@@ -42,11 +42,12 @@ import {
    este mesmo cabeçalho. A capa tem as âncoras por dentro, para quem já está
    rolando por ela. */
 const LINKS = [
-  /* A seção `#como` saiu da capa em 30/09/2026 (ver HomeClient.tsx); "Como
-     funciona" leva agora às três decisões de como o curso foi pensado. */
-  { href: '/#decisoes', label: 'Como funciona' },
-  { href: '/cursos', label: 'O curso' },
-  { href: '/metodo', label: 'Metodologia' },
+  /* 23/10/2026: a capa virou o portal, e o menu passou a ser as três jornadas
+     (lib/ecossistema.ts). O curso, a metodologia e "como funciona" moram
+     dentro de "Aprender hebraico". */
+  { href: '/aprender-hebraico', label: 'Aprender hebraico' },
+  { href: '/descobrir-israel', label: 'Descobrir Israel' },
+  { href: '/raizes-sefarditas', label: 'Raízes sefarditas' },
   { href: '/sobre', label: 'Sobre' },
   { href: '/faq', label: 'Dúvidas' }
 ] as const;
@@ -180,7 +181,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 {/* "Começar agora" cabe a partir de sm; num aparelho de 390 o
                     rótulo inteiro quebra em duas linhas e empurra o menu
                     para fora da tela. A palavra que importa é a primeira. */}
-                <LinkButton href="/cursos/alfabetizacao" size="sm"
+                <LinkButton href="/curso-de-hebraico" size="sm"
                             className="whitespace-nowrap px-3 sm:px-4">
                   {/* Um rótulo inteiro por largura, e não "Começar" + um
                       span com "&nbsp;agora": o `gap` do botão somava ao
@@ -267,13 +268,16 @@ function Footer() {
             próximos cursos, à parte, ainda em produção - e não como três
             ofertas na mesma coluna (auditoria de 01/10, CONV-011). */}
         <div className="grid gap-1 content-start">
-          <FooterCol title="O curso" links={[
-            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' },
-            /* 21/10/2026: o e-book, vendido à parte (data/courses.json, tipo livro),
-               só quando está à venda. */
+          {/* 23/10/2026: as três jornadas do portal. O livro e o Raízes
+              aparecem pela página de jornada ("Em breve", sem preço: decisão do
+              dono); a página de VENDA do livro só existe quando ele estiver à
+              venda, e só então ganha link próprio aqui. */}
+          <FooterCol title="Experiências" links={[
+            { href: '/curso-de-hebraico', label: 'Alfabetização em Hebraico' },
             ...(estaAVenda(getCourse('israel-alem-do-roteiro'))
               ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Roteiro' }]
-              : [])
+              : [{ href: '/descobrir-israel', label: 'Descobrir Israel' }]),
+            { href: '/raizes-sefarditas', label: 'Raízes sefarditas' }
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
             Próximos cursos, à parte e ainda em produção:{' '}

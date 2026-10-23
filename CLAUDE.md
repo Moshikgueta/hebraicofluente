@@ -829,6 +829,37 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   interpretativa. Cada seção tem a sua vinheta (`VINHETA_DA_SECAO`, ou `vinheta` no dado).
   `tests/raizes-experiencia.test.ts` exige artefatos, um jogo e curiosidades em todo módulo.
 
+## A capa é o portal das três jornadas (23/10/2026, master prompt "Hebraico Fluente 2.0")
+Decisões do dono no mesmo dia: portal na capa; o e-book e o Raízes "Em breve", SEM preço nem
+compra; medição só com o contador próprio.
+- `/` é o portal (`app/src/app/PortalClient.tsx`): abertura, três jornadas, experiências, "Leia
+  uma palavra agora" (שָׁלוֹם, com o sentido e a gravação do curso), quem faz (só o que /sobre
+  afirma), como os caminhos se cruzam, o que se pode conferir, convite final.
+- **A página de venda do curso mudou de endereço, não de conteúdo:** `/curso-de-hebraico`
+  (`app/src/app/curso-de-hebraico/`). Os links de campanha (/sefarad, /bio, /stories, /dm) e o
+  `/?parceria=` antigo levam para lá (`PAGINA_DE_VENDA` em worker.js). O microfone do "Ouça e
+  fale" abre SÓ lá (`naVenda` em `blindar`); a capa voltou a `microphone=()`. JSON-LD: Course e
+  FAQPage na página do curso (`grafoDoCurso`), Organization, WebSite e Person na capa.
+  `checa-seo.mjs`, `check-legal.mjs`, `clique.mjs`, `capa.mjs`, `ctas.mjs` e `worker/browser-check.mjs`
+  olham o endereço novo.
+- **Jornadas e produtos num lugar só:** `app/src/lib/ecossistema.ts`. O status sai do catálogo
+  (`statusDoCatalogo`): à venda = Disponível; `status: soon` = Em desenvolvimento; `aVenda: false`
+  ou fora do catálogo (Raízes) = Em breve. Produto novo entra ali. Os produtos 4 a 6 do prompt
+  (Sobrevivência, Antes de Embarcar, Biblioteca) NÃO existem e não aparecem.
+- Páginas: `/aprender-hebraico`, `/descobrir-israel`, `/israel-alem-do-roteiro` e
+  `/raizes-sefarditas` (peças em `components/portal/Jornada.tsx`). As duas "Em breve" não têm
+  preço, checkout nem botão de compra (`tests/portal.test.ts` confere no código, sem os
+  comentários); o botão delas leva ao curso. `/contato` → /suporte e `/minha-conta` → /meu-hebraico
+  (301, worker.js). Não há `/biblioteca` nem blog: não existe conteúdo para eles.
+- **Contador do portal:** `POST /api/portal {evento}` (api/estatisticas.js, `EVENTOS_DO_PORTAL`,
+  lista fechada, chave `p|<evento>`, robô fora, 40 por hora por IP) e `lib/funil-portal.ts` (uma
+  vez por visita). Sem cookie, conta nem IP guardado; Privacidade art. 4 diz isso (versão
+  2026-10-23). `/admin/estatisticas` recebe `portal` na resposta (a tela ainda não o mostra).
+- Ilustrações em código (`components/portal/Emblemas.tsx`): caderno, carta náutica sem contorno de
+  país, maço de arquivo. Sem hebraico dentro do SVG.
+- Cuidado já pago uma vez: `h1-h4` têm `color: var(--ink)` no globals.css, então título dentro de
+  bloco navy precisa de `text-white` explícito (a herança do bloco não vale).
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes
@@ -1191,7 +1222,7 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 ## Fim do pré-lançamento e e-mail do domínio (01/10/2026)
 - **O preço sobe sozinho** (decisão do dono): `tools/virar-preco.mjs` troca, em `data/courses.json`, o
   `brl` pelo `listBrl` e tira `listBrl`/`preLancamentoAte` quando o fim do dia `preLancamentoAte` em
-  Brasília passa. Quem roda é `.github/workflows/virar-preco.yml`, agendado para 01/11 03:05 UTC: aplica,
+  Brasília passa. Quem roda é `.github/workflows/virar-preco.yml`, agendado para 01/12 03:05 UTC (o pré-lançamento foi estendido até 30/11): aplica,
   roda a build (os Termos citam o preço, então nasce versão nova do contrato em
   `data/politicas-versoes/`), commita em main e dispara `deploy-worker.yml`. Rodar à mão é seguro.
   Testes de cobrança e `worker/e2e.sh` leem o preço do catálogo (`tests/ajuda/preco.ts`), nunca 147 fixo.
@@ -1282,6 +1313,9 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **Os arquivos:** `scripts/ebook-no-site.sh` monta a versão web (`--producao`, com o botão
   do PDF) e o PDF em `app/public/israel/` (gitignored); o passo "E-book no site" do
   `deploy-worker.yml` roda antes do build. O PDF tem de ficar abaixo de 25 MiB.
+- **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
+  /israel-alem-do-roteiro, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
+  VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.
 - **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
   cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o
   direito abre `/israel/` direto.

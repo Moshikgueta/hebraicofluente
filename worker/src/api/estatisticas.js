@@ -135,6 +135,33 @@ export async function contarDemo({ request, env }) {
   return nada;
 }
 
+/* O portal (a capa desde 23/10/2026): que jornada e que produto as pessoas
+   abrem. Decisão do dono: o contador próprio, como o do teste grátis, e não
+   uma ferramenta de terceiros. O app manda só o NOME do evento, uma vez por
+   evento e por visita (app/src/lib/funil-portal.ts); o servidor soma por dia
+   em `p|<evento>`: sem conta, e-mail, IP, horário nem cookie. Mesmos freios
+   da demo: lista fechada, robô fora, 40 por hora por endereço (o freio guarda
+   o IP só durante a janela). Uma visita inteira usa no máximo 12. */
+export const EVENTOS_DO_PORTAL = [
+  'visto',
+  'jornada-hebraico', 'jornada-israel', 'jornada-raizes',
+  'produto-alfabetizacao', 'produto-hebraico-a1', 'produto-israel-alem-do-roteiro', 'produto-raizes-sefarditas',
+  'palavra-ouvir', 'palavra-revelar',
+  'cta-curso', 'cta-explorar'
+];
+
+/** POST /api/portal {evento} - sempre 204. */
+export async function contarPortal({ request, env }) {
+  const nada = new Response(null, { status: 204 });
+  if (ROBO.test(request.headers.get('user-agent') || '')) return nada;
+  const b = await readJson(request, 1024);
+  const evento = String(b && b.evento || '');
+  if (!EVENTOS_DO_PORTAL.includes(evento)) return nada;
+  if (await throttled(env, `portal-ip:${ip(request)}`, 40, 3_600_000)) return nada;
+  await contarChave(env, `p|${evento}`);
+  return nada;
+}
+
 /** Soma 1 na etapa do teste, hoje. Nunca lança. */
 export const contarEtapa = (env, etapa) => contarChave(env, `d|${etapa}`);
 
@@ -155,6 +182,7 @@ export async function ler({ request, env }) {
   const campanhas = [];
   const demo = [];
   const motivos = [];
+  const portal = [];
   for (const { chave, n } of linhas || []) {
     const p = String(chave).split('|');
     if (p[0] === 'r' && p.length === 4) {
@@ -171,9 +199,11 @@ export async function ler({ request, env }) {
       demo.push({ etapa: p[1], n });
     } else if (p[0] === 'm' && p.length === 2) {
       motivos.push({ motivo: p[1], n });
+    } else if (p[0] === 'p' && p.length === 2) {
+      portal.push({ evento: p[1], n });
     }
   }
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos });
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

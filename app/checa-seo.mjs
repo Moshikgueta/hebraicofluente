@@ -136,21 +136,22 @@ for (const rota of listadas) {
   else console.log(`  aviso: ${rota} tem description com ${n} caracteres (o resultado corta em ~155)`);
 }
 
-/* ── os dados estruturados da capa (lib/jsonld.ts, SEO-001) ─────────────
+/* ── os dados estruturados da página do curso (lib/jsonld.ts, SEO-001) ──
    JSON válido; o preço do Course é o da caixa de preço (catálogo, ou o do
    PIX quando a loja só cobra por PIX); a validade é o fim do
    pré-lançamento; o CNPJ é o de data/empresa.json; a FAQPage tem as
-   perguntas que a capa mostra. */
+   perguntas que a página mostra. Até 23/10/2026 isto morava na capa; desde
+   então a capa é o portal e a página de venda é /curso-de-hebraico/. */
 {
-  const capa = html('/');
+  const capa = html('/curso-de-hebraico/');
   const blocos = [...capa.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => m[1]);
-  if (!blocos.length) nota('/ não tem JSON-LD (application/ld+json)');
+  if (!blocos.length) nota('/curso-de-hebraico/ não tem JSON-LD (application/ld+json)');
   const nos = [];
   for (const b of blocos) {
     try {
       const j = JSON.parse(b);
       nos.push(...(j['@graph'] || [j]));
-    } catch (e) { nota(`/ tem JSON-LD inválido: ${e.message}`); }
+    } catch (e) { nota(`/curso-de-hebraico/ tem JSON-LD inválido: ${e.message}`); }
   }
   const tipo = t => nos.find(n => n['@type'] === t);
   const catalogo = JSON.parse(readFileSync(new URL('./content/courses.json', import.meta.url), 'utf8'));
@@ -160,7 +161,7 @@ for (const rota of listadas) {
     ? Math.round(c.price.brl * (1 - c.price.pixDiscountPct / 100) * 100) / 100 : c.price.brl;
   const esperado = (empresa.pagamento?.modo === 'pix-direto' ? pix : c.price.brl).toFixed(2);
   const curso = tipo('Course'), org = tipo('Organization'), faq = tipo('FAQPage'), pessoa = tipo('Person');
-  if (!curso) nota('JSON-LD da capa sem Course');
+  if (!curso) nota('JSON-LD da página do curso sem Course');
   else {
     if (curso.offers?.price !== esperado) nota(`JSON-LD: preço ${curso.offers?.price}, o catálogo cobra ${esperado}`);
     if (curso.offers?.priceCurrency !== 'BRL') nota('JSON-LD: moeda do Course não é BRL');
@@ -169,15 +170,31 @@ for (const rota of listadas) {
       nota(`JSON-LD: priceValidUntil ${curso.offers?.priceValidUntil}, o catálogo diz ${ate}`);
     }
   }
-  if (!org) nota('JSON-LD da capa sem Organization');
+  if (!org) nota('JSON-LD da página do curso sem Organization');
   else if (empresa.cnpj && org.taxID !== empresa.cnpj) nota(`JSON-LD: CNPJ ${org.taxID}, empresa.json diz ${empresa.cnpj}`);
-  if (!faq || !faq.mainEntity?.length) nota('JSON-LD da capa sem FAQPage com perguntas');
+  if (!faq || !faq.mainEntity?.length) nota('JSON-LD da página do curso sem FAQPage com perguntas');
   else for (const q of faq.mainEntity) {
     if (!q.name || !q.acceptedAnswer?.text) nota('JSON-LD: pergunta da FAQPage sem nome ou resposta');
-    else if (!capa.includes(q.name)) nota(`JSON-LD: a pergunta "${q.name}" não aparece na capa`);
+    else if (!capa.includes(q.name)) nota(`JSON-LD: a pergunta "${q.name}" não aparece na página do curso`);
   }
-  if (!pessoa || pessoa.name !== 'Moshik Gueta') nota('JSON-LD da capa sem Person (o professor)');
-  if (blocos.length) console.log(`  JSON-LD da capa: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} · CNPJ ${org?.taxID}`);
+  if (!pessoa || pessoa.name !== 'Moshik Gueta') nota('JSON-LD da página do curso sem Person (o professor)');
+  if (blocos.length) console.log(`  JSON-LD do curso: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} · CNPJ ${org?.taxID}`);
+}
+
+/* ── e os da capa (o portal) ────────────────────────────────────────────
+   Quem é o site e quem o faz; nada de Course nem FAQPage, que descreveriam
+   outra página. */
+{
+  const capa = html('/');
+  const nos = [];
+  for (const m of capa.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try { const j = JSON.parse(m[1]); nos.push(...(j['@graph'] || [j])); }
+    catch (e) { nota(`/ tem JSON-LD inválido: ${e.message}`); }
+  }
+  const tipos = nos.map(n => n['@type']);
+  for (const t of ['Organization', 'Person']) if (!tipos.includes(t)) nota(`JSON-LD da capa sem ${t}`);
+  for (const t of ['Course', 'FAQPage']) if (tipos.includes(t)) nota(`JSON-LD da capa com ${t}: ele descreve a página do curso`);
+  console.log(`  JSON-LD da capa: ${tipos.join(', ')}`);
 }
 
 console.log(`  site: ${SITE}`);

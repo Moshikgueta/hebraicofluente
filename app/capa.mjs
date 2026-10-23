@@ -60,7 +60,7 @@ for (const W of [1280, 390]) {
   const faltando = [];
   page.on('response', r => { if (r.status() >= 400) faltando.push(`${r.status()} ${r.url()}`); });
 
-  await page.goto('http://localhost:4322/', { waitUntil: 'networkidle' });
+  await page.goto('http://localhost:4322/curso-de-hebraico/', { waitUntil: 'networkidle' });
   await page.waitForTimeout(2600); // a sequência de entrada do hero
 
   console.log(`\n── ${W}px ──────────────────────────────────`);
