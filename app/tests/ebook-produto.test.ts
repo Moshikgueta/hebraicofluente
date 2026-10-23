@@ -284,7 +284,7 @@ describe('o portão do e-book', () => {
     const env = envDeTeste({
       ASSETS: { fetch: async (r: Request) => {
         const corpo = arquivos[new URL(r.url).pathname];
-        return corpo ? new Response(corpo, { headers: { 'Content-Length': String(corpo.length) } }) : new Response('', { status: 404 });
+        return corpo ? new Response(corpo as BodyInit, { headers: { 'Content-Length': String(corpo.length) } }) : new Response('', { status: 404 });
       } }
     });
     const a = await conta(env);

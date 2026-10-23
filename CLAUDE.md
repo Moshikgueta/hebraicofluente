@@ -1282,10 +1282,9 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **Os arquivos:** `scripts/ebook-no-site.sh` monta a versão web (`--producao`, com o botão
   do PDF) e o PDF em `app/public/israel/` (gitignored); o passo "E-book no site" do
   `deploy-worker.yml` roda antes do build. O PDF tem de ficar abaixo de 25 MiB.
-- **Aba "Seus livros"** (22/10/2026, pedido do dono): `LinkDoLivroNaSidebar` e
-  `LinkDoLivroNoCabecalho` em AppShell.tsx levam a `/israel/` (com `<a>`, fora do roteador) e só
-  aparecem com `account.can('israel-alem-do-roteiro')`. No telefone é um ícone no cabeçalho; com
-  ele o nome da marca só aparece inteiro a partir de 480 px.
+- **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
+  cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o
+  direito abre `/israel/` direto.
 - **Texto protegido contra cópia** na versão web (editorial, `templates/web-app.js` e `web.css`):
   sem seleção, copiar, recortar, arrastar nem menu do botão direito; campos, links e fotos (CC)
   ficam livres. O PDF baixado continua copiável (mas leva a marca, abaixo).
