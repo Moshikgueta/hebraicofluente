@@ -10,7 +10,10 @@ export type EventoDoPortal =
   | 'jornada-hebraico' | 'jornada-israel' | 'jornada-raizes'
   | 'produto-alfabetizacao' | 'produto-hebraico-a1' | 'produto-israel-alem-do-roteiro' | 'produto-raizes-sefarditas'
   | 'palavra-ouvir' | 'palavra-revelar'
-  | 'cta-curso' | 'cta-explorar';
+  | 'cta-curso' | 'cta-explorar'
+  /* Mandados pela prévia do e-book (/previa), que é o app do livro e não usa
+     este arquivo: estão aqui para o tipo bater com a lista do servidor. */
+  | 'previa-visto' | 'previa-mochila-cheia' | 'previa-prato-pronto' | 'previa-diario-aberto' | 'previa-clique-curso';
 
 const enviados = new Set<EventoDoPortal>();
 

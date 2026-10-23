@@ -877,6 +877,16 @@ compra; medição só com o contador próprio.
   (lib/ecossistema.ts; catálogo quando ele tem). Preço só no produto à venda; "Em breve" sem preço
   nem data (`tests/portal.test.ts`). Nunca as três lado a lado como tabela de planos.
 
+## O cartão do link no WhatsApp e no Instagram (23/10/2026, pedido do dono)
+- Um cartão por porta de entrada, gerados por `tools/og.mjs` (num Chromium, com as fontes e as
+  cores do site; o hebraico é só o שָׁלוֹם do curso): `og-portal.jpg` (a capa e o resto do site),
+  `og-curso.jpg` (curso, /aprender-hebraico, /metodo, /checkout, /biblia), `og-livro.jpg`
+  (/israel-alem-do-obvio e /descobrir-israel, "Em breve", sem preço) e `og-previa.jpg` (/previa, que
+  o editorial monta com `og:image` absoluto). Qual vai em qual rota: `ogDaRota` em lib/seo.ts.
+- **Nome novo a cada cartão novo:** `/media` sai com cache de um ano e o WhatsApp e o Instagram
+  guardam a imagem pelo endereço. O `og.jpg` antigo fica para os links já compartilhados.
+  `tests/cartao-do-link.test.ts` confere as rotas, o 1200x630 e o peso (menos de 300 KB).
+
 ## Fontes: preload só do texto corrido (23/10/2026, pedido do dono)
 - `app/src/app/layout.tsx`: só a Instrument Sans (texto corrido, o elemento da maior pintura) tem
   `<link rel=preload>`; Bricolage (títulos), Noto Serif Hebrew e a cursiva carregam quando o CSS
@@ -885,7 +895,11 @@ compra; medição só com o contador próprio.
   com o nikud fora do lugar. Nunca voltar a `swap` sem preload.
 - Medida (Lighthouse celular simulado, mediana de 5): LCP da capa 3,75 → 3,16 s, da página de venda
   3,47 → 3,01 s, de /aprender-hebraico 3,74 → 2,63 s. FCP da capa 1,21 → 1,66 s (ainda abaixo de 1,8).
-- `npm run escuro` acusa 13 problemas do tema escuro que já existiam na `main` antes disto.
+- Os "13 problemas do tema escuro" eram do teste, não do tema (23/10/2026): `npm run escuro` rodado
+  sobre o build publicado (`NEXT_PUBLIC_PLATFORM_API=worker`), em que a casca do curso pede a sessão
+  ao Worker e não monta no servidor estático. No build local o escuro passa inteiro (menor contraste
+  5,33:1). O script agora para e avisa quando a casca não monta. `npm run varrer` e `npm run escuro`
+  medem o build LOCAL (`npm run build`, sem a variável).
 
 ## Antes de commitar
 ```sh
@@ -1352,6 +1366,18 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
   /israel-alem-do-obvio, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
   VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.
+- **Prévia grátis em /previa** (23/10/2026, pedido do dono): o link que o ManyChat manda no
+  direct a quem comenta EBOOK no Instagram. Pública, sem conta, FORA do portão, `noindex` (meta e
+  `X-Robots-Tag` em worker.js) e fora do sitemap (`NAO_LISTADAS` em seo.mjs e lib/seo.ts). É o app
+  do livro em modo prévia (`web.mjs --previa`, do editorial), montado por `scripts/ebook-no-site.sh`
+  em `app/public/previa/` (gitignored): SÓ os blocos de `editorial/<livro>/previa.json` (decisão do
+  dono: a mochila do cap. 8, o monte a sua comida do cap. 6 À VONTADE (`livre`: pita ou prato, sem
+  recusa nem limite, e "Servir" diz se virou um prato do capítulo), a roleta com 5 curiosidades do cap. 9
+  e duas páginas do diário), e a publicação para se algum faltar. Sem preço nem compra do livro
+  (que segue `aVenda: false`); o botão do fecho vai ao curso com `utm_content=previa-ebook`.
+  Contador: os eventos `previa-*` em `EVENTOS_DO_PORTAL` (POST /api/portal), um por visita; tabela
+  própria em /admin/estatisticas (`funilDaPrevia`); Privacidade art. 4 diz isso.
+  `tests/previa.test.ts` e o bloco "A prévia do e-book" do `worker/e2e.sh` travam tudo isso.
 - **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
   cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o
   direito abre `/israel/` direto.

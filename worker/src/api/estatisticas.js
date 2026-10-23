@@ -147,7 +147,10 @@ export const EVENTOS_DO_PORTAL = [
   'jornada-hebraico', 'jornada-israel', 'jornada-raizes',
   'produto-alfabetizacao', 'produto-hebraico-a1', 'produto-israel-alem-do-roteiro', 'produto-raizes-sefarditas',
   'palavra-ouvir', 'palavra-revelar',
-  'cta-curso', 'cta-explorar'
+  'cta-curso', 'cta-explorar',
+  /* A prévia grátis do e-book em /previa (23/10/2026): quem abriu, quem encheu
+     a mochila, quem montou um prato, quem abriu o diário e quem foi ao curso. */
+  'previa-visto', 'previa-mochila-cheia', 'previa-prato-pronto', 'previa-diario-aberto', 'previa-clique-curso'
 ];
 
 /** POST /api/portal {evento} - sempre 204. */
