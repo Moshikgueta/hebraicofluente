@@ -3,6 +3,7 @@ import { meta } from '@/lib/seo';
 import { Container, H2 } from '@/components/landing/base';
 import { Abertura, AvisoEmBreve, Ponte } from '@/components/portal/Jornada';
 import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
+import { GaleriaDoLivro } from '@/components/portal/GaleriaDoLivro';
 import { produtos } from '@/lib/ecossistema';
 import { getCourse } from '@/lib/catalog';
 
@@ -19,7 +20,8 @@ export const metadata: Metadata = meta({
  * Pronto e fora de venda até o contador e o advogado (CLAUDE.md, E-book).
  * Decisão do dono: a página existe e diz o que tem dentro, SEM preço, sem
  * botão de compra e sem checkout. Os textos vêm do catálogo (o mesmo que a
- * página de venda vai usar), não escritos aqui. */
+ * página de venda vai usar), não escritos aqui. A galeria das aberturas de
+ * capítulo também é a da página de venda (GaleriaDoLivro). */
 export default function IsraelAlemDoObvioPage() {
   const p = produtos().find(x => x.id === 'israel-alem-do-roteiro')!;
   const livro = getCourse('israel-alem-do-roteiro');
@@ -58,6 +60,10 @@ export default function IsraelAlemDoObvioPage() {
           <FichaDoProduto p={p} titulo="O livro em cinco linhas" />
         </Container>
       </section>
+
+      {/* A galeria das aberturas de capítulo, a mesma da página de venda
+          (pedido do dono, 23/10/2026): só ilustração, sem preço nem compra. */}
+      {livro && <GaleriaDoLivro c={livro} />}
 
       <Ponte
         jornada="israel"

@@ -1469,6 +1469,9 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   `<img>` o SVG não carrega fonte) e capturas do livro montado num Chromium, com a mochila e o monte em uso (o
   monte vem da PRÉVIA, a livre: no do livro, ingrediente errado fica vermelho). Seletor que sumir do livro para a
   publicação, com o nome dele. Texto alternativo de cada ilustração = o `aria-label` do próprio SVG.
+- **A galeria também está na página "Em breve"** (/israel-alem-do-obvio, pedido do dono, 23/10/2026):
+  `components/portal/GaleriaDoLivro.tsx` (+ `galeria-do-livro.css`) é a mesma nas duas páginas. Só ilustração,
+  sem preço nem compra; as imagens de /vitrine-livro/ ficam fora do portão.
 - Movimento: `livro.css`, só CSS, por cima de conteúdo já visível (linha do tempo da rolagem onde existe),
   parado com "reduzir movimento". Nada nasce escondido esperando JavaScript (ver `Reveal`).
 - `tests/livro-venda.test.ts` confere: imagens só das listas do script, todas com `alt`, sem banco de imagens,
