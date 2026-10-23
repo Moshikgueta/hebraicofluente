@@ -331,7 +331,7 @@ jobs:
       # domínio é uma edição. `checa-seo.mjs` reprova se os dois divergirem,
       # que é o que aconteceria se este `export` sumisse - o Next cairia no
       # padrão embutido em lib/seo.ts e passaria a anunciar o domínio velho.
-      # O e-book "Israel Além do Roteiro" (21/10/2026): a versão interativa e o
+      # O e-book "Israel Além do Óbvio" (21/10/2026): a versão interativa e o
       # PDF saem de editorial/ a cada publicação e vão para app/public/israel/,
       # que o build copia para o site. O portão (prefixo /israel em
       # worker/src/gate.js) só abre para quem comprou o e-book ou o pacote.

@@ -62,7 +62,7 @@ const BASE = 'http://127.0.0.1:4497';
 /* As páginas que um visitante alcança sem conta. A mesma lista de
    `check-legal.mjs`, mais as que têm controle interativo. */
 const ROTAS = [
-  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
+  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-obvio/', '/raizes-sefarditas/',
   '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/acessibilidade/', '/entrar/', '/criar-conta/'

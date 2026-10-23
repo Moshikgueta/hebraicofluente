@@ -413,7 +413,7 @@ function Footer() {
           <FooterCol title="Experiências" links={[
             ...JORNADAS.map(j => ({ href: j.rota, label: j.nome })),
             ...(estaAVenda(getCourse('israel-alem-do-roteiro'))
-              ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Roteiro' }]
+              ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Óbvio' }]
               : [])
           ]} />
         </div>

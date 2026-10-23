@@ -752,7 +752,7 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   `tests/raizes-laboratorio.test.ts` trava isso.
 - NÃO está em `data/courses.json`: falta preço, o contador (CNAE de idiomas) e
   mudar o art. 1 dos Termos. Até lá o acesso só existe concedido à mão.
-- Visual: a estética da coleção editorial (Israel Além do Roteiro), em
+- Visual: a estética da coleção editorial (Israel Além do Óbvio), em
   `app/src/app/raizes/raizes.css` (classes `rz-*`, só debaixo de `.rz`) e no
   layout `app/src/app/raizes/layout.tsx`, que carrega a Literata SÓ em /raizes
   (o latin-ext numa segunda face, baixada só quando a página tem a letra).
@@ -790,7 +790,7 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
     `raizes/docs/auditoria-prototipo-atlas.md`. Pendente antes de vender: uma linha sobre a
     árvore na Política de Privacidade.
 - **O módulo é um capítulo de leitura contínua** (22/10/2026, decisão do dono: "parecido com o
-  Israel Além do Roteiro"). As 8 partes do dado viram SEÇÕES da mesma página
+  Israel Além do Óbvio"). As 8 partes do dado viram SEÇÕES da mesma página
   (`ModuloRaizesClient`), com sumário, "você está aqui", placar de atividades e o "onde parei" pela
   seção lida (`?etapa=` continua valendo). O que conclui o módulo não mudou (as atividades). O
   visual é o da coleção em todos os módulos; a identidade "O Arquivo Aberto" (protótipo do módulo
@@ -820,7 +820,7 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   chaves `lugar:`, `artefato:`, `modulo:`, `personagem:`). O exportador copia para
   `app/public/raizes/fotos/` (gitignored, atrás do portão de /raizes). `components/raizes/Foto.tsx`
   mostra o crédito SEMPRE junto da imagem. Retrato e cena imaginada (pintura do séc. XIX) não entram.
-- **Peças do Israel Além do Roteiro** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
+- **Peças do Israel Além do Óbvio** (`components/raizes/Pecas.tsx`): `palpite`, `vf`
   (verdadeiro ou falso), `curiosidades` e `artefatos` (vitrine com ficha). Nenhuma conta para a
   conclusão nem grava no servidor. Todo texto factual delas segue a regra das marcas
   (`textosMarcados` em tests/raizes.test.ts), e a frase a julgar do V/F NÃO leva marca.
@@ -846,7 +846,7 @@ compra; medição só com o contador próprio.
   (`statusDoCatalogo`): à venda = Disponível; `status: soon` = Em desenvolvimento; `aVenda: false`
   ou fora do catálogo (Raízes) = Em breve. Produto novo entra ali. Os produtos 4 a 6 do prompt
   (Sobrevivência, Antes de Embarcar, Biblioteca) NÃO existem e não aparecem.
-- Páginas: `/aprender-hebraico`, `/descobrir-israel`, `/israel-alem-do-roteiro` e
+- Páginas: `/aprender-hebraico`, `/descobrir-israel`, `/israel-alem-do-obvio` e
   `/raizes-sefarditas` (peças em `components/portal/Jornada.tsx`). As duas "Em breve" não têm
   preço, checkout nem botão de compra (`tests/portal.test.ts` confere no código, sem os
   comentários); o botão delas leva ao curso. `/contato` → /suporte e `/minha-conta` → /meu-hebraico
@@ -871,6 +871,11 @@ compra; medição só com o contador próprio.
   mostra o funil do portal. `npm run alcance` prova que toda página do sitemap está a 2 cliques da capa.
   Sistema visual: `components/portal/README.md` e a amostra `/admin/sistema`. Roteiros dos testes com
   pessoas e a auditoria de persuasão: `audit/portal/`.
+- **Ficha comum dos produtos** (`components/portal/FichaDoProduto.tsx`, 23/10/2026, pedido do dono):
+  os mesmos cinco campos (para quem é, o que você passa a conseguir, formato, quanto tempo, situação)
+  em /aprender-hebraico, /israel-alem-do-obvio e /raizes-sefarditas, lidos de `Produto.ficha`
+  (lib/ecossistema.ts; catálogo quando ele tem). Preço só no produto à venda; "Em breve" sem preço
+  nem data (`tests/portal.test.ts`). Nunca as três lado a lado como tabela de planos.
 
 ## Antes de commitar
 ```sh
@@ -1289,7 +1294,14 @@ decidiu manter Álef primeiro: com Mem e Tav sozinhas não há palavra útil
 na lição 2. Rever só se alunos reais disserem que a lição do Álef (letra
 muda) confunde.
 
-## E-book Israel Além do Roteiro (21/10/2026, decisão do dono) - NO AR SÓ PARA O DONO
+## E-book Israel Além do Óbvio (21/10/2026, decisão do dono) - NO AR SÓ PARA O DONO
+**Nome novo desde 23/10/2026** (pedido do dono): "Israel Além do Óbvio", subtítulo "O país pelos
+olhos de quem nasceu lá", descrição "Uma jornada interativa pela história, cultura e lugares de
+Israel.", autor Moshik Gueta (`titlePt`, `taglinePt`, `descricaoPt`, `autorPt` em data/courses.json;
+`livro.json` no editorial). O que NÃO mudou de propósito: o slug `israel-alem-do-roteiro` (direito de
+acesso no banco, pedidos, `NAO_CURSOS`), `/israel/`, a pasta do editorial e o caminho do PDF em
+`/israel/`. O PDF baixa com o nome `israel-alem-do-obvio.pdf` (Content-Disposition em api/livro.js),
+e a página do portal mudou para `/israel-alem-do-obvio` (301 do endereço antigo, worker.js).
 Vendido à parte: é a "venda avulsa de produto digital" do Enquadramento acima. O dono
 decidiu **só abrir a venda depois de o contador confirmar o enquadramento (CNAE, nota)
 e de o advogado ler os parágrafos dos Termos e do Reembolso**.
@@ -1326,7 +1338,7 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   do PDF) e o PDF em `app/public/israel/` (gitignored); o passo "E-book no site" do
   `deploy-worker.yml` roda antes do build. O PDF tem de ficar abaixo de 25 MiB.
 - **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
-  /israel-alem-do-roteiro, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
+  /israel-alem-do-obvio, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
   VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.
 - **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
   cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o

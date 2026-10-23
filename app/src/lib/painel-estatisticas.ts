@@ -119,7 +119,7 @@ export const EVENTOS_DO_PORTAL_PT: readonly { grupo: string; evento: string; nom
   { grupo: 'Jornada', evento: 'jornada-raizes', nome: 'Raízes sefarditas' },
   { grupo: 'Produto', evento: 'produto-alfabetizacao', nome: 'Alfabetização em Hebraico' },
   { grupo: 'Produto', evento: 'produto-hebraico-a1', nome: 'A trilha (A1 em diante)' },
-  { grupo: 'Produto', evento: 'produto-israel-alem-do-roteiro', nome: 'Israel Além do Roteiro' },
+  { grupo: 'Produto', evento: 'produto-israel-alem-do-roteiro', nome: 'Israel Além do Óbvio' },
   { grupo: 'Produto', evento: 'produto-raizes-sefarditas', nome: 'Raízes Sefarditas' },
   { grupo: 'Para o curso', evento: 'cta-curso', nome: 'Botão para a página de venda' },
   { grupo: 'Para o curso', evento: 'cta-explorar', nome: 'Botão "explorar as experiências"' },

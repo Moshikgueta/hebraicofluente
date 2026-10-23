@@ -1,6 +1,6 @@
 /* As peças das páginas de jornada e de produto "em breve" (23/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
- * /aprender-hebraico, /descobrir-israel, /israel-alem-do-roteiro e
+ * /aprender-hebraico, /descobrir-israel, /israel-alem-do-obvio e
  * /raizes-sefarditas usam estas peças, e todas leem lib/ecossistema.ts: o
  * status que aparece é o do catálogo, nunca escrito na página.
  *

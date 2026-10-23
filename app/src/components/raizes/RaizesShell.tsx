@@ -7,7 +7,7 @@
  * (AppShell): nada de "Meu curso", "Revisão", "Aula 0", XP ou barra do
  * polegar do alfabeto, e nada de gravar `lastRoute` do curso de hebraico.
  *
- * A barra é a da coleção editorial (Israel Além do Roteiro): o nome em
+ * A barra é a da coleção editorial (Israel Além do Óbvio): o nome em
  * versalete, dois destinos, e o fio de progresso de leitura embaixo. O fio
  * anda por `transform` escrito direto no elemento, sem re-renderizar a página
  * a cada rolagem.

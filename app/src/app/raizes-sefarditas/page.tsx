@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { Container, H2 } from '@/components/landing/base';
 import { Abertura, AvisoEmBreve, Ponte } from '@/components/portal/Jornada';
+import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
 import { produtos } from '@/lib/ecossistema';
 
 export const metadata: Metadata = meta({
@@ -38,6 +39,12 @@ export default function RaizesSefarditasPage() {
       >
         <AvisoEmBreve texto="O curso está em revisão e ainda não está à venda. Sem data marcada." />
       </Abertura>
+
+      <section aria-label="A ficha do curso">
+        <Container className="pb-14 sm:pb-20">
+          <FichaDoProduto p={p} titulo="O curso em cinco linhas" />
+        </Container>
+      </section>
 
       <section aria-labelledby="como-titulo" className="bg-surface-2">
         <Container className="py-14 sm:py-20 grid gap-8">

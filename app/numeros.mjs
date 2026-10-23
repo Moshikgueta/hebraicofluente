@@ -90,7 +90,7 @@ function julgar(n, unidade) {
    "6 letras" dentro de um módulo), e ali um número menor é correto. A
    verificação é da VITRINE: o que se promete a quem ainda não comprou. */
 const LIVRES = new Set([
-  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
+  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-obvio/', '/raizes-sefarditas/',
   '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/checkout/alfabetizacao/'

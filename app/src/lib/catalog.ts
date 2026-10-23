@@ -81,6 +81,10 @@ export type CatalogCourse = {
    *  o e-book, como o Raízes Sefarditas). Sem o campo, está à venda. */
   aVenda?: boolean;
   taglinePt: string;
+  /** Uma linha que descreve o produto, abaixo do subtítulo (o livro, 23/10/2026). */
+  descricaoPt?: string;
+  /** O autor, quando o produto é uma obra assinada (o livro). */
+  autorPt?: string;
   summaryPt: string;
   outcomesPt: string[];
   forWhomPt: string[];

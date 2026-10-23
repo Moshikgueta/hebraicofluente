@@ -11,7 +11,7 @@ export const metadata: Metadata = meta({
 });
 
 /* A jornada "Descobrir Israel" (23/10/2026, portal). O produto dela, o livro
-   Israel Além do Roteiro, está pronto e fora de venda (decisão do dono:
+   Israel Além do Óbvio, está pronto e fora de venda (decisão do dono:
    "Em breve", sem preço). A ponte leva ao que dá para fazer hoje. */
 export default function DescobrirIsraelPage() {
   return (
@@ -19,7 +19,7 @@ export default function DescobrirIsraelPage() {
       <Abertura
         jornada="israel"
         rubrica="Descobrir Israel"
-        titulo="Uma viagem que vai além do roteiro."
+        titulo="Uma viagem além do óbvio."
         trilha={[{ nome: 'Descobrir Israel' }]}
         lead={
           <>

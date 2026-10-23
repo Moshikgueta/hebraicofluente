@@ -1,4 +1,4 @@
-/* A licença do e-book Israel Além do Roteiro (22/10/2026, pedido do dono).
+/* A licença do e-book Israel Além do Óbvio (22/10/2026, pedido do dono).
  * ─────────────────────────────────────────────────────────────────────────
  * A versão web do livro (/israel/) é uma página estática: não passa pelo app
  * e não tem a sessão em memória. Para pôr a marca d'água na margem, como nas
@@ -66,7 +66,7 @@ export async function pdfMarcado(request, env, ctx) {
   const headers = {
     'Content-Type': 'application/pdf',
     'Content-Length': String(total),
-    'Content-Disposition': 'inline; filename="israel-alem-do-roteiro.pdf"'
+    'Content-Disposition': 'inline; filename="israel-alem-do-obvio.pdf"'
   };
   if (request.method === 'HEAD') {
     await cancelar();
