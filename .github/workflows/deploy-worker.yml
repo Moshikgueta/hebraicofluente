@@ -367,6 +367,9 @@ jobs:
           ( cd editorial && npx --yes "playwright@$(node -p "require('./package.json').dependencies['playwright-core']")" install --with-deps chromium >/dev/null 2>&1 )
           export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
           bash scripts/ebook-no-site.sh
+          # As imagens da página de venda do livro, tiradas do livro montado
+          # (scripts/vitrine-do-livro.mjs): nunca entram no git.
+          node scripts/vitrine-do-livro.mjs
 
       - name: Build (modo plataforma)
         if: steps.guard.outputs.ok == 'true'

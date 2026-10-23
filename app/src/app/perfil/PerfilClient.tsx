@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 /* Sua conta.
  * ─────────────────────────────────────────────────────────────────────────
  * Quatro blocos e nenhuma configuração inventada: dados, cursos, números e
@@ -141,6 +143,11 @@ export function PerfilClient() {
             );
           })}
         </ul>
+        {/* Minha Biblioteca (23/10/2026): tudo que a conta tem, com o Israel
+            Além do Óbvio e o Raízes, que não são cursos e não aparecem acima. */}
+        <Link href="/minha-biblioteca" className="justify-self-start font-ui text-[14.5px] font-semibold text-[var(--accent)] hover:underline">
+          Abrir a Minha Biblioteca
+        </Link>
       </Card>
 
       {/* ── números ───────────────────────────────────────────────── */}

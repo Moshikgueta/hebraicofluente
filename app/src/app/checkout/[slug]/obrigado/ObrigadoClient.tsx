@@ -116,19 +116,21 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           <He size="lg" dim>ע</He>
           <Badge tone="mint">Pagamento confirmado</Badge>
           <h1 className="font-display text-[26px] sm:text-[30px] font-bold text-ink max-w-[20ch]">
-            {tipoDe(c) === 'livro' ? 'Pronto. O e-book é seu.' : tipoDe(c) === 'pacote' ? 'Pronto. O pacote é seu.' : 'Pronto. O curso é seu.'}
+            {tipoDe(c) === 'livro' ? 'Pronto. O Israel Além do Óbvio é seu.' : tipoDe(c) === 'pacote' ? 'Pronto. O combo é seu.' : 'Pronto. O curso é seu.'}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             {tipoDe(c) === 'livro'
               ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses.`
               : tipoDe(c) === 'pacote'
-                ? 'O curso de alfabetização e o e-book estão liberados. A primeira lição leva dez minutos.'
+                ? 'O curso de alfabetização e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
                 : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
           </p>
           {tipoDe(c) === 'livro'
             /* /israel/ é uma página estática fora do app: link comum, sem o roteador. */
-            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o e-book</a>
-            : <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>}
+            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o Israel Além do Óbvio</a>
+            : tipoDe(c) === 'pacote'
+              ? <LinkButton href="/minha-biblioteca" size="lg">Abrir a Minha Biblioteca</LinkButton>
+              : <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>}
         </Card>
       </Wrap>
     );

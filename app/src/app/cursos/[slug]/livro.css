@@ -1,0 +1,55 @@
+/* A página de venda do Israel Além do Óbvio (23/10/2026): a personalidade
+   editorial do livro, só debaixo de `.lv`. Cores dos tokens do site; o navy e
+   o dourado são os da capa do próprio livro.
+
+   Animação: só CSS e só por cima de conteúdo que JÁ está visível. Nada nasce
+   escondido esperando o JavaScript (foi o que atrasou a maior pintura da capa,
+   ver `Reveal` em components/landing/base.tsx). A entrada ao rolar usa a
+   linha do tempo da rolagem, onde o navegador tem; sem ela, a página fica
+   parada e inteira. "Reduzir movimento": nada se move. */
+
+.lv-papel {
+  background:
+    radial-gradient(1200px 500px at 85% -10%, rgba(226, 184, 100, .16), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgba(143, 214, 200, .12), transparent 60%),
+    var(--navy);
+}
+
+/* A moldura dos aparelhos: telas de verdade dentro de um corpo simples. */
+.lv-notebook { border-radius: 14px 14px 4px 4px; background: #0b2a30; padding: 10px 10px 14px; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .7); }
+.lv-notebook img { border-radius: 6px; display: block; width: 100%; height: auto; }
+.lv-notebook-base { height: 14px; margin: 0 -7%; border-radius: 0 0 16px 16px; background: linear-gradient(#cfc6b5, #a99f8c); }
+.lv-celular { border-radius: 34px; background: #0b2a30; padding: 9px; box-shadow: 0 34px 70px -30px rgba(0, 0, 0, .75); }
+.lv-celular-tela { border-radius: 26px; overflow: hidden; background: #f7f1e6; }
+.lv-celular-tela img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.lv-tablet { border-radius: 24px; background: #0b2a30; padding: 12px; box-shadow: 0 34px 70px -34px rgba(0, 0, 0, .6); }
+.lv-tablet img { border-radius: 14px; display: block; width: 100%; height: auto; }
+
+/* A galeria: rolagem com encaixe, que o dedo e o trackpad já sabem usar. */
+.lv-galeria { scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.lv-galeria::-webkit-scrollbar { display: none; }
+.lv-galeria > li { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .lv-flutua { animation: hf-float 6s ease-in-out infinite; }
+  .lv-flutua-2 { animation: hf-float 7s ease-in-out -2s infinite; }
+
+  @supports (animation-timeline: view()) {
+    /* Só transforma: a opacidade fica em 1, o texto nunca some. */
+    .lv-entra {
+      animation: lv-entra linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+    .lv-folha {
+      animation: lv-folha linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+      transform-origin: left center;
+    }
+  }
+}
+
+@keyframes lv-entra { from { transform: translateY(28px) scale(.985); } to { transform: none; } }
+/* A página que vira: a ilustração entra girando um pouco no eixo da lombada. */
+@keyframes lv-folha { from { transform: perspective(1200px) rotateY(-14deg) translateX(18px); } to { transform: none; } }

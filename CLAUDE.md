@@ -1113,6 +1113,9 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   mesmo preço `price.parceriaBrl` (R$ 147), e o pedido guarda o nome (orders.parceria, /admin/vendas).
 - O preço dos links vale até `price.parceriaAte` = 2026-11-30, fim do dia em Brasília (`parceriaVigente`, nos
   dois lados). Depois, os links levam ao preço do dia. A capa e o checkout dizem "até 30/11".
+- **Desde 23/10/2026 o catálogo não tem `parceriaBrl` nem `parceriaAte`** (decisão do dono, preços sem data):
+  os links cobram o preço do dia e continuam guardando o nome no pedido. O código da parceria fica, testado com
+  dados de exemplo (tests/parceria.test.ts), para o dia em que houver preço de link de novo.
 - O @ certo da associação é @adsefarditas.
 
 ## A segunda letra por e-mail, no fim do teste (03/10/2026)
@@ -1288,6 +1291,8 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   hebraico do dado-fonte em NFC).
 
 ## Fim do pré-lançamento e e-mail do domínio (01/10/2026)
+- **SUBSTITUÍDO em 23/10/2026: o preço NÃO sobe sozinho.** Ver "Preços, combo único e Minha Biblioteca"
+  abaixo. O texto que segue é histórico.
 - **O preço sobe sozinho** (decisão do dono): `tools/virar-preco.mjs` troca, em `data/courses.json`, o
   `brl` pelo `listBrl` e tira `listBrl`/`preLancamentoAte` quando o fim do dia `preLancamentoAte` em
   Brasília passa. Quem roda é `.github/workflows/virar-preco.yml`, agendado para 01/12 03:05 UTC (o pré-lançamento foi estendido até 30/11): aplica,
@@ -1372,10 +1377,8 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   foi junto. O histórico do ramo `claude/wonderful-mayer-n4sc1n` (e da PR #193) ainda
   contém o editorial: nunca fundir esses commits na `main` sem tirar o editorial deles.
 - **Catálogo:** `data/courses.json` ganhou `tipo` (sem ele, é curso). `israel-alem-do-roteiro`
-  (`livro`, R$ 67, versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
-  R$ 127 até 30/11 e R$ 327 a partir de 01/12 (decisões do dono, 21 e 22/10/2026: até 30/11
-  fica ABAIXO do curso sozinho, de propósito; depois, acima, com R$ 37 de economia), `componentes` = curso + e-book, `listBrl` e
-  `preLancamentoAte` como o curso, virado pela mesma Action `virar-preco`). `allCourses()` (app) só devolve cursos;
+  (`livro`) e `alfabetizacao-e-israel` (`pacote`, o combo, `componentes` = curso + livro). Preços desde
+  23/10/2026 em "Preços, combo único e Minha Biblioteca" abaixo. `allCourses()` (app) só devolve cursos;
   `allProducts()` devolve tudo (checkout, páginas de venda).
 - **Pedido de pacote:** `itensDoPedido` (worker/src/lib/catalog.js) diz o que um pedido
   abre. `applyPayment` concede cada item; `refundOrder` aceita `itens` e recua todos na MESMA
@@ -1429,3 +1432,46 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **Páginas:** `/cursos/<slug>` usa `ProdutoClient` para livro e pacote; rodapé e /cursos
   linkam o e-book. Termos (art. 1) e Reembolso (art. 4) têm um parágrafo marcado TEXTO PARA
   APROVAÇÃO; políticas na versão 2026-10-21.
+
+## Preços, combo único e Minha Biblioteca (23/10/2026, decisões do dono)
+- **Dois produtos e um combo só**, sem edições. Pré-lançamento (`brl`, o cobrado) e oficial (`listBrl`):
+  Alfabetização R$ 147 / R$ 197; Israel Além do Óbvio R$ 197 / R$ 297; combo "Descubra Israel + Aprenda
+  Hebraico" (`alfabetizacao-e-israel`) R$ 297 / R$ 397. Separados no pré-lançamento, R$ 344: a economia de R$ 47
+  é calculada na tela (`economiaDoCombo`), nunca escrita. Não criar outro combo.
+- **O preço oficial NÃO vira sozinho.** O catálogo não tem `preLancamentoAte` nem `parceriaAte`; as telas dizem
+  "Preço de pré-lançamento. Depois, R$ X." sem data (data sem virada seria escassez falsa). Virar é à mão:
+  Actions → "Virar o preço" → escrever `virar` (e, se quiser, só alguns slugs). `tools/virar-preco.mjs` sem
+  `--aplicar` só mostra. Curso com `status: soon` nunca vira. `tests/virar-preco.test.ts` trava a falta de agendamento.
+- **Livro e combo prontos e DESLIGADOS** (`aVenda: false`) até o contador e o advogado (seção E-book). Nome na
+  vitrine: "Israel Além do Óbvio: O Olhar de um Israelense" (`titlePt` + `taglinePt`, `nomeNaVitrine`); o livro é
+  apresentado como experiência digital interativa, não "e-book", nas telas e nos e-mails ao cliente (o slug e
+  os nomes internos ficam).
+- **Vitrine:** `components/portal/OpcoesDeCompra.tsx`, em /cursos (três opções, combo em destaque). Fora de
+  venda: "Em breve", sem preço. Quem tem uma parte do combo não recebe a oferta dele (o servidor daria 409).
+- **Minha Biblioteca:** `/minha-biblioteca`, casca PÚBLICA (quem tem só o livro não tem o curso), pede o login
+  ela mesma, fora do portão e da busca. Lista os direitos válidos (curso, livro, A1, Raízes) com "Abrir" e a
+  data do fim. O combo pago leva a ela (`abre`); o perfil e o botão do cabeçalho (conta sem curso) também.
+- **Pagamento:** nada novo no Worker; os três fluxos estão provados em `tests/ebook-produto.test.ts` ("os três
+  fluxos"): preço do catálogo, valor do navegador ignorado, combo pago a menos sem liberar, pendente e recusado
+  sem liberar, aviso sem assinatura recusado, aviso repetido concede uma vez. O teste com a Mercado Pago de
+  verdade, no modo de teste, é o roteiro `TESTE-DE-PAGAMENTO.md` (na máquina do dono, com token `TEST-`).
+
+## A landing do Israel Além do Óbvio (23/10/2026, master prompt do dono)
+- `LivroClient` (/cursos/israel-alem-do-roteiro), ainda desligada com o livro (`aVenda: false`). A página É a
+  demonstração: abertura navy com o livro no computador e a mochila no celular, "Não é um e-book", galeria das
+  aberturas de capítulo, a viagem em cinco passos (mochila, mapa ilustrado, roleta, monte a sua comida, diário),
+  os três aparelhos, quem escreveu, as duas opções de compra (só o livro, ou o combo), o roteiro, perguntas e
+  fecho; barra de compra fixa só no celular. O preço vem depois da demonstração. Nenhuma contagem de capítulos
+  ou curiosidades vende o livro (pedido do dono), e nada de escassez.
+- **As imagens são do próprio livro e nunca entram no git** (o livro mora no repositório privado):
+  `scripts/vitrine-do-livro.mjs` roda na publicação, logo depois de `ebook-no-site.sh` (passo "E-book no site"),
+  e escreve em `app/public/vitrine-livro/` (gitignored): as aberturas de capítulo SEM texto copiadas como SVG (num
+  `<img>` o SVG não carrega fonte) e capturas do livro montado num Chromium, com a mochila e o monte em uso (o
+  monte vem da PRÉVIA, a livre: no do livro, ingrediente errado fica vermelho). Seletor que sumir do livro para a
+  publicação, com o nome dele. Texto alternativo de cada ilustração = o `aria-label` do próprio SVG.
+- Movimento: `livro.css`, só CSS, por cima de conteúdo já visível (linha do tempo da rolagem onde existe),
+  parado com "reduzir movimento". Nada nasce escondido esperando JavaScript (ver `Reveal`).
+- `tests/livro-venda.test.ts` confere: imagens só das listas do script, todas com `alt`, sem banco de imagens,
+  sem preço nem contagem escritos à mão.
+- **Pendente no editorial** (não muda daqui): a capa do livro ainda diz "O país pelos olhos de quem nasceu lá",
+  e as contagens da capa (capítulos, curiosidades, exercícios) precisam bater com o catálogo.

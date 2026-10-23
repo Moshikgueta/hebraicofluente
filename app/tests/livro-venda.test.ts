@@ -33,13 +33,27 @@ describe('a página de venda do livro', () => {
     expect(p).toMatch(/<ProdutoClient/);
   });
 
-  it('nenhum preço, parcela ou prazo escrito à mão: vem do catálogo e da caixa de compra', () => {
+  it('nenhum preço, parcela ou prazo escrito à mão: vem do catálogo, pelas duas opções de compra', () => {
     const c = codigo(PAGINA);
-    expect(c).not.toMatch(/R\$\s?\d|\b67\b|\b12 meses\b|\b11 capítulos\b/);
-    expect(c).toContain('<CaixaDeCompra c={c} />');
+    expect(c).not.toMatch(/R\$\s?\d|\b197\b|\b297\b|\b12 meses\b/);
+    expect(c).toContain('<OpcoesDeCompra slugs={[LIVRO, COMBO]}');
     expect(c).toContain('c.accessMonths');
-    expect(c).toContain('c.modules.length');
     expect(c).toContain('empresa.politicas.arrependimentoDias');
+  });
+
+  it('o valor é a experiência: nenhuma contagem de capítulos, páginas ou curiosidades vende o livro', () => {
+    const c = codigo(PAGINA);
+    expect(c).not.toMatch(/modules\.length|\d+\s*(capítulos|curiosidades|páginas|exercícios)/);
+  });
+
+  it('as imagens são do próprio livro, geradas na publicação, e cada uma tem texto alternativo', () => {
+    const c = codigo(PAGINA);
+    const usadas = [...c.matchAll(/\$\{V\}\/([a-z-]+)\.(jpg|svg)/g)].map(m => m[1] ?? '');
+    const doTemplate = [...c.matchAll(/imagem: '([a-z-]+)'/g), ...c.matchAll(/arquivo: '([a-z-]+)'/g)].map(m => m[1] ?? '');
+    const script = fonte('../../scripts/vitrine-do-livro.mjs');
+    for (const n of [...usadas.filter(n => !/^[a-z]$/.test(n)), ...doTemplate]) expect(script, n).toContain(`'${n}'`);
+    expect(c).not.toMatch(/<img(?![^>]*\balt=)[^>]*>/);
+    expect(c).not.toMatch(/unsplash|pexels|shutterstock|istock/i);
   });
 
   it('quem escreveu: só a lista de lib/autor.ts, a mesma da capa', () => {

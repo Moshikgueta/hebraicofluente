@@ -202,7 +202,8 @@ describe('o livro se chama Israel Além do Óbvio (23/10/2026)', () => {
   it('o catálogo tem o nome, o subtítulo, a descrição e o autor; o slug não muda', () => {
     const livro = getCourse('israel-alem-do-roteiro')!;
     expect(livro.titlePt).toBe('Israel Além do Óbvio');
-    expect(livro.taglinePt).toBe('O país pelos olhos de quem nasceu lá.');
+    /* Subtítulo novo desde 23/10/2026 (decisão do dono, master prompt de preços). */
+    expect(livro.taglinePt).toBe('O Olhar de um Israelense');
     expect(livro.descricaoPt).toBe('Uma jornada interativa pela história, cultura e lugares de Israel.');
     expect(livro.autorPt).toBe('Moshik Gueta');
   });

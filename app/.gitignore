@@ -10,3 +10,6 @@ next-env.d.ts
 *.tsbuildinfo
 public/israel/
 public/previa/
+# As imagens da página de venda do livro, geradas na publicação a partir do
+# livro (scripts/vitrine-do-livro.mjs). O livro mora no repositório privado.
+public/vitrine-livro/

@@ -109,7 +109,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
      fora do app: navegação de verdade, não a do roteador. */
   const destino = c.abre ?? '/meu-hebraico';
   const irPara = (href: string) => { if (href.startsWith('/israel')) window.location.assign(href); else router.push(href); };
-  const oQue = tipo === 'livro' ? 'O e-book' : tipo === 'pacote' ? 'O pacote' : 'O curso';
+  const oQue = tipo === 'livro' ? 'O Israel Além do Óbvio' : tipo === 'pacote' ? 'O combo' : 'O curso';
   const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 
@@ -283,13 +283,13 @@ export function CheckoutClient({ slug }: { slug: string }) {
         <Card tone="mint" className="p-6 grid gap-3">
           <Badge tone="mint">Já é seu</Badge>
           <h1 className="font-display text-[21px] font-bold text-ink">
-            {tipo === 'livro' ? 'Este e-book já está na sua conta.' : 'Este curso já está na sua conta.'}
+            {tipo === 'livro' ? 'O Israel Além do Óbvio já está na sua conta.' : 'Este curso já está na sua conta.'}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             {tipo === 'livro' ? 'Nada a pagar.' : 'Nada a pagar. Continue de onde você parou.'}
           </p>
           {tipo === 'livro'
-            ? <a href={destino} className="justify-self-start inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o e-book</a>
+            ? <a href={destino} className="justify-self-start inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o Israel Além do Óbvio</a>
             : <LinkButton href="/meu-hebraico" size="lg" className="justify-self-start">Ir para Meu Hebraico</LinkButton>}
         </Card>
       </Shell>
@@ -310,10 +310,10 @@ export function CheckoutClient({ slug }: { slug: string }) {
             {tipo === 'livro'
               ? `Versão interativa liberada por ${c.accessMonths} meses.`
               : tipo === 'pacote'
-                ? 'O curso e o e-book estão liberados. A primeira lição leva dez minutos.'
+                ? 'O curso e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
                 : `Acesso liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
           </p>
-          <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? 'Abrir o e-book' : 'Começar agora'}</Button>
+          <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? 'Abrir o Israel Além do Óbvio' : tipo === 'pacote' ? 'Abrir a Minha Biblioteca' : 'Começar agora'}</Button>
         </Card>
       </Shell>
     );
@@ -487,9 +487,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
 function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse; renovacao?: boolean }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', tipoDe(curso) === 'livro'
-      ? `O e-book ${curso.titlePt}, na versão interativa, pelo navegador.`
+      ? `${curso.titlePt}: uma experiência digital interativa, pelo navegador.`
       : tipoDe(curso) === 'pacote'
-        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Óbvio, na versão interativa.'
+        ? 'Acesso completo ao curso interativo de Alfabetização em Hebraico e à plataforma Israel Além do Óbvio.'
         : `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
        fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */
@@ -503,8 +503,8 @@ function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse;
     ['Cobrança', 'Pagamento único. Não há assinatura nem renovação automática: ao fim do prazo, o acesso termina e nada mais é cobrado.'],
     /* COM-007 (auditoria de 28/09): o que NÃO vem junto, antes de pagar. */
     ['O que não vem junto', tipoDe(curso) === 'livro' ? <>
-      O curso de hebraico: o e-book é um guia de leitura, sem as lições da
-      plataforma.{' '}
+      O curso de hebraico: o Israel Além do Óbvio é sobre Israel, e não ensina a
+      ler hebraico como as lições do curso.{' '}
       <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
     </> : <>
       Aulas ao vivo e correção por professor: o curso é autoinstrucional, e a
@@ -698,9 +698,9 @@ function Shell({ course, children }: {
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
         <p className="font-ui text-[13px] text-ink-muted">
           {tipoDe(c) === 'livro'
-            ? `E-book · ${c.modules.length} capítulos · versão interativa por ${c.accessMonths} meses`
+            ? `Experiência interativa · ${c.modules.length} capítulos · ${c.accessMonths} meses de acesso`
             : tipoDe(c) === 'pacote'
-              ? `Curso de alfabetização + e-book · ${c.accessMonths} meses de acesso`
+              ? `Combo: curso de alfabetização + Israel Além do Óbvio · ${c.accessMonths} meses de acesso`
               : <>{c.stats.modules} módulos{c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}{' · '}{c.accessMonths} meses de acesso</>}
         </p>
         {/* O número grande é o número que vai ser cobrado.

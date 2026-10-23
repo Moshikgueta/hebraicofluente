@@ -1,63 +1,66 @@
-/* A virada do pré-lançamento, feita por máquina e não por memória.
+/* A virada do pré-lançamento para o preço oficial, SÓ QUANDO MANDADA.
  * ─────────────────────────────────────────────────────────────────────────
- * Decisão do dono em 01/10/2026: o preço SOBE de verdade quando o
- * pré-lançamento acaba (auditoria de 01/10/2026, PAY-B-001). Um anúncio de
- * "até 31/10, depois R$ 297" que continua no ar em novembro é publicidade
- * enganosa, e uma subida que depende de alguém lembrar à meia-noite não sobe.
+ * Decisão do dono em 23/10/2026: os preços oficiais ficam configurados
+ * (`listBrl` em data/courses.json) e NÃO sobem sozinhos. Até essa data a
+ * virada era agendada por `preLancamentoAte`; a data saiu do catálogo e da
+ * tela junto, porque "até 30/11" sem subida em 30/11 é escassez falsa.
  *
- * O que faz: para cada curso de data/courses.json com `listBrl` E
- * `preLancamentoAte`, se o pré-lançamento já terminou (o fim do dia
- * `preLancamentoAte` no horário de Brasília), o preço passa a ser o
- * `listBrl`, e `listBrl` e `preLancamentoAte` saem. Curso sem data não é
- * tocado: o `listBrl` dele é o preço de depois de um lançamento que ainda não
- * tem dia.
+ * O que faz: para cada produto vendável (sem `status: "soon"`) com `listBrl`,
+ * o preço passa a ser o `listBrl`, e `listBrl` vira null. Com `--so=`, só os
+ * produtos listados. Sem `--aplicar`, só mostra o que mudaria.
  *
- * Mexe só na linha do `price` de cada curso, para não reformatar o arquivo.
- * Rodar duas vezes não faz nada na segunda. Quem roda: o workflow
- * `.github/workflows/virar-preco.yml`, agendado para 01/12 (era 01/11 até 19/10/2026) às 00:05 de
- * Brasília, que faz o commit e dispara a publicação. A página e a cobrança
- * mudam juntas, na mesma publicação, porque as duas leem este arquivo.
+ * Mexe só na linha do `price` de cada produto, para não reformatar o arquivo.
+ * Rodar duas vezes não faz nada na segunda (o `listBrl` já é null). Quem roda:
+ * o workflow `.github/workflows/virar-preco.yml`, à mão (Actions → Virar o
+ * preço → Run workflow, escrevendo "virar"), que faz o commit, gera a versão
+ * nova dos Termos e dispara a publicação. A página e a cobrança mudam juntas.
  *
- *   node tools/virar-preco.mjs            vira o que já venceu
- *   node tools/virar-preco.mjs --agora=2026-11-01T03:00:00Z   (para testar)
+ *   node tools/virar-preco.mjs                       mostra o que viraria
+ *   node tools/virar-preco.mjs --aplicar             vira todos os vendáveis
+ *   node tools/virar-preco.mjs --aplicar --so=alfabetizacao,alfabetizacao-e-israel
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
-/** O instante em que o pré-lançamento termina: o fim do dia em Brasília. */
-export const fimDoDia = dia => Date.parse(`${dia}T23:59:59.999-03:00`);
-
-/** Vira as linhas de preço vencidas de um texto de courses.json. */
-export function virar(texto, agora) {
+/** Vira as linhas de preço de um texto de courses.json.
+ *  `so`: lista de slugs (vazia = todos os vendáveis). */
+export function virar(texto, { so = [] } = {}) {
+  const status = new Map(JSON.parse(texto).courses.map(c => [c.slug, c.status]));
   const virados = [];
   const novo = texto.replace(
-    /("price":\s*)(\{[^{}\n]*"preLancamentoAte"[^{}\n]*\})/g,
-    (linha, prefixo, objeto) => {
+    /("slug":\s*"([a-z0-9-]+)"[\s\S]*?)("price":\s*)(\{[^{}\n]*\})/g,
+    (trecho, antes, slug, prefixo, objeto) => {
       const p = JSON.parse(objeto);
-      if (p.listBrl == null || !/^\d{4}-\d{2}-\d{2}$/.test(p.preLancamentoAte || '')) return linha;
-      if (agora <= fimDoDia(p.preLancamentoAte)) return linha;
-      virados.push({ de: p.brl, para: p.listBrl, fim: p.preLancamentoAte });
-      const { listBrl, preLancamentoAte, ...resto } = p;
-      const depois = { ...resto, brl: listBrl, listBrl: null };
+      if (typeof p.listBrl !== 'number' || p.listBrl <= p.brl) return trecho;
+      if (status.get(slug) === 'soon') return trecho;
+      if (so.length && !so.includes(slug)) return trecho;
+      virados.push({ slug, de: p.brl, para: p.listBrl });
+      const { preLancamentoAte, ...resto } = p;
+      const depois = { ...resto, brl: p.listBrl, listBrl: null };
       /* A mesma ordem de chaves e o mesmo estilo de uma linha só. */
       const ordem = ['brl', 'listBrl', 'installments', 'pixDiscountPct'];
       const chaves = [...ordem.filter(k => k in depois), ...Object.keys(depois).filter(k => !ordem.includes(k))];
-      return prefixo + '{ ' + chaves.map(k => `"${k}": ${JSON.stringify(depois[k])}`).join(', ') + ' }';
+      return antes + prefixo + '{ ' + chaves.map(k => `"${k}": ${JSON.stringify(depois[k])}`).join(', ') + ' }';
     }
   );
   return { texto: novo, virados };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const arg = process.argv.find(a => a.startsWith('--agora='));
-  const agora = arg ? Date.parse(arg.slice(8)) : Date.now();
+  const aplicar = process.argv.includes('--aplicar');
+  const arg = process.argv.find(a => a.startsWith('--so='));
+  const so = arg ? arg.slice(5).split(',').map(s => s.trim()).filter(Boolean) : [];
   const arquivo = new URL('../data/courses.json', import.meta.url);
-  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), agora);
+  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), { so });
   if (!virados.length) {
-    console.log('Nada a virar: nenhum pré-lançamento terminou.');
+    console.log('Nada a virar: nenhum produto com preço oficial acima do atual.');
   } else {
-    JSON.parse(texto); /* nunca grava um JSON quebrado */
-    writeFileSync(arquivo, texto);
-    for (const v of virados) console.log(`Pré-lançamento até ${v.fim} terminou: R$ ${v.de} -> R$ ${v.para}.`);
+    for (const v of virados) console.log(`${v.slug}: R$ ${v.de} -> R$ ${v.para}${aplicar ? '' : ' (não aplicado)'}`);
+    if (aplicar) {
+      JSON.parse(texto); /* nunca grava um JSON quebrado */
+      writeFileSync(arquivo, texto);
+    } else {
+      console.log('Só mostrando. Para aplicar: --aplicar');
+    }
   }
 }

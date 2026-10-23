@@ -49,7 +49,9 @@ const NAO_LISTADAS = [
   /* A prévia grátis do e-book, só para quem recebe o link no direct (23/10/2026). */
   '/previa',
   /* O destino do link da bio do Instagram (24/10/2026). */
-  '/comece-aqui'
+  '/comece-aqui',
+  /* A Minha Biblioteca, da conta (23/10/2026). */
+  '/minha-biblioteca'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,
