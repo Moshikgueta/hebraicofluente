@@ -5,7 +5,9 @@
  *
  *   POST /api/segunda-letra {email}
  *
- * O que NÃO acontece: o endereço não entra em lista nenhuma e não é gravado.
+ * O que NÃO acontece: o endereço não entra em lista nenhuma e não é gravado,
+ * a menos que a pessoa marque a caixa das próximas letras (23/10/2026); aí
+ * ele entra na lista de interessados, e só vale depois de confirmado.
  * O que fica, por no máximo 48 horas, é o freio: o sha256 do endereço (para
  * não mandar duas vezes no mesmo dia, nem deixar alguém encher a caixa de
  * outra pessoa) e o IP (no máximo 5 pedidos por hora), como no cadastro.
@@ -23,6 +25,7 @@ import { sha256hex } from '../lib/crypto.js';
 import { mailReady, mensagemDaSegundaLetra, sendMail } from '../lib/mail.js';
 import { emailOk, ip } from './auth.js';
 import { contarEtapa } from './estatisticas.js';
+import { inscrever, linkDeConfirmacao } from './interessados.js';
 
 const DIA_MS = 86_400_000;
 
@@ -35,7 +38,16 @@ export async function pedir({ request, env }) {
   if (await throttled(env, `segunda-letra:${await sha256hex(email)}`, 1, DIA_MS)) return json({ ok: true });
 
   const site = String(env.SITE_ORIGIN || new URL(request.url).origin).replace(/\/+$/, '');
-  const m = mensagemDaSegundaLetra({ site, suporte: env.SUPPORT_EMAIL || '' });
+  /* A caixa "quero receber as próximas letras" (23/10/2026, começa
+     desmarcada): com ela, o endereço entra na lista de interessados e o
+     e-mail do Mem leva o link de confirmação. Sem ela, nada muda: o
+     endereço não é gravado. Ver api/interessados.js. */
+  let confirmar = null;
+  if (b.lista === true) {
+    const r = await inscrever(env, { email, interesse: 'curso', origem: b.origem });
+    if (r && !r.confirmado) confirmar = await linkDeConfirmacao(env, r.id);
+  }
+  const m = mensagemDaSegundaLetra({ site, suporte: env.SUPPORT_EMAIL || '', confirmar });
   const r = await sendMail(env, { to: email, ...m });
   if (!r.ok) {
     console.error('segunda-letra', r.motivo, r.status || '', r.detalhe || '');

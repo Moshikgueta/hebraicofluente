@@ -42,7 +42,7 @@ function origem() {
    src/lib/seo.ts - checa-seo.mjs confere as duas contra o HTML. */
 const NAO_LISTADAS = [
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
-  '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/verificar-certificado',
+  '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/confirmar-lista', '/verificar-certificado',
   '/termos/v', '/reembolso/v', '/privacidade/v',
   /* Responde 301 para /curso-de-hebraico (worker.js, 23/10/2026). */
   '/cursos/alfabetizacao',

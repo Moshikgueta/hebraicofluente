@@ -12,6 +12,8 @@ const PUBLIC_PREFIXES = [
      ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e
      nunca existiu como página - virou estas duas.) */
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/sair-da-lista',
+  /* A confirmação da lista de interessados (23/10/2026): quem clica não tem conta. */
+  '/confirmar-lista',
   /* O link de confirmação de e-mail. Pública porque quem clica pode estar
      sem sessão - e aí a própria página pede o login, com o caminho de volta. */
   '/confirmar-email',

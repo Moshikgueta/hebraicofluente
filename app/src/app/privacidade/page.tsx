@@ -246,7 +246,7 @@ export default function Page() {
              recebe endereço e nome de todo mundo que pede um link de
              senha. Omiti-la deixava a política descrevendo menos
              compartilhamento do que o sistema faz. */
-          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra, até três lembretes para começar o curso nos primeiros dias depois da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só um: o aviso de que o próximo curso abriu, e só para quem marcou esse pedido em Sua conta. Cada um desses e-mails traz o link para sair da lista.</>,
+          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra, até três lembretes para começar o curso nos primeiros dias depois da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só para quem pediu: o aviso de que o próximo curso abriu, para quem marcou esse pedido em Sua conta, e a lista de interessados descrita no artigo 4, para quem se inscreveu e confirmou. Cada um desses e-mails traz o link para sair da lista.</>,
           <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança. Uma segunda cópia de segurança, cifrada, fica no Google Drive; o Google guarda o arquivo, mas não consegue lê-lo.</>,
           /* 28/09/2026 (auditoria, LEGAL-003): o GitHub e o atendimento
              estavam fora da lista, e os dois recebem dado pessoal. */
@@ -323,9 +323,24 @@ export default function Page() {
         </p>
         {/* 03/10/2026: worker/src/api/segunda-letra.js. */}
         <p>
-          No fim desse teste, você pode pedir a segunda letra por e-mail. O endereço que você digita é usado só para
-          mandar esse e-mail e não é guardado nem entra em lista nenhuma. Para não mandar duas vezes no mesmo dia, o
-          servidor guarda por até 48 horas um código calculado a partir do endereço, que não permite recuperá-lo.
+          No fim desse teste, você pode pedir a segunda letra por e-mail. Se você não marcar a caixa das próximas
+          letras, o endereço que você digita é usado só para mandar esse e-mail e não é guardado nem entra em lista
+          nenhuma. Para não mandar duas vezes no mesmo dia, o servidor guarda por até 48 horas um código calculado a
+          partir do endereço, que não permite recuperá-lo.
+        </p>
+        {/* 23/10/2026: a lista de interessados (worker/src/api/interessados.js, sequencia.js). */}
+        <p>
+          <strong>A lista de interessados.</strong> Se você marcar a caixa das próximas letras no fim do teste, ou
+          pedir o aviso de um curso ou livro que ainda não está à venda, guardamos o seu e-mail, o que você pediu, a
+          categoria de onde você veio (como &quot;link da bio&quot; ou &quot;busca&quot;) e as datas da inscrição. A
+          base legal é o seu consentimento (LGPD, art. 7º, I). A inscrição só vale depois que você confirma pelo link
+          do primeiro e-mail; sem a confirmação, nada mais é mandado e o endereço é apagado em 7 dias. Quem pediu as
+          próximas letras recebe cinco e-mails em cerca de duas semanas (o último fala do curso e do preço) e, depois
+          deles, só novidades de verdade, como um curso novo. Quem pediu um aviso recebe só o aviso. Todo e-mail da
+          lista traz o link para sair, que funciona sem login; ao sair, o seu e-mail é apagado da lista e não mandamos
+          mais nada. Se você comprar o
+          curso, a sequência das letras para. O e-mail é entregue pela Resend e não é vendido nem compartilhado com
+          mais ninguém.
         </p>
       </Artigo>
 

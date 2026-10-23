@@ -31,6 +31,7 @@ import { ehCurso } from '../lib/catalog.js';
 import { emailsDeAdmin, exigirAdmin } from '../lib/admin.js';
 import { fonteValida } from '../lib/origem.js';
 import { ip, requireAccount } from './auth.js';
+import { resumo as resumoDaLista } from './interessados.js';
 
 const ID = /^[a-z0-9-]{1,40}$/;
 const MAX_EVENTOS = 60;
@@ -275,7 +276,9 @@ export async function ler({ request, env }) {
   const desdeMs = Date.parse(`${desde}T00:00:00-03:00`);
   const pedidos = await pedidosPorFonte(env, desdeMs);
   const testes = await pedidosDeTeste(env, desdeMs);
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes });
+  /* A lista de interessados: o total de hoje (não depende do período). */
+  const interessados = await resumoDaLista(env);
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes, interessados });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

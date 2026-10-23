@@ -17,6 +17,10 @@ import { Aviso, Erro } from '@/components/platform/Campo';
 
 export function SairDaLista() {
   const t = useSearchParams().get('t') ?? '';
+  /* Desde 23/10/2026 a página serve às duas listas: o token que começa com
+     `i` é da lista de interessados (worker/src/api/interessados.js); os
+     outros, do aviso do próximo curso para quem tem conta. */
+  const interessado = t.startsWith('i');
   const [estado, setEstado] = useState<'pronto' | 'enviando' | 'saiu' | 'invalido' | 'erro'>(
     t ? 'pronto' : 'invalido'
   );
@@ -24,7 +28,7 @@ export function SairDaLista() {
   async function sair() {
     setEstado('enviando');
     try {
-      const r = await fetch('/api/novidades/sair', {
+      const r = await fetch(interessado ? '/api/interessados/sair' : '/api/novidades/sair', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ t })
@@ -40,10 +44,14 @@ export function SairDaLista() {
       <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">Sair da lista</h1>
       <Card className="p-6 grid gap-4">
         {estado === 'saiu' ? (
-          <Aviso>
-            Pronto: você não vai mais receber o aviso do próximo curso. Sua conta e seu
-            acesso continuam iguais.
-          </Aviso>
+          interessado ? (
+            <Aviso>Pronto: você saiu da lista e não vai receber mais nenhum e-mail dela.</Aviso>
+          ) : (
+            <Aviso>
+              Pronto: você não vai mais receber o aviso do próximo curso. Sua conta e seu
+              acesso continuam iguais.
+            </Aviso>
+          )
         ) : estado === 'invalido' ? (
           <Erro>
             Este link não está completo. Abra de novo pelo e-mail, ou desmarque o aviso
@@ -52,8 +60,9 @@ export function SairDaLista() {
         ) : (
           <>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-              Você não vai mais receber o e-mail que avisa quando o próximo curso abrir.
-              Isso não muda nada na sua conta nem no seu acesso.
+              {interessado
+                ? 'Você não vai mais receber nenhum e-mail desta lista: nem as próximas letras, nem os avisos que pediu.'
+                : 'Você não vai mais receber o e-mail que avisa quando o próximo curso abrir. Isso não muda nada na sua conta nem no seu acesso.'}
             </p>
             {estado === 'erro' && <Erro>Não consegui agora. Tente de novo em instantes.</Erro>}
             <Button size="lg" onClick={() => void sair()} disabled={estado === 'enviando'}>

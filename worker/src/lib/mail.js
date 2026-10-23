@@ -72,7 +72,7 @@ const duvida = suporte => `Qualquer dúvida, responda esta mensagem ou escreva p
  *   { ok: false, motivo: 'recusado', detalhe, status }
  *   { ok: false, motivo: 'rede', detalhe }
  */
-export async function sendMail(env, { to, subject, text, html }) {
+export async function sendMail(env, { to, subject, text, html, headers }) {
   if (!mailReady(env)) return { ok: false, motivo: 'sem-provedor' };
 
   /* Para onde vai a RESPOSTA. Os textos dizem "responda este e-mail", e sem
@@ -90,7 +90,9 @@ export async function sendMail(env, { to, subject, text, html }) {
     subject: String(subject),
     text: String(text),
     ...(html ? { html: String(html) } : {}),
-    ...(suporte ? { reply_to: suporte } : {})
+    ...(suporte ? { reply_to: suporte } : {}),
+    /* Cabeçalhos extras: hoje só o List-Unsubscribe da lista de interessados. */
+    ...(headers && Object.keys(headers).length ? { headers } : {})
   };
 
   let r;
@@ -253,9 +255,17 @@ export const SEGUNDA_LETRA = {
   sabia: 'O nome Mem vem de uma palavra semítica muito antiga que queria dizer "água". Ela é da mesma família de מַיִם (máyim), a palavra que ainda hoje quer dizer "água" em hebraico.'
 };
 
-export function mensagemDaSegundaLetra({ site, suporte, marca }) {
+export function mensagemDaSegundaLetra({ site, suporte, marca, confirmar }) {
   const L = SEGUNDA_LETRA;
   const assinatura = marca || 'Hebraico Fluente';
+  /* Com `confirmar` (23/10/2026), a pessoa marcou a caixa de receber as
+     próximas letras: o rodapé pede a confirmação em vez de dizer que o
+     endereço não fica guardado. Ver api/interessados.js. */
+  const rodapeTexto = confirmar
+    ? ['Você também pediu para receber as próximas letras e novidades por e-mail. Para confirmar, abra este link e toque em "Confirmar":',
+       confirmar,
+       'Sem a confirmação, não mandamos mais nada, e o endereço é apagado em 7 dias. Não foi você que pediu? É só ignorar.']
+    : ['Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site. Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.'];
   const curso = `${site}/curso-de-hebraico/`;
   const silabas = L.silabas.map(([he, t]) => `${he} ${t}`).join(' · ');
   const palavras = L.palavras.map(([he, t, pt]) => `${he} (${t}), «${pt}»`).join(' · ');
@@ -283,7 +293,7 @@ export function mensagemDaSegundaLetra({ site, suporte, marca }) {
     'Faltam 20 letras. No curso, cada uma vem assim: a voz do professor, a escrita com o dedo e a correção na hora.',
     curso,
     '',
-    'Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site. Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.',
+    ...rodapeTexto,
     suporte ? `Dúvidas: ${suporte}` : '',
     '',
     assinatura
@@ -305,14 +315,153 @@ export function mensagemDaSegundaLetra({ site, suporte, marca }) {
     `<p><strong>Você sabia?</strong> ${escapar(L.sabia)}</p>`,
     '<p>Faltam 20 letras. No curso, cada uma vem assim: a voz do professor, a escrita com o dedo e a correção na hora.</p>',
     `<p><a href="${escapar(curso)}">Conhecer o curso completo</a></p>`,
-    '<p style="color:#666;font-size:13px">Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site.',
-    ' Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.',
+    confirmar
+      ? '<p>Você também pediu para receber as próximas letras e novidades por e-mail.</p>' +
+        `<p><a href="${escapar(confirmar)}"><strong>Confirmar a inscrição</strong></a></p>` +
+        '<p style="color:#666;font-size:13px">Sem a confirmação, não mandamos mais nada, e o endereço é apagado em 7 dias. Não foi você que pediu? É só ignorar.'
+      : '<p style="color:#666;font-size:13px">Você recebeu este e-mail porque alguém pediu a segunda letra com este endereço no site.' +
+        ' Não foi você? É só ignorar: não mandamos mais nada, e o endereço não fica guardado.',
     suporte ? ` Dúvidas: ${escapar(suporte)}` : '',
     '</p>',
     `<p>${escapar(assinatura)}</p>`
   ].join('');
 
   return { subject: `A segunda letra: ${L.nome} (${L.letra}) - ${assinatura}`, text, html };
+}
+
+/* ── a lista de interessados (api/interessados.js, sequencia.js) ────────── */
+
+/** O que cada interesse quer receber, para os e-mails dizerem com clareza. */
+export const INTERESSE_PT = {
+  curso: 'as próximas letras do alfabeto e as novidades do curso',
+  israel: 'o aviso de quando Israel Além do Óbvio abrir',
+  raizes: 'o aviso de quando Raízes Sefarditas abrir',
+  a1: 'o aviso de quando o curso Hebraico A1 abrir'
+};
+
+/** O e-mail que pede a confirmação da inscrição (quem não pediu, ignora). */
+export function mensagemDeConfirmacaoDaLista({ interesses, confirmar, suporte, marca }) {
+  const assinatura = marca || 'Hebraico Fluente';
+  const oQue = (interesses || []).map(i => INTERESSE_PT[i]).filter(Boolean).join('; ') || 'as novidades';
+  const text = [
+    'Oi.',
+    '',
+    `Alguém pediu, no site do ${assinatura}, para receber neste endereço: ${oQue}.`,
+    '',
+    'Para confirmar, abra este link e toque em "Confirmar":',
+    confirmar,
+    '',
+    'Sem a confirmação, não mandamos mais nada, e o endereço é apagado em 7 dias. Não foi você? É só ignorar.',
+    suporte ? `Dúvidas: ${suporte}` : '',
+    '',
+    assinatura
+  ].join('\n');
+  const html = [
+    '<p>Oi.</p>',
+    `<p>Alguém pediu, no site do ${escapar(assinatura)}, para receber neste endereço: ${escapar(oQue)}.</p>`,
+    `<p><a href="${escapar(confirmar)}"><strong>Confirmar a inscrição</strong></a></p>`,
+    '<p style="color:#666;font-size:13px">Sem a confirmação, não mandamos mais nada, e o endereço é apagado em 7 dias. Não foi você? É só ignorar.',
+    suporte ? ` Dúvidas: ${escapar(suporte)}` : '',
+    '</p>',
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject: `Confirme sua inscrição - ${assinatura}`, text, html };
+}
+
+/**
+ * A sequência de quem pediu as próximas letras: o Mem já foi no e-mail da
+ * segunda letra; estes são os cinco seguintes, em DIAS_DA_SEQUENCIA
+ * (api/interessados.js). Uma tarefa por e-mail; o preço só no último, e o do
+ * catálogo. Todo hebraico é do curso: tests/interessados.test.ts confere
+ * TERCEIRA_LETRA contra data/letters.json.
+ */
+export const TERCEIRA_LETRA = {
+  letra: 'ת', nome: 'Tav',
+  silabas: [['תַ', 'ta'], ['תֶ', 'te'], ['תִ', 'ti'], ['תוֹ', 'to'], ['תוּ', 'tu']],
+  palavra: ['אֶמֶת', 'émet', 'verdade']
+};
+
+export const ASSUNTOS_DA_SEQUENCIA = [
+  'A terceira letra: Tav (ת)',
+  'Por que uma letra de cada vez',
+  'Dá para ler a Bíblia depois do curso?',
+  'Como é uma lição por dentro',
+  'Se quiser continuar: o curso completo'
+];
+
+export function mensagemDaSequencia({ passo, site, sair, preco, suporte, marca }) {
+  const assinatura = marca || 'Hebraico Fluente';
+  const curso = `${site}/curso-de-hebraico/`;
+  const T = TERCEIRA_LETRA;
+  const he = t => `<span dir="rtl" lang="he" style="font-size:1.25em">${escapar(t)}</span>`;
+  /* Cada parágrafo é [texto puro, html]; o html só difere quando há hebraico ou link. */
+  let blocos;
+  if (passo === 1) {
+    blocos = [
+      ['A terceira letra do curso é o Tav.', null],
+      [`${T.letra}  ${T.nome}`, `<p style="font-size:44px;margin:16px 0 4px"><span dir="rtl" lang="he">${escapar(T.letra)}</span></p><p style="margin:0 0 16px"><strong>${escapar(T.nome)}</strong></p>`],
+      ['O som: como o T de "tatu", sempre seco. Nunca com som de TCH, nem antes de I e E.', null],
+      [`As sílabas: ${T.silabas.map(([h, t]) => `${h} ${t}`).join(' · ')}`,
+       `<p><strong>As sílabas:</strong> ${T.silabas.map(([h, t]) => `${he(h)} ${escapar(t)}`).join(' · ')}</p>`],
+      [`Com Álef, Mem e Tav você já lê: ${T.palavra[0]} (${T.palavra[1]}), «${T.palavra[2]}».`,
+       `<p>Com Álef, Mem e Tav você já lê: ${he(T.palavra[0])} (${escapar(T.palavra[1])}), «${escapar(T.palavra[2])}».</p>`],
+      ['Você sabia? O Tav é a última letra do alfabeto. Por isso, em hebraico, "do A ao Z" é "de Álef a Tav".', null],
+      [`No curso, a próxima é o Nun. Uma letra por vez: ${curso}`,
+       `<p>No curso, a próxima é o Nun. Uma letra por vez: <a href="${escapar(curso)}">conhecer o curso</a>.</p>`]
+    ];
+  } else if (passo === 2) {
+    blocos = [
+      ['No curso, você conhece a letra, pratica com ela e só então avança. O alfabeto inteiro na tela no primeiro dia não ensina: assusta.', null],
+      ['A transliteração ajuda no começo, mas o objetivo nunca foi você depender dela. Ela vai diminuindo junto com o seu progresso, até você ler direto do hebraico.', null],
+      ['A ordem em que as letras entram vem do método Ba Li Ivrit, do Dr. Damián Dzienciarsky. A adaptação para o aluno brasileiro é do professor: os exercícios, as explicações pensadas para quem fala português e a escrita cursiva.', null],
+      [`Como o curso foi pensado: ${site}/metodo/`, `<p><a href="${escapar(`${site}/metodo/`)}">Como o curso foi pensado</a></p>`]
+    ];
+  } else if (passo === 3) {
+    blocos = [
+      ['É a pergunta que mais chega. A resposta curta: sim para ler, não para entender.', null],
+      ['Ler: o texto hebraico da Bíblia usado hoje vem com os sinais de vogal, o nikud. São exatamente as 22 letras e os sinais que o curso ensina. Com eles você lê em voz alta qualquer versículo, sem transliteração.', null],
+      ['Entender: pede vocabulário e gramática, e o hebraico da Bíblia tem construções que o hebraico de hoje não usa. O curso é de alfabetização: ele dá a porta, não a casa.', null],
+      [`A resposta inteira, com as sete primeiras palavras da Bíblia para você tocar: ${site}/biblia/`,
+       `<p><a href="${escapar(`${site}/biblia/`)}">A resposta inteira, com as sete primeiras palavras da Bíblia</a></p>`]
+    ];
+  } else if (passo === 4) {
+    const etapas = [
+      ['Conhecer', 'a forma, o nome e o som da letra, com o áudio do professor e a explicação em português.'],
+      ['Palavras', 'palavras reais para ler, montadas só com letras que você já aprendeu.'],
+      ['Escrever', 'a letra em cursiva, traçada com o dedo na ordem certa dos traços.'],
+      ['Fixação', 'ouvir, observar e lembrar a letra, com apoio a cada passo e sem nota.'],
+      ['Exercícios', 'exercícios variados com nota, corrigidos na hora. O que você errar volta depois, na revisão.']
+    ];
+    blocos = [
+      ['Cada letra do curso tem uma lição em cinco etapas:', null],
+      ...etapas.map(([n, d]) => [`${n}: ${d}`, `<p><strong>${escapar(n)}:</strong> ${escapar(d)}</p>`]),
+      [`Para ver uma por dentro, o teste grátis do Álef segue as mesmas etapas: ${curso}#experimente`,
+       `<p>Para ver uma por dentro, <a href="${escapar(`${curso}#experimente`)}">o teste grátis do Álef</a> segue as mesmas etapas.</p>`]
+    ];
+  } else {
+    const p = preco || {};
+    const linhas = [
+      p.brl ? `O curso custa R$ ${p.brl}, em pagamento único, sem mensalidade.${p.listBrl ? ` É o preço de pré-lançamento; depois, R$ ${p.listBrl}.` : ''}` : null,
+      p.pixPct ? `No PIX, ${p.pixPct}% de desconto. No cartão, em até ${p.parcelas || 12}x (com os juros da Mercado Pago).` : null,
+      `São ${p.meses || 12} meses de acesso, e ${p.desistir || 7} dias para desistir e receber 100% de volta, sem justificar.`
+    ].filter(Boolean);
+    blocos = [
+      ['Este é o último e-mail desta série. Se as letras que você viu por aqui fizeram sentido, o curso continua do mesmo jeito: uma letra por vez, até as 22 e os sinais de vogal.', null],
+      ...linhas.map(l => [l, null]),
+      [`Começar: ${curso}`, `<p><a href="${escapar(curso)}"><strong>Conhecer o curso e começar</strong></a></p>`],
+      ['Depois deste, só escrevemos quando houver novidade de verdade, como um curso novo.', null]
+    ];
+  }
+  const rodape = `Você recebe este e-mail porque pediu as próximas letras no site do ${assinatura}. Para sair da lista: ${sair}`;
+  const text = ['Oi.', '', ...blocos.flatMap(([t]) => [t, '']), suporte ? `Dúvidas: responda esta mensagem ou escreva para ${suporte}.` : '', '', assinatura, '', rodape].join('\n');
+  const html = [
+    '<p>Oi.</p>',
+    ...blocos.map(([t, h]) => h || `<p>${escapar(t)}</p>`),
+    suporte ? `<p>Dúvidas: responda esta mensagem ou escreva para ${escapar(suporte)}.</p>` : '',
+    `<p>${escapar(assinatura)}</p>`,
+    `<p style="color:#666;font-size:13px">Você recebe este e-mail porque pediu as próximas letras no site do ${escapar(assinatura)}. <a href="${escapar(sair)}">Sair da lista</a>.</p>`
+  ].join('');
+  return { subject: ASSUNTOS_DA_SEQUENCIA[passo - 1] || ASSUNTOS_DA_SEQUENCIA[0], text, html };
 }
 
 /* ── o aviso de presente aguardando ────────────────────────────────────── */

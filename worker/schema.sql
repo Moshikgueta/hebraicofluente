@@ -564,3 +564,23 @@ CREATE TABLE IF NOT EXISTS avisos_ativacao (
   enviado_em  INTEGER NOT NULL,
   PRIMARY KEY (order_id, marco)
 );
+
+-- A lista de interessados (23/10/2026, plano de marketing, decisão 1): quem
+-- pediu, com consentimento, as próximas letras por e-mail ou o aviso de um
+-- produto "Em breve". Só vale depois de confirmar pelo link do e-mail
+-- (`confirmado_em`); sem confirmar, a linha some em 7 dias. `interesses` é a
+-- lista separada por vírgula (curso, israel, raizes, a1). `passo` é a
+-- posição na sequência de e-mails das letras (0 = fora dela). Sair grava
+-- `saiu_em` e não manda mais nada. Ver worker/src/api/interessados.js.
+CREATE TABLE IF NOT EXISTS interessados (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  email         TEXT    NOT NULL UNIQUE,
+  interesses    TEXT    NOT NULL DEFAULT '',
+  origem        TEXT,
+  criado_em     INTEGER NOT NULL,
+  confirmado_em INTEGER,
+  saiu_em       INTEGER,
+  passo         INTEGER NOT NULL DEFAULT 0,
+  proximo_em    INTEGER
+);
+CREATE INDEX IF NOT EXISTS interessados_proximo ON interessados(passo, proximo_em);
