@@ -164,12 +164,17 @@
 @keyframes hf-seta-rtl { from { transform: translateX(84px); opacity: .25; } 20% { opacity: 1; } to { transform: translateX(0); opacity: 1; } }
 .seta-rtl { left: 0; animation: hf-seta-rtl 2.4s ease-in-out infinite; }
 
-/* A entrada do hero (`data-entrada`, Hero.tsx) nasce com opacidade zero num
-   estilo inline que só o React troca. `scripting: none` mostra tudo, e o
-   `!important` vence o estilo inline (auditoria de 01/10, UXQA-001). A
-   revelação por rolagem das outras seções saiu em 20/10/2026. */
-@media (scripting: none) {
-  [data-entrada] { opacity: 1 !important; transform: none !important; }
+/* A entrada do hero (`data-entrada`, Hero.tsx). Desde 23/10/2026 é CSS, sem
+   esperar o React: o texto é visível desde a primeira pintura (é a maior
+   pintura da página de venda) e só sobe 12 px; a lâmina chega com fade.
+   Sem script ou com movimento reduzido, nada se mexe (auditoria de 01/10,
+   UXQA-001). A revelação por rolagem das outras seções saiu em 20/10/2026. */
+@keyframes hf-hero-sobe { from { transform: translateY(12px); } to { transform: none; } }
+@keyframes hf-hero-lamina { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero-entra { animation: hf-hero-sobe 450ms cubic-bezier(.23,1,.32,1) both; }
+.hero-entra-lamina { animation: hf-hero-lamina 450ms cubic-bezier(.23,1,.32,1) both; }
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  [data-entrada] { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
 
 .skeleton {

@@ -67,3 +67,22 @@ export function isAppRoute(pathname: string | null): boolean {
 export function isPublicRoute(pathname: string | null): boolean {
   return !isAppRoute(pathname);
 }
+
+/* As páginas que não usam o progresso do aluno (23/10/2026, velocidade no
+   celular). Nelas o ProgressProvider (o estado, as regras, a loja, a
+   sincronização) não monta, e o JavaScript dele não é baixado: era o que
+   segurava a primeira pintura da capa no celular. Só entra aqui página cuja
+   árvore de imports não chega a lib/state/store.tsx; tests/rotas-leves.test.ts
+   confere isso arquivo por arquivo. Na dúvida, fica fora: o custo é velocidade,
+   nunca o curso. */
+export const ROTAS_LEVES = [
+  '/', '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas',
+  '/curso-de-hebraico', '/metodo', '/sobre', '/faq', '/biblia',
+  '/termos', '/privacidade', '/reembolso', '/suporte', '/acessibilidade',
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha'
+] as const;
+
+export function rotaLeve(pathname: string | null): boolean {
+  const p = (pathname ?? '/').replace(/\/+$/, '') || '/';
+  return (ROTAS_LEVES as readonly string[]).includes(p);
+}

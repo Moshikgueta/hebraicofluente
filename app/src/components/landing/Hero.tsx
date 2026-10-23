@@ -28,9 +28,12 @@ import { Container, Rubrica } from './base';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { SEM_MIDIA, type HeroMedia } from './media';
 
-/** [etapa, atraso em ms]. Título, apoio, botões, lâmina. */
-const ETAPAS: readonly [number, number][] = [[1, 40], [2, 110], [3, 180], [4, 240]];
-const VISTO = 'hf-hero-visto';
+/* A entrada do hero é CSS (`hero-entra` em globals.css), não estado do React
+   (23/10/2026, velocidade no celular). Com o estado, o título nascia com
+   opacidade zero e só aparecia depois de o JavaScript chegar e rodar: no
+   celular era a maior pintura da página esperando o pacote inteiro. Agora o
+   texto (etapas 1 a 3) aparece na primeira pintura e só sobe uns pixels; a
+   lâmina (etapa 4) ainda chega com um fade, sem segurar o texto. */
 
 /* Os três desejos de quem chega (a versão "híbrida" do hero, escolhida pelo
    dono do curso em 28/09/2026). Eram selos com borda; viraram uma linha
@@ -59,21 +62,7 @@ export function Hero({
   /** A camada de atmosfera, quando o arquivo existe. Ver ./media.ts. */
   midia?: HeroMedia;
 }) {
-  const [etapa, setEtapa] = useState(0);
-  useEffect(() => {
-    const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    let visto = false;
-    try { visto = sessionStorage.getItem(VISTO) === '1'; sessionStorage.setItem(VISTO, '1'); } catch { /* aba privada */ }
-    if (reduz || visto) { setEtapa(ETAPAS.length); return; }
-    const timers = ETAPAS.map(([v, ms]) => setTimeout(() => setEtapa(v), ms));
-    return () => timers.forEach(clearTimeout);
-  }, []);
-
-  const entra = (n: number, y = 12) => ({
-    opacity: etapa >= n ? 1 : 0,
-    transform: etapa >= n ? 'none' : `translateY(${y}px)`
-  });
-  const transicao = 'transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(.23,1,.32,1)]';
+  const entra = (n: number) => ({ animationDelay: `${[0, 40, 110, 180, 240][n]}ms` });
 
   return (
     <header className="relative overflow-hidden">
@@ -85,7 +74,7 @@ export function Hero({
               desejos logo abaixo. De 28/09 a 01/10/2026 ela disputou um teste
               A/B com uma versão feita de perguntas; ficou esta, que diz em
               uma linha o que se aprende (CLAUDE.md, "Teste A/B do hero"). */}
-          <div className={transicao} data-entrada style={entra(1)}>
+          <div className="hero-entra" data-entrada style={entra(1)}>
             <Rubrica className="mb-5 sm:mb-6">
               <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
               <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
@@ -105,7 +94,7 @@ export function Hero({
               ))}
             </ul>
           </div>
-          <div className={transicao} data-entrada style={entra(2)}>
+          <div className="hero-entra" data-entrada style={entra(2)}>
             <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.32] font-medium tracking-[-0.02em]
                           text-ink max-w-[30ch] m-0 mb-2">
               Mesmo que hoje você não reconheça uma única letra.
@@ -115,7 +104,7 @@ export function Hero({
             </p>
           </div>
 
-          <div className={`grid gap-3 ${transicao}`} data-entrada style={entra(3)}>
+          <div className="grid gap-3 hero-entra" data-entrada style={entra(3)}>
             {/* Os dois botões com a mesma altura e o mesmo raio: no celular,
                 os dois ocupam a largura toda (antes o secundário ficava com a
                 largura do texto, torto embaixo de um primário cheio). */}
@@ -157,7 +146,7 @@ export function Hero({
         {/* Até 1024px a lâmina fica embaixo do texto; sem o teto de 540px,
             num tablet em pé ela ocupava a largura toda e a letra virava
             cartaz. */}
-        <div className={`relative w-full max-w-[540px] lg:max-w-none ${transicao}`} data-entrada style={entra(4, 18)}>
+        <div className="relative w-full max-w-[540px] lg:max-w-none hero-entra-lamina" data-entrada style={entra(4)}>
           {!midia.imagem && !midia.video && <HaloDesenhado />}
           <Lamina />
         </div>

@@ -40,7 +40,7 @@ import { comprar as comprarNaLoja, type ItemDaLoja, type Recusa } from '@/lib/lo
 import {
   fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
 } from '@/lib/rodadas';
-import { EXAM_PASS } from '@/lib/engine/exam';
+import { EXAM_PASS } from '@/lib/engine/nota-do-exame';
 
 /* Onde o progresso mora, nesta build.
  * ─────────────────────────────────────────────────────────────────────────
@@ -65,6 +65,14 @@ function comEspelhoDeRodadas(s: LearnerState): LearnerState {
 function createStore(): ProgressStore {
   if (apiMode() === 'worker') return new WorkerProgressStore();
   return supabaseConfigured() ? new SupabaseProgressStore() : new LocalProgressStore();
+}
+
+/* Sair da conta numa página em que o provider não montou
+   (components/shell/ProgressoQuandoPrecisa.tsx): o mesmo esquecer que o
+   provider faz ao ouvir `saiu`, sem o estado na tela. */
+export async function esquecerProgressoDoAparelho(): Promise<void> {
+  limparEspelho();
+  await createStore().esquecerAqui();
 }
 
 type Ctx = {

@@ -877,6 +877,19 @@ compra; medição só com o contador próprio.
   (lib/ecossistema.ts; catálogo quando ele tem). Preço só no produto à venda; "Em breve" sem preço
   nem data (`tests/portal.test.ts`). Nunca as três lado a lado como tabela de planos.
 
+## Velocidade no celular: o código do curso fora das páginas públicas (23/10/2026, pedido do dono)
+- O `ProgressProvider` saiu do JavaScript das páginas públicas: o layout raiz usa
+  `ProgressoQuandoPrecisa` (components/shell), que não monta o provider nas `ROTAS_LEVES`
+  (lib/rotas.ts) e o carrega sob demanda nas outras. Uma vez montado, não desmonta (a fila de
+  gravação e o "sair da conta" não se perdem). Página nova em `ROTAS_LEVES` não pode chegar a
+  `lib/state/store.tsx` pelos imports: `tests/rotas-leves.test.ts` segue a árvore e falha.
+- `AppShell` e `CourseGate` são `next/dynamic` no Chrome.tsx; `EXAM_PASS` mora em
+  `lib/engine/nota-do-exame.ts` (importar de exam.ts puxava o motor de exercícios para todo lado).
+- A entrada do Hero da página de venda é CSS (`hero-entra`), sem esperar o React: o texto aparece
+  na primeira pintura e só sobe 12 px.
+- Medida (Lighthouse celular simulado, mediana de 5): JS da capa 209 → 169 KB (gzip); LCP da capa
+  3,45 → 3,01 s. A página de venda oscila entre 3,4 e 4,3 s entre rodadas.
+
 ## O cartão do link no WhatsApp e no Instagram (23/10/2026, pedido do dono)
 - Um cartão por porta de entrada, gerados por `tools/og.mjs` (num Chromium, com as fontes e as
   cores do site; o hebraico é só o שָׁלוֹם do curso): `og-portal.jpg` (a capa e o resto do site),
