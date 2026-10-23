@@ -135,7 +135,10 @@ export function ModuloRaizesClient({ n }: { n: number }) {
                 <Fragment key={`${x.id}-${j}`}>
                   <BlocoRaizes b={b} m={m} />
                   {/* A foto da seção entra logo depois do primeiro bloco de texto: perto do que ela mostra. */}
-                  {j === 0 && <Fotos fotos={fotosDe(`secao:m${String(m.n).padStart(2, '0')}:${x.id}`)} titulo="Imagem desta seção" />}
+                  {j === 0 && (() => {
+                    const daSecao = fotosDe(`secao:m${String(m.n).padStart(2, '0')}:${x.id}`);
+                    return <Fotos fotos={daSecao} titulo={daSecao.length > 1 ? 'Imagens desta seção' : 'Imagem desta seção'} />;
+                  })()}
                 </Fragment>
               ))}
             <FolhaDaSecao m={m} etapa={x} numero={k + 1} />
