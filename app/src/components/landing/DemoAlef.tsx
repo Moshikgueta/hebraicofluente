@@ -350,7 +350,7 @@ export function DemoAlef({
                 <div className="grid gap-7 sm:grid-cols-[minmax(0,260px)_minmax(0,1fr)] sm:items-center">
                   <div className="rounded-[20px] bg-[var(--sand)] py-8 grid justify-items-center gap-1">
                     <He size="display" tone="navy">{ALEF.letter}</He>
-                    <p className="font-display text-[19px] font-bold text-ink">{ALEF.namePt}</p>
+                    <p className="font-display text-[19px] font-semibold text-ink">{ALEF.namePt}</p>
                   </div>
                   <div className="grid gap-4">
                     <p className="font-display text-[21px] sm:text-[23px] leading-[1.4] font-medium
