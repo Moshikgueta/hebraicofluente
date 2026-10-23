@@ -98,6 +98,13 @@ export function CheckoutClient({ slug }: { slug: string }) {
      acesso" do painel saía para bater num "nada a pagar". */
   const restam = daysLeft(account.session, slug);
   const owned = account.can(slug) && (restam === null || restam > 45);
+  /* Qual passo a pessoa viu (23/10/2026, plano de marketing, teste C4): o da
+     conta, para quem chegou sem sessão, e o do pagamento. Uma vez cada por
+     visita (contarComOrigem); quem cria a conta aqui conta nos dois. */
+  useEffect(() => {
+    if (!account.ready || owned) return;
+    contarComOrigem(account.signedIn ? 'checkout-pagar' : 'checkout-conta');
+  }, [account.ready, account.signedIn, owned]);
   /* O pacote não vira um direito com o slug dele: ele libera cada produto de
      `componentes`. Quem já tem um deles (fora da janela de renovação) compra
      só o que falta - o servidor recusa com `ja-tem-parte`. */

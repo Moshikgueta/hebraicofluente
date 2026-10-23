@@ -165,8 +165,11 @@ export const EVENTOS_DO_PORTAL = [
 /* O funil por origem (23/10/2026, plano de marketing): quem abriu a página
    de venda e quem abriu o checkout, separados pela fonte da visita (lista
    fechada em lib/origem.js). Somados em `f|<evento>|<fonte>`; fonte que não
-   está na lista conta como `direto`. Mesmo endpoint e mesmo freio do portal. */
-export const EVENTOS_COM_FONTE = ['venda-visto', 'checkout-aberto'];
+   está na lista conta como `direto`. Mesmo endpoint e mesmo freio do portal.
+   `checkout-conta` (o checkout pediu a conta a quem chegou sem sessão) e
+   `checkout-pagar` (mostrou o pagamento) entraram em 23/10/2026: são os dois
+   lados do passo que o teste C4 do plano mexe, medidos antes de ele começar. */
+export const EVENTOS_COM_FONTE = ['venda-visto', 'checkout-aberto', 'checkout-conta', 'checkout-pagar'];
 
 /** POST /api/portal {evento, fonte?} - sempre 204. */
 export async function contarPortal({ request, env }) {

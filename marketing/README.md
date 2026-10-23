@@ -11,6 +11,8 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 | `roteiros/i1-reels.md` | 12 roteiros do experimento I1 (Instagram) | para o dono aprovar (23/10/2026) |
 | `parcerias/candidatos.md` e `parcerias/kit-do-parceiro.md` | 15 candidatos e o kit do piloto | para o dono escolher e aprovar (23/10/2026) |
 | `seo/paginas-do-alfabeto.md` | proposta das páginas do alfabeto para a busca | espera a decisão A, B ou C do dono (23/10/2026) |
+| `emails/pedido-de-depoimento.md` | pedido de depoimento da semana 7 | para o dono aprovar (23/10/2026) |
+| `testes/c4-condicoes-antes-do-cadastro.md` | especificação do teste C4 (semana 5) | para o dono aprovar (23/10/2026) |
 | `04-painel.md` | 4. Painel de indicadores | definido; construção na semana 1 do plano (23/10/2026) |
 
 ## Regras de trabalho (do dono, 23/10/2026)
@@ -36,3 +38,5 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 23/10/2026: pilar C nos roteiros (16 ao todo), A1 a A4 aprovados; Reels pausados a pedido do dono.
 - 23/10/2026: parcerias, 15 candidatos e o kit do parceiro (`parcerias/`).
 - 23/10/2026: lista de interessados no ar (PR #247 e #248); proposta das páginas do alfabeto (`seo/`).
+- 23/10/2026: páginas do alfabeto no ar (PR #249, opção B).
+- 23/10/2026: contador dos passos do checkout (`checkout-conta`, `checkout-pagar`), a base do C4; rascunho do pedido de depoimento.
