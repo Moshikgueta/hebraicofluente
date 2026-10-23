@@ -11,7 +11,7 @@
  * preço, sem data inventada, sem botão de compra (tests/portal.test.ts).
  */
 
-import { brl, flagship } from '@/lib/catalog';
+import { brl, flagship, getCourse } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
 import { vendavel, type Produto } from '@/lib/ecossistema';
 import { precoDeVitrine } from '@/lib/vitrine';
@@ -70,14 +70,16 @@ function Situacao({ p }: { p: Produto }) {
       </p>
     );
   }
-  /* Hoje só o curso de alfabetização está à venda; o preço e o prazo são os
-     dele, lidos do catálogo. Um segundo produto à venda pede o preço dele aqui. */
+  /* O preço e o prazo do PRÓPRIO produto, lidos do catálogo. Até 23/10/2026
+     saíam sempre do curso, e o livro, no dia de abrir a venda, apareceria com
+     o preço do curso. */
+  const c = (p.slug && getCourse(p.slug)) || flagship();
   return (
     <p className="m-0 flex flex-wrap items-center gap-3">
       <SeloDoStatus status={p.status} />
       <span>
-        <strong className="font-semibold text-ink">{brl(precoDeVitrine())}</strong>, pagamento único,{' '}
-        {flagship().accessMonths} meses de acesso, {empresa.politicas.arrependimentoDias} dias para desistir.
+        <strong className="font-semibold text-ink">{brl(precoDeVitrine(c))}</strong>, pagamento único,{' '}
+        {c.accessMonths} meses de acesso, {empresa.politicas.arrependimentoDias} dias para desistir.
       </span>
     </p>
   );

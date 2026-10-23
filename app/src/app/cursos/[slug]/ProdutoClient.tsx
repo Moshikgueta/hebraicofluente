@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, estaAVenda, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { confirmaSozinho, empresa, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
 
@@ -69,7 +69,7 @@ function Condicoes({ c }: { c: CatalogCourse }) {
   );
 }
 
-function CaixaDeCompra({ c }: { c: CatalogCourse }) {
+export function CaixaDeCompra({ c }: { c: CatalogCourse }) {
   const account = useAccount();
   const tipo = tipoDe(c);
   const componentes = (c.componentes ?? []).map(s => getCourse(s)).filter((x): x is CatalogCourse => !!x);
@@ -124,11 +124,12 @@ function CaixaDeCompra({ c }: { c: CatalogCourse }) {
   );
 }
 
-/** O convite ao pacote, na página do e-book. */
-function OfertaDoPacote() {
+/** O convite ao pacote, na página do e-book. Só com o pacote à venda: sem
+ *  ele, o botão levaria a uma página que não existe. */
+export function OfertaDoPacote() {
   const account = useAccount();
   const p = getCourse(PACOTE);
-  if (!p || (p.componentes ?? []).some(s => account.can(s))) return null;
+  if (!estaAVenda(p) || (p.componentes ?? []).some(s => account.can(s))) return null;
   const separados = (p.componentes ?? []).map(s => getCourse(s)).reduce((n, x) => n + (x?.price.brl ?? 0), 0);
   return (
     <Card tone="wash" className="p-5 grid gap-2.5">

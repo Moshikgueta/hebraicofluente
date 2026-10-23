@@ -410,7 +410,7 @@ describe('o e-book não tem PDF para baixar', () => {
     expect(s).toMatch(/--producao(?!=)/);
   });
   it('as telas e os textos de venda não falam em PDF', () => {
-    for (const rel of ['../src/app/cursos/[slug]/ProdutoClient.tsx', '../src/app/checkout/[slug]/CheckoutClient.tsx',
+    for (const rel of ['../src/app/cursos/[slug]/ProdutoClient.tsx', '../src/app/cursos/[slug]/LivroClient.tsx', '../src/app/checkout/[slug]/CheckoutClient.tsx',
                        '../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', '../src/app/termos/page.tsx',
                        '../src/app/reembolso/page.tsx', '../src/lib/ecossistema.ts', '../src/app/israel-alem-do-obvio/page.tsx',
                        '../../worker/src/lib/mail.js']) {

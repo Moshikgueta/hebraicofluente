@@ -37,6 +37,7 @@ import { contarNoPortal, type EventoDoPortal } from '@/lib/funil-portal';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { oEssencialDoCurso } from '@/lib/inclui';
 import { DEPOIMENTOS } from '@/lib/testimonials';
+import { FATOS_DO_AUTOR } from '@/lib/autor';
 
 /* O tom de cada jornada: três mundos da mesma marca. Tinta e fundo vêm dos
    tokens (globals.css), nunca de cor solta. */
@@ -459,14 +460,8 @@ function Experimente() {
 }
 
 /* ── 5 · quem faz ──────────────────────────────────────────────────────── */
-/* Só o que /sobre afirma (components/landing/Trajetoria.tsx). Nenhum número
-   de alunos, nenhum "anos de experiência" contado. */
-const FATOS = [
-  'Israelense, com o hebraico como língua materna',
-  'No Brasil desde 2021, ensinando hebraico a brasileiros',
-  'Gerente Pedagógico da New School, em Tel Aviv',
-  'Formação CELTA e estudos em Letras'
-];
+/* Só o que /sobre afirma: lib/autor.ts, a mesma lista da página do livro. */
+const FATOS = FATOS_DO_AUTOR;
 
 function QuemFaz({ retrato }: { retrato: string | null }) {
   return (
