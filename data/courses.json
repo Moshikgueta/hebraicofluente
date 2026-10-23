@@ -197,7 +197,7 @@
         "Quem quer entender o país além do que o guia conta no ônibus."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 197, "listBrl": 297, "installments": 3, "pixDiscountPct": 10 },
+      "price": { "brl": 197, "listBrl": 297, "installments": 12, "pixDiscountPct": 10 },
       "accessMonths": 12,
       "modules": [
         { "n": 1, "titlePt": "Israel no mapa", "subPt": "Um país pequeno, uma geografia surpreendente" },
