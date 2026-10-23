@@ -9,6 +9,9 @@
  *  - a demonstração usa a palavra, a transliteração e o sentido do curso.
  */
 import { describe, expect, it } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
 import { readFileSync } from 'node:fs';
 import { getCourse, paginaDeVenda } from '@/lib/catalog';
 import { EVENTOS_DO_PORTAL_PT, funilDoPortal } from '@/lib/painel-estatisticas';
@@ -56,7 +59,7 @@ describe('o status sai do catálogo', () => {
 
 describe('as páginas "Em breve" não vendem', () => {
   it('sem preço, sem checkout e sem botão de compra no livro e no Raízes', () => {
-    for (const rel of ['../src/app/israel-alem-do-roteiro/page.tsx', '../src/app/raizes-sefarditas/page.tsx',
+    for (const rel of ['../src/app/israel-alem-do-obvio/page.tsx', '../src/app/raizes-sefarditas/page.tsx',
                        '../src/app/descobrir-israel/page.tsx']) {
       const t = codigo(rel);
       expect(t, rel).not.toMatch(/checkout/i);
@@ -154,5 +157,67 @@ describe('a capa no telefone', () => {
     const capa = codigo('../src/app/PortalClient.tsx');
     expect(capa).toContain('<Atalhos />');
     expect(capa).toMatch(/hidden lg:block relative mx-auto/);
+  });
+});
+
+describe('a ficha comum dos produtos', () => {
+  const html = (id: string) => {
+    const p = produtos().find(x => x.id === id)!;
+    return renderToStaticMarkup(createElement(FichaDoProduto, { p })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ');
+  };
+
+  it('os três respondem as mesmas cinco perguntas, na mesma ordem', () => {
+    const ROTULOS = ['Para quem é', 'O que você passa a conseguir', 'Formato', 'Quanto tempo', 'Situação'];
+    for (const id of ['alfabetizacao', 'israel-alem-do-roteiro', 'raizes-sefarditas']) {
+      const t = html(id);
+      const posicoes = ROTULOS.map(r => t.indexOf(r));
+      expect(posicoes.every(n => n >= 0), id).toBe(true);
+      expect([...posicoes].sort((a, b) => a - b), id).toEqual(posicoes);
+    }
+  });
+
+  it('o que é do catálogo sai do catálogo', () => {
+    const livro = getCourse('israel-alem-do-roteiro')!;
+    const t = html('israel-alem-do-roteiro');
+    for (const o of [...livro.outcomesPt, ...livro.forWhomPt]) expect(t).toContain(o);
+    expect(t).toContain(`${livro.modules.length} capítulos`);
+  });
+
+  it('só o produto à venda tem preço; "Em breve" não tem preço nem data', () => {
+    expect(html('alfabetizacao')).toMatch(/R\$\s?\d/);
+    for (const id of produtos().filter(p => !vendavel(p)).map(p => p.id)) {
+      const t = html(id);
+      /* "comprar" minúsculo é conteúdo (o A1 ensina a comprar num café);
+         o que não pode é o botão. */
+      expect(t, id).not.toMatch(/R\$|parcela|checkout|\bComprar\b/);
+      expect(t, id).not.toMatch(/\d{1,2}\/\d{1,2}(\/\d{2,4})?/);
+      expect(t, id).toContain('Ainda não está à venda');
+    }
+  });
+});
+
+describe('o livro se chama Israel Além do Óbvio (23/10/2026)', () => {
+  it('o catálogo tem o nome, o subtítulo, a descrição e o autor; o slug não muda', () => {
+    const livro = getCourse('israel-alem-do-roteiro')!;
+    expect(livro.titlePt).toBe('Israel Além do Óbvio');
+    expect(livro.taglinePt).toBe('O país pelos olhos de quem nasceu lá.');
+    expect(livro.descricaoPt).toBe('Uma jornada interativa pela história, cultura e lugares de Israel.');
+    expect(livro.autorPt).toBe('Moshik Gueta');
+  });
+
+  it('o endereço antigo da página do portal leva ao novo', async () => {
+    const env = envDeTeste();
+    for (const c of ['/israel-alem-do-roteiro', '/israel-alem-do-roteiro/']) {
+      const r = await worker.fetch(new Request(`${SITE}${c}`), env, ctx);
+      expect(r.status, c).toBe(301);
+      expect(r.headers.get('location'), c).toBe(`${SITE}/israel-alem-do-obvio/`);
+    }
+  });
+
+  it('nenhum texto público usa o nome antigo', () => {
+    const publicos = ['../src/app/israel-alem-do-obvio/page.tsx', '../src/lib/ecossistema.ts', '../src/components/shell/PublicShell.tsx',
+      '../src/app/checkout/[slug]/CheckoutClient.tsx', '../src/app/reembolso/page.tsx', '../../worker/src/lib/mail.js',
+      '../../worker/src/api/livro.js', '../../data/courses.json'];
+    for (const rel of publicos) expect(fonte(rel), rel).not.toMatch(/Além do Roteiro|alem-do-roteiro\.pdf"/);
   });
 });

@@ -1,4 +1,4 @@
-/* O e-book "Israel Além do Roteiro" e o pacote com o curso (21/10/2026).
+/* O e-book "Israel Além do Óbvio" e o pacote com o curso (21/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Dois produtos novos no mesmo catálogo dos cursos: o e-book (R$ 67) e o
  * pacote alfabetização + e-book (R$ 127). O que estes testes travam:
@@ -333,9 +333,9 @@ describe('comprar o e-book e o pacote (o dia em que a venda abrir)', () => {
     expect(await hasEntitlement(env, a.id, LIVRO)).toBe(true);
     expect(await hasEntitlement(env, a.id, 'alfabetizacao')).toBe(false);
     const recibo = enviados.find(m => m.to === a.email)!;
-    expect(recibo.subject).toContain('Israel Além do Roteiro');
+    expect(recibo.subject).toContain('Israel Além do Óbvio');
     expect(recibo.text).toContain(`${SITE}/israel/`);
-    expect(recibo.text).toContain('E-book: Israel Além do Roteiro');
+    expect(recibo.text).toContain('E-book: Israel Além do Óbvio');
     expect(recibo.text).not.toContain('Aula 0');
   });
 

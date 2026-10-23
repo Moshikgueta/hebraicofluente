@@ -1,7 +1,7 @@
 'use client';
 
 /* Um módulo de Raízes Sefarditas como um capítulo: uma leitura só, contínua,
- * como no Israel Além do Roteiro (decisão do dono, 22/10/2026).
+ * como no Israel Além do Óbvio (decisão do dono, 22/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * As oito partes do dado (descobrir, contextualizar, explorar, investigar,
  * aplicar, refletir, consolidar, avançar) viram SEÇÕES da mesma página, uma

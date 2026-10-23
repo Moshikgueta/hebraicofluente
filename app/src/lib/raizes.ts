@@ -85,7 +85,7 @@ export type Bloco =
   | { tipo: 'reflexao'; id: string; pergunta: string; apoio: string }
   | { tipo: 'laboratorio'; titulo: string; apresentacao: string }
   | { tipo: 'sintese'; itens: string[] }
-  /* As peças do Israel Além do Roteiro (22/10/2026): nenhuma conta para concluir o módulo. */
+  /* As peças do Israel Além do Óbvio (22/10/2026): nenhuma conta para concluir o módulo. */
   | { tipo: 'palpite'; id: string; pergunta: string; opcoes: { texto: string; correta?: boolean }[]; resposta: string }
   | { tipo: 'vf'; id: string; titulo: string; itens: { afirmacao: string; verdadeira: boolean; explicacao: string }[] }
   | { tipo: 'curiosidades'; titulo: string; itens: { titulo: string; texto: string }[] }

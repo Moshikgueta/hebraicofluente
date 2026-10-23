@@ -69,7 +69,7 @@ describe.skipIf(!TEM)('a experiência do módulo não diz mais do que o texto', 
   });
 });
 
-describe.skipIf(!TEM)('as peças do Israel Além do Roteiro', () => {
+describe.skipIf(!TEM)('as peças do Israel Além do Óbvio', () => {
   const blocos = modulos.flatMap(m => m.etapas.flatMap(e => e.blocos.map(b => ({ m: m.n, b }))));
 
   it('toda gravura pedida existe, e a vinheta de cada seção também', () => {

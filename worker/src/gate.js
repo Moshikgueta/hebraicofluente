@@ -77,7 +77,7 @@ const GATED = [
   '/depoimento',
   /* 06/10/2026: o curso Hebraico A1. É de OUTRO curso: ver `cursoDaRota`. */
   '/a1',
-  /* 21/10/2026: o e-book Israel Além do Roteiro (versão interativa e PDF).
+  /* 21/10/2026: o e-book Israel Além do Óbvio (versão interativa e PDF).
      É de outro PRODUTO: ver `cursoDaRota`. */
   '/israel',
   /* 21/10/2026: Raízes Sefarditas, outro produto (ver `cursoDaRota`). */

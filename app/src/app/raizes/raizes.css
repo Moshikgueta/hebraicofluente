@@ -165,7 +165,7 @@
 /* ── As peças ilustradas (22/10/2026) ──────────────────────────────────────
    A folha que se escreve, o selo, a narrativa com o mapa e os documentos
    exploráveis, no visual da coleção (decisão do dono: o Raízes segue o
-   Israel Além do Roteiro). A folha é sempre papel com tinta escura.
+   Israel Além do Óbvio). A folha é sempre papel com tinta escura.
    Movimento: tinta que se escreve, selo que assenta, texto que sobe 12 px.
    Tudo com o estado final como padrão: sem JavaScript ou com movimento
    reduzido, nada fica escondido. */
@@ -241,7 +241,7 @@
 .rz-fio { height: 2px; background: var(--linha); position: relative; overflow: hidden; }
 .rz-fio > i { position: absolute; inset: 0; background: var(--lacre, #8E2B1F); transform-origin: left; transition: transform .45s cubic-bezier(.2, .8, .2, 1); }
 
-/* ── As gravuras e as peças do Israel Além do Roteiro (22/10/2026) ──────── */
+/* ── As gravuras e as peças do Israel Além do Óbvio (22/10/2026) ──────── */
 .rz-gravura { display: block; overflow: visible; }
 .rz-traco { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .rz-traco-cheio { fill: currentColor; opacity: .85; }

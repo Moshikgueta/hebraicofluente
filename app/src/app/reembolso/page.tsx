@@ -121,7 +121,7 @@ export default function Page() {
         {/* TEXTO PARA APROVAÇÃO (21/10/2026): o e-book, vendido à parte. Só
             aparece quando ele está à venda (`aVenda` em data/courses.json). */}
         {estaAVenda(getCourse('israel-alem-do-roteiro')) && <p>
-          No <strong>e-book Israel Além do Roteiro</strong>, o direito de desistir é o
+          No <strong>e-book Israel Além do Óbvio</strong>, o direito de desistir é o
           mesmo, e a versão interativa fecha quando o reembolso é processado. O PDF que você
           baixou não tem como ser recolhido: ao pedir o reembolso, você se compromete a
           apagá-lo. No pacote, o reembolso devolve o valor inteiro e fecha o curso e o e-book.

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { Container, H2, Rubrica } from '@/components/landing/base';
 import { BotaoDoCurso } from '@/components/portal/BotaoDoCurso';
+import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
+import { produtos } from '@/lib/ecossistema';
 import { Abertura, Ponte, ProdutosDaJornada } from '@/components/portal/Jornada';
 import { course, totalLicoes } from '@/lib/content-publico';
 
@@ -57,6 +59,12 @@ export default function AprenderHebraicoPage() {
           </Link>
         </div>
       </Abertura>
+
+      <section aria-label="A ficha do curso">
+        <Container className="pb-14 sm:pb-20">
+          <FichaDoProduto p={produtos().find(x => x.id === 'alfabetizacao')!} titulo="O curso em cinco linhas" />
+        </Container>
+      </section>
 
       <ProdutosDaJornada id="hebraico" titulo="Os cursos de hebraico" />
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# O e-book "Israel Além do Roteiro" dentro do site, em /israel/ (21/10/2026).
+# O e-book "Israel Além do Óbvio" dentro do site, em /israel/ (21/10/2026).
 #
 # Monta a versão interativa e o PDF a partir de editorial/ e os põe em
 # app/public/israel/, que o build do app copia para out/israel/. Lá, o portão

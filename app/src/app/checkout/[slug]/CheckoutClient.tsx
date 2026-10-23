@@ -489,7 +489,7 @@ function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse;
     ['O que você leva', tipoDe(curso) === 'livro'
       ? `O e-book ${curso.titlePt}: a versão interativa, pelo navegador, e o PDF para baixar.`
       : tipoDe(curso) === 'pacote'
-        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Roteiro (versão interativa e PDF).'
+        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Óbvio (versão interativa e PDF).'
         : `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
        fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */

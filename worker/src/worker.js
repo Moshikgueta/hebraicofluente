@@ -256,7 +256,10 @@ async function responder(request, env, ctx) {
     }
     /* Endereços do portal que já têm casa (23/10/2026): o contato é o
        /suporte (o mesmo e-mail e WhatsApp), e "minha conta" é o painel. */
-    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/' };
+    /* O livro mudou de nome (23/10/2026): Israel Além do Óbvio. A página do
+       portal foi junto, e o endereço antigo leva para a nova. O slug do
+       catálogo, o direito de acesso e /israel/ continuam os mesmos. */
+    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/', '/israel-alem-do-roteiro': '/israel-alem-do-obvio/' };
     if (ATALHOS[path.toLowerCase()] && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(null, { status: 301, headers: { Location: `${url.origin}${ATALHOS[path.toLowerCase()]}` } });
     }

@@ -6,7 +6,7 @@ import { chromium } from 'playwright';
 const T={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2','.svg':'image/svg+xml','.json':'application/json','.png':'image/png'};
 const s=createServer((q,r)=>{const c=decodeURIComponent(q.url.split('?')[0]);for(const f of [`out${c}`,`out${c}/index.html`,`out${c}.html`,'out/404.html']){if(!existsSync(f))continue;try{const b=readFileSync(f);r.writeHead(200,{'Content-Type':T[f.slice(f.lastIndexOf('.'))]||'application/octet-stream'});return r.end(b)}catch{}}r.writeHead(404);r.end('404')});
 await new Promise(r=>s.listen(4402,r));
-const ROTAS = ['/','/metodo/','/cursos/','/curso-de-hebraico/','/aprender-hebraico/','/descobrir-israel/','/israel-alem-do-roteiro/','/raizes-sefarditas/','/sobre/','/faq/','/entrar/','/criar-conta/','/esqueci-senha/','/nova-senha/','/confirmar-email/','/checkout/alfabetizacao/','/termos/','/privacidade/','/reembolso/','/suporte/'];
+const ROTAS = ['/','/metodo/','/cursos/','/curso-de-hebraico/','/aprender-hebraico/','/descobrir-israel/','/israel-alem-do-obvio/','/raizes-sefarditas/','/sobre/','/faq/','/entrar/','/criar-conta/','/esqueci-senha/','/nova-senha/','/confirmar-email/','/checkout/alfabetizacao/','/termos/','/privacidade/','/reembolso/','/suporte/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim = 0;
 /* Quatro larguras, e as duas do meio foram acrescentadas por um motivo:

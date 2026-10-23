@@ -1,6 +1,6 @@
 'use client';
 
-/* As peças do Israel Além do Roteiro, trazidas para Raízes (22/10/2026).
+/* As peças do Israel Além do Óbvio, trazidas para Raízes (22/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
  * Quatro formas de pôr o aluno para fazer alguma coisa no meio da leitura:
  *   · Palpite: chute antes, a resposta (com fonte) depois. Não vale nota.

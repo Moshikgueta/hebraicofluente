@@ -262,7 +262,7 @@ if (!AUTOR || !OBRA) {
   /* As mesmas páginas livres do numeros.mjs: a vitrine, que é onde o rodapé
      público aparece. As pagas ficam de fora porque usam outra casca. */
   const LIVRES = [
-    '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
+    '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-obvio/', '/raizes-sefarditas/',
     '/metodo/', '/cursos/', '/sobre/', '/faq/',
     '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/'
   ];

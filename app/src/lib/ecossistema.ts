@@ -22,6 +22,7 @@
  */
 
 import { estaAVenda, getCourse, type CatalogCourse } from '@/lib/catalog';
+import { course, totalLicoes } from '@/lib/content-publico';
 
 export type JornadaId = 'hebraico' | 'israel' | 'raizes';
 
@@ -62,7 +63,7 @@ export const JORNADAS: readonly Jornada[] = [
   },
   {
     id: 'israel', rota: '/descobrir-israel', nome: 'Descobrir Israel', letra: 'מ',
-    chamada: 'Lugares, histórias e o dia a dia de Israel, para uma viagem que vai além do roteiro.',
+    chamada: 'Lugares, histórias e o dia a dia de Israel, contados por quem nasceu lá.',
     resumo: 'Lugares, história e o dia a dia do país.',
     cta: 'Quero descobrir Israel'
   },
@@ -93,6 +94,10 @@ export type Produto = {
   cta: string;
   /** O slug no data/courses.json, quando o produto está no catálogo. */
   slug?: string;
+  /** A ficha comum (FichaDoProduto): os mesmos campos para os três produtos,
+   *  para quem compara não ter de procurar a mesma informação em lugares
+   *  diferentes. Do catálogo quando ele tem (forWhomPt, outcomesPt). */
+  ficha: { paraQuem: string[]; consegue: string[]; tempo: string };
 };
 
 /** O status de um produto do catálogo, lido do catálogo. */
@@ -117,7 +122,12 @@ export function produtos(): Produto[] {
       formato: 'Curso interativo online, no celular ou no computador',
       publico: 'Quem nunca leu hebraico, ou já tentou e parou',
       status: statusDoCatalogo(alfabetizacao),
-      rota: '/curso-de-hebraico', cta: 'Conhecer o curso'
+      rota: '/curso-de-hebraico', cta: 'Conhecer o curso',
+      ficha: {
+        paraQuem: alfabetizacao?.forWhomPt ?? [],
+        consegue: alfabetizacao?.outcomesPt ?? [],
+        tempo: `${totalLicoes()} lições em ${course.modules.length} módulos, no seu ritmo, com ${alfabetizacao?.accessMonths ?? 12} meses de acesso.`
+      }
     },
     {
       id: 'hebraico-a1', slug: 'hebraico-a1', jornada: 'hebraico',
@@ -127,17 +137,23 @@ export function produtos(): Produto[] {
       formato: 'Curso interativo online',
       publico: 'Quem já lê as letras e quer começar a conversar',
       status: statusDoCatalogo(a1),
-      rota: '/cursos', cta: 'Ver a trilha dos cursos'
+      rota: '/cursos', cta: 'Ver a trilha dos cursos',
+      ficha: { paraQuem: a1?.forWhomPt ?? [], consegue: a1?.outcomesPt ?? [], tempo: '' }
     },
     {
       id: 'israel-alem-do-roteiro', slug: 'israel-alem-do-roteiro', jornada: 'israel',
-      nome: livro?.titlePt ?? 'Israel Além do Roteiro',
+      nome: livro?.titlePt ?? 'Israel Além do Óbvio',
       subtitulo: livro?.taglinePt ?? '',
       descricao: livro?.summaryPt ?? '',
-      formato: 'Livro digital interativo e PDF',
+      formato: 'Guia ilustrado e interativo, com o PDF para baixar',
       publico: 'Quem vai viajar para Israel, ou quer entender o país',
       status: statusDoCatalogo(livro),
-      rota: '/israel-alem-do-roteiro', cta: 'Ver o que tem dentro'
+      rota: '/israel-alem-do-obvio', cta: 'Ver o que tem dentro',
+      ficha: {
+        paraQuem: livro?.forWhomPt ?? [],
+        consegue: livro?.outcomesPt ?? [],
+        tempo: `${livro?.modules.length ?? 11} capítulos para ler antes da viagem e consultar durante, com ${livro?.accessMonths ?? 12} meses da versão interativa e o PDF para baixar.`
+      }
     },
     {
       id: 'raizes-sefarditas', jornada: 'raizes',
@@ -152,7 +168,21 @@ export function produtos(): Produto[] {
       publico: 'Quem tem curiosidade, ou uma história de família, sobre a herança sefardita',
       /* Fora do catálogo: sem preço e sem art. 1 dos Termos (CLAUDE.md, Raízes). */
       status: 'em-breve',
-      rota: '/raizes-sefarditas', cta: 'Ver o que tem dentro'
+      rota: '/raizes-sefarditas', cta: 'Ver o que tem dentro',
+      /* Fora do catálogo: a ficha repete só o que esta página já diz (os dez
+         módulos, o atlas, o laboratório), sem afirmação histórica nova. */
+      ficha: {
+        paraQuem: [
+          'Quem tem curiosidade pela história dos judeus sefarditas.',
+          'Quem tem uma história de família ligada à herança sefardita e quer organizá-la com cuidado.'
+        ],
+        consegue: [
+          'Acompanhar no mapa os caminhos do exílio que o curso estuda.',
+          'Separar o que é documentado do que é tradição ou hipótese.',
+          'Organizar a memória da sua família por tipo de evidência, guardada só no seu aparelho.'
+        ],
+        tempo: 'Dez módulos de leitura e atividades, no seu ritmo.'
+      }
     }
   ];
 }
