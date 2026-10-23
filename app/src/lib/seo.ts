@@ -75,7 +75,11 @@ export const NAO_LISTADAS = [
   /* A conferência pública de um certificado do A1 (06/10/2026). Aberta, para
      quem recebe o código poder conferir sem conta; fora da busca, porque cada
      página mostra o nome de uma pessoa. */
-  '/verificar-certificado'
+  '/verificar-certificado',
+  /* A página de venda antiga do curso: o Worker responde 301 para
+     /curso-de-hebraico (23/10/2026). Anunciar as duas era dividir o curso
+     em dois endereços na busca. */
+  '/cursos/alfabetizacao'
 ] as const;
 
 /** A rota, na forma canônica que o portão também usa para comparar. */

@@ -36,6 +36,7 @@
     "exercicios": "node exercicios.mjs",
     "rodada2": "node rodada2.mjs",
     "pacote": "node pacote.mjs",
+    "alcance": "node alcance.mjs",
     "promessas": "node promessas.mjs",
     "raizes": "node raizes.mjs",
     "test": "npm run export-content && vitest run"

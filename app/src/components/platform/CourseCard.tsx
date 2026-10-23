@@ -19,7 +19,7 @@
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
-import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse, fimDoPreLancamento } from '@/lib/catalog';
+import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse, fimDoPreLancamento, paginaDeVenda } from '@/lib/catalog';
 import { parcelasCurto, soPix } from '@/lib/empresa';
 
 export type CourseCardState = 'owned' | 'available' | 'soon' | 'locked';
@@ -45,7 +45,7 @@ export function CourseCard({
   progress?: number;
 }) {
   const badge = BADGE[state];
-  const href = state === 'owned' ? '/meu-hebraico' : `/cursos/${course.slug}`;
+  const href = state === 'owned' ? '/meu-hebraico' : paginaDeVenda(course.slug);
   const cta =
     state === 'owned' ? 'Continuar'
       : state === 'soon' ? 'Ver o que vem'

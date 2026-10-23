@@ -65,6 +65,7 @@ export default function RaizesSefarditasPage() {
       </section>
 
       <Ponte
+        jornada="raizes"
         titulo="Comece pela língua."
         texto="Enquanto o curso não abre, dá para começar pelo alfabeto hebraico, no seu ritmo, com o curso de alfabetização."
         href="/curso-de-hebraico"

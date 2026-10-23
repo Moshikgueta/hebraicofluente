@@ -10,7 +10,8 @@
  */
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { getCourse } from '@/lib/catalog';
+import { getCourse, paginaDeVenda } from '@/lib/catalog';
+import { EVENTOS_DO_PORTAL_PT, funilDoPortal } from '@/lib/painel-estatisticas';
 import { JORNADAS, produtos, statusDoCatalogo, vendavel } from '@/lib/ecossistema';
 import { AMOSTRA_AUDIO } from '@/lib/amostra-audio';
 import { envDeTeste } from './ajuda/d1';
@@ -111,5 +112,47 @@ describe('o contador do portal', () => {
     const doApp = [...app.slice(app.indexOf('export type EventoDoPortal'), app.indexOf(';', app.indexOf('export type EventoDoPortal')))
       .matchAll(/'([a-z0-9-]+)'/g)].map(m => m[1]).sort();
     expect(doApp).toEqual([...EVENTOS_DO_PORTAL].sort());
+  });
+});
+
+describe('uma página de venda só (23/10/2026, decisão do dono)', () => {
+  it('/cursos/alfabetizacao leva a /curso-de-hebraico com a consulta junto', async () => {
+    const env = envDeTeste();
+    for (const caminho of ['/cursos/alfabetizacao', '/cursos/alfabetizacao/', '/cursos/alfabetizacao/index.txt']) {
+      const r = await worker.fetch(new Request(`${SITE}${caminho}?sem-acesso=1`), env, ctx);
+      expect(r.status, caminho).toBe(301);
+      expect(r.headers.get('location'), caminho).toBe(`${SITE}/curso-de-hebraico/?sem-acesso=1`);
+      /* blindar() passa por toda resposta, inclusive esta. */
+      expect(r.headers.get('x-content-type-options'), caminho).toBe('nosniff');
+    }
+    /* Os outros cursos continuam no catálogo. */
+    const comAtivos = { ...env, ASSETS: { fetch: async () => new Response('<html></html>', { headers: { 'content-type': 'text/html' } }) } };
+    const a1 = await worker.fetch(new Request(`${SITE}/cursos/hebraico-a1/`), comAtivos, ctx);
+    expect(a1.status).not.toBe(301);
+  });
+
+  it('os links internos já apontam para o endereço novo', () => {
+    expect(paginaDeVenda('alfabetizacao')).toBe('/curso-de-hebraico');
+    expect(paginaDeVenda('hebraico-a1')).toBe('/cursos/hebraico-a1');
+    for (const rel of ['../src/components/shell/CourseGate.tsx', '../src/lib/cta.ts', '../src/lib/jsonld.ts',
+                       '../src/components/platform/CourseCard.tsx', '../src/app/cursos/CursosClient.tsx']) {
+      expect(codigo(rel), rel).not.toMatch(/\/cursos\/alfabetizacao|`\/cursos\/\$\{/);
+    }
+  });
+});
+
+describe('o painel lê o portal inteiro', () => {
+  it('cada evento do servidor tem nome no painel', () => {
+    expect(EVENTOS_DO_PORTAL_PT.map(e => e.evento).sort()).toEqual([...EVENTOS_DO_PORTAL].sort());
+    const f = funilDoPortal([{ evento: 'visto', n: 10 }, { evento: 'jornada-israel', n: 4 }]);
+    expect(f.find(l => l.evento === 'jornada-israel')!.deQuemViu).toBe(0.4);
+  });
+});
+
+describe('a capa no telefone', () => {
+  it('as jornadas estão na primeira tela e a mesa só aparece a partir de lg', () => {
+    const capa = codigo('../src/app/PortalClient.tsx');
+    expect(capa).toContain('<Atalhos />');
+    expect(capa).toMatch(/hidden lg:block relative mx-auto/);
   });
 });

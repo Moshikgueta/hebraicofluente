@@ -12,6 +12,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Container, H2, Rubrica } from '@/components/landing/base';
+import { BotaoDoCurso } from '@/components/portal/BotaoDoCurso';
 import { Emblema } from '@/components/portal/Emblemas';
 import {
   jornada as jornadaPorId, produtosDaJornada, ROTULO_DO_STATUS,
@@ -24,24 +25,8 @@ const FUNDO: Record<JornadaId, string> = {
   raizes: 'bg-[var(--sand)] text-[var(--navy)]'
 };
 
-/** "Início › Jornada › Produto": onde a pessoa está, e a volta ao portal. */
-export function Migalhas({ trilha }: { trilha: { nome: string; href?: string }[] }) {
-  return (
-    <nav aria-label="Você está em" className="font-ui text-[14px] text-ink-muted">
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 list-none p-0 m-0">
-        <li><Link href="/" className="inline-flex items-center min-h-[40px] underline underline-offset-[3px] hover:text-ink">Início</Link></li>
-        {trilha.map((t, i) => (
-          <li key={t.nome} className="flex items-center gap-2">
-            <span aria-hidden>›</span>
-            {t.href && i < trilha.length - 1
-              ? <Link href={t.href} className="inline-flex items-center min-h-[40px] underline underline-offset-[3px] hover:text-ink">{t.nome}</Link>
-              : <span aria-current="page" className="text-ink-body">{t.nome}</span>}
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
-}
+export { Migalhas } from '@/components/portal/Migalhas';
+import { Migalhas } from '@/components/portal/Migalhas';
 
 export function SeloDoStatus({ status }: { status: Status }) {
   const cor = status === 'disponivel'
@@ -123,24 +108,33 @@ export function CartaoDeProduto({ p }: { p: Produto }) {
   );
 }
 
-/** A ponte: o que dá para fazer HOJE, numa jornada cujo produto ainda não abriu. */
-export function Ponte({ titulo, texto, href, rotulo }: { titulo: string; texto: string; href: string; rotulo: string }) {
+/** A ponte: o que dá para fazer HOJE, numa jornada cujo produto ainda não abriu.
+ *  O emblema da jornada ocupa o lado que ficava vazio no desktop; no
+ *  telefone ele some e o texto fica com a caixa inteira. */
+export function Ponte({ titulo, texto, href, rotulo, jornada = 'hebraico' }: {
+  titulo: string; texto: string; href: string; rotulo: string; jornada?: JornadaId;
+}) {
   return (
     <section aria-labelledby="ponte-titulo">
       <Container className="py-14 sm:py-20">
-        <div className="grid gap-5 justify-items-start rounded-[20px] bg-[var(--navy)] text-white p-8 sm:p-12">
-          <Rubrica tom="lite">Enquanto isso</Rubrica>
-          <h2 id="ponte-titulo"
-              className="m-0 font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08] tracking-[-0.03em] text-balance max-w-[24ch] text-white">
-            {titulo}
-          </h2>
-          <p className="m-0 font-ui text-[17px] leading-[1.6] text-white/85 max-w-[52ch]">{texto}</p>
-          <Link href={href}
-                className="inline-flex items-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)] bg-white text-[var(--navy)]
-                           font-ui text-[15.5px] font-medium hover:bg-[var(--teal-soft)] transition-[background-color,scale] duration-[var(--dur)] active:scale-[.97]">
-            {rotulo}
-            <span aria-hidden>→</span>
-          </Link>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] items-center rounded-[20px] bg-[var(--navy)] text-white p-8 sm:p-12">
+          <div className="grid gap-5 justify-items-start">
+            <Rubrica tom="lite">Enquanto isso</Rubrica>
+            <h2 id="ponte-titulo"
+                className="m-0 font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08] tracking-[-0.03em] text-balance max-w-[24ch] text-white">
+              {titulo}
+            </h2>
+            <p className="m-0 font-ui text-[17px] leading-[1.6] text-white/85 max-w-[52ch]">{texto}</p>
+            <BotaoDoCurso href={href}
+                  className="inline-flex items-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)] bg-white text-[var(--navy)]
+                             font-ui text-[15.5px] font-medium hover:bg-[var(--teal-soft)] transition-[background-color,scale] duration-[var(--dur)] active:scale-[.97]">
+              {rotulo}
+              <span aria-hidden>→</span>
+            </BotaoDoCurso>
+          </div>
+          <div aria-hidden className={`hidden lg:block rounded-[16px] p-5 rotate-[2deg] shadow-[0_18px_40px_-24px_rgba(0,0,0,.6)] ${FUNDO[jornada]}`}>
+            <Emblema jornada={jornada} />
+          </div>
         </div>
       </Container>
     </section>

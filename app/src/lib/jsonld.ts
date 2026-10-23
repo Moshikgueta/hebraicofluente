@@ -19,7 +19,7 @@
  */
 
 import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
-import { ancora, flagship } from '@/lib/catalog';
+import { ancora, flagship, paginaDeVenda } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
@@ -63,7 +63,7 @@ export function curso(): Json {
     name: c.titlePt,
     description: c.taglinePt,
     inLanguage: 'pt-BR',
-    url: url(`/cursos/${c.slug}`),
+    url: url(paginaDeVenda(c.slug)),
     provider: { '@id': ID_ORG },
     offers: {
       '@type': 'Offer',
@@ -71,7 +71,7 @@ export function curso(): Json {
       price: precoDeVitrine().toFixed(2),
       priceCurrency: 'BRL',
       availability: 'https://schema.org/InStock',
-      url: url(`/cursos/${c.slug}`),
+      url: url(paginaDeVenda(c.slug)),
       ...(validade ? { priceValidUntil: validade } : {})
     }
   };

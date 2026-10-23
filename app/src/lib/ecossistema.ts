@@ -41,6 +41,8 @@ export type Jornada = {
   nome: string;
   /** A promessa curta do cartão da capa. */
   chamada: string;
+  /** Uma linha, para o menu do site. */
+  resumo: string;
   /** O botão do cartão da capa. */
   cta: string;
   /** A letra hebraica que marca a jornada (só ilustração, sempre por <He>). */
@@ -55,16 +57,19 @@ export const JORNADAS: readonly Jornada[] = [
   {
     id: 'hebraico', rota: '/aprender-hebraico', nome: 'Aprender hebraico', letra: 'א',
     chamada: 'Do primeiro contato com as letras à leitura das suas primeiras palavras.',
+    resumo: 'Ler e escrever do zero, letra por letra.',
     cta: 'Quero aprender hebraico'
   },
   {
     id: 'israel', rota: '/descobrir-israel', nome: 'Descobrir Israel', letra: 'מ',
     chamada: 'Lugares, histórias e o dia a dia de Israel, para uma viagem que vai além do roteiro.',
+    resumo: 'Lugares, história e o dia a dia do país.',
     cta: 'Quero descobrir Israel'
   },
   {
     id: 'raizes', rota: '/raizes-sefarditas', nome: 'Explorar raízes sefarditas', letra: 'ת',
     chamada: 'A história dos judeus sefarditas, da Península Ibérica aos caminhos que chegaram ao Brasil.',
+    resumo: 'A história sefardita, da Península Ibérica ao Brasil.',
     cta: 'Quero explorar minhas raízes'
   }
 ];
@@ -156,3 +161,9 @@ export const produtosDaJornada = (id: JornadaId): Produto[] => produtos().filter
 
 /** Um produto pode receber botão de compra? Só o disponível. */
 export const vendavel = (p: Produto): boolean => p.status === 'disponivel';
+
+/** "Disponível" ou "Em breve", para a jornada inteira: aberta se algum
+ *  produto dela está à venda. É o selo do menu do site. */
+export function jornadaAberta(id: JornadaId): boolean {
+  return produtosDaJornada(id).some(vendavel);
+}

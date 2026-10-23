@@ -28,7 +28,7 @@ import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, MIN_PASSWORD, passwordOk } from '@/lib/account/types';
 import { useProgress } from '@/lib/state/store';
 import { daysLeft, type AcessoVencido, type Order } from '@/lib/account/types';
-import { allCourses, brl, FLAGSHIP, getCourse } from '@/lib/catalog';
+import { allCourses, brl, FLAGSHIP, getCourse, paginaDeVenda } from '@/lib/catalog';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
@@ -134,7 +134,7 @@ export function PerfilClient() {
                       </LinkButton>
                   : c.status === 'soon'
                     ? <Badge>Em breve</Badge>
-                    : <LinkButton href={`/cursos/${c.slug}`} variant="secondary" size="sm">
+                    : <LinkButton href={paginaDeVenda(c.slug)} variant="secondary" size="sm">
                         Ver o curso
                       </LinkButton>}
               </li>
@@ -276,7 +276,7 @@ export function PerfilClient() {
       {!account.can(FLAGSHIP) && (
         <p className="font-ui text-[13px] text-ink-muted">
           Você está logado, mas ainda não tem nenhum curso ativo.{' '}
-          <LinkButton href={`/cursos/${FLAGSHIP}`} variant="ghost" size="sm">Ver os cursos</LinkButton>
+          <LinkButton href={paginaDeVenda(FLAGSHIP)} variant="ghost" size="sm">Ver os cursos</LinkButton>
         </p>
       )}
 

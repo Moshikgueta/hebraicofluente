@@ -27,7 +27,7 @@ import { Emblema } from '@/components/portal/Emblemas';
 import { PalavraDescoberta } from '@/components/portal/PalavraDescoberta';
 import { SeloDoStatus } from '@/components/portal/Jornada';
 import { useAccount } from '@/lib/account/store';
-import { brl, FLAGSHIP, flagship } from '@/lib/catalog';
+import { brl, fimDoPreLancamento, FLAGSHIP, flagship } from '@/lib/catalog';
 import { proximoPasso } from '@/lib/cta';
 import { empresa } from '@/lib/empresa';
 import {
@@ -35,6 +35,8 @@ import {
 } from '@/lib/ecossistema';
 import { contarNoPortal, type EventoDoPortal } from '@/lib/funil-portal';
 import { precoDeVitrine } from '@/lib/vitrine';
+import { oEssencialDoCurso } from '@/lib/inclui';
+import { DEPOIMENTOS } from '@/lib/testimonials';
 
 /* O tom de cada jornada: três mundos da mesma marca. Tinta e fundo vêm dos
    tokens (globals.css), nunca de cor solta. */
@@ -94,25 +96,34 @@ function Abertura({ jaEhAluno, continuar }: {
 
   return (
     <section aria-labelledby="portal-titulo" className="relative overflow-hidden">
-      <Container className="pt-12 pb-16 sm:pt-20 sm:pb-24 grid gap-12 lg:gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] items-center">
+      <Container className="pt-8 pb-12 sm:pt-20 sm:pb-24 grid gap-12 lg:gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] items-center">
         <div className="grid gap-6 min-w-0">
           <div {...entrada(0)}>
             <Rubrica letra="א">Hebraico Fluente</Rubrica>
           </div>
+          {/* A abertura B, escolhida pelo dono em 23/10/2026: diz em cinco
+              segundos o que o site oferece (ler hebraico) e por onde começar,
+              e nomeia as outras duas jornadas sem prometer data. */}
+          {/* O título e o parágrafo não entram animados: esconder o texto
+              até o JavaScript chegar adiava a maior pintura da página (LCP)
+              para depois da hidratação, 3,9 s no Lighthouse de celular. */}
           <h1 id="portal-titulo"
-              style={entrada(60).style}
-              className={`m-0 font-display font-semibold text-[clamp(38px,6vw,64px)] leading-[1.02]
-                          tracking-[-0.035em] text-balance text-ink ${entrada(60).className}`}>
-            Um idioma. Mil histórias para descobrir.
+              className="m-0 font-display font-semibold text-[clamp(36px,6vw,64px)] leading-[1.02]
+                          tracking-[-0.035em] text-balance text-ink">
+            Aprenda a ler hebraico.
+            <span className="block mt-2 text-[.56em] leading-[1.15] tracking-[-0.02em] font-medium text-ink-body">
+              Depois, descubra Israel e as raízes sefarditas.
+            </span>
           </h1>
-          <p style={entrada(120).style}
-             className={`m-0 font-ui text-[18px] sm:text-[20px] leading-[1.55] text-ink-muted max-w-[44ch] ${entrada(120).className}`}>
-            Aprenda hebraico, explore Israel e descubra as histórias que ligam língua, cultura e
-            identidade. Experiências digitais feitas para brasileiros.
+          <p className="m-0 font-ui text-[17px] sm:text-[20px] leading-[1.55] text-ink-muted max-w-[46ch]">
+            Um curso para brasileiros começarem do zero, letra por letra, e conteúdos sobre Israel e a
+            história sefardita que chegam em breve.
           </p>
           <div style={entrada(180).style} className={`flex flex-wrap items-center gap-3 pt-1 ${entrada(180).className}`}>
+            {/* No telefone a escolha da jornada está logo abaixo (Atalhos), e
+                este botão só repetiria a lista: ele aparece a partir de lg. */}
             <a href="#jornadas" onClick={() => contarNoPortal('cta-explorar')}
-               className="inline-flex items-center justify-center gap-2 min-h-[56px] px-7 rounded-[var(--r-md)]
+               className="hidden lg:inline-flex items-center justify-center gap-2 min-h-[56px] px-7 rounded-[var(--r-md)]
                           bg-[var(--navy)] text-white font-ui text-base font-medium shadow-[var(--sh)]
                           transition-[background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
                           hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0">
@@ -124,18 +135,24 @@ function Abertura({ jaEhAluno, continuar }: {
             <Link href={jaEhAluno ? continuar.href : '/curso-de-hebraico'}
                   onClick={() => { if (!jaEhAluno) contarNoPortal('cta-curso'); }}
                   className="inline-flex items-center justify-center gap-2 min-h-[56px] px-6 rounded-[var(--r-md)]
-                             bg-[var(--card)] text-ink border border-line font-ui text-base font-medium
-                             transition-[border-color,transform] duration-[var(--dur)] ease-[var(--ease)]
-                             hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0">
+                             bg-[var(--navy)] text-white lg:bg-[var(--card)] lg:text-ink border border-transparent lg:border-line
+                             font-ui text-base font-medium
+                             transition-[border-color,background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
+                             hover:bg-[var(--navy-2)] lg:hover:bg-[var(--card)] lg:hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0">
               {jaEhAluno ? continuar.label : 'Comece pelo hebraico'}
             </Link>
+          </div>
+          <div style={entrada(240).style} className={`lg:hidden ${entrada(240).className}`}>
+            <Atalhos />
           </div>
         </div>
 
         {/* A mesa: as três jornadas como três folhas sobre a mesa, uma por
             cima da outra. Ilustração; o conteúdo de cada uma está logo abaixo. */}
+        {/* Só a partir de lg: no telefone a mesa empurrava as jornadas para
+            baixo da primeira tela, e no lugar dela ficam os Atalhos. */}
         <div aria-hidden style={entrada(240).style}
-             className={`relative mx-auto w-full max-w-[520px] aspect-[5/4] ${entrada(240).className}`}>
+             className={`hidden lg:block relative mx-auto w-full max-w-[520px] aspect-[5/4] ${entrada(240).className}`}>
           <Folha jornada="israel"   className="absolute left-[2%] top-[4%] w-[62%] -rotate-[5deg]" />
           <Folha jornada="raizes"   className="absolute right-[0%] top-[18%] w-[58%] rotate-[4deg]" />
           <Folha jornada="hebraico" className="absolute left-[16%] bottom-[0%] w-[64%] -rotate-[1.5deg]" />
@@ -147,6 +164,52 @@ function Abertura({ jaEhAluno, continuar }: {
         </div>
       </Container>
     </section>
+  );
+}
+
+/** O que está aberto e o que não está, contado: "2 experiências" numa
+ *  jornada com uma só à venda prometia o dobro. */
+function situacaoDa(id: Jornada['id']): string {
+  const daqui = produtos().filter(p => p.jornada === id);
+  const abertos = daqui.filter(vendavel).length;
+  return abertos === 0
+    ? 'Em breve, sem data marcada'
+    : abertos === daqui.length
+      ? 'Disponível agora'
+      : `${abertos} disponível agora · ${daqui.length - abertos} em desenvolvimento`;
+}
+
+/* No telefone, as três jornadas já na primeira tela (390 x 844): uma linha
+   cada, com a letra, o nome e o que existe. Os cartões completos vêm logo
+   depois, em #jornadas. */
+function Atalhos() {
+  return (
+    <nav aria-label="As três jornadas" data-a11y-desvia className="grid gap-2.5 pt-2">
+      <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">
+        Escolha por onde começar
+      </p>
+      <ul className="grid gap-2 list-none p-0 m-0">
+        {JORNADAS.map(j => {
+          const t = TOM[j.id];
+          return (
+            <li key={j.id}>
+              <Link href={j.rota} onClick={() => contarNoPortal(`jornada-${j.id}` as EventoDoPortal)}
+                    className={`grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 min-h-[60px] px-3 py-2
+                                rounded-[14px] border ${t.fio} ${t.fundo} transition-[scale] duration-150 active:scale-[.98]`}>
+                <span aria-hidden className="grid place-items-center w-10 h-10 rounded-[10px] bg-[var(--card)]">
+                  <He size="inline" tone={j.id === 'hebraico' ? 'teal' : 'navy'}>{j.letra}</He>
+                </span>
+                <span className="grid min-w-0">
+                  <span className="font-display text-[17px] font-semibold leading-tight text-ink">{j.nome}</span>
+                  <span className="font-ui text-[13px] text-ink-muted">{situacaoDa(j.id)}</span>
+                </span>
+                <span aria-hidden className={`font-ui text-[18px] ${t.tinta}`}>→</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
 
@@ -163,10 +226,11 @@ function Folha({ jornada, className = '' }: { jornada: Jornada['id']; className?
 
 /* ── 2 · escolha sua jornada ────────────────────────────────────────────── */
 function Jornadas() {
-  const todos = produtos();
   return (
     <section id="jornadas" aria-labelledby="jornadas-titulo" className="scroll-mt-20 bg-surface-2">
-      <Container className="py-16 sm:py-24 grid gap-10">
+      {/* `minmax(0,1fr)`: com o texto em 150% no telefone, "sefarditas" não
+          cabe e a coluna crescia 8px para fora da tela (a11y.mjs). */}
+      <Container className="py-16 sm:py-24 grid grid-cols-[minmax(0,1fr)] gap-10">
         <div className="grid gap-4">
           <Rubrica letra="ב">Escolha sua jornada</Rubrica>
           <H2 id="jornadas-titulo" className="m-0 max-w-[22ch]">Três caminhos. A mesma vontade de entender.</H2>
@@ -179,29 +243,24 @@ function Jornadas() {
         <ul className="grid gap-5 lg:grid-cols-3 list-none p-0 m-0">
           {JORNADAS.map((j, i) => {
             const t = TOM[j.id];
-            const daqui = todos.filter(p => p.jornada === j.id);
-            const abertos = daqui.filter(vendavel).length;
-            /* O que está aberto e o que não está, contado: "2 experiências"
-               numa jornada com uma só à venda prometia o dobro. */
-            const situacao = abertos === 0
-              ? 'Em breve, sem data marcada'
-              : abertos === daqui.length
-                ? 'Disponível agora'
-                : `${abertos} disponível agora · ${daqui.length - abertos} em desenvolvimento`;
+            const situacao = situacaoDa(j.id);
             return (
               <li key={j.id}
-                  className={`group relative grid grid-rows-[auto_1fr_auto] gap-5 rounded-[18px] border ${t.fio} ${t.fundo}
-                              p-6 sm:p-7 transition-[transform,box-shadow] duration-200 ease-[var(--ease)]
+                  className={`group relative grid grid-cols-[minmax(0,1fr)] lg:grid-rows-[auto_1fr_auto] gap-4 lg:gap-5 rounded-[18px] border ${t.fio} ${t.fundo}
+                              p-5 sm:p-7 transition-[transform,box-shadow] duration-200 ease-[var(--ease)]
                               [@media(hover:hover)]:hover:-translate-y-[3px]
                               [@media(hover:hover)]:hover:shadow-[0_22px_44px_-28px_rgba(6,42,48,.55)]
                               focus-within:ring-2 focus-within:ring-[var(--teal)] focus-within:ring-offset-2`}>
-                <div className={`flex items-start justify-between gap-4 ${t.tinta}`}>
+                <div className={`hidden lg:flex items-start justify-between gap-4 ${t.tinta}`}>
                   <span className="font-display text-[15px] font-semibold tabular-nums">0{i + 1}</span>
                   <span className="text-[34px] leading-none"><He size="inline" tone={j.id === 'hebraico' ? 'teal' : 'navy'}>{j.letra}</He></span>
                 </div>
                 <div className="grid content-start gap-3">
-                  <div className={`max-w-[240px] ${t.tinta}`}><Emblema jornada={j.id} /></div>
-                  <h3 className="m-0 font-display text-[26px] font-semibold tracking-[-0.02em] text-ink">
+                  {/* No telefone o emblema fica pequeno, ao lado do título; o
+                      cartão perde metade da altura sem perder nada. */}
+                  <div className="flex items-center gap-4 min-w-0 lg:grid lg:gap-3">
+                  <div className={`w-[84px] shrink-0 lg:w-auto lg:max-w-[240px] ${t.tinta}`}><Emblema jornada={j.id} /></div>
+                  <h3 className="m-0 min-w-0 [overflow-wrap:anywhere] font-display text-[23px] lg:text-[26px] font-semibold tracking-[-0.02em] text-ink">
                     {/* O link cobre o cartão inteiro (o ::after), e o foco vai
                         para ele: um destino, uma parada de Tab. */}
                     <Link href={j.rota} onClick={() => contarNoPortal(`jornada-${j.id}` as EventoDoPortal)}
@@ -209,6 +268,7 @@ function Jornadas() {
                       {j.nome}
                     </Link>
                   </h3>
+                  </div>
                   <p className="m-0 font-ui text-[16px] leading-[1.55] text-ink-body text-pretty">{j.chamada}</p>
                 </div>
                 <div className="grid gap-4">
@@ -249,12 +309,14 @@ function EmDestaque({ jaEhAluno }: { jaEhAluno: boolean }) {
           </div>
         </div>
 
+        <UmaAluna />
+
         {emProducao.length > 0 && (
           <p className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-muted border-t border-line pt-5">
             Em desenvolvimento: os níveis seguintes do hebraico, a partir do A1, vendidos à parte e na
             mesma conta.{' '}
             <Link href="/cursos" onClick={() => contarNoPortal('produto-hebraico-a1')}
-                  className="font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]">
+                  className="inline-block py-3 -my-3 font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]">
               Ver a trilha dos cursos
             </Link>
           </p>
@@ -279,6 +341,16 @@ function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
         <p className="m-0 font-ui text-[17px] leading-[1.6] text-ink-body max-w-[52ch] text-pretty">{p.descricao}</p>
         <p className="m-0 font-ui text-[14.5px] text-ink-muted">Para: {p.publico.toLowerCase()}.</p>
       </div>
+      {/* O que o preço compra, em três itens da mesma lista da caixa de preço
+          (lib/inclui.ts): a página de venda tem o resto. */}
+      <ul className="grid gap-2 list-none p-0 m-0">
+        {oEssencialDoCurso().map(i => (
+          <li key={i} className="flex items-start gap-3 font-ui text-[15.5px] leading-[1.5] text-ink-body">
+            <span aria-hidden className="mt-[3px] grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)] text-[11px] font-bold shrink-0">✓</span>
+            {i}
+          </li>
+        ))}
+      </ul>
       <div className="flex flex-wrap items-end justify-between gap-5 border-t border-line pt-5">
         {jaEhAluno ? (
           <p className="m-0 font-ui text-[15.5px] text-ink-body">Este curso já é seu.</p>
@@ -292,6 +364,14 @@ function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
             <span className="font-ui text-[13.5px] text-ink-muted">
               pagamento único · {flagship().accessMonths} meses de acesso · {empresa.politicas.arrependimentoDias} dias para desistir
             </span>
+            {/* A data real em que o preço muda (a Action virar-preco roda no dia
+                seguinte), a mesma que a página de venda diz: prazo verdadeiro,
+                sem contagem regressiva (persuasion-audit, 23/10/2026). */}
+            {fimDoPreLancamento(flagship().price) && (
+              <span className="font-ui text-[13.5px] text-ink-muted">
+                Preço de pré-lançamento até {fimDoPreLancamento(flagship().price)}.
+              </span>
+            )}
           </p>
         )}
         <Link href={jaEhAluno ? '/meu-hebraico' : p.rota}
@@ -305,6 +385,33 @@ function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
         </Link>
       </div>
     </article>
+  );
+}
+
+/* O depoimento já publicado na página de venda (lib/testimonials.ts), aqui
+   em um trecho. O corte vem marcado com "[...]", como /depoimento promete a
+   quem escreve, e o vínculo da aluna com o professor vai à vista (CONAR).
+   Sem depoimento na lista, a seção não existe: nenhum cartão de exemplo. */
+function UmaAluna() {
+  const t = DEPOIMENTOS[0];
+  if (!t) return null;
+  const ps = t.citacao.split(/\n\s*\n/);
+  const trecho = ps.find(x => /plataforma/i.test(x)) ?? ps[0]!;
+  const cortado = ps.length > 1;
+  return (
+    <figure className="m-0 grid gap-3 border-l-2 border-[var(--gold)] pl-5 sm:pl-6 py-1 max-w-[760px]">
+      <blockquote className="m-0 font-display text-[19px] sm:text-[21px] leading-[1.45] text-ink text-pretty">
+        “{cortado && ps.indexOf(trecho) > 0 ? '[...] ' : ''}{trecho}{cortado && ps.indexOf(trecho) < ps.length - 1 ? ' [...]' : ''}”
+      </blockquote>
+      <figcaption className="flex flex-wrap items-center gap-x-3 gap-y-0.5 font-ui text-[14px] text-ink-muted">
+        <span className="font-semibold text-ink">{t.nome}</span>
+        <span>{t.contexto}</span>
+        <span aria-hidden>·</span>
+        <Link href="/curso-de-hebraico" className="inline-flex items-center min-h-[44px] font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]">
+          Ler o depoimento inteiro
+        </Link>
+      </figcaption>
+    </figure>
   );
 }
 

@@ -43,7 +43,9 @@ function origem() {
 const NAO_LISTADAS = [
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
   '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/verificar-certificado',
-  '/termos/v', '/reembolso/v', '/privacidade/v'
+  '/termos/v', '/reembolso/v', '/privacidade/v',
+  /* Responde 301 para /curso-de-hebraico (worker.js, 23/10/2026). */
+  '/cursos/alfabetizacao'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,

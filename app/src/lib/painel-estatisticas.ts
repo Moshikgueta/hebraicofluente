@@ -105,3 +105,33 @@ export function funilDaDemo(demo: readonly { etapa: string; n: number }[]) {
 /* Os motivos de desistência (04/10/2026), opcionais: o nome de cada um, como
    a pessoa viu ao desistir. É a lista de lib/motivos-desistencia.ts. */
 export { MOTIVOS_DESISTENCIA as MOTIVOS_PT } from './motivos-desistencia';
+
+/* O funil do portal (23/10/2026): a capa vista, a jornada escolhida, o
+   produto aberto e os botões que levam ao curso. Os eventos são os de
+   lib/funil-portal.ts (e de EVENTOS_DO_PORTAL no servidor), cada um contado
+   uma vez por visita; a porcentagem é sobre quem viu a capa. Depois da capa,
+   a página de venda tem o funil do teste grátis, e as compras estão em
+   /admin/vendas: o portal não conta checkout nem compra. */
+export const EVENTOS_DO_PORTAL_PT: readonly { grupo: string; evento: string; nome: string }[] = [
+  { grupo: 'Capa', evento: 'visto', nome: 'Viu a capa' },
+  { grupo: 'Jornada', evento: 'jornada-hebraico', nome: 'Aprender hebraico' },
+  { grupo: 'Jornada', evento: 'jornada-israel', nome: 'Descobrir Israel' },
+  { grupo: 'Jornada', evento: 'jornada-raizes', nome: 'Raízes sefarditas' },
+  { grupo: 'Produto', evento: 'produto-alfabetizacao', nome: 'Alfabetização em Hebraico' },
+  { grupo: 'Produto', evento: 'produto-hebraico-a1', nome: 'A trilha (A1 em diante)' },
+  { grupo: 'Produto', evento: 'produto-israel-alem-do-roteiro', nome: 'Israel Além do Roteiro' },
+  { grupo: 'Produto', evento: 'produto-raizes-sefarditas', nome: 'Raízes Sefarditas' },
+  { grupo: 'Para o curso', evento: 'cta-curso', nome: 'Botão para a página de venda' },
+  { grupo: 'Para o curso', evento: 'cta-explorar', nome: 'Botão "explorar as experiências"' },
+  { grupo: 'Palavra da capa', evento: 'palavra-revelar', nome: 'Viu as partes de «shalóm»' },
+  { grupo: 'Palavra da capa', evento: 'palavra-ouvir', nome: 'Ouviu a palavra' }
+];
+
+export function funilDoPortal(portal: readonly { evento: string; n: number }[]) {
+  const conta = new Map(portal.map(d => [d.evento, d.n]));
+  const viram = conta.get('visto') ?? 0;
+  return EVENTOS_DO_PORTAL_PT.map(({ grupo, evento, nome }) => {
+    const n = conta.get(evento) ?? 0;
+    return { grupo, evento, nome, n, deQuemViu: viram ? n / viram : null };
+  });
+}

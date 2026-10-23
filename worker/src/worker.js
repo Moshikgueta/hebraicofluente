@@ -246,6 +246,14 @@ async function responder(request, env, ctx) {
     if (path === '/' && url.searchParams.has('parceria') && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(null, { status: 302, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}${url.search}#experimente`, 'Cache-Control': 'no-store' } });
     }
+    /* Uma página de venda só (23/10/2026, decisão do dono): a do curso de
+       alfabetização mora em /curso-de-hebraico, e o endereço antigo do
+       catálogo leva para lá com a consulta junto (`?sem-acesso=1` do portão,
+       `?parceria=` de algum link velho). O payload RSC do mesmo endereço
+       também, para a navegação do Next não montar a página antiga. */
+    if (/^\/cursos\/alfabetizacao(\/(index\.(html|txt))?)?$/i.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 301, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}${url.search}` } });
+    }
     /* Endereços do portal que já têm casa (23/10/2026): o contato é o
        /suporte (o mesmo e-mail e WhatsApp), e "minha conta" é o painel. */
     const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/' };

@@ -10,11 +10,11 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  funilDaDemo, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
+  funilDaDemo, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; motivos?: { motivo: string; n: number }[] };
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[] };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -113,7 +113,32 @@ export function EstatisticasClient() {
             </section>
 
             <section className="grid gap-3">
-              <h2 className="text-[20px] font-semibold m-0">Teste grátis da capa</h2>
+              <h2 className="text-[20px] font-semibold m-0">A capa (portal)</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                O que os visitantes fizeram na capa, contando cada pessoa uma vez por visita. A porcentagem é
+                sobre quem viu a capa. Depois dela, o teste grátis da página de venda está logo abaixo, e as
+                compras estão em <Link href="/admin/vendas" className="underline">Quem comprou</Link>.
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full font-ui text-[14px] border-collapse">
+                  <thead><tr className="text-left text-ink-muted">
+                    <th className="py-2 pr-3">Onde</th><th className="py-2 pr-3">O quê</th>
+                    <th className="py-2 pr-3 text-right">Pessoas</th><th className="py-2 text-right">De quem viu</th>
+                  </tr></thead>
+                  <tbody>{funilDoPortal(estado.dados.portal || []).map(l => (
+                    <tr key={l.evento} className="border-t border-[color:var(--line-soft)]">
+                      <td className="py-2 pr-3 text-ink-muted">{l.grupo}</td>
+                      <td className="py-2 pr-3">{l.nome}</td>
+                      <td className="py-2 pr-3 text-right tabular-nums">{l.n}</td>
+                      <td className="py-2 text-right tabular-nums">{pct(l.deQuemViu)}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+              </div>
+            </section>
+
+            <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Teste grátis da página de venda</h2>
               <p className="font-ui text-[14px] text-ink-muted m-0">
                 Quantos visitantes chegaram a cada etapa do teste do Álef, contando cada pessoa uma vez por visita.
                 A porcentagem é sobre quem viu o teste. Uma queda grande de uma etapa para a seguinte mostra onde

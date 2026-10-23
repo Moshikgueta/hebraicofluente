@@ -63,7 +63,7 @@ const BASE = 'http://127.0.0.1:4497';
    `check-legal.mjs`, mais as que têm controle interativo. */
 const ROTAS = [
   '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
-  '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+  '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/acessibilidade/', '/entrar/', '/criar-conta/'
 ];

@@ -91,7 +91,7 @@ function julgar(n, unidade) {
    verificação é da VITRINE: o que se promete a quem ainda não comprou. */
 const LIVRES = new Set([
   '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
-  '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+  '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/checkout/alfabetizacao/'
 ]);

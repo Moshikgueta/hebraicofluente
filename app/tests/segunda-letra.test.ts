@@ -50,7 +50,7 @@ describe('o conteúdo do e-mail', () => {
     const m = mensagemDaSegundaLetra({ site: SITE, suporte: 'contato@hebraicofluente.com.br' });
     expect(m.subject).toBe('A segunda letra: Mem (מ) - Hebraico Fluente');
     expect(m.text).not.toMatch(/R\$/);
-    expect(m.text).toContain(`${SITE}/cursos/alfabetizacao/`);
+    expect(m.text).toContain(`${SITE}/curso-de-hebraico/`);
     expect(m.text).toContain('Não foi você? É só ignorar');
     expect(m.html).toContain('dir="rtl"');
     expect(m.html).not.toMatch(/<script/i);

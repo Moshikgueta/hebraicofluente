@@ -101,7 +101,7 @@ const noEscuro = () => contexto();
 
 const ROTAS_DO_ALUNO = ['/meu-hebraico/', '/mapa/', '/licao/alef/', '/revisao/',
                         '/academia/', '/conquistas/', '/perfil/', '/inicio/'];
-const ROTAS_PUBLICAS = ['/', '/metodo/', '/cursos/alfabetizacao/', '/faq/', '/entrar/'];
+const ROTAS_PUBLICAS = ['/', '/metodo/', '/curso-de-hebraico/', '/faq/', '/entrar/'];
 
 const fundo = p => p.evaluate(() => getComputedStyle(document.body).backgroundColor);
 

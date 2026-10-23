@@ -138,7 +138,7 @@ console.log('\n  A DESISTÊNCIA NA VITRINE\n');
     /* O React separa `{N}` do texto ao lado com um comentário vazio no HTML
        gerado ("7<!-- --> dias"); a frase lida pelo visitante é a mesma. */
     const FRASE = new RegExp(`\\b${N}(?:<!-- -->)? dias para desistir e receber 100% de volta, sem justificar\\.`);
-    for (const [rota, onde] of [['/curso-de-hebraico/', 'a caixa de preço da página de venda'], ['/cursos/alfabetizacao/', 'a caixa de preço do curso']]) {
+    for (const [rota, onde] of [['/curso-de-hebraico/', 'a caixa de preço da página de venda']]) {
       const p = html(rota);
       if (!p) { falha(`${rota} não foi gerada`); continue; }
       if (FRASE.test(p)) ok(`${onde} diz "${N} dias para desistir e receber 100% de volta, sem justificar."`);
@@ -263,7 +263,7 @@ if (!AUTOR || !OBRA) {
      público aparece. As pagas ficam de fora porque usam outra casca. */
   const LIVRES = [
     '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
-    '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+    '/metodo/', '/cursos/', '/sobre/', '/faq/',
     '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/'
   ];
   const sem = LIVRES.filter(r => { const p = html(r); return p && !p.includes(AUTOR); });
@@ -369,7 +369,7 @@ console.log('\n  AS FORMAS DE PAGAMENTO NO TEXTO\n');
     ...(confirma ? [] : [[/Acesso imediato|normalmente em minutos|em alguns minutos|liberado automaticamente|Acesso liberado na hora/i,
                           'promete liberação imediata, e no PIX direto a liberação é à mão']])
   ];
-  const ROTAS = ['/', '/curso-de-hebraico/', '/cursos/alfabetizacao/', '/checkout/alfabetizacao/', '/termos/', '/faq/', '/suporte/', '/reembolso/'];
+  const ROTAS = ['/', '/curso-de-hebraico/', '/checkout/alfabetizacao/', '/termos/', '/faq/', '/suporte/', '/reembolso/'];
   let achados = 0;
   for (const rota of ROTAS) {
     const p = html(rota);

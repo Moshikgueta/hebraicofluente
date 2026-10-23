@@ -12,8 +12,9 @@ import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { CourseShelf } from '@/components/platform/CourseShelf';
-import { allCourses, brl, estaAVenda, getCourse, isPlayable } from '@/lib/catalog';
+import { allCourses, brl, estaAVenda, getCourse, isPlayable, paginaDeVenda } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
+import { TrilhaNoTopo } from '@/components/portal/Migalhas';
 
 export function CursosClient() {
   const account = useAccount();
@@ -23,6 +24,7 @@ export function CursosClient() {
 
   return (
     <>
+      <TrilhaNoTopo trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'Os cursos' }]} />
       <Section labelledBy="cursos">
         <SectionHead
           id="cursos"
@@ -85,7 +87,7 @@ export function CursosClient() {
                       <p className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink tabular-nums">{brl(c.price.brl)}</p>
                     )}
                     <LinkButton
-                      href={owned ? '/meu-hebraico' : `/cursos/${c.slug}`}
+                      href={owned ? '/meu-hebraico' : paginaDeVenda(c.slug)}
                       variant={open && !owned ? 'primary' : 'secondary'}
                       size="sm"
                     >

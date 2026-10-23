@@ -20,7 +20,7 @@ import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { useAccount } from '@/lib/account/store';
 import { proximoCurso, proximoPasso } from '@/lib/cta';
-import { FLAGSHIP } from '@/lib/catalog';
+import { FLAGSHIP, paginaDeVenda } from '@/lib/catalog';
 import { track } from '@/lib/analytics';
 
 /** O botão sozinho, com a microcópia embaixo. Serve em qualquer lugar. */
@@ -80,8 +80,11 @@ export function FaixaCta({
        navy sobre papel creme. Era um cartão branco numa faixa teal-clara, o
        banner de fechamento de qualquer modelo pronto. Link dentro de `linha`
        tem de vir claro (ver /faq). */
+    /* `minmax(0,1fr)` e `overflow-wrap: anywhere`: com o texto em 150% no
+       telefone, o e-mail de contato (uma palavra só) esticava a faixa 56px
+       para fora da tela em /faq e /sobre (a11y.mjs, 23/10/2026). */
     <div className="rounded-[22px] bg-[var(--navy)] px-6 py-12 sm:px-12 sm:py-16
-                    grid gap-4 justify-items-center text-center">
+                    grid grid-cols-[minmax(0,1fr)] gap-4 justify-items-center text-center [overflow-wrap:anywhere]">
       <h2 className="font-display font-semibold text-[clamp(26px,3.2vw,38px)] leading-[1.1]
                      tracking-[-0.03em] text-white max-w-[24ch] m-0">
         {titulo}
@@ -133,7 +136,7 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
       )}
       <div className="pt-1">
         <Link
-          href={`/cursos/${curso.slug}`}
+          href={paginaDeVenda(curso.slug)}
           onClick={() => track('next_course_clicked', { itemId: curso.slug })}
           className="group inline-flex items-center gap-2 min-h-[48px] px-5 rounded-[var(--r-md)]
                      bg-[var(--accent-bg)] text-white font-ui font-semibold text-[15px]

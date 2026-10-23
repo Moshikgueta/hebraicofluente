@@ -71,6 +71,7 @@ export default function IsraelAlemDoRoteiroPage() {
       </section>
 
       <Ponte
+        jornada="israel"
         titulo="Chegue a Israel sabendo ler as letras."
         texto="O livro tem um capítulo sobre o hebraico das placas. Se quiser ir além do reconhecimento, o curso de alfabetização ensina a ler as 22 letras e os sinais de vogal."
         href="/curso-de-hebraico"

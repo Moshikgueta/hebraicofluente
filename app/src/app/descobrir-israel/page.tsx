@@ -38,6 +38,7 @@ export default function DescobrirIsraelPage() {
       <ProdutosDaJornada id="israel" titulo="O que esta jornada terá" />
 
       <Ponte
+        jornada="israel"
         titulo="As placas de Israel estão em hebraico."
         texto="Antes da viagem, dá para aprender a ler as letras. O curso de alfabetização ensina as 22, no seu ritmo, e termina com palavras como as que aparecem em placas, rótulos e cardápios."
         href="/curso-de-hebraico"

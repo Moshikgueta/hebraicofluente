@@ -859,6 +859,18 @@ compra; medição só com o contador próprio.
   país, maço de arquivo. Sem hebraico dentro do SVG.
 - Cuidado já pago uma vez: `h1-h4` têm `color: var(--ink)` no globals.css, então título dentro de
   bloco navy precisa de `text-white` explícito (a herança do bloco não vale).
+- **Rodada "nota 100" (23/10/2026, decisões do dono):** abertura B ("Aprenda a ler hebraico. Depois,
+  descubra Israel e as raízes sefarditas."); no telefone a mesa de folhas sai e as três jornadas
+  (`Atalhos`) ficam na primeira tela de 390 x 844. **Uma página de venda só:** `/cursos/alfabetizacao`
+  (e o `index.txt` dela) responde 301 para `/curso-de-hebraico/` com a consulta junto (worker.js), o
+  portão manda direto para lá, e todo link interno passa por `paginaDeVenda(slug)` (lib/catalog.ts);
+  fora do sitemap. O menu tem o painel "Experiências" (jornadas com `resumo` e status) e o rodapé tem
+  Experiências, Aprender, Ajuda e Legal. `/metodo`, `/biblia`, `/cursos` e `/faq` têm migalhas
+  (`PageHead trilha`, `TrilhaNoTopo`). `BotaoDoCurso` troca a oferta por "Continuar" para quem já é aluno.
+  O que o preço compra mora em `lib/inclui.ts` (capa e caixa de preço). O painel `/admin/estatisticas`
+  mostra o funil do portal. `npm run alcance` prova que toda página do sitemap está a 2 cliques da capa.
+  Sistema visual: `components/portal/README.md` e a amostra `/admin/sistema`. Roteiros dos testes com
+  pessoas e a auditoria de persuasão: `audit/portal/`.
 
 ## Antes de commitar
 ```sh

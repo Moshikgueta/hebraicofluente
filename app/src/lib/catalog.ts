@@ -120,6 +120,14 @@ export const getCourse = (slug: string): CatalogCourse | undefined =>
 /** O curso que a plataforma vende hoje. */
 export const FLAGSHIP = 'alfabetizacao';
 
+/** A página de venda de um produto. O curso de alfabetização vende em
+ *  /curso-de-hebraico desde 23/10/2026 (a capa virou o portal), e
+ *  /cursos/alfabetizacao responde 301 para lá (worker.js): uma página de
+ *  venda só, com um texto só. Os outros produtos seguem em /cursos/<slug>. */
+export const PAGINA_DO_CURSO = '/curso-de-hebraico';
+export const paginaDeVenda = (slug: string): string =>
+  slug === FLAGSHIP ? PAGINA_DO_CURSO : `/cursos/${slug}`;
+
 export const flagship = (): CatalogCourse => getCourse(FLAGSHIP)!;
 
 /**
@@ -134,7 +142,7 @@ export const isPlayable = (c: CatalogCourse): boolean =>
 
 /** A rota que abre o curso, ou a página de venda se ele ainda não abre. */
 export function courseHref(c: CatalogCourse): string {
-  return isPlayable(c) ? (c.abre ?? '/meu-hebraico') : `/cursos/${c.slug}`;
+  return isPlayable(c) ? (c.abre ?? '/meu-hebraico') : paginaDeVenda(c.slug);
 }
 
 /* ── dinheiro ───────────────────────────────────────────────────────────

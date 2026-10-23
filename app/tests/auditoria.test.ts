@@ -91,7 +91,7 @@ describe('o portão não acredita em cabeçalho do cliente', () => {
     const { cookie } = await comConta(env);
     const r = await gate(new Request(alvo, { headers: { Cookie: cookie } }), env);
     expect(r.status).toBe(302);
-    expect(r.headers.get('location')).toContain('/cursos/alfabetizacao/');
+    expect(r.headers.get('location')).toContain('/curso-de-hebraico/');
   });
 
   it('com sessão e curso, passa - inclusive o index.txt que o Next busca', async () => {

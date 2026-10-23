@@ -66,11 +66,14 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
         )}
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3">
+      {/* No telefone, 2 + 1: ouvir ocupa a linha de cima (é o gesto
+          principal), e os outros dois dividem a de baixo. Três botões
+          empilhados empurravam o sentido para fora da tela. */}
+      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
         <button type="button"
                 onClick={() => { setPartes(true); contarNoPortal('palavra-revelar'); }}
                 aria-pressed={partes}
-                className="min-h-[48px] px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
+                className="min-h-[48px] px-3 sm:px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
                            bg-white/10 text-white hover:bg-white/15 transition-[background-color,scale] duration-150 active:scale-[.97]
                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           Ver as partes
@@ -79,7 +82,7 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
                 onClick={() => { tocar('shalom'); contarNoPortal('palavra-ouvir'); }}
                 className="min-h-[48px] px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
                            bg-white text-[var(--navy)] hover:bg-[var(--teal-soft)] transition-[background-color,scale] duration-150 active:scale-[.97]
-                           inline-flex items-center justify-center gap-2 min-w-[172px]
+                           inline-flex items-center justify-center gap-2 col-span-2 order-first sm:order-none sm:min-w-[172px]
                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           <span aria-hidden className="inline-block w-0 h-0 border-y-[6px] border-y-transparent border-l-[10px] border-l-current" />
           {tocando === 'shalom' ? 'Tocando...' : 'Ouvir a palavra'}
@@ -88,7 +91,7 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
                 onClick={() => setSentido(true)}
                 aria-expanded={sentido}
                 aria-controls="palavra-sentido"
-                className="min-h-[48px] px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
+                className="min-h-[48px] px-3 sm:px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
                            bg-white/10 text-white hover:bg-white/15 transition-[background-color,scale] duration-150 active:scale-[.97]
                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
           O que significa?

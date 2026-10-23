@@ -209,7 +209,7 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
         ) : (
           <>
             Ainda não comprou?{' '}
-            <Link href="/cursos/alfabetizacao"
+            <Link href="/curso-de-hebraico"
                   className="text-[var(--accent)] font-medium hover:underline">
               Ver o curso
             </Link>

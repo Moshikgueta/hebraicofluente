@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { meta } from '@/lib/seo';
-import { Container, Rubrica } from '@/components/landing/base';
+import { Container, H2, Rubrica } from '@/components/landing/base';
+import { BotaoDoCurso } from '@/components/portal/BotaoDoCurso';
 import { Abertura, Ponte, ProdutosDaJornada } from '@/components/portal/Jornada';
 import { course, totalLicoes } from '@/lib/content-publico';
 
@@ -17,6 +18,13 @@ export const metadata: Metadata = meta({
    curso de alfabetização; os níveis seguintes aparecem com o status do
    catálogo ("Em desenvolvimento"). Os números (lições, letras) vêm do curso
    construído, nunca escritos à mão. */
+const MAIS = [
+  { href: '/metodo', t: 'O método', d: 'Como é cada lição, da letra nova à fixação.' },
+  { href: '/cursos', t: 'A trilha dos cursos', d: 'A alfabetização, e os níveis A1, A2 e B1 que vêm depois.' },
+  { href: '/biblia', t: 'Dá para ler a Bíblia?', d: 'Ler em voz alta, sim; entender sem vocabulário, não. Gênesis 1:1, palavra por palavra.' },
+  { href: '/faq', t: 'Dúvidas', d: 'Acesso, pagamento, celular, prazo para desistir.' }
+];
+
 export default function AprenderHebraicoPage() {
   return (
     <>
@@ -34,13 +42,13 @@ export default function AprenderHebraicoPage() {
         }
       >
         <div className="flex flex-wrap gap-3 pt-1">
-          <Link href="/curso-de-hebraico"
+          <BotaoDoCurso href="/curso-de-hebraico"
                 className="inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
                            bg-[var(--navy)] text-white font-ui text-[15.5px] font-medium hover:bg-[var(--navy-2)]
                            transition-colors duration-[var(--dur)]">
             Conhecer o curso
             <span aria-hidden>→</span>
-          </Link>
+          </BotaoDoCurso>
           <Link href="/metodo"
                 className="inline-flex items-center justify-center min-h-[52px] px-6 rounded-[var(--r-md)]
                            bg-[var(--card)] text-ink border border-line font-ui text-[15.5px] font-medium
@@ -63,6 +71,28 @@ export default function AprenderHebraicoPage() {
             as placas ou de abrir um texto, é preciso reconhecer as letras sem esforço. São {course.modules.length}{' '}
             módulos, no seu ritmo, no celular ou no computador.
           </p>
+        </Container>
+      </section>
+
+      {/* As páginas que explicam o curso, todas a um clique da jornada: quem
+          chega pela capa encontra o método, a trilha dos níveis, a pergunta
+          da Bíblia e as dúvidas sem voltar ao menu. */}
+      <section aria-labelledby="fundo-titulo" className="bg-surface-2">
+        <Container className="py-14 sm:py-20 grid gap-8">
+          <H2 id="fundo-titulo" className="m-0 max-w-[22ch]">Para conhecer melhor antes de começar.</H2>
+          <ul className="grid gap-x-10 md:grid-cols-2 list-none p-0 m-0 border-t border-line">
+            {MAIS.map(m => (
+              <li key={m.href} className="border-b border-line">
+                <Link href={m.href} className="group grid gap-1 py-5 min-h-[44px]">
+                  <span className="inline-flex items-center gap-2 font-display text-[19px] font-semibold text-ink">
+                    {m.t}
+                    <span aria-hidden className="text-[var(--teal-ink)] transition-transform duration-200 group-hover:translate-x-[3px]">→</span>
+                  </span>
+                  <span className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">{m.d}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Container>
       </section>
 

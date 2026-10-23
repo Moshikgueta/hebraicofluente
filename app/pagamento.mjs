@@ -66,7 +66,7 @@ const PROIBIDO_SEM_AUTOMATICO = [
   /ela se atualiza sozinha/i
 ];
 
-const PAGINAS = ['/', '/cursos/', '/cursos/alfabetizacao/', '/faq/', '/termos/',
+const PAGINAS = ['/', '/cursos/', '/curso-de-hebraico/', '/faq/', '/termos/',
                  '/privacidade/', '/reembolso/', '/suporte/', '/checkout/alfabetizacao/'];
 
 const navegador = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });

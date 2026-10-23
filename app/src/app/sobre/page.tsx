@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { TrilhaNoTopo } from '@/components/portal/Migalhas';
 import { meta } from '@/lib/seo';
 import { He } from '@/components/hebrew/He';
 import Link from 'next/link';
@@ -40,6 +41,7 @@ export default function SobrePage() {
       {/* A história inteira (28/09/2026): o mesmo componente que antes
           ocupava a capa, que agora mostra só um resumo com o link para cá.
           Aqui o título é o <h1> da página. */}
+      <TrilhaNoTopo trilha={[{ nome: 'Sobre' }]} />
       <div className="border-b border-[color:var(--line-soft)]">
         <Trajetoria retrato={retrato} nivel="h1" />
       </div>
