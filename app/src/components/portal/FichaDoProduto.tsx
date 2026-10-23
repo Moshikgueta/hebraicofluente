@@ -6,12 +6,12 @@
  * as cinco, na mesma ordem, nos três. Não é tabela de planos: cada produto tem
  * a sua ficha, na página dele, e nenhum é posto ao lado do outro como "melhor".
  *
- * Situação: o preço só aparece no produto à venda (lido de lib/vitrine.ts,
- * o mesmo que o checkout cobra). Produto "Em breve" diz isso e nada mais: sem
+ * Situação: o preço só aparece no produto à venda (lido de lib/vitrine.ts
+ * com o catálogo DO PRODUTO, o mesmo que o checkout cobra). Produto "Em breve" diz isso e nada mais: sem
  * preço, sem data inventada, sem botão de compra (tests/portal.test.ts).
  */
 
-import { brl, flagship } from '@/lib/catalog';
+import { brl, getCourse } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
 import { vendavel, type Produto } from '@/lib/ecossistema';
 import { precoDeVitrine } from '@/lib/vitrine';
@@ -70,14 +70,15 @@ function Situacao({ p }: { p: Produto }) {
       </p>
     );
   }
-  /* Hoje só o curso de alfabetização está à venda; o preço e o prazo são os
-     dele, lidos do catálogo. Um segundo produto à venda pede o preço dele aqui. */
+  /* O preço, o acesso e o prazo são os do produto, lidos do catálogo. */
+  const c = p.slug ? getCourse(p.slug) : undefined;
+  if (!c) return <p className="m-0"><SeloDoStatus status={p.status} /></p>;
   return (
     <p className="m-0 flex flex-wrap items-center gap-3">
       <SeloDoStatus status={p.status} />
       <span>
-        <strong className="font-semibold text-ink">{brl(precoDeVitrine())}</strong>, pagamento único,{' '}
-        {flagship().accessMonths} meses de acesso, {empresa.politicas.arrependimentoDias} dias para desistir.
+        <strong className="font-semibold text-ink">{brl(precoDeVitrine(c))}</strong>, pagamento único,{' '}
+        {c.accessMonths} meses de acesso, {empresa.politicas.arrependimentoDias} dias para desistir.
       </span>
     </p>
   );

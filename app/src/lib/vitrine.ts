@@ -7,10 +7,10 @@
  * regra viram três preços no dia em que a regra mudar.
  */
 
-import { flagship, pixPrice } from '@/lib/catalog';
+import { flagship, pixPrice, type CatalogCourse } from '@/lib/catalog';
 import { soPix } from '@/lib/empresa';
 
-export function precoDeVitrine(): number {
-  const c = flagship();
+/** O preço em destaque de um produto do catálogo (o curso, se nenhum for dado). */
+export function precoDeVitrine(c: CatalogCourse = flagship()): number {
   return soPix() ? pixPrice(c.price) : c.price.brl;
 }

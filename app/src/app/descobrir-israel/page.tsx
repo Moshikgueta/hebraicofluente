@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { Abertura, Ponte, ProdutosDaJornada } from '@/components/portal/Jornada';
+import { jornadaAberta } from '@/lib/ecossistema';
 
 export const metadata: Metadata = meta({
   rota: '/descobrir-israel',
@@ -10,9 +11,9 @@ export const metadata: Metadata = meta({
     'israelense. Para viajar sabendo o que se vê.'
 });
 
-/* A jornada "Descobrir Israel" (23/10/2026, portal). O produto dela, o livro
-   Israel Além do Óbvio, está pronto e fora de venda (decisão do dono:
-   "Em breve", sem preço). A ponte leva ao que dá para fazer hoje. */
+/* A jornada "Descobrir Israel" (23/10/2026, portal). O produto dela é o livro
+   Israel Além do Óbvio: "Em breve", sem preço, enquanto estiver fora de venda
+   (`aVenda` no catálogo). A ponte leva ao curso de hebraico. */
 export default function DescobrirIsraelPage() {
   return (
     <>
@@ -35,7 +36,7 @@ export default function DescobrirIsraelPage() {
         }
       />
 
-      <ProdutosDaJornada id="israel" titulo="O que esta jornada terá" />
+      <ProdutosDaJornada id="israel" titulo={jornadaAberta('israel') ? 'O que esta jornada tem' : 'O que esta jornada terá'} />
 
       <Ponte
         jornada="israel"

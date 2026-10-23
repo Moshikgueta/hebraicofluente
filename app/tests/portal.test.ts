@@ -58,14 +58,24 @@ describe('o status sai do catálogo', () => {
 });
 
 describe('as páginas "Em breve" não vendem', () => {
-  it('sem preço, sem checkout e sem botão de compra no livro e no Raízes', () => {
-    for (const rel of ['../src/app/israel-alem-do-obvio/page.tsx', '../src/app/raizes-sefarditas/page.tsx',
-                       '../src/app/descobrir-israel/page.tsx']) {
+  it('sem preço, sem checkout e sem botão de compra no Raízes e na jornada', () => {
+    for (const rel of ['../src/app/raizes-sefarditas/page.tsx', '../src/app/descobrir-israel/page.tsx']) {
       const t = codigo(rel);
       expect(t, rel).not.toMatch(/checkout/i);
       expect(t, rel).not.toMatch(/R\$|brl\(|precoDeVitrine|price\b/);
       expect(t, rel).not.toMatch(/Comprar|Garantir|Quero o livro/);
     }
+  });
+
+  it('a página do livro só mostra preço e botão quando o catálogo põe o livro à venda', () => {
+    const t = codigo('../src/app/israel-alem-do-obvio/page.tsx');
+    expect(t).not.toMatch(/checkout/i);
+    expect(t).not.toMatch(/R\$\s?\d/);
+    /* o preço e o botão moram no ramo `aVenda ?`, o outro é o aviso "Em breve" */
+    const ramo = t.slice(t.indexOf('{aVenda ?'), t.indexOf('<AvisoEmBreve'));
+    expect(ramo).toContain('precoDeVitrine(livro)');
+    expect(ramo).toContain('paginaDeVenda(');
+    expect(t).toMatch(/const aVenda = vendavel\(p\)/);
   });
 
   it('a capa só mostra preço do produto à venda, e o lê do catálogo', () => {

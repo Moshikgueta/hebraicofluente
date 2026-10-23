@@ -102,11 +102,12 @@ export const LIVRO = 'israel-alem-do-roteiro';
    confere esta lista contra data/courses.json. */
 export const NAO_CURSOS = new Set([LIVRO]);
 /* Produtos sem página de venda: fora do catálogo (Raízes) ou com `aVenda:
-   false` em data/courses.json (o e-book, 22/10/2026). Lista fixa porque este
-   arquivo não pode importar o catálogo: o seo.mjs da publicação o carrega no
-   Node puro, que recusa JSON sem atributo de importação. tests/ebook-produto
-   confere a lista contra o catálogo: abrir a venda pede tirar o slug daqui. */
-export const SEM_PAGINA_DE_VENDA = new Set(['raizes-sefarditas', LIVRO]);
+   false` em data/courses.json. Lista fixa porque este arquivo não pode
+   importar o catálogo: o seo.mjs da publicação o carrega no Node puro, que
+   recusa JSON sem atributo de importação. tests/ebook-produto confere a lista
+   contra o catálogo: fechar a venda de um produto pede pôr o slug aqui, abrir
+   pede tirar (o e-book saiu daqui quando a venda abriu). */
+export const SEM_PAGINA_DE_VENDA = new Set(['raizes-sefarditas']);
 const ehCurso = slug => !NAO_CURSOS.has(slug);
 
 export function cursoDaRota(path) {
@@ -173,8 +174,8 @@ export async function gate(request, env) {
     : await hasEntitlement(env, account.id, curso);
   if (!pode) {
     /* Produto sem página de venda - fora do catálogo (Raízes Sefarditas) ou
-       com `aVenda: false` (o e-book, 22/10/2026): quem não tem o direito vai
-       para a lista de cursos, e não para um 404. */
+       com `aVenda: false`: quem não tem o direito vai para a lista de cursos,
+       e não para um 404. */
     /* O curso de alfabetização vende em /curso-de-hebraico (23/10/2026); ir
        direto para lá poupa o 301 do endereço antigo. */
     const pagina = SEM_PAGINA_DE_VENDA.has(curso) ? '/cursos/'

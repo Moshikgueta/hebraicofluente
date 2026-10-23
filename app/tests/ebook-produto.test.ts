@@ -27,7 +27,7 @@ import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
 import { gate, cursoDaRota, isGatedPath, NAO_CURSOS, SEM_PAGINA_DE_VENDA } from '../../worker/src/gate.js';
 // @ts-expect-error - idem
-import { getCourse, itensDoPedido, priceCents } from '../../worker/src/lib/catalog.js';
+import { getCourse, isSellable, itensDoPedido, priceCents } from '../../worker/src/lib/catalog.js';
 // @ts-expect-error - idem
 import { grantAccess, hasEntitlement } from '../../worker/src/lib/db.js';
 // @ts-expect-error - idem
@@ -157,19 +157,21 @@ describe('o catálogo', () => {
     expect(allProducts().map(c => c.slug)).toContain('alfabetizacao');
   });
 
-  /* 22/10/2026 (decisão do dono): o e-book vai ao ar como o Raízes Sefarditas,
-     só para quem tem o acesso liberado à mão. `aVenda: false` no catálogo; abrir
-     a venda é tirar essa linha (e o contador e o advogado verem antes). */
-  it('enquanto `aVenda` é false: sem página de venda, sem checkout, sem link', () => {
-    expect(getCourse(LIVRO).aVenda).toBe(false);
-    expect(getCourse(PACOTE).aVenda).toBe(false);
-    expect(allProducts().map(c => c.slug)).not.toContain(LIVRO);
-    expect(allProducts().map(c => c.slug)).not.toContain(PACOTE);
+  /* A venda abre quando o contador e o advogado responderem (decisão do dono,
+     21/10/2026): o catálogo não tem mais `aVenda: false` no e-book nem no pacote. */
+  it('à venda: o e-book e o pacote estão na vitrine e no checkout', () => {
+    expect(getCourse(LIVRO).aVenda).not.toBe(false);
+    expect(getCourse(PACOTE).aVenda).not.toBe(false);
+    expect(isSellable(getCourse(LIVRO))).toBe(true);
+    expect(isSellable(getCourse(PACOTE))).toBe(true);
+    expect(allProducts().map(c => c.slug)).toContain(LIVRO);
+    expect(allProducts().map(c => c.slug)).toContain(PACOTE);
   });
 
-  it('enquanto `aVenda` é false, o servidor recusa a compra do e-book e do pacote', async () => {
+  it('com `aVenda: false`, o servidor recusa a compra do e-book e do pacote', async () => {
     const env = envDeTeste();
     const a = await conta(env);
+    for (const slug of [LIVRO, PACOTE]) { const c = getCourse(slug); if (!VENDA.has(slug)) VENDA.set(slug, c.aVenda); c.aVenda = false; }
     for (const slug of [LIVRO, PACOTE]) {
       const r = await pay.create({ request: pedido(`${SITE}/api/pay/create`, { courseSlug: slug, method: 'pix' }, { Cookie: a.cookie }), env, ctx });
       expect(r.status, slug).toBe(404);
@@ -232,13 +234,13 @@ describe('o portão do e-book', () => {
     expect((await porta('/audio/he-12345678.mp3'))?.status, 'o e-book abriu o áudio do curso').toBe(302);
   });
 
-  it('quem tem só o curso não lê o e-book, e vai para /cursos/ (o e-book não tem página de venda)', async () => {
+  it('quem tem só o curso não lê o e-book, e vai para a página de venda dele', async () => {
     const env = envDeTeste();
     const a = await conta(env);
     await grantAccess(env, { accountId: a.id, courseSlug: 'alfabetizacao', orderId: 'T-curso', months: 12 });
     const r = await gate(new Request(`${SITE}/israel/`, { headers: { Cookie: a.cookie } }), env);
     expect(r?.status).toBe(302);
-    expect(new URL(r!.headers.get('location')!, SITE).pathname).toBe('/cursos/');
+    expect(new URL(r!.headers.get('location')!, SITE).pathname).toBe(`/cursos/${LIVRO}/`);
   });
 
   it('a lista do portão dos produtos sem página de venda é a do catálogo (aVenda: false) mais o Raízes', () => {

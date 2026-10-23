@@ -1321,8 +1321,10 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   do e-book somem dos Termos e do Reembolso (as políticas ficam na versão de antes).
   `/israel/` vai ao ar atrás do portão e só abre com o direito `israel-alem-do-roteiro`,
   dado à mão em Actions → Acesso → `liberar`; quem não o tem vai para /cursos/.
-  **Abrir a venda** = tirar as duas linhas `aVenda`, subir `politicas.atualizadoEm` e
-  publicar (nasce versão nova dos Termos e do Reembolso).
+  **Abrir a venda** = tirar as duas linhas `aVenda`, tirar o livro de `SEM_PAGINA_DE_VENDA`
+  (worker/src/gate.js), subir `politicas.atualizadoEm` e publicar (nasce versão nova dos
+  Termos e do Reembolso). A página do portal e a ficha leem o preço do catálogo do produto
+  (`precoDeVitrine(c)`) e trocam "Em breve" pelo botão sozinhas.
 - **O editorial é PRIVADO** (21/10/2026): manuscrito, fontes, ilustrações, fotos e
   ferramentas moram em `Moshikgueta/hebraicofluente-editorial`, nunca neste repositório
   (público). `editorial/` está no `.gitignore`: para trabalhar, clone o privado aí. A
