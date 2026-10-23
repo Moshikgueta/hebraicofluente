@@ -888,7 +888,9 @@ function main() {
     sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
     shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד',
     alef: 'אָלֶף', 'alef-a': 'אַ', 'alef-e': 'אֶ', 'alef-i': 'אִ', 'alef-o': 'אוֹ', 'alef-u': 'אוּ',
-    aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל'
+    aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל',
+    /* As páginas do alfabeto (23/10/2026, app/src/lib/alfabeto-publico.ts). */
+    tav: 'תָו', ima: 'אִמָא', emet: 'אֶמֶת', laila: 'לַיְלָה'
   };
   const amostraAudio = join(pub, 'amostra-audio');
   rmSync(amostraAudio, { recursive: true, force: true });

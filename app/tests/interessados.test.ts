@@ -151,7 +151,7 @@ describe('a sequência das letras', () => {
     await post(env, '/api/segunda-letra', { email, lista: true });
     const t = tokenDoLink(linkNoEmail(enviados.at(-1)!));
     await post(env, '/api/interessados/confirmar', { t });
-    return Number(env.DB.bruto.prepare('SELECT confirmado_em FROM interessados WHERE email = ?').get(email)!.confirmado_em as number);
+    return Number((env.DB.bruto.prepare('SELECT confirmado_em FROM interessados WHERE email = ?').get(email) as { confirmado_em: number }).confirmado_em);
   }
   const rodar = async (env: Env, at: number) => { enviados = []; await runSequencia(env, at); return enviados; };
 

@@ -902,7 +902,11 @@ compra; medição só com o contador próprio.
   aluna foi para a fonte do texto corrido (`font-ui`) e a letra do `Rubrica` (components/landing/
   base.tsx, em todo o site) de 500 para 400. Eram 3 arquivos de fonte a mais antes da primeira
   pintura. LCP da capa 3,16 → 2,90 s, FCP 1,66 → 1,35 s. Um peso novo na capa é um arquivo novo:
-  medir antes. A página de venda ainda usa Bricolage 400, 500 e 700 (3,44 s).
+  medir antes. Na página de venda saíram o 700 (o nome "Álef" da demo) e o 400 (as aspas do
+  depoimento), os dois agora semibold: 41 KB a menos antes da primeira pintura, FCP 1,81 → 1,50 s.
+  Fica o 500, o estilo das frases de abertura (Hero e 8 seções): trocá-lo muda o tom da página,
+  decisão do dono. O LCP dessa página no Lighthouse local é bimodal (2,9 ou 3,7 s, conforme a
+  primeira pintura sai em 0,3 ou 1,3 s): compare o peso baixado antes da pintura, não a mediana.
 - `app/responder.mjs`: a resposta a cada tela de exercício, usada por `portao.mjs` e `exame.mjs`
   (escolha, "Monte a palavra", campo de escrever, "Ligue cada"). Os dois saem com código 1 quando
   algo falha. Tipo novo de exercício entra ali.
