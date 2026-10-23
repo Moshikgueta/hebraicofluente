@@ -17,6 +17,8 @@ import './globals.css';
 const display = localFont({
   variable: '--font-display-loaded',
   display: 'swap',
+  /* Sem preload desde 23/10/2026 (ver a nota acima de `cursive`). */
+  preload: false,
   src: [
     { path: '../../../assets/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
     { path: '../../../assets/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
@@ -49,22 +51,30 @@ const ui = localFont({
    consoante. A troca é segura. */
 const hebrew = localFont({
   variable: '--font-he-loaded',
-  display: 'swap',
+  /* `block`, e não `swap` (23/10/2026): sem preload, a fonte chega uma volta
+     de rede depois, e com `swap` o navegador pintaria o hebraico antes numa
+     fonte reserva - com o nikud fora do lugar, que é exatamente o erro que
+     esta família existe para evitar. Com `block` o hebraico espera a fonte
+     certa (no máximo uns 3 s, depois a reserva) e nunca aparece errado. */
+  display: 'block',
+  preload: false,
   src: [
     { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
     { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
     { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
-/* Sem preload (auditoria de 01/10/2026, PERF-006): a cursiva só aparece nas
-   telas de escrita do curso, e o `<link rel=preload>` a punha em alta
-   prioridade em TODA página, inclusive na capa, disputando banda com o
-   JavaScript. Com `swap`, ela chega quando uma tela a pede.
-   As outras três famílias continuam com preload: o Next decide o preload por
-   família, não por peso, e cada uma tem pesos usados na capa (Bricolage 500
-   a 700, Instrument 400 a 600, Noto Serif Hebrew 400). Tirar os pesos raros
-   do preload pediria partir a família, e o navegador então sintetiza o
-   negrito no lugar do peso real. */
+/* Preload só da fonte do texto corrido (23/10/2026).
+   ─────────────────────────────────────────────────────────────────────────
+   Eram 10 `<link rel=preload>` em toda página (4 pesos de Bricolage, 3 de
+   Instrument, 3 de Noto Serif Hebrew), 165 KB disputando banda com o CSS e
+   o JavaScript antes da primeira pintura. O Lighthouse de celular media a
+   maior pintura (LCP) em 3,2 a 3,9 s, e o elemento dela é um parágrafo em
+   Instrument Sans. Ficou o preload só dessa família; títulos (Bricolage) e
+   hebraico (Noto Serif Hebrew) são pedidos quando o CSS os usa, uma volta de
+   rede depois, cada família inteira, sem partir pesos (partir faria o
+   navegador sintetizar o negrito). A cursiva já não tinha preload
+   (auditoria de 01/10/2026, PERF-006): só aparece nas telas de escrita. */
 const cursive = localFont({
   variable: '--font-he-cursive-loaded',
   display: 'swap',
