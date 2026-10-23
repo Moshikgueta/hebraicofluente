@@ -8,6 +8,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROTAS_LEVES, isPublicRoute, rotaLeve } from '@/lib/rotas';
+import { BASE } from '../next.config';
 
 const SRC = join(dirname(fileURLToPath(import.meta.url)), '../src');
 
@@ -67,6 +68,20 @@ describe('rotas leves', () => {
     const layout = join(SRC, 'app/layout.tsx');
     for (const alvo of ['lib/state/store.tsx', 'lib/engine/exam.ts', 'components/shell/AppShell.tsx', 'components/shell/CourseGate.tsx'])
       expect(caminho(layout, alvo), alvo).toBeNull();
+  });
+
+  it('o pedaço `base` (next.config.ts) só junta o que o layout raiz já importa', () => {
+    const layout = join(SRC, 'app/layout.tsx');
+    const alvos = ['lib/catalog.ts', 'lib/content-publico.ts', 'lib/empresa.ts', 'lib/hebrew.ts', 'lib/raizes.ts',
+      'lib/state/raizes-estado.ts', 'lib/account/types.ts', 'lib/account/store.tsx', 'lib/account/api.ts'];
+    for (const a of alvos) {
+      expect(BASE.test(join(SRC, a)), a).toBe(true);
+      expect(caminho(layout, a), a).not.toBeNull();
+    }
+    /* e nada do curso pago nem do progresso entra nele */
+    for (const fora of ['lib/state/store.tsx', 'lib/content-servidor.ts', 'lib/content.ts', 'lib/engine/exam.ts'])
+      expect(BASE.test(join(SRC, fora)), fora).toBe(false);
+    expect(BASE.test(join(SRC, '../content/letters.json'))).toBe(false);
   });
 
   it('a barra final e a lição não mudam a decisão', () => {

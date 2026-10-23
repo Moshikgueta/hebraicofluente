@@ -887,8 +887,18 @@ compra; medição só com o contador próprio.
   `lib/engine/nota-do-exame.ts` (importar de exam.ts puxava o motor de exercícios para todo lado).
 - A entrada do Hero da página de venda é CSS (`hero-entra`), sem esperar o React: o texto aparece
   na primeira pintura e só sobe 12 px.
-- Medida (Lighthouse celular simulado, mediana de 5): JS da capa 209 → 169 KB (gzip); LCP da capa
-  3,45 → 3,01 s. A página de venda oscila entre 3,4 e 4,3 s entre rodadas.
+- **O pedaço `base`** (`next.config.ts`, `BASE`): o webpack COPIAVA para o pedaço do layout e para o
+  da página os módulos pequenos que os dois usam (catálogo, resumo do curso, conta, hebraico), e a
+  página baixava os dois. Agora vão num pedaço só. Só entra em `BASE` o que o layout raiz já importa
+  (`tests/rotas-leves.test.ts` confere); a regra geral "todo src/lib compartilhado" foi medida e
+  descartada: 3 KB a menos, o dobro de arquivos.
+- Medida (Lighthouse celular simulado, mediana de 5): JS da capa 209 → 158 KB (gzip), da página de
+  venda 228 → 176 KB; LCP de /aprender-hebraico 2,65 → 2,32 s. A capa fica entre 3,0 e 3,2 s: o
+  que sobra é o React (100 KB) e dois pesos da fonte de títulos mais dois do hebraico na primeira
+  tela; tirar isso muda o visual, decisão do dono.
+- `app/responder.mjs`: a resposta a cada tela de exercício, usada por `portao.mjs` e `exame.mjs`
+  (escolha, "Monte a palavra", campo de escrever, "Ligue cada"). Os dois saem com código 1 quando
+  algo falha. Tipo novo de exercício entra ali.
 
 ## O cartão do link no WhatsApp e no Instagram (23/10/2026, pedido do dono)
 - Um cartão por porta de entrada, gerados por `tools/og.mjs` (num Chromium, com as fontes e as
