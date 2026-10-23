@@ -192,15 +192,17 @@ export function crescimentoPorFonte(
   porFonte: readonly { evento: string; fonte: string; n: number }[],
   pedidos: readonly PedidosDaFonte[]
 ) {
-  const linhas = new Map<string, { fonte: string; nome: string; venda: number; checkout: number; pedidos: number; compras: number; receitaCentavos: number; estornos: number }>();
+  const linhas = new Map<string, { fonte: string; nome: string; venda: number; checkout: number; conta: number; pagar: number; pedidos: number; compras: number; receitaCentavos: number; estornos: number }>();
   const linha = (fonte: string) => {
     let l = linhas.get(fonte);
-    if (!l) { l = { fonte, nome: FONTES_PT[fonte] ?? fonte, venda: 0, checkout: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 }; linhas.set(fonte, l); }
+    if (!l) { l = { fonte, nome: FONTES_PT[fonte] ?? fonte, venda: 0, checkout: 0, conta: 0, pagar: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 }; linhas.set(fonte, l); }
     return l;
   };
   for (const f of porFonte) {
     if (f.evento === 'venda-visto') linha(f.fonte).venda += f.n;
     else if (f.evento === 'checkout-aberto') linha(f.fonte).checkout += f.n;
+    else if (f.evento === 'checkout-conta') linha(f.fonte).conta += f.n;
+    else if (f.evento === 'checkout-pagar') linha(f.fonte).pagar += f.n;
   }
   for (const p of pedidos) {
     const l = linha(p.fonte);
@@ -209,8 +211,8 @@ export function crescimentoPorFonte(
   const todas = [...linhas.values()].map(l => ({ ...l, conversao: l.venda ? l.compras / l.venda : null }));
   todas.sort((a, b) => b.compras - a.compras || b.venda - a.venda || a.fonte.localeCompare(b.fonte));
   const total = todas.reduce((t, l) => ({
-    venda: t.venda + l.venda, checkout: t.checkout + l.checkout, pedidos: t.pedidos + l.pedidos,
+    venda: t.venda + l.venda, checkout: t.checkout + l.checkout, conta: t.conta + l.conta, pagar: t.pagar + l.pagar, pedidos: t.pedidos + l.pedidos,
     compras: t.compras + l.compras, receitaCentavos: t.receitaCentavos + l.receitaCentavos, estornos: t.estornos + l.estornos
-  }), { venda: 0, checkout: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 });
+  }), { venda: 0, checkout: 0, conta: 0, pagar: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 });
   return { linhas: todas, total: { ...total, conversao: total.venda ? total.compras / total.venda : null } };
 }

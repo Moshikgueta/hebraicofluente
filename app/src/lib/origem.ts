@@ -96,7 +96,7 @@ export function origemAtual(agora = Date.now()): Origem | null {
   return v && agora - v.em < VALIDADE_MS ? { fonte: v.fonte, campanha: v.campanha } : null;
 }
 
-export type EventoComFonte = 'venda-visto' | 'checkout-aberto';
+export type EventoComFonte = 'venda-visto' | 'checkout-aberto' | 'checkout-conta' | 'checkout-pagar';
 const enviados = new Set<EventoComFonte>();
 
 /** Conta a abertura da página de venda ou do checkout, com a fonte. Uma vez

@@ -154,6 +154,8 @@ describe('o contador por fonte', () => {
     expect((await mandar({ evento: 'venda-visto', fonte: 'stories' })).status).toBe(204);
     await mandar({ evento: 'venda-visto', fonte: 'stories' });
     await mandar({ evento: 'checkout-aberto', fonte: 'stories' });
+    await mandar({ evento: 'checkout-conta', fonte: 'stories' });
+    await mandar({ evento: 'checkout-pagar', fonte: 'stories' });
     await mandar({ evento: 'venda-visto', fonte: 'inventada' });
     await mandar({ evento: 'venda-visto' });
     await mandar({ evento: 'venda-visto', fonte: 'busca' }, 'Googlebot/2.1');
@@ -161,6 +163,8 @@ describe('o contador por fonte', () => {
     const linhas = env.DB.bruto.prepare("SELECT chave, n FROM estatisticas WHERE chave LIKE 'f|%' ORDER BY chave").all();
     expect(linhas).toEqual([
       { chave: 'f|checkout-aberto|stories', n: 1 },
+      { chave: 'f|checkout-conta|stories', n: 1 },
+      { chave: 'f|checkout-pagar|stories', n: 1 },
       { chave: 'f|venda-visto|direto', n: 2 },
       { chave: 'f|venda-visto|stories', n: 2 }
     ]);
@@ -230,11 +234,12 @@ describe('a tabela de crescimento', () => {
     const { linhas, total } = crescimentoPorFonte(
       [
         { evento: 'venda-visto', fonte: 'stories', n: 50 }, { evento: 'checkout-aberto', fonte: 'stories', n: 5 },
+        { evento: 'checkout-conta', fonte: 'stories', n: 4 }, { evento: 'checkout-pagar', fonte: 'stories', n: 3 },
         { evento: 'venda-visto', fonte: 'busca', n: 20 }
       ],
       [{ fonte: 'stories', pedidos: 3, compras: 2, receitaCentavos: 26460, estornos: 0 }]
     );
-    expect(linhas[0]).toMatchObject({ fonte: 'stories', venda: 50, checkout: 5, pedidos: 3, compras: 2, conversao: 0.04 });
+    expect(linhas[0]).toMatchObject({ fonte: 'stories', venda: 50, checkout: 5, conta: 4, pagar: 3, pedidos: 3, compras: 2, conversao: 0.04 });
     expect(linhas[1]).toMatchObject({ fonte: 'busca', venda: 20, compras: 0, conversao: 0 });
     expect(total).toMatchObject({ venda: 70, compras: 2, receitaCentavos: 26460 });
     expect(total.conversao).toBeCloseTo(2 / 70);
