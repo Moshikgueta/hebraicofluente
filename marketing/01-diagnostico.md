@@ -9,6 +9,38 @@ com a fonte ao lado). **[H]** = hipótese, ainda sem dado que a confirme. Nada a
 medido de venda ou de tráfego: esses números estão no banco de produção e no Instagram, que esta
 sessão não alcança (o site responde 403 para a rede da sessão). A lista do que falta está no fim.
 
+## 0. Os primeiros dados reais (23/10/2026, painéis enviados pelo dono)
+
+Lidos de `/admin/vendas` e `/admin/estatisticas` (últimos 30 dias), em capturas de tela que o
+dono mandou. Aqui só totais: o repositório é público, e nome ou e-mail de aluno não entra.
+
+| Dado | Valor | O que diz |
+|---|---|---|
+| Compras pagas mantidas (desde o início) | 4, R$ 543,90 | volume muito baixo; o gargalo é tráfego |
+| Compras pelo link de campanha | 0 | os links de campanha ainda não trouxeram venda |
+| Pedidos criados (30 dias) | 9 | |
+| Pagos no período | 3 mantidos + 2 estornados | **2 de 5 estornados (40%)**, quatro vezes o alerta de 10% do painel |
+| Pedidos sem pagamento (30 dias) | 4 de 9 | quase metade abandona depois de gerar o PIX ou abrir o cartão |
+| Progresso de quem comprou (3 compras visíveis) | 0, 0 e 3 de 22 letras | **quem compra estuda no dia da compra e não volta** |
+| Último estudo de cada comprador | o mesmo dia da compra | idem |
+| Capa (contador ligado em 23/10, então cerca de 1 dia) | 30 visitas; "Descobrir Israel" 7 (23%), "Aprender hebraico" 3 (10%), botão para a página de venda 1 | amostra mínima; o interesse por Israel apareceu maior que pelo curso |
+| "Comece aqui" | 0 aberturas | o link da bio ainda não leva lá, ou ninguém tocou |
+| Prévia do livro | 11 abriram, 2 foram ao curso (18%) | o EBOOK do ManyChat traz gente; poucos usam as atividades |
+| Respostas nos exercícios (30 dias) | 2.251 | erro mais alto: Resh reconhecer (29%), Tav sentido da palavra (29%), Lámed digitar (25%), com 12 a 18 respostas cada |
+
+**O que muda no diagnóstico:**
+1. **Novo obstáculo, o maior: ativação depois da compra** [E]. Quem pagou não passou da primeira
+   sessão, e 2 de 5 pediram o dinheiro de volta. Tráfego novo, nessas condições, vira estorno. Vem
+   antes de qualquer anúncio. Falta saber o motivo dos dois estornos (tabela de motivos de
+   desistência em `/admin/estatisticas`).
+2. **Abandono no pagamento** [E]: 4 de 9 pedidos não foram pagos. [H] um lembrete de serviço
+   ("seu PIX vence em X horas", um só) recupera parte.
+3. **O tráfego é o segundo gargalo** [E]: 30 visitas num dia e 4 vendas na vida do produto.
+4. **Israel atrai mais que o curso** [H, amostra de 1 dia]: repetir a leitura em 2 semanas antes de
+   mudar qualquer coisa. Se confirmar, o livro (ainda fora de venda) é a porta de entrada mais
+   forte, e o caminho prévia → curso merece mais cuidado.
+5. A hipótese "o link de campanha vende" (O5) não se confirmou até aqui: 0 vendas por ele.
+
 ## 1. O que existe hoje
 
 ### Produtos e preços [E: `data/courses.json`]
@@ -80,7 +112,18 @@ que promete fluência em 30 dias) e o plano a preserva.
 Critério: impacto provável na receita dividido por custo e risco, com a ordem pensada para que
 cada uma alimente a seguinte. Impacto é estimativa [H] até haver números.
 
+### 0. Ativação e permanência de quem já comprou (acrescentada com os dados de 23/10)
+- **Problema:** compradores com 0 de 22 letras e 40% de estorno no mês.
+- **Proposta:** (a) ler os motivos dos dois estornos; (b) e-mails de serviço depois da compra
+  (dia 1: "comece pela Aula 0, 10 minutos"; dia 3, se não houver lição: "quer ajuda?"; dia 7: o
+  que já dá para ler), que não são propaganda e não dependem da lista de interessados; (c) uma
+  mensagem pessoal do professor a cada comprador na primeira semana; (d) um lembrete único para o
+  PIX gerado e não pago.
+- **Meta:** comprador com a lição 1 concluída em 3 dias; estorno abaixo de 10%.
+- **Custo:** baixo. **Risco:** nenhum, se os e-mails forem só de serviço e os textos forem do dono.
+
 ### 1. Medir o funil de ponta a ponta, sem cookie (base de todo o resto)
+- **Feito em 23/10/2026** (PR #242, publicado).
 - **Problema:** O2. Sem isso, qualquer investimento em Instagram, parceria ou anúncio é às cegas.
 - **Proposta:** gravar a origem (UTM ou link de campanha) da primeira página vista no aparelho e
   levá-la ao pedido, como já se faz com `parceria`; contar visitas à página de venda e "abriu o
