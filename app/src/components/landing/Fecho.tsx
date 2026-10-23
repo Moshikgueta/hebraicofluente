@@ -341,7 +341,7 @@ export function Depoimentos() {
                 </figcaption>
               </div>
               <blockquote className="relative m-0 grid gap-5 lg:pl-10 lg:border-l lg:border-line">
-                <span aria-hidden className="font-display text-[72px] leading-[.6] text-[var(--teal)] h-[28px]">“</span>
+                <span aria-hidden className="font-display font-semibold text-[72px] leading-[.6] text-[var(--teal)] h-[28px]">“</span>
                 {ps.map((par, j) => (
                   <p key={j}
                      className={j === 0
