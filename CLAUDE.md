@@ -893,9 +893,13 @@ compra; medição só com o contador próprio.
   (`tests/rotas-leves.test.ts` confere); a regra geral "todo src/lib compartilhado" foi medida e
   descartada: 3 KB a menos, o dobro de arquivos.
 - Medida (Lighthouse celular simulado, mediana de 5): JS da capa 209 → 158 KB (gzip), da página de
-  venda 228 → 176 KB; LCP de /aprender-hebraico 2,65 → 2,32 s. A capa fica entre 3,0 e 3,2 s: o
-  que sobra é o React (100 KB) e dois pesos da fonte de títulos mais dois do hebraico na primeira
-  tela; tirar isso muda o visual, decisão do dono.
+  venda 228 → 176 KB; LCP de /aprender-hebraico 2,65 → 2,32 s.
+- **A capa carrega um peso só de cada fonte de exibição** (23/10/2026, decisão do dono): Bricolage
+  600 e Noto Serif Hebrew 400. A segunda linha do título passou de 500 para semibold, a citação da
+  aluna foi para a fonte do texto corrido (`font-ui`) e a letra do `Rubrica` (components/landing/
+  base.tsx, em todo o site) de 500 para 400. Eram 3 arquivos de fonte a mais antes da primeira
+  pintura. LCP da capa 3,16 → 2,90 s, FCP 1,66 → 1,35 s. Um peso novo na capa é um arquivo novo:
+  medir antes. A página de venda ainda usa Bricolage 400, 500 e 700 (3,44 s).
 - `app/responder.mjs`: a resposta a cada tela de exercício, usada por `portao.mjs` e `exame.mjs`
   (escolha, "Monte a palavra", campo de escrever, "Ligue cada"). Os dois saem com código 1 quando
   algo falha. Tipo novo de exercício entra ali.

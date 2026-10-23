@@ -112,7 +112,10 @@ function Abertura({ jaEhAluno, continuar }: {
               className="m-0 font-display font-semibold text-[clamp(36px,6vw,64px)] leading-[1.02]
                           tracking-[-0.035em] text-balance text-ink">
             Aprenda a ler hebraico.
-            <span className="block mt-2 text-[.56em] leading-[1.15] tracking-[-0.02em] font-medium text-ink-body">
+            {/* Semibold como a primeira linha (23/10/2026): o peso 500 só existia
+                aqui e era mais um arquivo de fonte antes da primeira pintura. A
+                hierarquia fica no tamanho e na cor. */}
+            <span className="block mt-2 text-[.56em] leading-[1.15] tracking-[-0.02em] font-semibold text-ink-body">
               Depois, descubra Israel e as raízes sefarditas.
             </span>
           </h1>
@@ -401,7 +404,9 @@ function UmaAluna() {
   const cortado = ps.length > 1;
   return (
     <figure className="m-0 grid gap-3 border-l-2 border-[var(--gold)] pl-5 sm:pl-6 py-1 max-w-[760px]">
-      <blockquote className="m-0 font-display text-[19px] sm:text-[21px] leading-[1.45] text-ink text-pretty">
+      {/* Na fonte do texto corrido (23/10/2026): a de títulos no peso 400 só
+          aparecia nesta citação e era mais um arquivo baixado pela capa. */}
+      <blockquote className="m-0 font-ui text-[19px] sm:text-[21px] leading-[1.5] text-ink text-pretty">
         “{cortado && ps.indexOf(trecho) > 0 ? '[...] ' : ''}{trecho}{cortado && ps.indexOf(trecho) < ps.length - 1 ? ' [...]' : ''}”
       </blockquote>
       <figcaption className="flex flex-wrap items-center gap-x-3 gap-y-0.5 font-ui text-[14px] text-ink-muted">
