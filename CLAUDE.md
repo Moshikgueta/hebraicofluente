@@ -1355,7 +1355,8 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   `X-Robots-Tag` em worker.js) e fora do sitemap (`NAO_LISTADAS` em seo.mjs e lib/seo.ts). É o app
   do livro em modo prévia (`web.mjs --previa`, do editorial), montado por `scripts/ebook-no-site.sh`
   em `app/public/previa/` (gitignored): SÓ os blocos de `editorial/<livro>/previa.json` (decisão do
-  dono: a mochila do cap. 8, o monte a sua comida do cap. 6, a roleta com 5 curiosidades do cap. 9
+  dono: a mochila do cap. 8, o monte a sua comida do cap. 6 À VONTADE (`livre`: pita ou prato, sem
+  recusa nem limite, e "Servir" diz se virou um prato do capítulo), a roleta com 5 curiosidades do cap. 9
   e duas páginas do diário), e a publicação para se algum faltar. Sem preço nem compra do livro
   (que segue `aVenda: false`); o botão do fecho vai ao curso com `utm_content=previa-ebook`.
   Contador: os eventos `previa-*` em `EVENTOS_DO_PORTAL` (POST /api/portal), um por visita; tabela

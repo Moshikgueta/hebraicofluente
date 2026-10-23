@@ -82,6 +82,8 @@ describe('/previa não oferece a compra do livro', () => {
     expect(D.producao).toBeNull();
     const tipos = D.previa.secoes.flatMap((s: { blocos: { tipo: string; jogo?: string }[] }) => s.blocos.map(b => b.jogo ? `${b.tipo}:${b.jogo}` : b.tipo));
     expect(tipos).toEqual(['mochila', 'monte', 'jogo:roleta']);
+    /* o monte a sua comida, à vontade: sem recusa nem limite (pedido do dono) */
+    expect(D.previa.secoes.find((s: { id: string }) => s.id === 'comida').blocos[0].livre).toBe(true);
     const roleta = D.previa.secoes.find((s: { id: string }) => s.id === 'roleta').blocos[0];
     expect(roleta.itens).toHaveLength(5);
     expect(D.previa.diario.blocos.map((b: { titulo: string }) => b.titulo)).toEqual(['Lugares que desejo conhecer', 'Palavras em hebraico que aprendi']);
