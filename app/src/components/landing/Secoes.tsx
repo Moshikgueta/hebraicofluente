@@ -26,7 +26,7 @@
 
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
-import { Prose } from '@/components/learn/Blocks';
+import { Prose } from '@/components/hebrew/Prose';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';

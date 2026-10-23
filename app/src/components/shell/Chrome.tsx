@@ -15,13 +15,20 @@
 
 import { usePathname, useSelectedLayoutSegments } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { AppShell } from '@/components/shell/AppShell';
+import dynamic from 'next/dynamic';
 import { PublicShell } from '@/components/shell/PublicShell';
-import { CourseGate } from '@/components/shell/CourseGate';
 import { rotaDasRaizes } from '@/lib/raizes';
 import { isPublicRoute } from '@/lib/rotas';
 import { useAccount } from '@/lib/account/store';
 import { FLAGSHIP } from '@/lib/catalog';
+
+/* A casca do aluno e o portão vêm em pedaço próprio (23/10/2026, velocidade
+   no celular): importados direto, entravam no JavaScript de TODA página, e a
+   capa e a página de venda baixavam a navegação do curso sem nunca mostrá-la.
+   O servidor continua desenhando a casca nas rotas do aluno (o HTML é o
+   mesmo), e só elas pedem o pedaço. */
+const AppShell = dynamic(() => import('@/components/shell/AppShell').then(m => m.AppShell));
+const CourseGate = dynamic(() => import('@/components/shell/CourseGate').then(m => m.CourseGate));
 
 export { isAppRoute, isPublicRoute } from '@/lib/rotas';
 

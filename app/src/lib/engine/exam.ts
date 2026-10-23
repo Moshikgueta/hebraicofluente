@@ -149,8 +149,8 @@ const GENS: Record<ExamPartId, readonly Gen[]> = {
 export type ExamSection = { part: ExamPart; exercises: Exercise[] };
 export type Exam = { sections: ExamSection[]; total: number; attempt: number };
 
-/** 70%. The same bar as a checkpoint: this is a course, not a gate. */
-export const EXAM_PASS = 0.7;
+import { EXAM_PASS } from './nota-do-exame';
+export { EXAM_PASS };
 
 export function partsFor(audioAvailable: boolean): ExamPart[] {
   return EXAM_PARTS.filter(p => !p.needsAudio || audioAvailable);

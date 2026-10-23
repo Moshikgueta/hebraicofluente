@@ -81,7 +81,7 @@ const cursive = localFont({
   preload: false,
   src: [{ path: '../../../assets/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
 });
-import { ProgressProvider } from '@/lib/state/store';
+import { ProgressoQuandoPrecisa } from '@/components/shell/ProgressoQuandoPrecisa';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
 import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
@@ -157,7 +157,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {/* Modules 6 and 7 count toward completion: a bar that reads 100%
                 while the reader still cannot handle an unpointed word would be
                 lying about the thing the course exists to teach. */}
-            <ProgressProvider
+            <ProgressoQuandoPrecisa
               totalLetters={course.totalLetters}
               extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
               somIds={course.modules.flatMap(m => m.lessons.filter(l => l.som).map(l => `som-${l.som}`))}
@@ -165,7 +165,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Chrome>
                 <div id="conteudo" tabIndex={-1} className="outline-none">{children}</div>
               </Chrome>
-            </ProgressProvider>
+            </ProgressoQuandoPrecisa>
           </AccountProvider>
         </div>
         <BotaoAcessibilidade />
