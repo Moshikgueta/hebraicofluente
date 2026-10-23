@@ -66,6 +66,9 @@ export const NAO_LISTADAS = [
      pior vitrine possível. */
   '/conta-apagada',
   '/sair-da-lista',
+  /* A prévia grátis do e-book (23/10/2026, scripts/ebook-no-site.sh): só para
+     quem recebe o link no direct do Instagram, sem conta e fora da busca. */
+  '/previa',
   /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
      Existem para quem aceitou aquela versão; na busca, só a de hoje. */
   '/termos/v', '/reembolso/v', '/privacidade/v',

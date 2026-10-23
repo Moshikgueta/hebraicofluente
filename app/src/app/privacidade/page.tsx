@@ -306,6 +306,12 @@ export default function Page() {
           servidor soma por dia e não guarda nome, e-mail, conta, endereço de IP, horário nem cookie. Os totais saem
           depois de um ano.
         </p>
+        {/* 23/10/2026: a prévia do e-book em /previa (eventos previa-*, contarPortal). */}
+        <p>
+          Na prévia gratuita do e-book, que não pede conta, o contador é o mesmo: o navegador manda só o nome do que
+          você fez (abrir a prévia, encher a mochila, montar um prato, abrir o diário, ir para o curso), uma vez por
+          visita. O que você escreve no diário e marca nas atividades fica guardado só no seu aparelho e não é enviado.
+        </p>
         {/* 03/10/2026: worker/src/api/segunda-letra.js. */}
         <p>
           No fim desse teste, você pode pedir a segunda letra por e-mail. O endereço que você digita é usado só para

@@ -178,6 +178,18 @@ for p in "/" "/metodo/" "/cursos/" "/curso-de-hebraico/" "/cursos/hebraico-a1/" 
   [ "$c" = "200" ] || diagnostico "$B$p"
 done
 
+# A prévia grátis do e-book (23/10/2026): o link que vai no direct a quem
+# comenta EBOOK. Abre sem conta, fica fora da busca e não vende o livro (que
+# continua aVenda: false). O nome antigo do livro não pode aparecer.
+echo "A prévia do e-book, sem conta"
+PREVIA_HTML="$(G -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+espera "/previa/ abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+espera "/previa/ fora da busca (cabeçalho)" 1 "$(G -o /dev/null -D - "$B/previa/" | grep -ci '^x-robots-tag:.*noindex')"
+espera "/previa/ fora da busca (meta)" 1 "$(grep -c 'name="robots" content="noindex' <<<"$PREVIA_HTML")"
+espera "/previa/ tem a mochila, o monte e a roleta" 1 "$(grep -q '"tipo":"mochila"' <<<"$PREVIA_HTML" && grep -q '"tipo":"monte"' <<<"$PREVIA_HTML" && grep -q '"jogo":"roleta"' <<<"$PREVIA_HTML" && echo 1 || echo 0)"
+espera "/previa/ não vende o livro" 0 "$(grep -cE 'R\$|/checkout|/cursos/israel' <<<"$PREVIA_HTML")"
+espera "/previa/ sem o nome antigo do livro" 0 "$(grep -ci 'al[eé]m do roteiro' <<<"$PREVIA_HTML")"
+
 # Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
 # some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca - que
 # do lado de quem abre é indistinguível de "o site não funciona". Estas três

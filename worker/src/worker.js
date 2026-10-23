@@ -541,6 +541,12 @@ function blindar(res, path, hashes = null) {
   if (/\.txt$/i.test(path) && path !== '/robots.txt' && path !== '/llms.txt') {
     h.set('X-Robots-Tag', 'noindex');
   }
+  /* A prévia grátis do e-book (23/10/2026): pública e sem conta, mas só para
+     quem recebe o link no direct. Fora da busca pelo cabeçalho, além da meta
+     que o HTML dela já traz (tools/web.mjs do editorial, --previa). */
+  if (path === '/previa' || path.startsWith('/previa/')) {
+    h.set('X-Robots-Tag', 'noindex, nofollow');
+  }
   if (!path.startsWith('/api/') && isGatedPath(path)) {
     /* O clipe de áudio que o portão deixou passar: um dia no aparelho do
        aluno, nunca em cache compartilhado (PERF-008, api/audio.js). */

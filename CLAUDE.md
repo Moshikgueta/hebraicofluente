@@ -1350,6 +1350,18 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
   /israel-alem-do-obvio, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
   VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.
+- **Prévia grátis em /previa** (23/10/2026, pedido do dono): o link que o ManyChat manda no
+  direct a quem comenta EBOOK no Instagram. Pública, sem conta, FORA do portão, `noindex` (meta e
+  `X-Robots-Tag` em worker.js) e fora do sitemap (`NAO_LISTADAS` em seo.mjs e lib/seo.ts). É o app
+  do livro em modo prévia (`web.mjs --previa`, do editorial), montado por `scripts/ebook-no-site.sh`
+  em `app/public/previa/` (gitignored): SÓ os blocos de `editorial/<livro>/previa.json` (decisão do
+  dono: a mochila do cap. 8, o monte a sua comida do cap. 6 À VONTADE (`livre`: pita ou prato, sem
+  recusa nem limite, e "Servir" diz se virou um prato do capítulo), a roleta com 5 curiosidades do cap. 9
+  e duas páginas do diário), e a publicação para se algum faltar. Sem preço nem compra do livro
+  (que segue `aVenda: false`); o botão do fecho vai ao curso com `utm_content=previa-ebook`.
+  Contador: os eventos `previa-*` em `EVENTOS_DO_PORTAL` (POST /api/portal), um por visita; tabela
+  própria em /admin/estatisticas (`funilDaPrevia`); Privacidade art. 4 diz isso.
+  `tests/previa.test.ts` e o bloco "A prévia do e-book" do `worker/e2e.sh` travam tudo isso.
 - **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
   cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o
   direito abre `/israel/` direto.

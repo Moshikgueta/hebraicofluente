@@ -14,6 +14,19 @@ LIVRO=israel-alem-do-roteiro
 PDF=israel-alem-do-roteiro.pdf
 DEST=app/public/israel
 
+PREVIA=app/public/previa
+
+# A prévia grátis (23/10/2026, pedido do dono): /previa, FORA do portão, sem
+# conta, para quem recebe o link no direct. Leva só os blocos de
+# editorial/$LIVRO/previa.json (mochila, monte a sua comida, roleta com cinco
+# curiosidades, duas páginas do diário) e para a publicação se algum faltar.
+# Os capítulos daqui são os de onde esses blocos saem. Montada antes do livro,
+# porque o web.mjs limpa a mesma pasta de trabalho.
+( cd editorial && node tools/web.mjs "$LIVRO" --capitulos=06-sabores.md,08-na-pratica.md,09-curiosidades.md --previa )
+rm -rf "$PREVIA"
+mkdir -p "$PREVIA"
+cp -r editorial/$LIVRO/saida/previa/. "$PREVIA/"
+
 ( cd editorial
   node tools/web.mjs "$LIVRO" --livro --producao="$PDF"
   node tools/revista.mjs "$LIVRO" --livro )
@@ -33,4 +46,4 @@ fi
 # A marca d'água de cada comprador: a cauda que o Worker completa por pedido
 # (scripts/pdf-marca.mjs e worker/src/lib/pdf-marca.js).
 node scripts/pdf-marca.mjs "$DEST/$PDF"
-echo "e-book em $DEST: $(du -sh "$DEST" | cut -f1), PDF $((tamanho / 1024 / 1024)) MB"
+echo "e-book em $DEST: $(du -sh "$DEST" | cut -f1), PDF $((tamanho / 1024 / 1024)) MB; prévia em $PREVIA: $(du -sh "$PREVIA" | cut -f1)"

@@ -45,7 +45,9 @@ const NAO_LISTADAS = [
   '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/verificar-certificado',
   '/termos/v', '/reembolso/v', '/privacidade/v',
   /* Responde 301 para /curso-de-hebraico (worker.js, 23/10/2026). */
-  '/cursos/alfabetizacao'
+  '/cursos/alfabetizacao',
+  /* A prévia grátis do e-book, só para quem recebe o link no direct (23/10/2026). */
+  '/previa'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,

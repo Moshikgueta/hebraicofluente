@@ -127,6 +127,25 @@ export const EVENTOS_DO_PORTAL_PT: readonly { grupo: string; evento: string; nom
   { grupo: 'Palavra da capa', evento: 'palavra-ouvir', nome: 'Ouviu a palavra' }
 ];
 
+/* A prévia grátis do e-book (/previa, 23/10/2026): o mesmo contador do
+   portal, eventos `previa-*`. A porcentagem é sobre quem abriu a prévia. */
+export const EVENTOS_DA_PREVIA_PT: readonly { evento: string; nome: string }[] = [
+  { evento: 'previa-visto', nome: 'Abriu a prévia' },
+  { evento: 'previa-mochila-cheia', nome: 'Encheu a mochila' },
+  { evento: 'previa-prato-pronto', nome: 'Montou um prato' },
+  { evento: 'previa-diario-aberto', nome: 'Abriu o diário' },
+  { evento: 'previa-clique-curso', nome: 'Foi para o curso de hebraico' }
+];
+
+export function funilDaPrevia(portal: readonly { evento: string; n: number }[]) {
+  const conta = new Map(portal.map(d => [d.evento, d.n]));
+  const abriram = conta.get('previa-visto') ?? 0;
+  return EVENTOS_DA_PREVIA_PT.map(({ evento, nome }) => {
+    const n = conta.get(evento) ?? 0;
+    return { evento, nome, n, deQuemAbriu: abriram ? n / abriram : null };
+  });
+}
+
 export function funilDoPortal(portal: readonly { evento: string; n: number }[]) {
   const conta = new Map(portal.map(d => [d.evento, d.n]));
   const viram = conta.get('visto') ?? 0;
