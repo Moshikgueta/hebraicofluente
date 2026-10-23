@@ -19,8 +19,8 @@ dono mandou. Aqui só totais: o repositório é público, e nome ou e-mail de al
 | Compras pagas mantidas (desde o início) | 4, R$ 543,90 | volume muito baixo; o gargalo é tráfego |
 | Compras pelo link de campanha | 0 | os links de campanha ainda não trouxeram venda |
 | Pedidos criados (30 dias) | 9 | |
-| Pagos no período | 3 mantidos + 2 estornados | **2 de 5 estornados (40%)**, quatro vezes o alerta de 10% do painel |
-| Pedidos sem pagamento (30 dias) | 4 de 9 | quase metade abandona depois de gerar o PIX ou abrir o cartão |
+| Pagos no período | 3 mantidos + 2 estornados | os 2 estornos foram **testes do dono** (corrigido pelo dono em 23/10): nenhum cliente pediu o dinheiro de volta |
+| Pedidos sem pagamento (30 dias) | 4 de 9 | também **testes do dono**: o abandono no pagamento não está medido |
 | Progresso de quem comprou (3 compras visíveis) | 0, 0 e 3 de 22 letras | **quem compra estuda no dia da compra e não volta** |
 | Último estudo de cada comprador | o mesmo dia da compra | idem |
 | Capa (contador ligado em 23/10, então cerca de 1 dia) | 30 visitas; "Descobrir Israel" 7 (23%), "Aprender hebraico" 3 (10%), botão para a página de venda 1 | amostra mínima; o interesse por Israel apareceu maior que pelo curso |
@@ -29,12 +29,14 @@ dono mandou. Aqui só totais: o repositório é público, e nome ou e-mail de al
 | Respostas nos exercícios (30 dias) | 2.251 | erro mais alto: Resh reconhecer (29%), Tav sentido da palavra (29%), Lámed digitar (25%), com 12 a 18 respostas cada |
 
 **O que muda no diagnóstico:**
-1. **Novo obstáculo, o maior: ativação depois da compra** [E]. Quem pagou não passou da primeira
-   sessão, e 2 de 5 pediram o dinheiro de volta. Tráfego novo, nessas condições, vira estorno. Vem
-   antes de qualquer anúncio. Falta saber o motivo dos dois estornos (tabela de motivos de
-   desistência em `/admin/estatisticas`).
-2. **Abandono no pagamento** [E]: 4 de 9 pedidos não foram pagos. [H] um lembrete de serviço
-   ("seu PIX vence em X horas", um só) recupera parte.
+1. **Novo obstáculo: ativação depois da compra** [E]. Quem pagou não passou da primeira sessão
+   (0, 0 e 3 de 22 letras, último estudo no dia da compra). Não houve estorno de cliente, mas um
+   aluno que não volta não dá depoimento, não indica e não compra o A1. Vem antes de qualquer
+   anúncio.
+2. **Os testes do dono entram nos números** [E]: 2 estornos e 4 pedidos sem pagamento do mês eram
+   testes. Enquanto os painéis os contarem, estorno, abandono e conversão saem errados. Proposta:
+   os painéis deixam de contar pedidos de contas de `ADMIN_EMAILS` (com a opção de vê-los à parte).
+   O abandono real no pagamento só fica medido depois disso.
 3. **O tráfego é o segundo gargalo** [E]: 30 visitas num dia e 4 vendas na vida do produto.
 4. **Israel atrai mais que o curso** [H, amostra de 1 dia]: repetir a leitura em 2 semanas antes de
    mudar qualquer coisa. Se confirmar, o livro (ainda fora de venda) é a porta de entrada mais
@@ -113,13 +115,13 @@ Critério: impacto provável na receita dividido por custo e risco, com a ordem 
 cada uma alimente a seguinte. Impacto é estimativa [H] até haver números.
 
 ### 0. Ativação e permanência de quem já comprou (acrescentada com os dados de 23/10)
-- **Problema:** compradores com 0 de 22 letras e 40% de estorno no mês.
-- **Proposta:** (a) ler os motivos dos dois estornos; (b) e-mails de serviço depois da compra
+- **Problema:** compradores com 0 de 22 letras, sem voltar depois do primeiro dia.
+- **Proposta:** (a) tirar dos painéis os pedidos de teste do dono; (b) e-mails de serviço depois da compra
   (dia 1: "comece pela Aula 0, 10 minutos"; dia 3, se não houver lição: "quer ajuda?"; dia 7: o
   que já dá para ler), que não são propaganda e não dependem da lista de interessados; (c) uma
   mensagem pessoal do professor a cada comprador na primeira semana; (d) um lembrete único para o
-  PIX gerado e não pago.
-- **Meta:** comprador com a lição 1 concluída em 3 dias; estorno abaixo de 10%.
+  PIX gerado e não pago, se o abandono real (sem os testes) se mostrar relevante.
+- **Meta:** comprador com a lição 1 concluída em 3 dias e de volta na primeira semana.
 - **Custo:** baixo. **Risco:** nenhum, se os e-mails forem só de serviço e os textos forem do dono.
 
 ### 1. Medir o funil de ponta a ponta, sem cookie (base de todo o resto)

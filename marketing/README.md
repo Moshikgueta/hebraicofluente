@@ -30,3 +30,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 23/10/2026: painel de indicadores (`04-painel.md`).
 - 23/10/2026: primeiros dados reais no diagnóstico (seção 0) e a oportunidade 0, ativação de quem já comprou.
 - 23/10/2026: roteiros dos 12 Reels do experimento I1 (`roteiros/i1-reels.md`).
+- 23/10/2026: correção do dono: os 2 estornos e os 4 pedidos sem pagamento do mês eram testes dele.
