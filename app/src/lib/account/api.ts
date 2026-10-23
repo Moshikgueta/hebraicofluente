@@ -22,6 +22,7 @@
  */
 
 import type { Compras, Order, PaymentMethod, Session } from './types';
+import type { Origem } from '@/lib/origem';
 
 export type ApiMode = 'worker' | 'local';
 
@@ -88,7 +89,7 @@ export interface PlatformApi {
 
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
    *  URL do checkout da Mercado Pago em `redirectUrl`. */
-  startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string }):
+  startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
     Promise<Order & { redirectUrl?: string }>;
 
   /** O estado de um pedido, do servidor - nunca dos parâmetros de redirect.

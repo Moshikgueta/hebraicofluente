@@ -39,6 +39,7 @@ import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
 import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse, paginaDeVenda } from '@/lib/catalog';
 import { comParceria, fimDaParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
+import { contarComOrigem, origemAtual } from '@/lib/origem';
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
@@ -64,7 +65,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
   /* Parceria (lib/parceria.ts): lida depois de montar, porque mora no
      armazenamento do aparelho e a página é gerada sem ele. */
   const [parceria, setParceria] = useState<string | null>(null);
-  useEffect(() => { setParceria(parceriaAtual()); }, []);
+  useEffect(() => { setParceria(parceriaAtual()); contarComOrigem('checkout-aberto'); }, []);
   const c = comParceria(getCourse(slug)!, parceria);
 
 
@@ -207,7 +208,9 @@ export function CheckoutClient({ slug }: { slug: string }) {
       const created = await account.startOrder({
         courseSlug: slug, method,
         ...(method === 'card' ? { installments: parcelas } : {}),
-        ...(parceria ? { parceria } : {})
+        ...(parceria ? { parceria } : {}),
+        /* De onde a pessoa veio (lib/origem.ts): só para o painel do dono. */
+        ...(origemAtual() ? { origem: origemAtual()! } : {})
       });
       /* O cartão sai daqui: quem coleta o número é a Mercado Pago, e é assim
          que esta plataforma nunca vê um dado de cartão. */

@@ -45,6 +45,7 @@ import {
 } from '@/components/landing/Fecho';
 import { FLAGSHIP, brl, getCourse } from '@/lib/catalog';
 import { fimDaParceria, guardarParceriaDaUrl, parceriaAtual, precoDaParceria } from '@/lib/parceria';
+import { contarComOrigem } from '@/lib/origem';
 import { useEffect, useState } from 'react';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
@@ -64,7 +65,7 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
   /* Quem veio por um link de parceria (/sefarad): guarda e, se o preço da
      parceria for menor que o do dia, avisa no topo. Ver lib/parceria.ts. */
   const [parceria, setParceria] = useState<string | null>(null);
-  useEffect(() => { guardarParceriaDaUrl(); setParceria(parceriaAtual()); }, []);
+  useEffect(() => { guardarParceriaDaUrl(); setParceria(parceriaAtual()); contarComOrigem('venda-visto'); }, []);
   const curso = getCourse(FLAGSHIP);
   const daParceria = parceria && curso ? precoDaParceria(curso, parceria) : null;
 

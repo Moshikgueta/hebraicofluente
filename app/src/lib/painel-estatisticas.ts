@@ -175,3 +175,42 @@ export function funilDoPortal(portal: readonly { evento: string; n: number }[]) 
     return { grupo, evento, nome, n, deQuemViu: viram ? n / viram : null };
   });
 }
+
+/* ── Crescimento por origem (23/10/2026, marketing/04-painel.md) ──────────
+   Uma linha por fonte da visita (lib/origem.ts): quem abriu a página de
+   venda, quem abriu o checkout, pedidos, compras e receita no período. A
+   conversão é compras sobre visitas da página de venda da MESMA fonte. */
+export const FONTES_PT: Record<string, string> = {
+  direto: 'Direto (sem marca)', bio: 'Link da bio', stories: 'Stories', dm: 'Direct', sefarad: 'Sefarad (parceria)',
+  instagram: 'Instagram (outros)', previa: 'Prévia do e-book', busca: 'Busca', ia: 'Busca por IA', email: 'E-mail',
+  parceiro: 'Parceiros', anuncio: 'Anúncio', outro: 'Outros sites', 'sem-marca': 'Pedido sem origem'
+};
+
+export type PedidosDaFonte = { fonte: string; pedidos: number; compras: number; receitaCentavos: number; estornos: number };
+
+export function crescimentoPorFonte(
+  porFonte: readonly { evento: string; fonte: string; n: number }[],
+  pedidos: readonly PedidosDaFonte[]
+) {
+  const linhas = new Map<string, { fonte: string; nome: string; venda: number; checkout: number; pedidos: number; compras: number; receitaCentavos: number; estornos: number }>();
+  const linha = (fonte: string) => {
+    let l = linhas.get(fonte);
+    if (!l) { l = { fonte, nome: FONTES_PT[fonte] ?? fonte, venda: 0, checkout: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 }; linhas.set(fonte, l); }
+    return l;
+  };
+  for (const f of porFonte) {
+    if (f.evento === 'venda-visto') linha(f.fonte).venda += f.n;
+    else if (f.evento === 'checkout-aberto') linha(f.fonte).checkout += f.n;
+  }
+  for (const p of pedidos) {
+    const l = linha(p.fonte);
+    l.pedidos += p.pedidos; l.compras += p.compras; l.receitaCentavos += p.receitaCentavos; l.estornos += p.estornos;
+  }
+  const todas = [...linhas.values()].map(l => ({ ...l, conversao: l.venda ? l.compras / l.venda : null }));
+  todas.sort((a, b) => b.compras - a.compras || b.venda - a.venda || a.fonte.localeCompare(b.fonte));
+  const total = todas.reduce((t, l) => ({
+    venda: t.venda + l.venda, checkout: t.checkout + l.checkout, pedidos: t.pedidos + l.pedidos,
+    compras: t.compras + l.compras, receitaCentavos: t.receitaCentavos + l.receitaCentavos, estornos: t.estornos + l.estornos
+  }), { venda: 0, checkout: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 });
+  return { linhas: todas, total: { ...total, conversao: total.venda ? total.compras / total.venda : null } };
+}

@@ -25,6 +25,7 @@ import {
 } from 'react';
 import { api, apiMode, isDemo, type ApiMode } from './api';
 import { hasAccess, type Order, type PaymentMethod, type Session } from './types';
+import type { Origem } from '@/lib/origem';
 
 type AccountValue = {
   /** A sessão já foi consultada? Antes disso, nada de decidir nada. */
@@ -56,7 +57,7 @@ type AccountValue = {
   /** A caixa do perfil do aviso do próximo curso. */
   setNovidades(quero: boolean): Promise<void>;
 
-  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string }):
+  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
     Promise<Order & { redirectUrl?: string }>;
   orderStatus(id: string): Promise<Order>;
   requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;

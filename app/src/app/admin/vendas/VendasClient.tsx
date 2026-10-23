@@ -4,6 +4,7 @@
  *
  * As últimas compras pagas ou estornadas: nome, e-mail, valor, meio, data e,
  * quando houver, o link de campanha de onde o pedido veio. Só leitura.
+ * Desde 23/10/2026, também a origem da visita (lib/origem.ts) e a campanha.
  * Desde 05/10/2026, também se a pessoa já começou o curso, e até onde foi.
  */
 
@@ -12,10 +13,12 @@ import Link from 'next/link';
 import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course, letterIds } from '@/lib/content-publico';
+import { FONTES_PT } from '@/lib/painel-estatisticas';
 
 type Venda = {
   orderId: string; curso: string; valorCentavos: number; metodo: string; parcelas: number;
-  status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; nome: string; email: string | null;
+  status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; origem?: string | null; campanha?: string | null;
+  nome: string; email: string | null;
   estudouEm: number | null; concluidas: string[];
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
@@ -94,6 +97,11 @@ export function VendasClient() {
           </p>
           {v.parceria && (
             <p className="font-ui text-[14px] m-0"><strong>Veio pelo link {LINK[v.parceria] ?? v.parceria}</strong></p>
+          )}
+          {v.origem && (
+            <p className="font-ui text-[14px] m-0">
+              Origem: {FONTES_PT[v.origem] ?? v.origem}{v.campanha ? ` · campanha ${v.campanha}` : ''}
+            </p>
           )}
           {v.status === 'paid' && (
             <p className="font-ui text-[14px] m-0">
