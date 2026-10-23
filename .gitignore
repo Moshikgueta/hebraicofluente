@@ -40,3 +40,8 @@ editorial/
 # Raízes Sefarditas: o CONTEÚDO mora no repositório privado
 # Moshikgueta/hebraicofluente-raizes, clonado aqui (ver tools/export-content.mjs).
 /raizes/
+
+# Growth OS: relatórios e planilhas de marketing (vendas, parceiros, contatos)
+# ficam fora do git porque o repositório é público. Modelos em growth/modelos/.
+growth/reports/
+growth/data/
