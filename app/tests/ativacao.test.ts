@@ -158,6 +158,8 @@ describe('o texto dos lembretes', () => {
         expect(tudo).not.toMatch(/R\$|preço|desconto|checkout|oferta|combo|livro/i);
         expect(m.html).not.toContain('<b>Ana</b>');
         expect(m.text).toContain('Estes lembretes são só três');
+        /* O áudio funciona: não sugerir que ele pode ser o problema (pedido do dono, 23/10/2026). */
+        expect(tudo).not.toMatch(/áudio/i);
       }
     }
   });
