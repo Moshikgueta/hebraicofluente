@@ -1,6 +1,8 @@
 node_modules
 dist/
 pdf/
+# a skill de PDF do Claude Code tem o mesmo nome de pasta
+!.claude/skills/pdf/
 .DS_Store
 app/node_modules
 app/.next/

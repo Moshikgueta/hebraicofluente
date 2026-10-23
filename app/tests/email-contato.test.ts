@@ -85,6 +85,7 @@ describe('contato@', () => {
 
   it('o Worker expõe o tratador de e-mail', () => {
     expect(typeof worker.email).toBe('function');
-    expect(confirmacaoTexto(Date.now())).not.toMatch(/\u2014|\u2013/);
+    const proibido = new RegExp(`[${String.fromCharCode(0x2013)}${String.fromCharCode(0x2014)}]`);
+    expect(confirmacaoTexto(Date.now())).not.toMatch(proibido);
   });
 });

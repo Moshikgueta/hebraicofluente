@@ -262,6 +262,7 @@ describe('o curso Hebraico A1 (data/a1/)', () => {
 
   it('nenhum travessão em nenhum texto', () => {
     const todos = ['curso.json', 'exame.json', 'historia.json', ...ordem.map(nomeDe)].map(ler).join('\n');
-    expect(todos).not.toMatch(/[–—]/);
+    const proibido = new RegExp(`[${String.fromCharCode(0x2013)}${String.fromCharCode(0x2014)}]`);
+    expect(todos).not.toMatch(proibido);
   });
 });
