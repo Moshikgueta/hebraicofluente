@@ -16,7 +16,7 @@
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { useTocador } from '@/components/landing/useTocador';
-import { contarNoPortal } from '@/lib/funil-portal';
+import { contarNoPortal, type EventoDoPortal } from '@/lib/funil-portal';
 
 const PALAVRA = 'שָׁלוֹם';
 /* Da direita para a esquerda, como se leem. */
@@ -25,7 +25,14 @@ const PARTES = [
   { he: 'לוֹם', som: 'lóm' }
 ] as const;
 
-export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
+/* O que cada gesto conta. Na capa, os eventos do portal; a página "Comece
+   aqui" passa os dela. */
+type Gesto = 'ouvir' | 'revelar' | 'curso';
+const NA_CAPA: Record<Gesto, EventoDoPortal> = { ouvir: 'palavra-ouvir', revelar: 'palavra-revelar', curso: 'cta-curso' };
+
+export function PalavraDescoberta({ hrefCurso, contar = g => contarNoPortal(NA_CAPA[g]) }: {
+  hrefCurso: string; contar?: (gesto: Gesto) => void;
+}) {
   const { tocar, tocando } = useTocador();
   const [partes, setPartes] = useState(false);
   const [sentido, setSentido] = useState(false);
@@ -71,7 +78,7 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
           empilhados empurravam o sentido para fora da tela. */}
       <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center">
         <button type="button"
-                onClick={() => { setPartes(true); contarNoPortal('palavra-revelar'); }}
+                onClick={() => { setPartes(true); contar('revelar'); }}
                 aria-pressed={partes}
                 className="min-h-[48px] px-3 sm:px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
                            bg-white/10 text-white hover:bg-white/15 transition-[background-color,scale] duration-150 active:scale-[.97]
@@ -79,7 +86,7 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
           Ver as partes
         </button>
         <button type="button"
-                onClick={() => { tocar('shalom'); contarNoPortal('palavra-ouvir'); }}
+                onClick={() => { tocar('shalom'); contar('ouvir'); }}
                 className="min-h-[48px] px-5 rounded-[var(--r-md)] font-ui text-[15px] font-medium
                            bg-white text-[var(--navy)] hover:bg-[var(--teal-soft)] transition-[background-color,scale] duration-150 active:scale-[.97]
                            inline-flex items-center justify-center gap-2 col-span-2 order-first sm:order-none sm:min-w-[172px]
@@ -107,7 +114,7 @@ export function PalavraDescoberta({ hrefCurso }: { hrefCurso: string }) {
           A mesma palavra cumprimenta, se despede e deseja paz. No curso, ela aparece quando você já
           conhece as quatro letras dela.
         </p>
-        <a href={hrefCurso} onClick={() => contarNoPortal('cta-curso')}
+        <a href={hrefCurso} onClick={() => contar('curso')}
            className="justify-self-center mt-2 inline-flex items-center gap-2 font-ui text-[16px] font-semibold
                       text-[var(--teal-lite)] underline underline-offset-[3px] decoration-[1.5px]">
           Aprender a ler as 22 letras

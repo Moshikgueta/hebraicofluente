@@ -233,12 +233,17 @@ async function responder(request, env, ctx) {
        04/10/2026, /bio, /stories e /dm (Instagram): cada um soma uma
        visita do dia e leva ao teste grátis da capa. 302, e não 301: o
        navegador não pode guardar o desvio, senão a segunda visita da mesma
-       pessoa nem passa por aqui. Ver api/estatisticas.js. */
+       pessoa nem passa por aqui. Ver api/estatisticas.js. A bio vai para a
+       página "Comece aqui" (24/10/2026), que deixa a pessoa escolher entre
+       ler hebraico e conhecer Israel, com a mesma parceria no endereço. */
     const campanha = estatisticas.LINKS_DE_CAMPANHA.get(path.toLowerCase());
     if (campanha && (request.method === 'GET' || request.method === 'HEAD')) {
       const conta = estatisticas.contarCampanha(env, campanha, request);
       if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(conta); else await conta;
-      return new Response(null, { status: 302, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}?parceria=${campanha}#experimente`, 'Cache-Control': 'no-store' } });
+      const destino = estatisticas.PARA_O_COMECE_AQUI.has(campanha)
+        ? `/comece-aqui/?parceria=${campanha}`
+        : `${PAGINA_DE_VENDA}?parceria=${campanha}#experimente`;
+      return new Response(null, { status: 302, headers: { Location: `${url.origin}${destino}`, 'Cache-Control': 'no-store' } });
     }
     /* O link de parceria antigo (`/?parceria=sefarad`), de antes de a capa
        virar o portal (23/10/2026): segue para a página de venda, com a

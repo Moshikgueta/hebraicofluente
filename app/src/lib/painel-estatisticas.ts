@@ -146,6 +146,27 @@ export function funilDaPrevia(portal: readonly { evento: string; n: number }[]) 
   });
 }
 
+/* A página "Comece aqui" (/comece-aqui, 24/10/2026): o link da bio do
+   Instagram leva para lá. O mesmo contador do portal, eventos `comece-*`. A
+   porcentagem é sobre quem abriu a página. Quem escolheu "ler hebraico" segue
+   para o teste grátis, e o funil dele está na tabela do teste. */
+export const EVENTOS_DO_COMECE_PT: readonly { evento: string; nome: string }[] = [
+  { evento: 'comece-visto', nome: 'Abriu a página' },
+  { evento: 'comece-ler', nome: 'Escolheu ler hebraico (teste grátis)' },
+  { evento: 'comece-israel', nome: 'Escolheu conhecer Israel (prévia do e-book)' },
+  { evento: 'comece-palavra', nome: 'Ouviu ou abriu a palavra «shalóm»' },
+  { evento: 'comece-curso', nome: 'Foi para a página do curso' }
+];
+
+export function funilDoComece(portal: readonly { evento: string; n: number }[]) {
+  const conta = new Map(portal.map(d => [d.evento, d.n]));
+  const abriram = conta.get('comece-visto') ?? 0;
+  return EVENTOS_DO_COMECE_PT.map(({ evento, nome }) => {
+    const n = conta.get(evento) ?? 0;
+    return { evento, nome, n, deQuemAbriu: abriram ? n / abriram : null };
+  });
+}
+
 export function funilDoPortal(portal: readonly { evento: string; n: number }[]) {
   const conta = new Map(portal.map(d => [d.evento, d.n]));
   const viram = conta.get('visto') ?? 0;

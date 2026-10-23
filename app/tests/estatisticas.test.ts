@@ -152,8 +152,10 @@ describe('as tabelas do painel', () => {
 
     /* Os links do Instagram (04/10/2026): cada um conta à parte e leva o
        próprio nome no endereço, que é o que o pedido guarda. */
+    /* 24/10/2026: a bio vai para a página "Comece aqui", com a parceria. */
     const bio = await ir('Mozilla/5.0 (iPhone) Instagram', 'GET', '/bio');
-    expect(bio.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=bio#experimente`);
+    expect(bio.status).toBe(302);
+    expect(bio.headers.get('location')).toBe(`${SITE}/comece-aqui/?parceria=bio`);
     /* 23/10/2026: a capa virou o portal, e o link antigo `/?parceria=` (de
        posts já publicados) segue para a página de venda com a parceria. */
     const antigo = await ir('Mozilla/5.0', 'GET', '/?parceria=sefarad');
@@ -161,8 +163,9 @@ describe('as tabelas do painel', () => {
     expect(antigo.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=sefarad#experimente`);
     expect((await ir('Mozilla/5.0', 'GET', '/contato')).headers.get('location')).toBe(`${SITE}/suporte/`);
     expect((await ir('Mozilla/5.0', 'GET', '/minha-conta/')).headers.get('location')).toBe(`${SITE}/meu-hebraico/`);
-    await ir('Mozilla/5.0', 'GET', '/stories/');
-    await ir('Mozilla/5.0', 'GET', '/dm');
+    /* Stories e direct continuam no teste grátis. */
+    expect((await ir('Mozilla/5.0', 'GET', '/stories/')).headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=stories#experimente`);
+    expect((await ir('Mozilla/5.0', 'GET', '/dm')).headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=dm#experimente`);
     const d2 = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))
       .json() as { campanhas: { origem: string; visitas: number }[] };
     expect(Object.fromEntries(d2.campanhas.map(c => [c.origem, c.visitas]))).toEqual({ sefarad: 2, bio: 1, stories: 1, dm: 1 });

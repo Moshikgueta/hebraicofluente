@@ -69,6 +69,10 @@ export const NAO_LISTADAS = [
   /* A prévia grátis do e-book (23/10/2026, scripts/ebook-no-site.sh): só para
      quem recebe o link no direct do Instagram, sem conta e fora da busca. */
   '/previa',
+  /* A página "Comece aqui" (24/10/2026): o destino do link da bio do
+     Instagram. Uma porta de quem já chegou, que não deve disputar a busca com
+     a capa. */
+  '/comece-aqui',
   /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
      Existem para quem aceitou aquela versão; na busca, só a de hoje. */
   '/termos/v', '/reembolso/v', '/privacidade/v',

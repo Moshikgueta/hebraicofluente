@@ -13,7 +13,9 @@ export type EventoDoPortal =
   | 'cta-curso' | 'cta-explorar'
   /* Mandados pela prévia do e-book (/previa), que é o app do livro e não usa
      este arquivo: estão aqui para o tipo bater com a lista do servidor. */
-  | 'previa-visto' | 'previa-mochila-cheia' | 'previa-prato-pronto' | 'previa-diario-aberto' | 'previa-clique-curso';
+  | 'previa-visto' | 'previa-mochila-cheia' | 'previa-prato-pronto' | 'previa-diario-aberto' | 'previa-clique-curso'
+  /* A página "Comece aqui" (/comece-aqui), o destino do link da bio. */
+  | 'comece-visto' | 'comece-ler' | 'comece-israel' | 'comece-palavra' | 'comece-curso';
 
 const enviados = new Set<EventoDoPortal>();
 

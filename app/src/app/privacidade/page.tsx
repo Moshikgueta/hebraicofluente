@@ -299,9 +299,9 @@ export default function Page() {
           alcançou, uma vez por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e
           não guarda nome, e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
         </p>
-        {/* 23/10/2026: worker/src/api/estatisticas.js, contarPortal. */}
+        {/* 23/10/2026: worker/src/api/estatisticas.js, contarPortal. 24/10/2026: e a /comece-aqui (eventos comece-*). */}
         <p>
-          Na página inicial, do mesmo jeito, o navegador manda só o nome do caminho ou do produto que você abriu (por
+          Na página inicial e na página &quot;Comece aqui&quot;, do mesmo jeito, o navegador manda só o nome do caminho ou do produto que você abriu (por
           exemplo, &quot;Descobrir Israel&quot;), uma vez por visita, para sabermos o que interessa a quem chega. O
           servidor soma por dia e não guarda nome, e-mail, conta, endereço de IP, horário nem cookie. Os totais saem
           depois de um ano.
