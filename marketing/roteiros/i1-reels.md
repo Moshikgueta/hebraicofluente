@@ -60,6 +60,7 @@ Os 6 seguem a ordem do curso: quem assiste à série inteira lê de verdade no f
 - **Legenda:** "Duas letras, uma palavra de verdade: אִמָא, íma, mãe. É assim que o curso anda,
   uma letra por vez. Comenta LER que eu te mando o teste grátis."
 - **Fonte:** Mem, `soundNotePt`, `didYouKnow`; palavra אִמָא de `wordsToRead` do Mem.
+- **Aprovado pelo dono** em 23/10/2026, como está.
 
 ### A3 - "De Álef a Tav" (Tav ת)
 - **Gancho:** "Como se diz 'do A ao Z' em hebraico?"
