@@ -36,13 +36,14 @@ Os 6 seguem a ordem do curso: quem assiste à série inteira lê de verdade no f
 ### A1 - A letra que não tem som (Álef א)
 - **Gancho (0-3 s), na tela e na fala:** "A primeira letra do alfabeto hebraico não tem som."
 - **Corpo:** mostra o א grande. "Ela se chama Álef. Sozinha, não se pronuncia: ela segura a vogal,
-  e você lê só a vogal." Mostra אָ e diz "a". "E sabe de onde vem a palavra alfabeto? Álef virou
-  o alpha dos gregos, alpha mais beta deu alfabeto."
+  e você lê só a vogal." Mostra אָ e diz "a". "E sabe de onde vem a palavra alfabeto? O nome Álef
+  é o da letra fenícia que os gregos adotaram como alpha. Alpha mais beta deu alfabeto."
 - **Fecho:** o fecho padrão.
 - **Texto na tela:** "א = Álef · não tem som · segura a vogal".
 - **Legenda:** "A primeira letra do hebraico não faz som nenhum. Ela existe para segurar a vogal.
-  E foi ela que, passando pelos gregos, deu nome ao nosso alfabeto. Comenta LER e eu te mando a
-  aula grátis dessa letra."
+  O nome Álef é o da letra fenícia que os gregos adotaram como alpha, e alpha mais beta deu a
+  palavra alfabeto. Comenta LER e eu te mando a aula grátis dessa letra."
+- **Aprovado pelo dono** em 23/10/2026, com a versão exata da frase do alpha.
 - **Fonte:** Álef, `soundNotePt` e `didYouKnow`.
 
 ### A2 - Duas letras e você já lê "mãe" (Mem מ)
