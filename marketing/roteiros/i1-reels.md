@@ -72,6 +72,7 @@ Os 6 seguem a ordem do curso: quem assiste à série inteira lê de verdade no f
 - **Legenda:** "Do A ao Z, em hebraico, é de Álef a Tav. E com três letras você já lê אֶמֶת,
   verdade. Comenta LER para começar pela primeira."
 - **Fonte:** Tav, `soundNotePt`, `didYouKnow`; אֶמֶת de `wordsToRead` do Tav.
+- **Aprovado pelo dono** em 23/10/2026, como está.
 
 ### A4 - A menor letra do alfabeto (Yud י)
 - **Gancho:** "Esta é a menor letra do hebraico, e ela aparece em tudo."
