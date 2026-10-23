@@ -13,7 +13,7 @@
  * vira o "onde parei" (`?etapa=`, o mesmo endereço de antes: os links antigos
  * continuam levando ao lugar certo). */
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Heroi } from '@/components/raizes/Heroi';
 import { SemConteudo } from '@/app/raizes/RaizesHomeClient';
@@ -131,7 +131,16 @@ export function ModuloRaizesClient({ n }: { n: number }) {
             </div>
             {narrativa
               ? <NarrativaComMapa m={m} blocos={x.blocos} passos={narrativa.passos} />
-              : x.blocos.map((b, j) => <BlocoRaizes key={`${x.id}-${j}`} b={b} m={m} />)}
+              : x.blocos.map((b, j) => (
+                <Fragment key={`${x.id}-${j}`}>
+                  <BlocoRaizes b={b} m={m} />
+                  {/* A foto da seção entra logo depois do primeiro bloco de texto: perto do que ela mostra. */}
+                  {j === 0 && (() => {
+                    const daSecao = fotosDe(`secao:m${String(m.n).padStart(2, '0')}:${x.id}`);
+                    return <Fotos fotos={daSecao} titulo={daSecao.length > 1 ? 'Imagens desta seção' : 'Imagem desta seção'} />;
+                  })()}
+                </Fragment>
+              ))}
             <FolhaDaSecao m={m} etapa={x} numero={k + 1} />
             {x.id === 'avancar' && <Fechamento m={m} />}
           </section>
