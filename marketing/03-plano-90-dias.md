@@ -59,8 +59,7 @@ repetida, não por significância estatística fina (skill `ab-testing`).
 - **Entrega:** metas escritas; 5 parceiros escolhidos; kit pronto para aprovação.
 
 ### Semana 4 (16/11 a 22/11) - primeiro veredito
-- Fim do I1: decidir o pilar principal pela regra escrita (cliques em `/stories` e `/dm` e teste
-  grátis concluído, não curtida).
+- I1 na terceira semana (pilar C entrou em 23/10; o veredito passa para a semana 5).
 - Contato com os 5 parceiros (o dono envia; o texto é aprovado antes).
 - Se a decisão 1 saiu: construir a lista de interessados (caixa no fim do teste grátis, na prévia
   e nas páginas "Em breve") e a sequência de 6 e-mails. Enquanto não: só o texto pronto.
@@ -69,6 +68,8 @@ repetida, não por significância estatística fina (skill `ab-testing`).
 ## Mês 2 - Converter mais do mesmo tráfego (semanas 5 a 8)
 
 ### Semana 5 (23/11 a 29/11) - primeiro teste de página
+- Fim do I1: decidir o pilar principal pela regra escrita (comentários LER por Reel, depois
+  visitas `/dm`+`/stories` e teste grátis concluído; nunca curtida).
 - **C1** (se a decisão 2 saiu): curso em primeiro na capa e no `/comece-aqui`, 3 semanas, métrica
   `cta-curso` / `visto`. Enquanto não: **C4** (condições da compra antes do cadastro), que não
   mexe no portal.
@@ -137,7 +138,7 @@ repetida, não por significância estatística fina (skill `ab-testing`).
 
 | Id | Canal | Hipótese | Métrica | Duração | Regra | Semanas |
 |---|---|---|---|---|---|---|
-| I1 | Instagram | "uma letra, uma palavra" leva mais ao teste grátis que "Israel" | cliques `/stories`+`/dm`; teste grátis concluído | 2 sem | o pilar com 30% a mais nas duas métricas vence; empate: os dois seguem | 2 a 4 |
+| I1 | Instagram | qual dos três pilares (A "uma letra, uma palavra", B "Israel", C "erro de brasileiro") leva mais ao teste grátis | comentários LER por Reel; visitas `/dm`+`/stories` e teste grátis concluído no total | 3 sem | o pilar com 30% a mais de LER por Reel vence; os outros seguem com menos peso | 2 a 5 |
 | C1 | Capa | curso em primeiro aumenta o clique no curso | `cta-curso` / `visto` | 3 sem | +20% mantém; menos que isso volta | 5 a 8 (decisão 2) |
 | C4 | Checkout | condições antes do cadastro aumentam pedidos | pedidos / cliques no botão | 3 sem | +20% mantém | 5 a 8 (se C1 não) |
 | C2 | Teste grátis | pedir e-mail no fim retém quem não compra | inscrições / `pronto`; compras da sequência | 4 sem | define a meta na semana 3 | 8 a 12 (decisão 1) |
