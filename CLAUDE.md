@@ -1350,6 +1350,12 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
 - **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
   /israel-alem-do-obvio, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
   VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.
+- **Amostra grátis** (23/10/2026, pedido do dono): o capítulo 1 inteiro (mapas, exercícios e
+  jogos) em `/israel-amostra/`, FORA do portão e sem cadastro, montado por `scripts/ebook-no-site.sh`
+  com `web.mjs --capitulos=01-israel-no-mapa.md --amostra=/israel-alem-do-obvio/` (sem o diário,
+  sem PDF, com o convite para a página do livro). Fica em `app/public/israel-amostra/`
+  (gitignored). Botão "Ler o capítulo 1 grátis" em /israel-alem-do-obvio. Mudar o capítulo da
+  amostra é decisão do dono: o conteúdo dela é público.
 - **Sem aba no curso** (22/10/2026, decisão do dono): a aba "Seus livros" (sidebar e ícone no
   cabeçalho, #204) saiu no mesmo dia. O curso de alfabetização não mostra o livro; quem tem o
   direito abre `/israel/` direto.

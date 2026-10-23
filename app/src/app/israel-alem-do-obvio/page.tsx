@@ -6,6 +6,9 @@ import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
 import { produtos } from '@/lib/ecossistema';
 import { getCourse } from '@/lib/catalog';
 
+/* A amostra grátis: o capítulo 1 inteiro, fora do portão (scripts/ebook-no-site.sh). */
+const AMOSTRA = '/israel-amostra/';
+
 export const metadata: Metadata = meta({
   rota: '/israel-alem-do-obvio',
   title: 'Israel Além do Óbvio, de Moshik Gueta (em breve) - Hebraico Fluente',
@@ -44,6 +47,14 @@ export default function IsraelAlemDoObvioPage() {
           </>
         }
       >
+        <div className="flex flex-wrap items-center gap-4">
+          <a href={AMOSTRA}
+             className="inline-flex items-center min-h-[52px] px-6 rounded-[var(--r-md)] bg-[var(--navy)] text-white
+                        font-ui text-[15.5px] font-medium no-underline active:scale-[.97] transition-transform">
+            Ler o capítulo 1 grátis
+          </a>
+          <span className="font-ui text-[14px] text-ink-muted">Com os mapas, os exercícios e os jogos. Sem cadastro.</span>
+        </div>
         <AvisoEmBreve texto="O livro está pronto e ainda não está à venda. Sem data marcada." />
       </Abertura>
 

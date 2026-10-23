@@ -14,6 +14,17 @@ LIVRO=israel-alem-do-roteiro
 PDF=israel-alem-do-roteiro.pdf
 DEST=app/public/israel
 
+AMOSTRA=app/public/israel-amostra
+
+# A amostra grátis (23/10/2026, pedido do dono): o capítulo 1 inteiro, FORA do
+# portão, em /israel-amostra/, com o convite para a página do livro. Montada
+# antes do livro porque o web.mjs reescreve a mesma pasta de saída.
+( cd editorial && node tools/web.mjs "$LIVRO" --capitulos=01-israel-no-mapa.md --amostra=/israel-alem-do-obvio/ )
+rm -rf "$AMOSTRA"
+mkdir -p "$AMOSTRA"
+cp editorial/$LIVRO/saida/web/index.html "$AMOSTRA/"
+cp -r editorial/$LIVRO/saida/web/assets "$AMOSTRA/"
+
 ( cd editorial
   node tools/web.mjs "$LIVRO" --livro --producao="$PDF"
   node tools/revista.mjs "$LIVRO" --livro )
@@ -33,4 +44,4 @@ fi
 # A marca d'água de cada comprador: a cauda que o Worker completa por pedido
 # (scripts/pdf-marca.mjs e worker/src/lib/pdf-marca.js).
 node scripts/pdf-marca.mjs "$DEST/$PDF"
-echo "e-book em $DEST: $(du -sh "$DEST" | cut -f1), PDF $((tamanho / 1024 / 1024)) MB"
+echo "e-book em $DEST: $(du -sh "$DEST" | cut -f1), PDF $((tamanho / 1024 / 1024)) MB; amostra em $AMOSTRA: $(du -sh "$AMOSTRA" | cut -f1)"

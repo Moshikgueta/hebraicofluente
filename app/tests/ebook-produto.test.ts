@@ -218,6 +218,9 @@ describe('o portão do e-book', () => {
     expect(isGatedPath('/israel/')).toBe(true);
     expect(isGatedPath('/israel/israel-alem-do-roteiro.pdf')).toBe(true);
     expect(isGatedPath('/israelense')).toBe(false);
+    /* a amostra grátis (o capítulo 1) fica fora do portão, de propósito */
+    expect(isGatedPath('/israel-amostra/')).toBe(false);
+    expect(isGatedPath('/israel-amostra/assets/audio/x.mp3')).toBe(false);
     expect(cursoDaRota('/israel/assets/fotos/x.jpg')).toBe(LIVRO);
   });
 
