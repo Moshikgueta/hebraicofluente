@@ -15,11 +15,15 @@ import { allProducts, brl, getCourse } from '@/lib/catalog';
 import { produtos } from '@/lib/ecossistema';
 import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
 import { precoDeVitrine } from '@/lib/vitrine';
+// @ts-expect-error - módulo JS do Worker, sem tipos
+import { isGatedPath } from '../../worker/src/gate.js';
 
 const fonte = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 const codigo = (rel: string) => fonte(rel).replace(/\/\*[\s\S]*?\*\//g, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '').replace(/^\s*\/\/.*$/gm, '');
 const PAGINA = '../src/app/cursos/[slug]/LivroClient.tsx';
 const LIVRO = 'israel-alem-do-roteiro';
+const GALERIA = '../src/components/portal/GaleriaDoLivro.tsx';
+const EM_BREVE = '../src/app/israel-alem-do-obvio/page.tsx';
 
 describe('a página de venda do livro', () => {
   it('enquanto `aVenda` é false, a página não é gerada', () => {
@@ -47,7 +51,7 @@ describe('a página de venda do livro', () => {
   });
 
   it('as imagens são do próprio livro, geradas na publicação, e cada uma tem texto alternativo', () => {
-    const c = codigo(PAGINA);
+    const c = codigo(PAGINA) + codigo(GALERIA);
     const usadas = [...c.matchAll(/\$\{V\}\/([a-z-]+)\.(jpg|svg)/g)].map(m => m[1] ?? '');
     const doTemplate = [...c.matchAll(/imagem: '([a-z-]+)'/g), ...c.matchAll(/arquivo: '([a-z-]+)'/g)].map(m => m[1] ?? '');
     const script = fonte('../../scripts/vitrine-do-livro.mjs');
@@ -71,6 +75,21 @@ describe('a página de venda do livro', () => {
 
   it('a oferta do pacote só aparece com o pacote à venda', () => {
     expect(codigo('../src/app/cursos/[slug]/ProdutoClient.tsx')).toMatch(/if \(!estaAVenda\(p\)/);
+  });
+});
+
+describe('a galeria na página "Em breve" (pedido do dono, 23/10/2026)', () => {
+  it('a página de venda e a "Em breve" usam a mesma galeria', () => {
+    expect(codigo(PAGINA)).toContain('<GaleriaDoLivro c={c} />');
+    expect(codigo(EM_BREVE)).toContain('<GaleriaDoLivro c={livro} />');
+  });
+
+  it('a galeria só mostra ilustração: sem preço, compra nem checkout', () => {
+    expect(codigo(GALERIA)).not.toMatch(/R\$|brl\(|\/checkout|precoDe|price|OpcoesDeCompra/);
+  });
+
+  it('as ilustrações ficam fora do portão: a página "Em breve" é pública', () => {
+    expect(isGatedPath('/vitrine-livro/abertura-jerusalem.svg')).toBe(false);
   });
 });
 

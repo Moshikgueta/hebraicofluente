@@ -25,10 +25,7 @@
 .lv-tablet { border-radius: 24px; background: #0b2a30; padding: 12px; box-shadow: 0 34px 70px -34px rgba(0, 0, 0, .6); }
 .lv-tablet img { border-radius: 14px; display: block; width: 100%; height: auto; }
 
-/* A galeria: rolagem com encaixe, que o dedo e o trackpad já sabem usar. */
-.lv-galeria { scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-.lv-galeria::-webkit-scrollbar { display: none; }
-.lv-galeria > li { scroll-snap-align: start; }
+/* A galeria e a folha que vira: components/portal/galeria-do-livro.css. */
 
 @media (prefers-reduced-motion: no-preference) {
   .lv-flutua { animation: hf-float 6s ease-in-out infinite; }
@@ -41,15 +38,7 @@
       animation-timeline: view();
       animation-range: entry 0% cover 28%;
     }
-    .lv-folha {
-      animation: lv-folha linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 35%;
-      transform-origin: left center;
-    }
   }
 }
 
 @keyframes lv-entra { from { transform: translateY(28px) scale(.985); } to { transform: none; } }
-/* A página que vira: a ilustração entra girando um pouco no eixo da lombada. */
-@keyframes lv-folha { from { transform: perspective(1200px) rotateY(-14deg) translateX(18px); } to { transform: none; } }

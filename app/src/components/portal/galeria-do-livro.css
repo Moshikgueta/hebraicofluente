@@ -1,0 +1,21 @@
+/* A galeria do Israel Além do Óbvio (GaleriaDoLivro.tsx): na página de venda
+   e na página "Em breve". Rolagem com encaixe, que o dedo e o trackpad já
+   sabem usar. A folha entra girando um pouco no eixo da lombada, só onde há
+   linha do tempo da rolagem; com "reduzir movimento", nada se move. */
+
+.lv-galeria { scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.lv-galeria::-webkit-scrollbar { display: none; }
+.lv-galeria > li { scroll-snap-align: start; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .lv-folha {
+      animation: lv-folha linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+      transform-origin: left center;
+    }
+  }
+}
+
+@keyframes lv-folha { from { transform: perspective(1200px) rotateY(-14deg) translateX(18px); } to { transform: none; } }
