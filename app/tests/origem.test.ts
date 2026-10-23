@@ -121,7 +121,7 @@ describe('o primeiro toque com marca, guardado no aparelho', () => {
   it('guarda só a fonte, a campanha e a data', () => {
     visitar(`${SITE}/?utm_source=newsletter&utm_campaign=boas-vindas&email=ana@exemplo.com`);
     registrarOrigem(5);
-    expect(JSON.parse(guardado['hf-origem-v1'])).toEqual({ fonte: 'email', campanha: 'boas-vindas', em: 5 });
+    expect(JSON.parse(guardado['hf-origem-v1']!)).toEqual({ fonte: 'email', campanha: 'boas-vindas', em: 5 });
   });
 
   it('fonte forjada no aparelho não é lida', () => {

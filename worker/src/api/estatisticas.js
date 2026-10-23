@@ -28,7 +28,7 @@
 import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { activeEntitlements, throttled } from '../lib/db.js';
 import { ehCurso } from '../lib/catalog.js';
-import { exigirAdmin } from '../lib/admin.js';
+import { emailsDeAdmin, exigirAdmin } from '../lib/admin.js';
 import { fonteValida } from '../lib/origem.js';
 import { ip, requireAccount } from './auth.js';
 
@@ -189,24 +189,42 @@ export async function contarPortal({ request, env }) {
    Pedido = criado no período, qualquer estado; compra = paga no período e
    não estornada; estorno = estornado, contado pela data do pagamento.
    Pedido sem origem (de antes da migração, ou sem nada no aparelho) aparece
-   como `sem-marca`. Banco sem a coluna: lista vazia, o resto do painel segue. */
+   como `sem-marca`. Banco sem a coluna: lista vazia, o resto do painel segue.
+   Pedidos de contas de ADMIN_EMAILS (os testes do dono, 23/10/2026) ficam de
+   fora e são contados à parte em `pedidosDeTeste`. */
 async function pedidosPorFonte(env, desdeMs) {
+  const admins = emailsDeAdmin(env);
+  const fora = admins.length ? `AND LOWER(COALESCE(a.email, '')) NOT IN (${admins.map((_, i) => `?${i + 2}`).join(', ')})` : '';
   try {
     const { results } = await env.DB.prepare(
-      `SELECT COALESCE(origem, 'sem-marca') AS fonte,
-              SUM(CASE WHEN created_at >= ?1 THEN 1 ELSE 0 END) AS pedidos,
-              SUM(CASE WHEN status = 'paid' AND paid_at >= ?1 THEN 1 ELSE 0 END) AS compras,
-              SUM(CASE WHEN status = 'paid' AND paid_at >= ?1 THEN amount_cents ELSE 0 END) AS receita_centavos,
-              SUM(CASE WHEN status = 'refunded' AND paid_at >= ?1 THEN 1 ELSE 0 END) AS estornos
-         FROM orders
-        WHERE created_at >= ?1 OR paid_at >= ?1
+      `SELECT COALESCE(o.origem, 'sem-marca') AS fonte,
+              SUM(CASE WHEN o.created_at >= ?1 THEN 1 ELSE 0 END) AS pedidos,
+              SUM(CASE WHEN o.status = 'paid' AND o.paid_at >= ?1 THEN 1 ELSE 0 END) AS compras,
+              SUM(CASE WHEN o.status = 'paid' AND o.paid_at >= ?1 THEN o.amount_cents ELSE 0 END) AS receita_centavos,
+              SUM(CASE WHEN o.status = 'refunded' AND o.paid_at >= ?1 THEN 1 ELSE 0 END) AS estornos
+         FROM orders o LEFT JOIN accounts a ON a.id = o.account_id
+        WHERE (o.created_at >= ?1 OR o.paid_at >= ?1) ${fora}
         GROUP BY 1`
-    ).bind(desdeMs).all();
+    ).bind(desdeMs, ...admins).all();
     return (results || []).map(r => ({
       fonte: r.fonte, pedidos: r.pedidos || 0, compras: r.compras || 0,
       receitaCentavos: r.receita_centavos || 0, estornos: r.estornos || 0
     }));
   } catch { return []; }
+}
+
+/** Quantos pedidos de contas de administrador o período teve (os testes). */
+async function pedidosDeTeste(env, desdeMs) {
+  const admins = emailsDeAdmin(env);
+  if (!admins.length) return 0;
+  try {
+    const r = await env.DB.prepare(
+      `SELECT COUNT(*) AS n FROM orders o JOIN accounts a ON a.id = o.account_id
+        WHERE (o.created_at >= ?1 OR o.paid_at >= ?1)
+          AND LOWER(a.email) IN (${admins.map((_, i) => `?${i + 2}`).join(', ')})`
+    ).bind(desdeMs, ...admins).first();
+    return Number(r && r.n) || 0;
+  } catch { return 0; }
 }
 
 /** Soma 1 na etapa do teste, hoje. Nunca lança. */
@@ -254,8 +272,10 @@ export async function ler({ request, env }) {
     }
   }
   /* O dia `desde` começa à meia-noite de Brasília (UTC-3, sem horário de verão). */
-  const pedidos = await pedidosPorFonte(env, Date.parse(`${desde}T00:00:00-03:00`));
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos });
+  const desdeMs = Date.parse(`${desde}T00:00:00-03:00`);
+  const pedidos = await pedidosPorFonte(env, desdeMs);
+  const testes = await pedidosDeTeste(env, desdeMs);
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

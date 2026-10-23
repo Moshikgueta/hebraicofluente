@@ -246,7 +246,7 @@ export default function Page() {
              recebe endereço e nome de todo mundo que pede um link de
              senha. Omiti-la deixava a política descrevendo menos
              compartilhamento do que o sistema faz. */
-          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só um: o aviso de que o próximo curso abriu, e só para quem marcou esse pedido em Sua conta. Cada um desses e-mails traz o link para sair da lista.</>,
+          <><strong>Resend</strong>: entrega os nossos e-mails (recuperação de senha, confirmação da compra, até três lembretes para começar o curso nos primeiros dias depois da compra e avisos da sua conta). Para isso, recebe o <strong>seu endereço de e-mail e o nome da sua conta</strong>. E-mail de propaganda, só um: o aviso de que o próximo curso abriu, e só para quem marcou esse pedido em Sua conta. Cada um desses e-mails traz o link para sair da lista.</>,
           <><strong>Infraestrutura</strong>: a plataforma roda na Cloudflare, que hospeda o site, o banco de dados e as cópias de segurança. Uma segunda cópia de segurança, cifrada, fica no Google Drive; o Google guarda o arquivo, mas não consegue lê-lo.</>,
           /* 28/09/2026 (auditoria, LEGAL-003): o GitHub e o atendimento
              estavam fora da lista, e os dois recebem dado pessoal. */

@@ -554,3 +554,13 @@ CREATE TABLE IF NOT EXISTS certificados (
   publico     INTEGER NOT NULL DEFAULT 1,
   UNIQUE (account_id, curso)
 );
+
+-- Os lembretes dos primeiros dias depois da compra (23/10/2026, plano de
+-- marketing): um marco (d1, d3, d7) por pedido, uma vez. Ver
+-- worker/src/ativacao.js.
+CREATE TABLE IF NOT EXISTS avisos_ativacao (
+  order_id    TEXT    NOT NULL,
+  marco       TEXT    NOT NULL,
+  enviado_em  INTEGER NOT NULL,
+  PRIMARY KEY (order_id, marco)
+);

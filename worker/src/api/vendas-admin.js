@@ -10,6 +10,9 @@
  * `orders.campanha`, migração 0003); pedidos de antes delas vêm sem a marca.
  * Pedidos pendentes, vencidos e recusados ficam de fora: não houve dinheiro.
  *
+ * Desde 23/10/2026, a compra de uma conta de ADMIN_EMAILS vem com
+ * `teste: true`: são os testes do dono, que o painel mostra à parte e não soma.
+ *
  * Desde 05/10/2026, cada compra diz também se a pessoa já começou o curso:
  * quando o progresso dela foi gravado pela última vez (`progress.updated_at`,
  * que só muda quando algo de verdade mudou) e quais lições ela concluiu.
@@ -21,7 +24,8 @@
  */
 
 import { json } from '../lib/http.js';
-import { exigirAdmin } from '../lib/admin.js';
+import { emailsDeAdmin, exigirAdmin } from '../lib/admin.js';
+import { normalizeEmail } from '../lib/db.js';
 
 const LIMITE = 200;
 
@@ -44,12 +48,14 @@ export async function listar({ request, env }) {
       ORDER BY COALESCE(o.paid_at, o.created_at) DESC
       LIMIT ?`
   ).bind(LIMITE).all();
+  const admins = emailsDeAdmin(env);
   return json({
     vendas: (results || []).map(v => ({
       orderId: v.id, curso: v.course_slug, valorCentavos: v.amount_cents, metodo: v.method,
       parcelas: v.installments, status: v.status, pagoEm: v.paid_at || v.created_at,
       parceria: v.parceria || null, origem: v.origem || null, campanha: v.campanha || null, nome: v.name || '', email: v.email || null,
-      estudouEm: v.progresso_em || null, concluidas: lista(v.concluidas)
+      estudouEm: v.progresso_em || null, concluidas: lista(v.concluidas),
+      teste: !!v.email && admins.includes(normalizeEmail(v.email))
     }))
   });
 }

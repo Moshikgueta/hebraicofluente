@@ -786,6 +786,68 @@ export function mensagemDeVencimento({
 }
 
 /**
+ * Os lembretes dos primeiros dias depois da compra (23/10/2026, plano de
+ * marketing, oportunidade 0; ver worker/src/ativacao.js). Aviso de serviço
+ * contratado, como o de fim de acesso: não é propaganda, não fala de preço nem
+ * oferece outro produto. Três marcos, cada um uma vez por compra:
+ *   d1  um dia depois, se nenhuma lição foi concluída;
+ *   d3  três dias depois, se ainda nenhuma;
+ *   d7  uma semana depois, se a pessoa não estuda há mais de 3 dias.
+ * Textos aprovados pelo dono no PR que os criou.
+ */
+export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio, primeira, painel, marca, suporte }) {
+  const nome = nomeSeguro(cru);
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const feitas = Number(concluidas) || 0;
+  const fecho = 'Estes lembretes são só três, nos primeiros dias depois da compra.';
+  const ajuda = suporte
+    ? `Se algo travou (o áudio, a entrada em outro aparelho, por onde começar), responda esta mensagem ou escreva para ${suporte}.`
+    : 'Se algo travou (o áudio, a entrada em outro aparelho, por onde começar), responda esta mensagem.';
+
+  let subject; let corpo; let link; let rotulo;
+  if (marco === 'd1') {
+    subject = 'Sua primeira lição leva dez minutos';
+    corpo = [
+      `Seu acesso ao curso ${curso} está liberado.`,
+      'O jeito mais simples de começar é a Aula 0, que mostra como o hebraico funciona, e depois a primeira letra, o Álef. A primeira lição leva dez minutos.'
+    ];
+    link = inicio; rotulo = 'Começar pela Aula 0';
+  } else if (marco === 'd3') {
+    subject = 'Ficou alguma dúvida para começar?';
+    corpo = [
+      `O seu curso ${curso} ainda não tem nenhuma lição concluída.`,
+      'Às vezes o que segura é uma coisa pequena. A primeira letra é o Álef, e ela já leva você à primeira palavra na lição seguinte.',
+      ajuda
+    ];
+    link = primeira; rotulo = 'Abrir a primeira letra';
+  } else {
+    subject = feitas > 0 ? 'Continue de onde você parou' : 'Uma letra hoje?';
+    corpo = feitas > 0
+      ? [
+          `Você já concluiu ${feitas} ${feitas === 1 ? 'lição' : 'lições'} do curso ${curso}.`,
+          'O curso guarda onde você parou, neste e em qualquer outro aparelho em que você entrar.'
+        ]
+      : [
+          `Faz uma semana que o seu acesso ao curso ${curso} foi liberado.`,
+          'Uma letra por vez: a primeira lição leva dez minutos.',
+          ajuda
+        ];
+    link = feitas > 0 ? painel : primeira; rotulo = feitas > 0 ? 'Continuar o curso' : 'Abrir a primeira letra';
+  }
+
+  const text = [ola, '', ...corpo.flatMap(l => [l, '']), `${rotulo}: ${link}`, '', fecho, '', assinatura].join('\n');
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    ...corpo.map(l => `<p>${escapar(l)}</p>`),
+    `<p><a href="${escapar(link)}">${escapar(rotulo)}</a></p>`,
+    `<p><small>${escapar(fecho)}</small></p>`,
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject, text, html };
+}
+
+/**
  * Um alerta operacional para o dono (worker/src/alertas.js e o estorno que
  * travou). Texto puro, curto, sem dado de aluno além do que o dono precisa
  * para agir. `linhas` é uma lista; string vazia vira parágrafo.
