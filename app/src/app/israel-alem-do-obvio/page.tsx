@@ -56,7 +56,7 @@ export default function IsraelAlemDoObvioPage() {
                              font-ui text-[15.5px] font-medium no-underline active:scale-[.97] transition-transform">
               Quero o livro · {brl(precoDeVitrine(livro))}
             </Link>
-            <span className="font-ui text-[14px] text-ink-muted">Pagamento único, versão interativa e PDF.</span>
+            <span className="font-ui text-[14px] text-ink-muted">Pagamento único, versão interativa no celular ou no computador.</span>
           </div>
         ) : (
           <AvisoEmBreve texto="O livro está pronto e ainda não está à venda. Sem data marcada." />
