@@ -120,7 +120,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             {tipoDe(c) === 'livro'
-              ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses, e o PDF para baixar.`
+              ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses.`
               : tipoDe(c) === 'pacote'
                 ? 'O curso de alfabetização e o e-book estão liberados. A primeira lição leva dez minutos.'
                 : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}

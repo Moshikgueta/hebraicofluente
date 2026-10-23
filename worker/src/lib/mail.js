@@ -430,7 +430,7 @@ export function mensagemDeCompra({
   const rotulo = livro ? 'E-book' : tipo === 'pacote' ? 'Pacote' : 'Curso';
   const COMO_ENTRAR = livro
     ? ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
-       'compra. Na primeira página do e-book fica o botão para baixar o PDF.']
+       'compra. O e-book abre no navegador, no celular ou no computador.']
     : ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
        'compra. Seu progresso fica na conta, então dá para estudar no celular e',
        'continuar no computador de onde parou.'];

@@ -145,14 +145,14 @@ export function produtos(): Produto[] {
       nome: livro?.titlePt ?? 'Israel Além do Óbvio',
       subtitulo: livro?.taglinePt ?? '',
       descricao: livro?.summaryPt ?? '',
-      formato: 'Guia ilustrado e interativo, com o PDF para baixar',
+      formato: 'Guia ilustrado e interativo, no celular ou no computador',
       publico: 'Quem vai viajar para Israel, ou quer entender o país',
       status: statusDoCatalogo(livro),
       rota: '/israel-alem-do-obvio', cta: 'Ver o que tem dentro',
       ficha: {
         paraQuem: livro?.forWhomPt ?? [],
         consegue: livro?.outcomesPt ?? [],
-        tempo: `${livro?.modules.length ?? 11} capítulos para ler antes da viagem e consultar durante, com ${livro?.accessMonths ?? 12} meses da versão interativa e o PDF para baixar.`
+        tempo: `${livro?.modules.length ?? 11} capítulos para ler antes da viagem e consultar durante, com ${livro?.accessMonths ?? 12} meses de acesso à versão interativa.`
       }
     },
     {

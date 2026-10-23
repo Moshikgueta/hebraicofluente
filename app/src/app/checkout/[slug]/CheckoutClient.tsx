@@ -308,7 +308,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             {tipo === 'livro'
-              ? `Versão interativa liberada por ${c.accessMonths} meses, e o PDF para baixar.`
+              ? `Versão interativa liberada por ${c.accessMonths} meses.`
               : tipo === 'pacote'
                 ? 'O curso e o e-book estão liberados. A primeira lição leva dez minutos.'
                 : `Acesso liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
@@ -487,16 +487,16 @@ export function CheckoutClient({ slug }: { slug: string }) {
 function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse; renovacao?: boolean }) {
   const LINHAS: [string, React.ReactNode][] = [
     ['O que você leva', tipoDe(curso) === 'livro'
-      ? `O e-book ${curso.titlePt}: a versão interativa, pelo navegador, e o PDF para baixar.`
+      ? `O e-book ${curso.titlePt}, na versão interativa, pelo navegador.`
       : tipoDe(curso) === 'pacote'
-        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Óbvio (versão interativa e PDF).'
+        ? 'Acesso completo ao curso Alfabetização em Hebraico e o e-book Israel Além do Óbvio, na versão interativa.'
         : `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
     /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
        fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */
     ['Por quanto tempo', renovacao
       ? `Mais ${curso.accessMonths} meses, somados ao fim do acesso atual.`
       : tipoDe(curso) === 'livro'
-        ? `A versão interativa por ${curso.accessMonths} meses, ${INICIO_DO_ACESSO}. O PDF baixado fica com você.`
+        ? `A versão interativa por ${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`
         : `${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`],
     /* 30/09/2026 (CDC, art. 6º, III): dito com todas as letras, e não
        deduzido de "12 meses". Renovar é uma compra nova, feita pela pessoa. */
@@ -698,7 +698,7 @@ function Shell({ course, children }: {
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
         <p className="font-ui text-[13px] text-ink-muted">
           {tipoDe(c) === 'livro'
-            ? `E-book · ${c.modules.length} capítulos · versão interativa por ${c.accessMonths} meses e PDF`
+            ? `E-book · ${c.modules.length} capítulos · versão interativa por ${c.accessMonths} meses`
             : tipoDe(c) === 'pacote'
               ? `Curso de alfabetização + e-book · ${c.accessMonths} meses de acesso`
               : <>{c.stats.modules} módulos{c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}{' · '}{c.accessMonths} meses de acesso</>}

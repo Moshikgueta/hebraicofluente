@@ -397,3 +397,26 @@ describe('o pacote liberado à mão (PIX direto, Actions → Acesso → liberar)
     expect(() => execFileSync('bash', [SCRIPT, 'HF1', 'a@b.c', '12', "x' OR 1=1 --"], { encoding: 'utf8', stdio: 'pipe' })).toThrow();
   });
 });
+
+/* Sem PDF para baixar (decisão do dono, 23/10/2026): a publicação não monta
+   nem publica o PDF, e nenhum texto de venda, checkout, política ou e-mail o
+   promete. Os comentários podem citar o PDF (a história); o código, não. */
+describe('o e-book não tem PDF para baixar', () => {
+  const semComentarios = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '').replace(/^\s*(\/\/|#).*$/gm, '');
+  it('a publicação não monta nem copia o PDF', () => {
+    const s = semComentarios('../../scripts/ebook-no-site.sh');
+    expect(s).not.toMatch(/revista\.mjs|\.pdf|pdf-marca/);
+    expect(s).toMatch(/--producao(?!=)/);
+  });
+  it('as telas e os textos de venda não falam em PDF', () => {
+    for (const rel of ['../src/app/cursos/[slug]/ProdutoClient.tsx', '../src/app/checkout/[slug]/CheckoutClient.tsx',
+                       '../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', '../src/app/termos/page.tsx',
+                       '../src/app/reembolso/page.tsx', '../src/lib/ecossistema.ts', '../src/app/israel-alem-do-obvio/page.tsx',
+                       '../../worker/src/lib/mail.js']) {
+      expect(semComentarios(rel), rel).not.toMatch(/PDF/);
+    }
+    const cat = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8')).courses as { summaryPt: string; taglinePt: string }[];
+    for (const c of cat) expect(`${c.summaryPt} ${c.taglinePt}`).not.toMatch(/PDF/);
+  });
+});

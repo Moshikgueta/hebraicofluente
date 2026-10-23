@@ -1358,9 +1358,13 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   `NAO_CURSOS` (gate.js) diz quais direitos não são de curso: o e-book não abre /audio, não
   grava progresso nem estatística. A lista é conferida contra o catálogo em
   `tests/ebook-produto.test.ts`.
-- **Os arquivos:** `scripts/ebook-no-site.sh` monta a versão web (`--producao`, com o botão
-  do PDF) e o PDF em `app/public/israel/` (gitignored); o passo "E-book no site" do
-  `deploy-worker.yml` roda antes do build. O PDF tem de ficar abaixo de 25 MiB.
+- **Sem PDF para baixar** (23/10/2026, decisão do dono): o livro é só a versão interativa.
+  `scripts/ebook-no-site.sh` monta a versão web (`--producao`, sem arquivo: sem o botão "Baixar o
+  PDF") em `app/public/israel/` (gitignored), e não monta nem publica o PDF; o passo "E-book no site"
+  do `deploy-worker.yml` roda antes do build. Venda, checkout, Termos, Reembolso, e-mail e a nota
+  metodológica não falam em PDF (`tests/ebook-produto.test.ts`, "o e-book não tem PDF para
+  baixar"). O código da marca d'água no PDF (abaixo) fica dormente: sem o arquivo, a rota dá 404.
+  Para o PDF voltar: `--producao=<arquivo.pdf>`, o `revista.mjs` e o `pdf-marca.mjs` no script.
 - **No portal** (23/10/2026, decisão do dono): o livro aparece "Em breve" em /descobrir-israel e
   /israel-alem-do-obvio, SEM preço nem compra, e o rodapé leva a /descobrir-israel. A página de
   VENDA (/cursos/israel-alem-do-roteiro) continua só existindo com o livro à venda.

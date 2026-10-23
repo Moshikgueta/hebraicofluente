@@ -107,9 +107,9 @@ export default function Page() {
             <strong>O e-book {livro.titlePt}.</strong> Também oferecemos, à parte, este
             e-book: um guia ilustrado sobre Israel, que não inclui o curso. Ele custa{' '}
             {brl(livro.price.brl)} e dá acesso à versão interativa, no navegador, por{' '}
-            {livro.accessMonths} meses {INICIO_DO_ACESSO}, e ao arquivo em PDF para baixar,
-            que fica com você para uso pessoal. Ninguém pode copiar, distribuir ou
-            revender o e-book (artigo 5).
+            {livro.accessMonths} meses {INICIO_DO_ACESSO}, para uso pessoal. O e-book não
+            tem arquivo para baixar. Ninguém pode copiar, distribuir ou revender o e-book
+            (artigo 5).
             {pacote && <>
               {' '}O pacote {pacote.titlePt} custa {brl(pacote.price.brl)}
               {ancora(pacote.price) && fimDoPreLancamento(pacote.price)
