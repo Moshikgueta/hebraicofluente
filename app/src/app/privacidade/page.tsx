@@ -339,7 +339,7 @@ export default function Page() {
           deles, só novidades de verdade, como um curso novo. Quem pediu um aviso recebe só o aviso. Todo e-mail da
           lista traz o link para sair, que funciona sem login; ao sair, o seu e-mail é apagado da lista e não mandamos
           mais nada. Se você comprar o
-          curso, a sequência das letras para. O e-mail é entregue pela Resend e não é vendido nem compartilhado com
+          curso, os e-mails das próximas letras param. O e-mail é entregue pela Resend e não é vendido nem compartilhado com
           mais ninguém.
         </p>
       </Artigo>
