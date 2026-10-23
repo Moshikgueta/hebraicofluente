@@ -802,8 +802,8 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
   const feitas = Number(concluidas) || 0;
   const fecho = 'Estes lembretes são só três, nos primeiros dias depois da compra.';
   const ajuda = suporte
-    ? `Se algo travou (o áudio, a entrada em outro aparelho, por onde começar), responda esta mensagem ou escreva para ${suporte}.`
-    : 'Se algo travou (o áudio, a entrada em outro aparelho, por onde começar), responda esta mensagem.';
+    ? `Se algo travou (a entrada em outro aparelho, por onde começar), responda esta mensagem ou escreva para ${suporte}.`
+    : 'Se algo travou (a entrada em outro aparelho, por onde começar), responda esta mensagem.';
 
   let subject; let corpo; let link; let rotulo;
   if (marco === 'd1') {
