@@ -79,7 +79,9 @@ export const ROTAS_LEVES = [
   '/', '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas',
   '/curso-de-hebraico', '/metodo', '/sobre', '/faq', '/biblia',
   '/termos', '/privacidade', '/reembolso', '/suporte', '/acessibilidade',
-  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha'
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha',
+  /* A porta do link da bio do Instagram (24/10/2026): quem chega é de celular. */
+  '/comece-aqui'
 ] as const;
 
 export function rotaLeve(pathname: string | null): boolean {

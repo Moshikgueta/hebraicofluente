@@ -61,9 +61,9 @@ function Condicoes({ c }: { c: CatalogCourse }) {
       <li>
         {tipoDe(c) === 'livro'
           ? `Versão interativa por ${c.accessMonths} meses, no celular ou no computador.`
-          : `${c.accessMonths} meses de curso e de e-book, do celular ao computador.`}
+          : `${c.accessMonths} meses de curso e de Israel Além do Óbvio, no mesmo login, do celular ao computador.`}
       </li>
-      <li>O e-book recebe atualizações, e a versão interativa é sempre a da edição mais recente.</li>
+      <li>Israel Além do Óbvio recebe atualizações, e você lê sempre a edição mais recente.</li>
       <li>{empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.</li>
     </ul>
   );
@@ -80,11 +80,11 @@ export function CaixaDeCompra({ c }: { c: CatalogCourse }) {
       <Card tone="mint" className="p-6 grid gap-3 content-start">
         <Badge tone="mint">Na sua conta</Badge>
         <p className="font-display text-[19px] font-bold text-ink leading-snug">
-          {tipo === 'livro' ? 'Você já tem este e-book.' : 'Você já tem o curso e o e-book.'}
+          {tipo === 'livro' ? 'Você já tem o Israel Além do Óbvio.' : 'Você já tem o curso e o Israel Além do Óbvio.'}
         </p>
         <a href="/israel/" className="inline-flex justify-center items-center min-h-[48px] px-5 rounded-full
                                     bg-[var(--accent-bg)] text-white font-ui font-semibold">
-          Abrir o e-book
+          Abrir o Israel Além do Óbvio
         </a>
       </Card>
     );
@@ -108,11 +108,11 @@ export function CaixaDeCompra({ c }: { c: CatalogCourse }) {
       <Preco c={c} />
       {tipo === 'pacote' && separados > c.price.brl && (
         <p className="font-ui text-[13.5px] text-ink-body">
-          Separados, os dois custam {brl(separados)}.
+          Separados, os dois custam {brl(separados)}: no combo, {brl(separados - c.price.brl)} a menos.
         </p>
       )}
       <LinkButton href={`/checkout/${c.slug}`} size="lg" full>
-        {tipo === 'livro' ? 'Comprar o e-book' : 'Comprar o pacote'}
+        {tipo === 'livro' ? 'Garantir meu acesso' : 'Garantir o combo'}
       </LinkButton>
       <Condicoes c={c} />
       {!account.signedIn && (
@@ -137,12 +137,12 @@ export function OfertaDoPacote() {
         Quer ler as placas sozinho?
       </p>
       <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-        Leve junto o curso Alfabetização em Hebraico: os dois por {brl(p.price.brl)}
+        Leve junto o curso Alfabetização em Hebraico no combo {p.titlePt}: os dois por {brl(p.price.brl)}
         {separados > p.price.brl ? ` (separados, ${brl(separados)})` : ''}
         {fimDoPreLancamento(p.price) ? `, até ${fimDoPreLancamento(p.price)}` : ''}.
       </p>
       <LinkButton href={`/cursos/${PACOTE}`} variant="secondary" size="sm" className="justify-self-start">
-        Ver o pacote
+        Ver o combo
       </LinkButton>
     </Card>
   );
@@ -163,10 +163,10 @@ export function ProdutoClient({ slug }: { slug: string }) {
             <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
               <Link href="/cursos" className="hover:text-[var(--accent)]">Cursos</Link>
               <span aria-hidden> · </span>
-              <span>{tipo === 'livro' ? 'E-book' : 'Pacote'}</span>
+              <span>{tipo === 'livro' ? 'Israel Além do Óbvio' : 'Combo'}</span>
             </nav>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge tone="accent">{tipo === 'livro' ? 'E-book' : 'Curso + e-book'}</Badge>
+              <Badge tone="accent">{tipo === 'livro' ? 'Experiência interativa' : 'Combo: curso + Israel Além do Óbvio'}</Badge>
             </div>
             <h1 className="font-display font-semibold text-[clamp(32px,4.2vw,52px)] leading-[1.05]
                            tracking-[-0.034em] text-ink m-0 [text-wrap:balance]">
@@ -208,7 +208,7 @@ export function ProdutoClient({ slug }: { slug: string }) {
       )}
 
       <Section labelledBy="capitulos">
-        <SectionHead id="capitulos" eyebrowPt="Por dentro" titlePt={`Os ${livro.modules.length} capítulos do e-book.`} />
+        <SectionHead id="capitulos" eyebrowPt="Por dentro" titlePt={`Os ${livro.modules.length} capítulos do Israel Além do Óbvio.`} />
         <ol className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
           {livro.modules.map(m => (
             <li key={m.n} className="flex gap-4 py-4 border-b border-line min-w-0">

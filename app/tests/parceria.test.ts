@@ -4,8 +4,6 @@
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import { priceCents, parceriaValida } from '../../worker/src/lib/catalog.js';
-// @ts-expect-error - script JS, sem tipos
-import { virar } from '../../tools/virar-preco.mjs';
 import { comParceria, fimDaParceria, precoDaParceria, PARCERIAS } from '@/lib/parceria';
 import { getCourse, FLAGSHIP, type CatalogCourse } from '@/lib/catalog';
 import { readFileSync } from 'node:fs';
@@ -30,19 +28,26 @@ describe('o servidor cobra o preço da parceria', () => {
   });
 });
 
-describe('a virada (01/12 desde 19/10/2026) mantém o preço da parceria', () => {
-  it('o catálogo real tem o preço da parceria, e ele sobrevive à virada', () => {
+/* 23/10/2026 (decisão do dono): o catálogo não tem mais preço nem data de
+   parceria. Os links (/sefarad, /bio, /stories, /dm) seguem valendo para
+   registrar de onde veio a compra (orders.parceria), e cobram o preço do dia. */
+describe('o catálogo real não tem preço de parceria', () => {
+  it('quem vem por um link paga o preço do dia, e o pedido guarda o nome', () => {
     const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
-    const r = virar(texto, Date.parse('2026-12-01T03:05:00Z'));
-    const cursos = JSON.parse(r.texto).courses ?? JSON.parse(r.texto);
-    const alf = (Array.isArray(cursos) ? cursos : Object.values(cursos)).find((c: { slug: string }) => c.slug === 'alfabetizacao');
-    expect(alf.price).toMatchObject({ brl: 297, listBrl: null, parceriaBrl: 147 });
+    expect(texto).not.toMatch(/"parceriaBrl"|"parceriaAte"/);
+    const curso = getCourse(FLAGSHIP)!;
+    for (const nome of ['sefarad', 'bio', 'stories', 'dm']) {
+      expect(parceriaValida(nome)).toBe(true);
+      expect(priceCents(curso, 'card', nome)).toBe(priceCents(curso, 'card'));
+      expect(precoDaParceria(curso, nome)).toBeNull();
+    }
+    expect(fimDaParceria(curso)).toBeNull();
   });
 });
 
 describe('a tela mostra o mesmo preço que o servidor cobra', () => {
   const curso = getCourse(FLAGSHIP)!;
-  const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null } };
+  const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null, parceriaBrl: 147 } };
   it('só com parceria válida e preço menor', () => {
     expect(PARCERIAS.sefarad?.perfil).toBe('@adsefarditas');
     expect(precoDaParceria(virado, 'sefarad')).toBe(147);
@@ -50,9 +55,7 @@ describe('a tela mostra o mesmo preço que o servidor cobra', () => {
     expect(precoDaParceria(virado, 'outra')).toBeNull();
     expect(comParceria(virado, 'sefarad').price.brl).toBe(147);
     expect(comParceria(virado, null)).toBe(virado);
-    /* O pré-lançamento e os links têm o mesmo preço (R$ 147 desde
-       19/10/2026): no pré-lançamento a faixa do link não aparece. */
-    expect(curso.price.brl).toBe(147);
+    /* Sem preço de parceria no catálogo (23/10/2026), a faixa do link não aparece. */
     expect(precoDaParceria(curso, 'sefarad')).toBeNull();
     expect(precoDaParceria(curso, null)).toBeNull();
   });
@@ -73,16 +76,9 @@ describe('o preço dos links tem data para acabar', () => {
       expect(priceCents(ate, 'card', nome, ultimoSegundo)).toBe(14700);
     }
     const curso = getCourse(FLAGSHIP)!;
-    const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null, parceriaAte: '2026-11-30' } };
+    const virado: CatalogCourse = { ...curso, price: { ...curso.price, brl: 297, listBrl: null, preLancamentoAte: null, parceriaBrl: 147, parceriaAte: '2026-11-30' } };
     expect(precoDaParceria(virado, 'bio', ultimoSegundo)).toBe(147);
     expect(precoDaParceria(virado, 'bio', ultimoSegundo + 1000)).toBeNull();
     expect(fimDaParceria(virado)).toBe('30/11');
-  });
-  it('o catálogo real tem a data, e ela sobrevive à virada de 01/12', () => {
-    const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
-    const r = virar(texto, Date.parse('2026-12-01T03:05:00Z'));
-    const cursos = JSON.parse(r.texto).courses ?? JSON.parse(r.texto);
-    const alf = (Array.isArray(cursos) ? cursos : Object.values(cursos)).find((c: { slug: string }) => c.slug === 'alfabetizacao');
-    expect(alf.price).toMatchObject({ brl: 297, parceriaBrl: 147, parceriaAte: '2026-11-30' });
   });
 });

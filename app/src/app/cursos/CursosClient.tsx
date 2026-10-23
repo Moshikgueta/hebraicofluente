@@ -12,15 +12,14 @@ import { Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { CourseShelf } from '@/components/platform/CourseShelf';
-import { allCourses, brl, estaAVenda, getCourse, isPlayable, paginaDeVenda } from '@/lib/catalog';
+import { allCourses, brl, isPlayable, paginaDeVenda } from '@/lib/catalog';
+import { OpcoesDeCompra } from '@/components/portal/OpcoesDeCompra';
 import { useAccount } from '@/lib/account/store';
 import { TrilhaNoTopo } from '@/components/portal/Migalhas';
 
 export function CursosClient() {
   const account = useAccount();
   const courses = allCourses();
-  const livro = getCourse('israel-alem-do-roteiro');
-  const livroAVenda = estaAVenda(livro);
 
   return (
     <>
@@ -34,6 +33,12 @@ export function CursosClient() {
           leadPt="A Alfabetização está disponível hoje. O A1, o A2 e o B1 estão em produção e serão vendidos à parte, na mesma conta, cada um começando onde o anterior parou."
         />
         <CourseShelf />
+      </Section>
+
+      {/* Dois produtos e um combo só (23/10/2026, decisão do dono). O que está
+          fora de venda aparece "Em breve", sem preço (OpcoesDeCompra). */}
+      <Section labelledBy="opcoes-titulo">
+        <OpcoesDeCompra />
       </Section>
 
       <Section tone="surface" labelledBy="trilha-detalhe">
@@ -103,20 +108,6 @@ export function CursosClient() {
         <span hidden data-curso="fim" />
       </Section>
 
-      {/* O e-book (21/10/2026): não é um nível da trilha, é um guia à parte.
-          Só aparece quando está à venda (`aVenda` em data/courses.json). */}
-      {livroAVenda && <Section tone="surface" labelledBy="ebook">
-        <div className="grid gap-4 max-w-[760px]">
-          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-[var(--accent)] m-0">E-book</p>
-          <h2 id="ebook" className="font-display font-semibold text-[clamp(26px,3vw,36px)] leading-[1.1] tracking-[-0.03em] text-ink m-0">
-            {livro?.titlePt}
-          </h2>
-          <p className="font-ui text-[17px] leading-[1.65] text-ink-body max-w-[60ch] m-0">{livro?.taglinePt}</p>
-          <div>
-            <LinkButton href="/cursos/israel-alem-do-roteiro" variant="secondary">Conhecer o e-book</LinkButton>
-          </div>
-        </div>
-      </Section>}
 
       <Section labelledBy="ordem">
         {/* Uma afirmação, não um cartão: o fio teal à esquerda é o mesmo das

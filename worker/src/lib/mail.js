@@ -420,17 +420,17 @@ export function mensagemDeCompra({
      O e-book (21/10/2026) diz "e-book", e o pacote, os dois produtos. */
   const livro = tipo === 'livro';
   const abertura = livro
-    ? (renovacao ? `Seu acesso ao e-book ${curso} foi renovado.` : `Seu e-book ${curso} está liberado.`)
+    ? (renovacao ? `Seu acesso ao ${curso} foi renovado.` : `Seu acesso ao ${curso} está liberado.`)
     : tipo === 'pacote'
-      ? `Seu acesso ao curso Alfabetização em Hebraico e ao e-book Israel Além do Óbvio está liberado.`
+      ? `Seu acesso ao curso Alfabetização em Hebraico e ao Israel Além do Óbvio está liberado, no mesmo login.`
       : renovacao
         ? `Seu acesso ao curso ${curso} foi renovado.`
         : `Seu acesso ao curso ${curso} está liberado.`;
   const primeiroPasso = !livro && !renovacao && aula0;
-  const rotulo = livro ? 'E-book' : tipo === 'pacote' ? 'Pacote' : 'Curso';
+  const rotulo = livro ? 'Experiência interativa' : tipo === 'pacote' ? 'Combo' : 'Curso';
   const COMO_ENTRAR = livro
     ? ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
-       'compra. O e-book abre no navegador, no celular ou no computador.']
+       'compra. O Israel Além do Óbvio abre no navegador, no celular ou no computador.']
     : ['Entre com este mesmo endereço de e-mail e a senha que você escolheu na',
        'compra. Seu progresso fica na conta, então dá para estudar no celular e',
        'continuar no computador de onde parou.'];
@@ -445,9 +445,9 @@ export function mensagemDeCompra({
     primeiroPasso ? 'Seu primeiro passo: a Aula 0.' : null,
     primeiroPasso ? AULA0 : null,
     primeiroPasso ? '' : null,
-    `${livro ? 'Abra o e-book' : 'Comece por aqui'}: ${primeiroPasso ? aula0 : link}`,
+    `${livro ? 'Abra o Israel Além do Óbvio' : 'Comece por aqui'}: ${primeiroPasso ? aula0 : link}`,
     primeiroPasso ? `Depois, o curso inteiro fica no seu painel: ${link}` : null,
-    ebook ? `O e-book Israel Além do Óbvio: ${ebook}` : null,
+    ebook ? `O Israel Além do Óbvio: ${ebook}` : null,
     '',
     ...COMO_ENTRAR,
     '',
@@ -489,8 +489,8 @@ export function mensagemDeCompra({
       ? `<p><strong>Seu primeiro passo: a Aula 0.</strong> ${escapar(AULA0)}</p>` +
         `<p><a href="${escapar(aula0)}">Começar pela Aula 0</a></p>` +
         `<p>Depois, o curso inteiro fica no <a href="${escapar(link)}">seu painel</a>.</p>`
-      : `<p><a href="${escapar(link)}">${livro ? 'Abrir o e-book' : 'Começar o curso'}</a></p>`,
-    ebook ? `<p>O e-book: <a href="${escapar(ebook)}">Israel Além do Óbvio</a>.</p>` : '',
+      : `<p><a href="${escapar(link)}">${livro ? 'Abrir o Israel Além do Óbvio' : 'Começar o curso'}</a></p>`,
+    ebook ? `<p>E também: <a href="${escapar(ebook)}">Israel Além do Óbvio</a>.</p>` : '',
     `<p>${escapar(COMO_ENTRAR.join(' '))}</p>`,
     '<hr>',
     `<p>${rotulo}: ${escapar(curso)}<br>`,

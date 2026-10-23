@@ -19,7 +19,7 @@ import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
 import { readFileSync } from 'node:fs';
 import { allCourses, allProducts } from '@/lib/catalog';
 // @ts-expect-error - script JS sem tipos
-import { virar, fimDoDia } from '../../tools/virar-preco.mjs';
+import { virar } from '../../tools/virar-preco.mjs';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -176,9 +176,13 @@ describe('o catálogo', () => {
     }
   });
 
-  it('o preço cobrado sai do catálogo: R$ 67 o e-book, R$ 127 o pacote', () => {
-    expect(priceCents(getCourse(LIVRO), 'card')).toBe(6700);
-    expect(priceCents(getCourse(PACOTE), 'card')).toBe(12700);
+  /* A tabela do dono (23/10/2026): R$ 147 o curso, R$ 197 o livro, R$ 297 o
+     combo, cobrados no backend a partir do catálogo, com o PIX a 10% menos. */
+  it('o preço cobrado sai do catálogo: R$ 147 o curso, R$ 197 o livro, R$ 297 o combo', () => {
+    expect(priceCents(getCourse('alfabetizacao'), 'card')).toBe(14700);
+    expect(priceCents(getCourse(LIVRO), 'card')).toBe(19700);
+    expect(priceCents(getCourse(PACOTE), 'card')).toBe(29700);
+    expect(priceCents(getCourse(PACOTE), 'pix')).toBe(26730);
   });
 
   it('o pacote abre o curso e o e-book, cada um com os seus meses', () => {
@@ -189,21 +193,18 @@ describe('o catálogo', () => {
     expect(itensDoPedido(getCourse(LIVRO))).toEqual([{ courseSlug: LIVRO, months: 12 }]);
   });
 
-  it('o pacote vira de R$ 127 para R$ 327 no mesmo dia que o curso; abaixo dele antes, acima depois', () => {
+  it('um combo só: R$ 297 contra R$ 344 dos dois separados, e a virada manual leva a R$ 397', () => {
     const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
-    const p = getCourse(PACOTE);
-    expect(p.price.preLancamentoAte, 'o pacote vira junto com o curso').toBe(getCourse('alfabetizacao').price.preLancamentoAte);
+    const cursos = JSON.parse(texto).courses as { slug: string; tipo?: string; titlePt: string }[];
+    expect(cursos.filter(c => c.tipo === 'pacote').map(c => c.slug)).toEqual([PACOTE]);
+    expect(getCourse(PACOTE).titlePt).toBe('Descubra Israel + Aprenda Hebraico');
     const preco = (t: string, slug: string) => JSON.parse(t).courses.find((c: { slug: string }) => c.slug === slug).price.brl;
     const separados = (t: string) => preco(t, 'alfabetizacao') + preco(t, LIVRO);
-    const depois = virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto;
-    /* Antes e depois da virada: abaixo dos dois separados. Até 30/11 o pacote fica
-       abaixo do curso sozinho (decisão do dono, 22/10/2026); depois, acima. */
+    expect(separados(texto)).toBe(344);
+    expect(separados(texto) - preco(texto, PACOTE)).toBe(47);
+    const depois = virar(texto).texto;
+    expect([preco(depois, 'alfabetizacao'), preco(depois, LIVRO), preco(depois, PACOTE)]).toEqual([197, 297, 397]);
     for (const t of [texto, depois]) expect(preco(t, PACOTE)).toBeLessThan(separados(t));
-    expect(preco(texto, PACOTE)).toBeLessThan(preco(texto, 'alfabetizacao'));
-    expect(preco(depois, PACOTE)).toBeGreaterThan(preco(depois, 'alfabetizacao'));
-    expect(preco(texto, PACOTE)).toBe(127);
-    expect(preco(depois, PACOTE)).toBe(327);
-    expect(preco(depois, 'alfabetizacao')).toBe(297);
   });
 });
 
@@ -335,7 +336,8 @@ describe('comprar o e-book e o pacote (o dia em que a venda abrir)', () => {
     const recibo = enviados.find(m => m.to === a.email)!;
     expect(recibo.subject).toContain('Israel Além do Óbvio');
     expect(recibo.text).toContain(`${SITE}/israel/`);
-    expect(recibo.text).toContain('E-book: Israel Além do Óbvio');
+    expect(recibo.text).toContain('Experiência interativa: Israel Além do Óbvio');
+    expect(recibo.text).not.toMatch(/e-book/i);
     expect(recibo.text).not.toContain('Aula 0');
   });
 
@@ -373,6 +375,94 @@ describe('comprar o e-book e o pacote (o dia em que a venda abrir)', () => {
     expect(await hasEntitlement(env, a.id, LIVRO)).toBe(true);
   });
 
+});
+
+/* Os três fluxos de compra com a tabela do dono (23/10/2026): cada opção cobra
+   o seu preço, calculado no servidor; só um pagamento APROVADO, consultado na
+   Mercado Pago e no valor do pedido, libera alguma coisa. Voltar do checkout
+   sem pagar, um pagamento pendente, recusado ou de valor menor não liberam. */
+describe('os três fluxos: curso, Israel Além do Óbvio e o combo', () => {
+  beforeEach(abrirVenda);
+  const criar = async (env: Record<string, unknown>, cookie: string, slug: string, method: 'pix' | 'card' = 'pix') => {
+    const c = await pay.create({ request: pedido(`${SITE}/api/pay/create`, { courseSlug: slug, method }, { Cookie: cookie }), env, ctx });
+    expect(c.status).toBe(200);
+    return { ordem: (await c.json() as { id: string }).id, p: [...pagamentos.values()].at(-1)! };
+  };
+
+  it('cada opção cobra o próprio preço no PIX: R$ 132,30, R$ 177,30 e R$ 267,30', async () => {
+    const env = envCompleto();
+    for (const [slug, valor, email] of [['alfabetizacao', 132.3, 'a@x.com.br'], [LIVRO, 177.3, 'b@x.com.br'], [PACOTE, 267.3, 'c@x.com.br']] as const) {
+      const a = await conta(env, email);
+      const { p } = await criar(env, a.cookie, slug);
+      expect(p.transaction_amount, slug).toBe(valor);
+    }
+  });
+
+  it('o preço não vem do navegador: um valor no corpo do pedido é ignorado', async () => {
+    const env = envCompleto();
+    const a = await conta(env);
+    const c = await pay.create({ request: pedido(`${SITE}/api/pay/create`, { courseSlug: PACOTE, method: 'pix', amount: 1, amountCents: 100, price: 1 }, { Cookie: a.cookie }), env, ctx });
+    expect(c.status).toBe(200);
+    expect([...pagamentos.values()].at(-1)!.transaction_amount).toBe(267.3);
+  });
+
+  it('o combo pago com valor menor que o dele não libera nada', async () => {
+    const env = envCompleto();
+    const a = await conta(env);
+    const { p } = await criar(env, a.cookie, PACOTE);
+    p.transaction_amount = 177.3;
+    p.status = 'approved';
+    await pay.webhook({ request: await aviso(p.id), env });
+    await assentar();
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao')).toBe(false);
+    expect(await hasEntitlement(env, a.id, LIVRO)).toBe(false);
+  });
+
+  it('pendente e recusado não liberam; o aviso aprovado depois libera os dois do combo', async () => {
+    const env = envCompleto();
+    const a = await conta(env);
+    const { p } = await criar(env, a.cookie, PACOTE);
+    await pay.webhook({ request: await aviso(p.id), env });
+    await assentar();
+    expect(await hasEntitlement(env, a.id, LIVRO)).toBe(false);
+    const b = await conta(env, 'beto@exemplo.com.br');
+    const r = await criar(env, b.cookie, LIVRO);
+    r.p.status = 'rejected';
+    await pay.webhook({ request: await aviso(r.p.id), env });
+    await assentar();
+    expect(await hasEntitlement(env, b.id, LIVRO)).toBe(false);
+    p.status = 'approved';
+    await pay.webhook({ request: await aviso(p.id), env });
+    await assentar();
+    expect(await hasEntitlement(env, a.id, 'alfabetizacao')).toBe(true);
+    expect(await hasEntitlement(env, a.id, LIVRO)).toBe(true);
+  });
+
+  it('um aviso sem assinatura válida não libera nada', async () => {
+    const env = envCompleto();
+    const a = await conta(env);
+    const { p } = await criar(env, a.cookie, LIVRO);
+    p.status = 'approved';
+    const falso = new Request(`${SITE}/api/pay/webhook?data.id=${p.id}&type=payment`, {
+      method: 'POST', headers: { 'x-signature': 'ts=1,v1=00', 'x-request-id': 'req-1', 'content-type': 'application/json' }, body: '{}'
+    });
+    expect((await pay.webhook({ request: falso, env })).status).toBe(401);
+    await assentar();
+    expect(await hasEntitlement(env, a.id, LIVRO)).toBe(false);
+  });
+
+  it('o mesmo aviso aprovado duas vezes concede uma vez só', async () => {
+    const env = envCompleto();
+    const a = await conta(env);
+    const r = await comprar(env, a.cookie, PACOTE);
+    const p = pagamentos.get(r.pagamento!)!;
+    await pay.webhook({ request: await aviso(p.id), env });
+    await assentar();
+    const linhas = (env.DB as { bruto: { prepare(q: string): { all(...a: unknown[]): unknown[] } } }).bruto
+      .prepare('SELECT course_slug FROM entitlements WHERE account_id = ?').all(a.id);
+    expect(linhas.length).toBe(2);
+    expect(enviados.filter(m => m.to === a.email).length).toBe(1);
+  });
 });
 
 describe('o pacote liberado à mão (PIX direto, Actions → Acesso → liberar)', () => {

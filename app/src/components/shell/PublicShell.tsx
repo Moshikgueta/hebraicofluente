@@ -156,8 +156,10 @@ export function PublicShell({ children }: { children: ReactNode }) {
             {account.ready && account.signedIn && account.can(FLAGSHIP) ? (
               <LinkButton href="/meu-hebraico" size="sm">Meu Hebraico</LinkButton>
             ) : account.ready && account.signedIn ? (
-              <LinkButton href="/perfil" variant="secondary" size="sm" className="whitespace-nowrap">
-                Minha conta
+              /* Sem o curso, a conta pode ter o Israel Além do Óbvio ou o Raízes
+                 (23/10/2026): a Minha Biblioteca mostra tudo, e leva à conta. */
+              <LinkButton href="/minha-biblioteca" variant="secondary" size="sm" className="whitespace-nowrap">
+                Minha Biblioteca
               </LinkButton>
             ) : (
               <>

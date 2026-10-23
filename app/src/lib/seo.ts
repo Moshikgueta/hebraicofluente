@@ -73,6 +73,8 @@ export const NAO_LISTADAS = [
      Instagram. Uma porta de quem já chegou, que não deve disputar a busca com
      a capa. */
   '/comece-aqui',
+  /* A Minha Biblioteca (23/10/2026): da conta, sem nada para a busca. */
+  '/minha-biblioteca',
   /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
      Existem para quem aceitou aquela versão; na busca, só a de hoje. */
   '/termos/v', '/reembolso/v', '/privacidade/v',
