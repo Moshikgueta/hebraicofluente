@@ -60,10 +60,10 @@ function Condicoes({ c }: { c: CatalogCourse }) {
       </li>
       <li>
         {tipoDe(c) === 'livro'
-          ? `Versão interativa por ${c.accessMonths} meses; o PDF baixado fica com você.`
+          ? `Versão interativa por ${c.accessMonths} meses, no celular ou no computador.`
           : `${c.accessMonths} meses de curso e de e-book, do celular ao computador.`}
       </li>
-      <li>O e-book recebe atualizações, e o PDF para baixar é sempre o da edição mais recente.</li>
+      <li>O e-book recebe atualizações, e a versão interativa é sempre a da edição mais recente.</li>
       <li>{empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.</li>
     </ul>
   );
@@ -179,7 +179,7 @@ export function ProdutoClient({ slug }: { slug: string }) {
             <dl className="flex flex-wrap gap-x-10 gap-y-4 pt-5 mt-2 border-t border-line max-w-[560px]">
               {([
                 ['Capítulos', String(livro.modules.length)],
-                ['Formato', 'Web + PDF'],
+                ['Formato', 'Interativo, no navegador'],
                 ['Acesso', `${c.accessMonths} meses`]
               ] as const).map(([k, v]) => (
                 <div key={k} className="grid gap-0.5">
@@ -222,7 +222,7 @@ export function ProdutoClient({ slug }: { slug: string }) {
         </ol>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[62ch] mt-6">
           Na versão interativa, os mapas se tocam, cada capítulo termina com exercícios de compreensão
-          corrigidos na hora, e o diário guarda o que você escreve. O PDF tem o mesmo texto, para ler e imprimir.
+          corrigidos na hora, e o diário guarda o que você escreve.
         </p>
       </Section>
 
