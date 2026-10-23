@@ -31,7 +31,7 @@ async function cenario(nome, aluno) {
   p.on('console',m=>{if(m.type()==='error')erros.push(nome+': '+m.text())});
   p.on('pageerror',e=>erros.push(nome+' pageerror: '+e.message));
 
-  await p.goto('http://127.0.0.1:4409/',{waitUntil:'networkidle'});
+  await p.goto('http://127.0.0.1:4409/curso-de-hebraico/',{waitUntil:'networkidle'});
   await p.waitForTimeout(2400);           /* a sequência do hero leva 1,9s */
   const h1 = (await p.locator('h1').first().innerText()).replace(/\s+/g,' ');
   const botao = (await p.locator('header a').filter({hasText:/Quero começar|Começar|Continuar|Liberar/}).first().innerText()).replace(/\s+/g,' ').trim();

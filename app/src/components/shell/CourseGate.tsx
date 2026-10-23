@@ -39,7 +39,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Card, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
-import { FLAGSHIP, getCourse } from '@/lib/catalog';
+import { FLAGSHIP, getCourse, paginaDeVenda } from '@/lib/catalog';
 import { carregarConteudo, conteudoPronto } from '@/lib/content';
 import { CURSO_A1, a1Pronto, carregarA1, rotaDoA1 } from '@/lib/a1';
 import { CURSO_RAIZES, carregarRaizes, raizesPronto, rotaDasRaizes } from '@/lib/raizes';
@@ -70,7 +70,7 @@ export function CourseGate({ children }: { children: ReactNode }) {
   const carregar = dasRaizes ? carregarRaizes : doA1 ? carregarA1 : carregarConteudo;
   /* Sem página de venda (não está no catálogo): quem não tem o direito vai
      para a lista de cursos, como no portão do servidor. */
-  const paginaDoCurso = dasRaizes ? '/cursos' : `/cursos/${curso}?${PARAM_SEM_ACESSO}=1`;
+  const paginaDoCurso = dasRaizes ? '/cursos' : `${paginaDeVenda(curso)}?${PARAM_SEM_ACESSO}=1`;
   const allowed = account.signedIn && (!needsPurchase || account.can(curso));
 
   /* O conteúdo do curso, buscado uma vez por sessão do navegador. `pronto`

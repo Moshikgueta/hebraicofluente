@@ -138,7 +138,7 @@ describe('as tabelas do painel', () => {
       new Request(`${SITE}${caminho}`, { method: metodo, headers: { 'user-agent': ua } }), env, ctx);
     const r = await ir('Mozilla/5.0 (iPhone) Instagram');
     expect(r.status).toBe(302);
-    expect(r.headers.get("location")).toBe(`${SITE}/?parceria=sefarad#experimente`);
+    expect(r.headers.get("location")).toBe(`${SITE}/curso-de-hebraico/?parceria=sefarad#experimente`);
     await ir('Mozilla/5.0 (iPhone)', 'GET', '/Sefarad/');
     await ir('facebookexternalhit/1.1');
     await ir('Mozilla/5.0', 'HEAD');
@@ -153,7 +153,14 @@ describe('as tabelas do painel', () => {
     /* Os links do Instagram (04/10/2026): cada um conta à parte e leva o
        próprio nome no endereço, que é o que o pedido guarda. */
     const bio = await ir('Mozilla/5.0 (iPhone) Instagram', 'GET', '/bio');
-    expect(bio.headers.get('location')).toBe(`${SITE}/?parceria=bio#experimente`);
+    expect(bio.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=bio#experimente`);
+    /* 23/10/2026: a capa virou o portal, e o link antigo `/?parceria=` (de
+       posts já publicados) segue para a página de venda com a parceria. */
+    const antigo = await ir('Mozilla/5.0', 'GET', '/?parceria=sefarad');
+    expect(antigo.status).toBe(302);
+    expect(antigo.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=sefarad#experimente`);
+    expect((await ir('Mozilla/5.0', 'GET', '/contato')).headers.get('location')).toBe(`${SITE}/suporte/`);
+    expect((await ir('Mozilla/5.0', 'GET', '/minha-conta/')).headers.get('location')).toBe(`${SITE}/meu-hebraico/`);
     await ir('Mozilla/5.0', 'GET', '/stories/');
     await ir('Mozilla/5.0', 'GET', '/dm');
     const d2 = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx))

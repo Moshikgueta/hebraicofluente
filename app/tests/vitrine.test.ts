@@ -178,7 +178,7 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
        dela. Um `<BarraFixa>` solto no JSX passa despercebido numa revisão e
        só aparece no site do cliente. */
     const capa = readFileSync(
-      new URL('../src/app/HomeClient.tsx', import.meta.url), 'utf8');
+      new URL('../src/app/curso-de-hebraico/CursoDeHebraicoClient.tsx', import.meta.url), 'utf8');
     expect(capa).toContain('passo.vende && <BarraFixa');
 
     /* E o preço que ela mostra sai do catálogo, nunca escrito à mão: é o

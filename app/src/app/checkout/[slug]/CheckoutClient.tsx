@@ -37,7 +37,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@/lib/account/types';
-import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse, paginaDeVenda } from '@/lib/catalog';
 import { comParceria, fimDaParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { AuthForm } from '@/components/platform/AuthForm';
@@ -244,7 +244,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
               {empresa.contato.emailSuporte}
             </a>
           </p>
-          <LinkButton href={`/cursos/${c.slug}`} variant="secondary" className="justify-self-start">
+          <LinkButton href={paginaDeVenda(c.slug)} variant="secondary" className="justify-self-start">
             Voltar ao curso
           </LinkButton>
         </Card>
@@ -679,7 +679,7 @@ function Shell({ course, children }: {
                     grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
       <div className="grid gap-5">
         <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
-          <Link href={`/cursos/${c.slug}`} className="hover:text-[var(--accent)]">
+          <Link href={paginaDeVenda(c.slug)} className="hover:text-[var(--accent)]">
             {c.titlePt}
           </Link>
           <span aria-hidden> · </span>

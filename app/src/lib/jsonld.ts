@@ -1,4 +1,4 @@
-/* Os dados estruturados da capa (JSON-LD), gerados dos dados.
+/* Os dados estruturados (JSON-LD) da capa e da página do curso, gerados dos dados.
  * ─────────────────────────────────────────────────────────────────────────
  * Até 01/10/2026 o site não tinha nenhum (auditoria, SEO-001). Quatro
  * blocos, e nenhum valor escrito aqui à mão:
@@ -8,7 +8,7 @@
  *                 caixa de preço (`precoDeVitrine`), e `priceValidUntil` é o
  *                 `preLancamentoAte` enquanto houver preço de pré-lançamento
  *                 - senão o Google mostraria em novembro um preço vencido;
- *   FAQPage       as perguntas que a FAQ da capa MOSTRA (faq-capa.ts);
+ *   FAQPage       as perguntas que a FAQ da página do curso MOSTRA (faq-capa.ts);
  *   Person        o professor, só com o que /sobre já afirma (Trajetoria.tsx).
  *                 Nada de cargo, número ou credencial que não esteja lá.
  *
@@ -19,7 +19,7 @@
  */
 
 import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
-import { ancora, flagship } from '@/lib/catalog';
+import { ancora, flagship, paginaDeVenda } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
@@ -63,7 +63,7 @@ export function curso(): Json {
     name: c.titlePt,
     description: c.taglinePt,
     inLanguage: 'pt-BR',
-    url: url(`/cursos/${c.slug}`),
+    url: url(paginaDeVenda(c.slug)),
     provider: { '@id': ID_ORG },
     offers: {
       '@type': 'Offer',
@@ -71,7 +71,7 @@ export function curso(): Json {
       price: precoDeVitrine().toFixed(2),
       priceCurrency: 'BRL',
       availability: 'https://schema.org/InStock',
-      url: url(`/cursos/${c.slug}`),
+      url: url(paginaDeVenda(c.slug)),
       ...(validade ? { priceValidUntil: validade } : {})
     }
   };
@@ -102,11 +102,28 @@ export function professor(retrato: string | null): Json {
   };
 }
 
-/** O grafo da capa, num bloco só. */
-export function grafoDaCapa(retrato: string | null): Json {
+/** O grafo da página de venda do curso (/curso-de-hebraico), num bloco só.
+ *  Foi o da capa até 23/10/2026: o Course e a FAQPage descrevem o que ESSA
+ *  página mostra (a caixa de preço e as perguntas dela). */
+export function grafoDoCurso(retrato: string | null): Json {
   return {
     '@context': 'https://schema.org',
     '@graph': [organizacao(), curso(), faq(), professor(retrato)]
+  };
+}
+
+/** O grafo da capa (o portal, desde 23/10/2026): quem é o site e quem o faz.
+ *  Sem Course nem FAQPage: a capa não mostra preço nem aquelas perguntas, e
+ *  dado estruturado que descreve outra página é o que o Google pune. */
+export function grafoDaCapa(retrato: string | null): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      organizacao(),
+      { '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
+        inLanguage: 'pt-BR', publisher: { '@id': ID_ORG } },
+      professor(retrato)
+    ]
   };
 }
 

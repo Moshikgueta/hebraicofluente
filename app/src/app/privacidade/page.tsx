@@ -295,9 +295,16 @@ export default function Page() {
         </p>
         {/* 03/10/2026: worker/src/api/estatisticas.js, contarDemo. */}
         <p>
-          No teste grátis da página inicial, o navegador manda só o nome de cada etapa que você alcançou, uma vez
-          por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e não guarda nome,
-          e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
+          No teste grátis da página do curso de hebraico, o navegador manda só o nome de cada etapa que você
+          alcançou, uma vez por visita, para sabermos onde as pessoas param. O servidor soma esses números por dia e
+          não guarda nome, e-mail, conta, endereço de IP, horário nem as suas respostas. Os totais saem depois de um ano.
+        </p>
+        {/* 23/10/2026: worker/src/api/estatisticas.js, contarPortal. */}
+        <p>
+          Na página inicial, do mesmo jeito, o navegador manda só o nome do caminho ou do produto que você abriu (por
+          exemplo, &quot;Descobrir Israel&quot;), uma vez por visita, para sabermos o que interessa a quem chega. O
+          servidor soma por dia e não guarda nome, e-mail, conta, endereço de IP, horário nem cookie. Os totais saem
+          depois de um ano.
         </p>
         {/* 03/10/2026: worker/src/api/segunda-letra.js. */}
         <p>

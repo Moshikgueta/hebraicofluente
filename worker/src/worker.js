@@ -49,6 +49,8 @@ import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
 import * as segundaLetra from './api/segunda-letra.js';
 
+/* A página de venda do curso de alfabetização. Foi a capa até 23/10/2026. */
+const PAGINA_DE_VENDA = '/curso-de-hebraico/';
 const ROUTES = {
   'POST /api/auth/signup': auth.signup,
   'POST /api/auth/login': auth.login,
@@ -153,6 +155,8 @@ const ROUTES = {
   'GET /api/admin/estatisticas': estatisticas.ler,
   /* Até onde os visitantes chegam no teste grátis da capa. Sem sessão. */
   'POST /api/demo': estatisticas.contarDemo,
+  /* O portal da capa (23/10/2026): jornadas e produtos abertos. Ver api/estatisticas.js. */
+  'POST /api/portal': estatisticas.contarPortal,
   /* A segunda letra por e-mail, no fim do teste. Ver api/segunda-letra.js. */
   'POST /api/segunda-letra': segundaLetra.pedir,
 
@@ -234,7 +238,27 @@ async function responder(request, env, ctx) {
     if (campanha && (request.method === 'GET' || request.method === 'HEAD')) {
       const conta = estatisticas.contarCampanha(env, campanha, request);
       if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(conta); else await conta;
-      return new Response(null, { status: 302, headers: { Location: `${url.origin}/?parceria=${campanha}#experimente`, 'Cache-Control': 'no-store' } });
+      return new Response(null, { status: 302, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}?parceria=${campanha}#experimente`, 'Cache-Control': 'no-store' } });
+    }
+    /* O link de parceria antigo (`/?parceria=sefarad`), de antes de a capa
+       virar o portal (23/10/2026): segue para a página de venda, com a
+       parceria, para o preço do link não se perder num post já publicado. */
+    if (path === '/' && url.searchParams.has('parceria') && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 302, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}${url.search}#experimente`, 'Cache-Control': 'no-store' } });
+    }
+    /* Uma página de venda só (23/10/2026, decisão do dono): a do curso de
+       alfabetização mora em /curso-de-hebraico, e o endereço antigo do
+       catálogo leva para lá com a consulta junto (`?sem-acesso=1` do portão,
+       `?parceria=` de algum link velho). O payload RSC do mesmo endereço
+       também, para a navegação do Next não montar a página antiga. */
+    if (/^\/cursos\/alfabetizacao(\/(index\.(html|txt))?)?$/i.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 301, headers: { Location: `${url.origin}${PAGINA_DE_VENDA}${url.search}` } });
+    }
+    /* Endereços do portal que já têm casa (23/10/2026): o contato é o
+       /suporte (o mesmo e-mail e WhatsApp), e "minha conta" é o painel. */
+    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/' };
+    if (ATALHOS[path.toLowerCase()] && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 301, headers: { Location: `${url.origin}${ATALHOS[path.toLowerCase()]}` } });
     }
 
     /* ── a API ──────────────────────────────────────────────────────── */
@@ -471,9 +495,11 @@ function blindar(res, path, hashes = null) {
   /* 28/09/2026: e na CAPA, só nela. A landing ganhou "Ouça e fale"
      (components/landing/OuvirEFalar.tsx): o visitante se grava falando
      שָׁלוֹם e é corrigido, antes de comprar - a pedido do dono do curso. As
-     outras páginas públicas e a API continuam fechadas. */
-  const naCapa = path === '/' || path === '/index.html';
-  const mic = isGatedPath(path) || isAdminPath(path) || naCapa ? 'microphone=(self)' : 'microphone=()';
+     outras páginas públicas e a API continuam fechadas. 23/10/2026: a página
+     de venda saiu da capa para /curso-de-hebraico (a capa virou o portal das
+     jornadas, que não grava ninguém), e o microfone foi junto. */
+  const naVenda = path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
+  const mic = isGatedPath(path) || isAdminPath(path) || naVenda ? 'microphone=(self)' : 'microphone=()';
   h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {

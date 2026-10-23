@@ -62,7 +62,8 @@ const BASE = 'http://127.0.0.1:4497';
 /* As páginas que um visitante alcança sem conta. A mesma lista de
    `check-legal.mjs`, mais as que têm controle interativo. */
 const ROTAS = [
-  '/', '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-roteiro/', '/raizes-sefarditas/',
+  '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/acessibilidade/', '/entrar/', '/criar-conta/'
 ];
@@ -98,7 +99,7 @@ for (const width of LARGURAS) {
     await p.goto(`${BASE}${rota}`, { waitUntil: 'networkidle' });
     /* A sequência de entrada do hero leva 1,9 s, e um clique no meio dela
        testa um estado que ninguém vê. */
-    await p.waitForTimeout(rota === '/' ? 2300 : 500);
+    await p.waitForTimeout(rota === '/curso-de-hebraico/' ? 2300 : 500);
 
     if (explosoes.length) {
       erro(`${rota} explodiu só ao CARREGAR: ${explosoes[0]}`);
@@ -168,10 +169,10 @@ for (const width of LARGURAS) {
   const explosoes = [];
   p.on('pageerror', e => explosoes.push(String(e.message || e).slice(0, 200)));
 
-  for (const alvo of ['/#experimente', '/#decisoes', '/#duvidas']) {
+  for (const alvo of ['/curso-de-hebraico/#experimente', '/curso-de-hebraico/#decisoes', '/curso-de-hebraico/#duvidas']) {
     await p.goto(`${BASE}${alvo}`, { waitUntil: 'networkidle' });
     await p.waitForTimeout(900);
-    const id = alvo.slice(2);
+    const id = alvo.split('#')[1];
     const existe = await p.locator(`#${id}`).count();
     if (!existe) erro(`${alvo}: a seção #${id} não existe na página`);
     else if (explosoes.length) erro(`${alvo}: ${explosoes[0]}`);
@@ -196,7 +197,7 @@ for (const width of LARGURAS) {
   const explosoes = [];
   p.on('pageerror', e => explosoes.push(String(e.message || e).slice(0, 200)));
 
-  await p.goto(`${BASE}/#experimente`, { waitUntil: 'networkidle' });
+  await p.goto(`${BASE}/curso-de-hebraico/#experimente`, { waitUntil: 'networkidle' });
   await p.waitForTimeout(900);
 
   const secao = p.locator('#experimente');

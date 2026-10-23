@@ -256,7 +256,7 @@ export const SEGUNDA_LETRA = {
 export function mensagemDaSegundaLetra({ site, suporte, marca }) {
   const L = SEGUNDA_LETRA;
   const assinatura = marca || 'Hebraico Fluente';
-  const curso = `${site}/cursos/alfabetizacao/`;
+  const curso = `${site}/curso-de-hebraico/`;
   const silabas = L.silabas.map(([he, t]) => `${he} ${t}`).join(' · ');
   const palavras = L.palavras.map(([he, t, pt]) => `${he} (${t}), «${pt}»`).join(' · ');
 

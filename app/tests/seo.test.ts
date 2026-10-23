@@ -62,7 +62,7 @@ describe('as rotas que não respondem a busca', () => {
 
 describe('a vitrine', () => {
   it('é anunciável inteira', () => {
-    for (const r of ['/', '/metodo', '/cursos', '/cursos/alfabetizacao', '/sobre', '/faq', '/biblia']) {
+    for (const r of ['/', '/metodo', '/cursos', '/curso-de-hebraico', '/sobre', '/faq', '/biblia']) {
       expect(anunciavel(r), r).toBe(true);
     }
   });

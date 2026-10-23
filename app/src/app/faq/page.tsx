@@ -237,6 +237,7 @@ export default function FaqPage() {
               limitação respondida com clareza tranquiliza; a mesma limitação
               anunciada em corpo 44 assusta. */}
       <PageHead
+        trilha={[{ nome: 'Dúvidas' }]}
         eyebrowPt="Dúvidas frequentes"
         titlePt="Tudo o que vale saber antes de começar."
         leadPt="Respostas diretas sobre o curso, o acesso, o conteúdo e o que esperar da experiência dentro da plataforma."

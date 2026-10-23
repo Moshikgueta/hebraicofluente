@@ -26,12 +26,12 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
-import { totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, empresa, parcelasTexto, soPix, temPix } from '@/lib/empresa';
 import { Container, H2, Reveal, Rubrica, Check, CheckList, Chevron } from './base';
 import { precoDeVitrine } from '@/lib/vitrine';
+import { oQueOCursoInclui } from '@/lib/inclui';
 import { perguntasDaCapa } from './faq-capa';
 
 const TEM_AUDIO = audioAvailable();
@@ -401,21 +401,9 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
   const pix = pixPrice(c.price);
   const cheio = ancora(c.price);
 
-  /* O que se recebe, em itens concretos e conferidos no produto (auditoria
-     de 01/10, CONV-001 seção 2, item 4): a Aula 0 (/inicio), as lições
-     (contadas do curso), a cursiva traçada na tela, o áudio (só com o
-     manifesto cheio), os jogos da Academia (/academia), o exame final
-     (/desafio-final) e o certificado, que a própria imagem diz não ser
-     oficial (/faq, "Tem certificado?"). */
-  const inclui = [
-    'Aula 0: como o hebraico funciona, antes da primeira letra',
-    `${totalLicoes()} lições, uma letra por vez`,
-    'Escrita cursiva traçada na tela, com avaliação do traço',
-    TEM_AUDIO ? 'Áudio gravado pelo professor, um israelense' : 'Explicação de som para cada letra',
-    'Jogos de prática na Academia de Leitura',
-    'Exame final e certificado de conclusão (não oficial)',
-    'Progresso salvo, no celular e no computador'
-  ];
+  /* O que se recebe, em itens concretos e conferidos no produto: a lista
+     mora em lib/inclui.ts, a mesma que o cartão da capa lê. */
+  const inclui = oQueOCursoInclui();
 
   return (
     <section id="preco">

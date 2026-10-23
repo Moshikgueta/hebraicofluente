@@ -1,6 +1,11 @@
 'use client';
 
-/* A porta da frente.
+/* A página de venda do curso de alfabetização.
+ *
+ * Foi a capa (`/`) até 23/10/2026, quando a capa virou o portal das jornadas
+ * (decisão do dono, master prompt "Hebraico Fluente 2.0"). Mudou de endereço,
+ * não de conteúdo: os links de campanha (/sefarad, /bio, /stories, /dm) e o
+ * `/?parceria=` antigo vêm direto para cá (worker.js).
  *
  * 30/09/2026, decisão do dono: a capa tinha 19 seções e 22.650 px no celular,
  * com o preço a 17.000 px de rolagem. Saíram as sete que repetiam outra
@@ -46,7 +51,7 @@ import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
 import type { HeroMedia } from '@/components/landing/media';
 
-export function HomeClient({ midia, retrato }: { midia: HeroMedia; retrato: string | null }) {
+export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; retrato: string | null }) {
   const account = useAccount();
 
   /* Um aluno que já entrou não deve ser mandado para o checkout pela própria

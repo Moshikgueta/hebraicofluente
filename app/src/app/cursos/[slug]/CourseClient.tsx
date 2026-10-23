@@ -263,7 +263,7 @@ function BuyBox({ slug }: { slug: string }) {
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
           Enquanto isso, o caminho para chegar até aqui começa na alfabetização.
         </p>
-        <LinkButton href="/cursos/alfabetizacao" variant="secondary" size="lg" full>
+        <LinkButton href="/curso-de-hebraico" variant="secondary" size="lg" full>
           Ver o curso 01
         </LinkButton>
       </Card>

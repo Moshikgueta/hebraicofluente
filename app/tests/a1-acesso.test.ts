@@ -74,7 +74,7 @@ describe('o portão não deixa um curso abrir o outro', () => {
     expect(await porta(env, cookie, '/a1/unidade/1/')).toBeNull();
     const r = await porta(env, cookie, '/licao/alef/');
     expect(r?.status).toBe(302);
-    expect(r?.headers.get('location')).toContain('/cursos/alfabetizacao/');
+    expect(r?.headers.get('location')).toContain('/curso-de-hebraico/');
   });
 
   it('os clipes de áudio servem a quem tem qualquer um dos dois cursos', async () => {

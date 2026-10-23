@@ -33,6 +33,7 @@ import { DemoNotice } from '@/components/shell/DemoNotice';
 import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { estaAVenda, FLAGSHIP, flagship, getCourse, parcelasMax } from '@/lib/catalog';
+import { JORNADAS, jornadaAberta } from '@/lib/ecossistema';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -42,11 +43,10 @@ import {
    este mesmo cabeçalho. A capa tem as âncoras por dentro, para quem já está
    rolando por ela. */
 const LINKS = [
-  /* A seção `#como` saiu da capa em 30/09/2026 (ver HomeClient.tsx); "Como
-     funciona" leva agora às três decisões de como o curso foi pensado. */
-  { href: '/#decisoes', label: 'Como funciona' },
-  { href: '/cursos', label: 'O curso' },
-  { href: '/metodo', label: 'Metodologia' },
+  /* 23/10/2026: a capa virou o portal. As três jornadas moram no painel
+     "Experiências" (MenuExperiencias), com uma linha de descrição e o
+     status de cada uma; ao lado ficam as páginas que explicam o curso. */
+  { href: '/metodo', label: 'O método' },
   { href: '/sobre', label: 'Sobre' },
   { href: '/faq', label: 'Dúvidas' }
 ] as const;
@@ -124,6 +124,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               dá conta dos links; o que não pode sair da barra é o par
               "Entrar" e "Começar", que é o que cada visitante veio fazer. */}
           <nav aria-label="Navegação do site" className="hidden lg:flex items-center gap-1 ml-4">
+            <MenuExperiencias pathname={pathname} />
             {LINKS.map(l => {
               const active = norm(pathname) === norm(l.href);
               return (
@@ -180,7 +181,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 {/* "Começar agora" cabe a partir de sm; num aparelho de 390 o
                     rótulo inteiro quebra em duas linhas e empurra o menu
                     para fora da tela. A palavra que importa é a primeira. */}
-                <LinkButton href="/cursos/alfabetizacao" size="sm"
+                <LinkButton href="/curso-de-hebraico" size="sm"
                             className="whitespace-nowrap px-3 sm:px-4">
                   {/* Um rótulo inteiro por largura, e não "Começar" + um
                       span com "&nbsp;agora": o `gap` do botão somava ao
@@ -215,9 +216,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
             {/* Só os links de navegação. "Entrar" saiu daqui porque agora
                 está na barra, visível em toda largura - repeti-lo dentro do
                 menu só ensinaria que é aqui que se procura. */}
-            <ul className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-2 grid">
-              {LINKS
-                .map(l => (
+            <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-3 grid gap-3">
+              <p className="m-0 font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">Experiências</p>
+              <ListaDasJornadas />
+              <ul className="grid list-none p-0 m-0 border-t border-[color:var(--line-soft)]">
+                {LINKS.map(l => (
                   <li key={l.href}>
                     <Link
                       href={l.href}
@@ -228,7 +231,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
                     </Link>
                   </li>
                 ))}
-            </ul>
+              </ul>
+            </div>
           </nav>
         )}
       </header>
@@ -242,12 +246,105 @@ export function PublicShell({ children }: { children: ReactNode }) {
   );
 }
 
+/* As três jornadas, com a letra, o nome, o status e uma linha do que são.
+   É a mesma lista no painel do desktop e no menu do telefone. */
+function ListaDasJornadas() {
+  return (
+    <ul className="grid gap-1 list-none p-0 m-0">
+      {JORNADAS.map(j => {
+        const aberta = jornadaAberta(j.id);
+        return (
+          <li key={j.id}>
+            <Link href={j.rota}
+                  className="grid grid-cols-[40px_minmax(0,1fr)] items-start gap-3 rounded-[12px] p-2.5 min-h-[56px]
+                             hover:bg-surface-2 focus-visible:bg-surface-2 transition-colors duration-150">
+              <span aria-hidden className="grid place-items-center w-10 h-10 rounded-[10px] bg-[var(--teal-soft)]">
+                <He size="inline" tone={j.id === 'hebraico' ? 'teal' : 'navy'}>{j.letra}</He>
+              </span>
+              <span className="grid gap-0.5 min-w-0">
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="font-ui text-[15.5px] font-semibold text-ink">{j.nome}</span>
+                  <span className={`inline-flex items-center min-h-[20px] px-2 rounded-full font-ui text-[11.5px] font-semibold
+                                    ${aberta ? 'bg-[var(--teal-ink)] text-white' : 'bg-[var(--gold-soft)] text-[var(--gold-ink)]'}`}>
+                    {aberta ? 'Disponível' : 'Em breve'}
+                  </span>
+                </span>
+                <span className="font-ui text-[13.5px] leading-[1.45] text-ink-muted">{j.resumo}</span>
+              </span>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/* O painel "Experiências" do desktop.
+   ─────────────────────────────────────────────────────────────────────────
+   Abre ao passar o mouse (só onde há mouse: no toque o hover dispara junto
+   com o clique e o painel abria e fechava) e ao clicar; Enter e Espaço pelo
+   botão; Esc fecha e devolve o foco ao botão; sair com o Tab ou clicar fora
+   fecha. O conteúdo está no HTML mesmo fechado (`hidden`), então os links
+   das jornadas existem para quem lê o código da página e para a busca. */
+function MenuExperiencias({ pathname }: { pathname: string | null }) {
+  const [aberto, setAberto] = useState(false);
+  const botao = useRef<HTMLButtonElement>(null);
+  const caixa = useRef<HTMLDivElement>(null);
+  const timer = useRef<number | null>(null);
+  const ativo = JORNADAS.some(j => norm(pathname).startsWith(j.rota));
+  const temMouse = () => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+  const cancelar = () => { if (timer.current) { window.clearTimeout(timer.current); timer.current = null; } };
+
+  useEffect(() => { setAberto(false); }, [pathname]);
+  useEffect(() => {
+    if (!aberto) return;
+    const tecla = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setAberto(false); botao.current?.focus(); }
+    };
+    const fora = (e: PointerEvent) => {
+      if (caixa.current && !caixa.current.contains(e.target as Node)) setAberto(false);
+    };
+    document.addEventListener('keydown', tecla);
+    document.addEventListener('pointerdown', fora);
+    return () => {
+      document.removeEventListener('keydown', tecla);
+      document.removeEventListener('pointerdown', fora);
+    };
+  }, [aberto]);
+  useEffect(() => cancelar, []);
+
+  return (
+    <div ref={caixa} className="relative"
+         onMouseEnter={() => { if (!temMouse()) return; cancelar(); setAberto(true); }}
+         onMouseLeave={() => { if (!temMouse()) return; cancelar(); timer.current = window.setTimeout(() => setAberto(false), 140); }}
+         onBlur={e => { if (!caixa.current?.contains(e.relatedTarget as Node | null)) setAberto(false); }}>
+      <button ref={botao} type="button"
+              aria-expanded={aberto} aria-controls="painel-experiencias"
+              onClick={() => setAberto(v => !v)}
+              className={`relative inline-flex items-center gap-1.5 min-h-[44px] px-3 font-ui text-[14px] font-medium
+                          transition-colors duration-150
+                          after:absolute after:left-3 after:right-3 after:bottom-[9px] after:h-[2px]
+                          after:bg-[var(--teal)] after:transition-opacity after:duration-150
+                          ${ativo ? 'text-ink after:opacity-100' : 'text-ink-body hover:text-ink after:opacity-0'}`}>
+        Experiências
+        <span aria-hidden className={`inline-block text-[10px] transition-transform duration-150 ${aberto ? 'rotate-180' : ''}`}>▾</span>
+      </button>
+      <div id="painel-experiencias" hidden={!aberto} className="absolute left-0 top-full pt-2 w-[440px] z-50">
+        <div className="rounded-[16px] border border-line bg-[var(--card)] p-2
+                        shadow-[0_24px_50px_-24px_rgba(6,42,48,.45)] motion-safe:animate-[hf-rise_160ms_var(--ease)_both]">
+          <ListaDasJornadas />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Footer() {
   return (
     <footer className="mt-16 border-t border-[color:var(--line-soft)] bg-surface-2">
       <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-10 grid gap-8
-                      sm:grid-cols-2 lg:grid-cols-4">
-        <div className="grid gap-2 content-start">
+                      grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_repeat(4,minmax(0,1fr))]">
+        <div className="col-span-2 lg:col-span-1 grid gap-2 content-start">
           <Logo size={28} />
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
             Hebraico para brasileiros, começando pelo alfabeto. Feito para adulto
@@ -261,19 +358,72 @@ function Footer() {
             <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
             ({METODO_ORIGINAL.obraTranslit}), de {METODO_ORIGINAL.autor}.
           </p>
+          <div className="grid gap-2 content-start mt-3">
+            <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">Contato</p>
+            <a href={`mailto:${empresa.contato.emailSuporte}`}
+               className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
+                          text-ink-body hover:text-[var(--accent)] break-all">
+              {empresa.contato.emailSuporte}
+            </a>
+            {empresa.contato.whatsapp && (
+              whatsappUrl()
+                ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
+                     className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
+                                text-ink-body hover:text-[var(--accent)]">
+                    WhatsApp {empresa.contato.whatsapp}
+                  </a>
+                : <span className="font-ui text-[13.5px] text-ink-body">
+                    WhatsApp {empresa.contato.whatsapp}
+                  </span>
+            )}
+            <RedesSociais />
+            <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
+              {empresa.atendimento.horarioPt}. Resposta {prazoResposta()}.
+            </p>
+            {/* Esta linha aparece em TODA página pública, o que faz dela a
+                promessa de pagamento mais repetida do site - e a mais cara de
+                deixar errada. Sai de data/empresa.json, como o resto, e agora
+                também das FORMAS que a conta do provedor aceita: prometer PIX
+                no rodapé de todas as páginas e não ter PIX no checkout é a
+                versão mais visível do mesmo defeito. */}
+            <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
+              {/* O "12x" era escrito à mão aqui. Passou a sair do catálogo pelo
+                  mesmo motivo de todo número do site: o dia em que o
+                  parcelamento mudar em data/courses.json, esta linha muda
+                  junto, em vez de continuar prometendo o número velho no pé de
+                  todas as páginas. */}
+              {soPix()
+                ? 'Pagamento por PIX. Acesso liberado depois de conferido o pagamento.'
+                : temPix() && temCartao()
+                  ? `Pagamento por PIX ou cartão, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
+                  : temCartao()
+                    ? `Pagamento por cartão de crédito, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
+                    : 'Pagamento por PIX. Acesso liberado na hora.'}
+            </p>
+          </div>
         </div>
 
-        {/* O curso à venda é um só. A1, A2 e B1 aparecem como o que são:
-            próximos cursos, à parte, ainda em produção - e não como três
-            ofertas na mesma coluna (auditoria de 01/10, CONV-011). */}
+        {/* Quatro colunas com hierarquia (23/10/2026): as jornadas, o que
+            explica o curso, a ajuda e o legal. O curso à venda é um só; A1,
+            A2 e B1 aparecem como o que são, próximos cursos em produção
+            (auditoria de 01/10, CONV-011). Legal ao lado dos outros, e não
+            numa linha miúda: quem procura a política de reembolso antes de
+            comprar está decidindo. */}
         <div className="grid gap-1 content-start">
-          <FooterCol title="O curso" links={[
-            { href: '/cursos/alfabetizacao', label: 'Alfabetização em Hebraico' },
-            /* 21/10/2026: o e-book, vendido à parte (data/courses.json, tipo livro),
-               só quando está à venda. */
+          <FooterCol title="Experiências" links={[
+            ...JORNADAS.map(j => ({ href: j.rota, label: j.nome })),
             ...(estaAVenda(getCourse('israel-alem-do-roteiro'))
               ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Roteiro' }]
               : [])
+          ]} />
+        </div>
+
+        <div className="grid gap-1 content-start">
+          <FooterCol title="Aprender" links={[
+            { href: '/curso-de-hebraico', label: 'Alfabetização em Hebraico' },
+            { href: '/metodo', label: 'O método' },
+            { href: '/cursos', label: 'Os cursos' },
+            { href: '/biblia', label: 'Ler a Bíblia?' }
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
             Próximos cursos, à parte e ainda em produção:{' '}
@@ -283,69 +433,20 @@ function Footer() {
           </p>
         </div>
 
-        <FooterCol title="A plataforma" links={[
-          { href: '/metodo', label: 'O método' },
-          { href: '/biblia', label: 'Ler a Bíblia?' },
-          { href: '/sobre', label: 'Sobre o Moshik' },
+        <FooterCol title="Ajuda" links={[
           { href: '/faq', label: 'Dúvidas' },
-          { href: '/entrar', label: 'Entrar' }
+          { href: '/suporte', label: 'Suporte' },
+          { href: '/entrar', label: 'Entrar' },
+          { href: '/sobre', label: 'Sobre o Moshik' },
+          { href: '/acessibilidade', label: 'Acessibilidade' }
         ]} />
 
-        {/* Legal ao lado de Cursos e Plataforma, e não escondido numa linha
-            miúda embaixo. Quem procura "tem política de reembolso?" antes de
-            comprar está decidindo: achar em dois segundos converte, caçar
-            não. */}
         <FooterCol title="Legal" links={[
           { href: '/termos', label: 'Termos de Uso' },
           { href: '/privacidade', label: 'Política de Privacidade' },
-          { href: '/reembolso', label: 'Reembolso e Cancelamento' },
-          { href: '/acessibilidade', label: 'Acessibilidade' },
-          { href: '/suporte', label: 'Suporte' }
+          { href: '/reembolso', label: 'Reembolso e Cancelamento' }
         ]} />
 
-        <div className="grid gap-2 content-start">
-          <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">Contato</p>
-          <a href={`mailto:${empresa.contato.emailSuporte}`}
-             className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                        text-ink-body hover:text-[var(--accent)] break-all">
-            {empresa.contato.emailSuporte}
-          </a>
-          {empresa.contato.whatsapp && (
-            whatsappUrl()
-              ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
-                   className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
-                              text-ink-body hover:text-[var(--accent)]">
-                  WhatsApp {empresa.contato.whatsapp}
-                </a>
-              : <span className="font-ui text-[13.5px] text-ink-body">
-                  WhatsApp {empresa.contato.whatsapp}
-                </span>
-          )}
-          <RedesSociais />
-          <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
-            {empresa.atendimento.horarioPt}. Resposta {prazoResposta()}.
-          </p>
-          {/* Esta linha aparece em TODA página pública, o que faz dela a
-              promessa de pagamento mais repetida do site - e a mais cara de
-              deixar errada. Sai de data/empresa.json, como o resto, e agora
-              também das FORMAS que a conta do provedor aceita: prometer PIX
-              no rodapé de todas as páginas e não ter PIX no checkout é a
-              versão mais visível do mesmo defeito. */}
-          <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
-            {/* O "12x" era escrito à mão aqui. Passou a sair do catálogo pelo
-                mesmo motivo de todo número do site: o dia em que o
-                parcelamento mudar em data/courses.json, esta linha muda
-                junto, em vez de continuar prometendo o número velho no pé de
-                todas as páginas. */}
-            {soPix()
-              ? 'Pagamento por PIX. Acesso liberado depois de conferido o pagamento.'
-              : temPix() && temCartao()
-                ? `Pagamento por PIX ou cartão, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
-                : temCartao()
-                  ? `Pagamento por cartão de crédito, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
-                  : 'Pagamento por PIX. Acesso liberado na hora.'}
-          </p>
-        </div>
       </div>
 
       {/* A identificação do fornecedor.

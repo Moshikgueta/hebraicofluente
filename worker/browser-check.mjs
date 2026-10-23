@@ -29,7 +29,7 @@ if (!BASE) {
 
 /* As rotas que um visitante vê antes de comprar. Se qualquer uma destas
    estiver em branco, não há venda. */
-const PAGES = ['/', '/cursos/', '/cursos/alfabetizacao/', '/metodo/', '/entrar/'];
+const PAGES = ['/', '/curso-de-hebraico/', '/cursos/', '/metodo/', '/entrar/'];
 
 /* Abaixo disto a página está em branco na prática. A capa tem milhares de
    caracteres; 200 é generoso e ainda assim pega uma tela vazia. */

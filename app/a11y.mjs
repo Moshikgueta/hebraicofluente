@@ -78,7 +78,7 @@ console.log('\n── o botão ────────────────�
 
 /* Em toda página, e não só na capa: quem precisa do recurso precisa dele na
    lição. As duas cascas (site e plataforma) têm de carregá-lo. */
-for (const rota of ['/', '/cursos/alfabetizacao/', '/faq/', '/entrar/', '/meu-hebraico/']) {
+for (const rota of ['/', '/curso-de-hebraico/', '/faq/', '/entrar/', '/meu-hebraico/']) {
   await pg.goto(`${BASE}${rota}`, { waitUntil: 'networkidle' });
   const n = await pg.getByRole('button', { name: /Ajustes de acessibilidade/ }).count();
   conferir(n === 1, `${rota.padEnd(24)} tem o botão (${n})`);

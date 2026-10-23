@@ -175,7 +175,10 @@ export async function gate(request, env) {
     /* Produto sem página de venda - fora do catálogo (Raízes Sefarditas) ou
        com `aVenda: false` (o e-book, 22/10/2026): quem não tem o direito vai
        para a lista de cursos, e não para um 404. */
-    const pagina = SEM_PAGINA_DE_VENDA.has(curso) ? '/cursos/' : `/cursos/${curso || COURSE}/`;
+    /* O curso de alfabetização vende em /curso-de-hebraico (23/10/2026); ir
+       direto para lá poupa o 301 do endereço antigo. */
+    const pagina = SEM_PAGINA_DE_VENDA.has(curso) ? '/cursos/'
+      : (curso || COURSE) === COURSE ? '/curso-de-hebraico/' : `/cursos/${curso}/`;
     return recusa(url, documento, pagina);
   }
 

@@ -13,7 +13,7 @@ import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
-import { allCourses, FLAGSHIP, isPlayable, type CatalogCourse } from '@/lib/catalog';
+import { allCourses, FLAGSHIP, isPlayable, type CatalogCourse, paginaDeVenda } from '@/lib/catalog';
 import { Card } from '@/components/ui/Card';
 import { CourseCard, courseCardState } from './CourseCard';
 
@@ -83,7 +83,7 @@ function ShelfRows({ courses }: { courses: CatalogCourse[] }) {
           return (
             <li key={c.slug} className="min-w-0">
               <Link
-                href={state === 'owned' ? '/meu-hebraico' : `/cursos/${c.slug}`}
+                href={state === 'owned' ? '/meu-hebraico' : paginaDeVenda(c.slug)}
                 className="flex items-center gap-3 min-h-[52px] px-2.5 rounded-[var(--r-md)]
                            hover:bg-surface-2 transition-colors"
               >

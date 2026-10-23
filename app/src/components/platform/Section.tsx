@@ -6,6 +6,7 @@
  * alternar o fundo e separar as faixas sem desenhar uma linha entre elas.
  */
 
+import { Migalhas, type Trilha } from '@/components/portal/Migalhas';
 import type { ReactNode } from 'react';
 import { Rubrica } from '@/components/landing/base';
 
@@ -75,11 +76,16 @@ export function SectionHead({
  * semibold de entrelinha curta, apoio em cinza.
  */
 export function PageHead({
-  eyebrowPt, titlePt, leadPt, children
-}: { eyebrowPt?: string; titlePt: ReactNode; leadPt?: ReactNode; children?: ReactNode }) {
+  eyebrowPt, titlePt, leadPt, children, trilha
+}: {
+  eyebrowPt?: string; titlePt: ReactNode; leadPt?: ReactNode; children?: ReactNode;
+  /** Onde a página mora no portal (23/10/2026): "Início › Aprender hebraico › ...". */
+  trilha?: Trilha;
+}) {
   return (
     <div className="border-b border-line">
-      <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 pt-14 pb-14 sm:pt-20 sm:pb-20 grid gap-5">
+      <div className={`mx-auto w-full max-w-[1180px] px-4 sm:px-6 ${trilha ? 'pt-8 sm:pt-10' : 'pt-14 sm:pt-20'} pb-14 sm:pb-20 grid gap-5`}>
+        {trilha && <div className="mb-3"><Migalhas trilha={trilha} /></div>}
         {eyebrowPt && <Rubrica>{eyebrowPt}</Rubrica>}
         <h1 className="font-display font-semibold text-[clamp(36px,4.4vw,56px)] leading-[1.03]
                        tracking-[-0.036em] text-ink max-w-[20ch] m-0">

@@ -169,7 +169,7 @@ fi  # fim das conferências que pedem HF_ADMIN_TOKEN
 # abriu", e um 302 - mesmo que fosse para algum lugar bonito - é exatamente a
 # falha que este bloco existe para pegar.
 echo "Site público, sem conta"
-for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1/" \
+for p in "/" "/metodo/" "/cursos/" "/curso-de-hebraico/" "/cursos/hebraico-a1/" \
          "/sobre/" "/faq/" "/entrar/" "/criar-conta/" "/checkout/alfabetizacao/"; do
   c="$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
   espera "$p abre" 200 "$c"
@@ -281,7 +281,7 @@ espera "e-mail normalizado" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X
   -d "{\"email\":\"  $(echo "$MAIL" | tr '[:lower:]' '[:upper:]') \",\"password\":\"cavalo correto\"}")"
 
 echo "Portão com conta, sem compra"
-espera "vai para a página do curso" "$B/cursos/alfabetizacao/" "$(location -b "$JAR" $B/meu-hebraico/)"
+espera "vai para a página do curso" "$B/curso-de-hebraico/" "$(location -b "$JAR" $B/meu-hebraico/)"
 
 echo "Cobrança"
 # Duas situações legítimas, e a checagem se adapta:

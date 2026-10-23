@@ -20,7 +20,7 @@
  * regra: uma faixa comercial some inteira quando o passo não vende.
  */
 
-import { FLAGSHIP, getCourse, isPlayable, allCourses, type CatalogCourse } from './catalog';
+import { FLAGSHIP, getCourse, isPlayable, allCourses, paginaDeVenda, type CatalogCourse } from './catalog';
 import { confirmaSozinho, empresa } from './empresa';
 
 export type Passo = {
@@ -52,7 +52,7 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
      é vender o que não se tem. */
   if (curso && !isPlayable(curso)) {
     return {
-      href: `/cursos/${slug}`,
+      href: paginaDeVenda(slug),
       label: 'Ver o que vem neste curso',
       micro: 'Em breve. A página mostra o plano completo.',
       vende: false
