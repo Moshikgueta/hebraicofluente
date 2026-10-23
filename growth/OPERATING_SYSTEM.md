@@ -64,3 +64,6 @@ O pacote é genérico; onde ele discorda do `CLAUDE.md`, vale o `CLAUDE.md`.
 - **Nada de travessão** (U+2014) nem meia-risca (U+2013) em texto ao cliente.
 - **Toda ação externa** (publicar, mandar mensagem ou e-mail, gastar, mexer em
   preço, checkout ou produção) espera "pode" do dono. Responder ao dono em português.
+- **Partir do que já existe em `marketing/`**: diagnóstico, estratégia, plano de
+  90 dias, painel de indicadores, parcerias do piloto, roteiros aprovados e SEO.
+  O Growth OS atualiza esse trabalho; não refaz do zero nem repete candidatos.
