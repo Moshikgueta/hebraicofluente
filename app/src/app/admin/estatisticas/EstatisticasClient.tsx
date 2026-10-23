@@ -10,13 +10,60 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  crescimentoPorFonte, funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT,
+  crescimentoPorFonte, FONTES_PT, funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT,
   type Etapa, type PedidosDaFonte, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
 type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
-  porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[]; pedidosDeTeste?: number };
+  porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[]; pedidosDeTeste?: number;
+  interessados?: Interessados | null };
+type Interessados = { ativos: number; aguardando: number; sairam: number; porInteresse: Record<string, number>; porOrigem: Record<string, number> };
+
+const INTERESSE_PT: Record<string, string> = {
+  curso: 'Próximas letras (fim do teste grátis)', israel: 'Aviso: Israel Além do Óbvio',
+  raizes: 'Aviso: Raízes Sefarditas', a1: 'Aviso: Hebraico A1'
+};
+
+/* A lista de interessados (23/10/2026, worker/src/api/interessados.js): só contagens. */
+function ListaDeInteressados({ l }: { l: Interessados }) {
+  const interesses = Object.entries(l.porInteresse).sort((a, b) => b[1] - a[1]);
+  const origens = Object.entries(l.porOrigem).sort((a, b) => b[1] - a[1]);
+  return (
+    <section className="grid gap-3">
+      <h2 className="text-[20px] font-semibold m-0">Lista de interessados</h2>
+      <p className="font-ui text-[14px] text-ink-muted m-0">
+        Quem pediu as próximas letras ou o aviso de um produto e confirmou pelo link do e-mail. O total de hoje,
+        sem depender do período. Os que ainda não confirmaram somem em 7 dias; quem sai é apagado e só entra na
+        contagem de saídas.
+      </p>
+      <p className="font-ui text-[15px] m-0">
+        <strong>{l.ativos}</strong> {l.ativos === 1 ? 'confirmado' : 'confirmados'} · {l.aguardando} aguardando
+        confirmação · {l.sairam} {l.sairam === 1 ? 'saiu' : 'saíram'}
+      </p>
+      {interesses.length > 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full font-ui text-[14px] border-collapse">
+            <thead><tr className="text-left text-ink-muted">
+              <th className="py-2 pr-3">O que pediu</th><th className="py-2 text-right">Confirmados</th>
+            </tr></thead>
+            <tbody>{interesses.map(([i, n]) => (
+              <tr key={i} className="border-t border-[color:var(--line-soft)]">
+                <td className="py-2 pr-3">{INTERESSE_PT[i] ?? i}</td>
+                <td className="py-2 text-right tabular-nums">{n}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+      )}
+      {origens.length > 0 && (
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          De onde vieram: {origens.map(([o, n]) => `${FONTES_PT[o] ?? o} ${n}`).join(' · ')}
+        </p>
+      )}
+    </section>
+  );
+}
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -170,6 +217,7 @@ export function EstatisticasClient() {
             </section>
 
             <Crescimento dados={estado.dados} />
+            {estado.dados.interessados && <ListaDeInteressados l={estado.dados.interessados} />}
 
             <section className="grid gap-3">
               <h2 className="text-[20px] font-semibold m-0">A capa (portal)</h2>

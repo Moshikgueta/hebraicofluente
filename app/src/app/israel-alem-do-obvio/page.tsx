@@ -4,6 +4,7 @@ import { Container, H2 } from '@/components/landing/base';
 import { Abertura, AvisoEmBreve, Ponte } from '@/components/portal/Jornada';
 import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
 import { GaleriaDoLivro } from '@/components/portal/GaleriaDoLivro';
+import { ListaDeEspera } from '@/components/portal/ListaDeEspera';
 import { produtos } from '@/lib/ecossistema';
 import { getCourse } from '@/lib/catalog';
 
@@ -47,6 +48,8 @@ export default function IsraelAlemDoObvioPage() {
         }
       >
         <AvisoEmBreve texto="O livro está pronto e ainda não está à venda. Sem data marcada." />
+        {/* A lista de espera (23/10/2026): só o aviso, com consentimento e confirmação. */}
+        <ListaDeEspera interesse="israel" produto="Israel Além do Óbvio" />
       </Abertura>
 
       <section aria-labelledby="dentro-titulo" className="bg-surface-2">

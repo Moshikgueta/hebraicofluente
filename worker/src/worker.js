@@ -48,6 +48,7 @@ import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
 import * as segundaLetra from './api/segunda-letra.js';
+import * as interessados from './api/interessados.js';
 
 /* A página de venda do curso de alfabetização. Foi a capa até 23/10/2026. */
 const PAGINA_DE_VENDA = '/curso-de-hebraico/';
@@ -159,6 +160,10 @@ const ROUTES = {
   'POST /api/portal': estatisticas.contarPortal,
   /* A segunda letra por e-mail, no fim do teste. Ver api/segunda-letra.js. */
   'POST /api/segunda-letra': segundaLetra.pedir,
+  /* A lista de interessados (23/10/2026): entrar, confirmar e sair. Ver api/interessados.js. */
+  'POST /api/interessados': interessados.entrar,
+  'POST /api/interessados/confirmar': interessados.confirmar,
+  'POST /api/interessados/sair': interessados.sair,
 
   /* O segundo fator do administrador: o código por e-mail. Ver
      lib/admin.js e api/admin-codigo.js. */

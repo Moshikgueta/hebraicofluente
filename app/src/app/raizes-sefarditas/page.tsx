@@ -3,6 +3,7 @@ import { meta } from '@/lib/seo';
 import { Container, H2 } from '@/components/landing/base';
 import { Abertura, AvisoEmBreve, Ponte } from '@/components/portal/Jornada';
 import { FichaDoProduto } from '@/components/portal/FichaDoProduto';
+import { ListaDeEspera } from '@/components/portal/ListaDeEspera';
 import { produtos } from '@/lib/ecossistema';
 
 export const metadata: Metadata = meta({
@@ -38,6 +39,8 @@ export default function RaizesSefarditasPage() {
         lead={<p className="m-0">{p.descricao}</p>}
       >
         <AvisoEmBreve texto="O curso está em revisão e ainda não está à venda. Sem data marcada." />
+        {/* A lista de espera (23/10/2026): só o aviso, com consentimento e confirmação. */}
+        <ListaDeEspera interesse="raizes" produto="Raízes Sefarditas" />
       </Abertura>
 
       <section aria-label="A ficha do curso">

@@ -62,6 +62,7 @@ import { contarEtapaDaDemo, type EtapaDaDemo } from '@/lib/funil-demo';
 import { type NomeAmostra } from '@/lib/amostra-audio';
 import { useTocador } from './useTocador';
 import { asset } from '@/lib/asset';
+import { origemAtual } from '@/lib/origem';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -983,6 +984,10 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
    entra em lista nenhuma. Ver worker/src/api/segunda-letra.js. */
 function SegundaLetra() {
   const [email, setEmail] = useState('');
+  /* A caixa das próximas letras (23/10/2026): começa desmarcada. Marcada, o
+     endereço entra na lista de interessados e só vale depois de confirmado
+     pelo link do e-mail. Ver worker/src/api/interessados.js. */
+  const [lista, setLista] = useState(false);
   const [estado, setEstado] = useState<'pronto' | 'enviando' | 'ok' | 'invalido' | 'erro'>('pronto');
 
   const enviar = async (e: React.FormEvent) => {
@@ -992,7 +997,8 @@ function SegundaLetra() {
     try {
       const r = await fetch(asset('/api/segunda-letra'), {
         method: 'POST', credentials: 'same-origin', cache: 'no-store',
-        headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lista ? { email, lista: true, origem: origemAtual()?.fonte } : { email })
       });
       if (r.ok) return setEstado('ok');
       const { error } = await r.json().catch(() => ({ error: '' })) as { error?: string };
@@ -1007,7 +1013,8 @@ function SegundaLetra() {
           Ainda não quer decidir? Receba a segunda letra por <span className="whitespace-nowrap">e-mail</span>.
         </p>
         <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
-          Mandamos um e-mail só, com o Mem, a segunda letra do curso. Seu endereço não entra em lista nenhuma.
+          Mandamos um e-mail com o Mem, a segunda letra do curso. Seu endereço só entra numa lista se você marcar a
+          caixa abaixo.
         </p>
       </div>
       {estado === 'ok' ? (
@@ -1015,6 +1022,7 @@ function SegundaLetra() {
           <span aria-hidden className="font-bold mr-1.5">✓</span>
           Pronto! A segunda letra está a caminho de <strong className="break-all">{email}</strong>. Se não chegar em
           alguns minutos, olhe a caixa de spam.
+          {lista && <> Para receber as próximas letras, confirme pelo link que vai no mesmo e-mail.</>}
         </p>
       ) : (
         <form onSubmit={enviar} className="grid gap-2">
@@ -1040,6 +1048,17 @@ function SegundaLetra() {
               {estado === 'enviando' ? 'Enviando…' : 'Mandar a segunda letra'}
             </button>
           </div>
+          <label htmlFor="segunda-letra-lista" className="flex items-start gap-2.5 font-ui text-[14px] leading-[1.5] text-ink-body">
+            <input
+              id="segunda-letra-lista" type="checkbox" checked={lista}
+              onChange={e => setLista(e.target.checked)}
+              className="mt-[3px] h-[18px] w-[18px] shrink-0 accent-[var(--teal)]"
+            />
+            <span>
+              Quero receber também as próximas letras e as novidades do curso por e-mail. Posso sair quando quiser.{' '}
+              <a href="/privacidade/" target="_blank" rel="noopener" className="underline">Privacidade</a>
+            </span>
+          </label>
           <div aria-live="polite" className="min-h-[20px]">
             {estado === 'invalido' && (
               <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">Confira o e-mail: parece que falta alguma coisa.</p>

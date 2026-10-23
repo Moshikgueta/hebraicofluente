@@ -29,6 +29,7 @@ import { enviarRecibosManuais, runEstornos, settleFromProvider } from './api/pay
 import { runAlertas } from './alertas.js';
 import { runVencimentos } from './vencimento.js';
 import { runAtivacao } from './ativacao.js';
+import { runSequencia } from './sequencia.js';
 import { pegarTrava, soltarTrava,
   arrependimentosIpPurge, expiredOrdersToRecheck, getOrder, log, logPurge, paidOrdersToRecheck,
   registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
@@ -154,6 +155,7 @@ async function varrer(env) {
   try { await enviarRecibosManuais(env); } catch (e) { console.error('recibos', e && e.stack || e); }
   try { await runVencimentos(env); } catch (e) { console.error('vencimentos', e && e.stack || e); }
   try { await runAtivacao(env); } catch (e) { console.error('ativacao', e && e.stack || e); }
+  try { await runSequencia(env); } catch (e) { console.error('sequencia', e && e.stack || e); }
   try { await runEstornos(env); } catch (e) { console.error('estornos', e && e.stack || e); }
   try { await runAlertas(env); } catch (e) { console.error('alertas', e && e.stack || e); }
 

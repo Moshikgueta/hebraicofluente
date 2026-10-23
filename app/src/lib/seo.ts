@@ -65,7 +65,7 @@ export const NAO_LISTADAS = [
      ser indexada: "conta apagada" saindo numa busca pelo nome do curso é a
      pior vitrine possível. */
   '/conta-apagada',
-  '/sair-da-lista',
+  '/sair-da-lista', '/confirmar-lista',
   /* A prévia grátis do e-book (23/10/2026, scripts/ebook-no-site.sh): só para
      quem recebe o link no direct do Instagram, sem conta e fora da busca. */
   '/previa',
