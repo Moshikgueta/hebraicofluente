@@ -61,8 +61,10 @@ const DESCRICAO: Record<string, { chamada: string; inclui: string[] }> = {
   }
 };
 
-export function OpcoesDeCompra({ slugs = [CURSO, LIVRO, COMBO], titulo = 'Escolha como começar.', id = 'opcoes' }: {
+export function OpcoesDeCompra({ slugs = [CURSO, LIVRO, COMBO], titulo = 'Escolha como começar.', id = 'opcoes', aqui }: {
   slugs?: string[]; titulo?: string; id?: string;
+  /** O produto da página em que a vitrine está: o cartão dele não leva a ela mesma. */
+  aqui?: string;
 }) {
   const produtos = slugs.map(s => getCourse(s)).filter((c): c is CatalogCourse => !!c);
   return (
@@ -72,13 +74,13 @@ export function OpcoesDeCompra({ slugs = [CURSO, LIVRO, COMBO], titulo = 'Escolh
         {titulo}
       </h2>
       <ul className={`grid gap-4 list-none p-0 m-0 ${produtos.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2'} lg:items-stretch`}>
-        {produtos.map(c => <li key={c.slug} className="grid"><Opcao c={c} /></li>)}
+        {produtos.map(c => <li key={c.slug} className="grid"><Opcao c={c} detalhes={c.slug !== aqui} /></li>)}
       </ul>
     </section>
   );
 }
 
-function Opcao({ c }: { c: CatalogCourse }) {
+function Opcao({ c, detalhes }: { c: CatalogCourse; detalhes: boolean }) {
   const account = useAccount();
   const combo = c.slug === COMBO;
   const aVenda = estaAVenda(c);
@@ -149,11 +151,12 @@ function Opcao({ c }: { c: CatalogCourse }) {
               <p className={`m-0 font-ui text-[13.5px] ${suave}`}>
                 {soPix()
                   ? 'no PIX'
-                  : `ou ${parcelasCurto(parcelasMax(c.price))} no cartão${temPix() && c.price.pixDiscountPct > 0 ? ` · ${brl(pixPrice(c.price))} no PIX` : ''}`}
+                  : `ou ${parcelasCurto(parcelasMax(c.price))} no cartão${temPix() && c.price.pixDiscountPct > 0 ? ` · ${brl(pixPrice(c.price))} no PIX (${c.price.pixDiscountPct}% a menos)` : ''}`}
               </p>
               {eco && (
                 <p className="m-0 font-ui text-[14px] font-semibold text-[var(--gold)]">
-                  Separados, {brl(eco.separados)}. No combo, {brl(eco.economia)} a menos.
+                  Separados, {brl(eco.separados)}. No combo, {brl(eco.economia)} a menos
+                  ({(Math.round(eco.economia / eco.separados * 1000) / 10).toLocaleString('pt-BR')}%).
                 </p>
               )}
               {oficial && (
@@ -169,7 +172,7 @@ function Opcao({ c }: { c: CatalogCourse }) {
                                 : 'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] focus-visible:outline-[var(--teal)]'}`}>
               {combo ? 'Garantir o combo' : 'Garantir meu acesso'}
             </Link>
-            {!combo && (
+            {!combo && detalhes && (
               <Link href={paginaDeVenda(c.slug)}
                     className={`justify-self-center font-ui text-[14.5px] font-semibold underline underline-offset-[3px] ${suave}`}>
                 Ver os detalhes

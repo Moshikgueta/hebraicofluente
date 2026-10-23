@@ -1451,3 +1451,23 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   fluxos"): preço do catálogo, valor do navegador ignorado, combo pago a menos sem liberar, pendente e recusado
   sem liberar, aviso sem assinatura recusado, aviso repetido concede uma vez. O teste com a Mercado Pago de
   verdade, no modo de teste, é o roteiro `TESTE-DE-PAGAMENTO.md` (na máquina do dono, com token `TEST-`).
+
+## A landing do Israel Além do Óbvio (23/10/2026, master prompt do dono)
+- `LivroClient` (/cursos/israel-alem-do-roteiro), ainda desligada com o livro (`aVenda: false`). A página É a
+  demonstração: abertura navy com o livro no computador e a mochila no celular, "Não é um e-book", galeria das
+  aberturas de capítulo, a viagem em cinco passos (mochila, mapa ilustrado, roleta, monte a sua comida, diário),
+  os três aparelhos, quem escreveu, as duas opções de compra (só o livro, ou o combo), o roteiro, perguntas e
+  fecho; barra de compra fixa só no celular. O preço vem depois da demonstração. Nenhuma contagem de capítulos
+  ou curiosidades vende o livro (pedido do dono), e nada de escassez.
+- **As imagens são do próprio livro e nunca entram no git** (o livro mora no repositório privado):
+  `scripts/vitrine-do-livro.mjs` roda na publicação, logo depois de `ebook-no-site.sh` (passo "E-book no site"),
+  e escreve em `app/public/vitrine-livro/` (gitignored): as aberturas de capítulo SEM texto copiadas como SVG (num
+  `<img>` o SVG não carrega fonte) e capturas do livro montado num Chromium, com a mochila e o monte em uso (o
+  monte vem da PRÉVIA, a livre: no do livro, ingrediente errado fica vermelho). Seletor que sumir do livro para a
+  publicação, com o nome dele. Texto alternativo de cada ilustração = o `aria-label` do próprio SVG.
+- Movimento: `livro.css`, só CSS, por cima de conteúdo já visível (linha do tempo da rolagem onde existe),
+  parado com "reduzir movimento". Nada nasce escondido esperando JavaScript (ver `Reveal`).
+- `tests/livro-venda.test.ts` confere: imagens só das listas do script, todas com `alt`, sem banco de imagens,
+  sem preço nem contagem escritos à mão.
+- **Pendente no editorial** (não muda daqui): a capa do livro ainda diz "O país pelos olhos de quem nasceu lá",
+  e as contagens da capa (capítulos, curiosidades, exercícios) precisam bater com o catálogo.

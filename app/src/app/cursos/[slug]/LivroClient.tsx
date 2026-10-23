@@ -1,118 +1,168 @@
 'use client';
 
-/* A página de venda do livro Israel Além do Óbvio (23/10/2026, pedido do dono).
+/* A página de venda do Israel Além do Óbvio: O Olhar de um Israelense.
  * ─────────────────────────────────────────────────────────────────────────
  * PRONTA E DESLIGADA. O livro tem `aVenda: false` em data/courses.json, e com
- * isso esta página nem é gerada (generateStaticParams lê `allProducts`, que
- * só devolve o que está à venda). Decisão do dono: a venda abre depois de o
- * contador confirmar o enquadramento e de o advogado ler os parágrafos do livro
- * nos Termos e no Reembolso. Abrir = tirar a linha `aVenda`, subir
- * `politicas.atualizadoEm` e publicar (CLAUDE.md, E-book).
+ * isso esta página nem é gerada (generateStaticParams lê `allProducts`).
+ * Abrir a venda: CLAUDE.md, "E-book".
  *
- * Tudo que é número ou fato sai do catálogo: preço, parcelas, meses, os
- * capítulos, o que você leva, para quem é. Quem escreveu: lib/autor.ts, só o
- * que /sobre afirma. A prévia grátis (/previa/) é o app do próprio livro, e a
- * lista do que ela tem é a de editorial/<livro>/previa.json.
+ * A página É a demonstração do produto (master prompt do dono, 23/10/2026):
+ * o visitante vê partes reais do livro antes de ver o preço. Todas as imagens
+ * são do próprio livro e nascem na publicação (scripts/vitrine-do-livro.mjs),
+ * em /vitrine-livro/, fora do git: o livro mora no repositório privado. As
+ * ilustrações são as aberturas de capítulo; as telas são capturas da versão
+ * interativa (a mochila, o mapa ilustrado, a roleta, o monte a sua comida, o
+ * diário). Nada inventado: cada frase descreve o que a captura mostra.
  *
- * O visual é o das páginas do portal (/israel-alem-do-obvio, /descobrir-israel):
- * migalhas, rubrica, o emblema da jornada Israel e os tons dourados dela.
+ * Nenhum número de capítulos, páginas ou curiosidades vende o livro aqui
+ * (pedido do dono: o valor é a experiência). O preço vem depois da
+ * demonstração, em duas opções (só o livro, ou o combo), lidas do catálogo
+ * por OpcoesDeCompra. Sem escassez, contador nem preço riscado.
+ *
+ * Movimento: livro.css, só CSS, por cima de conteúdo já visível, e parado
+ * com "reduzir movimento".
  */
 
+import './livro.css';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
-import { Container, H2, Lead, Rubrica } from '@/components/landing/base';
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Container } from '@/components/landing/base';
 import { Emblema } from '@/components/portal/Emblemas';
 import { Migalhas } from '@/components/portal/Migalhas';
+import { COMBO, LIVRO, OpcoesDeCompra } from '@/components/portal/OpcoesDeCompra';
+import { useAccount } from '@/lib/account/store';
 import { FATOS_DO_AUTOR } from '@/lib/autor';
-import { getCourse, parcelasMax, type CatalogCourse } from '@/lib/catalog';
+import { brl, getCourse, parcelasMax, type CatalogCourse } from '@/lib/catalog';
 import { confirmaSozinho, empresa, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
-import { CaixaDeCompra, OfertaDoPacote } from './ProdutoClient';
+import { precoDeVitrine } from '@/lib/vitrine';
 
 const PREVIA = '/previa/';
+const V = '/vitrine-livro';
 
-/* O que a prévia tem: editorial/<livro>/previa.json (decisão do dono, 23/10/2026). */
-const NA_PREVIA = [
-  { titulo: 'Arrume a mochila', texto: 'O que levar para Israel, do capítulo "Israel na prática".' },
-  { titulo: 'Monte a sua comida', texto: 'Pita ou prato, à vontade, com os sabores do capítulo 6.' },
-  { titulo: 'Gire a roleta', texto: 'Cinco das curiosidades do capítulo 9, cada uma com a fonte.' },
-  { titulo: 'Comece o diário', texto: 'Duas páginas do diário de viagem, o capítulo 11.' }
+/* As aberturas de capítulo, com o texto alternativo que o próprio livro dá a
+   cada uma (o aria-label do SVG) e o capítulo de onde vêm. */
+const GALERIA = [
+  { arquivo: 'abertura-israel-no-mapa', cap: 1, alt: 'A paisagem de oeste a leste, do mar à praia, à planície, às montanhas e à descida até um lago no fundo de um vale, com aves migrando no céu.' },
+  { arquivo: 'abertura-jerusalem', cap: 3, alt: 'A muralha da Cidade Antiga, com ameias e um portão em arco, e atrás dela casas, uma torre e uma cúpula dourada.' },
+  { arquivo: 'abertura-alem-de-jerusalem', cap: 4, alt: 'Um platô de topo reto no deserto, um lago azul lá embaixo, o sol e duas tamareiras.' },
+  { arquivo: 'abertura-vida-real', cap: 5, alt: 'Uma rua no fim da tarde, com o sol baixo, janelas acesas, portas de loja baixando e um ponto de ônibus vazio.' },
+  { arquivo: 'abertura-sabores', cap: 6, alt: 'Uma mesa vista de cima, com um prato grande de homus no centro, um pratinho de falafel, pitas empilhadas, salada, berinjela e um copo de água.' },
+  { arquivo: 'abertura-pratica', cap: 8, alt: 'Uma mala, um passaporte e uma passagem.' },
+  { arquivo: 'abertura-diario', cap: 11, alt: 'Um caderno aberto com linhas e pequenos desenhos de uma cúpula e de ondas, e um lápis.' }
 ] as const;
 
-/* A versão interativa: o que a página do produto já dizia (ProdutoClient,
-   21/10/2026) e o resumo do catálogo (mapas, ilustrações, fotos, exercícios). */
-const COMO_E = [
-  { titulo: 'Mapas que se tocam', texto: 'Os mapas do livro são interativos, no celular e no computador.' },
-  { titulo: 'Exercícios no fim de cada capítulo', texto: 'Perguntas de compreensão, corrigidas na hora.' },
-  { titulo: 'Um diário que guarda o que você escreve', texto: 'Páginas para antes, durante e depois da viagem.' },
-  { titulo: 'Ilustrações e fotos', texto: 'Mapas, ilustrações e fotos ao longo dos capítulos.' }
+/* A viagem em cinco passos: cada um com a tela real que ele descreve. */
+const PASSOS = [
+  { titulo: 'Prepare a sua mala', imagem: 'mochila', alt: 'A tela "Arrume a sua mochila", com a mochila desenhada cheia de objetos e o medidor em 41%.',
+    texto: 'Toque em cada coisa e ela vai para a mochila. A lista da sua viagem fica guardada no seu aparelho.' },
+  { titulo: 'Descubra os lugares de Israel', imagem: 'mapa-destinos', alt: 'O mapa ilustrado "Israel, de lugar em lugar", com dez lugares numerados e a distância de cada um até Jerusalém.', largo: true,
+    texto: 'Dez lugares no mapa ilustrado, cada um com a sua história e a distância até Jerusalém.' },
+  { titulo: 'Explore histórias e curiosidades', imagem: 'roleta', alt: 'A roleta das curiosidades, com as fatias numeradas e o botão "Girar a roleta".',
+    texto: 'Gire a roleta e descubra uma curiosidade sobre Israel, cada uma com a fonte.' },
+  { titulo: 'Viva a cultura, não só leia sobre ela', imagem: 'monte', alt: 'A tela "Monte a sua comida", com uma pita recheada de falafel, salada, picles, batata frita, tahine e amba.',
+    texto: 'Monte a sua comida na pita ou no prato, com os sabores de rua que o capítulo conta.' },
+  { titulo: 'Registre as suas descobertas', imagem: 'diario', alt: 'A tela "Meu diário de viagem", com as datas da viagem e as abas Antes, Durante e Depois.',
+    texto: 'Antes, durante e depois: o diário guarda o que você escreve, carimba e fotografa, no seu aparelho.' }
+] as const;
+
+/* O que a experiência é. Seis afirmações, cada uma sobre o que o livro TEM. */
+const PILARES = [
+  { titulo: 'História e cultura, com fonte', texto: 'Cada informação vem de uma fonte, numerada no fim do capítulo. O que é história e o que é tradição ficam separados.' },
+  { titulo: 'O olhar de um israelense', texto: 'O país explicado para brasileiros por quem nasceu lá e vive no Brasil.' },
+  { titulo: 'Ilustrações e mapas próprios', texto: 'Desenhados para estas páginas: as aberturas de capítulo, os mapas ilustrados, os infográficos.' },
+  { titulo: 'Exploração interativa', texto: 'Mapas para tocar, uma mochila para arrumar, uma roleta para girar, uma pita para montar.' },
+  { titulo: 'Uma narrativa de viagem', texto: 'Do mapa à mesa, de Jerusalém aos outros destinos, até as dicas de onde comer e sair.' },
+  { titulo: 'Atividades e descobertas', texto: 'Exercícios no fim de cada capítulo, corrigidos na hora, e um diário para a sua viagem.' }
 ] as const;
 
 const BOTAO = `inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
-               font-ui text-[15.5px] font-medium transition-[background-color,transform] duration-[var(--dur)]
+               font-ui text-[15.5px] font-semibold transition-[background-color,transform] duration-[var(--dur)]
                active:scale-[.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`;
 
 export function LivroClient({ slug }: { slug: string }) {
   const c = getCourse(slug);
+  const fimDaAbertura = useRef<HTMLDivElement>(null);
   if (!c) return null;
   return (
-    <>
+    <div className="lv">
       <Abertura c={c} />
-      <Previa />
-      <ComoE />
-      <OQueLeva c={c} />
-      <Capitulos c={c} />
+      <div ref={fimDaAbertura} aria-hidden />
+      <NaoEUmEbook />
+      <Galeria c={c} />
+      <Viagem />
+      <PorDentro />
       <QuemEscreveu c={c} />
+      <Comprar />
+      <Capitulos c={c} />
       <Perguntas c={c} />
       <Fecho c={c} />
-    </>
+      <BarraDeCompra c={c} depoisDe={fimDaAbertura} />
+    </div>
   );
 }
 
-/* ── 1 · a abertura, com a caixa de compra ─────────────────────────────── */
+/* ── 1 · a abertura ────────────────────────────────────────────────────── */
 function Abertura({ c }: { c: CatalogCourse }) {
+  const account = useAccount();
+  const tem = account.ready && account.can(c.slug);
   return (
-    <section aria-labelledby="livro-titulo">
-      <Container className="pt-6 pb-14 sm:pt-10 sm:pb-20 grid gap-6 sm:gap-8">
-        <Migalhas trilha={[{ nome: 'Descobrir Israel', href: '/descobrir-israel' }, { nome: c.titlePt }]} />
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
-          <div className="grid gap-4 sm:gap-5 min-w-0">
-            <Rubrica>Livro interativo</Rubrica>
-            <h1 id="livro-titulo"
-                className="m-0 font-display font-semibold text-[clamp(34px,5vw,56px)] leading-[1.04]
-                           tracking-[-0.035em] text-balance text-ink max-w-[18ch]">
-              {c.titlePt}
+    <section aria-labelledby="livro-titulo" className="lv-papel text-white overflow-hidden">
+      <Container className="pt-6 pb-14 sm:pt-10 sm:pb-20 grid gap-8">
+        <div className="[&_a]:text-white/80 [&_span]:text-white/70 [&_ol]:text-white/70">
+          <Migalhas trilha={[{ nome: 'Descobrir Israel', href: '/descobrir-israel' }, { nome: c.titlePt }]} />
+        </div>
+        {/* No celular o produto vem logo depois do título (o visitante vê
+            partes reais do livro na primeira tela); no computador, o texto
+            fica à esquerda e a composição à direita. */}
+        <div className="grid gap-7 lg:gap-x-12 lg:gap-y-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]
+                        [grid-template-areas:'topo'_'visual'_'base'] lg:[grid-template-areas:'topo_visual'_'base_visual']">
+          <div className="grid gap-4 sm:gap-5 min-w-0 [grid-area:topo] lg:self-end">
+            <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--teal-lite)]">
+              Uma experiência digital interativa
+            </p>
+            <h1 id="livro-titulo" className="m-0 grid gap-1 text-white">
+              <span className="font-display font-bold text-[clamp(46px,8vw,92px)] leading-[.92] tracking-[-0.02em] uppercase">Israel</span>
+              <span className="font-display font-semibold text-[clamp(22px,3.4vw,38px)] leading-[1.05] tracking-[.02em] uppercase text-[#E2B864]">
+                Além do Óbvio
+              </span>
             </h1>
-            <p className="m-0 font-display italic text-[clamp(20px,2.4vw,25px)] leading-[1.35] text-ink">{c.taglinePt}</p>
-            {c.descricaoPt && (
-              <p className="m-0 font-ui text-[17px] sm:text-[18px] leading-[1.6] text-ink-muted max-w-[52ch]">{c.descricaoPt}</p>
-            )}
+            <p className="m-0 font-display italic text-[clamp(21px,2.6vw,28px)] leading-[1.25] text-[#E9DCC0]">{c.taglinePt}</p>
+          </div>
+          <div className="grid gap-5 min-w-0 [grid-area:base] lg:self-start">
+            <p className="m-0 font-ui text-[17px] sm:text-[18px] leading-[1.6] text-white/80 max-w-[46ch]">
+              A história, a cultura e os lugares de Israel contados por quem nasceu lá: com mapas para tocar,
+              ilustrações, jogos e um diário para a sua viagem.
+            </p>
             {c.autorPt && (
-              <p className="m-0 font-ui text-[13.5px] font-semibold uppercase tracking-[.14em] text-ink-body">
-                de {c.autorPt}
-              </p>
+              <p className="m-0 font-ui text-[13px] font-semibold uppercase tracking-[.16em] text-white/70">de {c.autorPt}</p>
             )}
-            <dl className="flex flex-wrap gap-x-6 sm:gap-x-10 gap-y-3 pt-4 sm:pt-5 mt-1 border-t border-line max-w-[560px] m-0">
-              {([
-                ['Capítulos', String(c.modules.length)],
-                ['Formato', 'Interativo'],
-                ['Acesso', `${c.accessMonths} meses`]
-              ] as const).map(([k, v]) => (
-                <div key={k} className="grid gap-0.5">
-                  <dt className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">{k}</dt>
-                  <dd className="font-display text-[19px] sm:text-[24px] font-semibold tracking-[-0.02em] text-ink tabular-nums m-0">{v}</dd>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <a href={PREVIA} className={`${BOTAO} bg-[#E2B864] text-[var(--navy)] hover:bg-[#ecc77c] focus-visible:outline-white`}>
+                Explorar a experiência
+                <span aria-hidden>→</span>
+              </a>
+              {tem
+                ? <a href="/israel/" className={`${BOTAO} border border-white/40 text-white hover:bg-white/10 focus-visible:outline-white`}>Abrir o livro</a>
+                : <a href="#comprar" className={`${BOTAO} border border-white/40 text-white hover:bg-white/10 focus-visible:outline-white`}>Garantir meu acesso</a>}
+            </div>
+            <p className="m-0 font-ui text-[13.5px] text-white/65">A prévia é grátis, abre no celular e não pede cadastro.</p>
+          </div>
+
+          {/* A composição: o livro aberto no computador e, na frente, a
+              mochila no celular. Telas de verdade, do livro montado. */}
+          <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[620px] pb-8 sm:pb-6 [grid-area:visual] lg:self-center">
+            <div className="lv-notebook">
+              <img src={`${V}/capa-computador.jpg`} width={1280} height={800} fetchPriority="high"
+                   alt="A capa da versão interativa no computador: ISRAEL, Além do Óbvio, sobre uma paisagem de mar e deserto." />
+            </div>
+            <div className="lv-notebook-base" aria-hidden />
+            <div className="absolute -bottom-2 right-2 sm:-right-4 w-[34%] max-w-[190px] lv-flutua">
+              <div className="lv-celular">
+                <div className="lv-celular-tela aspect-[390/780]">
+                  <img src={`${V}/mochila.jpg`} width={358} height={1000} alt="No celular, a mochila sendo arrumada." />
                 </div>
-              ))}
-            </dl>
-            <a href={PREVIA}
-               className={`${BOTAO} justify-self-start border border-line bg-[var(--card)] text-ink hover:border-[#C9C3B4]
-                           focus-visible:outline-[var(--teal)]`}>
-              Experimentar a prévia grátis
-              <span aria-hidden>→</span>
-            </a>
-          </div>
-          <div className="grid gap-4 content-start">
-            <CaixaDeCompra c={c} />
-            <OfertaDoPacote />
+              </div>
+            </div>
           </div>
         </div>
       </Container>
@@ -120,87 +170,230 @@ function Abertura({ c }: { c: CatalogCourse }) {
   );
 }
 
-/* ── 2 · experimente antes ─────────────────────────────────────────────── */
-function Previa() {
+/* ── 2 · não é um e-book ───────────────────────────────────────────────── */
+function NaoEUmEbook() {
   return (
-    <section aria-labelledby="previa-titulo" className="bg-[var(--gold-soft)]">
-      <Container className="py-14 sm:py-20 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-center">
-        <div className="grid gap-4 content-start">
-          <Rubrica>Antes de comprar</Rubrica>
-          <H2 id="previa-titulo" className="m-0">Experimente o livro de graça.</H2>
-          <Lead className="m-0">
-            A prévia é o próprio livro, com quatro atividades de quatro capítulos. Abre no celular, sem cadastro.
-          </Lead>
-          <a href={PREVIA}
-             className={`${BOTAO} justify-self-start bg-[var(--navy)] text-white shadow-[var(--sh)] hover:bg-[var(--navy-2)]
-                         focus-visible:outline-[var(--teal)]`}>
-            Abrir a prévia
-            <span aria-hidden>→</span>
-          </a>
+    <section aria-labelledby="nao-e-titulo">
+      <Container className="py-16 sm:py-24 grid gap-10 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:items-start">
+        <div className="grid gap-4 lg:sticky lg:top-24">
+          <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--gold-ink)]">O que é</p>
+          <h2 id="nao-e-titulo" className="m-0 font-display font-semibold text-[clamp(30px,4.4vw,48px)] leading-[1.05] tracking-[-0.03em] text-ink text-balance">
+            Não é um e-book. É uma viagem pelo país, com quem nasceu lá.
+          </h2>
         </div>
-        <Grade itens={NA_PREVIA} tom="card" />
-      </Container>
-    </section>
-  );
-}
-
-/* ── 3 · como é ler ────────────────────────────────────────────────────── */
-function ComoE() {
-  return (
-    <section aria-labelledby="como-titulo">
-      <Container className="py-14 sm:py-20 grid gap-8">
-        <div className="grid gap-4 max-w-[60ch]">
-          <Rubrica>A versão interativa</Rubrica>
-          <H2 id="como-titulo" className="m-0">Um livro para ler no celular, antes e durante a viagem.</H2>
-        </div>
-        <Grade itens={COMO_E} tom="contorno" />
-      </Container>
-    </section>
-  );
-}
-
-/* ── 4 · o que você leva ───────────────────────────────────────────────── */
-function OQueLeva({ c }: { c: CatalogCourse }) {
-  if (!c.outcomesPt.length) return null;
-  return (
-    <section aria-labelledby="leva-titulo" className="bg-surface-2">
-      <Container className="py-14 sm:py-20 grid gap-8">
-        <div className="grid gap-4">
-          <Rubrica>Depois da leitura</Rubrica>
-          <H2 id="leva-titulo" className="m-0">O que você leva deste livro.</H2>
-        </div>
-        <ul className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
-          {c.outcomesPt.map(o => (
-            <li key={o} className="flex gap-3 py-5 border-b border-line font-ui text-[16px] leading-[1.6] text-ink-body">
-              <span aria-hidden className="mt-[11px] w-[6px] h-[6px] rounded-full bg-[var(--gold)] shrink-0" />
-              <span className="min-w-0">{o}</span>
+        <ol className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
+          {PILARES.map((p, i) => (
+            <li key={p.titulo} className="lv-entra grid gap-2 py-6 border-b border-line">
+              <span className="font-display text-[15px] font-semibold tabular-nums text-[var(--gold-ink)]">0{i + 1}</span>
+              <h3 className="m-0 font-display text-[20px] font-semibold tracking-[-0.015em] text-ink">{p.titulo}</h3>
+              <p className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-body">{p.texto}</p>
             </li>
           ))}
-        </ul>
-        {c.forWhomPt.length > 0 && (
-          <div className="grid gap-3 max-w-[62ch]">
-            <h3 className="m-0 font-display text-[21px] font-semibold tracking-[-0.02em] text-ink">Para quem é</h3>
-            <ul className="grid gap-2 list-none p-0 m-0">
-              {c.forWhomPt.map(f => (
-                <li key={f} className="font-ui text-[16px] leading-[1.6] text-ink-body">{f}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        </ol>
       </Container>
     </section>
   );
 }
 
-/* ── 5 · os capítulos ──────────────────────────────────────────────────── */
+/* ── 3 · a galeria ─────────────────────────────────────────────────────── */
+function Galeria({ c }: { c: CatalogCourse }) {
+  const trilho = useRef<HTMLUListElement>(null);
+  const andar = (dir: 1 | -1) => {
+    const t = trilho.current;
+    if (!t) return;
+    const passo = (t.querySelector('li') as HTMLElement | null)?.offsetWidth ?? 320;
+    const suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    t.scrollBy({ left: dir * (passo + 16), behavior: suave ? 'smooth' : 'auto' });
+  };
+  const capitulo = (n: number) => c.modules.find(m => m.n === n);
+  const seta = `grid place-items-center w-11 h-11 rounded-full border border-line bg-[var(--card)] text-ink
+                font-ui text-[18px] hover:border-[#C9C3B4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--teal)]`;
+  return (
+    <section aria-labelledby="galeria-titulo" className="bg-[var(--gold-soft)] overflow-hidden">
+      <Container className="py-16 sm:py-24 grid gap-8">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="grid gap-3 max-w-[30ch]">
+            <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--gold-ink)]">Ilustrações do livro</p>
+            <h2 id="galeria-titulo" className="m-0 font-display font-semibold text-[clamp(28px,4vw,44px)] leading-[1.06] tracking-[-0.03em] text-ink text-balance">
+              Uma pequena amostra do Israel que você vai descobrir.
+            </h2>
+          </div>
+          <div className="hidden sm:flex gap-2">
+            <button type="button" className={seta} onClick={() => andar(-1)} aria-label="Ilustração anterior">←</button>
+            <button type="button" className={seta} onClick={() => andar(1)} aria-label="Próxima ilustração">→</button>
+          </div>
+        </div>
+        <ul ref={trilho} tabIndex={0} aria-label="Galeria de ilustrações, role para o lado"
+            className="lv-galeria flex gap-4 overflow-x-auto list-none p-0 m-0 -mx-4 px-4 sm:-mx-6 sm:px-6 scroll-px-4 sm:scroll-px-6 pb-2
+                       focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--teal)]">
+          {GALERIA.map(g => {
+            const m = capitulo(g.cap);
+            return (
+              <li key={g.arquivo} className="shrink-0 w-[82%] sm:w-[46%] lg:w-[31%]">
+                <figure className="lv-folha m-0 grid gap-3">
+                  <div className="rounded-[18px] overflow-hidden bg-[var(--navy)] shadow-[0_24px_50px_-30px_rgba(6,42,48,.6)]">
+                    <img src={`${V}/${g.arquivo}.svg`} width={1480} height={1300} loading="lazy" decoding="async" alt={g.alt}
+                         className="block w-full h-auto" />
+                  </div>
+                  <figcaption className="grid gap-0.5 px-1">
+                    <span className="font-ui text-[12px] font-semibold uppercase tracking-[.14em] text-[var(--gold-ink)]">Capítulo {g.cap}</span>
+                    <span className="font-display text-[18px] font-semibold text-ink">{m?.titlePt}</span>
+                    {m?.subPt && <span className="font-ui text-[14px] text-ink-muted">{m.subPt}</span>}
+                  </figcaption>
+                </figure>
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </section>
+  );
+}
+
+/* ── 4 · a viagem, em cinco passos ─────────────────────────────────────── */
+function Viagem() {
+  return (
+    <section aria-labelledby="viagem-titulo">
+      <Container className="py-16 sm:py-24 grid gap-12 sm:gap-16">
+        <div className="grid gap-3 max-w-[34ch]">
+          <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--teal-ink)]">Como é por dentro</p>
+          <h2 id="viagem-titulo" className="m-0 font-display font-semibold text-[clamp(28px,4vw,44px)] leading-[1.06] tracking-[-0.03em] text-ink text-balance">
+            Uma viagem em cinco passos.
+          </h2>
+        </div>
+        <ol className="grid gap-14 sm:gap-20 list-none p-0 m-0">
+          {PASSOS.map((p, i) => (
+            <li key={p.imagem}
+                className={`grid gap-6 lg:gap-14 items-center ${'largo' in p ? 'lg:grid-cols-[minmax(0,.75fr)_minmax(0,1.25fr)]' : 'lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]'}`}>
+              <div className={`grid gap-3 max-w-[44ch] ${i % 2 ? 'lg:order-2' : ''}`}>
+                <span className="font-display text-[44px] sm:text-[56px] font-bold leading-none tabular-nums text-[var(--gold)]">{i + 1}</span>
+                <h3 className="m-0 font-display text-[24px] sm:text-[30px] font-semibold leading-[1.12] tracking-[-0.02em] text-ink">{p.titulo}</h3>
+                <p className="m-0 font-ui text-[16.5px] leading-[1.6] text-ink-body">{p.texto}</p>
+              </div>
+              <div className={`lv-entra ${i % 2 ? 'lg:order-1' : ''}`}>
+                {'largo' in p ? (
+                  <img src={`${V}/${p.imagem}.jpg`} width={1296} height={1500} loading="lazy" decoding="async" alt={p.alt}
+                       className="block w-full h-auto rounded-[18px] border border-line shadow-[0_30px_60px_-40px_rgba(6,42,48,.5)]" />
+                ) : (
+                  /* Sem proporção fixa: cada tela tem a sua largura, e um corte
+                     fixo comia as laterais da roleta. O alto é limitado. */
+                  <div className="mx-auto w-[72%] max-w-[300px] lv-celular">
+                    <div className="lv-celular-tela max-h-[560px] sm:max-h-[600px]">
+                      <img src={`${V}/${p.imagem}.jpg`} width={390} height={1000} loading="lazy" decoding="async" alt={p.alt}
+                           className="!h-auto" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="flex flex-wrap items-center gap-4">
+          <a href={PREVIA} className={`${BOTAO} bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] focus-visible:outline-[var(--teal)]`}>
+            Explorar a experiência
+            <span aria-hidden>→</span>
+          </a>
+          <span className="font-ui text-[14.5px] text-ink-muted">A mochila, o monte a sua comida, a roleta e o diário, de graça.</span>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+/* ── 5 · nos três aparelhos ────────────────────────────────────────────── */
+function PorDentro() {
+  return (
+    <section aria-labelledby="aparelhos-titulo" className="bg-surface-2 overflow-hidden">
+      <Container className="py-16 sm:py-24 grid gap-10">
+        <div className="grid gap-3 max-w-[40ch]">
+          <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--teal-ink)]">Onde você lê</p>
+          <h2 id="aparelhos-titulo" className="m-0 font-display font-semibold text-[clamp(28px,4vw,44px)] leading-[1.06] tracking-[-0.03em] text-ink text-balance">
+            No computador, no tablet e no celular.
+          </h2>
+          <p className="m-0 font-ui text-[16.5px] leading-[1.6] text-ink-body">
+            Pelo navegador, entrando na sua conta. Não precisa instalar nada.
+          </p>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,.55fr)] sm:items-end">
+          <figure className="lv-entra m-0 grid gap-3">
+            <div>
+              <div className="lv-notebook">
+                <img src={`${V}/capa-computador.jpg`} width={1280} height={800} loading="lazy" decoding="async" alt="A versão interativa aberta no computador." />
+              </div>
+              <div className="lv-notebook-base" aria-hidden />
+            </div>
+            <figcaption className="font-ui text-[13.5px] text-ink-muted">No computador</figcaption>
+          </figure>
+          <figure className="lv-entra m-0 grid gap-3">
+            <div className="lv-tablet">
+              <img src={`${V}/jerusalem-tablet.jpg`} width={834} height={1112} loading="lazy" decoding="async"
+                   alt="No tablet, a abertura do capítulo sobre Jerusalém, com a ilustração da muralha da Cidade Antiga." />
+            </div>
+            <figcaption className="font-ui text-[13.5px] text-ink-muted">No tablet</figcaption>
+          </figure>
+          <figure className="lv-entra m-0 grid gap-3 w-[58%] sm:w-auto">
+            <div className="lv-celular">
+              <div className="lv-celular-tela aspect-[390/844]">
+                <img src={`${V}/capa-celular.jpg`} width={390} height={844} loading="lazy" decoding="async" alt="A capa da versão interativa no celular." />
+              </div>
+            </div>
+            <figcaption className="font-ui text-[13.5px] text-ink-muted">No celular</figcaption>
+          </figure>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+/* ── 6 · quem escreveu ─────────────────────────────────────────────────── */
+function QuemEscreveu({ c }: { c: CatalogCourse }) {
+  return (
+    <section aria-labelledby="autor-titulo">
+      <Container className="py-16 sm:py-24 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+        <div className="grid gap-4 content-start">
+          <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--gold-ink)]">Quem escreveu</p>
+          <h2 id="autor-titulo" className="m-0 font-display font-semibold text-[clamp(28px,4vw,44px)] leading-[1.06] tracking-[-0.03em] text-ink">
+            {c.autorPt ?? 'Moshik Gueta'}.
+          </h2>
+          <p className="m-0 font-display italic text-[22px] text-ink-body">{c.taglinePt}.</p>
+          <Link href="/sobre/"
+                className="justify-self-start inline-flex items-center gap-1.5 min-h-[44px] font-ui text-[15.5px] font-semibold
+                           text-[var(--teal-ink)] underline underline-offset-[3px] decoration-[1.5px]">
+            Conhecer a trajetória
+          </Link>
+        </div>
+        <ul className="grid gap-3 list-none p-0 m-0">
+          {FATOS_DO_AUTOR.map(f => (
+            <li key={f} className="rounded-[14px] border border-line bg-[var(--card)] px-5 py-4 font-ui text-[16px] text-ink-body">{f}</li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  );
+}
+
+/* ── 7 · as duas opções ────────────────────────────────────────────────── */
+function Comprar() {
+  return (
+    <section id="comprar" aria-label="Opções de compra" className="bg-surface-2 scroll-mt-16">
+      <Container className="py-16 sm:py-24 grid gap-4">
+        <p className="m-0 font-ui text-[16.5px] leading-[1.6] text-ink-body max-w-[60ch]">
+          Descubra Israel pelos olhos de um israelense e, se quiser, aprenda a ler o idioma que faz parte dessa história.
+        </p>
+        <OpcoesDeCompra slugs={[LIVRO, COMBO]} titulo="Escolha como embarcar." id="opcoes-livro" aqui={LIVRO} />
+      </Container>
+    </section>
+  );
+}
+
+/* ── 8 · os capítulos ──────────────────────────────────────────────────── */
 function Capitulos({ c }: { c: CatalogCourse }) {
   return (
     <section aria-labelledby="capitulos-titulo">
-      <Container className="py-14 sm:py-20 grid gap-8">
-        <div className="grid gap-4">
-          <Rubrica>Por dentro</Rubrica>
-          <H2 id="capitulos-titulo" className="m-0">Os {c.modules.length} capítulos.</H2>
-        </div>
+      <Container className="py-16 sm:py-24 grid gap-8">
+        <h2 id="capitulos-titulo" className="m-0 font-display font-semibold text-[clamp(26px,3.4vw,38px)] leading-[1.08] tracking-[-0.03em] text-ink">
+          O roteiro do livro.
+        </h2>
         <ol className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
           {c.modules.map(m => (
             <li key={m.n} className="flex gap-4 py-4 border-b border-line min-w-0">
@@ -217,34 +410,7 @@ function Capitulos({ c }: { c: CatalogCourse }) {
   );
 }
 
-/* ── 6 · quem escreveu ─────────────────────────────────────────────────── */
-function QuemEscreveu({ c }: { c: CatalogCourse }) {
-  return (
-    <section aria-labelledby="autor-titulo" className="bg-surface-2">
-      <Container className="py-14 sm:py-20 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
-        <div className="grid gap-4 content-start">
-          <Rubrica>Quem escreveu</Rubrica>
-          <H2 id="autor-titulo" className="m-0">{c.autorPt ?? 'Moshik Gueta'}.</H2>
-          <Lead className="m-0">{c.taglinePt}</Lead>
-          <Link href="/sobre/"
-                className="justify-self-start inline-flex items-center gap-1.5 min-h-[44px] font-ui text-[15.5px] font-semibold
-                           text-[var(--teal-ink)] underline underline-offset-[3px] decoration-[1.5px]">
-            Conhecer a trajetória
-          </Link>
-        </div>
-        <ul className="grid gap-3 list-none p-0 m-0">
-          {FATOS_DO_AUTOR.map(f => (
-            <li key={f} className="rounded-[14px] border border-line bg-[var(--card)] px-5 py-4 font-ui text-[16px] text-ink-body">
-              {f}
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
-  );
-}
-
-/* ── 7 · perguntas ─────────────────────────────────────────────────────── */
+/* ── 9 · perguntas ─────────────────────────────────────────────────────── */
 function Perguntas({ c }: { c: CatalogCourse }) {
   const parcelas = parcelasMax(c.price);
   const pagamento = soPix()
@@ -253,36 +419,24 @@ function Perguntas({ c }: { c: CatalogCourse }) {
       ? `Por PIX ou cartão, à vista ou ${parcelasTexto(parcelas)}.`
       : temCartao() ? `No cartão, à vista ou ${parcelasTexto(parcelas)}.` : 'Por PIX.';
   const lista: { p: string; r: ReactNode }[] = [
-    {
-      p: 'Preciso saber hebraico?',
-      r: 'Não. O livro é em português. O capítulo 7 ensina palavras para reconhecer nas placas e nos cardápios.'
-    },
-    {
-      p: 'Onde eu leio?',
-      r: 'No navegador, no celular ou no computador, entrando na sua conta. Não precisa instalar nada.'
-    },
-    {
-      p: 'Por quanto tempo tenho acesso?',
-      r: `${c.accessMonths} meses, a contar da liberação. O livro recebe atualizações, e você lê sempre a edição mais recente.`
-    },
-    {
-      p: 'Como pago e quando recebo?',
-      r: `${pagamento} ${confirmaSozinho() ? 'O acesso é liberado automaticamente.' : `O acesso é liberado à mão, ${prazoResposta()} depois do pagamento.`}`
-    },
-    {
-      p: 'E se eu não gostar?',
-      r: (
-        <>
-          Você tem {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar, pelo
-          botão em Sua conta. Veja a <Link href="/reembolso/" className="underline underline-offset-[3px]">Política de Reembolso</Link>.
-        </>
-      )
-    }
+    { p: 'É um e-book?', r: 'É uma experiência digital interativa: o livro abre no navegador, com mapas para tocar, ilustrações, jogos, exercícios e um diário. Não é um arquivo para baixar.' },
+    { p: 'Preciso saber hebraico?', r: 'Não. Tudo é em português. Um capítulo ensina palavras para reconhecer nas placas e nos cardápios.' },
+    { p: 'Onde eu leio?', r: 'No navegador, no celular, no tablet ou no computador, entrando na sua conta. Não precisa instalar nada.' },
+    { p: 'Por quanto tempo tenho acesso?', r: `${c.accessMonths} meses, a contar da liberação. O livro recebe atualizações, e você lê sempre a edição mais recente.` },
+    { p: 'Como pago e quando recebo?', r: `${pagamento} ${confirmaSozinho() ? 'O acesso é liberado automaticamente, assim que a Mercado Pago confirma o pagamento.' : `O acesso é liberado à mão, ${prazoResposta()} depois do pagamento.`}` },
+    { p: 'E se eu não gostar?', r: (
+      <>
+        Você tem {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar, pelo
+        botão em Sua conta. Veja a <Link href="/reembolso/" className="underline underline-offset-[3px]">Política de Reembolso</Link>.
+      </>
+    ) }
   ];
   return (
-    <section aria-labelledby="perguntas-titulo">
-      <Container className="py-14 sm:py-20 grid gap-8 max-w-[860px]">
-        <H2 id="perguntas-titulo" className="m-0">Perguntas sobre o livro.</H2>
+    <section aria-labelledby="perguntas-titulo" className="bg-surface-2">
+      <Container className="py-16 sm:py-24 grid gap-8 max-w-[860px]">
+        <h2 id="perguntas-titulo" className="m-0 font-display font-semibold text-[clamp(26px,3.4vw,38px)] leading-[1.08] tracking-[-0.03em] text-ink">
+          Perguntas frequentes.
+        </h2>
         <div className="grid border-t border-line">
           {lista.map(({ p, r }) => (
             <details key={p} className="group border-b border-line">
@@ -300,26 +454,24 @@ function Perguntas({ c }: { c: CatalogCourse }) {
   );
 }
 
-/* ── 8 · o fecho ───────────────────────────────────────────────────────── */
+/* ── 10 · o fecho ──────────────────────────────────────────────────────── */
 function Fecho({ c }: { c: CatalogCourse }) {
   return (
     <section aria-labelledby="fecho-titulo">
-      <Container className="pb-16 sm:pb-24">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_240px] items-center rounded-[20px] bg-[var(--navy)] text-white p-8 sm:p-12">
+      <Container className="py-16 sm:py-24">
+        <div className="lv-papel grid gap-8 lg:grid-cols-[minmax(0,1fr)_240px] items-center rounded-[20px] text-white p-8 sm:p-12">
           <div className="grid gap-5 justify-items-start">
-            <Rubrica tom="lite">{c.titlePt}</Rubrica>
+            <p className="m-0 font-ui text-[12.5px] font-semibold uppercase tracking-[.16em] text-[var(--teal-lite)]">{c.titlePt}</p>
             <h2 id="fecho-titulo"
                 className="m-0 font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08] tracking-[-0.03em] text-balance max-w-[22ch] text-white">
               Chegue a Israel sabendo o que está vendo.
             </h2>
             <div className="flex flex-wrap gap-3">
-              <a href="#livro-titulo"
-                 className={`${BOTAO} bg-white text-[var(--navy)] hover:bg-[var(--teal-soft)] focus-visible:outline-white`}>
-                Ver o preço
+              <a href="#comprar" className={`${BOTAO} bg-[#E2B864] text-[var(--navy)] hover:bg-[#ecc77c] focus-visible:outline-white`}>
+                Garantir meu acesso
               </a>
-              <a href={PREVIA}
-                 className={`${BOTAO} border border-white/40 text-white hover:bg-white/10 focus-visible:outline-white`}>
-                Experimentar a prévia
+              <a href={PREVIA} className={`${BOTAO} border border-white/40 text-white hover:bg-white/10 focus-visible:outline-white`}>
+                Explorar a experiência
               </a>
             </div>
           </div>
@@ -333,16 +485,47 @@ function Fecho({ c }: { c: CatalogCourse }) {
   );
 }
 
-function Grade({ itens, tom }: { itens: readonly { titulo: string; texto: string }[]; tom: 'card' | 'contorno' }) {
+/* ── a barra de compra do celular ─────────────────────────────────────────
+   Aparece depois da abertura e some quando as opções de compra estão na
+   tela (ou para quem já tem o livro). Só no celular: no computador, o
+   botão da abertura e o do fecho bastam. */
+function BarraDeCompra({ c, depoisDe }: { c: CatalogCourse; depoisDe: RefObject<HTMLDivElement | null> }) {
+  const account = useAccount();
+  const [visivel, setVisivel] = useState(false);
+  useEffect(() => {
+    const marco = depoisDe.current;
+    const compra = document.getElementById('comprar');
+    if (!marco || !compra) return;
+    /* Uma conta na rolagem, e não um IntersectionObserver: voltar ao topo
+       não cruza a borda de nada, e a barra ficava aparecendo na abertura. */
+    let pedido = 0;
+    const medir = () => {
+      pedido = 0;
+      const passou = marco.getBoundingClientRect().top < 0;
+      const r = compra.getBoundingClientRect();
+      const naCompra = r.top < window.innerHeight && r.bottom > 0;
+      setVisivel(passou && !naCompra);
+    };
+    const agendar = () => { if (!pedido) pedido = requestAnimationFrame(medir); };
+    medir();
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    return () => { window.removeEventListener('scroll', agendar); window.removeEventListener('resize', agendar); if (pedido) cancelAnimationFrame(pedido); };
+  }, [depoisDe]);
+  if (account.ready && account.can(c.slug)) return null;
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
-      {itens.map(i => (
-        <li key={i.titulo}
-            className={`grid gap-1.5 rounded-[16px] p-5 ${tom === 'card' ? 'bg-[var(--card)] shadow-[0_14px_34px_-26px_rgba(6,42,48,.5)]' : 'border border-line'}`}>
-          <span className="font-display text-[18px] font-semibold tracking-[-0.01em] text-ink">{i.titulo}</span>
-          <span className="font-ui text-[15px] leading-[1.55] text-ink-body">{i.texto}</span>
-        </li>
-      ))}
-    </ul>
+    <div aria-hidden={!visivel}
+         className={`sm:hidden fixed inset-x-0 bottom-0 z-40 border-t border-line bg-[var(--card)]/95 backdrop-blur px-4 py-3
+                     flex items-center justify-between gap-3 transition-transform duration-300 motion-reduce:transition-none
+                     ${visivel ? 'translate-y-0' : 'translate-y-full'}`}>
+      <span className="grid min-w-0">
+        <span className="font-ui text-[13px] text-ink-muted truncate">{c.titlePt}</span>
+        <span className="font-display text-[19px] font-bold text-ink tabular-nums">{brl(precoDeVitrine(c))}</span>
+      </span>
+      <a href="#comprar" tabIndex={visivel ? 0 : -1}
+         className="inline-flex items-center justify-center min-h-[48px] px-5 rounded-[var(--r-md)] bg-[var(--navy)] text-white font-ui text-[15px] font-semibold">
+        Garantir meu acesso
+      </a>
+    </div>
   );
 }

@@ -87,7 +87,7 @@ describe('a contagem', () => {
     const f = funilDoComece([{ evento: 'comece-visto', n: 20 }, { evento: 'comece-ler', n: 5 }]);
     expect(f.find(l => l.evento === 'comece-ler')!.deQuemAbriu).toBe(0.25);
     expect(f.find(l => l.evento === 'comece-israel')!.n).toBe(0);
-    expect(funilDoComece([])[0].deQuemAbriu).toBeNull();
+    expect(funilDoComece([])[0]!.deQuemAbriu).toBeNull();
   });
 
   it('o servidor aceita os eventos novos, sem dado pessoal', async () => {
