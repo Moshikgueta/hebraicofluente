@@ -4,7 +4,7 @@
  * livro montado pelo editorial (scripts/ebook-no-site.sh, web.mjs --previa) e
  * não mora no git; o que este arquivo trava é o que o SITE promete sobre ela:
  * abre sem login e sem conta, fica fora da busca e do sitemap, não oferece a
- * compra do livro (que continua aVenda: false) e conta só os cinco eventos.
+ * compra do livro (nem com a venda aberta: a prévia é só a amostra) e conta só os cinco eventos.
  * Quando a cópia montada existe (app/public/previa, depois da publicação ou do
  * script), o conteúdo dela também é conferido. */
 
@@ -19,7 +19,6 @@ import { EVENTOS_DO_PORTAL } from '../../worker/src/api/estatisticas.js';
 // @ts-expect-error - módulo .mjs, sem tipos
 import { classificar } from '../seo.mjs';
 import { anunciavel } from '@/lib/seo';
-import { getCourse } from '@/lib/catalog';
 import { EVENTOS_DA_PREVIA_PT, funilDaPrevia } from '@/lib/painel-estatisticas';
 import { envDeTeste } from './ajuda/d1';
 
@@ -60,10 +59,6 @@ describe('/previa abre sem login', () => {
 });
 
 describe('/previa não oferece a compra do livro', () => {
-  it('o livro continua fora de venda', () => {
-    expect(getCourse('israel-alem-do-roteiro')?.aVenda).toBe(false);
-  });
-
   it('a montagem pede só a prévia e leva ao curso, não ao livro', () => {
     const script = fonte('../../scripts/ebook-no-site.sh');
     expect(script).toContain('--previa');

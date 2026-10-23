@@ -1,6 +1,6 @@
 /* O e-book "Israel Além do Óbvio" e o pacote com o curso (21/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
- * Dois produtos novos no mesmo catálogo dos cursos: o e-book (R$ 67) e o
+ * Dois produtos novos no mesmo catálogo dos cursos: o e-book (R$ 127 até 30/11, R$ 149 depois) e o
  * pacote alfabetização + e-book (R$ 127). O que estes testes travam:
  *  - o pacote libera os DOIS produtos num pedido, e o estorno recua os dois;
  *  - quem tem só o e-book lê /israel/ e não abre nada do curso (nem o áudio);
@@ -159,13 +159,13 @@ describe('o catálogo', () => {
 
   /* A venda abre quando o contador e o advogado responderem (decisão do dono,
      21/10/2026): o catálogo não tem mais `aVenda: false` no e-book nem no pacote. */
-  it('à venda: o e-book e o pacote estão na vitrine e no checkout', () => {
+  it('à venda: o e-book está na vitrine e no checkout; o pacote, não (decisão do dono, 23/10/2026)', () => {
     expect(getCourse(LIVRO).aVenda).not.toBe(false);
-    expect(getCourse(PACOTE).aVenda).not.toBe(false);
     expect(isSellable(getCourse(LIVRO))).toBe(true);
-    expect(isSellable(getCourse(PACOTE))).toBe(true);
     expect(allProducts().map(c => c.slug)).toContain(LIVRO);
-    expect(allProducts().map(c => c.slug)).toContain(PACOTE);
+    expect(getCourse(PACOTE).aVenda).toBe(false);
+    expect(isSellable(getCourse(PACOTE))).toBe(false);
+    expect(allProducts().map(c => c.slug)).not.toContain(PACOTE);
   });
 
   it('com `aVenda: false`, o servidor recusa a compra do e-book e do pacote', async () => {
@@ -178,9 +178,22 @@ describe('o catálogo', () => {
     }
   });
 
-  it('o preço cobrado sai do catálogo: R$ 67 o e-book, R$ 127 o pacote', () => {
-    expect(priceCents(getCourse(LIVRO), 'card')).toBe(6700);
+  it('o preço cobrado sai do catálogo: o e-book a R$ 127 até 30/11 (R$ 149 depois), 10% a menos no PIX', () => {
+    expect(priceCents(getCourse(LIVRO), 'card')).toBe(12700);
+    expect(priceCents(getCourse(LIVRO), 'pix')).toBe(11430);
+    expect(getCourse(LIVRO).price.listBrl).toBe(149);
+    expect(getCourse(LIVRO).price.preLancamentoAte).toBe(getCourse('alfabetizacao').price.preLancamentoAte);
     expect(priceCents(getCourse(PACOTE), 'card')).toBe(12700);
+  });
+
+  it('o e-book vira para R$ 149 no mesmo dia que o curso, pela mesma Action', () => {
+    const texto = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
+    const p = getCourse(LIVRO);
+    const depois = virar(texto, fimDoDia(p.price.preLancamentoAte) + 1).texto;
+    const livro = JSON.parse(depois).courses.find((c: { slug: string }) => c.slug === LIVRO);
+    expect(livro.price.brl).toBe(149);
+    expect(livro.price.listBrl ?? null).toBeNull();
+    expect(livro.price.pixDiscountPct).toBe(10);
   });
 
   it('o pacote abre o curso e o e-book, cada um com os seus meses', () => {

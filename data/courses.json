@@ -197,7 +197,7 @@
         "Quem quer entender o país além do que o guia conta no ônibus."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 67, "installments": 3, "pixDiscountPct": 10 },
+      "price": { "brl": 127, "listBrl": 149, "installments": 3, "pixDiscountPct": 10, "preLancamentoAte": "2026-11-30" },
       "accessMonths": 12,
       "modules": [
         { "n": 1, "titlePt": "Israel no mapa", "subPt": "Um país pequeno, uma geografia surpreendente" },
@@ -216,6 +216,7 @@
 
     {
       "slug": "alfabetizacao-e-israel",
+      "aVenda": false,
       "tipo": "pacote",
       "code": "P1",
       "n": 102,

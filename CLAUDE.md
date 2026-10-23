@@ -1335,6 +1335,10 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   do e-book somem dos Termos e do Reembolso (as políticas ficam na versão de antes).
   `/israel/` vai ao ar atrás do portão e só abre com o direito `israel-alem-do-roteiro`,
   dado à mão em Actions → Acesso → `liberar`; quem não o tem vai para /cursos/.
+  **Lançamento do livro (decisão do dono, 23/10/2026):** só o livro abre; o pacote continua
+  `aVenda: false` (com o livro a R$ 127, ele custaria o mesmo que o livro sozinho), e a página do
+  livro não convida ao pacote fora de venda (`OfertaDoPacote`). A prévia (/previa) continua sem
+  compra, mesmo com a venda aberta.
   **Abrir a venda** = tirar as duas linhas `aVenda`, tirar o livro de `SEM_PAGINA_DE_VENDA`
   (worker/src/gate.js), subir `politicas.atualizadoEm` e publicar (nasce versão nova dos
   Termos e do Reembolso). A página do portal e a ficha leem o preço do catálogo do produto
@@ -1347,7 +1351,9 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   foi junto. O histórico do ramo `claude/wonderful-mayer-n4sc1n` (e da PR #193) ainda
   contém o editorial: nunca fundir esses commits na `main` sem tirar o editorial deles.
 - **Catálogo:** `data/courses.json` ganhou `tipo` (sem ele, é curso). `israel-alem-do-roteiro`
-  (`livro`, R$ 67, versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
+  (`livro`, R$ 127 até 30/11 e R$ 149 a partir de 01/12, 10% no PIX = R$ 114,30, em até 3x; decisão
+  do dono, 23/10/2026: o preço "de" é real, vira pela mesma Action `virar-preco` do curso; era R$ 67;
+  versão interativa 12 meses + PDF) e `alfabetizacao-e-israel` (`pacote`,
   R$ 127 até 30/11 e R$ 327 a partir de 01/12 (decisões do dono, 21 e 22/10/2026: até 30/11
   fica ABAIXO do curso sozinho, de propósito; depois, acima, com R$ 37 de economia), `componentes` = curso + e-book, `listBrl` e
   `preLancamentoAte` como o curso, virado pela mesma Action `virar-preco`). `allCourses()` (app) só devolve cursos;
