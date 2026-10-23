@@ -4,7 +4,8 @@
  *
  * As últimas compras pagas ou estornadas: nome, e-mail, valor, meio, data e,
  * quando houver, o link de campanha de onde o pedido veio. Só leitura.
- * Desde 23/10/2026, também a origem da visita (lib/origem.ts) e a campanha.
+ * Desde 23/10/2026, também a origem da visita (lib/origem.ts) e a campanha,
+ * e as compras de contas de administrador (os testes do dono) vão à parte.
  * Desde 05/10/2026, também se a pessoa já começou o curso, e até onde foi.
  */
 
@@ -19,7 +20,7 @@ type Venda = {
   orderId: string; curso: string; valorCentavos: number; metodo: string; parcelas: number;
   status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; origem?: string | null; campanha?: string | null;
   nome: string; email: string | null;
-  estudouEm: number | null; concluidas: string[];
+  estudouEm: number | null; concluidas: string[]; teste?: boolean;
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; vendas: Venda[] };
@@ -51,7 +52,9 @@ export function VendasClient() {
 
   useEffect(() => { void carregar(); }, [carregar]);
 
-  const pagas = estado.tipo === 'pronto' ? estado.vendas.filter(v => v.status === 'paid') : [];
+  const reaisDeAlunos = estado.tipo === 'pronto' ? estado.vendas.filter(v => !v.teste) : [];
+  const testes = estado.tipo === 'pronto' ? estado.vendas.filter(v => v.teste) : [];
+  const pagas = reaisDeAlunos.filter(v => v.status === 'paid');
   const doLink = pagas.filter(v => v.parceria).length;
 
   return (
@@ -75,7 +78,7 @@ export function VendasClient() {
         {estado.tipo === 'nao-admin' && <p className="m-0">Esta conta não tem acesso a este painel.</p>}
         {estado.tipo === 'codigo' && <CodigoDoAdmin onPronto={() => void carregar()} />}
         {estado.tipo === 'erro' && <p className="m-0">Não consegui carregar agora. Confira a internet e tente de novo.</p>}
-        {estado.tipo === 'pronto' && estado.vendas.length === 0 && <p className="m-0">Nenhuma compra ainda.</p>}
+        {estado.tipo === 'pronto' && reaisDeAlunos.length === 0 && <p className="m-0">Nenhuma compra de aluno ainda.</p>}
         {estado.tipo === 'pronto' && pagas.length > 0 && (
           <p className="m-0">
             <strong>{pagas.length}</strong> {pagas.length === 1 ? 'compra paga' : 'compras pagas'}
@@ -85,34 +88,49 @@ export function VendasClient() {
         )}
       </div>
 
-      {estado.tipo === 'pronto' && estado.vendas.map(v => (
-        <article key={v.orderId} className="rounded-lg border border-[var(--line)] bg-surface p-4 grid gap-1">
-          <p className="font-ui text-[16px] m-0 break-words">
-            <strong>{v.nome || 'Sem nome'}</strong>
-            {' · '}<span className="break-all">{v.email ?? 'conta apagada'}</span>
-          </p>
-          <p className="font-ui text-[14px] text-ink-body m-0 break-all">
-            {reais(v.valorCentavos)} · {v.metodo === 'pix' ? 'PIX' : v.parcelas > 1 ? `cartão em ${v.parcelas}x` : 'cartão'}
-            {' · '}{quando(v.pagoEm)} · pedido {v.orderId}
-          </p>
-          {v.parceria && (
-            <p className="font-ui text-[14px] m-0"><strong>Veio pelo link {LINK[v.parceria] ?? v.parceria}</strong></p>
-          )}
-          {v.origem && (
-            <p className="font-ui text-[14px] m-0">
-              Origem: {FONTES_PT[v.origem] ?? v.origem}{v.campanha ? ` · campanha ${v.campanha}` : ''}
-            </p>
-          )}
-          {v.status === 'paid' && (
-            <p className="font-ui text-[14px] m-0">
-              {v.estudouEm === null
-                ? 'Ainda não começou o curso.'
-                : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
-            </p>
-          )}
-          {v.status === 'refunded' && <p className="font-ui text-[14px] text-ink-muted m-0">Estornada</p>}
-        </article>
-      ))}
+      {reaisDeAlunos.map(v => <Cartao key={v.orderId} v={v} />)}
+
+      {testes.length > 0 && (
+        <details className="font-ui text-[15px]">
+          <summary className="cursor-pointer">
+            Testes do administrador ({testes.length}): compras de contas de ADMIN_EMAILS, fora dos totais
+          </summary>
+          <div className="grid gap-3 mt-3">
+            {testes.map(v => <Cartao key={v.orderId} v={v} />)}
+          </div>
+        </details>
+      )}
     </main>
+  );
+}
+
+function Cartao({ v }: { v: Venda }) {
+  return (
+    <article className="rounded-lg border border-[var(--line)] bg-surface p-4 grid gap-1">
+      <p className="font-ui text-[16px] m-0 break-words">
+        <strong>{v.nome || 'Sem nome'}</strong>
+        {' · '}<span className="break-all">{v.email ?? 'conta apagada'}</span>
+      </p>
+      <p className="font-ui text-[14px] text-ink-body m-0 break-all">
+        {reais(v.valorCentavos)} · {v.metodo === 'pix' ? 'PIX' : v.parcelas > 1 ? `cartão em ${v.parcelas}x` : 'cartão'}
+        {' · '}{quando(v.pagoEm)} · pedido {v.orderId}
+      </p>
+      {v.parceria && (
+        <p className="font-ui text-[14px] m-0"><strong>Veio pelo link {LINK[v.parceria] ?? v.parceria}</strong></p>
+      )}
+      {v.origem && (
+        <p className="font-ui text-[14px] m-0">
+          Origem: {FONTES_PT[v.origem] ?? v.origem}{v.campanha ? ` · campanha ${v.campanha}` : ''}
+        </p>
+      )}
+      {v.status === 'paid' && (
+        <p className="font-ui text-[14px] m-0">
+          {v.estudouEm === null
+            ? 'Ainda não começou o curso.'
+            : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
+        </p>
+      )}
+      {v.status === 'refunded' && <p className="font-ui text-[14px] text-ink-muted m-0">Estornada</p>}
+    </article>
   );
 }

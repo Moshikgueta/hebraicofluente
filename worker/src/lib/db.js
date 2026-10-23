@@ -951,6 +951,63 @@ export async function soltarVencimento(env, { accountId, courseSlug, expiresAt, 
   } catch { /* a reserva fica; o aviso deste marco se perde, o curso não */ }
 }
 
+/* ── lembretes dos primeiros dias (worker/src/ativacao.js) ─────────────── */
+
+/** Compras pagas cujo marco (d1, d3, d7) caiu na janela e ainda não saiu,
+ *  com o que o lembrete precisa: contato, quantas lições a conta concluiu e
+ *  quando o progresso mudou pela última vez. Só pedidos de `cursos`, pagos a
+ *  partir de `desde`. Tabela ausente: lista vazia. */
+export async function ativacoesParaAvisar(env, { cursos, desde, limit = 20 }, at = now()) {
+  const D = 86_400_000;
+  if (!cursos || !cursos.length) return [];
+  const lista = cursos.map((_, i) => `?${i + 9}`).join(', ');
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT o.id AS order_id, o.account_id, o.course_slug, o.paid_at, a.email, a.name,
+              p.updated_at AS progresso_em, m.marco,
+              (SELECT COUNT(*) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.lessons') l
+                WHERE json_extract(l.value, '$.completedAt') IS NOT NULL) AS concluidas
+         FROM orders o
+         JOIN accounts a ON a.id = o.account_id
+         LEFT JOIN progress p ON p.account_id = o.account_id
+         JOIN (SELECT 'd1' AS marco, ?1 AS de, ?2 AS ate
+               UNION ALL SELECT 'd3', ?3, ?4
+               UNION ALL SELECT 'd7', ?5, ?6) m
+           ON o.paid_at > m.de AND o.paid_at <= m.ate
+        WHERE o.status = 'paid' AND o.paid_at >= ?7 AND o.course_slug IN (${lista})
+          AND NOT EXISTS (SELECT 1 FROM avisos_ativacao v WHERE v.order_id = o.id AND v.marco = m.marco)
+        ORDER BY o.paid_at ASC LIMIT ?8`
+    ).bind(
+      at - 3 * D, at - 1 * D,     // d1: pago entre 3 dias e 1 dia atrás
+      at - 6 * D, at - 3 * D,     // d3: entre 6 e 3 dias atrás
+      at - 10 * D, at - 7 * D,    // d7: entre 10 e 7 dias atrás
+      desde, limit, ...cursos
+    ).all();
+    return results || [];
+  } catch {
+    return [];
+  }
+}
+
+/** Reserva o marco do pedido. true = esta chamada reservou e deve mandar. */
+export async function reservarAtivacao(env, { orderId, marco }, at = now()) {
+  try {
+    const r = await env.DB.prepare(
+      'INSERT OR IGNORE INTO avisos_ativacao (order_id, marco, enviado_em) VALUES (?, ?, ?)'
+    ).bind(orderId, marco, at).run();
+    return Number(r && r.meta && r.meta.changes) > 0;
+  } catch {
+    return false;
+  }
+}
+
+/** Solta a reserva quando o e-mail não saiu: a próxima rodada tenta. */
+export async function soltarAtivacao(env, { orderId, marco }) {
+  try {
+    await env.DB.prepare('DELETE FROM avisos_ativacao WHERE order_id = ? AND marco = ?').bind(orderId, marco).run();
+  } catch { /* o lembrete deste marco se perde, o curso não */ }
+}
+
 /** Pedidos PAGOS pela Mercado Pago nos últimos `dias`, que a varredura não
  *  conferiu nas últimas 24 h. É a rede para estorno e contestação cujo aviso
  *  nunca chegou (auditoria de 28/09, PAY-002): antes, a varredura só olhava

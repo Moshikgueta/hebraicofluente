@@ -16,7 +16,7 @@ import {
 
 type Campanha = { origem: string; visitas: number };
 type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
-  porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[] };
+  porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[]; pedidosDeTeste?: number };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
@@ -34,6 +34,8 @@ function Crescimento({ dados }: { dados: Dados }) {
         pessoa) e o que ela fez: abriu a página de venda, abriu o checkout, criou um pedido, pagou. A conversão é
         compras sobre visitas da página de venda da mesma origem. Receita = pagos no período, sem os estornados.
         Detalhe de cada compra em <Link href="/admin/vendas" className="underline">Quem comprou</Link>.
+        {dados.pedidosDeTeste ? <> Ficaram de fora {dados.pedidosDeTeste} {dados.pedidosDeTeste === 1 ? 'pedido' : 'pedidos'} de contas
+          de administrador (os seus testes).</> : null}
       </p>
       {linhas.length ? (
         <div className="overflow-x-auto">

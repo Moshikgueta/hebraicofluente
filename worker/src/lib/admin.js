@@ -22,11 +22,13 @@ import { b64url, b64urlDecode, hmacB64, timingSafeEqual } from './crypto.js';
 import { readSession } from './session.js';
 import { requireAccount } from '../api/auth.js';
 
+/** Os e-mails de ADMIN_EMAILS, normalizados. */
+export const emailsDeAdmin = env => String(env.ADMIN_EMAILS || '')
+  .split(',').map(normalizeEmail).filter(Boolean);
+
 export function isAdmin(account, env) {
   if (!account || !account.email) return false;
-  const lista = String(env.ADMIN_EMAILS || '')
-    .split(',').map(normalizeEmail).filter(Boolean);
-  return lista.includes(normalizeEmail(account.email));
+  return emailsDeAdmin(env).includes(normalizeEmail(account.email));
 }
 
 const COOKIE = '__Host-hf_admin';
