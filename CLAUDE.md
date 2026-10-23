@@ -44,12 +44,15 @@ Verificação (o locale importa, senão a contagem sai em bytes):
 
 ```sh
 LC_ALL=C.UTF-8 grep -rlP '\x{2014}|\x{2013}' \
-  --exclude-dir={node_modules,.next,out,dist,.git,.wrangler} .
-grep -rn 'u2014\|u2013' --exclude-dir={node_modules,.next,out,dist,.git,.wrangler} .
+  --exclude-dir={node_modules,.next,out,dist,.git,.wrangler,.claude} .
+grep -rn 'u2014\|u2013' --exclude-dir={node_modules,.next,out,dist,.git,.wrangler,.claude} .
 ```
 
 As duas linhas têm de sair vazias. As réguas de caixa (`─`, U+2500) dos
 cabeçalhos de comentário não são travessões e ficam como estão.
+`.claude/skills/` fica de fora: são as skills de marketing de terceiros
+(coreyhaines31/marketingskills, MIT, instaladas com `npx skills add`), não
+texto do site nem do autor.
 
 ## Onde mora o quê
 - `data/*.json` é a fonte. `app/content/` e `app/src/lib/audio-manifest.ts` são
