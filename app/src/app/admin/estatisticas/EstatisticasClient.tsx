@@ -10,7 +10,7 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  funilDaDemo, funilDaPrevia, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
+  funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
@@ -138,6 +138,30 @@ export function EstatisticasClient() {
             </section>
 
             <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Comece aqui (link da bio)</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                A página /comece-aqui, para onde vai o link da bio do Instagram. Cada pessoa conta uma vez por
+                visita; a porcentagem é sobre quem abriu a página. Quantas tocaram no link está em Links de
+                campanha (bio); quem escolheu ler hebraico segue no teste grátis, logo abaixo.
+              </p>
+              <div className="overflow-x-auto">
+                <table className="w-full font-ui text-[14px] border-collapse">
+                  <thead><tr className="text-left text-ink-muted">
+                    <th className="py-2 pr-3">O quê</th>
+                    <th className="py-2 pr-3 text-right">Pessoas</th><th className="py-2 text-right">De quem abriu</th>
+                  </tr></thead>
+                  <tbody>{funilDoComece(estado.dados.portal || []).map(l => (
+                    <tr key={l.evento} className="border-t border-[color:var(--line-soft)]">
+                      <td className="py-2 pr-3">{l.nome}</td>
+                      <td className="py-2 pr-3 text-right tabular-nums">{l.n}</td>
+                      <td className="py-2 text-right tabular-nums">{pct(l.deQuemAbriu)}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+              </div>
+            </section>
+
+            <section className="grid gap-3">
               <h2 className="text-[20px] font-semibold m-0">Prévia do e-book (Instagram)</h2>
               <p className="font-ui text-[14px] text-ink-muted m-0">
                 A prévia grátis de Israel Além do Óbvio em /previa, aberta pelo link que vai no direct a quem
@@ -207,7 +231,8 @@ export function EstatisticasClient() {
             <section className="grid gap-3">
               <h2 className="text-[20px] font-semibold m-0">Links de campanha</h2>
               <p className="font-ui text-[14px] text-ink-muted m-0">
-                Visitas que entraram pelo link curto e foram levadas ao teste grátis. Robôs de pré-visualização não contam.
+                Visitas que entraram pelo link curto. O da bio leva à página Comece aqui; os outros, ao teste
+                grátis. Robôs de pré-visualização não contam.
               </p>
               <ul className="list-none p-0 m-0 grid gap-1 font-ui text-[15px]">
                 {['sefarad', 'bio', 'stories', 'dm'].map(origem => (

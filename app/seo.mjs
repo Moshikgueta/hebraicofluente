@@ -47,7 +47,9 @@ const NAO_LISTADAS = [
   /* Responde 301 para /curso-de-hebraico (worker.js, 23/10/2026). */
   '/cursos/alfabetizacao',
   /* A prévia grátis do e-book, só para quem recebe o link no direct (23/10/2026). */
-  '/previa'
+  '/previa',
+  /* O destino do link da bio do Instagram (24/10/2026). */
+  '/comece-aqui'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,

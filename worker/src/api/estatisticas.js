@@ -94,6 +94,10 @@ export const LINKS_DE_CAMPANHA = new Map([
      o link mandado no direct. Cada um conta à parte. */
   ['/bio', 'bio'], ['/stories', 'stories'], ['/dm', 'dm']
 ]);
+/* Os links que vão para a página "Comece aqui" (24/10/2026, decisão do dono)
+   em vez do teste grátis: só a bio, que recebe gente de todo post. Stories e
+   direct chegam de um conteúdo que já diz do que se trata. */
+export const PARA_O_COMECE_AQUI = new Set(['bio']);
 const ROBO = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|curl|wget|python|headless/i;
 
 export async function contarCampanha(env, origem, request) {
@@ -150,7 +154,10 @@ export const EVENTOS_DO_PORTAL = [
   'cta-curso', 'cta-explorar',
   /* A prévia grátis do e-book em /previa (23/10/2026): quem abriu, quem encheu
      a mochila, quem montou um prato, quem abriu o diário e quem foi ao curso. */
-  'previa-visto', 'previa-mochila-cheia', 'previa-prato-pronto', 'previa-diario-aberto', 'previa-clique-curso'
+  'previa-visto', 'previa-mochila-cheia', 'previa-prato-pronto', 'previa-diario-aberto', 'previa-clique-curso',
+  /* A página "Comece aqui" (/comece-aqui, o destino do link da bio desde
+     24/10/2026): quem abriu, qual caminho escolheu e quem foi ao curso. */
+  'comece-visto', 'comece-ler', 'comece-israel', 'comece-palavra', 'comece-curso'
 ];
 
 /** POST /api/portal {evento} - sempre 204. */

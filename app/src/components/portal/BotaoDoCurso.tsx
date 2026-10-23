@@ -14,8 +14,10 @@ import { useAccount } from '@/lib/account/store';
 import { FLAGSHIP, PAGINA_DO_CURSO } from '@/lib/catalog';
 import { proximoPasso } from '@/lib/cta';
 
-export function BotaoDoCurso({ href, children, className }: {
+export function BotaoDoCurso({ href, children, className, onClick }: {
   href: string; children: ReactNode; className: string;
+  /** Só no botão de visitante: a volta do aluno ao curso não entra em funil. */
+  onClick?: () => void;
 }) {
   const account = useAccount();
   const vaiAoCurso = (href.split(/[?#]/)[0] ?? '').replace(/\/+$/, '') === PAGINA_DO_CURSO;
@@ -28,5 +30,5 @@ export function BotaoDoCurso({ href, children, className }: {
       </Link>
     );
   }
-  return <Link href={href} className={className}>{children}</Link>;
+  return <Link href={href} className={className} onClick={onClick}>{children}</Link>;
 }

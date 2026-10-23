@@ -147,7 +147,8 @@ describe('uma página de venda só (23/10/2026, decisão do dono)', () => {
 describe('o painel lê o portal inteiro', () => {
   it('cada evento do servidor tem nome no painel', () => {
     /* os `previa-*` têm a tabela própria (EVENTOS_DA_PREVIA_PT, tests/previa.test.ts) */
-    expect(EVENTOS_DO_PORTAL_PT.map(e => e.evento).sort()).toEqual([...EVENTOS_DO_PORTAL].filter((e: string) => !e.startsWith('previa-')).sort());
+    /* e os `comece-*` também (EVENTOS_DO_COMECE_PT, tests/comece-aqui.test.ts) */
+    expect(EVENTOS_DO_PORTAL_PT.map(e => e.evento).sort()).toEqual([...EVENTOS_DO_PORTAL].filter((e: string) => !e.startsWith('previa-') && !e.startsWith('comece-')).sort());
     const f = funilDoPortal([{ evento: 'visto', n: 10 }, { evento: 'jornada-israel', n: 4 }]);
     expect(f.find(l => l.evento === 'jornada-israel')!.deQuemViu).toBe(0.4);
   });
