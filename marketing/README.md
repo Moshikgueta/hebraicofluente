@@ -10,6 +10,7 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 | `03-plano-90-dias.md` | 3. Plano de 90 dias | rascunho com as decisões em aberto (23/10/2026) |
 | `roteiros/i1-reels.md` | 12 roteiros do experimento I1 (Instagram) | para o dono aprovar (23/10/2026) |
 | `parcerias/candidatos.md` e `parcerias/kit-do-parceiro.md` | 15 candidatos e o kit do piloto | para o dono escolher e aprovar (23/10/2026) |
+| `seo/paginas-do-alfabeto.md` | proposta das páginas do alfabeto para a busca | espera a decisão A, B ou C do dono (23/10/2026) |
 | `04-painel.md` | 4. Painel de indicadores | definido; construção na semana 1 do plano (23/10/2026) |
 
 ## Regras de trabalho (do dono, 23/10/2026)
@@ -34,3 +35,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 23/10/2026: correção do dono: os 2 estornos e os 4 pedidos sem pagamento do mês eram testes dele.
 - 23/10/2026: pilar C nos roteiros (16 ao todo), A1 a A4 aprovados; Reels pausados a pedido do dono.
 - 23/10/2026: parcerias, 15 candidatos e o kit do parceiro (`parcerias/`).
+- 23/10/2026: lista de interessados no ar (PR #247 e #248); proposta das páginas do alfabeto (`seo/`).

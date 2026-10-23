@@ -425,6 +425,7 @@ function Footer() {
             { href: '/curso-de-hebraico', label: 'Alfabetização em Hebraico' },
             { href: '/metodo', label: 'O método' },
             { href: '/cursos', label: 'Os cursos' },
+            { href: '/alfabeto-hebraico', label: 'Alfabeto hebraico' },
             { href: '/biblia', label: 'Ler a Bíblia?' }
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">

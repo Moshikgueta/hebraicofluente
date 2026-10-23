@@ -12,7 +12,10 @@ export const AMOSTRA_AUDIO = {
   sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
   shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד',
   alef: 'אָלֶף', 'alef-a': 'אַ', 'alef-e': 'אֶ', 'alef-i': 'אִ', 'alef-o': 'אוֹ', 'alef-u': 'אוּ',
-  aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל'
+  aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל',
+  /* As páginas do alfabeto (23/10/2026, lib/alfabeto-publico.ts): o nome do
+     Tav e a palavra de exemplo de cada letra. */
+  tav: 'תָו', ima: 'אִמָא', emet: 'אֶמֶת', laila: 'לַיְלָה'
 } as const;
 export type NomeAmostra = keyof typeof AMOSTRA_AUDIO;
 export const urlAmostra = (nome: NomeAmostra): string => `/amostra-audio/${nome}.mp3`;
