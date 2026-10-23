@@ -62,9 +62,11 @@ export function Rubrica({
                     tracking-[.12em] ${cor} ${className}`}>
       {/* <He> e não um span com a classe: é a única porta do hebraico no
           projeto (isolamento bidi, fonte, nikud). 20px x 1.15em dá 23px,
-          o piso para uma letra hebraica legível. */}
+          o piso para uma letra hebraica legível. Peso 400, o do hebraico
+          corrido (23/10/2026): o 500 só existia aqui e custava mais um
+          arquivo de fonte na capa. */}
       {letra && (
-        <span className="text-[20px] leading-none normal-case tracking-normal font-medium">
+        <span className="text-[20px] leading-none normal-case tracking-normal font-normal">
           <He tone={tom === 'lite' ? 'lite' : 'teal'}>{letra}</He>
         </span>
       )}
