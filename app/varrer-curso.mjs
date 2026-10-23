@@ -52,7 +52,9 @@ for (const w of [390,1280]) {
        Só conta link que ocupa espaço na tela: nas duas barras o HTML das
        duas existe sempre, e é o CSS que esconde uma delas. A inicial da
        conta, no cabeçalho do telefone, é a versão móvel do item "Perfil" e
-       por isso entra na conta. */
+       por isso entra na conta; o presente do cabeçalho é a versão móvel de
+       "Recompensas" (27/09/2026: na barra de baixo não cabe um oitavo
+       destino), e entra pelo mesmo motivo. */
     /* E o que a tela oferece a quem precisa de SOCORRO. Medido junto porque
        é a mesma pergunta: o que esta tela alcança. */
     ajuda[w][rota]=await p.evaluate(()=>{
@@ -66,7 +68,7 @@ for (const w of [390,1280]) {
       const visivel=el=>!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
       const fora=new Set();
       for (const a of document.querySelectorAll(
-             'nav[aria-label="Navegação principal"] a[href^="/"], header a[href^="/perfil"]'))
+             'nav[aria-label="Navegação principal"] a[href^="/"], header a[href^="/perfil"], header a[href^="/loja"]'))
         if (visivel(a)) fora.add(new URL(a.href).pathname.replace(/\/+$/,'')||'/');
       return [...fora].sort();
     });
@@ -234,7 +236,10 @@ for (const w of [390,1280]) {
      uma pergunta e esquecer o título, a página passa a mentir por conta
      própria - e o pedido era de 12 a 18. */
   const cartoes = await p.evaluate(() => {
-    const sec = document.querySelector('section[aria-labelledby="atividade"]');
+    /* A checagem mora no <Compreensao id="atividade-perguntas">, dentro da
+       parte "atividade" (que chega fechada: o texto está no HTML, então
+       textContent conta mesmo assim). */
+    const sec = document.querySelector('section[aria-labelledby="atividade-perguntas"]');
     if (!sec) return 0;
     return [...sec.children].filter(el => /^\d+\./.test(el.textContent || '')).length;
   });
@@ -243,6 +248,11 @@ for (const w of [390,1280]) {
               `${faixa ? '(entre 12 e 18)' : 'FORA DA FAIXA 12-18'}`);
   if (!faixa) ruim++;
 
+  /* As partes da Aula 0 chegam fechadas (pedido do dono, 29/09/2026,
+     components/learn/Partes.tsx): o texto fica no HTML com `hidden`, e o
+     innerText só lê o que está à vista. Abre todas antes de procurar. */
+  const abrirTodas = p.getByRole('button', { name: 'Abrir todas as partes' });
+  if (await abrirTodas.count()) { await abrirTodas.first().click(); await p.waitForTimeout(200); }
   const txt = (await p.innerText('body')).replace(/\s+/g, ' ');
   for (const [o_que, marca] of [
     ['a linha de duas direções', 'Quando a linha tem duas direções'],

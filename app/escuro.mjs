@@ -105,6 +105,28 @@ const ROTAS_PUBLICAS = ['/', '/metodo/', '/curso-de-hebraico/', '/faq/', '/entra
 
 const fundo = p => p.evaluate(() => getComputedStyle(document.body).backgroundColor);
 
+/* ── 0 · o build certo ────────────────────────────────────────────────────
+   Este script mede as telas do aluno com a conta e o progresso no
+   localStorage, no build LOCAL (`npm run build`). O build publicado
+   (`NEXT_PUBLIC_PLATFORM_API=worker`) pede a sessão ao Worker, que este
+   servidor estático não tem: a casca do curso não monta, a tela fica no
+   esqueleto claro, e o resultado eram 13 "problemas" que não existiam
+   (23/10/2026). Sem a casca, para aqui e diz o que fazer. */
+{
+  const ctx = await noEscuro();
+  const p = await ctx.newPage();
+  await p.goto(BASE + '/mapa/', { waitUntil: 'networkidle' });
+  const temCasca = await p.evaluate(() => !!document.querySelector('[data-plataforma]'));
+  await ctx.close();
+  if (!temCasca) {
+    console.log('\nA casca do curso não montou em /mapa/: este out/ parece ser o build publicado,');
+    console.log('que pede a sessão ao Worker. Rode `npm run build` (sem NEXT_PUBLIC_PLATFORM_API)');
+    console.log('e depois `npm run escuro` de novo.');
+    await navegador.close(); servidor.close();
+    process.exit(2);
+  }
+}
+
 /* ── 1 · a fronteira ──────────────────────────────────────────────────── */
 console.log('\n── a fronteira: plataforma escurece, vitrine não ──');
 {

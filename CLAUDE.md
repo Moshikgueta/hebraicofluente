@@ -885,7 +885,11 @@ compra; medição só com o contador próprio.
   com o nikud fora do lugar. Nunca voltar a `swap` sem preload.
 - Medida (Lighthouse celular simulado, mediana de 5): LCP da capa 3,75 → 3,16 s, da página de venda
   3,47 → 3,01 s, de /aprender-hebraico 3,74 → 2,63 s. FCP da capa 1,21 → 1,66 s (ainda abaixo de 1,8).
-- `npm run escuro` acusa 13 problemas do tema escuro que já existiam na `main` antes disto.
+- Os "13 problemas do tema escuro" eram do teste, não do tema (23/10/2026): `npm run escuro` rodado
+  sobre o build publicado (`NEXT_PUBLIC_PLATFORM_API=worker`), em que a casca do curso pede a sessão
+  ao Worker e não monta no servidor estático. No build local o escuro passa inteiro (menor contraste
+  5,33:1). O script agora para e avisa quando a casca não monta. `npm run varrer` e `npm run escuro`
+  medem o build LOCAL (`npm run build`, sem a variável).
 
 ## Antes de commitar
 ```sh
