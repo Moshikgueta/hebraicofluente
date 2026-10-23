@@ -223,7 +223,9 @@ describe.skipIf(!TEM_CONTEUDO)('as fotos históricas', () => {
     const artefatos = new Set(dados.conteudo.flatMap(m => m.etapas.flatMap(e => e.blocos.flatMap(b => (b.tipo === 'artefatos' ? b.itens.map(i => `m${String(m.n).padStart(2, '0')}:${i.id}`) : [])))));
     for (const f of fotos) for (const k of f.onde) {
       const [tipo, ...resto] = k.split(':'); const id = resto.join(':');
-      const ok = tipo === 'lugar' ? lugares.has(id) : tipo === 'personagem' ? pessoas.has(id) : tipo === 'artefato' ? artefatos.has(id) : tipo === 'modulo' ? dados.conteudo.some(m => String(m.n) === id) : false;
+      const secoes = new Set(dados.conteudo.flatMap(m => m.etapas.map(e => `m${String(m.n).padStart(2, '0')}:${e.id}`)));
+      const ok = tipo === 'lugar' ? lugares.has(id) : tipo === 'personagem' ? pessoas.has(id) : tipo === 'artefato' ? artefatos.has(id)
+        : tipo === 'modulo' ? dados.conteudo.some(m => String(m.n) === id) : tipo === 'secao' ? secoes.has(id) : false;
       expect(ok, `${f.id}: ${k}`).toBe(true);
     }
   });
