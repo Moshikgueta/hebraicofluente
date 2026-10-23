@@ -76,13 +76,16 @@ Os 6 seguem a ordem do curso: quem assiste à série inteira lê de verdade no f
 
 ### A4 - A menor letra do alfabeto (Yud י)
 - **Gancho:** "Esta é a menor letra do hebraico, e ela aparece em tudo."
-- **Corpo:** mostra י. "Yud. Um tracinho no alto da linha, com som de I de ioiô." "É dela que vem a
-  expressão 'nem um jota', a menor parte." Mostra מַיִם. "Com ela você já lê: máyim. Água."
+- **Corpo:** mostra י. "Yud. Um tracinho no alto da linha, com som de I, de ioiô." "A letra grega
+  iota vem da mesma letra antiga que o Yud, e é dessa história que vem a expressão 'nem um jota':
+  nem a menor parte." Mostra מַיִם. "Com ela você já lê: máyim. Água."
 - **Fecho:** padrão.
 - **Texto na tela:** "י = Yud · som de I/Y" · "מַיִם = máyim = água".
-- **Legenda:** "'Nem um jota' vem desta letra: י, a menor do alfabeto hebraico. E com ela você já
-  lê מַיִם, água. Comenta LER que eu te mando o teste grátis."
+- **Legenda:** "A menor letra do alfabeto hebraico é o י. O iota grego vem da mesma letra antiga, e é
+  dessa história que vem a expressão 'nem um jota'. Com ela você já lê מַיִם, água. Comenta LER que
+  eu te mando o teste grátis."
 - **Fonte:** Yud, `soundNotePt`, `didYouKnow`; מַיִם de `wordsToRead` do Yud.
+- **Aprovado pelo dono** em 23/10/2026, com a frase do jota na forma exata do curso.
 
 ### A5 - Um ponto muda o som (Shin שׁ)
 - **Gancho:** "Um ponto em cima muda o som desta letra."
