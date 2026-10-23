@@ -877,6 +877,16 @@ compra; medição só com o contador próprio.
   (lib/ecossistema.ts; catálogo quando ele tem). Preço só no produto à venda; "Em breve" sem preço
   nem data (`tests/portal.test.ts`). Nunca as três lado a lado como tabela de planos.
 
+## Fontes: preload só do texto corrido (23/10/2026, pedido do dono)
+- `app/src/app/layout.tsx`: só a Instrument Sans (texto corrido, o elemento da maior pintura) tem
+  `<link rel=preload>`; Bricolage (títulos), Noto Serif Hebrew e a cursiva carregam quando o CSS
+  as usa. Eram 10 preloads (165 KB) em toda página.
+- O hebraico usa `display: 'block'`: espera a fonte certa (até uns 3 s) em vez de pintar numa reserva
+  com o nikud fora do lugar. Nunca voltar a `swap` sem preload.
+- Medida (Lighthouse celular simulado, mediana de 5): LCP da capa 3,75 → 3,16 s, da página de venda
+  3,47 → 3,01 s, de /aprender-hebraico 3,74 → 2,63 s. FCP da capa 1,21 → 1,66 s (ainda abaixo de 1,8).
+- `npm run escuro` acusa 13 problemas do tema escuro que já existiam na `main` antes disto.
+
 ## Antes de commitar
 ```sh
 cd app && npm test        # 302 testes
