@@ -29,6 +29,7 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { activeEntitlements, throttled } from '../lib/db.js';
 import { ehCurso } from '../lib/catalog.js';
 import { exigirAdmin } from '../lib/admin.js';
+import { fonteValida } from '../lib/origem.js';
 import { ip, requireAccount } from './auth.js';
 
 const ID = /^[a-z0-9-]{1,40}$/;
@@ -160,16 +161,52 @@ export const EVENTOS_DO_PORTAL = [
   'comece-visto', 'comece-ler', 'comece-israel', 'comece-palavra', 'comece-curso'
 ];
 
-/** POST /api/portal {evento} - sempre 204. */
+/* O funil por origem (23/10/2026, plano de marketing): quem abriu a página
+   de venda e quem abriu o checkout, separados pela fonte da visita (lista
+   fechada em lib/origem.js). Somados em `f|<evento>|<fonte>`; fonte que não
+   está na lista conta como `direto`. Mesmo endpoint e mesmo freio do portal. */
+export const EVENTOS_COM_FONTE = ['venda-visto', 'checkout-aberto'];
+
+/** POST /api/portal {evento, fonte?} - sempre 204. */
 export async function contarPortal({ request, env }) {
   const nada = new Response(null, { status: 204 });
   if (ROBO.test(request.headers.get('user-agent') || '')) return nada;
   const b = await readJson(request, 1024);
   const evento = String(b && b.evento || '');
-  if (!EVENTOS_DO_PORTAL.includes(evento)) return nada;
+  const comFonte = EVENTOS_COM_FONTE.includes(evento);
+  if (!comFonte && !EVENTOS_DO_PORTAL.includes(evento)) return nada;
   if (await throttled(env, `portal-ip:${ip(request)}`, 40, 3_600_000)) return nada;
-  await contarChave(env, `p|${evento}`);
+  if (comFonte) {
+    const fonte = fonteValida(b.fonte) ? b.fonte : 'direto';
+    await contarChave(env, `f|${evento}|${fonte}`);
+  } else {
+    await contarChave(env, `p|${evento}`);
+  }
   return nada;
+}
+
+/* Pedidos e compras por origem no período (orders.origem, migração 0003).
+   Pedido = criado no período, qualquer estado; compra = paga no período e
+   não estornada; estorno = estornado, contado pela data do pagamento.
+   Pedido sem origem (de antes da migração, ou sem nada no aparelho) aparece
+   como `sem-marca`. Banco sem a coluna: lista vazia, o resto do painel segue. */
+async function pedidosPorFonte(env, desdeMs) {
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT COALESCE(origem, 'sem-marca') AS fonte,
+              SUM(CASE WHEN created_at >= ?1 THEN 1 ELSE 0 END) AS pedidos,
+              SUM(CASE WHEN status = 'paid' AND paid_at >= ?1 THEN 1 ELSE 0 END) AS compras,
+              SUM(CASE WHEN status = 'paid' AND paid_at >= ?1 THEN amount_cents ELSE 0 END) AS receita_centavos,
+              SUM(CASE WHEN status = 'refunded' AND paid_at >= ?1 THEN 1 ELSE 0 END) AS estornos
+         FROM orders
+        WHERE created_at >= ?1 OR paid_at >= ?1
+        GROUP BY 1`
+    ).bind(desdeMs).all();
+    return (results || []).map(r => ({
+      fonte: r.fonte, pedidos: r.pedidos || 0, compras: r.compras || 0,
+      receitaCentavos: r.receita_centavos || 0, estornos: r.estornos || 0
+    }));
+  } catch { return []; }
 }
 
 /** Soma 1 na etapa do teste, hoje. Nunca lança. */
@@ -193,6 +230,7 @@ export async function ler({ request, env }) {
   const demo = [];
   const motivos = [];
   const portal = [];
+  const porFonte = [];
   for (const { chave, n } of linhas || []) {
     const p = String(chave).split('|');
     if (p[0] === 'r' && p.length === 4) {
@@ -211,9 +249,13 @@ export async function ler({ request, env }) {
       motivos.push({ motivo: p[1], n });
     } else if (p[0] === 'p' && p.length === 2) {
       portal.push({ evento: p[1], n });
+    } else if (p[0] === 'f' && p.length === 3) {
+      porFonte.push({ evento: p[1], fonte: p[2], n });
     }
   }
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal });
+  /* O dia `desde` começa à meia-noite de Brasília (UTC-3, sem horário de verão). */
+  const pedidos = await pedidosPorFonte(env, Date.parse(`${desde}T00:00:00-03:00`));
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

@@ -86,6 +86,7 @@ import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
 import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
 import { EnvioDeEstatisticas } from '@/components/shell/EnvioDeEstatisticas';
+import { RegistroDeOrigem } from '@/components/shell/RegistroDeOrigem';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
@@ -150,6 +151,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             acessibilidade fica de fora dele de propósito - um controle de
             zoom que cresce junto com o zoom sai da tela em 150% e prende a
             pessoa no ajuste que ela acabou de fazer. */}
+        {/* De onde veio a visita (lib/origem.ts): antes do conteúdo, para o
+            efeito rodar antes de a página limpar o endereço. */}
+        <RegistroDeOrigem />
         <div id="hf-zoom">
           <AccountProvider>
             {/* As estatísticas de aprendizagem, só com sessão (lib/estatisticas.ts). */}

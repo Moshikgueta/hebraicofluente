@@ -10,15 +10,70 @@ import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
 import {
-  funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT, type Etapa, type Resposta
+  crescimentoPorFonte, funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT,
+  type Etapa, type PedidosDaFonte, type Resposta
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[] };
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
+  porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[] };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; dados: Dados };
 
 const pct = (x: number | null) => (x == null ? '-' : `${Math.round(x * 100)}%`);
+const pct1 = (x: number | null) => (x == null ? '-' : `${(x * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`);
+const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+function Crescimento({ dados }: { dados: Dados }) {
+  const { linhas, total } = crescimentoPorFonte(dados.porFonte || [], dados.pedidos || []);
+  return (
+    <section className="grid gap-3">
+      <h2 className="text-[20px] font-semibold m-0">Crescimento por origem</h2>
+      <p className="font-ui text-[14px] text-ink-muted m-0">
+        De onde veio cada visita (a primeira página dela, pelo link de campanha, pela UTM ou pelo site que mandou a
+        pessoa) e o que ela fez: abriu a página de venda, abriu o checkout, criou um pedido, pagou. A conversão é
+        compras sobre visitas da página de venda da mesma origem. Receita = pagos no período, sem os estornados.
+        Detalhe de cada compra em <Link href="/admin/vendas" className="underline">Quem comprou</Link>.
+      </p>
+      {linhas.length ? (
+        <div className="overflow-x-auto">
+          <table className="w-full font-ui text-[14px] border-collapse">
+            <thead><tr className="text-left text-ink-muted">
+              <th className="py-2 pr-3">Origem</th><th className="py-2 pr-3 text-right">Página de venda</th>
+              <th className="py-2 pr-3 text-right">Checkout</th><th className="py-2 pr-3 text-right">Pedidos</th>
+              <th className="py-2 pr-3 text-right">Compras</th><th className="py-2 pr-3 text-right">Conversão</th>
+              <th className="py-2 pr-3 text-right">Receita</th><th className="py-2 text-right">Estornos</th>
+            </tr></thead>
+            <tbody>
+              {linhas.map(l => (
+                <tr key={l.fonte} className="border-t border-[color:var(--line-soft)]">
+                  <td className="py-2 pr-3">{l.nome}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{l.venda}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{l.checkout}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{l.pedidos}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{l.compras}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{pct1(l.conversao)}</td>
+                  <td className="py-2 pr-3 text-right tabular-nums">{reais(l.receitaCentavos)}</td>
+                  <td className="py-2 text-right tabular-nums">{l.estornos}</td>
+                </tr>
+              ))}
+              <tr className="border-t-2 border-[color:var(--line)] font-semibold">
+                <td className="py-2 pr-3">Total</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{total.venda}</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{total.checkout}</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{total.pedidos}</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{total.compras}</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{pct1(total.conversao)}</td>
+                <td className="py-2 pr-3 text-right tabular-nums">{reais(total.receitaCentavos)}</td>
+                <td className="py-2 text-right tabular-nums">{total.estornos}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : <p className="font-ui text-[14px] m-0">Ainda não há visitas nem pedidos com origem neste período.</p>}
+    </section>
+  );
+}
 
 export function EstatisticasClient() {
   const [dias, setDias] = useState(30);
@@ -111,6 +166,8 @@ export function EstatisticasClient() {
                 </div>
               ) : <p className="font-ui text-[14px] m-0">Ainda não há respostas bastantes para comparar.</p>}
             </section>
+
+            <Crescimento dados={estado.dados} />
 
             <section className="grid gap-3">
               <h2 className="text-[20px] font-semibold m-0">A capa (portal)</h2>

@@ -22,6 +22,7 @@ import { ip, ipCompleto, requireAccount } from './auth.js';
 import { MOTIVOS_DESISTENCIA, motivoValido } from '../lib/motivos.js';
 import { contarChave } from './estatisticas.js';
 import { clampInstallments, getCourse, isSellable, itensDoPedido, parceriaValida, priceCents, tipoDe } from '../lib/catalog.js';
+import { origemDoCorpo } from '../lib/origem.js';
 import {
   acessosVencidos, arrependimentosDe, createOrder, entitlementExpiry, entitlementOf, estornoAtualizar,
   estornoCriar, estornoDe, estornosDe, estornosParaVarrer, findAccountById, getOrder, grantAccess, log,
@@ -196,8 +197,13 @@ export async function create({ request, env }) {
   const pixAnterior = method === 'pix' && !pixDireto()
     ? await pixPendente(env, account.id, course.slug) : null;
 
+  /* De onde a pessoa veio (lib/origem.js): só para o dono ler, nunca muda
+     o preço nem o que o pedido abre. */
+  const { fonte: origem, campanha } = origemDoCorpo(body.origem);
+
   const order = await createOrder(env, {
-    accountId: account.id, courseSlug: course.slug, amountCents, method, installments, parceria
+    accountId: account.id, courseSlug: course.slug, amountCents, method, installments, parceria,
+    origem, campanha
   });
   /* A versão dos Termos que vale para este pedido (LEGAL-104). */
   await gravarTermosDoPedido(env, order.id);

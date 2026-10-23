@@ -13,6 +13,7 @@
  * válidos é a mesma dos dois lados.
  */
 import type { CatalogCourse } from './catalog';
+import { registrarOrigem } from './origem';
 
 export const PARCERIAS: Record<string, { perfil: string }> = {
   sefarad: { perfil: '@adsefarditas' },
@@ -27,6 +28,8 @@ const valida = (nome: unknown): nome is string => typeof nome === 'string' && no
 
 /** Na capa: guarda a parceria que veio no endereço e limpa o endereço. */
 export function guardarParceriaDaUrl(): void {
+  /* A origem lê o mesmo `?parceria=`, e precisa ler antes da limpeza. */
+  registrarOrigem();
   try {
     const url = new URL(window.location.href);
     const nome = url.searchParams.get('parceria');
