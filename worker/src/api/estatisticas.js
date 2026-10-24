@@ -231,6 +231,73 @@ async function pedidosDeTeste(env, desdeMs) {
   } catch { return 0; }
 }
 
+/* O funil numa linha por semana (24/10/2026, marketing/04-painel.md, "O funil,
+   numa linha por semana"). Semana de segunda a domingo, no relógio de
+   Brasília, as últimas SEMANAS_DO_FUNIL contando a de hoje. Tudo sai das
+   mesmas fontes do resto do painel, sem nada novo gravado:
+     capa / teste / testeFeito  p|visto, d|visto, d|pronto
+     venda / checkout / conta / pagar  f|<evento>|* somados de todas as fontes
+     leads      interessados confirmados na semana (quem saiu foi apagado e
+                não aparece; o total de hoje está na seção da lista)
+     pedidos    orders criados na semana; compras/receita: pagos na semana,
+                estornos: estornados contados pela semana do pagamento
+   Pedidos de contas de ADMIN_EMAILS ficam de fora, como em pedidosPorFonte. */
+export const SEMANAS_DO_FUNIL = 8;
+const segundaDe = dia => {
+  const t = Date.parse(`${dia}T00:00:00Z`);
+  return new Date(t - ((new Date(t).getUTCDay() + 6) % 7) * DIA_MS).toISOString().slice(0, 10);
+};
+const semanaDoMs = ms => segundaDe(hojeBrasilia(ms));
+const CAMPO_DA_CHAVE = { 'p|visto': 'capa', 'd|visto': 'teste', 'd|pronto': 'testeFeito' };
+const CAMPO_DA_FONTE = { 'venda-visto': 'venda', 'checkout-aberto': 'checkout', 'checkout-conta': 'conta', 'checkout-pagar': 'pagar' };
+
+export async function funilSemanal(env, agora = Date.now(), semanas = SEMANAS_DO_FUNIL) {
+  const inicio = segundaDe(hojeBrasilia(agora - (semanas - 1) * 7 * DIA_MS));
+  const inicioMs = Date.parse(`${inicio}T00:00:00-03:00`);
+  const linhas = new Map();
+  for (let i = 0; i < semanas; i++) {
+    const semana = new Date(Date.parse(`${inicio}T00:00:00Z`) + i * 7 * DIA_MS).toISOString().slice(0, 10);
+    linhas.set(semana, { semana, capa: 0, venda: 0, teste: 0, testeFeito: 0, checkout: 0, conta: 0, pagar: 0,
+      leads: 0, pedidos: 0, compras: 0, receitaCentavos: 0, estornos: 0 });
+  }
+  const somar = (semana, campo, n) => { const l = linhas.get(semana); if (l) l[campo] += n; };
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT dia, chave, n FROM estatisticas
+        WHERE dia >= ?1 AND (chave IN ('p|visto', 'd|visto', 'd|pronto') OR chave LIKE 'f|%')`
+    ).bind(inicio).all();
+    for (const r of results || []) {
+      const p = String(r.chave).split('|');
+      const campo = p[0] === 'f' ? CAMPO_DA_FONTE[p[1]] : CAMPO_DA_CHAVE[r.chave];
+      if (campo) somar(segundaDe(r.dia), campo, Number(r.n) || 0);
+    }
+  } catch { /* tabela ausente: as colunas do contador ficam em zero */ }
+  const admins = emailsDeAdmin(env);
+  const fora = admins.length ? `AND LOWER(COALESCE(a.email, '')) NOT IN (${admins.map((_, i) => `?${i + 2}`).join(', ')})` : '';
+  try {
+    const { results } = await env.DB.prepare(
+      `SELECT o.created_at, o.paid_at, o.status, o.amount_cents
+         FROM orders o LEFT JOIN accounts a ON a.id = o.account_id
+        WHERE (o.created_at >= ?1 OR o.paid_at >= ?1) ${fora}`
+    ).bind(inicioMs, ...admins).all();
+    for (const o of results || []) {
+      if (o.created_at >= inicioMs) somar(semanaDoMs(o.created_at), 'pedidos', 1);
+      if (!o.paid_at || o.paid_at < inicioMs) continue;
+      if (o.status === 'paid') {
+        somar(semanaDoMs(o.paid_at), 'compras', 1);
+        somar(semanaDoMs(o.paid_at), 'receitaCentavos', Number(o.amount_cents) || 0);
+      } else if (o.status === 'refunded') somar(semanaDoMs(o.paid_at), 'estornos', 1);
+    }
+  } catch { /* sem pedidos legíveis: as colunas de venda ficam em zero */ }
+  try {
+    const { results } = await env.DB.prepare(
+      'SELECT confirmado_em FROM interessados WHERE confirmado_em >= ?1 AND saiu_em IS NULL'
+    ).bind(inicioMs).all();
+    for (const r of results || []) somar(semanaDoMs(r.confirmado_em), 'leads', 1);
+  } catch { /* tabela ausente: leads em zero */ }
+  return [...linhas.values()];
+}
+
 /** Soma 1 na etapa do teste, hoje. Nunca lança. */
 export const contarEtapa = (env, etapa) => contarChave(env, `d|${etapa}`);
 
@@ -281,7 +348,8 @@ export async function ler({ request, env }) {
   const testes = await pedidosDeTeste(env, desdeMs);
   /* A lista de interessados: o total de hoje (não depende do período). */
   const interessados = await resumoDaLista(env);
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes, interessados });
+  const semanas = await funilSemanal(env);
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes, interessados, semanas });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

@@ -42,3 +42,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 23/10/2026: páginas do alfabeto no ar (PR #249, opção B).
 - 23/10/2026: contador dos passos do checkout (`checkout-conta`, `checkout-pagar`), a base do C4; rascunho do pedido de depoimento.
 - 24/10/2026: rascunho de Chanucá, só com hebraico que já está no curso (`roteiros/chanuca.md`).
+- 24/10/2026: o funil por semana em `/admin/estatisticas`; `04-painel.md` com o estado de cada indicador.

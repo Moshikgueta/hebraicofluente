@@ -25,15 +25,15 @@ Estado: **existe** (já se mede), **parcial** (mede, mas sem origem ou sem a tel
 
 | # | Indicador | Definição | Fórmula | Fonte | Estado |
 |---|---|---|---|---|---|
-| K1 | Visitas | visitas humanas à capa, ao `/comece-aqui`, à página de venda e ao teste grátis, uma por visita | soma de `visto` por página | `p\|visto`, `p\|comece-visto`, `d\|visto`; página de venda: nova chave | parcial (falta a página de venda) |
-| K2 | Origem do tráfego | de onde veio cada visita | contagem por origem: bio, stories, dm, sefarad, prévia, parceiro, busca, direto, anúncio | `o\|<origem>` para os 4 links; UTM: nova chave | parcial (falta UTM e busca) |
+| K1 | Visitas | visitas humanas à capa, ao `/comece-aqui`, à página de venda e ao teste grátis, uma por visita | soma de `visto` por página | `p\|visto`, `p\|comece-visto`, `d\|visto`; página de venda: nova chave | existe (`f\|venda-visto\|<origem>`, 23/10) |
+| K2 | Origem do tráfego | de onde veio cada visita | contagem por origem: bio, stories, dm, sefarad, prévia, parceiro, busca, direto, anúncio | `o\|<origem>` para os 4 links; UTM: nova chave | existe (`lib/origem.ts`, 23/10) |
 | K3 | Teste grátis concluído | quem chegou ao fim dos 6 exercícios | `d\|pronto` / `d\|visto` | `d\|` (existe) | existe |
-| K4 | Leads | e-mails com consentimento na lista de interessados | inscrições novas na semana, por origem | tabela `novidades` estendida (depende da decisão 1) | falta |
-| K5 | Cliques no checkout | quem apertou "Começar o curso" e abriu o checkout | aberturas do checkout / visitas da página de venda | nova chave `k\|checkout\|<origem>` | falta |
+| K4 | Leads | e-mails com consentimento na lista de interessados | inscrições novas na semana, por origem | tabela `interessados` (23/10) | existe |
+| K5 | Cliques no checkout | quem apertou "Começar o curso" e abriu o checkout | aberturas do checkout / visitas da página de venda | `f\|checkout-aberto\|<origem>`; os passos da conta e do pagamento desde 23/10 | existe |
 | K6 | Pedidos criados | quem escolheu PIX ou cartão | `orders` criados na semana | `orders.created_at` | existe |
 | K7 | Compras | pedidos pagos na semana, menos estornados | `status = 'paid'` com `paid_at` na semana | `orders` | existe (tela `/admin/vendas`) |
-| K8 | Taxa de conversão | compras sobre visitas da página de venda, na mesma semana | K7 / visitas da página de venda | K7 e K1 | falta (depende de K1) |
-| K9 | Conversão por origem | a mesma taxa, para cada origem | K7 da origem / visitas da origem | nova coluna `orders.origem` (migração 0003) | parcial (só `parceria`) |
+| K8 | Taxa de conversão | compras sobre visitas da página de venda, na mesma semana | K7 / visitas da página de venda | K7 e K1 | existe |
+| K9 | Conversão por origem | a mesma taxa, para cada origem | K7 da origem / visitas da origem | `orders.origem` (migração 0003) | existe |
 | K10 | Custo por aquisição (CAC) | quanto custou cada compra paga de um canal pago | gasto do canal na semana / K7 do canal na semana | gerenciador de anúncios + K9 | falta (só com anúncio) |
 | K11 | Receita bruta | o que entrou | soma de `amount_cents` dos pagos na semana | `orders` | existe |
 | K12 | Receita líquida | o que ficou | K11 menos estornos e desistências (`refunded`) menos a taxa da Mercado Pago | `orders` + extrato MP | parcial (taxa da MP a anotar) |
@@ -57,6 +57,10 @@ O painel principal é uma tabela só, uma linha por semana, as colunas na ordem 
 | Semana | Visitas (K1) | Teste concluído (K3) | Leads (K4) | Checkout (K5) | Pedidos (K6) | Compras (K7) | Conversão (K8) | Receita líquida (K12) | Gasto pago | CAC (K10) |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 26/10 | | | | | | | | | 0 | - |
+
+No ar desde 24/10/2026: `/admin/estatisticas`, "O funil por semana" (`funilSemanal` em
+`worker/src/api/estatisticas.js`), as últimas 8 semanas, sem as colunas de gasto e CAC, que
+vêm do gerenciador de anúncios e são anotadas à mão.
 
 E uma segunda tabela, a mesma coisa quebrada por origem (bio, stories, dm, sefarad, prévia,
 parceiros, busca, e-mail, anúncio, direto), para a semana e para as 4 últimas semanas somadas
