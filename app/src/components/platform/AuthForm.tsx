@@ -48,10 +48,15 @@ export const MOTIVOS: Record<string, string> = {
     'O limite é de 3 aparelhos ao mesmo tempo.'
 };
 
-export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
+export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
   mode: 'signin' | 'signup';
   /** No checkout o título da página é o do passo, e este vira h2 (VIS-012). */
   nivelDoTitulo?: 'h1' | 'h2';
+  /** Depois de criar a conta ou entrar, volta para a página em que o
+   *  formulário está, em vez do `?next=`. É o checkout: sem isto, quem criava
+   *  a conta no meio da compra ia para o painel, o portão o devolvia à página
+   *  de venda, e a compra recomeçava do zero (growth, 23/10/2026). */
+  voltarAqui?: boolean;
 }) {
   const account = useAccount();
   const router = useRouter();
@@ -62,8 +67,12 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
      rodapé pulava quando ele entrava (CLS 0,59 em 3G). Agora o HTML já traz
      o formulário inteiro; a URL só decide para onde voltar e se há aviso. */
   const [busca, setBusca] = useState<URLSearchParams | null>(null);
-  useEffect(() => { setBusca(new URLSearchParams(window.location.search)); }, []);
-  const next = safeNext(busca?.get('next') ?? null);
+  const [aqui, setAqui] = useState<string | null>(null);
+  useEffect(() => {
+    setBusca(new URLSearchParams(window.location.search));
+    setAqui(window.location.pathname + window.location.search);
+  }, []);
+  const next = safeNext(voltarAqui ? aqui : busca?.get('next') ?? null);
   const motivo = MOTIVOS[busca?.get('motivo') ?? ''];
   const Titulo = nivelDoTitulo;
 
@@ -89,7 +98,9 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1' }: {
     try {
       if (signup) await account.signUp({ name, email, password, aceitouTermos: aceite, declarouIdade: aceite });
       else await account.signIn({ email, password });
-      router.replace(safeNext(new URLSearchParams(window.location.search).get('next')));
+      router.replace(safeNext(voltarAqui
+        ? window.location.pathname + window.location.search
+        : new URLSearchParams(window.location.search).get('next')));
     } catch (err) {
       setError(err instanceof AuthError ? err.message : MESSAGES.server);
       setBusy(false);

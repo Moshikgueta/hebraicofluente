@@ -672,10 +672,11 @@ function MethodOption({
 
 /** O formulário de conta, apontando o retorno para o próprio checkout. */
 function AuthFormInline({ slug }: { slug: string }) {
-  /* AuthForm lê `?next=` da URL, e aqui a URL é a do checkout. Em vez de
-     duplicar o formulário com outra prop, o link de retorno é o endereço
-     atual - que é exatamente o que a pessoa quer: voltar para a compra. */
-  return <AuthForm mode="signup" nivelDoTitulo="h2" key={slug} />;
+  /* `voltarAqui`: o retorno é o próprio checkout, com a consulta junto
+     (`?parceria=`), e o link "Entrar" leva o mesmo destino. O `?next=` da
+     URL não serve aqui: nenhum link para o checkout o traz, e sem ele a
+     pessoa ia para o painel e era devolvida à página de venda. */
+  return <AuthForm mode="signup" nivelDoTitulo="h2" voltarAqui key={slug} />;
 }
 
 function Shell({ course, children }: {
