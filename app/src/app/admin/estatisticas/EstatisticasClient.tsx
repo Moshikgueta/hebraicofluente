@@ -17,7 +17,9 @@ import {
 type Campanha = { origem: string; visitas: number };
 type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
   porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[]; pedidosDeTeste?: number;
-  interessados?: Interessados | null };
+  interessados?: Interessados | null; semanas?: Semana[] };
+type Semana = { semana: string; capa: number; venda: number; teste: number; testeFeito: number; checkout: number; conta: number;
+  pagar: number; leads: number; pedidos: number; compras: number; receitaCentavos: number; estornos: number };
 type Interessados = { ativos: number; aguardando: number; sairam: number; porInteresse: Record<string, number>; porOrigem: Record<string, number> };
 
 const INTERESSE_PT: Record<string, string> = {
@@ -70,6 +72,44 @@ type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-adm
 const pct = (x: number | null) => (x == null ? '-' : `${Math.round(x * 100)}%`);
 const pct1 = (x: number | null) => (x == null ? '-' : `${(x * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`);
 const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+/* O funil numa linha por semana (24/10/2026, marketing/04-painel.md): as últimas 8 semanas, de segunda a
+   domingo, a mais recente em cima. Não depende do período escolhido acima. */
+function FunilPorSemana({ semanas }: { semanas: Semana[] }) {
+  const COLUNAS: [string, (s: Semana) => string | number][] = [
+    ['Capa', s => s.capa], ['Página de venda', s => s.venda], ['Teste grátis', s => s.teste],
+    ['Teste concluído', s => s.testeFeito], ['Checkout', s => s.checkout], ['Pagamento', s => s.pagar],
+    ['Leads', s => s.leads], ['Pedidos', s => s.pedidos], ['Compras', s => s.compras],
+    ['Conversão', s => pct1(s.venda ? s.compras / s.venda : null)], ['Receita', s => reais(s.receitaCentavos)],
+    ['Estornos', s => s.estornos]
+  ];
+  const dia = (iso: string) => iso.slice(8, 10) + '/' + iso.slice(5, 7);
+  return (
+    <section className="grid gap-3">
+      <h2 className="text-[20px] font-semibold m-0">O funil por semana</h2>
+      <p className="font-ui text-[14px] text-ink-muted m-0">
+        Uma linha por semana (segunda a domingo), as últimas 8, a mais recente em cima; não muda com o período
+        escolhido acima. Cada visita conta uma vez por página. Leads = quem confirmou a lista de interessados na
+        semana. Conversão = compras sobre visitas da página de venda da mesma semana. Pedidos de teste (contas de
+        administrador) ficam de fora. Com pouco volume, uma semana sozinha engana: compare as quatro últimas.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full font-ui text-[14px] border-collapse">
+          <thead><tr className="text-left text-ink-muted">
+            <th className="py-2 pr-3">Semana</th>
+            {COLUNAS.map(([nome]) => <th key={nome} className="py-2 pr-3 text-right">{nome}</th>)}
+          </tr></thead>
+          <tbody>{[...semanas].reverse().map(s => (
+            <tr key={s.semana} className="border-t border-[color:var(--line-soft)]">
+              <td className="py-2 pr-3 whitespace-nowrap">{dia(s.semana)}</td>
+              {COLUNAS.map(([nome, valor]) => <td key={nome} className="py-2 pr-3 text-right tabular-nums">{valor(s)}</td>)}
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
 
 function Crescimento({ dados }: { dados: Dados }) {
   const { linhas, total } = crescimentoPorFonte(dados.porFonte || [], dados.pedidos || []);
@@ -221,6 +261,7 @@ export function EstatisticasClient() {
               ) : <p className="font-ui text-[14px] m-0">Ainda não há respostas bastantes para comparar.</p>}
             </section>
 
+            {estado.dados.semanas && <FunilPorSemana semanas={estado.dados.semanas} />}
             <Crescimento dados={estado.dados} />
             {estado.dados.interessados && <ListaDeInteressados l={estado.dados.interessados} />}
 

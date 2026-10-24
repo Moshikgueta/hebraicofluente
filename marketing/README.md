@@ -13,6 +13,7 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 | `seo/paginas-do-alfabeto.md` | proposta das páginas do alfabeto para a busca | espera a decisão A, B ou C do dono (23/10/2026) |
 | `emails/pedido-de-depoimento.md` | pedido de depoimento da semana 7 | para o dono aprovar (23/10/2026) |
 | `testes/c4-condicoes-antes-do-cadastro.md` | especificação do teste C4 (semana 5) | para o dono aprovar (23/10/2026) |
+| `roteiros/chanuca.md` | carrossel e stories de Chanucá (semana 6) | para o dono aprovar (24/10/2026) |
 | `04-painel.md` | 4. Painel de indicadores | definido; construção na semana 1 do plano (23/10/2026) |
 
 ## Regras de trabalho (do dono, 23/10/2026)
@@ -40,3 +41,5 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 23/10/2026: lista de interessados no ar (PR #247 e #248); proposta das páginas do alfabeto (`seo/`).
 - 23/10/2026: páginas do alfabeto no ar (PR #249, opção B).
 - 23/10/2026: contador dos passos do checkout (`checkout-conta`, `checkout-pagar`), a base do C4; rascunho do pedido de depoimento.
+- 24/10/2026: rascunho de Chanucá, só com hebraico que já está no curso (`roteiros/chanuca.md`).
+- 24/10/2026: o funil por semana em `/admin/estatisticas`; `04-painel.md` com o estado de cada indicador.
