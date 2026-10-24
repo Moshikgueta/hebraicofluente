@@ -44,6 +44,7 @@ import * as marca from './api/marca.js';
 import * as depoimentos from './api/depoimentos.js';
 import * as avaliacoes from './api/avaliacoes.js';
 import * as estatisticas from './api/estatisticas.js';
+import { campanhaValida } from './lib/origem.js';
 import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
@@ -245,9 +246,15 @@ async function responder(request, env, ctx) {
     if (campanha && (request.method === 'GET' || request.method === 'HEAD')) {
       const conta = estatisticas.contarCampanha(env, campanha, request);
       if (ctx && typeof ctx.waitUntil === 'function') ctx.waitUntil(conta); else await conta;
+      /* O nome da campanha do post (`/bio?utm_campaign=p01`) segue junto
+         (growth, 23/10/2026): sem ele, o desvio jogava fora a única marca
+         que liga uma compra a uma peça. Só esse parâmetro, e só no formato
+         que lib/origem aceita; o resto da consulta fica para trás. */
+      const peca = campanhaValida(String(url.searchParams.get('utm_campaign') || '').trim().toLowerCase().replace(/\s+/g, '-'));
+      const comPeca = peca ? `&utm_campaign=${peca}` : '';
       const destino = estatisticas.PARA_O_COMECE_AQUI.has(campanha)
-        ? `/comece-aqui/?parceria=${campanha}`
-        : `${PAGINA_DE_VENDA}?parceria=${campanha}#experimente`;
+        ? `/comece-aqui/?parceria=${campanha}${comPeca}`
+        : `${PAGINA_DE_VENDA}?parceria=${campanha}${comPeca}#experimente`;
       return new Response(null, { status: 302, headers: { Location: `${url.origin}${destino}`, 'Cache-Control': 'no-store' } });
     }
     /* O link de parceria antigo (`/?parceria=sefarad`), de antes de a capa

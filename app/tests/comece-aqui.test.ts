@@ -41,6 +41,26 @@ describe('o link da bio', () => {
   });
 });
 
+describe('os links curtos levam o nome da campanha junto', () => {
+  /* growth, 23/10/2026: o desvio jogava fora o utm_campaign, e nenhuma compra
+     se ligava à peça do Instagram que a trouxe. */
+  const desvio = async (caminho: string) => {
+    const r = await worker.fetch(new Request(`${SITE}${caminho}`, { redirect: 'manual', headers: { 'user-agent': 'Mozilla/5.0 (iPhone) Instagram' } }), envDeTeste(), ctx) as Response;
+    expect(r.status).toBe(302);
+    return r.headers.get('location');
+  };
+
+  it('a bio e os stories repassam o utm_campaign', async () => {
+    expect(await desvio('/bio?utm_campaign=p01')).toBe(`${SITE}/comece-aqui/?parceria=bio&utm_campaign=p01`);
+    expect(await desvio('/stories?utm_campaign=Reel%20A1')).toBe(`${SITE}/curso-de-hebraico/?parceria=stories&utm_campaign=reel-a1#experimente`);
+  });
+
+  it('campanha fora do formato e o resto da consulta ficam para trás', async () => {
+    expect(await desvio('/dm?utm_campaign=%3Cscript%3E&utm_source=x')).toBe(`${SITE}/curso-de-hebraico/?parceria=dm#experimente`);
+    expect(await desvio(`/dm?utm_campaign=${'a'.repeat(41)}`)).toBe(`${SITE}/curso-de-hebraico/?parceria=dm#experimente`);
+  });
+});
+
 describe('a página', () => {
   it('é pública, fora do portão, da busca e do sitemap', () => {
     expect(isGatedPath('/comece-aqui/')).toBe(false);
