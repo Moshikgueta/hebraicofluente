@@ -15,7 +15,13 @@ enviar**; nada sai em nome dele sem isso.
 Os links longos funcionam como estão. Se algum parceiro for divulgar em cartaz ou folheto, dá para
 criar um endereço curto, como o `/sefarad`.
 
-## As mensagens
+## As mensagens (revisadas em 26/10/2026, prontas para copiar)
+
+Mudanças da revisão: as agências não recebem mais um mês de caravana (a página delas muda, e a aula
+serve a qualquer grupo); a promessa das agências passou a ser só o que o roteiro da aula entrega
+(três letras, as primeiras palavras e "água" na garrafa; "obrigado" e "shabat" não estão no
+roteiro); a frase sobre o público da Kahal Zur, que era suposição, virou um fato da própria
+sinagoga. Cada e-mail tem assunto.
 
 ### 1. @adsefarditas (direct do Instagram)
 
@@ -28,29 +34,22 @@ criar um endereço curto, como o `/sefarad`.
 > Eu preparo a aula e o texto de divulgação; vocês só escolhem a data e avisam o público. Faz
 > sentido para vocês?
 
-### 2. Terra Santa Viagens (e-mail ou WhatsApp do site)
+### 2. Terra Santa Viagens e 3. VPI Turismo (a mesma mensagem; e-mail ou WhatsApp do site)
+
+Assunto do e-mail: **Aula grátis de hebraico para os seus viajantes, antes do embarque**
 
 > Olá. Aqui é o Moshik Gueta, do Hebraico Fluente. Sou israelense e ensino brasileiros a ler
 > hebraico.
 >
-> Vi que vocês têm caravanas para Israel em 2026 e 2027. Queria oferecer aos seus viajantes, sem
-> custo, uma aula online de 20 minutos antes do embarque: ler as palavras que eles vão ver na viagem,
-> como água na garrafa do mercado, obrigado no recibo e o aviso de shabat na porta das lojas.
->
-> Eu preparo tudo; vocês só avisam o grupo. Podemos conversar?
-
-### 3. VPI Turismo (e-mail ou WhatsApp do site)
-
-> Olá. Aqui é o Moshik Gueta, do Hebraico Fluente. Sou israelense e ensino brasileiros a ler
-> hebraico.
->
-> Vi que vocês têm caravana para Israel em novembro de 2026. Queria oferecer ao grupo, sem custo,
-> uma aula online de 20 minutos antes do embarque: ler as palavras que eles vão ver na viagem, como
-> água na garrafa do mercado, obrigado no recibo e o aviso de shabat na porta das lojas.
+> Vi que vocês levam grupos para Israel, e queria oferecer aos seus viajantes, sem custo, uma aula
+> online de 20 minutos antes do embarque. Em 20 minutos eles aprendem três letras, leem as primeiras
+> palavras sozinhos e já reconhecem "água" na garrafa do mercado.
 >
 > Eu preparo tudo; vocês só avisam o grupo. Podemos conversar?
 
 ### 4. Centro Israelita do Paraná (pessoalmente ou por e-mail)
+
+Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
 
 > Olá, [nome]. Aqui é o Moshik Gueta, do Hebraico Fluente. Sou israelense, moro em Curitiba e ensino
 > hebraico a brasileiros.
@@ -63,23 +62,33 @@ criar um endereço curto, como o `/sefarad`.
 
 ### 5. Arquivo Histórico Judaico de Pernambuco (e-mail)
 
+Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
+
 > Olá. Aqui é o Moshik Gueta, do Hebraico Fluente. Sou israelense e ensino hebraico a brasileiros.
 >
 > Sei que o Arquivo já promoveu cursos sobre temática judaica, e queria oferecer ao público de vocês
-> uma aula aberta e gratuita de 20 minutos, online: "Leia sua primeira palavra em hebraico". Muita
-> gente que visita a Kahal Zur se interessa pelas raízes sefarditas, e ler as primeiras letras é um
-> primeiro passo concreto.
+> uma aula aberta e gratuita de 20 minutos, online: "Leia sua primeira palavra em hebraico". Para
+> quem se interessa pela história da Kahal Zur, a primeira sinagoga das Américas, ler as primeiras
+> letras hebraicas é um primeiro passo concreto.
 >
 > Eu preparo a aula e o texto de divulgação; vocês só escolhem a data e avisam o público. Faz
 > sentido para vocês?
 
 ## Para o dono conferir antes de enviar
 
-- **"Moro em Curitiba"** (mensagem 4): a empresa é de Curitiba, mas o site não diz onde o professor
-  mora. Confirme ou corte a frase.
-- **"Obrigado pela parceria"** (mensagem 1): confirme que a relação com a @adsefarditas é essa.
-- **Os meses das caravanas** (2 e 3) vêm das páginas das agências em 23/10/2026; vale olhar de novo
-  no dia do envio.
-- **"Muita gente que visita a Kahal Zur se interessa pelas raízes sefarditas"** (mensagem 5) é uma
-  suposição; se preferir, corte a frase.
-- O canal de cada um: o dono escolhe (direct, e-mail ou WhatsApp do site deles).
+- **"Moro em Curitiba"** (mensagem 4): confirmado pelo dono em 26/10/2026.
+- **"Obrigado pela parceria"** (mensagem 1): confirmado pelo dono em 26/10/2026.
+- **Contato de cada agência:** a sessão não conseguiu abrir os sites delas em 26/10 (a rede daqui
+  bloqueia). Pegue o WhatsApp ou o e-mail na página de contato de cada uma.
+- **Antes de responder a quem aceitar:** a data da aula, a sala online (Meet ou Zoom) e o texto de
+  divulgação do kit, com o link do parceiro.
+
+## Registro de envio
+
+| # | Parceiro | Enviado em | Canal | Resposta | Aula marcada |
+|---|---|---|---|---|---|
+| 1 | @adsefarditas | | | | |
+| 2 | Terra Santa Viagens | | | | |
+| 3 | VPI Turismo | | | | |
+| 4 | Centro Israelita do Paraná | | | | |
+| 5 | Arquivo Histórico Judaico de Pernambuco | | | | |
