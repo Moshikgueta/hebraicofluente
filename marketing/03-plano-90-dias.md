@@ -73,8 +73,7 @@ repetida, não por significância estatística fina (skill `ab-testing`).
 - **C1** (se a decisão 2 saiu): curso em primeiro na capa e no `/comece-aqui`, 3 semanas, métrica
   `cta-curso` / `visto`. Enquanto não: **C4** (condições da compra antes do cadastro), que não
   mexe no portal.
-- Black Friday (27/11): **sem desconto inventado.** Se o dono quiser uma condição, ela é real, com
-  data e para todos; senão, conteúdo normal. Decisão do dono.
+- Black Friday (27/11): **conteúdo normal, sem condição especial** (decisão do dono, 26/10/2026).
 - Instagram: ritmo do pilar escolhido (3 Reels, 1 carrossel, stories 4 dias).
 - **Entrega:** um teste de página rodando.
 

@@ -1,6 +1,6 @@
 # Série de carrosséis "O erro do brasileiro" (5 posts)
 
-Rascunho para o dono aprovar (26/10/2026). Nada é publicado sem a aprovação dele. Skills usadas:
+**Aprovada pelo dono em 26/10/2026.** O dono publica; as artes saem de `roteiros/artes/`. Skills usadas:
 `social` e `content-strategy`.
 
 ## Por que esta série
