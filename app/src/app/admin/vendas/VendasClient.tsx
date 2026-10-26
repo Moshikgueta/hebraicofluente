@@ -17,7 +17,7 @@ import { course, letterIds } from '@/lib/content-publico';
 import { FONTES_PT } from '@/lib/painel-estatisticas';
 
 type Venda = {
-  orderId: string; curso: string; valorCentavos: number; metodo: string; parcelas: number;
+  orderId: string; curso: string; valorCentavos: number; liquidoCentavos?: number | null; metodo: string; parcelas: number;
   status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; origem?: string | null; campanha?: string | null;
   nome: string; email: string | null;
   estudouEm: number | null; concluidas: string[]; teste?: boolean;
@@ -86,6 +86,14 @@ export function VendasClient() {
             {' · '}{doLink} pelo link de campanha
           </p>
         )}
+        {estado.tipo === 'pronto' && pagas.some(v => v.liquidoCentavos != null) && (
+          <p className="m-0 text-[15px]">
+            Depois da taxa da Mercado Pago:{' '}
+            <strong>{reais(pagas.reduce((s, v) => s + (v.liquidoCentavos ?? 0), 0))}</strong>
+            {' '}nas {pagas.filter(v => v.liquidoCentavos != null).length} compras em que ela informou o valor. As anteriores
+            a 26/10/2026, o PIX direto e a liberação à mão não têm esse número.
+          </p>
+        )}
       </div>
 
       {reaisDeAlunos.map(v => <Cartao key={v.orderId} v={v} />)}
@@ -112,7 +120,9 @@ function Cartao({ v }: { v: Venda }) {
         {' · '}<span className="break-all">{v.email ?? 'conta apagada'}</span>
       </p>
       <p className="font-ui text-[14px] text-ink-body m-0 break-all">
-        {reais(v.valorCentavos)} · {v.metodo === 'pix' ? 'PIX' : v.parcelas > 1 ? `cartão em ${v.parcelas}x` : 'cartão'}
+        {reais(v.valorCentavos)}
+        {v.liquidoCentavos != null && <> (você recebe {reais(v.liquidoCentavos)})</>}
+        {' · '}{v.metodo === 'pix' ? 'PIX' : v.parcelas > 1 ? `cartão em ${v.parcelas}x` : 'cartão'}
         {' · '}{quando(v.pagoEm)} · pedido {v.orderId}
       </p>
       {v.parceria && (

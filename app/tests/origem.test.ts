@@ -20,7 +20,7 @@ import * as pay from '../../worker/src/api/pay.js';
 // @ts-expect-error - idem
 import { FONTES as FONTES_DO_SERVIDOR, origemDoCorpo } from '../../worker/src/lib/origem.js';
 // @ts-expect-error - idem
-import { createOrder } from '../../worker/src/lib/db.js';
+import { createOrder, recordEvent } from '../../worker/src/lib/db.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 const HOST = 'hebraicofluente.com.br';
@@ -215,6 +215,12 @@ describe('a origem no pedido', () => {
     const pago = await createOrder(env, { accountId: ana, courseSlug: 'alfabetizacao', amountCents: 13230, method: 'pix', origem: 'busca', campanha: 'alfabeto' });
     await createOrder(env, { accountId: ana, courseSlug: 'alfabetizacao', amountCents: 13230, method: 'pix' });
     env.DB.bruto.prepare("UPDATE orders SET status = 'paid', paid_at = ? WHERE id = ?").run(Date.now(), pago.id);
+    /* A receita líquida (26/10/2026): o que a Mercado Pago informou depois da taxa. */
+    await recordEvent(env, { eventId: '55:paid', orderId: pago.id, status: 'paid', source: 'teste', raw: {
+      id: 55, status: 'approved', transaction_amount: 132.3,
+      transaction_details: { net_received_amount: 130.97, financial_institution: 'banco-do-pagador' },
+      fee_details: [{ type: 'mercadopago_fee', amount: 1.33, fee_payer: 'collector' }]
+    } });
 
     const est = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx)).json() as
       { pedidos: { fonte: string; pedidos: number; compras: number; receitaCentavos: number }[] };
@@ -223,9 +229,13 @@ describe('a origem no pedido', () => {
     expect(porFonte['sem-marca']).toMatchObject({ pedidos: 1, compras: 0, receitaCentavos: 0 });
 
     const { vendas } = await (await worker.fetch(new Request(`${SITE}/api/admin/vendas`, { headers: { cookie: dono } }), env, ctx)).json() as
-      { vendas: { origem: string | null; campanha: string | null }[] };
+      { vendas: { origem: string | null; campanha: string | null; liquidoCentavos: number | null }[] };
     expect(vendas).toHaveLength(1);
-    expect(vendas[0]).toMatchObject({ origem: 'busca', campanha: 'alfabeto' });
+    expect(vendas[0]).toMatchObject({ origem: 'busca', campanha: 'alfabeto', liquidoCentavos: 13097 });
+    const [ev] = env.DB.bruto.prepare('SELECT raw FROM payment_events').all() as { raw: string }[];
+    expect(JSON.parse(ev!.raw)).toMatchObject({ liquido: 130.97, taxas: 1.33 });
+    expect(ev!.raw).not.toContain('banco-do-pagador');
+    expect(ev!.raw).not.toContain('transaction_details');
   });
 });
 
