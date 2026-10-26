@@ -83,6 +83,39 @@ Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
 - **Antes de responder a quem aceitar:** a data da aula, a sala online (Meet ou Zoom) e o texto de
   divulgação do kit, com o link do parceiro.
 
+## As mensagens seguintes (rascunhos, 26/10/2026)
+
+### Para quem aceitar
+
+> Que bom! Obrigado. Proponho [dia da semana, data], às [hora], online, pelo [Google Meet ou Zoom];
+> se outra data for melhor para vocês, eu me adapto.
+>
+> Segue o texto para avisar o público. Pode ajustar à vontade:
+>
+> **Aula aberta e gratuita: leia sua primeira palavra em hebraico**
+> [data], às [hora], online. Com Moshik Gueta, israelense, professor do Hebraico Fluente.
+> Em 20 minutos você aprende três letras do alfabeto hebraico e lê duas palavras de verdade, sem
+> precisar saber nada antes.
+> Link da sala: [link do Meet ou Zoom]
+>
+> No fim da aula eu mostro como continuar, com este link: [link do parceiro, da tabela acima].
+
+### Lembrete, uma semana sem resposta (uma vez só)
+
+> Olá, [nome]. Volto só para saber se a aula aberta de 20 minutos ("Leia sua primeira palavra em
+> hebraico") faz sentido para o público de vocês. Se não for o momento, sem problema, e obrigado
+> pela atenção.
+
+### Depois da aula
+
+> Obrigado por receber a aula de hoje! Para quem não pôde assistir, ou quiser continuar, a primeira
+> lição está aberta aqui, sem cadastro: [link do parceiro]. Se o público gostar, posso voltar com
+> outra aula.
+
+Material da aula: os 11 slides, com as notas do que dizer em cada minuto, estão no artefato
+"Aula aberta: leia sua primeira palavra em hebraico" (privado do dono). O slide 10 tem
+**[link do parceiro]**: trocar pelo link da tabela no dia.
+
 ## Registro de envio
 
 | # | Parceiro | Enviado em | Canal | Resposta | Aula marcada |
