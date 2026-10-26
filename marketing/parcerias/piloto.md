@@ -77,7 +77,7 @@ Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
 ## Para o dono conferir antes de enviar
 
 - **"Moro em Curitiba"** (mensagem 4): confirmado pelo dono em 26/10/2026.
-- **"Obrigado pela parceria"** (mensagem 1): confirme que a relação com a @adsefarditas é essa.
+- **"Obrigado pela parceria"** (mensagem 1): confirmado pelo dono em 26/10/2026.
 - **Contato de cada agência:** a sessão não conseguiu abrir os sites delas em 26/10 (a rede daqui
   bloqueia). Pegue o WhatsApp ou o e-mail na página de contato de cada uma.
 - **Antes de responder a quem aceitar:** a data da aula, a sala online (Meet ou Zoom) e o texto de
