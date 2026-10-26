@@ -31,15 +31,26 @@ completa continua na lição.
    Em dia de jejum ou de luto, não se diz." (o mesmo que a nota do curso)
 5. **A letra do pião:** "No pião de Chanucá há quatro letras. Uma delas é o ג, Gimel: quando o pião
    cai nela, quem jogou leva tudo."
-6. **Fecho:** "O Gimel é a 7ª letra do curso. Comece pela primeira, de graça." Link da bio.
+6. **Fecho (pedido do dono, 26/10: mais forte, para seguir e salvar; sem "mande para um amigo"):**
+   - Em cima, grande: **"Salve para a sexta à noite."**
+   - Embaixo: "A frase, o jeito de dizer e quando não usar ficam guardados aqui."
+   - Fecho, com o @ em destaque: **"Siga @hebraicofluente e aprenda a ler hebraico de verdade, uma
+     letra por vez, explicado em português."**
+   - Na arte: o ícone de salvar (a bandeirinha) ao lado da primeira linha e uma seta para o botão
+     Seguir. O curso sai deste slide e vai para a legenda: um pedido por slide converte mais que três.
 
-Legenda: "חַג שָׂמֵחַ para quem comemora! Salve para mandar na sexta. E comente LER se quiser ler as
-letras sozinho." (O ManyChat do LER já está ligado.)
+Por que assim: quem salva é quem vai usar a frase numa data marcada, então o slide diz quando ela vai
+servir (a sexta à noite) e o que fica guardado. Quem segue é quem quer mais do mesmo, então o slide
+promete o que a conta entrega sempre (ler hebraico, letra por letra, em português), sem número nem
+frequência que o dono depois teria de cumprir.
+
+Legenda: "חַג שָׂמֵחַ a quem comemora! Salve este post para ter a frase à mão na sexta à noite, e siga
+@hebraicofluente para aprender a ler hebraico, uma letra por vez. Quer começar pela primeira letra?
+Comente LER que eu te mando o link." (O ManyChat do LER já está ligado.)
 
 Conferir antes de publicar:
 - "sexta à noite": 04/12/2026 é uma sexta-feira (conferido no calendário). A data de início da
   festa é a do plano; confirme no seu calendário judaico.
-- "a 7ª letra do curso": o Gimel tem `order: 7` em `data/letters.json`. Conferido.
 - "quatro letras" no pião: conhecimento geral, mas não está escrito no curso. Se preferir, a frase
   fica só com o Gimel.
 
