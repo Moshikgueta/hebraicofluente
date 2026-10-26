@@ -359,6 +359,20 @@ jobs:
           path: editorial
           persist-credentials: false
 
+      # O Chromium do editorial guardado entre publicações (26/10/2026): o
+      # download pendurou de novo em 23/10 e 26/10 e derrubou uma publicação.
+      # Com o navegador no cache, o `install` abaixo acha o que já existe e não
+      # baixa nada; o download só acontece quando a versão do Playwright muda.
+      - name: Versão do Playwright do editorial
+        id: pw
+        if: steps.guard.outputs.ok == 'true'
+        run: echo "v=$(cd editorial && node -p "require('./package.json').dependencies['playwright-core']")" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
+
       # Teto do passo (23/10/2026): o download do Chromium pendurou duas vezes no
       # mesmo dia e a publicação ficou parada até ser cancelada à mão, segurando
       # a fila das seguintes. Com o teto, ela falha em vez de travar.
