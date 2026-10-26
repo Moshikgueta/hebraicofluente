@@ -11,6 +11,7 @@ enviar**; nada sai em nome dele sem isso.
 | 3 | VPI Turismo (Viaje para Israel) | `hebraicofluente.com.br/curso-de-hebraico/?utm_source=parceiro&utm_campaign=vpi#experimente` | Parceiros; campanha `vpi` | a contatar |
 | 4 | Centro Israelita do Paraná | `hebraicofluente.com.br/curso-de-hebraico/?utm_source=parceiro&utm_campaign=cip-curitiba#experimente` | Parceiros; campanha `cip-curitiba` | a contatar |
 | 5 | Arquivo Histórico Judaico de Pernambuco | `hebraicofluente.com.br/curso-de-hebraico/?utm_source=parceiro&utm_campaign=arquivo-pe#experimente` | Parceiros; campanha `arquivo-pe` | a contatar |
+| 6 | @israelviagemeturismo (Israel Viagem e Turismo) | `hebraicofluente.com.br/curso-de-hebraico/?utm_source=parceiro&utm_campaign=israelviagem#experimente` | Parceiros; campanha `israelviagem` | já é parceira (post conjunto de 21/10, confirmado pelo dono em 26/10); a contatar para a aula |
 
 Os links longos funcionam como estão. Se algum parceiro for divulgar em cartaz ou folheto, dá para
 criar um endereço curto, como o `/sefarad`.
@@ -46,6 +47,16 @@ Assunto do e-mail: **Aula grátis de hebraico para os seus viajantes, antes do e
 > palavras sozinhos e já reconhecem "água" na garrafa do mercado.
 >
 > Eu preparo tudo; vocês só avisam o grupo. Podemos conversar?
+
+### 6. @israelviagemeturismo (direct do Instagram; já é parceira)
+
+> Olá! Aqui é o Moshik, do Hebraico Fluente. Obrigado pela parceria do nosso post de 21/10.
+>
+> Queria oferecer aos grupos de vocês, sem custo, uma aula online de 20 minutos antes do embarque.
+> Em 20 minutos eles aprendem três letras, leem as primeiras palavras sozinhos e já reconhecem
+> "água" na garrafa do mercado.
+>
+> Eu preparo tudo; vocês só avisam o grupo. Pode ser?
 
 ### 4. Centro Israelita do Paraná (pessoalmente ou por e-mail)
 
@@ -83,6 +94,39 @@ Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
 - **Antes de responder a quem aceitar:** a data da aula, a sala online (Meet ou Zoom) e o texto de
   divulgação do kit, com o link do parceiro.
 
+## As mensagens seguintes (rascunhos, 26/10/2026)
+
+### Para quem aceitar
+
+> Que bom! Obrigado. Proponho [dia da semana, data], às [hora], online, pelo [Google Meet ou Zoom];
+> se outra data for melhor para vocês, eu me adapto.
+>
+> Segue o texto para avisar o público. Pode ajustar à vontade:
+>
+> **Aula aberta e gratuita: leia sua primeira palavra em hebraico**
+> [data], às [hora], online. Com Moshik Gueta, israelense, professor do Hebraico Fluente.
+> Em 20 minutos você aprende três letras do alfabeto hebraico e lê duas palavras de verdade, sem
+> precisar saber nada antes.
+> Link da sala: [link do Meet ou Zoom]
+>
+> No fim da aula eu mostro como continuar, com este link: [link do parceiro, da tabela acima].
+
+### Lembrete, uma semana sem resposta (uma vez só)
+
+> Olá, [nome]. Volto só para saber se a aula aberta de 20 minutos ("Leia sua primeira palavra em
+> hebraico") faz sentido para o público de vocês. Se não for o momento, sem problema, e obrigado
+> pela atenção.
+
+### Depois da aula
+
+> Obrigado por receber a aula de hoje! Para quem não pôde assistir, ou quiser continuar, a primeira
+> lição está aberta aqui, sem cadastro: [link do parceiro]. Se o público gostar, posso voltar com
+> outra aula.
+
+Material da aula: os 11 slides, com as notas do que dizer em cada minuto, estão no artefato
+"Aula aberta: leia sua primeira palavra em hebraico" (privado do dono). O slide 10 tem
+**[link do parceiro]**: trocar pelo link da tabela no dia.
+
 ## Registro de envio
 
 | # | Parceiro | Enviado em | Canal | Resposta | Aula marcada |
@@ -92,3 +136,4 @@ Assunto do e-mail: **Aula aberta: leia sua primeira palavra em hebraico**
 | 3 | VPI Turismo | | | | |
 | 4 | Centro Israelita do Paraná | | | | |
 | 5 | Arquivo Histórico Judaico de Pernambuco | | | | |
+| 6 | @israelviagemeturismo | | | | |
