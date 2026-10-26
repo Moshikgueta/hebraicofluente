@@ -117,6 +117,35 @@ export function robotsTxt(site) {
   ].join('\n');
 }
 
+/* ── llms.txt (26/10/2026, plano de marketing) ────────────────────────────
+   O resumo do site para os assistentes de IA (o formato de llmstxt.org): o
+   nome e a descrição da capa, e uma linha por página anunciável, com o
+   título e a descrição que a própria página publica. Nada é escrito aqui à
+   mão: um preço ou uma contagem que mude no catálogo muda na página, e a
+   página é a fonte. Só as rotas do sitemap; nenhuma paga, nenhuma oculta. */
+const desfazer = (t) => t.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'")
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+/** O título e a descrição publicados no HTML de uma página. */
+export function cabecalho(html) {
+  const titulo = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+  const descricao = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  return { titulo: titulo ? desfazer(titulo).trim() : null, descricao: descricao ? desfazer(descricao).trim() : null };
+}
+
+export function llmsTxt(site, paginas) {
+  const capa = paginas.find(p => p.rota === '/');
+  const nome = (capa && capa.titulo ? capa.titulo.split(' | ')[0] : 'Hebraico Fluente');
+  const linhas = [`# ${nome}`, ''];
+  if (capa && capa.descricao) linhas.push(`> ${capa.descricao}`, '');
+  linhas.push('## Páginas', '');
+  for (const p of paginas) {
+    if (!p.titulo) continue;
+    linhas.push(`- [${p.titulo}](${site}${p.rota})${p.descricao ? `: ${p.descricao}` : ''}`);
+  }
+  return linhas.join('\n') + '\n';
+}
+
 /* ── execução ─────────────────────────────────────────────────────────── */
 if (import.meta.url === `file://${process.argv[1]}`) {
   const site = origem();
@@ -125,10 +154,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   writeFileSync('out/sitemap.xml', sitemapXml(site, listadas, hoje));
   writeFileSync('out/robots.txt', robotsTxt(site));
+  const paginas = listadas.map(rota => ({ rota, ...cabecalho(readFileSync(join('out', rota, 'index.html'), 'utf8')) }));
+  writeFileSync('out/llms.txt', llmsTxt(site, paginas));
 
   console.log(`  site: ${site}`);
   console.log(`  no sitemap (${listadas.length}): ${listadas.join(' ')}`);
   console.log(`  fora, por serem pagas (${pagas.length})`);
   console.log(`  fora, por não responderem a busca (${ocultas.length}): ${ocultas.join(' ')}`);
-  console.log('\n✓ out/sitemap.xml e out/robots.txt escritos');
+  console.log('\n✓ out/sitemap.xml, out/robots.txt e out/llms.txt escritos');
 }
