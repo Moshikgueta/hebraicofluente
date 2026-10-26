@@ -116,11 +116,12 @@ vez do estado manda quem lê procurar no lugar errado:
   gateway. É para onde a publicação cai sozinha se a credencial parar de
   autenticar - e lá **nada confirma o pagamento sozinho**: a liberação é à mão
   em Actions → Acesso → `liberar`, depois de olhar o extrato.
-- **Ainda não provado em produção:** que uma cobrança REAL nasce. O e2e pula a
-  criação quando o token é de produção, de propósito (senão cada publicação
-  deixaria um PIX pendente no painel). A prova é uma compra de verdade; o que
-  ela deu está em Actions → Acesso → `pagamento`, que lê `pay-create-failed`
-  com o motivo que a Mercado Pago devolveu.
+- **Cobrança real provada:** o dono confirmou em 26/10/2026 que já houve
+  compra de verdade. O e2e continua pulando a criação quando o token é de
+  produção, de propósito (senão cada publicação deixaria um PIX pendente no
+  painel); uma falha numa compra real aparece em Actions → Acesso →
+  `pagamento`, que lê `pay-create-failed` com o motivo que a Mercado Pago
+  devolveu.
 - **E-mail: LIGADO.** Resend, com `EMAIL_FROM` no `wrangler.toml` e
   `RESEND_API_KEY` nos segredos do repositório.
 - **Ainda por conferir:** a assinatura do webhook da Mercado Pago contra uma
@@ -897,6 +898,17 @@ compra; medição só com o contador próprio.
   descartada: 3 KB a menos, o dobro de arquivos.
 - Medida (Lighthouse celular simulado, mediana de 5): JS da capa 209 → 158 KB (gzip), da página de
   venda 228 → 176 KB; LCP de /aprender-hebraico 2,65 → 2,32 s.
+- **A capa é componente de servidor** (26/10/2026, pedido do dono): `PortalClient.tsx` não tem mais
+  `'use client'`; o texto sai pronto do HTML e só três ilhas vão ao navegador: `ContadorDoPortal`
+  (o "visto" e os cliques, por delegação: todo link contado leva `data-portal-evento="<evento>"`),
+  `ParaQuem`/`BotaoContinuar` (o que muda para quem já é aluno) e `EssencialDoCurso` (a lista do
+  cartão pergunta se há áudio gravado, que só se sabe no aparelho). A entrada da abertura é CSS
+  (`portal-entra` em globals.css, com `data-entrada` para sem JavaScript e "reduzir movimento") e
+  roda a cada visita. Medida: tempo de bloqueio da capa 216 → 104 ms; o LCP não mudou (2,96 → 2,93 s).
+  O que pesa no LCP agora são os três pesos da Instrument Sans, pré-carregados juntos (52 KB antes
+  da pintura). Pré-carregar só o 400 não ajuda: o 500 e o 600 estão na primeira tela e o navegador
+  os pede antes de pintar. Tirar o 500 do site (vira 400) deu 2,93 → 2,76 s na capa e 2,60 → 2,47 s
+  em /aprender-hebraico: decisão visual do dono, ainda não tomada.
 - **A capa carrega um peso só de cada fonte de exibição** (23/10/2026, decisão do dono): Bricolage
   600 e Noto Serif Hebrew 400. A segunda linha do título passou de 500 para semibold, a citação da
   aluna foi para a fonte do texto corrido (`font-ui`) e a letra do `Rubrica` (components/landing/
