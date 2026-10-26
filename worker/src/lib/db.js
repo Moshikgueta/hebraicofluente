@@ -1060,7 +1060,18 @@ const GUARDAR = [
 ];
 export function enxuto(raw) {
   if (!raw || typeof raw !== 'object') return raw;
-  return Object.fromEntries(GUARDAR.filter(k => k in raw).map(k => [k, raw[k]]));
+  const fica = Object.fromEntries(GUARDAR.filter(k => k in raw).map(k => [k, raw[k]]));
+  /* O que sobrou depois da taxa (26/10/2026, receita líquida do painel de
+     marketing): só dois NÚMEROS, tirados de `transaction_details` e
+     `fee_details`. Os dois objetos inteiros ficam de fora: o primeiro pode
+     trazer a instituição e a referência bancária do pagador. */
+  const liquido = raw.transaction_details && Number(raw.transaction_details.net_received_amount);
+  if (Number.isFinite(liquido) && liquido > 0) fica.liquido = liquido;
+  if (Array.isArray(raw.fee_details)) {
+    const taxas = raw.fee_details.reduce((s, f) => s + (Number(f && f.amount) || 0), 0);
+    if (taxas > 0) fica.taxas = Math.round(taxas * 100) / 100;
+  }
+  return fica;
 }
 
 /* ── freio ──────────────────────────────────────────────────────────────── */

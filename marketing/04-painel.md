@@ -36,7 +36,7 @@ Estado: **existe** (já se mede), **parcial** (mede, mas sem origem ou sem a tel
 | K9 | Conversão por origem | a mesma taxa, para cada origem | K7 da origem / visitas da origem | `orders.origem` (migração 0003) | existe |
 | K10 | Custo por aquisição (CAC) | quanto custou cada compra paga de um canal pago | gasto do canal na semana / K7 do canal na semana | gerenciador de anúncios + K9 | falta (só com anúncio) |
 | K11 | Receita bruta | o que entrou | soma de `amount_cents` dos pagos na semana | `orders` | existe |
-| K12 | Receita líquida | o que ficou | K11 menos estornos e desistências (`refunded`) menos a taxa da Mercado Pago | `orders` + extrato MP | parcial (taxa da MP a anotar) |
+| K12 | Receita líquida | o que ficou | K11 menos estornos e desistências (`refunded`) menos a taxa da Mercado Pago | `orders` + `liquido` do pagamento (`payment_events`, desde 26/10) | existe para pagamentos novos (`/admin/vendas`); os anteriores, pelo extrato |
 | K13 | Ticket médio e meio | valor médio, PIX x cartão, parcelas | K11 / K7; proporção de `method` | `orders` | existe |
 | K14 | Desistência em 7 dias | pedidos estornados por desistência | estornos / K7 | `arrependimentos`, `estornos` | existe |
 

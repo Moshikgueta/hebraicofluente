@@ -56,10 +56,10 @@ describe('o painel de vendas', () => {
 
     const { vendas } = await (await listar(env, dono)).json() as { vendas: Record<string, unknown>[] };
     expect(vendas).toEqual([
-      { orderId: doLink.id, curso: 'alfabetizacao', valorCentavos: 14700, metodo: 'card', parcelas: 12,
+      { orderId: doLink.id, curso: 'alfabetizacao', valorCentavos: 14700, liquidoCentavos: null, metodo: 'card', parcelas: 12,
         status: 'paid', pagoEm: 2000, parceria: 'sefarad', origem: null, campanha: null, nome: 'Ana', email: 'ana@exemplo.com',
         estudouEm: null, concluidas: [], teste: false },
-      { orderId: semLink.id, curso: 'alfabetizacao', valorCentavos: 13230, metodo: 'pix', parcelas: 1,
+      { orderId: semLink.id, curso: 'alfabetizacao', valorCentavos: 13230, liquidoCentavos: null, metodo: 'pix', parcelas: 1,
         status: 'refunded', pagoEm: 1000, parceria: null, origem: null, campanha: null, nome: 'Bia', email: 'bia@exemplo.com',
         estudouEm: null, concluidas: [], teste: false }
     ]);
