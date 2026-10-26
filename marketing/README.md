@@ -45,3 +45,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 24/10/2026: o funil por semana em `/admin/estatisticas`; `04-painel.md` com o estado de cada indicador.
 - 26/10/2026: migalhas em JSON-LD nas páginas do alfabeto e link vindo de /aprender-hebraico (PR #256); `llms.txt` gerado das páginas anunciáveis.
 - 26/10/2026: receita líquida (K12): o valor depois da taxa da Mercado Pago, em `/admin/vendas`; fecho do carrossel de Chanucá refeito a pedido do dono.
+- 26/10/2026: números do Instagram lidos no Metricool (`dados/instagram-2026-10-26.md`): base para as metas da semana 3.
