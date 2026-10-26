@@ -9,6 +9,7 @@ import { OuvirAmostra } from '@/components/alfabeto/OuvirAmostra';
 import { course } from '@/lib/content-publico';
 import { somPt } from '@/lib/som-pt';
 import { FORMAS_FINAIS, LETRAS_PUBLICAS, letraPublica, partes } from '@/lib/alfabeto-publico';
+import { jsonLdTexto, migalhas } from '@/lib/jsonld';
 
 /* Uma página por letra (23/10/2026, opção B de marketing/seo/paginas-do-alfabeto.md):
  * a forma, o nome e o som (públicos), uma palavra com a gravação do professor,
@@ -48,6 +49,10 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
+        { nome: 'Aprender hebraico', rota: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' },
+        { nome: l.namePt, rota: `/alfabeto-hebraico/${l.id}` }
+      ])) }} />
       <PageHead
         trilha={[{ nome: 'Alfabeto hebraico', href: '/alfabeto-hebraico' }, { nome: l.namePt }]}
         eyebrowPt={`Alfabeto hebraico · letra ${l.order} na ordem do curso`}

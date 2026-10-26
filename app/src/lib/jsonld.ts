@@ -127,6 +127,18 @@ export function grafoDaCapa(retrato: string | null): Json {
   };
 }
 
+/** As migalhas de uma página (BreadcrumbList), da capa até ela (26/10/2026, páginas do
+ *  alfabeto). Só nome e rota: o que a própria página já mostra nas migalhas da tela. */
+export function migalhas(itens: { nome: string; rota: string }[]): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ nome: 'Início', rota: '/' }, ...itens].map((it, i) => ({
+      '@type': 'ListItem', position: i + 1, name: it.nome, item: url(it.rota)
+    }))
+  };
+}
+
 /** O texto do <script type="application/ld+json">. `<` vira `<` para
  *  que nenhum texto de dado feche a tag por engano. */
 export const jsonLdTexto = (dado: Json): string =>

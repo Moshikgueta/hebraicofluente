@@ -21,6 +21,7 @@ export const metadata: Metadata = meta({
    catálogo ("Em desenvolvimento"). Os números (lições, letras) vêm do curso
    construído, nunca escritos à mão. */
 const MAIS = [
+  { href: '/alfabeto-hebraico', t: 'O alfabeto hebraico', d: 'As 22 letras com o nome e o som em português, e as formas finais.' },
   { href: '/metodo', t: 'O método', d: 'Como é cada lição, da letra nova à fixação.' },
   { href: '/cursos', t: 'A trilha dos cursos', d: 'A alfabetização, e os níveis A1, A2 e B1 que vêm depois.' },
   { href: '/biblia', t: 'Dá para ler a Bíblia?', d: 'Ler em voz alta, sim; entender sem vocabulário, não. Gênesis 1:1, palavra por palavra.' },

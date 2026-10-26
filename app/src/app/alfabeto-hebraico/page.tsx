@@ -8,6 +8,7 @@ import { course } from '@/lib/content-publico';
 import { somPt } from '@/lib/som-pt';
 import { FORMAS_FINAIS, letraPublica } from '@/lib/alfabeto-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
+import { jsonLdTexto, migalhas } from '@/lib/jsonld';
 
 export const metadata: Metadata = meta({
   rota: '/alfabeto-hebraico',
@@ -26,6 +27,9 @@ export default function AlfabetoHebraicoPage() {
   const letras = [...course.letters].sort((a, b) => a.order - b.order);
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
+        { nome: 'Aprender hebraico', rota: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' }
+      ])) }} />
       <PageHead
         trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico' }]}
         eyebrowPt="Alfabeto hebraico"

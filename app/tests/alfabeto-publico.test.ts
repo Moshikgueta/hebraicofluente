@@ -10,6 +10,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { LETRAS_PUBLICAS, partes } from '@/lib/alfabeto-publico';
 import { AMOSTRA_AUDIO } from '@/lib/amostra-audio';
+import { migalhas } from '@/lib/jsonld';
 
 const letras = JSON.parse(readFileSync(new URL('../../data/letters.json', import.meta.url), 'utf8')) as Record<string, any>[];
 const porId = new Map<string, Record<string, any>>(letras.map(l => [l.id, l]));
@@ -53,6 +54,16 @@ describe('as letras das páginas públicas', () => {
   it('as marcas {{ }} viram partes em hebraico', () => {
     expect(partes('Ler {{שֶׁל}} como "shel".')).toEqual([
       { he: false, t: 'Ler ' }, { he: true, t: 'שֶׁל' }, { he: false, t: ' como "shel".' }
+    ]);
+  });
+
+  it('as migalhas em JSON-LD começam na capa e terminam na página', () => {
+    const m = migalhas([{ nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' }, { nome: 'Tav', rota: '/alfabeto-hebraico/tav' }]) as
+      { itemListElement: { position: number; name: string; item: string }[] };
+    expect(m.itemListElement.map(i => [i.position, i.name, i.item])).toEqual([
+      [1, 'Início', 'https://hebraicofluente.com.br/'],
+      [2, 'Alfabeto hebraico', 'https://hebraicofluente.com.br/alfabeto-hebraico/'],
+      [3, 'Tav', 'https://hebraicofluente.com.br/alfabeto-hebraico/tav/']
     ]);
   });
 });
