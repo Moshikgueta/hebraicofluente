@@ -1,6 +1,6 @@
 # Série de carrosséis "O erro do brasileiro" (5 posts)
 
-**Aprovada pelo dono em 26/10/2026.** O dono publica; as artes saem de `roteiros/artes/`. Skills usadas:
+**Aprovada pelo dono em 26/10/2026.** O dono publica. As artes (30 imagens, 1080x1350) foram entregues ao dono num zip em 26/10; o gerador ficou fora do repositório. Skills usadas:
 `social` e `content-strategy`.
 
 ## Por que esta série
@@ -72,6 +72,31 @@ hebraicofluente.com.br/alfabeto-hebraico (link na bio)." + "Salve este post e si
 - Certo: Ler שֶׁל como "shel", com o L bem apoiado na ponta da língua.
 - A palavra: לַיְלָה, láyla: noite.
 
+## As legendas, prontas para colar
+
+O link do site vai escrito, sem "link na bio": o da bio leva ao /comece-aqui, não à página da letra.
+
+1. **Shin:** "Se você lê שָׁלוֹם como “salóm”, não é só você. O ש tem som de X, como em “xícara”: shalóm.
+   Salve para treinar a leitura e siga @hebraicofluente para aprender a ler hebraico, uma letra por
+   vez. A pronúncia gravada está em hebraicofluente.com.br/alfabeto-hebraico
+   #hebraico #aprenderhebraico #alfabetohebraico #shalom"
+2. **Tav:** "O ת é sempre T seco, mesmo antes de I e de E: nunca “tchi”, nunca “tche”. Salve para
+   treinar a leitura e siga @hebraicofluente para aprender a ler hebraico, uma letra por vez. A
+   pronúncia gravada está em hebraicofluente.com.br/alfabeto-hebraico
+   #hebraico #aprenderhebraico #alfabetohebraico"
+3. **Mem:** "אֵם não é o “em” do português: a vogal é oral, como o E de “mesa”, e o M do fim fecha
+   os lábios de verdade. Salve para treinar a leitura e siga @hebraicofluente para aprender a ler
+   hebraico, uma letra por vez. A pronúncia gravada está em hebraicofluente.com.br/alfabeto-hebraico
+   #hebraico #aprenderhebraico #alfabetohebraico"
+4. **Álef:** "A primeira letra do hebraico não tem som: quem soa é a vogal marcada nela. Salve para
+   treinar a leitura e siga @hebraicofluente para aprender a ler hebraico, uma letra por vez. A
+   pronúncia gravada está em hebraicofluente.com.br/alfabeto-hebraico
+   #hebraico #aprenderhebraico #alfabetohebraico"
+5. **Lámed:** "שֶׁל é “shel”, com o L apoiado na ponta da língua, e não “sheu”. Salve para treinar a
+   leitura e siga @hebraicofluente para aprender a ler hebraico, uma letra por vez. A pronúncia
+   gravada está em hebraicofluente.com.br/alfabeto-hebraico
+   #hebraico #aprenderhebraico #alfabetohebraico"
+
 ## Medição
 
 Por post, no Metricool: salvamentos e seguidores ganhos, contra a mediana dos carrosséis de
@@ -80,6 +105,6 @@ Console, quando estiver ligado.
 
 ## Pendências
 
-- [ ] Dono aprova a série (ou escolhe quais posts entram).
+- [x] Dono aprova a série (26/10/2026).
 - [ ] Confere o hebraico de cada capa contra a página da letra no site (é a mesma grafia).
-- [ ] Monta as artes (ou me pede um rascunho visual).
+- [x] As artes: entregues em 26/10/2026.
