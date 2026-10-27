@@ -3591,7 +3591,7 @@
         "ondePt": "no fim da palavra - e, no hebraico moderno, normalmente sem ponto"
       }
     ],
-    "soundNotePt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, e na forma final {{ך}}, a letra tem outro som, e ele ganha lição própria logo depois desta.",
+    "soundNotePt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, a letra tem outro som, e ele ganha lição própria logo depois desta, junto com a forma que a letra tem no fim da palavra.",
     "articulacao": {
       "pontos": [
         {
@@ -3603,10 +3603,10 @@
     },
     "ensino": {
       "funcaoPt": "{{כּ}} funciona como o {{בּ}}: o ponto dentro decide o som. Com o ponto, ela é K, igual ao {{ק}}: {{כֶּלֶב}}, {{כּוֹס}}, {{כַּדוּר}}. Duas letras com o mesmo som - quem decide qual se escreve é a palavra.",
-      "detalhePt": "Ela tem forma final, {{ך}}, que desce abaixo da linha. No hebraico moderno, a forma final normalmente não leva ponto e tem som de CH - o som da próxima lição. Por enquanto, a regra desta é uma só: ponto dentro, K.",
+      "detalhePt": "Ela tem uma forma final, para o fim da palavra, com outro desenho e outro som. Essa forma fica para a próxima lição, junto com o som dela. Por enquanto, a regra desta é uma só: ponto dentro, K.",
       "paraBrasileiroPt": "O K não dá trabalho: é o mesmo do português. O cuidado é com o desenho, que se parece com o {{ב}} - o {{כ}} é uma curva arredondada, sem o pé do {{ב}} na base.",
       "padraoPt": "É o mesmo ponto do {{ב}}: dentro da letra, ele troca o som da consoante. Você já viu isso uma vez e vai ver mais uma, na última letra do curso. Três letras, uma regra só.",
-      "lembrePt": "Com o ponto dentro, {{כּ}} é K, igual ao {{ק}}. Sem o ponto, e no {{ך}} final, é outro som, e ele é a próxima lição.",
+      "lembrePt": "Com o ponto dentro, {{כּ}} é K, igual ao {{ק}}. Sem o ponto, é outro som, e ele é a próxima lição.",
       "checagem": [
         {
           "t": "visual",
@@ -3627,12 +3627,6 @@
           ],
           "certa": 0,
           "porque": "{{כּ}} com ponto e {{ק}} soam igual: K. Qual se escreve depende da palavra."
-        },
-        {
-          "t": "vf",
-          "q": "A forma final {{ך}} pode aparecer com ponto dentro.",
-          "certa": false,
-          "porque": "Não aparece, e por isso o {{ך}} nunca é K. O som dele é o da próxima lição."
         }
       ]
     },
@@ -3734,7 +3728,7 @@
         "pt": "bola"
       }
     ],
-    "didYouKnow": "{{כַּף}} é a palma da mão, e o antepassado desta letra, há milhares de anos, provavelmente desenhava uma mão. E {{מֶלֶךְ}}, \"rei\", que apareceu lá na primeira lição, você já consegue ler: o {{ך}} do fim é sempre raspado, e esse som é o assunto da próxima lição.",
+    "didYouKnow": "{{כַּף}} é a palma da mão, e o antepassado desta letra, há milhares de anos, provavelmente desenhava uma mão.",
     "brazilianMistake": {
       "wrong": "Confundir {{כ}} com {{ב}} e ler {{כּוֹס}} como \"bos\".",
       "right": "Olhar a base: o {{כ}} é uma curva arredondada, sem pé; o {{ב}} tem um pé que avança para a direita. \"Kos\".",
@@ -3806,7 +3800,7 @@
         "ondePt": "no fim da palavra - e, no hebraico moderno, normalmente sem ponto"
       }
     ],
-    "soundNotePt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, e na forma final {{ף}}, a letra tem outro som, e ele ganha lição própria logo depois desta.",
+    "soundNotePt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, a letra tem outro som, e ele ganha lição própria logo depois desta, junto com a forma que a letra tem no fim da palavra.",
     "articulacao": {
       "pontos": [
         {
@@ -3818,10 +3812,10 @@
     },
     "ensino": {
       "funcaoPt": "{{פּ}} é a terceira e última letra em que um ponto dentro decide o som. Com o ponto, ela é P, como em \"pato\": {{פֶּה}}, {{פָּרָה}}, {{מִשְׁפָּחָה}}. Você já conhece o mecanismo do {{בּ}} e do {{כּ}} - é o mesmo.",
-      "detalhePt": "Ela também tem forma final, {{ף}}, que desce abaixo da linha. Como o {{ך}}, no hebraico moderno a forma final normalmente não leva ponto e tem som de F - o som da próxima lição. Por enquanto, a regra desta é uma só: ponto dentro, P.",
+      "detalhePt": "Como o {{כ}}, ela tem uma forma final, para o fim da palavra, com outro desenho e outro som. Essa forma fica para a próxima lição, junto com o som dela. Por enquanto, a regra desta é uma só: ponto dentro, P.",
       "paraBrasileiroPt": "O P é o mesmo do português. Repare no desenho: a boca do {{פ}} fica aberta à esquerda, com um dente virado para dentro.",
       "padraoPt": "A terceira e última letra do grupo do ponto: {{ב}}, {{כ}} e esta. Se você reconheceu o padrão nas outras duas, aqui não há nada novo para decorar - só a letra. Dica: no começo de uma palavra, B, K e P são muito comuns; no fim, V, CH e F são muito comuns. É uma boa regra de bolso, mas há exceções.",
-      "lembrePt": "Com o ponto dentro, {{פּ}} é P. Sem o ponto, e no {{ף}} final, é outro som, e ele é a próxima lição.",
+      "lembrePt": "Com o ponto dentro, {{פּ}} é P. Sem o ponto, é outro som, e ele é a próxima lição.",
       "checagem": [
         {
           "t": "visual",

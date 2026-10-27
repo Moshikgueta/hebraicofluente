@@ -24,6 +24,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { alvoDoSom } from '@/lib/fixacao';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
@@ -205,6 +206,41 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
 }
 
 /* ── 1 · conhecer ──────────────────────────────────────────────────────── */
+function FormaFinalDoSom({ S }: { S: SomLicao }) {
+  const p = useProgress();
+  const base = S.depoisDe ?? S.id;
+  return (
+    <Card className="p-6 grid gap-4">
+      <h2 className="text-[19px] font-semibold">No fim da palavra</h2>
+      <div className="flex items-center justify-center gap-5 rounded-[var(--r-md)] bg-surface-2 px-4 py-4">
+        <span className="grid justify-items-center gap-1">
+          <He size="lg">{S.he}</He>
+          <span className="font-ui text-[12px] text-ink-muted">no começo e no meio</span>
+        </span>
+        <span aria-hidden className="text-ink-muted text-[20px]">→</span>
+        <span className="grid justify-items-center gap-1">
+          <He size="lg">{S.finalHe!}</He>
+          <span className="font-ui text-[12px] text-ink-muted">no fim</span>
+        </span>
+        <span className="grid justify-items-center gap-1">
+          <He size="lg" cursive>{S.finalHe!}</He>
+          <span className="font-ui text-[12px] text-ink-muted">no fim, à mão</span>
+        </span>
+      </div>
+      <p className="text-[15.5px] leading-relaxed text-ink-body">
+        No fim da palavra a letra muda de desenho e desce abaixo da linha. Ela nunca leva o ponto
+        dentro, então no fim o som é sempre o do {S.namePt}.
+      </p>
+      <WritingCanvas
+        glyph={S.finalHe!}
+        letterId={`${base}-final`}
+        label={`${S.namePt} - forma final`}
+        onScored={score => p.recordWriting(base, score)}
+      />
+    </Card>
+  );
+}
+
 function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
   return (
     <div className="grid gap-5">
@@ -245,6 +281,13 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
           <Prose text={S.irmaoPt} />
         </p>
       </Card>
+
+      {/* A forma final mora aqui, e não na lição da letra (27/10/2026, pedido
+          do dono: "coloca a ך junto com a כ e não com a Kaf"). Ela nunca leva o
+          ponto e soa sempre como este som, então é aqui que se aprende a
+          reconhecê-la e a escrevê-la. Saiu da lição do Kaf e do Pe junto com o
+          traçado (soOLadoDoPonto em lib/sons.ts). */}
+      {S.finalHe && <FormaFinalDoSom S={S} />}
 
       <BrazilianTip mistake={S.erro} />
 

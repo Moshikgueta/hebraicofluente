@@ -309,7 +309,8 @@ export function HebrewLetterCard({ letter }: { letter: Letter }) {
     <div className="grid sm:grid-cols-[1fr_auto] items-center gap-6">
       <div className="grid gap-3">
         <div className="flex items-baseline gap-4 flex-wrap">
-          <He size="hero">{letter.letter}</He>
+          {/* Com o daguesh na lição do Bet, Kaf e Pe (glifoDaLicao em lib/sons.ts). */}
+          <He size="hero">{letter.letraComPonto ?? letter.letter}</He>
           {letter.finalForm && (
             <span className="flex items-baseline gap-2">
               <He size="xl" dim>{letter.finalForm}</He>

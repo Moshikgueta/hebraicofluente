@@ -79,7 +79,8 @@ function optionsWith<T>(correct: T, wrong: T[], rand: Rand): { options: T[]; ans
  * as duas portas passam por aqui. A forma final tem exercício próprio
  * (`exFinalForm`), onde a base É a errada de propósito.
  */
-export const mesmaLetra = (L: Letter, g: string): boolean => g === L.letter || g === L.finalForm;
+export const mesmaLetra = (L: Letter, g: string): boolean =>
+  g === L.letter || g === L.finalForm || (!!L.finalDoSom && g === L.finalDoSom);
 
 function letterDistractors(L: Letter, ctx: Ctx, rand: Rand, n: number): string[] {
   const confusable = L.confusableWith.filter(c => !mesmaLetra(L, c));
@@ -485,7 +486,8 @@ export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
   return {
     id: `${L.id}-mls-${i}`, kind: 'match', letterId: L.id, skill: 'som',
     promptPt: 'Ligue cada letra ao seu som.',
-    pairs: shuffled(chosen, rand).map(x => ({ left: x.letter, right: somPt(x.sound) })),
+    /* A letra da lição com o daguesh quando é ele que faz o som (כּ ↔ K). */
+    pairs: shuffled(chosen, rand).map(x => ({ left: x.letraComPonto ?? x.letter, right: somPt(x.sound) })),
     leftKind: 'glyph', rightKind: 'text',
     labelLeft: 'Letra', labelRight: 'Som',
     explainPt: 'O som é a única coisa que a forma da letra não mostra - é o que precisa ser decorado.'

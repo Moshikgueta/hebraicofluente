@@ -93,14 +93,14 @@ describe('CONT-001: "Ligue cada letra ao seu som" nunca tem duas cartas com o me
           const direita = ex.pairs.map(p => p.right);
           expect(new Set(direita).size, `${raw.id}#${s}: ${direita.join(' | ')}`).toBe(direita.length);
           /* E nem som parcial em comum (Kaf "k ou raspado" ao lado de Kuf "k"). */
-          const sons = ex.pairs.map(p => letters.find(x => x.letter === p.left)!)
+          const sons = ex.pairs.map(p => letters.find(x => x.letter === p.left.replace('\u05BC', ''))!)
             .map(x => (x.id === L.id ? L.sound : x.sound));
           for (let i = 0; i < sons.length; i++) {
             for (let j = i + 1; j < sons.length; j++) {
               expect(somEmComum(sons[i]!, sons[j]!), `${raw.id}#${s}: ${sons[i]} / ${sons[j]}`).toBe(false);
             }
           }
-          expect(ex.pairs.some(p => p.left === L.letter)).toBe(true);
+          expect(ex.pairs.some(p => p.left === (L.letraComPonto ?? L.letter))).toBe(true);
         }
       }
     }

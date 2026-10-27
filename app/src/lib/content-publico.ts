@@ -172,6 +172,13 @@ export type Letter = {
   lesson: number;
   letter: string;
   finalForm: string | null;
+  /** Só na lição de Bet, Kaf e Pe (soOLadoDoPonto em lib/sons.ts): a letra
+   *  com o daguesh, o desenho que tem o som que a lição ensina (כּ = K). */
+  letraComPonto?: string;
+  /** Só na lição de Kaf e Pe: a forma final, que soa como o lado SEM o ponto
+   *  e por isso é ensinada na lição do som (ך no Chaf, ף no Fe). Continua
+   *  sendo a mesma letra: nunca é alternativa errada de "qual é o Kaf". */
+  finalDoSom?: string | null;
   nameHe: string;
   namePt: string;
   translit: string;

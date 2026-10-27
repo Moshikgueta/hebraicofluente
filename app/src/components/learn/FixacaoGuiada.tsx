@@ -55,6 +55,9 @@ export type AlvoFixacao = {
   lembrePt: string;
   /** Mostrar a cursiva no passo de observar. */
   cursiva: boolean;
+  /** A forma da letra para a memória visual, quando `glifo` traz o daguesh:
+   *  ali se compara o desenho, e o ponto entregaria a resposta. */
+  glifoForma?: string;
   /** O desenho à mão, quando não é o mesmo glifo: à mão não se escrevem os
    *  pontos (o Sin cursivo é o ש cursivo). Sem ele, a cursiva usa `glifo`. */
   glifoCursivo?: string | null;
@@ -264,6 +267,7 @@ function LetraESom({ alvo }: { alvo: AlvoFixacao }) {
 const OLHAR_MS = 3000;
 
 function Memoria({ alvo }: { alvo: AlvoFixacao }) {
+  const forma = alvo.glifoForma ?? alvo.glifo;
   const [fase, setFase] = useState<'olhar' | 'escolher' | 'certo'>('olhar');
   const [errados, setErrados] = useState<string[]>([]);
   const [rodada, setRodada] = useState(0);
@@ -273,8 +277,8 @@ function Memoria({ alvo }: { alvo: AlvoFixacao }) {
     return () => clearTimeout(t);
   }, [fase, rodada]);
   const opcoes = useMemo(
-    () => shuffled([alvo.glifo, ...alvo.outrosGlifos.filter(g => g !== alvo.glifo).slice(0, 3)], rng(`fix-mem-${alvo.id}-${rodada}`)),
-    [alvo, rodada]
+    () => shuffled([forma, ...alvo.outrosGlifos.filter(g => g !== forma).slice(0, 3)], rng(`fix-mem-${alvo.id}-${rodada}`)),
+    [alvo, forma, rodada]
   );
   return (
     <div className="grid gap-4">
@@ -284,7 +288,7 @@ function Memoria({ alvo }: { alvo: AlvoFixacao }) {
             Olhe bem para a letra. Em três segundos ela some, e você vai procurá-la.
           </p>
           <div className="grid place-items-center rounded-[var(--r-md)] bg-surface-2 py-8">
-            <He size="display">{alvo.glifo}</He>
+            <He size="display">{forma}</He>
           </div>
           <Button variant="secondary" onClick={() => setFase('escolher')}>Já memorizei</Button>
         </>
@@ -294,10 +298,10 @@ function Memoria({ alvo }: { alvo: AlvoFixacao }) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Escolha a letra">
             {opcoes.map(g => {
               const errou = errados.includes(g);
-              const acerto = fase === 'certo' && g === alvo.glifo;
+              const acerto = fase === 'certo' && g === forma;
               return (
                 <button key={g} type="button" disabled={fase === 'certo' || errou}
-                        onClick={() => (g === alvo.glifo ? setFase('certo') : setErrados(e => [...e, g]))}
+                        onClick={() => (g === forma ? setFase('certo') : setErrados(e => [...e, g]))}
                         className={`min-h-[72px] rounded-[var(--r-sm)] border grid place-items-center
                           ${acerto ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
                             : errou ? 'border-line bg-surface opacity-50'
