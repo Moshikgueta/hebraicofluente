@@ -907,8 +907,8 @@ compra; medição só com o contador próprio.
   roda a cada visita. Medida: tempo de bloqueio da capa 216 → 104 ms; o LCP não mudou (2,96 → 2,93 s).
   O que pesa no LCP agora são os três pesos da Instrument Sans, pré-carregados juntos (52 KB antes
   da pintura). Pré-carregar só o 400 não ajuda: o 500 e o 600 estão na primeira tela e o navegador
-  os pede antes de pintar. Tirar o 500 do site (vira 400) deu 2,93 → 2,76 s na capa e 2,60 → 2,47 s
-  em /aprender-hebraico: decisão visual do dono, ainda não tomada.
+  os pede antes de pintar. **O 500 saiu do site** (decisão do dono, 27/10/2026): o texto em 500 usa
+  o arquivo do 400 (layout.tsx). Capa 2,93 → 2,76 s, /aprender-hebraico 2,60 → 2,47 s.
 - **A capa carrega um peso só de cada fonte de exibição** (23/10/2026, decisão do dono): Bricolage
   600 e Noto Serif Hebrew 400. A segunda linha do título passou de 500 para semibold, a citação da
   aluna foi para a fonte do texto corrido (`font-ui`) e a letra do `Rubrica` (components/landing/

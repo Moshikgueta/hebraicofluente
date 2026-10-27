@@ -26,12 +26,16 @@ const display = localFont({
     { path: '../../../assets/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
+/* Instrument Sans no texto corrido: só 400 e 600 (26/10/2026, decisão do
+   dono). O 500 estava na primeira tela ("Entrar", "Começar", os botões) e os
+   três pesos chegavam antes da maior pintura; sem ele, o texto em 500 usa o
+   arquivo do 400. LCP da capa 2,93 -> 2,76 s. Um peso novo aqui é um arquivo
+   novo em toda página: medir antes. */
 const ui = localFont({
   variable: '--font-ui-loaded',
   display: 'swap',
   src: [
     { path: '../../../assets/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../../assets/fonts/instrument-sans-latin-500-normal.woff2', weight: '500', style: 'normal' },
     { path: '../../../assets/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
