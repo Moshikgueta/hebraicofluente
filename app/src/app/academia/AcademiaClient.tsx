@@ -48,6 +48,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
+import { comOsSonsFeitos, idDoSom } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import {
@@ -148,8 +149,12 @@ export function AcademiaClient() {
   /* Only what has been unlocked. A letter whose lesson was started counts:
      the learner has met it, and practising it is exactly what they should be
      doing. */
+  /* As palavras de som (טוֹב, do Vet) entram quando a lição do som começa,
+     pela mesma régua (27/10/2026): antes, terminar o Bet já as trazia. */
   const unlocked = useMemo<Letter[]>(
-    () => allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
+    () => allLetters()
+      .filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0)
+      .map(l => comOsSonsFeitos(l, som => (p.state.lessons[idDoSom(som)]?.stagesDone.length ?? 0) > 0)),
     [p.state.lessons]
   );
 

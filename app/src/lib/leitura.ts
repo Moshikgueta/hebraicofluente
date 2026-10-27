@@ -8,6 +8,7 @@ import { allLetters, textosDoCurso, type Letter } from '@/lib/content';
 import { palavrasDoTexto, textoLidoId } from '@/lib/engine/textos';
 import { clean } from '@/lib/hebrew';
 import { isLessonComplete } from '@/lib/state/rules';
+import { comOsSonsFeitos, idDoSom } from '@/lib/sons';
 import type { LearnerState } from '@/lib/state/types';
 import {
   alfabetoDe, palavrasLegiveis, vocabularioDoCurso, type PalavraDoCurso
@@ -49,17 +50,23 @@ function comTextos(vocab: PalavraDoCurso[], state: LearnerState): PalavraDoCurso
   return [...vocab, ...extras];
 }
 
+/* As palavras de som (טוֹב, do Vet) só contam depois da lição do som. */
+const comSonsConcluidos = (state: LearnerState, letras: readonly Letter[]): Letter[] =>
+  letras.map(l => comOsSonsFeitos(l, som => isLessonComplete(state, idDoSom(som))));
+
 export function leituraDe(state: LearnerState): Leitura {
   const todas = allLetters();
   const letras = letrasConcluidas(state, todas);
   const alfabeto = alfabetoDe(letras);
-  const vocab = comTextos(vocabularioDoCurso(todas), state);
-  return { legiveis: palavrasLegiveis(vocab, alfabeto), total: vocab.length, letras, alfabeto };
+  /* O total é o curso inteiro; o que já se lê espera também a lição do som. */
+  const total = comTextos(vocabularioDoCurso(todas), state).length;
+  const vocab = comTextos(vocabularioDoCurso(comSonsConcluidos(state, todas)), state);
+  return { legiveis: palavrasLegiveis(vocab, alfabeto), total, letras, alfabeto };
 }
 
 /** Quantas palavras NOVAS uma letra acrescentou, para o fim da lição. */
 export function novasCom(state: LearnerState, letra: Letter): number {
-  const todas = allLetters();
+  const todas = comSonsConcluidos(state, allLetters());
   const antes = letrasConcluidas(state, todas).filter(l => l.id !== letra.id);
   const vocab = vocabularioDoCurso(todas);
   const semEla = palavrasLegiveis(vocab, alfabetoDe(antes)).length;

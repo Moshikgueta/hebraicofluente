@@ -55,6 +55,9 @@ export type AlvoFixacao = {
   lembrePt: string;
   /** Mostrar a cursiva no passo de observar. */
   cursiva: boolean;
+  /** O desenho à mão, quando não é o mesmo glifo: à mão não se escrevem os
+   *  pontos (o Sin cursivo é o ש cursivo). Sem ele, a cursiva usa `glifo`. */
+  glifoCursivo?: string | null;
   /** Duas ou três palavras curtas, já legíveis neste ponto do curso. */
   palavras: PalavraDaFixacao[];
   /** Os glifos destacados dentro das palavras (a letra e a final). */
@@ -188,7 +191,7 @@ function Ouvir({ alvo }: { alvo: AlvoFixacao }) {
 function Observar({ alvo }: { alvo: AlvoFixacao }) {
   const formas: { rotulo: string; glifo: string; cursiva: boolean }[] = [
     { rotulo: 'impressa', glifo: alvo.glifo, cursiva: false },
-    ...(alvo.cursiva ? [{ rotulo: 'cursiva (à mão)', glifo: alvo.glifo, cursiva: true }] : []),
+    ...(alvo.cursiva ? [{ rotulo: 'cursiva (à mão)', glifo: alvo.glifoCursivo ?? alvo.glifo, cursiva: true }] : []),
     ...(alvo.final ? [{ rotulo: 'no fim da palavra', glifo: alvo.final, cursiva: false }] : []),
     /* A final também à mão (pedido do dono, 19/10/2026): quem escreve um
        bilhete escreve o ם cursivo, e ele não se parece com o impresso. */
