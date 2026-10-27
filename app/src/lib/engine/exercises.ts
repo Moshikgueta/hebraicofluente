@@ -850,12 +850,35 @@ export function buildMiniTest(
      prova cobrava uma vogal das cinco que a lição ensina. */
   const giro = Math.floor(rand() * 97);
 
+  /* UM "qual destas é a letra" por fixação (27/10/2026, pedido do dono: "esse
+     tipo de exercício é repetitivo, que não apareça mais de uma vez").
+     Medido antes: o Álef tinha CINCO itens de escolher a letra entre quatro
+     cartões (o reconhecer, o de parecidas, o contraste do par, a revisão da
+     letra anterior e o preenchimento), e He, Shin e Tet tinham quatro ou
+     cinco. O tipo `letter-recognition` cobre os três enunciados ("Qual destas
+     é", "Entre estas parecidas", o contraste do par), porque na tela são o
+     mesmo gesto. A fileira com a intrusa também fica em um. Quando o teto
+     barra, a camada cai para o próximo gerador da lista, que é outro gesto.
+     A letra em cursiva (os mesmos quatro cartões de letra) fica em dois, um em
+     cada direção, e nenhum outro tipo passa de três em vinte: antes, "Como se
+     lê esta sílaba?" chegava a cinco no Yod. Só o último recurso, abaixo,
+     relaxa o teto geral, e nunca o do reconhecer. */
+  const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2
+  };
+  const TETO_GERAL = 3;
+  let tetoGeral = TETO_GERAL;
+  const cabe = (ex: Exercise) => {
+    const teto = TETO_POR_TIPO[ex.kind] ?? tetoGeral;
+    return out.filter(e => e.kind === ex.kind).length < teto;
+  };
+
   const tentar = (gens: readonly Gen[]) => {
     for (let round = 0; round < 6; round++) {
       for (const gen of gens) {
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round + out.length);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); return;
       }
     }
@@ -958,12 +981,16 @@ export function buildMiniTest(
        HOJE, como Bet e Kaf -, a revisão de ontem é o contraste. */
     const c = contrasteDe(P, L, contrastes, L.order);
     const doPar = c ? girar(gensDoPar(c), L.order).map(g => ({ g, cx: ctx })) : [];
-    const comuns = [exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound]
+    /* O reconhecer por último: o teto de um por fixação quase sempre já foi
+       gasto na abertura, e a letra de ontem volta lendo, ouvindo ou montando. */
+    const comuns = [...girar([exLetterInWord, exSyllableReading, exWordMeaning, exBuildSyllable, exVowelSound], L.order),
+                    exLetterRecognition]
       .map(g => ({ g, cx: contextFor(P, history) }));
     for (const { g: gen, cx } of [...doPar, ...comuns]) {
+      if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
       /* Os geradores de par ignoram o primeiro argumento: o par já vem no fecho. */
       const ex = gen(P, cx, rand, giro + 1);
-      if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+      if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex)) && cabe(ex)) {
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
       }
     }
@@ -1005,9 +1032,9 @@ export function buildMiniTest(
     if (antigas.length && out.length < count) {
       const Q = ordemDeRevisao(L, antigas, [], rand)[0]!;
       const cq = contextFor(Q, history);
-      for (const gen of girar([exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound, exWordMeaning], L.order)) {
+      for (const gen of [...girar([exLetterInWord, exSyllableReading, exVowelSound, exWordMeaning, exMatchSyllable], L.order), exLetterRecognition]) {
         const ex = gen(Q, cq, rand, giro + 2);
-        if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+        if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex)) && cabe(ex)) {
           seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
         }
       }
@@ -1020,7 +1047,7 @@ export function buildMiniTest(
   if (out.length < count) {
     for (const ex of fill([L], history, LESSON_GENERATORS, rand, count * 4, audioAvailable, 6)) {
       if (out.length >= count) break;
-      if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+      if (seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
       seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
     }
   }
@@ -1030,9 +1057,13 @@ export function buildMiniTest(
         if (out.length >= count) break;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round * 2);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
       }
+      /* Nas primeiras letras o alfabeto é pequeno demais para vinte gestos
+         diferentes: uma volta sem achar nada novo afrouxa o teto geral, um
+         de cada vez, para o bloco chegar a vinte. */
+      if (round % 3 === 2) tetoGeral++;
     }
   }
   /* `spread` aqui também: com nove itens e três camadas novas, duas escolhas
