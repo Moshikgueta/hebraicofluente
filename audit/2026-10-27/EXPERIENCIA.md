@@ -34,7 +34,7 @@ o que foi visto, o que mudou e o que vem depois.
 | 6 | Lição | A letra nova aparece de uma vez, sem marcar o momento. | Feito: revelação da direita para a esquerda |
 | 7 | Lição | A etapa 1 é muito longa no celular (cerca de 9.400 px no Guímel): letra, pronúncia, articulação, erro comum, sílabas, comparação e perguntas numa página só. | Rodada 2 |
 | 8 | Laboratório | Os três cartões de modo empurram a primeira palavra para baixo da dobra no celular. | Rodada 2: seletor compacto |
-| 9 | Navegação | Barra de baixo com 7 itens e rótulos de 11 a 12 px; "Aula 0" fica nela depois de concluída. | Rodada 2 (muda a navegação: pede o ok do dono) |
+| 9 | Navegação | Barra de baixo com 7 itens e rótulos de 11 a 12 px; "Aula 0" fica nela depois de concluída. | Parte feita (ok do dono): a Aula 0 sai das duas navegações depois de concluída e continua no topo do mapa. Os rótulos ficam para a rodada 2 |
 | 10 | Painel | O aviso de conquista ocupa um quarto da primeira tela, antes do próximo passo; o botão de acessibilidade cobre parte do "Ler agora". | Rodada 2 |
 | 11 | Academia | Os jogos são cartões iguais, sem dizer o que cada um treina nem quando foi jogado. | Rodada 3 |
 | 12 | Exame e certificado | Não auditados por dentro. | Rodada 2 |
@@ -89,8 +89,7 @@ depoimento, onboarding) e nas públicas (capa, entrar, criar conta, esqueci a se
   auditoria por dentro do exame e do certificado (com a revelação do certificado).
 - **Rodada 3:** os jogos da Academia (placar que anima sem pular de largura, cronômetro mais claro,
   tela de fim com "tentar de novo"), e as ilustrações com propósito.
-- **Precisa do dono:** a barra de navegação de 7 itens (tirar a Aula 0 depois de concluída?) e
-  qualquer ilustração com hebraico, que só usa palavras já aprovadas do curso.
+- **Precisa do dono:** qualquer ilustração com hebraico, que só usa palavras já aprovadas do curso.
 
 As notas de 0 a 100 do pedido são metas. Este documento não dá nota sem evidência; cada rodada
 diz o que foi medido.

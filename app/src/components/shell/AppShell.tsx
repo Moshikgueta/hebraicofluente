@@ -30,7 +30,7 @@ import { ITENS, saldo } from '@/lib/loja';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { ACHIEVEMENTS } from '@/lib/state/rules';
+import { ACHIEVEMENTS, aula0Feita } from '@/lib/state/rules';
 import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import {
@@ -93,6 +93,14 @@ const NAV = [
   { href: '/loja', label: 'Recompensas', icon: IconeRecompensas, movel: 'cabecalho' },
   { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
 ] as const;
+
+/* A Aula 0 sai da navegação depois de concluída (27/10/2026, decisão do
+   dono): na barra do telefone eram sete alvos de 54px com rótulos de 10,5px,
+   e ela é consulta. Sai das DUAS navegações, para o computador e o celular
+   oferecerem os mesmos destinos (varrer-curso.mjs), e continua no topo do
+   mapa ("Fica aqui para você reler quando quiser"). */
+const naNavegacao = (href: string, aula0Concluida: boolean): boolean =>
+  !(href === '/inicio' && aula0Concluida);
 
 /**
  * Is this nav item the page we are on?
@@ -326,7 +334,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
 
       <nav aria-label="Navegação principal">
         <ul className="grid gap-[3px]">
-          {NAV.map(item => {
+          {NAV.filter(item => naNavegacao(item.href, p.ready && aula0Feita(p.state))).map(item => {
             const active = isActive(pathname, item.href);
             const Icone = item.icon;
             return (
@@ -426,7 +434,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
           esticar a linha: sem ele, `flex-1` respeita a largura do conteúdo e
           a barra fica mais larga que a tela. */}
       <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
-        {NAV.filter(item => item.movel === 'barra').map(item => {
+        {NAV.filter(item => item.movel === 'barra' && naNavegacao(item.href, p.ready && aula0Feita(p.state))).map(item => {
           const active = isActive(pathname, item.href);
           const Icone = item.icon;
           return (
