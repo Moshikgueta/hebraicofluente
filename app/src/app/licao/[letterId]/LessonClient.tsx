@@ -50,7 +50,7 @@ import {
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 import { somPt } from '@/lib/som-pt';
-import { nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
+import { glifoDaLicao, nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
@@ -335,7 +335,7 @@ function StageConhecer({
           </p>
           <p className="text-[16px] leading-relaxed text-ink-body">
             Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
-            <He size="inline">{letter.letter}</He>
+            <He size="inline">{glifoDaLicao(letter)}</He>
             {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
           </p>
         </div>}
@@ -772,7 +772,9 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="grid gap-2 justify-items-center">
             <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Impressa</p>
-            <He size="display">{letter.letter}</He>
+            {/* Com o daguesh no Bet, Kaf e Pe (27/10/2026): a impressa da lição
+                é a que tem o som dela. À mão, o ponto não se escreve. */}
+            <He size="display">{glifoDaLicao(letter)}</He>
           </div>
           <div className="grid gap-2 justify-items-center">
             <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Cursiva</p>

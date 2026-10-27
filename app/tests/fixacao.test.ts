@@ -22,7 +22,8 @@ describe('a fixação guiada tem material em toda lição', () => {
       expect(a.lembrePt.trim(), letter.id).not.toBe('');
       /* A revisão rápida só compara com letras que o aluno já viu. */
       for (const c of a.comparar) {
-        expect(L.find(l => l.letter === c.glifo)!.order, letter.id).toBeLessThan(letter.order);
+        /* No Bet, Kaf e Pe a comparação mostra a letra com o daguesh (27/10/2026). */
+        expect(L.find(l => l.letter === c.glifo.replace('\u05BC', ''))!.order, letter.id).toBeLessThan(letter.order);
       }
       if (letter.order > 1) expect(a.comparar.length, letter.id).toBeGreaterThan(0);
     }

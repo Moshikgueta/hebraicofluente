@@ -393,10 +393,26 @@ const DAGUESH = 'ּ';
  * O Shin não muda: nenhuma das duas leituras dele tem daguesh, e o Sin segue
  * ensinado pelo contraste.
  */
-export function soOLadoDoPonto<T extends { sound: string; variantes: readonly { he: string; som: string }[] }>(
+export function soOLadoDoPonto<T extends { sound: string; variantes: readonly { he: string; som: string }[]; finalForm?: string | null }>(
   letra: T
 ): T {
   const comPonto = letra.variantes.filter(v => v.he.includes(DAGUESH));
   if (!comPonto.length || comPonto.length === letra.variantes.length) return letra;
-  return { ...letra, variantes: comPonto, sound: comPonto.map(v => v.som).join(' ') };
+  /* 27/10/2026, pedidos do dono: a letra que faz o som da lição aparece com o
+     daguesh (כּ, e não כ, ao lado de "/k/"), e a forma final suave (ך, ף)
+     sai da lição da letra e fica na do som, junto com o lado sem o ponto. */
+  const finalSuave = !!letra.finalForm && FINAIS_SUAVES.has(letra.finalForm);
+  return {
+    ...letra,
+    variantes: comPonto,
+    sound: comPonto.map(v => v.som).join(' '),
+    letraComPonto: comPonto[0]!.he,
+    ...(finalSuave ? { finalForm: null, finalDoSom: letra.finalForm } : {})
+  };
 }
+
+const FINAIS_SUAVES = new Set(['ך', 'ף']);
+
+/** O desenho que a lição mostra para a letra: com o daguesh no Bet, Kaf e Pe. */
+export const glifoDaLicao = (l: { letter: string; letraComPonto?: string }): string =>
+  l.letraComPonto ?? l.letter;

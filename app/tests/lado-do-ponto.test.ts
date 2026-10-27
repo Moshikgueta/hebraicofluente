@@ -4,9 +4,9 @@
 import { describe, expect, it } from 'vitest';
 import { allLetters, extras } from '../src/lib/content';
 import { leituraDe, novasCom } from '../src/lib/leitura';
-import { alvoDoSom } from '../src/lib/fixacao';
+import { alvoDaLetra, alvoDoSom } from '../src/lib/fixacao';
 import { exVowelPair } from '../src/lib/engine/generators';
-import { contextFor } from '../src/lib/engine/exercises';
+import { buildLetterPractice, buildMiniTest, contextFor } from '../src/lib/engine/exercises';
 import { rng } from '../src/lib/engine/rng';
 import { comOsSonsFeitos, idDoSom, semPalavrasDeSom, soOLadoDoPonto, sonsDaPalavra } from '../src/lib/sons';
 import { EMPTY_STATE, type LearnerState } from '../src/lib/state/types';
@@ -81,6 +81,61 @@ describe('a cursiva nas lições de som', () => {
       expect(a.cursiva, S.id).toBe(true);
       expect(a.glifoCursivo, S.id).toBeTruthy();
       expect(/[֑-ׇ]/.test(a.glifoCursivo!), S.id).toBe(false);
+    }
+  });
+});
+
+/* 27/10/2026: "coloca a ך junto com a כ e não com a Kaf" e "nas letras Kaf,
+ * Bet e Pe tem que mostrar o daguesh". */
+describe('a lição do Kaf, do Bet e do Pe', () => {
+  const daLicao = (id: string) => soOLadoDoPonto(semPalavrasDeSom(letters.find(l => l.id === id)!));
+  const historico = (L: ReturnType<typeof daLicao>) =>
+    letters.filter(l => l.order <= L.order).map(l => (l.id === L.id ? L : l));
+
+  it('a letra aparece com o daguesh', () => {
+    expect(daLicao('bet').letraComPonto).toBe('בּ');
+    expect(daLicao('kaf').letraComPonto).toBe('כּ');
+    expect(daLicao('pe').letraComPonto).toBe('פּ');
+    for (const id of ['bet', 'kaf', 'pe']) {
+      const L = daLicao(id);
+      const a = alvoDaLetra(L, historico(L));
+      expect(a.glifo, id).toBe(L.letraComPonto);
+      expect(a.glifoForma, id).toBe(L.letter);
+      /* Os sons das anteriores pelo lado da lição delas: nada de "/b/ ou /v/". */
+      expect(a.outrosSons.filter(s => / ou |\/ \//.test(s)), id).toEqual([]);
+    }
+  });
+
+  it('o ך e o ף saem da lição da letra e ficam na do som', () => {
+    expect(daLicao('kaf').finalForm).toBeNull();
+    expect(daLicao('kaf').finalDoSom).toBe('ך');
+    expect(daLicao('pe').finalForm).toBeNull();
+    expect(daLicao('pe').finalDoSom).toBe('ף');
+    const sons = extras().sons;
+    expect(sons.find(s => s.id === 'chaf')!.finalHe).toBe('ך');
+    expect(sons.find(s => s.id === 'fe')!.finalHe).toBe('ף');
+  });
+
+  it('nenhum exercício da lição do Kaf ou do Pe mostra a forma final', () => {
+    for (const [id, fin] of [['kaf', 'ך'], ['pe', 'ף']] as const) {
+      const L = daLicao(id);
+      for (let r = 0; r < 20; r++) {
+        for (const ex of [...buildLetterPractice(L, historico(L), { audioAvailable: true, seed: `p${r}` }),
+                          ...buildMiniTest(L, historico(L), { audioAvailable: true, seed: `m${r}` })]) {
+          expect(ex.kind, `${id} ${ex.id}`).not.toBe('final-form');
+          const o = (ex as { options?: string[] }).options ?? [];
+          expect(o.includes(fin), `${id} ${ex.id} ${ex.promptPt}`).toBe(false);
+        }
+      }
+    }
+  });
+
+  it('os textos do Kaf e do Pe não falam mais do ך nem do ף', () => {
+    for (const [id, fin] of [['kaf', 'ך'], ['pe', 'ף']] as const) {
+      const L = letters.find(l => l.id === id)!;
+      const textos = [L.soundNotePt, L.didYouKnow, L.ensino.detalhePt ?? '', L.ensino.lembrePt,
+                      ...L.ensino.checagem.map(c => JSON.stringify(c))].join(' ');
+      expect(textos.includes(fin), id).toBe(false);
     }
   });
 });
