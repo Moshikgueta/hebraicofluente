@@ -595,11 +595,11 @@ export function buildLetterPractice(
      quatro cartões de letra, fica em dois, e nenhum outro tipo passa de três;
      só o último recurso afrouxa estes tetos, nunca o do reconhecer. */
   const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
-    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1
   };
   let tetoGeral = 3;
   const cabe = (ex: Exercise) => {
-    const teto = ex.kind === 'letter-recognition' ? 1
+    const teto = ex.kind === 'letter-recognition' || ex.kind === 'vowel-pair' ? 1
       : tetoGeral > 3 ? Math.max(TETO_POR_TIPO[ex.kind] ?? 0, tetoGeral) : TETO_POR_TIPO[ex.kind] ?? tetoGeral;
     return out.filter(e => e.kind === ex.kind).length < teto;
   };
@@ -877,8 +877,10 @@ export function buildMiniTest(
      cada direção, e nenhum outro tipo passa de três em vinte: antes, "Como se
      lê esta sílaba?" chegava a cinco no Yod. Só o último recurso, abaixo,
      relaxa o teto geral, e nunca o do reconhecer. */
+  /* "Estas duas escrevem o MESMO som" também em um (27/10/2026, pedido do
+     dono: no Álef ele saía duas vezes, אֵ אֶ e depois אַ אָ). */
   const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
-    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1
   };
   const TETO_GERAL = 3;
   let tetoGeral = TETO_GERAL;
