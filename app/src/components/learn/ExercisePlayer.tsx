@@ -283,9 +283,11 @@ export function ExercisePlayer({
         )}
         <div className="flex items-center gap-3">
           <div className="h-1.5 flex-1 rounded-full bg-surface-2 overflow-hidden">
+            {/* `transform`, e não `width` (27/10/2026): a barra anda sem refazer
+                o layout da pergunta a cada resposta. */}
             <div
-              className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[var(--ease)]"
-              style={{ width: `${((i + (settled ? 1 : 0)) / fila.length) * 100}%` }}
+              className="h-full w-full origin-left rounded-full bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]"
+              style={{ transform: `scaleX(${(i + (settled ? 1 : 0)) / fila.length})` }}
             />
           </div>
           {/* `data-progresso` é para a varredura de exercícios, do mesmo jeito
@@ -689,9 +691,9 @@ function Options({
               type="button"
               disabled={settled}
               onClick={() => onChoose(idx)}
-              data-resposta={settled && idx === ex.answer ? 'right' : undefined}
+              data-resposta={settled && idx === ex.answer ? 'right' : settled && idx === chosen ? 'wrong' : undefined}
               aria-label={`Posição ${idx + 1}`}
-              className={`min-h-[76px] min-w-[72px] px-3 rounded-[var(--r-md)] border-2
+              className={`hf-opcao min-h-[76px] min-w-[72px] px-3 rounded-[var(--r-md)] border-2
                 grid place-items-center transition-colors disabled:cursor-default
                 ${settled && idx === ex.answer ? 'border-[var(--green)] bg-mint'
                   : settled && idx === chosen ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
@@ -783,8 +785,9 @@ function OptionButton({
       onClick={onClick}
       disabled={disabled}
       data-resposta={state}
-      className={`relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
-        flex items-center gap-4 text-left transition-all duration-[var(--dur)] ease-[var(--ease)]
+      className={`hf-opcao relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
+        flex items-center gap-4 text-left transition-[border-color,background-color,opacity,scale] duration-[var(--dur)] ease-[var(--ease)]
+        enabled:active:scale-[.98]
         disabled:cursor-default ${TONE[state]}
         ${tile ? 'sm:h-full sm:min-h-[104px] sm:justify-center sm:gap-0 sm:px-3' : ''}`}
     >

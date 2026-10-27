@@ -178,6 +178,15 @@
   --ease:      cubic-bezier(.2, .7, .3, 1);
   --ease-fill: cubic-bezier(.3, .8, .3, 1);
   --dur:       200ms;
+  /* A escala completa (27/10/2026, rodada de experiência). Três durações,
+     pela frequência do gesto: o toque (o aluno faz centenas por dia), a
+     resposta de interface e a revelação que acontece uma vez por lição.
+     ease-out para o que entra ou responde a um toque; ease-in-out para o
+     que já está na tela e se move. Nada passa de 700 ms. */
+  --dur-toque:  130ms;
+  --dur-revela: 640ms;
+  --ease-out:    cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.645, .045, .355, 1);
 }
 
 /* ── o tema escuro ────────────────────────────────────────────────────────

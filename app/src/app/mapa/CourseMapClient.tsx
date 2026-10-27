@@ -194,11 +194,19 @@ function Trecho({ module: m, estado, ultimo }: {
   const total = itens.length + (extra ? 3 : 0);
   const pct = total ? Math.round((etapas / total) * 100) : 0;
   const pendente = itens.find(i => !isLessonComplete(p.state, i.id));
-  const destino = pendente ? pendente.href : extra ? `/modulo/${m.n}` : itens[0]?.href ?? `/modulo/${m.n}`;
+  /* As letras todas feitas e o checkpoint ainda não (27/10/2026): o cartão
+     dizia "Em andamento" ao lado de 100%, e levava de volta à primeira
+     letra. Agora diz o que falta e leva até lá. */
+  const faltaCheckpoint = estado === 'agora' && !extra && !pendente && !!m.checkpoint
+    && !p.state.checkpoints[m.checkpoint.id]?.passedAt;
+  const destino = faltaCheckpoint ? `/checkpoint/${m.n}`
+    : pendente ? pendente.href : extra ? `/modulo/${m.n}` : itens[0]?.href ?? `/modulo/${m.n}`;
+  /* A próxima letra a estudar, a única que ganha o anel (`hf-chama`). */
+  const proxima = estado === 'agora' ? pendente?.id ?? null : null;
 
   const TAG = {
     feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
-    agora: { texto: 'Em andamento', cor: 'text-[var(--teal-ink)]' },
+    agora: { texto: faltaCheckpoint ? 'Falta o checkpoint' : 'Em andamento', cor: 'text-[var(--teal-ink)]' },
     /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
        nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
        alto contraste. */
@@ -325,17 +333,29 @@ function Trecho({ module: m, estado, ultimo }: {
                    não abria - parecia trancado sem dizer por quê. Antes de o
                    progresso carregar, nada que não foi aberto vira link. */
                 const liberada = aberta || (p.ready && !bloqueada);
+                const ehAProxima = p.ready && L.id === proxima && liberada;
                 const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas`
-                  : bloqueada ? ' - bloqueada' : '';
+                  : bloqueada ? ' - bloqueada' : ehAProxima ? ' - a próxima' : '';
                 const classe = `relative z-[1] min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
                   ${liberada ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
                   ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
-                    : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
-                    : 'bg-[var(--sand)] border-line'}`;
+                    : comecada || ehAProxima ? 'bg-[var(--card)] border-[var(--teal)] border-2'
+                    : 'bg-[var(--sand)] border-line'}
+                  ${ehAProxima ? 'hf-chama' : ''}`;
                 const miolo = (
                   <>
                     {bloqueada && (
                       <span aria-hidden className="absolute -top-2 -right-2 leading-none text-ink-muted bg-[var(--card)] rounded-full"><IconeCadeado size={14} /></span>
+                    )}
+                    {/* A letra concluída leva um selo, e não só outra cor: dá
+                        para ver de relance, inclusive sem distinguir cores. */}
+                    {feita && (
+                      <span aria-hidden className="absolute -top-1.5 -right-1.5 w-[17px] h-[17px] rounded-full bg-[var(--teal)]
+                                                  grid place-items-center shadow-[0_1px_2px_rgba(0,0,0,.18)]">
+                        <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
+                          <path d="M3.6 9.4 7 12.8 14.4 5.4" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
                     )}
                     <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
                         className="!text-[23px] !leading-[1.1]">
