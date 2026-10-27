@@ -850,18 +850,31 @@ export function buildMiniTest(
      prova cobrava uma vogal das cinco que a lição ensina. */
   const giro = Math.floor(rand() * 97);
 
+  /* NO MÁXIMO DOIS DE CADA TIPO (27/10/2026, pedido do dono).
+     ─────────────────────────────────────────────────────────────────────
+     Medido antes: "Qual destas é a letra X?" aparecia até cinco vezes num
+     teste de vinte, e abria as 22 lições. Agora nenhum tipo passa de dois
+     por teste; só se o alfabeto disponível não render vinte perguntas
+     diferentes de outro jeito (as primeiras letras), o teto cede no fim. */
+  const TETO = 2;
+  /* Digitar continua um só por teste (P0-4): é o item mais lento, no celular. */
+  const tetoDe = (kind: Exercise['kind']) => (kind === 'type-answer' ? 1 : TETO);
+  const cabeTipo = (ex: Exercise) => out.filter(e => e.kind === ex.kind).length < tetoDe(ex.kind);
+
   const tentar = (gens: readonly Gen[]) => {
     for (let round = 0; round < 6; round++) {
       for (const gen of gens) {
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round + out.length);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabeTipo(ex)) continue;
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); return;
       }
     }
   };
 
-  tentar([exLetterRecognition]);
+  /* A abertura muda de letra para letra: reconhecer a letra, achar a
+     intrusa, achá-la dentro de uma palavra ou ligar cada letra ao seu som. */
+  tentar(girar([exLetterRecognition, exOddOneOut, exLetterInWord, exMatchLetterSound], L.order + 1));
   /* A VARIANTE, que a prática cobrava e a fixação não.
      ─────────────────────────────────────────────────────────────────────
      Bet, Kaf, Pe e Shin têm duas leituras, e é a coisa mais difícil delas -
@@ -963,7 +976,7 @@ export function buildMiniTest(
     for (const { g: gen, cx } of [...doPar, ...comuns]) {
       /* Os geradores de par ignoram o primeiro argumento: o par já vem no fecho. */
       const ex = gen(P, cx, rand, giro + 1);
-      if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+      if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex)) && cabeTipo(ex)) {
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
       }
     }
@@ -1007,7 +1020,7 @@ export function buildMiniTest(
       const cq = contextFor(Q, history);
       for (const gen of girar([exLetterRecognition, exLetterInWord, exSyllableReading, exVowelSound, exWordMeaning], L.order)) {
         const ex = gen(Q, cq, rand, giro + 2);
-        if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex))) {
+        if (ex && !seen.has(ex.id) && !ditos.has(assinatura(ex)) && cabeTipo(ex)) {
           seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex); break;
         }
       }
@@ -1017,20 +1030,20 @@ export function buildMiniTest(
   /* Uma camada pode não render - letra sem palavra legível, alfabeto pequeno
      demais para distratores. O mini-teste tem tamanho fixo, então completa,
      pedindo folga pelo mesmo motivo do bloco de prática. */
-  if (out.length < count) {
+  /* Primeiro respeitando o teto de tipos; só se faltar, sem ele. */
+  for (const comTeto of [true, false]) {
+    if (out.length >= count) break;
     for (const ex of fill([L], history, LESSON_GENERATORS, rand, count * 4, audioAvailable, 6)) {
       if (out.length >= count) break;
-      if (seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+      if (seen.has(ex.id) || ditos.has(assinatura(ex)) || (comTeto && !cabeTipo(ex))) continue;
       seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
     }
-  }
-  if (out.length < count) {
     for (let round = 1; round < 12 && out.length < count; round++) {
       for (const gen of LESSON_GENERATORS) {
         if (out.length >= count) break;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round * 2);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || (comTeto && !cabeTipo(ex))) continue;
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
       }
     }
