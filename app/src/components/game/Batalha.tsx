@@ -267,7 +267,7 @@ function Relampago({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {o.namePt}{r.final ? ' final' : ''}
               {mostra && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
@@ -366,7 +366,7 @@ function Qual({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink hover:bg-surface-2 active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {o.namePt}{r.final ? ' final' : ''}
               {mostrar && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
@@ -395,8 +395,14 @@ function Todas({
       /* Tocar na errada encerra a rodada: aqui a pergunta é "você distingue",
          e continuar depois de um engano transformaria o jogo em tentativa e
          erro, que é exatamente o que ele existe para desfazer. */
-      fechar(false, porQueErrou(r.alvo, r.outra), r.alvo.id,
-             `batalha:${r.alvo.id}:t${idx}`, cel.glifo);
+      /* A outra forma da MESMA letra: o retorno diz qual forma é qual, e não
+         a diferença entre as duas letras do par. */
+      const mesma = cel.letterId === r.alvo.id;
+      const texto = !mesma ? porQueErrou(r.alvo, r.outra)
+        : r.glifo === r.alvo.finalForm
+          ? `Essa é a ${r.alvo.namePt} de começo e meio de palavra. O pedido era a forma final, a que fecha a palavra.`
+          : `Essa é a ${r.alvo.namePt} final, a que fecha a palavra. O pedido era a forma de começo e meio.`;
+      fechar(false, texto, r.alvo.id, `batalha:${r.alvo.id}:t${idx}`, mesma ? undefined : cel.glifo);
       return;
     }
     setTocadas(t => [...t, id]);
