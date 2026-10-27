@@ -22,6 +22,7 @@ describe('a fixação de cada letra é variada', () => {
              par são o mesmo gesto na tela: um só por bloco. */
           expect(conta('letter-recognition'), tag).toBe(1);
           expect(conta('odd-one-out'), tag).toBeLessThanOrEqual(1);
+          expect(conta('vowel-pair'), tag).toBeLessThanOrEqual(1);
           expect(conta('print-vs-cursive'), tag).toBeLessThanOrEqual(2);
           for (const k of new Set(m.map(e => e.kind))) expect(conta(k), `${tag} ${k}`).toBeLessThanOrEqual(3);
           expect(new Set(m.map(e => e.kind)).size, tag).toBeGreaterThanOrEqual(10);
@@ -44,6 +45,7 @@ describe('a prática de cada letra é variada', () => {
           expect(m.length, tag).toBe(letter.order >= 2 ? 16 : 14);
           expect(conta('letter-recognition'), tag).toBe(1);
           expect(conta('odd-one-out'), tag).toBeLessThanOrEqual(1);
+          expect(conta('vowel-pair'), tag).toBeLessThanOrEqual(1);
           expect(conta('print-vs-cursive'), tag).toBeLessThanOrEqual(2);
           for (const k of new Set(m.map(e => e.kind))) expect(conta(k), `${tag} ${k}`).toBeLessThanOrEqual(3);
         }
