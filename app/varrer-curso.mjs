@@ -115,18 +115,33 @@ for (const w of [390,1280]) {
     : `os mesmos destinos nas duas larguras (${chaves(ROTAS[0])})`}`);
 }
 
+/* O cartão "Aula 0" no topo do mapa: o caminho para ela depois de concluída. */
+const mapaLinkaAula0 = await (async () => {
+  const ctx = await b.newContext({ viewport: { width: 390, height: 900 } });
+  await ctx.addInitScript(([a,st])=>{localStorage.setItem('hf-platform-local-v1',a);localStorage.setItem('hebraico-fluente-v1',st)},[JSON.stringify(ACC),JSON.stringify(ST)]);
+  const p = await ctx.newPage();
+  await p.goto('http://127.0.0.1:4403/mapa/', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(500);
+  const n = await p.locator('main a[href="/inicio/"], main a[href="/inicio"]').count();
+  await ctx.close();
+  return n > 0;
+})();
+
 /* ── a aula 0 fica ao alcance do curso inteiro ────────────────────────────
    Ela era uma ETAPA: o painel oferecia, o onboarding terminava nela, e
    depois sumia do caminho. Mas a página é referência - quem esbarra no ה
    mudo na décima lição precisa dela ali, não no painel. Agora ela é um
    destino da navegação, e isto recusa a volta atrás: em toda rota que tem
-   navegação, nas duas larguras, existe um link visível para /inicio. */
+   navegação, nas duas larguras, existe um link visível para /inicio.
+   Exceção (27/10/2026, decisão do dono): depois de CONCLUÍDA, ela sai das
+   duas navegações e o caminho passa a ser o cartão no topo do mapa. Então a
+   tela sem o link na navegação só passa se o mapa tiver o link. */
 {
   let sem=0;
   for (const w of [390,1280]) for (const rota of ROTAS) {
     const tem=navegacao[w][rota];
     if (!tem.length) continue;
-    if (!tem.includes('/inicio')) {
+    if (!tem.includes('/inicio') && !mapaLinkaAula0) {
       sem++; ruim++;
       console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} SEM CAMINHO PARA A AULA 0`);
     }
