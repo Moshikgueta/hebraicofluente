@@ -39,7 +39,7 @@ export function ContadorDeLeitura({ letra, className = '' }: { letra?: Letter; c
         </p>
       )}
       {n > 0 && (
-        <Link href="/vocabulario" className="font-ui text-[14px] font-medium text-[var(--teal-ink)] underline w-fit">
+        <Link href="/vocabulario" className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium text-[var(--teal-ink)] underline w-fit">
           Ver o meu vocabulário
         </Link>
       )}

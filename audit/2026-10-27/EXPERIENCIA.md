@@ -65,6 +65,23 @@ o que foi visto, o que mudou e o que vem depois.
 - `a11y-pago` (9 telas pagas a 360 e 390 px, texto em 100% e 150%): verde.
 - Capturas do mapa e da lição antes e depois, sem erro de console.
 
+## Revisão pela checklist do Emil (emil-design-engineering, a pedido do dono)
+
+A checklist inteira da skill, conferida no código e medida num Chromium, nas telas do aluno
+(painel, mapa, lição, Academia, Laboratório, vocabulário, progresso, perfil, checkout,
+depoimento, onboarding) e nas públicas (capa, entrar, criar conta, esqueci a senha):
+
+| Item | Resultado |
+|---|---|
+| Sem `transition: all` | 5 achados (barras do A1, grade do Blast, sílabas do comparar pronúncia, cartão de sílaba): trocados pelas propriedades exatas; as duas barras do A1 passaram a `transform` |
+| z-index numa escala fixa | o `z-[9999]` da imagem da conquista virou `z-[70]`, no topo da escala 10 a 60 do site |
+| Área de toque de 44 px | medido: só "Ver o meu vocabulário" (21 px de altura) estava abaixo; agora 44 px |
+| Campos com 16 px ou mais (zoom do iOS) | medido: todos os campos visíveis já tinham |
+| Números que mudam sem pular de largura | o XP e os placares já usam `tabular-nums` |
+| Hover só onde há mouse | Tailwind 4 já faz isso; o CSS próprio do Raízes tem `:hover` solto (fora de venda, fica para quando ele voltar) |
+| Foco visível no teclado | `*:focus-visible` global, inclusive no alto contraste |
+| Movimento reduzido | regra global (sistema e menu de acessibilidade); as três animações em loop que sobram têm motivo (gravando, ponto de articulação, seta da leitura) |
+
 ## O que vem depois
 
 - **Rodada 2:** a etapa 1 da lição em sequência curta (descobrir, ouvir, observar, entender,

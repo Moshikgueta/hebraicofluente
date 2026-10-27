@@ -104,7 +104,7 @@ export function CompartilharConquista({ id, quando, size = 'sm', variant = 'seco
           e um fixed dentro dele ficaria preso ao aviso, embaixo da barra. */}
       {mostrar && pronta && createPortal(
         <div role="dialog" aria-modal="true" aria-label="A imagem da conquista"
-             className="fixed inset-0 z-[9999] bg-black/85 grid place-items-center p-4">
+             className="fixed inset-0 z-[70] bg-black/85 grid place-items-center p-4">
           <span className="grid gap-3 justify-items-center max-w-[360px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={pronta.url} alt={frase} className="w-full max-h-[70vh] object-contain rounded-[12px]" />

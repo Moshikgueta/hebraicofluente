@@ -110,7 +110,7 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
             type="button"
             onClick={() => setActive(active === i ? null : i)}
             aria-expanded={active === i}
-            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-all
+            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-[border-color,background-color]
               duration-[var(--dur)] ease-[var(--ease)] min-h-[108px]
               flex flex-col items-center justify-center gap-1.5
               ${active === i

@@ -269,7 +269,7 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
                     onClick={() => escolher(k)}
                     aria-label={`${it.translit ?? it.he}: ouvir e praticar`}
                     className={`rounded-[var(--r-lg)] border p-4 text-center min-h-[108px]
-                      flex flex-col items-center justify-center gap-1.5 transition-all duration-[var(--dur)]
+                      flex flex-col items-center justify-center gap-1.5 transition-[border-color,background-color] duration-[var(--dur)]
                       ${k === qual ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
                         : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}>
               <He size="lg">{it.he}</He>
