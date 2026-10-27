@@ -185,6 +185,27 @@ describe('a batalha é jogável, sempre', () => {
     }
   });
 
+  it('a forma final é outra letra na fileira: em "toque em todas as ף", só a ף conta', () => {
+    /* Pedido do dono (27/10/2026): a fileira de Pe final aceitava a פ. */
+    const pe = TODAS.find(l => l.finalForm === 'ף')!;
+    const mem = TODAS.find(l => l.finalForm === 'ם')!;
+    let finais = 0, mesmaLetraErrada = 0;
+    for (let s = 0; s < 80; s++) {
+      for (const r of montarBatalha([[pe, mem]], false, rng(`fin-${s}`), 16).rodadas) {
+        if (r.tipo === 'todas') {
+          for (const c of r.fila) expect(c.certa, `${c.glifo} na fileira de ${r.glifo}`).toBe(c.glifo === r.glifo);
+          if (r.glifo === 'ף') finais++;
+          if (r.fila.some(c => !c.certa && c.letterId === r.alvo.id)) mesmaLetraErrada++;
+        }
+        if ((r.tipo === 'qual' || r.tipo === 'relampago')) {
+          expect(r.glifo).toBe(r.final ? r.alvo.finalForm : r.alvo.letter);
+        }
+      }
+    }
+    expect(finais).toBeGreaterThan(0);
+    expect(mesmaLetraErrada, 'a outra forma da letra nunca entrou como distrator').toBeGreaterThan(0);
+  });
+
   it('o intruso aparece uma vez, e é a outra letra do par', () => {
     for (let s = 0; s < 40; s++) {
       const b = montarBatalha([par], false, rng(`i-${s}`), 9);
