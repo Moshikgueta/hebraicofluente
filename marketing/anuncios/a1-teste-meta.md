@@ -1,5 +1,8 @@
 # Teste A1: o primeiro anúncio pago (Instagram), semana de 27/10/2026
 
+**ADIADO pelo dono em 27/10/2026: "melhor seguir no orgânico".** O plano fica pronto para quando
+ele decidir; nada foi gasto. Volta à pauta só com decisão dele (decisão 5 do plano).
+
 Pedido do dono (27/10/2026): anunciar o curso nesta semana, para levar gente ao site e à compra.
 Skills usadas: `ads` e `ad-creative`. **Nada é gasto sem o dono:** ele define o teto e aperta o
 botão. O plano previa o anúncio só na semana 9, depois de 6 semanas de base; o dono antecipou, e
