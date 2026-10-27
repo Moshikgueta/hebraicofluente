@@ -833,6 +833,28 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   interpretativa. Cada seção tem a sua vinheta (`VINHETA_DA_SECAO`, ou `vinheta` no dado).
   `tests/raizes-experiencia.test.ts` exige artefatos, um jogo e curiosidades em todo módulo.
 
+## Só o curso de alfabetização no site (27/10/2026, decisão do dono)
+"Por enquanto deixa o site só com o curso de alfabetização." O portal da seção abaixo está
+GUARDADO, não apagado:
+- `/` monta a página do curso (`app/src/app/page.tsx` renderiza a de `/curso-de-hebraico`, que
+  continua respondendo: campanhas, e-mails e portão levam para lá). Microfone liberado nas duas
+  (`naVenda` em worker.js); JSON-LD com Course e FAQPage na capa (`checa-seo.mjs`); cartão do link
+  do curso em todo o site (`ogDaRota`).
+- `/aprender-hebraico`, `/descobrir-israel`, `/israel-alem-do-obvio`, `/raizes-sefarditas` e
+  `/comece-aqui` continuam no build, fora do sitemap (`NAO_LISTADAS` nos dois lados), e o Worker
+  responde 301 para `/` com a consulta junto. `/bio` vai direto ao curso (`PARA_O_COMECE_AQUI`
+  vazio). `/previa`, `/israel/` e `/raizes/` não mudam. `worker/e2e.sh` ("Só o curso no site")
+  confere.
+- Cabeçalho sem o painel "Experiências" e rodapé sem a coluna (o código está no histórico, no
+  commit que os tirou). Conta conectada SEM o curso vê "Minha conta" e "Começar o curso"
+  (`/checkout/alfabetizacao`), e não só "Minha Biblioteca": foi aí que uma aluna travou.
+- `/cursos` sem a vitrine do livro e do combo (`OpcoesDeCompra`). A biblioteca vazia diz a conta, o
+  pagamento pendente, o acesso vencido ou o pago sem acesso, o botão do curso, o "outro e-mail" e o
+  atendimento (`Vazia` em BibliotecaClient.tsx).
+- **Para voltar:** tirar a regex das cinco páginas em worker.js, a linha delas em `NAO_LISTADAS`
+  (seo.ts e seo.mjs), devolver o PortalClient à `page.tsx`, o painel e a coluna ao PublicShell,
+  `bio` ao `PARA_O_COMECE_AQUI`, e a regra antiga da capa em `checa-seo.mjs`.
+
 ## A capa é o portal das três jornadas (23/10/2026, master prompt "Hebraico Fluente 2.0")
 Decisões do dono no mesmo dia: portal na capa; o e-book e o Raízes "Em breve", SEM preço nem
 compra; medição só com o contador próprio.

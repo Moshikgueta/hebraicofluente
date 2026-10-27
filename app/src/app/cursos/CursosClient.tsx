@@ -13,7 +13,6 @@ import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
 import { CourseShelf } from '@/components/platform/CourseShelf';
 import { allCourses, brl, isPlayable, paginaDeVenda } from '@/lib/catalog';
-import { OpcoesDeCompra } from '@/components/portal/OpcoesDeCompra';
 import { useAccount } from '@/lib/account/store';
 import { TrilhaNoTopo } from '@/components/portal/Migalhas';
 
@@ -23,7 +22,7 @@ export function CursosClient() {
 
   return (
     <>
-      <TrilhaNoTopo trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'Os cursos' }]} />
+      <TrilhaNoTopo trilha={[{ nome: 'Os cursos' }]} />
       <Section labelledBy="cursos">
         <SectionHead
           id="cursos"
@@ -35,11 +34,9 @@ export function CursosClient() {
         <CourseShelf />
       </Section>
 
-      {/* Dois produtos e um combo só (23/10/2026, decisão do dono). O que está
-          fora de venda aparece "Em breve", sem preço (OpcoesDeCompra). */}
-      <Section labelledBy="opcoes-titulo">
-        <OpcoesDeCompra />
-      </Section>
+      {/* As opções de compra (o curso, o Israel Além do Óbvio e o combo,
+          OpcoesDeCompra) saíram em 27/10/2026: o site fica só com o curso de
+          alfabetização (decisão do dono). Voltam quando o livro abrir. */}
 
       <Section tone="surface" labelledBy="trilha-detalhe">
         <SectionHead

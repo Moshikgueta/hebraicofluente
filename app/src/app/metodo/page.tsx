@@ -31,7 +31,7 @@ export default function MetodoPage() {
   return (
     <>
       <PageHead
-        trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'O método' }]}
+        trilha={[{ nome: 'O método' }]}
         eyebrowPt="O método"
         titlePt={`${quantasEtapasPt()} etapas em toda lição, e uma regra que sustenta todas.`}
         leadPt="Não é método novo nem segredo de ninguém. É um conjunto pequeno de decisões, tomadas de propósito, e mantidas mesmo quando dão trabalho."

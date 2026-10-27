@@ -56,8 +56,10 @@ describe('a vitrine: dois produtos e um combo', () => {
     expect(codigo(VITRINE)).toMatch(/temParte \? \(/);
   });
 
-  it('/cursos usa a vitrine', () => {
-    expect(codigo('../src/app/cursos/CursosClient.tsx')).toContain('<OpcoesDeCompra />');
+  /* 27/10/2026: o site é só o curso de alfabetização; a vitrine com o livro e
+     o combo saiu de /cursos e volta quando o livro abrir. */
+  it('/cursos não mostra a vitrine do livro e do combo', () => {
+    expect(codigo('../src/app/cursos/CursosClient.tsx')).not.toContain('<OpcoesDeCompra />');
   });
 });
 
@@ -82,5 +84,36 @@ describe('a Minha Biblioteca', () => {
     expect(getCourse(COMBO)!.abre).toBe('/minha-biblioteca/');
     expect(codigo('../src/app/perfil/PerfilClient.tsx')).toContain('href="/minha-biblioteca"');
     expect(codigo('../src/components/shell/PublicShell.tsx')).toContain('href="/minha-biblioteca"');
+  });
+});
+
+/* 27/10/2026: uma aluna entrou, viu a biblioteca vazia e escreveu "não
+ * consegui...". A tela vazia passou a dizer a conta e o caminho. */
+describe('a Minha Biblioteca vazia diz o que fazer', () => {
+  const c = () => codigo(BIBLIOTECA);
+  it('diz em qual conta a pessoa está', () => {
+    expect(c()).toContain('Você está conectado como');
+  });
+  it('lê as compras: pagamento pendente, acesso vencido e pago sem acesso', () => {
+    expect(c()).toContain('.compras()');
+    expect(c()).toContain("o.status === 'pending'");
+    expect(c()).toContain('compras?.vencidos');
+    expect(c()).toContain("o.status === 'paid'");
+    expect(c()).toContain('/obrigado?order=');
+  });
+  it('sem compra nenhuma, o botão do curso; e sempre o outro e-mail e o atendimento', () => {
+    expect(c()).toContain('paginaDeVenda(FLAGSHIP)');
+    expect(c()).toContain('Entrar com outro e-mail');
+    expect(c()).toContain('Não pague de novo.');
+    expect(c()).toContain('whatsappUrl()');
+  });
+});
+
+describe('o topo para quem entrou sem o curso', () => {
+  it('mostra a conta e o botão de começar o curso', () => {
+    const shell = codigo('../src/components/shell/PublicShell.tsx');
+    expect(shell).toContain('Minha conta');
+    expect(shell).toContain('href={`/checkout/${FLAGSHIP}`}');
+    expect(shell).not.toContain('MenuExperiencias');
   });
 });

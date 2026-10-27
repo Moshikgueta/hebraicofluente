@@ -50,7 +50,7 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
-        { nome: 'Aprender hebraico', rota: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' },
+        { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' },
         { nome: l.namePt, rota: `/alfabeto-hebraico/${l.id}` }
       ])) }} />
       <PageHead

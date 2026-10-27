@@ -181,9 +181,11 @@ for (const rota of listadas) {
   if (blocos.length) console.log(`  JSON-LD do curso: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} · CNPJ ${org?.taxID}`);
 }
 
-/* ── e os da capa (o portal) ────────────────────────────────────────────
-   Quem é o site e quem o faz; nada de Course nem FAQPage, que descreveriam
-   outra página. */
+/* ── e os da capa ───────────────────────────────────────────────────────
+   Desde 27/10/2026 a capa é a página do curso (o site é só o curso de
+   alfabetização, decisão do dono): o mesmo grafo dela, com o Course e a
+   FAQPage. Quando o portal voltar, a regra antiga volta junto: sem Course nem
+   FAQPage na capa. */
 {
   const capa = html('/');
   const nos = [];
@@ -192,8 +194,7 @@ for (const rota of listadas) {
     catch (e) { nota(`/ tem JSON-LD inválido: ${e.message}`); }
   }
   const tipos = nos.map(n => n['@type']);
-  for (const t of ['Organization', 'Person']) if (!tipos.includes(t)) nota(`JSON-LD da capa sem ${t}`);
-  for (const t of ['Course', 'FAQPage']) if (tipos.includes(t)) nota(`JSON-LD da capa com ${t}: ele descreve a página do curso`);
+  for (const t of ['Organization', 'Person', 'Course', 'FAQPage']) if (!tipos.includes(t)) nota(`JSON-LD da capa sem ${t}`);
   console.log(`  JSON-LD da capa: ${tipos.join(', ')}`);
 }
 

@@ -276,7 +276,16 @@ async function responder(request, env, ctx) {
     /* O livro mudou de nome (23/10/2026): Israel Além do Óbvio. A página do
        portal foi junto, e o endereço antigo leva para a nova. O slug do
        catálogo, o direito de acesso e /israel/ continuam os mesmos. */
-    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/', '/israel-alem-do-roteiro': '/israel-alem-do-obvio/' };
+    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/', '/israel-alem-do-roteiro': '/' };
+    /* Só o curso de alfabetização no site (27/10/2026, decisão do dono): as
+       páginas das jornadas, das duas experiências "Em breve" e o "Comece
+       aqui" levam à capa, que é a página do curso. A consulta vai junto
+       (`?parceria=` de um link da bio já publicado). As páginas continuam no
+       build, para voltarem sem reescrever nada: é só tirar esta linha. */
+    if (/^\/(aprender-hebraico|descobrir-israel|israel-alem-do-obvio|raizes-sefarditas|comece-aqui)(\/(index\.(html|txt))?)?$/i.test(path)
+        && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 301, headers: { Location: `${url.origin}/${url.search}` } });
+    }
     if (ATALHOS[path.toLowerCase()] && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(null, { status: 301, headers: { Location: `${url.origin}${ATALHOS[path.toLowerCase()]}` } });
     }
@@ -518,7 +527,9 @@ function blindar(res, path, hashes = null) {
      outras páginas públicas e a API continuam fechadas. 23/10/2026: a página
      de venda saiu da capa para /curso-de-hebraico (a capa virou o portal das
      jornadas, que não grava ninguém), e o microfone foi junto. */
-  const naVenda = path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
+  /* 27/10/2026: a capa voltou a ser a página do curso, e o microfone com ela. */
+  const naVenda = path === '/' || path === '/index.html'
+    || path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
   const mic = isGatedPath(path) || isAdminPath(path) || naVenda ? 'microphone=(self)' : 'microphone=()';
   h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
   const tipo = h.get('Content-Type') || '';

@@ -189,11 +189,17 @@ espera "/previa/ fora da busca (meta)" 1 "$(grep -c 'name="robots" content="noin
 espera "/previa/ tem a mochila, o monte e a roleta" 1 "$(grep -q '"tipo":"mochila"' <<<"$PREVIA_HTML" && grep -q '"tipo":"monte"' <<<"$PREVIA_HTML" && grep -q '"jogo":"roleta"' <<<"$PREVIA_HTML" && echo 1 || echo 0)"
 espera "/previa/ não vende o livro" 0 "$(grep -cE 'R\$|/checkout|/cursos/israel' <<<"$PREVIA_HTML")"
 espera "/previa/ sem o nome antigo do livro" 0 "$(grep -ci 'al[eé]m do roteiro' <<<"$PREVIA_HTML")"
-# A página "Comece aqui" (24/10/2026): o destino do link da bio. O curl é
-# robô para o contador (estatisticas.js), então esta conferência não soma visita.
-espera "/bio leva à Comece aqui" "$B/comece-aqui/?parceria=bio" "$(location "$B/bio")"
-espera "/comece-aqui/ abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B/comece-aqui/")"
-espera "/comece-aqui/ fora da busca" 1 "$(G -H 'Sec-Fetch-Dest: document' "$B/comece-aqui/" | grep -c 'name="robots" content="noindex')"
+# Só o curso de alfabetização no site (27/10/2026, decisão do dono): o link da
+# bio vai direto à página do curso, e as páginas das jornadas, das experiências
+# "Em breve" e o "Comece aqui" levam à capa, com a consulta junto. O curl é robô
+# para o contador (estatisticas.js), então esta conferência não soma visita.
+echo "Só o curso no site"
+espera "/bio leva ao curso" "$B/curso-de-hebraico/?parceria=bio#experimente" "$(location "$B/bio")"
+for p in "/comece-aqui/" "/aprender-hebraico/" "/descobrir-israel/" "/israel-alem-do-obvio/" "/raizes-sefarditas/"; do
+  espera "$p leva à capa" "$B/" "$(location "$B$p")"
+done
+espera "/comece-aqui/ leva a parceria" "$B/?parceria=bio" "$(location "$B/comece-aqui/?parceria=bio")"
+espera "a capa é a página do curso" 1 "$(G -H 'Sec-Fetch-Dest: document' "$B/" | grep -c 'id="experimente"')"
 
 # Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
 # some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca - que

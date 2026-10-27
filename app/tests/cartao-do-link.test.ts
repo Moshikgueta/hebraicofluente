@@ -19,8 +19,10 @@ function tamanho(src: string) {
 }
 
 describe('o cartão do link', () => {
-  it('a capa e o resto do site levam o cartão do portal', () => {
-    for (const r of ['/', '/sobre', '/faq', '/raizes-sefarditas']) expect(ogDaRota(r).src, r).toBe('/media/og-portal.jpg');
+  /* 27/10/2026: o site é só o curso de alfabetização, e a capa é a página
+     dele. O cartão do portal (og-portal.jpg) fica guardado. */
+  it('a capa e o resto do site levam o cartão do curso', () => {
+    for (const r of ['/', '/sobre', '/faq', '/raizes-sefarditas']) expect(ogDaRota(r).src, r).toBe('/media/og-curso.jpg');
   });
 
   it('as páginas do curso levam o cartão do curso', () => {

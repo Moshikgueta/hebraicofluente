@@ -32,8 +32,7 @@ import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
-import { estaAVenda, FLAGSHIP, flagship, getCourse, parcelasMax } from '@/lib/catalog';
-import { JORNADAS, jornadaAberta } from '@/lib/ecossistema';
+import { FLAGSHIP, flagship, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -43,9 +42,10 @@ import {
    este mesmo cabeçalho. A capa tem as âncoras por dentro, para quem já está
    rolando por ela. */
 const LINKS = [
-  /* 23/10/2026: a capa virou o portal. As três jornadas moram no painel
-     "Experiências" (MenuExperiencias), com uma linha de descrição e o
-     status de cada uma; ao lado ficam as páginas que explicam o curso. */
+  /* 23/10/2026: a capa virou o portal, com as três jornadas no painel
+     "Experiências". 27/10/2026 (decisão do dono): o site fica só com o curso
+     de alfabetização, e o painel saiu do cabeçalho e do rodapé (o código
+     dele está no histórico do git, no commit que o tirou). */
   { href: '/metodo', label: 'O método' },
   { href: '/sobre', label: 'Sobre' },
   { href: '/faq', label: 'Dúvidas' }
@@ -124,7 +124,6 @@ export function PublicShell({ children }: { children: ReactNode }) {
               dá conta dos links; o que não pode sair da barra é o par
               "Entrar" e "Começar", que é o que cada visitante veio fazer. */}
           <nav aria-label="Navegação do site" className="hidden lg:flex items-center gap-1 ml-4">
-            <MenuExperiencias pathname={pathname} />
             {LINKS.map(l => {
               const active = norm(pathname) === norm(l.href);
               return (
@@ -156,11 +155,22 @@ export function PublicShell({ children }: { children: ReactNode }) {
             {account.ready && account.signedIn && account.can(FLAGSHIP) ? (
               <LinkButton href="/meu-hebraico" size="sm">Meu Hebraico</LinkButton>
             ) : account.ready && account.signedIn ? (
-              /* Sem o curso, a conta pode ter o Israel Além do Óbvio ou o Raízes
-                 (23/10/2026): a Minha Biblioteca mostra tudo, e leva à conta. */
-              <LinkButton href="/minha-biblioteca" variant="secondary" size="sm" className="whitespace-nowrap">
-                Minha Biblioteca
-              </LinkButton>
+              /* Conta sem o curso (27/10/2026, pedido do dono). Era só o
+                 botão "Minha Biblioteca", e uma aluna que tinha acabado de
+                 criar a conta ficou sem saber como comprar: escreveu "não
+                 consegui...". Agora são as mesmas duas portas de quem não
+                 entrou: a conta, e começar o curso. */
+              <>
+                <LinkButton href="/minha-biblioteca" variant="ghost" size="sm"
+                            className="whitespace-nowrap px-2.5 sm:px-4">
+                  Minha conta
+                </LinkButton>
+                <LinkButton href={`/checkout/${FLAGSHIP}`} size="sm"
+                            className="whitespace-nowrap px-3 sm:px-4">
+                  <span className="sm:hidden">Começar</span>
+                  <span className="hidden sm:inline">Começar o curso</span>
+                </LinkButton>
+              </>
             ) : (
               <>
                 {/* "Entrar" aparece em TODA largura, inclusive no telefone.
@@ -219,9 +229,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 está na barra, visível em toda largura - repeti-lo dentro do
                 menu só ensinaria que é aqui que se procura. */}
             <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-3 grid gap-3">
-              <p className="m-0 font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">Experiências</p>
-              <ListaDasJornadas />
-              <ul className="grid list-none p-0 m-0 border-t border-[color:var(--line-soft)]">
+              <ul className="grid list-none p-0 m-0">
                 {LINKS.map(l => (
                   <li key={l.href}>
                     <Link
@@ -248,104 +256,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
   );
 }
 
-/* As três jornadas, com a letra, o nome, o status e uma linha do que são.
-   É a mesma lista no painel do desktop e no menu do telefone. */
-function ListaDasJornadas() {
-  return (
-    <ul className="grid gap-1 list-none p-0 m-0">
-      {JORNADAS.map(j => {
-        const aberta = jornadaAberta(j.id);
-        return (
-          <li key={j.id}>
-            <Link href={j.rota}
-                  className="grid grid-cols-[40px_minmax(0,1fr)] items-start gap-3 rounded-[12px] p-2.5 min-h-[56px]
-                             hover:bg-surface-2 focus-visible:bg-surface-2 transition-colors duration-150">
-              <span aria-hidden className="grid place-items-center w-10 h-10 rounded-[10px] bg-[var(--teal-soft)]">
-                <He size="inline" tone={j.id === 'hebraico' ? 'teal' : 'navy'}>{j.letra}</He>
-              </span>
-              <span className="grid gap-0.5 min-w-0">
-                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span className="font-ui text-[15.5px] font-semibold text-ink">{j.nome}</span>
-                  <span className={`inline-flex items-center min-h-[20px] px-2 rounded-full font-ui text-[11.5px] font-semibold
-                                    ${aberta ? 'bg-[var(--teal-ink)] text-white' : 'bg-[var(--gold-soft)] text-[var(--gold-ink)]'}`}>
-                    {aberta ? 'Disponível' : 'Em breve'}
-                  </span>
-                </span>
-                <span className="font-ui text-[13.5px] leading-[1.45] text-ink-muted">{j.resumo}</span>
-              </span>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-/* O painel "Experiências" do desktop.
-   ─────────────────────────────────────────────────────────────────────────
-   Abre ao passar o mouse (só onde há mouse: no toque o hover dispara junto
-   com o clique e o painel abria e fechava) e ao clicar; Enter e Espaço pelo
-   botão; Esc fecha e devolve o foco ao botão; sair com o Tab ou clicar fora
-   fecha. O conteúdo está no HTML mesmo fechado (`hidden`), então os links
-   das jornadas existem para quem lê o código da página e para a busca. */
-function MenuExperiencias({ pathname }: { pathname: string | null }) {
-  const [aberto, setAberto] = useState(false);
-  const botao = useRef<HTMLButtonElement>(null);
-  const caixa = useRef<HTMLDivElement>(null);
-  const timer = useRef<number | null>(null);
-  const ativo = JORNADAS.some(j => norm(pathname).startsWith(j.rota));
-  const temMouse = () => typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
-  const cancelar = () => { if (timer.current) { window.clearTimeout(timer.current); timer.current = null; } };
-
-  useEffect(() => { setAberto(false); }, [pathname]);
-  useEffect(() => {
-    if (!aberto) return;
-    const tecla = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setAberto(false); botao.current?.focus(); }
-    };
-    const fora = (e: PointerEvent) => {
-      if (caixa.current && !caixa.current.contains(e.target as Node)) setAberto(false);
-    };
-    document.addEventListener('keydown', tecla);
-    document.addEventListener('pointerdown', fora);
-    return () => {
-      document.removeEventListener('keydown', tecla);
-      document.removeEventListener('pointerdown', fora);
-    };
-  }, [aberto]);
-  useEffect(() => cancelar, []);
-
-  return (
-    <div ref={caixa} className="relative"
-         onMouseEnter={() => { if (!temMouse()) return; cancelar(); setAberto(true); }}
-         onMouseLeave={() => { if (!temMouse()) return; cancelar(); timer.current = window.setTimeout(() => setAberto(false), 140); }}
-         onBlur={e => { if (!caixa.current?.contains(e.relatedTarget as Node | null)) setAberto(false); }}>
-      <button ref={botao} type="button"
-              aria-expanded={aberto} aria-controls="painel-experiencias"
-              onClick={() => setAberto(v => !v)}
-              className={`relative inline-flex items-center gap-1.5 min-h-[44px] px-3 font-ui text-[14px] font-medium
-                          transition-colors duration-150
-                          after:absolute after:left-3 after:right-3 after:bottom-[9px] after:h-[2px]
-                          after:bg-[var(--teal)] after:transition-opacity after:duration-150
-                          ${ativo ? 'text-ink after:opacity-100' : 'text-ink-body hover:text-ink after:opacity-0'}`}>
-        Experiências
-        <span aria-hidden className={`inline-block text-[10px] transition-transform duration-150 ${aberto ? 'rotate-180' : ''}`}>▾</span>
-      </button>
-      <div id="painel-experiencias" hidden={!aberto} className="absolute left-0 top-full pt-2 w-[440px] z-50">
-        <div className="rounded-[16px] border border-line bg-[var(--card)] p-2
-                        shadow-[0_24px_50px_-24px_rgba(6,42,48,.45)] motion-safe:animate-[hf-rise_160ms_var(--ease)_both]">
-          <ListaDasJornadas />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Footer() {
   return (
     <footer className="mt-16 border-t border-[color:var(--line-soft)] bg-surface-2">
       <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-10 grid gap-8
-                      grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_repeat(4,minmax(0,1fr))]">
+                      grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
         <div className="col-span-2 lg:col-span-1 grid gap-2 content-start">
           <Logo size={28} />
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
@@ -405,21 +320,13 @@ function Footer() {
           </div>
         </div>
 
-        {/* Quatro colunas com hierarquia (23/10/2026): as jornadas, o que
-            explica o curso, a ajuda e o legal. O curso à venda é um só; A1,
-            A2 e B1 aparecem como o que são, próximos cursos em produção
-            (auditoria de 01/10, CONV-011). Legal ao lado dos outros, e não
-            numa linha miúda: quem procura a política de reembolso antes de
-            comprar está decidindo. */}
-        <div className="grid gap-1 content-start">
-          <FooterCol title="Experiências" links={[
-            ...JORNADAS.map(j => ({ href: j.rota, label: j.nome })),
-            ...(estaAVenda(getCourse('israel-alem-do-roteiro'))
-              ? [{ href: '/cursos/israel-alem-do-roteiro', label: 'E-book Israel Além do Óbvio' }]
-              : [])
-          ]} />
-        </div>
-
+        {/* Três colunas com hierarquia: o que explica o curso, a ajuda e o
+            legal. Legal ao lado dos outros, e não numa linha miúda: quem
+            procura a política de reembolso antes de comprar está decidindo.
+            A1, A2 e B1 aparecem como o que são, próximos cursos de hebraico em
+            produção (auditoria de 01/10, CONV-011). A coluna "Experiências"
+            (as três jornadas) saiu em 27/10/2026, com o site só no curso de
+            alfabetização. */}
         <div className="grid gap-1 content-start">
           <FooterCol title="Aprender" links={[
             { href: '/curso-de-hebraico', label: 'Alfabetização em Hebraico' },

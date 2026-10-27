@@ -28,10 +28,10 @@ export default function AlfabetoHebraicoPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
-        { nome: 'Aprender hebraico', rota: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' }
+        { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' }
       ])) }} />
       <PageHead
-        trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'Alfabeto hebraico' }]}
+        trilha={[{ nome: 'Alfabeto hebraico' }]}
         eyebrowPt="Alfabeto hebraico"
         titlePt="As 22 letras do hebraico, uma por uma."
         leadPt={

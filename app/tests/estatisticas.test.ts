@@ -152,10 +152,11 @@ describe('as tabelas do painel', () => {
 
     /* Os links do Instagram (04/10/2026): cada um conta à parte e leva o
        próprio nome no endereço, que é o que o pedido guarda. */
-    /* 24/10/2026: a bio vai para a página "Comece aqui", com a parceria. */
+    /* 24/10/2026: a bio ia para a página "Comece aqui"; desde 27/10/2026 (só o
+       curso no site) vai direto à página do curso, com a parceria. */
     const bio = await ir('Mozilla/5.0 (iPhone) Instagram', 'GET', '/bio');
     expect(bio.status).toBe(302);
-    expect(bio.headers.get('location')).toBe(`${SITE}/comece-aqui/?parceria=bio`);
+    expect(bio.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=bio#experimente`);
     /* 23/10/2026: a capa virou o portal, e o link antigo `/?parceria=` (de
        posts já publicados) segue para a página de venda com a parceria. */
     const antigo = await ir('Mozilla/5.0', 'GET', '/?parceria=sefarad');
