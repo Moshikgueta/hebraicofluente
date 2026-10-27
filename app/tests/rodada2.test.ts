@@ -7,6 +7,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { idDoSom } from '../src/lib/sons';
 import { allLetters } from '../src/lib/content';
 import {
   buildLetterPractice, buildMiniTest, violatesOrderRule, type Exercise
@@ -239,7 +240,15 @@ describe('"você já consegue ler N palavras"', () => {
       antes = agora;
     }
     expect(leituraDe(comLicoes(0)).legiveis.length).toBe(0);
-    expect(leituraDe(comLicoes(22)).legiveis.length).toBe(vocab.length);
+    /* Desde 27/10/2026 as palavras do Vet, do Chaf e do Fe esperam a lição do
+       som (comOsSonsFeitos em lib/sons.ts): o vocabulário inteiro é as 22
+       letras E as três lições de som. O total continua o curso inteiro. */
+    const tudo = comLicoes(22);
+    const comSons: LearnerState = { ...tudo, lessons: { ...tudo.lessons, ...Object.fromEntries(['vet', 'chaf', 'fe'].map(s =>
+      [idDoSom(s), { ...tudo.lessons[letters[0]!.id]!, letterId: idDoSom(s) }])) } };
+    expect(leituraDe(tudo).legiveis.length).toBeLessThan(vocab.length);
+    expect(leituraDe(tudo).total).toBe(vocab.length);
+    expect(leituraDe(comSons).legiveis.length).toBe(vocab.length);
   });
 
   it('bate com a regra de leitura, palavra por palavra', () => {

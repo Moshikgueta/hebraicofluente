@@ -342,6 +342,44 @@ export function semPalavrasDeSom<T extends { wordsToRead: readonly { som?: strin
   return { ...letra, wordsToRead: letra.wordsToRead.filter(fica), wordsToRecognize: letra.wordsToRecognize.filter(fica) };
 }
 
+/* O som suave que a GRAFIA pede: ב, כ ou פ sem o daguesh, e as finais ך e ף
+   (que são sempre o lado suave). É a grafia que decide, e não só a marca `som`
+   do dado: as mesmas palavras aparecem também como "para reconhecer" em lições
+   anteriores (מֶלֶךְ no Mem, יָפֶה no Yod, חָבֵר no Resh), sem marca nenhuma. */
+const SUAVE: Record<string, string> = { 'ב': 'vet', 'כ': 'chaf', 'פ': 'fe', 'ך': 'chaf', 'ף': 'fe' };
+const MARCA = /[\u0591-\u05C7]/;
+
+/** Os sons de lição própria (vet, chaf, fe) que esta palavra pede para ser lida. */
+export function sonsDaPalavra(he: string, som?: string | null): string[] {
+  const out = new Set<string>(som ? [som] : []);
+  const cs = [...he.normalize('NFC')];
+  for (let i = 0; i < cs.length; i++) {
+    const c = cs[i]!;
+    if (!SUAVE[c]) continue;
+    if (c === 'ך' || c === 'ף') { out.add(SUAVE[c]!); continue; }
+    let k = i + 1, daguesh = false;
+    while (k < cs.length && MARCA.test(cs[k]!)) { if (cs[k] === '\u05BC') daguesh = true; k++; }
+    if (!daguesh) out.add(SUAVE[c]!);
+  }
+  return [...out];
+}
+
+/**
+ * A letra com as palavras de som que o aluno JÁ pode ler (27/10/2026, pedido
+ * do dono: "tem palavras com vet na seção de bet"). `semPalavrasDeSom` tira
+ * as marcadas, para a tela da lição da letra; esta tira toda palavra que pede
+ * um som cuja lição ainda não foi feita (`feito` recebe o id do som: 'vet',
+ * 'chaf', 'fe'). É o que o vocabulário e a academia usam: terminar o Bet não
+ * pode pôr טוֹב na lista de "palavras que você já lê" antes da lição do Vet.
+ */
+export function comOsSonsFeitos<T extends { wordsToRead: readonly { he: string; som?: string | null }[]; wordsToRecognize: readonly { he: string; som?: string | null }[] }>(
+  letra: T, feito: (som: string) => boolean
+): T {
+  const fica = (w: { he: string; som?: string | null }) => sonsDaPalavra(w.he, w.som).every(feito);
+  if (letra.wordsToRead.every(fica) && letra.wordsToRecognize.every(fica)) return letra;
+  return { ...letra, wordsToRead: letra.wordsToRead.filter(fica), wordsToRecognize: letra.wordsToRecognize.filter(fica) };
+}
+
 const DAGUESH = 'ּ';
 
 /**

@@ -266,11 +266,18 @@ export const exVowelPair: Gen = (L, ctx, rand, i) => {
   const answer = options.indexOf(som.sound);
   if (answer < 0 || options.length < 3) return null;
 
+  /* A consoante como a lição a ensina (27/10/2026): na lição do Kaf, que só
+     mostra o lado COM o ponto (soOLadoDoPonto), כַ sem o ponto já se lê
+     "cha", o som do Chaf, que ainda não foi ensinado. Quando todas as
+     leituras que a letra traz têm daguesh, a sílaba sai com ele: כַּ כָּ. */
+  const V = L.variantes ?? [];
+  const base = V.length && V.every(v => v.he.includes('\u05BC')) ? V[0]!.he : L.letter;
+  const silaba = (sinal: string) => `${base}${sinal}`.normalize('NFC');
   return {
     id: `${L.id}-parvogal-${som.sound}`,
     kind: 'vowel-pair', letterId: L.id, skill: 'som',
     promptPt: 'Estas duas escrevem o MESMO som. Qual é?',
-    he: `${L.letter}${a.sign} ${L.letter}${b.sign}`,
+    he: `${silaba(a.sign)} ${silaba(b.sign)}`,
     options, answer,
     whyPt: options.map(v => v === som.sound ? null : `Esse som se escreve de outro jeito.`),
     hintsPt: ['Os dois desenhos são diferentes. O som que sai é o mesmo.'],

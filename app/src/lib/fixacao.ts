@@ -21,6 +21,8 @@ const GLIFOS_RESERVA = ['ב', 'ג', 'ד', 'ע', 'צ', 'ש'];
 const SONS_RESERVA = ['/m/', '/t/', '/n/', '/l/'];
 
 const unicos = <T,>(xs: readonly T[]): T[] => [...new Set(xs)];
+/* Sem os sinais de vogal, daguesh e pontos de shin/sin; o gerech fica. */
+const semPontos = (he: string): string => he.normalize('NFD').replace(/[\u0591-\u05C7]/g, '');
 
 export function alvoDaLetra(letter: Letter, history: readonly Letter[]): AlvoFixacao {
   const anteriores = history.filter(l => l.order < letter.order);
@@ -79,7 +81,11 @@ export function alvoDoSom(S: SomLicao): AlvoFixacao {
     som: S.som,
     audioId: S.audioId,
     lembrePt: S.regraPt,
-    cursiva: false,
+    /* A cursiva também nas lições de som (27/10/2026, pedido do dono: "falta
+       a cursiva aqui", no Vet). À mão não se escrevem os pontos, então o
+       desenho sai sem eles; o gerech (׳) fica, porque é ele que faz o som. */
+    cursiva: true,
+    glifoCursivo: semPontos(S.he),
     palavras,
     destaque: [base, ...(S.finalHe ? [S.finalHe] : [])],
     comparar: [{ glifo: S.parHe, nome: S.parNomePt, som: S.parSom, audioId: null, notaPt: S.irmaoPt }],
