@@ -1,4 +1,3 @@
-'use client';
 
 /* A capa: o portal das três jornadas (23/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
@@ -20,22 +19,20 @@
  */
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Container, H2, Lead, Rubrica } from '@/components/landing/base';
 import { Emblema } from '@/components/portal/Emblemas';
 import { PalavraDescoberta } from '@/components/portal/PalavraDescoberta';
 import { SeloDoStatus } from '@/components/portal/Jornada';
-import { useAccount } from '@/lib/account/store';
-import { brl, fimDoPreLancamento, FLAGSHIP, flagship } from '@/lib/catalog';
-import { proximoPasso } from '@/lib/cta';
+import { brl, fimDoPreLancamento, flagship } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
 import {
   JORNADAS, produtos, vendavel, type Jornada, type Produto
 } from '@/lib/ecossistema';
-import { contarNoPortal, type EventoDoPortal } from '@/lib/funil-portal';
+import { ContadorDoPortal } from '@/components/portal/ContadorDoPortal';
+import { BotaoContinuar, ParaQuem } from '@/components/portal/ParaQuem';
 import { precoDeVitrine } from '@/lib/vitrine';
-import { oEssencialDoCurso } from '@/lib/inclui';
+import { EssencialDoCurso } from '@/components/portal/EssencialDoCurso';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { FATOS_DO_AUTOR } from '@/lib/autor';
 
@@ -47,20 +44,18 @@ const TOM: Record<Jornada['id'], { fundo: string; tinta: string; fio: string; se
   raizes:   { fundo: 'bg-[var(--sand)]',      tinta: 'text-[var(--navy)]',     fio: 'border-[#D8D8D4]', selo: 'Memória' }
 };
 
-const VISTO = 'hf-portal-visto';
-
+/* Montada no SERVIDOR desde 26/10/2026 (velocidade no celular): a capa era
+   inteira um componente de navegador, e o React baixava e reativava o texto
+   todo para que cada link contasse o clique e dois botões soubessem se quem
+   lê já é aluno. Hoje o clique é contado por `ContadorDoPortal` (o link leva
+   `data-portal-evento`) e a diferença de aluno mora em `ParaQuem`. */
 export function PortalClient({ retrato }: { retrato: string | null }) {
-  const account = useAccount();
-  const passo = proximoPasso(account);
-  const jaEhAluno = account.ready && account.can(FLAGSHIP);
-
-  useEffect(() => { contarNoPortal('visto'); }, []);
-
   return (
     <>
-      <Abertura jaEhAluno={jaEhAluno} continuar={passo} />
+      <ContadorDoPortal />
+      <Abertura />
       <Jornadas />
-      <EmDestaque jaEhAluno={jaEhAluno} />
+      <EmDestaque />
       <Experimente />
       <QuemFaz retrato={retrato} />
       <Caminhos />
@@ -71,35 +66,21 @@ export function PortalClient({ retrato }: { retrato: string | null }) {
 }
 
 /* ── 1 · a abertura ─────────────────────────────────────────────────────── */
-function Abertura({ jaEhAluno, continuar }: {
-  jaEhAluno: boolean; continuar: ReturnType<typeof proximoPasso>;
-}) {
-  /* A entrada (menos de meio segundo, só opacidade e translação) acontece uma
-     vez por sessão, como no hero da página do curso. Movimento reduzido: nada
-     se move. */
-  const [entrou, setEntrou] = useState(true);
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem(VISTO)) return;
-      sessionStorage.setItem(VISTO, '1');
-    } catch { return; }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    setEntrou(false);
-    const t = window.setTimeout(() => setEntrou(true), 30);
-    return () => window.clearTimeout(t);
-  }, []);
-  /* O atraso de cada peça vai no `style`: uma classe montada com o número
-     dentro não existe para o Tailwind, que só gera o que lê no código. */
+function Abertura() {
+  /* A entrada (menos de meio segundo, só opacidade e translação) é CSS,
+     `portal-entra` em globals.css, sem esperar o React; movimento reduzido ou
+     sem script: nada se move. O atraso de cada peça vai no `style`: uma classe
+     montada com o número dentro não existe para o Tailwind. */
   const entrada = (atraso: number) => ({
-    className: `transition-[opacity,transform] duration-[420ms] ease-[var(--ease)] ${entrou ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[10px]'}`,
-    style: { transitionDelay: `${atraso}ms` }
+    className: 'portal-entra',
+    style: { animationDelay: `${atraso}ms` }
   });
 
   return (
     <section aria-labelledby="portal-titulo" className="relative overflow-hidden">
       <Container className="pt-8 pb-12 sm:pt-20 sm:pb-24 grid gap-12 lg:gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] items-center">
         <div className="grid gap-6 min-w-0">
-          <div {...entrada(0)}>
+          <div {...entrada(0)} data-entrada>
             <Rubrica letra="א">Hebraico Fluente</Rubrica>
           </div>
           {/* A abertura B, escolhida pelo dono em 23/10/2026: diz em cinco
@@ -123,10 +104,10 @@ function Abertura({ jaEhAluno, continuar }: {
             Um curso para brasileiros começarem do zero, letra por letra, e conteúdos sobre Israel e a
             história sefardita que chegam em breve.
           </p>
-          <div style={entrada(180).style} className={`flex flex-wrap items-center gap-3 pt-1 ${entrada(180).className}`}>
+          <div style={entrada(180).style} data-entrada className={`flex flex-wrap items-center gap-3 pt-1 ${entrada(180).className}`}>
             {/* No telefone a escolha da jornada está logo abaixo (Atalhos), e
                 este botão só repetiria a lista: ele aparece a partir de lg. */}
-            <a href="#jornadas" onClick={() => contarNoPortal('cta-explorar')}
+            <a href="#jornadas" data-portal-evento="cta-explorar"
                className="hidden lg:inline-flex items-center justify-center gap-2 min-h-[56px] px-7 rounded-[var(--r-md)]
                           bg-[var(--navy)] text-white font-ui text-base font-medium shadow-[var(--sh)]
                           transition-[background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
@@ -136,17 +117,24 @@ function Abertura({ jaEhAluno, continuar }: {
             </a>
             {/* Para quem já é aluno, o segundo botão é a volta ao curso
                 (lib/cta.ts), e não uma oferta do que já comprou. */}
-            <Link href={jaEhAluno ? continuar.href : '/curso-de-hebraico'}
-                  onClick={() => { if (!jaEhAluno) contarNoPortal('cta-curso'); }}
-                  className="inline-flex items-center justify-center gap-2 min-h-[56px] px-6 rounded-[var(--r-md)]
+            <ParaQuem
+              aluno={<BotaoContinuar className="inline-flex items-center justify-center gap-2 min-h-[56px] px-6 rounded-[var(--r-md)]
+                             bg-[var(--navy)] text-white lg:bg-[var(--card)] lg:text-ink border border-transparent lg:border-line
+                             font-ui text-base font-medium
+                             transition-[border-color,background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
+                             hover:bg-[var(--navy-2)] lg:hover:bg-[var(--card)] lg:hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0" />}
+              visitante={
+                <Link href="/curso-de-hebraico" data-portal-evento="cta-curso"
+                      className="inline-flex items-center justify-center gap-2 min-h-[56px] px-6 rounded-[var(--r-md)]
                              bg-[var(--navy)] text-white lg:bg-[var(--card)] lg:text-ink border border-transparent lg:border-line
                              font-ui text-base font-medium
                              transition-[border-color,background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
                              hover:bg-[var(--navy-2)] lg:hover:bg-[var(--card)] lg:hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0">
-              {jaEhAluno ? continuar.label : 'Comece pelo hebraico'}
-            </Link>
+                  Comece pelo hebraico
+                </Link>
+              } />
           </div>
-          <div style={entrada(240).style} className={`lg:hidden ${entrada(240).className}`}>
+          <div style={entrada(240).style} data-entrada className={`lg:hidden ${entrada(240).className}`}>
             <Atalhos />
           </div>
         </div>
@@ -155,7 +143,7 @@ function Abertura({ jaEhAluno, continuar }: {
             cima da outra. Ilustração; o conteúdo de cada uma está logo abaixo. */}
         {/* Só a partir de lg: no telefone a mesa empurrava as jornadas para
             baixo da primeira tela, e no lugar dela ficam os Atalhos. */}
-        <div aria-hidden style={entrada(240).style}
+        <div aria-hidden style={entrada(240).style} data-entrada
              className={`hidden lg:block relative mx-auto w-full max-w-[520px] aspect-[5/4] ${entrada(240).className}`}>
           <Folha jornada="israel"   className="absolute left-[2%] top-[4%] w-[62%] -rotate-[5deg]" />
           <Folha jornada="raizes"   className="absolute right-[0%] top-[18%] w-[58%] rotate-[4deg]" />
@@ -197,7 +185,7 @@ function Atalhos() {
           const t = TOM[j.id];
           return (
             <li key={j.id}>
-              <Link href={j.rota} onClick={() => contarNoPortal(`jornada-${j.id}` as EventoDoPortal)}
+              <Link href={j.rota} data-portal-evento={`jornada-${j.id}`}
                     className={`grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 min-h-[60px] px-3 py-2
                                 rounded-[14px] border ${t.fio} ${t.fundo} transition-[scale] duration-150 active:scale-[.98]`}>
                 <span aria-hidden className="grid place-items-center w-10 h-10 rounded-[10px] bg-[var(--card)]">
@@ -267,7 +255,7 @@ function Jornadas() {
                   <h3 className="m-0 min-w-0 [overflow-wrap:anywhere] font-display text-[23px] lg:text-[26px] font-semibold tracking-[-0.02em] text-ink">
                     {/* O link cobre o cartão inteiro (o ::after), e o foco vai
                         para ele: um destino, uma parada de Tab. */}
-                    <Link href={j.rota} onClick={() => contarNoPortal(`jornada-${j.id}` as EventoDoPortal)}
+                    <Link href={j.rota} data-portal-evento={`jornada-${j.id}`}
                           className="after:absolute after:inset-0 after:rounded-[18px] focus:outline-none">
                       {j.nome}
                     </Link>
@@ -292,7 +280,7 @@ function Jornadas() {
 }
 
 /* ── 3 · as experiências ───────────────────────────────────────────────── */
-function EmDestaque({ jaEhAluno }: { jaEhAluno: boolean }) {
+function EmDestaque() {
   const todos = produtos();
   const principal = todos.find(p => p.id === 'alfabetizacao')!;
   const outros = todos.filter(p => p.id === 'israel-alem-do-roteiro' || p.id === 'raizes-sefarditas');
@@ -307,7 +295,7 @@ function EmDestaque({ jaEhAluno }: { jaEhAluno: boolean }) {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
-          <CartaoPrincipal p={principal} jaEhAluno={jaEhAluno} />
+          <CartaoPrincipal p={principal} />
           <div className="grid gap-5">
             {outros.map(p => <CartaoEmBreve key={p.id} p={p} />)}
           </div>
@@ -319,7 +307,7 @@ function EmDestaque({ jaEhAluno }: { jaEhAluno: boolean }) {
           <p className="m-0 font-ui text-[15.5px] leading-[1.6] text-ink-muted border-t border-line pt-5">
             Em desenvolvimento: os níveis seguintes do hebraico, a partir do A1, vendidos à parte e na
             mesma conta.{' '}
-            <Link href="/cursos" onClick={() => contarNoPortal('produto-hebraico-a1')}
+            <Link href="/cursos" data-portal-evento="produto-hebraico-a1"
                   className="inline-block py-3 -my-3 font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]">
               Ver a trilha dos cursos
             </Link>
@@ -330,7 +318,7 @@ function EmDestaque({ jaEhAluno }: { jaEhAluno: boolean }) {
   );
 }
 
-function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
+function CartaoPrincipal({ p }: { p: Produto }) {
   return (
     <article className="grid gap-6 rounded-[20px] border border-line bg-[var(--card)] p-6 sm:p-9
                         shadow-[0_24px_60px_-40px_rgba(6,42,48,.5)]">
@@ -347,18 +335,24 @@ function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
       </div>
       {/* O que o preço compra, em três itens da mesma lista da caixa de preço
           (lib/inclui.ts): a página de venda tem o resto. */}
-      <ul className="grid gap-2 list-none p-0 m-0">
-        {oEssencialDoCurso().map(i => (
-          <li key={i} className="flex items-start gap-3 font-ui text-[15.5px] leading-[1.5] text-ink-body">
-            <span aria-hidden className="mt-[3px] grid place-items-center w-[18px] h-[18px] rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)] text-[11px] font-bold shrink-0">✓</span>
-            {i}
-          </li>
-        ))}
-      </ul>
+      <EssencialDoCurso />
       <div className="flex flex-wrap items-end justify-between gap-5 border-t border-line pt-5">
-        {jaEhAluno ? (
-          <p className="m-0 font-ui text-[15.5px] text-ink-body">Este curso já é seu.</p>
-        ) : (
+        <ParaQuem
+          aluno={
+            <>
+              <p className="m-0 font-ui text-[15.5px] text-ink-body">Este curso já é seu.</p>
+              <Link href="/meu-hebraico" data-portal-evento="produto-alfabetizacao"
+                    className="inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
+                         bg-[var(--navy)] text-white font-ui text-[15.5px] font-medium
+                         transition-[background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
+                         hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0">
+                Continuar o curso
+                <span aria-hidden>→</span>
+              </Link>
+            </>
+          }
+          visitante={
+            <>
           /* O preço que o checkout cobra (lib/vitrine.ts), dito sem clique:
              a página do curso explica o resto, inclusive o pré-lançamento. */
           <p className="m-0 grid gap-0.5">
@@ -377,16 +371,16 @@ function CartaoPrincipal({ p, jaEhAluno }: { p: Produto; jaEhAluno: boolean }) {
               </span>
             )}
           </p>
-        )}
-        <Link href={jaEhAluno ? '/meu-hebraico' : p.rota}
-              onClick={() => contarNoPortal('produto-alfabetizacao')}
-              className="inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
+              <Link href={p.rota} data-portal-evento="produto-alfabetizacao"
+                    className="inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
                          bg-[var(--navy)] text-white font-ui text-[15.5px] font-medium
                          transition-[background-color,transform] duration-[var(--dur)] ease-[var(--ease)]
                          hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0">
-          {jaEhAluno ? 'Continuar o curso' : p.cta}
-          <span aria-hidden>→</span>
-        </Link>
+                {p.cta}
+                <span aria-hidden>→</span>
+              </Link>
+            </>
+          } />
       </div>
     </article>
   );
@@ -431,7 +425,7 @@ function CartaoEmBreve({ p }: { p: Produto }) {
         <span className="font-ui text-[13.5px] text-ink-muted">{p.formato}</span>
       </div>
       <h3 className="m-0 font-display text-[24px] font-semibold tracking-[-0.02em] text-ink">
-        <Link href={p.rota} onClick={() => contarNoPortal(`produto-${p.id}` as EventoDoPortal)}
+        <Link href={p.rota} data-portal-evento={`produto-${p.id}`}
               className="after:absolute after:inset-0 after:rounded-[18px] focus:outline-none">
           {p.nome}
         </Link>
@@ -593,13 +587,13 @@ function Fecho() {
             Escolha por onde começar. Se ainda não sabe, comece pelas letras: elas abrem todas as outras portas.
           </p>
           <div className="flex flex-wrap gap-3">
-            <a href="#jornadas" onClick={() => contarNoPortal('cta-explorar')}
+            <a href="#jornadas" data-portal-evento="cta-explorar"
                className="inline-flex items-center justify-center min-h-[52px] px-6 rounded-[var(--r-md)]
                           bg-[var(--navy)] text-white font-ui text-[15.5px] font-medium hover:bg-[var(--navy-2)]
                           transition-colors duration-[var(--dur)]">
               Explorar todas as experiências
             </a>
-            <Link href="/curso-de-hebraico" onClick={() => contarNoPortal('cta-curso')}
+            <Link href="/curso-de-hebraico" data-portal-evento="cta-curso"
                   className="inline-flex items-center justify-center min-h-[52px] px-6 rounded-[var(--r-md)]
                              bg-[var(--card)] text-ink border border-line font-ui text-[15.5px] font-medium
                              hover:border-[#C9C3B4] transition-colors duration-[var(--dur)]">

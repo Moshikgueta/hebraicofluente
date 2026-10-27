@@ -173,6 +173,12 @@
 @keyframes hf-hero-lamina { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .hero-entra { animation: hf-hero-sobe 450ms cubic-bezier(.23,1,.32,1) both; }
 .hero-entra-lamina { animation: hf-hero-lamina 450ms cubic-bezier(.23,1,.32,1) both; }
+/* A entrada da capa (PortalClient, 26/10/2026): o mesmo princípio. O título e o
+   parágrafo não animam (são a maior pintura); a rubrica, os botões, os atalhos
+   e a mesa sobem 10 px com fade. Era estado do React, uma vez por sessão;
+   agora é CSS e roda a cada visita, sem esperar o JavaScript. */
+@keyframes hf-portal-entra { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.portal-entra { animation: hf-portal-entra 420ms var(--ease) both; }
 @media (scripting: none), (prefers-reduced-motion: reduce) {
   [data-entrada] { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
