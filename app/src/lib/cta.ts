@@ -92,6 +92,13 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
  * alfabetização. Devolve `null` quando não sobrou nada para oferecer - e aí
  * a seção inteira não é renderizada, em vez de virar um botão morto.
  */
+/** O curso logo depois de `atual` na trilha (A1 depois da alfabetização),
+ *  tenha a conta ou não. */
+export function cursoSeguinte(atual: string = FLAGSHIP): CatalogCourse | null {
+  const aqui = getCourse(atual);
+  return [...allCourses()].sort((a, b) => a.n - b.n).find(c => c.n > (aqui?.n ?? 0)) ?? null;
+}
+
 export function proximoCurso(conta: Conta, atual: string = FLAGSHIP): CatalogCourse | null {
   if (!conta.ready) return null;
   const aqui = getCourse(atual);

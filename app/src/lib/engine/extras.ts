@@ -20,6 +20,7 @@
 import type { Exercise } from './exercises';
 import { rng, shuffled, take, type Rand } from './rng';
 import { analisar } from './posicao-do-ponto';
+import { stripNikud } from '@/lib/hebrew';
 
 export type DageshLetter = {
   id: string;
@@ -120,25 +121,31 @@ const optionsWith = (correct: string, wrong: string[], rand: Rand) => {
 
 /* ── module 6 ───────────────────────────────────────────────────────────── */
 
-/* O daguesh desta letra está depois de vogal? Então não é o do começo da
-   palavra nem o de depois de consoante: é o que dobra a letra ({{אַבָּא}}),
-   e a explicação geral ("no começo ou depois de consoante") mentiria.
-   `hard` traz a letra com o ponto (בּ); a análise compara pela letra base. */
-function dobra(he: string, hard: string): boolean {
-  const base = hard.normalize('NFD')[0];
-  return analisar(he).some(a => a.letra.he === base && a.real && a.posicao === 'depois-de-vogal');
-}
-
 export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exercise[] {
   const rand = rng(seed);
   const out: Exercise[] = [];
 
   /* One "which sound does it have here?" per word, hard and soft interleaved
-     so the answer is never predictable from position in the list. */
+     so the answer is never predictable from position in the list.
+
+     SEM NIKUD (27/10/2026, pedido do dono: "na parte sem nikud ainda tem
+     nikud"). O fecho é a etapa "Sem nikud" da lição 23, e esta pergunta
+     mostrava a palavra pontuada, com o daguesh à vista: a resposta estava
+     desenhada. Agora a palavra vem sem ponto nenhum, com o significado como
+     pista, e o aluno decide pelo que a lição 21 ensinou: no começo e depois
+     de consoante, o som forte; depois de vogal, o suave. Por isso só entram as
+     palavras em que essa regra acerta e a letra aparece uma vez só: as do
+     ponto que dobra (אַבָּא) não teriam resposta sem os pontos. A forma
+     pontuada aparece na explicação, depois de responder. */
+  const base = (hard: string) => hard.normalize('NFD')[0]!;
+  const legivelSemPontos = (he: string, letra: string): boolean => {
+    const a = analisar(he).filter(x => x.letra.he === letra);
+    return a.length === 1 && a[0]!.previsto === a[0]!.real;
+  };
   const rows = extras.dagesh.letters.flatMap(D => [
     ...D.hardWords.map(w => ({ D, w, isHard: true })),
     ...D.softWords.map(w => ({ D, w, isHard: false }))
-  ]);
+  ]).filter(r => legivelSemPontos(r.w.he, base(r.D.hard)));
 
   for (const [i, row] of shuffled(rows, rand).entries()) {
     const correct = row.isHard ? row.D.hardPt : row.D.softPt;
@@ -148,15 +155,13 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-dag-${row.D.id}-${i}`,
       kind: 'word-meaning',
       letterId: row.D.id, skill: 'ler',
-      promptPt: `Nesta palavra, a letra tem que som?`,
-      he: row.w.he,
+      promptPt: `Sem os pontos, como num jornal: nesta palavra («${row.w.pt}»), que som tem a letra ${row.D.namePt}?`,
+      he: stripNikud(row.w.he),
       options,
       answer,
       explainPt: `${row.w.he} - ${row.w.translit} - ${row.w.pt}. ` +
         (row.isHard
-          ? (dobra(row.w.he, row.D.hard)
-            ? 'Com daguesh. Aqui ele aparece depois de vogal: é o ponto que "dobra" a letra, e acontece em palavras como {{אַבָּא}} e {{סַבָּא}}.'
-            : 'Com daguesh: no começo da palavra ou depois de consoante que fecha a sílaba.')
+          ? 'Com daguesh: no começo da palavra ou depois de consoante que fecha a sílaba.'
           : 'Sem daguesh: quase sempre entre vogais, e no fim da palavra.')
     });
   }
