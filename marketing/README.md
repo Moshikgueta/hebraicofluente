@@ -49,3 +49,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 26/10/2026: série "O erro do brasileiro" (5 carrosséis, só hebraico já público no site) e horários do Metricool (`roteiros/serie-o-erro-do-brasileiro.md`).
 - 26/10/2026: decisões do dono: série "O erro do brasileiro" aprovada; @israelviagemeturismo é parceira (entra no piloto como 6); Black Friday com conteúdo normal.
 - 26/10/2026: Search Console verificado pelo dono; começa a medição do experimento S1 (páginas do alfabeto).
+- 27/10/2026: teste A1 de anúncio pago no Instagram, antecipado a pedido do dono (`anuncios/a1-teste-meta.md`): espera o teto de gasto.
