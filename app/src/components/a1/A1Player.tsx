@@ -126,7 +126,7 @@ export function A1Player({
       <header className="grid gap-2">
         {titulo && <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{titulo}</p>}
         <div className="h-2 rounded-full bg-surface-2 overflow-hidden" aria-hidden>
-          <div className="h-full bg-[var(--accent)] transition-all" style={{ width: `${(feitos / inicial.length) * 100}%` }} />
+          <div className="h-full w-full origin-left bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]" style={{ transform: `scaleX(${feitos / inicial.length})` }} />
         </div>
         <p className="font-ui text-[13px] text-ink-muted m-0" aria-live="polite">
           {volta ? 'Esta voltou para você tentar de novo.' : `${Math.min(pos + 1, inicial.length)} de ${inicial.length}`}

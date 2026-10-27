@@ -159,6 +159,27 @@
 .animate-pulse-dot { animation: hf-pulse 1.5s ease-in-out infinite; }
 .animate-xp    { animation: hf-xp 2.1s ease-out .15s both; }
 .animate-spark { animation: hf-spark 1s ease-out both; }
+/* ── o movimento do aprendizado (27/10/2026) ──────────────────────────────
+   Pouco, curto e sempre com motivo. A resposta certa "assenta" (260 ms) e a
+   errada balança de leve (280 ms), sem cor nova: o sinal é o movimento, a cor
+   e o ícone já existiam. A letra nova se revela da direita para a esquerda,
+   no sentido da leitura, uma vez por lição; não desenha traço nenhum (o
+   caminho da caneta não foi conferido, ver StrokeOrder.tsx). A próxima letra
+   do mapa ganha um anel que se abre três vezes e para. Tudo some com o
+   movimento reduzido (as duas regras deste arquivo). */
+@keyframes hf-certo  { 0% { transform: scale(.97); } 55% { transform: scale(1.02); } 100% { transform: scale(1); } }
+@keyframes hf-errado { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-4px); } 40% { transform: translateX(4px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
+@keyframes hf-revela-rtl { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes hf-anel   { 0% { opacity: .75; transform: scale(.94); } 100% { opacity: 0; transform: scale(1.18); } }
+.hf-opcao[data-resposta='right'] { animation: hf-certo 260ms var(--ease-out) both; }
+.hf-opcao[data-resposta='wrong'] { animation: hf-errado 280ms var(--ease-in-out) both; }
+.hf-revela { animation: hf-revela-rtl var(--dur-revela) var(--ease-out) both; }
+.hf-chama::after {
+  content: ''; position: absolute; inset: -5px; border-radius: inherit;
+  border: 2px solid var(--teal); opacity: 0; pointer-events: none;
+  animation: hf-anel 1.6s var(--ease-out) .4s 3;
+}
+
 /* A seta da Aula 0 que corre da direita para a esquerda, no sentido da
    leitura (11/10/2026). Com movimento reduzido ela para no fim: à esquerda. */
 @keyframes hf-seta-rtl { from { transform: translateX(84px); opacity: .25; } 20% { opacity: 1; } to { transform: translateX(0); opacity: 1; } }

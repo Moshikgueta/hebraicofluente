@@ -183,7 +183,7 @@ export function Blast({
                 disabled={escolha !== null}
                 data-resposta={estado === 'certo' ? 'right' : undefined}
                 className={`w-full min-h-[64px] rounded-[16px] border-2 px-3 py-3
-                  grid place-items-center gap-1 transition-all duration-[180ms]
+                  grid place-items-center gap-1 transition-[border-color,background-color,opacity,translate,scale] duration-[180ms] enabled:active:scale-[.98]
                   ${estado === 'certo' ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
                     : estado === 'errado' ? 'border-[#D9B872] bg-[var(--gold-soft)]'
                     : estado === 'apagado' ? 'border-line bg-[var(--card)] opacity-50'

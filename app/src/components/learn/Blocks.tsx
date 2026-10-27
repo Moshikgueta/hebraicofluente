@@ -110,7 +110,7 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
             type="button"
             onClick={() => setActive(active === i ? null : i)}
             aria-expanded={active === i}
-            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-all
+            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-[border-color,background-color]
               duration-[var(--dur)] ease-[var(--ease)] min-h-[108px]
               flex flex-col items-center justify-center gap-1.5
               ${active === i
@@ -309,8 +309,12 @@ export function HebrewLetterCard({ letter }: { letter: Letter }) {
     <div className="grid sm:grid-cols-[1fr_auto] items-center gap-6">
       <div className="grid gap-3">
         <div className="flex items-baseline gap-4 flex-wrap">
-          {/* Com o daguesh na lição do Bet, Kaf e Pe (glifoDaLicao em lib/sons.ts). */}
-          <He size="hero">{letter.letraComPonto ?? letter.letter}</He>
+          {/* Com o daguesh na lição do Bet, Kaf e Pe (glifoDaLicao em lib/sons.ts).
+              A letra se revela da direita para a esquerda, no sentido da
+              leitura, uma vez ao abrir a lição (`hf-revela`, globals.css): é
+              um recorte que se abre, e não um traço desenhado, então o glifo
+              é sempre o da fonte. Com movimento reduzido ela já está inteira. */}
+          <He size="hero" className="hf-revela">{letter.letraComPonto ?? letter.letter}</He>
           {letter.finalForm && (
             <span className="flex items-baseline gap-2">
               <He size="xl" dim>{letter.finalForm}</He>
