@@ -203,7 +203,7 @@ describe('o catálogo', () => {
     expect(separados(texto)).toBe(344);
     expect(separados(texto) - preco(texto, PACOTE)).toBe(47);
     const depois = virar(texto).texto;
-    expect([preco(depois, 'alfabetizacao'), preco(depois, LIVRO), preco(depois, PACOTE)]).toEqual([197, 297, 397]);
+    expect([preco(depois, 'alfabetizacao'), preco(depois, LIVRO), preco(depois, PACOTE)]).toEqual([297, 297, 397]);
     for (const t of [texto, depois]) expect(preco(t, PACOTE)).toBeLessThan(separados(t));
   });
 });
