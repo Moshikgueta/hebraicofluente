@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error - script JS, sem tipos
-import { virar } from '../../tools/virar-preco.mjs';
+import { fimDoDia, virar } from '../../tools/virar-preco.mjs';
 
 /* A virada do pré-lançamento para o preço oficial (decisão do dono em
    23/10/2026: SÓ À MÃO, sem data). tools/virar-preco.mjs roda no workflow
@@ -59,19 +59,25 @@ describe('tools/virar-preco.mjs', () => {
     const real = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
     const r = virar(real);
     const preco = (slug: string) => JSON.parse(r.texto).courses.find((x: { slug: string }) => x.slug === slug).price;
-    expect(preco('alfabetizacao')).toMatchObject({ brl: 197, listBrl: null });
+    expect(preco('alfabetizacao')).toMatchObject({ brl: 297, listBrl: null });
     expect(preco('israel-alem-do-roteiro')).toMatchObject({ brl: 297, listBrl: null });
     expect(preco('alfabetizacao-e-israel')).toMatchObject({ brl: 397, listBrl: null });
   });
 
-  it('nada vira sozinho: a Action não tem agendamento e exige a palavra "virar"', () => {
+  it('sozinho, só em 01/12 e só quem tem data vencida (decisão do dono em 27/10/2026)', () => {
     const yml = readFileSync(new URL('../../.github/workflows/virar-preco.yml', import.meta.url), 'utf8');
     const semComentarios = yml.replace(/^\s*#.*$/gm, '');
-    expect(semComentarios).not.toMatch(/schedule:|cron:/);
-    expect(semComentarios).toMatch(/workflow_dispatch:/);
+    expect(semComentarios).toMatch(/cron: '5 3 1 12 \*'/);
+    expect(semComentarios).toMatch(/--aplicar --vencidos/);
+    /* À mão continua exigindo a palavra "virar". */
     expect(semComentarios).toMatch(/"\$CONFIRMAR" != "virar"/);
-    /* O catálogo não tem mais data de fim de pré-lançamento nem de parceria. */
     const real = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
-    expect(real).not.toMatch(/"preLancamentoAte"|"parceriaAte"/);
+    const alf = JSON.parse(real).courses.find((x: { slug: string }) => x.slug === 'alfabetizacao').price;
+    expect(alf).toMatchObject({ brl: 147, listBrl: 297, preLancamentoAte: '2026-11-30' });
+    /* 30/11 ainda é pré-lançamento; 01/12 00:05 de Brasília vira só a Alfabetização. */
+    expect(virar(real, { vencidos: true, agora: fimDoDia('2026-11-30') }).virados).toEqual([]);
+    const r = virar(real, { vencidos: true, agora: Date.parse('2026-12-01T03:05:00Z') });
+    expect(r.virados).toEqual([{ slug: 'alfabetizacao', de: 147, para: 297 }]);
+    expect(r.texto).not.toMatch(/"preLancamentoAte"/);
   });
 });

@@ -18,13 +18,24 @@
  *   node tools/virar-preco.mjs                       mostra o que viraria
  *   node tools/virar-preco.mjs --aplicar             vira todos os vendáveis
  *   node tools/virar-preco.mjs --aplicar --so=alfabetizacao,alfabetizacao-e-israel
+ *   node tools/virar-preco.mjs --aplicar --vencidos  só os de data vencida
+ *
+ * 27/10/2026, decisão do dono: a Alfabetização volta a ter data (até
+ * 30/11, oficial R$ 297) e sobe sozinha. O agendamento usa `--vencidos`,
+ * que só vira produto COM `preLancamentoAte` já passado.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
+/** O último instante de um dia `YYYY-MM-DD` em Brasília (UTC-3), em ms. */
+export const fimDoDia = dia => Date.parse(`${dia}T23:59:59.999-03:00`);
+
 /** Vira as linhas de preço de um texto de courses.json.
- *  `so`: lista de slugs (vazia = todos os vendáveis). */
-export function virar(texto, { so = [] } = {}) {
+ *  `so`: lista de slugs (vazia = todos os vendáveis).
+ *  `vencidos`: só os que têm `preLancamentoAte` e cuja data já passou em
+ *  `agora` - é o modo do agendamento (27/10/2026): um produto sem data
+ *  nunca vira sozinho. */
+export function virar(texto, { so = [], vencidos = false, agora = Date.now() } = {}) {
   const status = new Map(JSON.parse(texto).courses.map(c => [c.slug, c.status]));
   const virados = [];
   const novo = texto.replace(
@@ -34,6 +45,7 @@ export function virar(texto, { so = [] } = {}) {
       if (typeof p.listBrl !== 'number' || p.listBrl <= p.brl) return trecho;
       if (status.get(slug) === 'soon') return trecho;
       if (so.length && !so.includes(slug)) return trecho;
+      if (vencidos && !(typeof p.preLancamentoAte === 'string' && fimDoDia(p.preLancamentoAte) < agora)) return trecho;
       virados.push({ slug, de: p.brl, para: p.listBrl });
       const { preLancamentoAte, ...resto } = p;
       const depois = { ...resto, brl: p.listBrl, listBrl: null };
@@ -50,8 +62,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const aplicar = process.argv.includes('--aplicar');
   const arg = process.argv.find(a => a.startsWith('--so='));
   const so = arg ? arg.slice(5).split(',').map(s => s.trim()).filter(Boolean) : [];
+  const vencidos = process.argv.includes('--vencidos');
   const arquivo = new URL('../data/courses.json', import.meta.url);
-  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), { so });
+  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), { so, vencidos });
   if (!virados.length) {
     console.log('Nada a virar: nenhum produto com preço oficial acima do atual.');
   } else {
