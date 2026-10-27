@@ -19,7 +19,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { useAccount } from '@/lib/account/store';
-import { proximoCurso, proximoPasso } from '@/lib/cta';
+import { cursoSeguinte, proximoCurso, proximoPasso } from '@/lib/cta';
 import { FLAGSHIP, paginaDeVenda } from '@/lib/catalog';
 import { track } from '@/lib/analytics';
 
@@ -104,8 +104,38 @@ export function FaixaCta({
  * Fica no fim do curso e na área de progresso. Um curso que ainda não abriu
  * ganha a página de plano e nenhuma promessa de data.
  */
+/* Onde cada curso abre para quem já o tem. */
+const ABRE: Record<string, string> = { 'hebraico-a1': '/a1/' };
+
 export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
   const account = useAccount();
+  /* Depois da alfabetização, o cartão é SEMPRE o do A1 (27/10/2026, pedido
+     do dono). Antes ele pulava para o primeiro curso que a conta não tinha:
+     a conta do dono, com o A1 liberado para revisão, via o A2. Quem já tem o
+     curso seguinte recebe a porta para ele, e não uma oferta. */
+  const seguinte = cursoSeguinte(atual);
+  if (seguinte && account.ready && account.can(seguinte.slug)) {
+    return (
+      <Card tone="wash" className="p-6 sm:p-7 grid gap-3">
+        <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--accent)]">
+          Depois desta etapa
+        </p>
+        <h2 className="font-display text-[20px] sm:text-[23px] font-bold leading-snug text-ink">
+          {seguinte.titlePt}
+        </h2>
+        <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[52ch]">
+          Este curso já está na sua conta. {seguinte.summaryPt}
+        </p>
+        <div className="pt-1">
+          <Link href={ABRE[seguinte.slug] ?? '/minha-biblioteca/'}
+                className="inline-flex items-center gap-2 min-h-[48px] px-5 rounded-[var(--r-md)]
+                           bg-[var(--accent-bg)] text-white font-ui font-semibold text-[15px]">
+            Abrir o {seguinte.titlePt}<span aria-hidden>→</span>
+          </Link>
+        </div>
+      </Card>
+    );
+  }
   const curso = proximoCurso(account, atual);
   if (!curso) return null;
 
@@ -152,6 +182,16 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
           ? 'Compra separada. O curso que você já tem continua aberto.'
           : 'Ainda não abriu. A página mostra o que ele vai cobrir.'}
       </p>
+      {/* O aviso por e-mail mora SÓ em Sua conta (a única porta da lista,
+          LEGAL-019): daqui sai um link para lá, e não outra caixa. */}
+      {!abre && account.signedIn && (
+        <p className="font-ui text-[13.5px] text-ink-body">
+          Quer saber quando ele abrir?{' '}
+          <Link href="/perfil/" className="font-semibold text-[var(--accent)] underline underline-offset-[3px]">
+            Peça o aviso em Sua conta
+          </Link>.
+        </p>
+      )}
     </Card>
   );
 }
