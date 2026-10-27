@@ -589,11 +589,19 @@ export function buildLetterPractice(
      letter-recognition, que inclui "entre estas parecidas") era um em cada
      cinco itens do curso, e chegava a seis numa lição só, somando a camada
      de reconhecer, a de parecidas, a revisão cumulativa e o preenchimento.
-     Dois por bloco bastam; o lugar dos outros vai para gestos diferentes. */
-  const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = { 'letter-recognition': 2, 'odd-one-out': 1 };
+     Dois por bloco bastam; o lugar dos outros vai para gestos diferentes.
+     UM desde 27/10/2026, como na fixação (pedido do dono: o formato não
+     aparece mais de uma vez por etapa). A letra em cursiva, que também são
+     quatro cartões de letra, fica em dois, e nenhum outro tipo passa de três;
+     só o último recurso afrouxa estes tetos, nunca o do reconhecer. */
+  const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2
+  };
+  let tetoGeral = 3;
   const cabe = (ex: Exercise) => {
-    const teto = TETO_POR_TIPO[ex.kind];
-    return teto === undefined || out.filter(e => e.kind === ex.kind).length < teto;
+    const teto = ex.kind === 'letter-recognition' ? 1
+      : tetoGeral > 3 ? Math.max(TETO_POR_TIPO[ex.kind] ?? 0, tetoGeral) : TETO_POR_TIPO[ex.kind] ?? tetoGeral;
+    return out.filter(e => e.kind === ex.kind).length < teto;
   };
 
   const tentar = (gens: readonly Gen[], quantos = 1) => {
@@ -728,7 +736,7 @@ export function buildLetterPractice(
         let feito = false;
         for (const gen of girar(gensDoPar(c), L.order + n)) {
           const ex = gen(L, ctx, rand, giro + n);
-          if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+          if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
           seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
           postos++; emPar++; feito = true;
           break;
@@ -780,9 +788,12 @@ export function buildLetterPractice(
         if (out.length >= count) break;
         if (!audioAvailable && NEEDS_AUDIO.has(gen)) continue;
         const ex = gen(L, ctx, rand, giro + round * 3);
-        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex))) continue;
+        if (!ex || seen.has(ex.id) || ditos.has(assinatura(ex)) || !cabe(ex)) continue;
         seen.add(ex.id); ditos.add(assinatura(ex)); out.push(ex);
       }
+      /* O alfabeto das primeiras letras não dá tantos gestos: afrouxa o
+         teto geral aos poucos, para o bloco não sair curto. */
+      if (round % 3 === 2) tetoGeral++;
     }
   }
 
@@ -806,8 +817,11 @@ export function buildLetterPractice(
      onde nada a tira - e o bloco termina com «você acabou de ler uma frase em
      hebraico», que é o melhor lugar para terminar. */
   const teto = frase ? count - 1 : count;
-  const arranjado = spread(out.slice(0, teto));
-  if (frase && !seen.has(frase.id) && !ditos.has(assinatura(frase))) arranjado.push(frase);
+  /* O preenchimento pode ter trazido a MESMA frase (ela está na rotação
+     geral): fica só a do fim, e não um bloco com um item a menos. */
+  const proprios = frase ? out.filter(e => assinatura(e) !== assinatura(frase)) : out;
+  const arranjado = spread(proprios.slice(0, teto));
+  if (frase) arranjado.push(frase);
   return arranjado;
 }
 

@@ -94,7 +94,9 @@ describe('the order rule', () => {
       }
     }
     expect([...new Set(offences)].slice(0, 20)).toEqual([]);
-  });
+    /* Mais de três mil blocos: leva uns 4 s, colado no prazo padrão de 5 s,
+       e uma máquina mais lenta reprovava a regra sem violação nenhuma. */
+  }, 20_000);
 
   /* The negative case. Without it the three tests above could be passing
      because the checker never rejects anything. */
