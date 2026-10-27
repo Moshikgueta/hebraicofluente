@@ -88,7 +88,11 @@ export const NAO_LISTADAS = [
   /* A página de venda antiga do curso: o Worker responde 301 para
      /curso-de-hebraico (23/10/2026). Anunciar as duas era dividir o curso
      em dois endereços na busca. */
-  '/cursos/alfabetizacao'
+  '/cursos/alfabetizacao',
+  /* Só o curso de alfabetização no site (27/10/2026, decisão do dono): as
+     páginas das jornadas, das duas experiências "Em breve" e o "Comece aqui"
+     continuam no código, mas o Worker responde 301 para a capa. */
+  '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ] as const;
 
 /** A rota, na forma canônica que o portão também usa para comparar. */
@@ -122,7 +126,7 @@ export function url(rota: string): string {
    editorial e usa /media/og-previa.jpg, do mesmo gerador. */
 /* Nome novo a cada cartão novo: /media sai com cache de um ano, e o WhatsApp
    e o Instagram guardam a imagem pelo endereço. */
-export const OG = { src: '/media/og-portal.jpg', largura: 1200, altura: 630 } as const;
+export const OG = { src: '/media/og-curso.jpg', largura: 1200, altura: 630 } as const;
 const OG_POR_PORTA: readonly { prefixos: readonly string[]; src: string; alt: string }[] = [
   { prefixos: ['/curso-de-hebraico', '/aprender-hebraico', '/metodo', '/checkout', '/biblia', '/cursos/alfabetizacao'],
     src: '/media/og-curso.jpg', alt: 'Hebraico Fluente: aprenda a ler hebraico do zero' },
@@ -134,7 +138,10 @@ const OG_POR_PORTA: readonly { prefixos: readonly string[]; src: string; alt: st
 export function ogDaRota(rota: string): { src: string; alt: string } {
   const r = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '') || '/';
   const porta = OG_POR_PORTA.find(p => p.prefixos.some(x => r === x || r.startsWith(x + '/')));
-  return porta ? { src: porta.src, alt: porta.alt } : { src: OG.src, alt: 'Hebraico Fluente: aprender hebraico, descobrir Israel e as raízes sefarditas' };
+  /* Desde 27/10/2026 o site é só o curso de alfabetização (decisão do dono):
+     a capa e o resto do site levam o cartão do curso. O do portal
+     (og-portal.jpg, as três jornadas) fica para quando elas voltarem. */
+  return porta ? { src: porta.src, alt: porta.alt } : { src: OG_POR_PORTA[0]!.src, alt: OG_POR_PORTA[0]!.alt };
 }
 
 /**

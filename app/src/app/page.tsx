@@ -1,29 +1,22 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
-import { PortalClient } from './PortalClient';
-import { primeiroQueExiste } from '@/lib/midia-publica';
-import { grafoDaCapa, jsonLdTexto } from '@/lib/jsonld';
+import CursoDeHebraicoPage from './curso-de-hebraico/page';
 
-/* A capa é o portal das três jornadas desde 23/10/2026 (PortalClient.tsx).
-   A página de venda do curso, que morava aqui, está em /curso-de-hebraico. */
+/* A capa é a página do curso de alfabetização (27/10/2026, decisão do dono:
+   "por enquanto deixa o site só com o curso de alfabetização"). De 23 a
+   27/10/2026 ela foi o portal das três jornadas: o PortalClient.tsx continua
+   no código, para voltar quando o Israel Além do Óbvio e o Raízes abrirem.
+   /curso-de-hebraico segue respondendo a mesma página: é para lá que vão os
+   links de campanha, os e-mails e o portão. */
 export const metadata: Metadata = meta({
   rota: '/',
-  title: 'Hebraico Fluente | Aprenda hebraico e descubra Israel',
+  title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
   /* Até 155 caracteres (checa-seo.mjs). */
   description:
-    'Aprenda a ler hebraico, conheça Israel e a história sefardita, em experiências digitais ' +
-    'feitas para brasileiros por um educador israelense.'
+    'Curso interativo para brasileiros aprenderem a ler hebraico do zero: as 22 letras, os ' +
+    'sinais de vogal e palavras reais, com correção na hora.'
 });
 
 export default function HomePage() {
-  const retrato = primeiroQueExiste(['media/moshik.avif', 'media/moshik.webp', 'media/moshik.jpg']);
-  return (
-    <>
-    {/* Dados estruturados da capa (Organization, WebSite, Person): quem é o
-        site e quem o faz. O Course e a FAQPage moram na página do curso. */}
-    <script type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: jsonLdTexto(grafoDaCapa(retrato)) }} />
-    <PortalClient retrato={retrato} />
-    </>
-  );
+  return <CursoDeHebraicoPage />;
 }

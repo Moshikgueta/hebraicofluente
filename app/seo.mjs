@@ -51,7 +51,9 @@ const NAO_LISTADAS = [
   /* O destino do link da bio do Instagram (24/10/2026). */
   '/comece-aqui',
   /* A Minha Biblioteca, da conta (23/10/2026). */
-  '/minha-biblioteca'
+  '/minha-biblioteca',
+  /* Só o curso de alfabetização no site (27/10/2026): respondem 301 para a capa. */
+  '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ];
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,

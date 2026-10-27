@@ -177,10 +177,13 @@ describe('o site sai blindado', () => {
        fale" da landing -, e só para ele. */
     /* 23/10/2026: a página de venda saiu da capa para /curso-de-hebraico, e
        o microfone foi junto; a capa (o portal) volta a fechá-lo. */
-    expect((await worker.fetch(new Request(`${SITE}/`), env, ctx)).headers.get('permissions-policy')).toContain('microphone=()');
-    const capa = await worker.fetch(new Request(`${SITE}/curso-de-hebraico/`), env, ctx);
-    expect(capa.headers.get('permissions-policy')).toContain('microphone=(self)');
-    expect(capa.headers.get('permissions-policy')).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
+    /* 27/10/2026: a capa voltou a ser a página do curso (o site é só o curso
+       de alfabetização), e o microfone abre nas duas. */
+    for (const r of ['/', '/curso-de-hebraico/']) {
+      const venda = await worker.fetch(new Request(`${SITE}${r}`), env, ctx);
+      expect(venda.headers.get('permissions-policy'), r).toContain('microphone=(self)');
+      expect(venda.headers.get('permissions-policy'), r).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
+    }
 
     const { cookie, id } = await comConta(env);
     await grantAccess(env, { accountId: id, courseSlug: 'alfabetizacao', orderId: 'M', months: 12 });

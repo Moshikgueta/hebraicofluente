@@ -47,7 +47,7 @@ export default function BibliaPage() {
   return (
     <>
       <PageHead
-        trilha={[{ nome: 'Aprender hebraico', href: '/aprender-hebraico' }, { nome: 'Ler a Bíblia' }]}
+        trilha={[{ nome: 'Ler a Bíblia' }]}
         eyebrowPt="A pergunta que mais chega"
         titlePt="Vou conseguir ler a Bíblia em hebraico?"
         leadPt="A resposta tem duas metades, e as duas importam."

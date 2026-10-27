@@ -14,10 +14,12 @@
  */
 
 import Link from 'next/link';
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useAccount } from '@/lib/account/store';
-import { entitlementFor } from '@/lib/account/types';
-import { FLAGSHIP, getCourse } from '@/lib/catalog';
+import { api } from '@/lib/account/api';
+import { entitlementFor, type Compras } from '@/lib/account/types';
+import { FLAGSHIP, getCourse, paginaDeVenda } from '@/lib/catalog';
+import { empresa, whatsappUrl } from '@/lib/empresa';
 import { proximoPasso } from '@/lib/cta';
 import { Container, Rubrica } from '@/components/landing/base';
 import { nomeNaVitrine } from '@/components/portal/OpcoesDeCompra';
@@ -62,15 +64,7 @@ export function BibliotecaClient() {
   return (
     <Moldura>
       {itens.length === 0 ? (
-        <div className="grid gap-4">
-          <p className="m-0 font-ui text-[17px] leading-[1.6] text-ink-body max-w-[52ch]">
-            Sua biblioteca ainda está vazia. Se você pagou há pouco por PIX, o acesso aparece aqui assim que o
-            pagamento for confirmado.
-          </p>
-          <Link href="/cursos/" className="justify-self-start font-ui text-[15.5px] font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]">
-            Ver o que o Hebraico Fluente oferece
-          </Link>
-        </div>
+        <Vazia email={account.session!.account.email} />
       ) : (
         <ul className="grid gap-4 md:grid-cols-2 list-none p-0 m-0">
           {itens.map(i => {
@@ -100,6 +94,115 @@ export function BibliotecaClient() {
         Compras, recibos e desistência ficam em <Link href="/perfil" className="underline underline-offset-[3px]">Sua conta</Link>.
       </p>
     </Moldura>
+  );
+}
+
+/* A biblioteca VAZIA (27/10/2026, pedido do dono).
+ * ─────────────────────────────────────────────────────────────────────────
+ * Uma aluna entrou, viu "Sua biblioteca ainda está vazia" e um link miúdo, e
+ * escreveu ao dono: "não consegui...". A tela não dizia em qual conta ela
+ * estava, nem se havia um pagamento esperando, nem como começar o curso. É o
+ * mesmo estado que a página do curso já trata ("Esta conta ainda não tem o
+ * curso", CourseClient): conta conectada sem direito nenhum. Então a tela
+ * lê as compras da conta e diz a coisa certa para cada caso:
+ *
+ *   · pagamento AGUARDANDO: conferir o pagamento (e o código PIX em Sua conta);
+ *   · acesso VENCIDO: renovar (vem antes do pago: o pedido de um acesso
+ *     vencido continua `paid`);
+ *   · pedido PAGO sem acesso: não pagar de novo, falar com a gente;
+ *   · nada disso: o botão do curso, em destaque.
+ *
+ * Em todos, o e-mail da conta (comprar com outro e-mail é o caso mais comum)
+ * e o caminho do atendimento. */
+function Vazia({ email }: { email: string }) {
+  const [compras, setCompras] = useState<Compras | null>(null);
+  useEffect(() => {
+    let parar = false;
+    void (async () => {
+      const r = await (await api()).compras().catch(() => ({ orders: [], vencidos: [] }) as Compras);
+      if (!parar) setCompras(r);
+    })();
+    return () => { parar = true; };
+  }, []);
+
+  const pendente = compras?.orders.find(o => o.status === 'pending');
+  const pago = compras?.orders.find(o => o.status === 'paid');
+  const vencido = compras?.vencidos[0];
+  const zap = whatsappUrl();
+  const nomeDe = (slug: string) => {
+    const c = getCourse(slug);
+    return c ? nomeNaVitrine(c) : slug;
+  };
+  const botao = `justify-self-start inline-flex items-center justify-center gap-2 min-h-[52px] px-6 rounded-[var(--r-md)]
+                 bg-[var(--navy)] text-white font-ui text-[15.5px] font-semibold
+                 transition-[background-color,transform] duration-[var(--dur)] hover:bg-[var(--navy-2)] active:scale-[.98]`;
+  const link = 'font-ui font-semibold text-[var(--teal-ink)] underline underline-offset-[3px]';
+
+  return (
+    <div className="grid gap-5">
+      <p className="m-0 font-ui text-[17px] leading-[1.6] text-ink-body max-w-[56ch]">
+        Você está conectado como <strong className="break-all text-ink">{email}</strong>, e esta conta
+        ainda não tem nenhum curso.
+      </p>
+
+      {compras === null ? null : pendente ? (
+        <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
+          <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
+            Há um pagamento esperando confirmação
+          </h2>
+          <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
+            {nomeDe(pendente.courseSlug)}, {pendente.method === 'pix' ? 'por PIX' : 'no cartão'}. Assim que o pagamento
+            for confirmado, o curso aparece aqui. Se você ainda não pagou, o código PIX está em Sua conta.
+          </p>
+          <Link href={`/checkout/${pendente.courseSlug}/obrigado?order=${encodeURIComponent(pendente.id)}`} className={botao}>
+            Conferir o pagamento<span aria-hidden>→</span>
+          </Link>
+          <Link href="/perfil" className={`justify-self-start text-[15px] ${link}`}>Ver o código PIX em Sua conta</Link>
+        </div>
+      ) : vencido ? (
+        <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
+          <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
+            Seu acesso terminou em {data(vencido.expiredAt)}
+          </h2>
+          <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
+            {nomeDe(vencido.courseSlug)}. Seu progresso continua guardado e volta inteiro quando você renovar.
+          </p>
+          <Link href={`/checkout/${vencido.courseSlug}`} className={botao}>Renovar o acesso<span aria-hidden>→</span></Link>
+        </div>
+      ) : pago ? (
+        <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
+          <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
+            Seu pagamento consta como pago
+          </h2>
+          <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
+            <strong>Não pague de novo.</strong> O acesso ainda não apareceu nesta conta: fale com a gente e a
+            gente libera.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-3">
+          <Link href={paginaDeVenda(FLAGSHIP)} className={botao}>
+            Começar o curso de hebraico<span aria-hidden>→</span>
+          </Link>
+          <Link href="/cursos/" className={`justify-self-start text-[15px] ${link}`}>
+            Ver tudo o que o Hebraico Fluente oferece
+          </Link>
+        </div>
+      )}
+
+      <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5 max-w-[60ch]">
+        <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
+          Comprou com outro e-mail? O curso fica na conta do e-mail que pagou.{' '}
+          <Link href={`/entrar?next=${encodeURIComponent('/minha-biblioteca')}`} className={link}>Entrar com outro e-mail</Link>
+        </p>
+        <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
+          Já pagou e o curso não aparece? <strong>Não pague de novo.</strong> Fale com a gente
+          {zap ? <> pelo <a href={zap} target="_blank" rel="noopener noreferrer" className={link}>WhatsApp</a> ou</> : null}
+          {' '}por <a href={`mailto:${empresa.contato.emailSuporte}`} className={`break-all ${link}`}>{empresa.contato.emailSuporte}</a>,
+          com o e-mail da compra.
+        </p>
+      </div>
+    </div>
   );
 }
 
