@@ -18,11 +18,12 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { useProgress } from '@/lib/state/store';
-import { getLetter } from '@/lib/content';
+import { allLetters, getLetter } from '@/lib/content';
 import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { tx } from '@/i18n/telas/conta-painel';
 import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
-import { Yael } from '@/components/aventura/Yael';
+import { Yael, YaelDiz } from '@/components/aventura/Yael';
+import { falaDaSemana, resumoDaSemana } from '@/lib/resumo-da-semana';
 
 /* ── o cartão do curso ──────────────────────────────────────────────────── */
 export function CartaoCurso({
@@ -173,33 +174,45 @@ const DIA = tx.diasDaSemana;
 
 export function CartaoSemana() {
   const p = useProgress();
-
-  /* Sete dias terminando hoje. A data é montada em UTC a partir da chave
-     YYYY-MM-DD do próprio estado, e não com `new Date()` local: o dia do
-     estudo é o que o app gravou, e não o fuso de quem está olhando. */
+  /* O resumo dos sete dias terminando hoje (lib/resumo-da-semana.ts): o
+     tempo por dia, os dias com estudo, as letras e as palavras novas, e o
+     comentário da Yael. Só lê o progresso. */
   const hoje = p.day;
-  const dias = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(`${hoje}T12:00:00Z`);
-    d.setUTCDate(d.getUTCDate() - (6 - i));
-    const chave = d.toISOString().slice(0, 10);
-    return { chave, dow: d.getUTCDay(), units: p.state.days[chave]?.units ?? 0 };
-  });
-
-  const total = dias.reduce((n, d) => n + d.units, 0);
-  const teto = Math.max(...dias.map(d => d.units), 1);
-  const minutos = Math.round(total / 3);
-  const h = Math.floor(minutos / 60);
+  const r = resumoDaSemana(p.state, hoje, allLetters());
+  const { fala, humor } = falaDaSemana(r);
+  const teto = Math.max(...r.dias.map(d => d.units), 1);
+  const h = Math.floor(r.minutos / 60);
 
   return (
-    <Card className="p-6">
-      <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">{tx.suaSemana}</p>
-      <p className="font-ui text-[14px] text-ink-muted mb-5">
-        {total === 0
-          ? tx.nadaEstudado
-          : tx.estudados(h, minutos % 60)}
-      </p>
+    <Card className="p-6 grid gap-5">
+      <div>
+        <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">{tx.suaSemana}</p>
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          {r.minutos === 0 ? tx.nadaEstudado : tx.estudados(h, r.minutos % 60)}
+        </p>
+      </div>
+      <YaelDiz humor={humor} tamanho={60}>
+        {fala === 'palavras' ? tx.falaPalavras(r.palavrasNovas) : fala === 'ritmo' ? tx.falaRitmo : fala === 'quieta' ? tx.falaQuieta : tx.falaContinua}
+      </YaelDiz>
+      <dl className="grid grid-cols-3 gap-2 m-0">
+        {([[r.diasEstudados, tx.diasDeEstudo], [r.letras.length, tx.letrasNovas], [r.palavrasNovas, tx.palavrasNovas]] as const).map(([n, rotulo]) => (
+          <div key={rotulo} className="grid gap-0.5 rounded-[var(--r-md)] bg-[var(--sand)] px-3 py-2.5 text-center">
+            <dd className="m-0 font-display text-[24px] font-bold tabular-nums text-ink">{n}</dd>
+            <dt className="font-ui text-[12px] leading-tight text-ink-muted">{rotulo}</dt>
+          </div>
+        ))}
+      </dl>
+      {r.letras.length > 0 && (
+        <p className="m-0 flex flex-wrap items-center gap-2" aria-label={r.letras.map(l => l.namePt).join(', ')}>
+          {r.letras.map(l => (
+            <span key={l.id} aria-hidden className="grid place-items-center w-10 h-10 rounded-[12px] bg-[var(--teal-soft)]">
+              <He size="inline">{l.letter}</He>
+            </span>
+          ))}
+        </p>
+      )}
       <div className="flex items-end gap-[9px] h-[92px]">
-        {dias.map((d, i) => {
+        {r.dias.map((d, i) => {
           const eHoje = d.chave === hoje;
           const altura = d.units === 0 ? 4 : Math.max(8, Math.round((d.units / teto) * 100));
           return (
