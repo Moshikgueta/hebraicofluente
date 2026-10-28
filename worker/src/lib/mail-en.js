@@ -274,3 +274,27 @@ export function mensagemDeAtivacao({ nome, curso, marco, concluidas, inicio, pri
   ].join('');
   return { subject, text, html };
 }
+
+/** The study reminder (worker/src/lembrete.js); see the Portuguese version. */
+export function mensagemDeLembrete({ nome, painel, praticar, sair, marca }) {
+  const ola = saudacao(nome);
+  const assinatura = marca || 'Hebraico Fluente';
+  const subject = 'Ten minutes of Hebrew today?';
+  const corpo = [
+    'No Hebrew yet today. A letter takes about ten minutes, and the course keeps your place.',
+    `If the day is short, a round in Practice counts too: ${praticar}`
+  ];
+  const rotulo = 'Pick up where I left off';
+  const fecho = 'You get this email because you asked for the reminder in Your account. After three reminders without study, they stop on their own until you come back.';
+  const saida = `To stop receiving it: ${sair}`;
+  const text = [ola, '', ...corpo.flatMap(l => [l, '']), `${rotulo}: ${painel}`, '', fecho, saida, '', assinatura].join('\n');
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p>${escapar(corpo[0])}</p>`,
+    `<p>If the day is short, <a href="${escapar(praticar)}">a round in Practice</a> counts too.</p>`,
+    `<p><a href="${escapar(painel)}">${escapar(rotulo)}</a></p>`,
+    `<p><small>${escapar(fecho)} <a href="${escapar(sair)}">Stop the reminder</a>.</small></p>`,
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject, text, html };
+}

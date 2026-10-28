@@ -60,6 +60,8 @@ export type Empresa = {
     agentePequenoPorte?: boolean;
     /** Prazo de resposta a pedido de titular. A LGPD usa 15 dias no art. 19. */
     prazoLgpdDias: number;
+    /** O lembrete para estudar existe? Ver `lembreteLigado` abaixo. */
+    lembreteDeEstudo?: boolean;
   };
   politicas: {
     /** Art. 49 do CDC: sete dias para compra fora do estabelecimento. */
@@ -167,6 +169,11 @@ export function nomeLegalCompleto(): string {
  * para tentar o PIX.
  */
 export const soPix = (): boolean => empresa.pagamento.modo === 'pix-direto';
+
+/** O lembrete para estudar está ligado? A mesma chave liga a caixa do perfil,
+ *  o parágrafo da Política de Privacidade e, no Worker, a rota e o envio
+ *  (worker/src/api/lembrete.js). Ligar é decisão do dono, junto com o texto. */
+export const lembreteLigado = (): boolean => empresa.privacidade.lembreteDeEstudo === true;
 
 /* ── o que esta build consegue cobrar ──────────────────────────────────────
  * Diferente de `soPix()`, que é uma DECISÃO (o trilho escolhido), isto é um

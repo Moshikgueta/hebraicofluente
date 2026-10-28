@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
-import { empresa, soPix } from '@/lib/empresa';
+import { empresa, lembreteLigado, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/privacidade',
@@ -345,6 +345,21 @@ export default function Page() {
           curso, os e-mails das próximas letras param. O e-mail é entregue pela Resend e não é vendido nem compartilhado com
           mais ninguém.
         </p>
+        {/* 28/10/2026: o lembrete para estudar (worker/src/lembrete.js). Só
+            aparece com a chave ligada em data/empresa.json, que é também o que
+            liga a caixa do perfil e o envio: a política nunca descreve menos
+            do que o site faz, nem mais. TEXTO PARA APROVAÇÃO do dono. */}
+        {lembreteLigado() && (
+          <p>
+            <strong>O lembrete para estudar.</strong> Se você ligar o lembrete em Sua conta, mandamos um e-mail
+            curto, no máximo um por dia e a partir das 19h (horário de Brasília), nos dias em que o seu progresso
+            ainda não mostra estudo. Para isso o servidor lê o seu progresso, que já guardamos para sincronizar os
+            aparelhos, e guarda a data em que você ligou o lembrete, o último dia em que ele foi conferido e quantos
+            lembretes seguidos saíram sem estudo: no terceiro, eles param até você voltar. A base legal é o seu
+            consentimento (LGPD, art. 7º, I). Você desliga em Sua conta ou pelo link de todo lembrete, que funciona
+            sem login; ao desligar, ou ao apagar a conta, esses dados são apagados. O e-mail é entregue pela Resend.
+          </p>
+        )}
       </Artigo>
 
       <Artigo n={5} titulo="Segurança">

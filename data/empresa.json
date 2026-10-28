@@ -39,7 +39,9 @@
   "privacidade": {
     "encarregadoNome": null,
     "agentePequenoPorte": true,
-    "prazoLgpdDias": 15
+    "prazoLgpdDias": 15,
+    "_notaLembrete": "O lembrete para estudar (worker/src/lembrete.js). false = a caixa do perfil, a rota, o envio e o parágrafo da Política de Privacidade não existem. Ligar só depois de o dono aprovar o parágrafo: true, subir politicas.atualizadoEm e publicar.",
+    "lembreteDeEstudo": false
   },
 
   "politicas": {

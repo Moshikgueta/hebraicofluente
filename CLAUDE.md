@@ -592,6 +592,21 @@ chave `rua`. Imagens em `app/public/media/rua/`. Candidatas: Action "Fotos das m
 (`tools/fotos-rua-pedido.json`); revisão em `HEBRAICO-NA-RUA-PARA-REVISAR.md`.
 `tests/hebraico-na-rua.test.ts`.
 
+## Lembrete para estudar (28/10/2026) - PRONTO E DESLIGADO
+Pedido do dono ("faz tudo", item 6). Desligado até ele aprovar o parágrafo da Privacidade.
+- **Uma chave só:** `privacidade.lembreteDeEstudo` em `data/empresa.json` (`lembreteLigado` no app e
+  em `worker/src/api/lembrete.js`). Em `false` não existe nada: a caixa do perfil, o parágrafo do
+  art. 4 da Privacidade, `PUT /api/lembrete` (404), o campo `lembrete` do `/api/me` e o envio.
+  **Ligar** = `true`, subir `politicas.atualizadoEm` e publicar. Só `/api/lembrete/sair` funciona
+  sempre: e-mail velho sempre sabe tirar a pessoa.
+- Quem pede: a caixa em Sua conta, desmarcada, só com o curso. Tabela `lembretes_estudo` (a linha é o
+  consentimento). Sai pela caixa, pelo link de todo lembrete (token `l<id>.<hmac 'lembrete:'>`, página
+  /sair-da-lista) ou apagando a conta. Teto de 20 por hora por endereço.
+- O envio (`worker/src/lembrete.js`, na varredura): a partir das 19h de Brasília, uma vez por dia por
+  conta (`ultimo_dia`, UPDATE condicional = reserva), só se o progresso não tem estudo no dia, e no
+  máximo 3 seguidos sem estudo (`seguidos`); estudar zera. Texto sem cobrança nem sequência perdida.
+- `tests/lembrete.test.ts` (chave ligada por mock) e `tests/lembrete-desligado.test.ts`.
+
 ## Mini-textos de leitura corrida
 
 Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),
