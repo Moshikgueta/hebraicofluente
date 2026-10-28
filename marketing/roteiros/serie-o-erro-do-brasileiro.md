@@ -18,8 +18,8 @@
 Os posts do dono de 26/10 ("os 3 erros", Xanucá) e de 27/10 (eleições em Israel) prometeram ao
 público que "o próximo post é sobre o Álef, a letra que não tem som". Para cumprir a promessa, a
 série começa pelo Álef (arte `4-alef` do zip). Ordem proposta: Álef (28 ou 29/10), Shin, Tav, Mem
-e Lámed, um por dia útil às 10h. O "4/5" e o "1/5" do topo das capas viram só numeração interna;
-se o dono quiser a numeração certa nas capas, gero as artes de novo.
+e Lámed, um por dia útil às 10h. As artes foram geradas de novo nessa ordem (zip novo, 28/10), com
+a numeração 1/5 a 5/5 certa nas capas.
 
 ## Quando publicar
 
