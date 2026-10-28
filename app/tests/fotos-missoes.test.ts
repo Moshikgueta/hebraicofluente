@@ -8,13 +8,13 @@ const raiz = join(__dirname, '..', '..');
 const dado = JSON.parse(readFileSync(join(raiz, 'data/fotos-missoes.json'), 'utf8')) as { fotos: Record<string, unknown>[] };
 const missoes = JSON.parse(readFileSync(join(raiz, 'data/missoes.json'), 'utf8')).missoes as { modulo: number }[];
 const exportadas = JSON.parse(readFileSync(join(__dirname, '..', 'content/missoes.json'), 'utf8')).missoes as { modulo: number; foto?: { id: string } }[];
-const LICENCAS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+const LICENCAS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 2.5', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
 
 describe('as fotos das missões', () => {
   it('toda foto tem crédito completo, licença aceita e página do Commons', () => {
     const ids = new Set<string>();
     for (const f of dado.fotos) {
-      for (const campo of ['id', 'missao', 'arquivo', 'pagina', 'autor', 'licenca', 'mostra', 'largura', 'altura']) {
+      for (const campo of ['id', 'missao', 'arquivo', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
         expect(f[campo], `${f.id}: ${campo}`).toBeTruthy();
       }
       expect(typeof f.aprovada, `${f.id}: aprovada`).toBe('boolean');

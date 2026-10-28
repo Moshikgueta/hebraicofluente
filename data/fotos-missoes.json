@@ -1,4 +1,103 @@
 {
-  "_nota": "As fotos de verdade das missões (28/10/2026, pedido do dono). Só do Wikimedia Commons, com domínio público, CC0, CC BY ou CC BY-SA, autor e página de origem. 'mostra' diz só o que a ficha do arquivo diz. Cada foto nasce com aprovada: false e só aparece para o aluno com true, depois de o dono olhar (FOTOS-DAS-MISSOES-PARA-REVISAR.md). O arquivo mora em app/public/media/missoes/. Sem rosto de pessoa identificável, sem símbolo religioso como enfeite.",
-  "fotos": []
+  "_nota": "As fotos de verdade das missões (28/10/2026, pedido do dono). Só do Wikimedia Commons, com domínio público, CC0, CC BY ou CC BY-SA, autor e página de origem. 'mostraPt' diz só o que a ficha do arquivo diz. Cada foto nasce com aprovada: false e só aparece para o aluno com true, depois de o dono olhar (FOTOS-DAS-MISSOES-PARA-REVISAR.md). O arquivo mora em app/public/media/missoes/. Sem rosto de pessoa identificável, sem símbolo religioso como enfeite.",
+  "fotos": [
+    {
+      "id": "m1-carmel",
+      "missao": 1,
+      "arquivo": "missao-1-mercado.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:128488_tel_aviv_carmel_market_PikiWiki_Israel.jpg",
+      "autor": "ישראל פרקר",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "2025",
+      "mostraPt": "Banca de frutas e verduras no mercado Carmel, no Kerem HaTeimanim, em Tel Aviv.",
+      "largura": 1200,
+      "altura": 942,
+      "aprovada": true
+    },
+    {
+      "id": "m2-meron",
+      "missao": 2,
+      "arquivo": "missao-2-escola.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Meron_School_Bodek_Architects22.jpg",
+      "autor": "Oded Smadar",
+      "licenca": "CC BY-SA 3.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "data": "2017",
+      "mostraPt": "A escola Meron, em Tel Aviv.",
+      "largura": 900,
+      "altura": 784,
+      "aprovada": true
+    },
+    {
+      "id": "m3-paes",
+      "missao": 3,
+      "arquivo": "missao-3-padaria.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Bread_for_sale_in_Jerusalem.jpg",
+      "autor": "Danielrosehill",
+      "licenca": "CC BY 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by/4.0",
+      "data": "2025",
+      "mostraPt": "Pães à venda numa padaria de Jerusalém.",
+      "largura": 1200,
+      "altura": 675,
+      "aprovada": true
+    },
+    {
+      "id": "m4-even-sapir",
+      "missao": 4,
+      "arquivo": "missao-4-placa.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:A_sign_on_Even_Sappir_Street_in_Jerusalem.jpg",
+      "autor": "Korenn",
+      "licenca": "CC BY-SA 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "data": "2022",
+      "mostraPt": "Placa da rua Even Sapir, em Jerusalém.",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    },
+    {
+      "id": "m5-florentin",
+      "missao": 5,
+      "arquivo": "missao-5-sabado.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Florentin_on_shabbat.jpg",
+      "autor": "Jakub.zabinski",
+      "licenca": "CC BY-SA 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "data": "2018",
+      "mostraPt": "Um beco do bairro Florentin, em Tel Aviv: no Shabat as ruas ficam vazias.",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    },
+    {
+      "id": "m6-nachlat-binyamin",
+      "missao": 6,
+      "arquivo": "missao-6-letreiro.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_29478_Nachlat_Binyamin.jpg",
+      "autor": "ofra schwartz",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "c. 2010",
+      "mostraPt": "Um letreiro em Nachlat Binyamin.",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    },
+    {
+      "id": "m7-terminal-3",
+      "missao": 7,
+      "arquivo": "missao-7-aeroporto.webp",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Ben_Gurion_Airport_terminal_3_reception_hall.jpg",
+      "autor": "GeorgeDement",
+      "licenca": "CC BY-SA 2.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "data": "2015",
+      "mostraPt": "O saguão de chegada do Terminal 3 do aeroporto Ben Gurion.",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    }
+  ]
 }

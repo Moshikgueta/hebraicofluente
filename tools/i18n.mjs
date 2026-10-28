@@ -39,7 +39,7 @@ export const LOCALE = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'en' : 'pt';
     a empresa (o site em inglês terá os seus), o A1 e o Raízes. */
 export const ARQUIVOS = [
   'letters', 'modules', 'nikud', 'extras', 'real-world', 'sentences',
-  'eras', 'culture', 'missoes', 'textos', 'bonus', 'biblia'
+  'eras', 'culture', 'missoes', 'textos', 'bonus', 'biblia', 'fotos-missoes'
 ];
 
 /* Chaves de texto que não terminam em Pt. Toda chave terminada em Pt é texto

@@ -623,11 +623,11 @@ function main() {
      que o dono aprovou (data/fotos-missoes.json). Uma foto aprovada sem
      arquivo ou sem crédito para a build: o crédito sai SEMPRE junto da
      imagem, é o que as licenças pedem. tests/fotos-missoes.test.ts. */
-  const LICENCAS_DAS_FOTOS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+  const LICENCAS_DAS_FOTOS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 2.5', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
   const fotoDaMissao = new Map();
   for (const f of readJson('data/fotos-missoes.json').fotos) {
     if (f.aprovada !== true) continue;
-    for (const campo of ['id', 'arquivo', 'pagina', 'autor', 'licenca', 'mostra', 'largura', 'altura']) {
+    for (const campo of ['id', 'arquivo', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
       if (!f[campo]) throw new Error(`fotos-missoes.json: a foto ${f.id ?? '?'} não tem ${campo}`);
     }
     if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`fotos-missoes.json: licença não aceita em ${f.id}: ${f.licenca}`);

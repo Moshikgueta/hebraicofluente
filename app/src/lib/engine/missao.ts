@@ -39,7 +39,7 @@ export type PassoMissao =
 export type FotoDaMissao = {
   id: string; missao: number; arquivo: string; pagina: string;
   autor: string; licenca: string; licencaUrl?: string; data?: string;
-  mostra: string; largura: number; altura: number;
+  mostraPt: string; largura: number; altura: number;
 };
 
 export type Missao = {
