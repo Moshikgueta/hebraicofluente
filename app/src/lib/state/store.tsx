@@ -38,6 +38,7 @@ import {
 import { track } from '@/lib/analytics';
 import { ACERTO_DO_TRACO } from '@/lib/trace-score';
 import { comprar as comprarNaLoja, type ItemDaLoja, type Recusa } from '@/lib/loja';
+import { alternarNoCaderno } from '@/lib/caderno';
 import {
   fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
 } from '@/lib/rodadas';
@@ -168,6 +169,8 @@ type Ctx = {
   /** Uma sessão de "Minha revisão" terminou, com tantos itens. */
   revisaoA1Feita: (itens: number) => void;
   marcarFavoritoA1: (chave: string, on: boolean) => void;
+  /** Põe ou tira uma palavra do caderno (lib/caderno.ts). */
+  alternarCaderno: (he: string) => void;
   setAutoA1: (n: number, itens: number[]) => void;
   setTranslitA1: (valor: TranslitA1) => void;
   /* ── Raízes Sefarditas (21/10/2026) ── */
@@ -610,6 +613,11 @@ export function ProgressProvider({
     commit({ ...s, a1: { ...s.a1, favoritos: { ...s.a1.favoritos, [chave]: { on, em: new Date().toISOString() } } } });
   }, [commit, agora]);
 
+  const alternarCaderno = useCallback((he: string) => {
+    const s = agora();
+    commit({ ...s, caderno: alternarNoCaderno(s.caderno, he, new Date().toISOString()) });
+  }, [commit, agora]);
+
   const setAutoA1 = useCallback((n: number, itens: number[]) => {
     const s = agora();
     commit({ ...s, a1: { ...s.a1, auto: { ...s.a1.auto, [String(n)]: { itens, em: new Date().toISOString() } } } });
@@ -647,7 +655,7 @@ export function ProgressProvider({
       setOnboarding, finishStage, answer, markFirst: doMarkFirst, registrarLeitura: doRegistrarLeitura, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
       remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
+      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, alternarCaderno, setAutoA1, setTranslitA1,
       registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
     };
   }, [
@@ -655,7 +663,7 @@ export function ProgressProvider({
     setOnboarding, finishStage, answer, doMarkFirst, doRegistrarLeitura, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
     setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
-    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, setAutoA1, setTranslitA1,
+    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, alternarCaderno, setAutoA1, setTranslitA1,
     registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
   ]);
 

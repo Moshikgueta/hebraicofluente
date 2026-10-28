@@ -22,6 +22,12 @@ const pt = {
   letrasDaPalavra: 'As letras desta palavra',
   letras: 'Letras',
   aMao: 'À mão',
+  porNoCaderno: (translit: string) => `Guardar ${translit} no meu caderno`,
+  tirarDoCaderno: (translit: string) => `Tirar ${translit} do meu caderno`,
+  soOCaderno: (n: number) => `Só o meu caderno (${n})`,
+  treinarCaderno: 'Treinar as palavras do meu caderno',
+  cadernoDica: 'Toque na estrela de uma palavra para guardar no seu caderno e treinar só as guardadas.',
+  cadernoVazio: 'Nenhuma palavra guardada ainda. Toque na estrela de uma palavra para guardar.',
   nenhuma: (busca: string) =>
     `Nenhuma palavra que você já lê tem “${busca}”. A palavra pode usar uma letra que ainda vem pela frente.`
 } as const;
@@ -47,6 +53,12 @@ const en: Traducao<typeof pt> = {
   letrasDaPalavra: 'The letters of this word',
   letras: 'Letters',
   aMao: 'By hand',
+  porNoCaderno: translit => `Save ${translit} to my notebook`,
+  tirarDoCaderno: translit => `Remove ${translit} from my notebook`,
+  soOCaderno: n => `Only my notebook (${n})`,
+  treinarCaderno: 'Practice the words in my notebook',
+  cadernoDica: 'Tap the star on a word to save it to your notebook and practice only the saved ones.',
+  cadernoVazio: 'No words saved yet. Tap the star on a word to save it.',
   nenhuma: busca =>
     `None of the words you can read has “${busca}”. The word may use a letter that is still ahead.`
 };

@@ -88,6 +88,8 @@ const pt = {
   flashPalavrasTitulo: 'Flashcards de palavras',
   flashLetrasRotulo: 'A letra na frente; o nome e o som atrás',
   flashPalavrasRotulo: 'A palavra na frente; a leitura e o sentido atrás',
+  flashCadernoTitulo: 'Meu caderno de palavras',
+  flashCadernoRotulo: 'Só as palavras que você marcou para rever',
 
   palavrasAMao: 'Palavras à mão',
   palavrasAMaoRotulo: 'Escreva em cursiva as palavras que você já aprendeu',
@@ -230,6 +232,8 @@ const en: Traducao<typeof pt> = {
   flashPalavrasTitulo: 'Word flashcards',
   flashLetrasRotulo: 'The letter on the front; the name and sound on the back',
   flashPalavrasRotulo: 'The word on the front; the reading and meaning on the back',
+  flashCadernoTitulo: 'My word notebook',
+  flashCadernoRotulo: 'Only the words you marked to review',
 
   palavrasAMao: 'Words by hand',
   palavrasAMaoRotulo: 'Write the words you have already learned in cursive',

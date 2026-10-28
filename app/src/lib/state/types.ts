@@ -1,6 +1,7 @@
 /* The learner's state. One shape, two adapters (localStorage now, Supabase
  * when there are keys), so nothing above this line knows where it is stored. */
 
+import type { Caderno } from '@/lib/caderno';
 import { A1_VAZIO, type EstadoA1 } from './a1-estado';
 import type { EstadoRaizes } from './raizes-estado';
 import type { Rodadas } from '@/lib/rodadas';
@@ -254,6 +255,12 @@ export type LearnerState = {
    * produto, e nada do curso de hebraico lê esta chave.
    */
   raizes?: EstadoRaizes;
+  /**
+   * Meu caderno de palavras (lib/caderno.ts): as palavras que o aluno marcou
+   * para rever, com a data em que entraram e a em que saíram. Opcional:
+   * estados antigos não o têm.
+   */
+  caderno?: Caderno;
 };
 
 /** Uma troca de XP. O id é único por compra (`folga:<instante>`, `carta:<id>`). */

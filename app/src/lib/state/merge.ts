@@ -37,6 +37,7 @@ import {
 } from './types';
 import { fundirRodadas } from '@/lib/rodadas';
 import { fundirCompras } from '@/lib/loja';
+import { fundirCaderno } from '@/lib/caderno';
 
 /* ── auxiliares ─────────────────────────────────────────────────────────── */
 
@@ -289,6 +290,9 @@ export function mergeStates(local: LearnerState, remoto: LearnerState): LearnerS
        a visita mais recente (lib/state/raizes-estado.ts). Só aparece quando
        algum dos lados a tem. */
     ...(a.raizes || b.raizes ? { raizes: fundirRaizes(a.raizes, b.raizes) } : {}),
+    /* O caderno de palavras: por palavra, a entrada e a saída mais recentes
+       (lib/caderno.ts). Comutativa e idempotente. */
+    ...(a.caderno || b.caderno ? { caderno: fundirCaderno(a.caderno ?? {}, b.caderno ?? {}) } : {}),
     ...(a.leituraAutoavaliada || b.leituraAutoavaliada ? {
       leituraAutoavaliada: fundirMapa(a.leituraAutoavaliada ?? {}, b.leituraAutoavaliada ?? {}, (x, y) => ({
         tentadas: Math.max(x.tentadas, y.tentadas),
