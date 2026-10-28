@@ -30,12 +30,11 @@ import { ITENS, saldo } from '@/lib/loja';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { ACHIEVEMENTS, aula0Feita } from '@/lib/state/rules';
+import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
 import {
-  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0,
-  IconePalavras, IconeRecompensas
+  IconeHoje, IconeMapa, IconePraticar, IconeConquistas, IconePerfil, IconeRecompensas
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
 import { FLAGSHIP } from '@/lib/catalog';
@@ -59,49 +58,39 @@ import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
  *   'conta' - no cabeçalho do telefone, como a inicial da conta, e na sidebar
  *   'cabecalho' - no cabeçalho do telefone, como ícone, e na sidebar
  */
+/* Quatro portas (28/10/2026, decisão do dono: "o caminho do estudante
+   simples e fácil de navegar"). Eram seis ou sete na barra do telefone, com
+   rótulos de 10,5 px, e o aluno tinha de saber a diferença entre Revisão,
+   Praticar e Palavras. Agora cada porta é uma pergunta:
+     Hoje      - o que eu faço agora?
+     Curso     - onde estou no caminho? (o mapa, as lições e a Aula 0)
+     Praticar  - quero treinar (revisão, flashcards, jogos, leitura, palavras)
+     Progresso - o que eu já conquistei? (diário, coleção, conquistas)
+   Nenhuma página saiu: Revisão e Palavras abrem pelo alto de Praticar, e a
+   Aula 0 pelo topo do mapa e pelo botão principal de Hoje. `secao` diz quais
+   endereços acendem cada porta. */
 const NAV = [
-  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra' },
-  { href: '/mapa', label: 'Meu curso', icon: IconeMapa, movel: 'barra' },
-  { href: '/revisao', label: 'Revisão', icon: IconeRevisao, movel: 'barra' },
-  /* The gym is a destination, not a feature buried in a screen: a learner who
-     has finished the alphabet has nowhere else to go, and one who wants to
-     drill only the vowels should not have to find the door. */
-  { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra' },
-  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra' },
-  /* As palavras aprendidas: /vocabulario mostra só o que as letras já
-     concluídas leem. Antes a página só se abria pelo link do contador de
-     leitura no painel, e quem queria rever uma palavra tinha de voltar ao
-     painel para achar a porta. Depois dos cinco destinos do dia, para que
-     nenhum deles mude de lugar. */
-  { href: '/vocabulario', label: 'Palavras', icon: IconePalavras, movel: 'barra' },
-  /* A aula 0 fica na navegação, e não só no painel.
-     ──────────────────────────────────────────────────────────────────────
-     Ela nasceu como uma etapa: o painel oferecia, o onboarding terminava
-     nela, e depois disso ela sumia do caminho. Só que a página não é uma
-     etapa - é referência. Quem esbarra no {{ה}} mudo na décima lição, ou
-     descobre na aula de cursiva que o desenho do livro não é o da mão,
-     precisa dela NAQUELE momento, e o que existia era um link solto no
-     painel que só aparece para quem volta ao painel.
-     Última posição de propósito: material de consulta, e nenhum dos cinco
-     destinos do dia muda de lugar. */
-  { href: '/inicio', label: 'Aula 0', icon: IconeAula0, movel: 'barra' },
+  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra', secao: [] },
+  { href: '/mapa', label: 'Curso', icon: IconeMapa, movel: 'barra',
+    secao: ['/inicio', '/licao', '/som', '/extra', '/modulo', '/checkpoint', '/desafio-final', '/concluido'] },
+  { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra',
+    secao: ['/revisao', '/vocabulario', '/leitura', '/meu-nome', '/teclado-hebraico', '/bonus', '/nikud-biblico'] },
+  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra',
+    secao: ['/historia', '/certificado', '/meu-hebraico/dominio'] },
   /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta
      no cabeçalho, que diz de relance EM QUAL conta a pessoa está. */
   /* Recompensas (27/09/2026): um ícone próprio, a pedido do dono do curso.
-     Na barra de baixo não cabe um oitavo destino (54px viram 48, e
-     "Progresso" mede 52), então no telefone ele é o presente do cabeçalho,
-     ao lado do XP que ele gasta. */
-  { href: '/loja', label: 'Recompensas', icon: IconeRecompensas, movel: 'cabecalho' },
-  { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
+     No telefone ele é o presente do cabeçalho, ao lado do XP que ele gasta. */
+  { href: '/loja', label: 'Recompensas', icon: IconeRecompensas, movel: 'cabecalho', secao: [] },
+  { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta', secao: [] }
 ] as const;
 
-/* A Aula 0 sai da navegação depois de concluída (27/10/2026, decisão do
-   dono): na barra do telefone eram sete alvos de 54px com rótulos de 10,5px,
-   e ela é consulta. Sai das DUAS navegações, para o computador e o celular
-   oferecerem os mesmos destinos (varrer-curso.mjs), e continua no topo do
-   mapa ("Fica aqui para você reler quando quiser"). */
-const naNavegacao = (href: string, aula0Concluida: boolean): boolean =>
-  !(href === '/inicio' && aula0Concluida);
+/** A porta acesa: a própria página, ou uma página da seção dela. */
+function portaAtiva(pathname: string | null, item: (typeof NAV)[number]): boolean {
+  if (isActive(pathname, item.href)) return true;
+  const aqui = (pathname ?? '/').replace(/\/+$/, '') || '/';
+  return item.secao.some(base => aqui === base || aqui.startsWith(`${base}/`));
+}
 
 /**
  * Is this nav item the page we are on?
@@ -348,8 +337,8 @@ function Sidebar({ pathname }: { pathname: string | null }) {
 
       <nav aria-label="Navegação principal">
         <ul className="grid gap-[3px]">
-          {NAV.filter(item => naNavegacao(item.href, p.ready && aula0Feita(p.state))).map(item => {
-            const active = isActive(pathname, item.href);
+          {NAV.map(item => {
+            const active = portaAtiva(pathname, item);
             const Icone = item.icon;
             return (
               <li key={item.href}>
@@ -365,7 +354,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
                 >
                   <Icone className={active ? 'text-[var(--teal-lite)]' : 'text-white/[.55]'} />
                   <span className="flex-1">{item.label}</span>
-                  {item.href === '/revisao' && p.dueCount > 0 && (
+                  {item.href === '/academia' && p.dueCount > 0 && (
                     <span className="rounded-full bg-[var(--gold-solid)] px-[7px] py-[2px]
                                      font-ui text-[11.5px] font-bold text-white tabular-nums">
                       {p.dueCount}
@@ -438,12 +427,14 @@ export function Key({ children, dark = false }: { children: ReactNode; dark?: bo
 function BottomBar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
   const preCarregar = usePreCarregar();
-  const itens = NAV.filter(item => item.movel === 'barra' && naNavegacao(item.href, p.ready && aula0Feita(p.state)));
+  const itens = NAV.filter(item => item.movel === 'barra');
   /* O rótulo cresce quando a Aula 0 sai da barra (28/10/2026): com seis
      itens, cada um tem 58,7 px num celular de 360px, e "Progresso" a 11,5 px
      mede 57. Abaixo de 360px (o iPhone SE antigo, 320) cai para 10 px. Com
      sete, 10,5 px é o que cabe a partir de 360. */
-  const rotulo = itens.length <= 6 ? 'text-[11.5px] max-[359px]:text-[10px]' : 'text-[10.5px]';
+  /* Quatro portas: cada uma tem 90 px num celular de 360, e o rótulo
+     cresce para 12,5 px. */
+  const rotulo = 'text-[12.5px]';
   return (
     <nav
       aria-label="Navegação principal"
@@ -457,7 +448,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
           a barra fica mais larga que a tela. */}
       <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
         {itens.map(item => {
-          const active = isActive(pathname, item.href);
+          const active = portaAtiva(pathname, item);
           const Icone = item.icon;
           return (
             <li key={item.href} className="flex-1 min-w-0">
@@ -473,9 +464,9 @@ function BottomBar({ pathname }: { pathname: string | null }) {
               >
                 <span aria-hidden className="hf-barra-icone inline-grid"><Icone size={19} /></span>
                 <span className="hf-barra-rotulo">{item.label}</span>
-                {item.href === '/revisao' && p.dueCount > 0 && (
+                {item.href === '/academia' && p.dueCount > 0 && (
                   <span aria-hidden
-                        className="absolute top-2 right-[24%] w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
+                        className="absolute top-2 right-[30%] w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
                 )}
               </Link>
             </li>
