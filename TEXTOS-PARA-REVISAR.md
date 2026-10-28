@@ -16,24 +16,25 @@ e a tradução, e se as palavras novas fazem sentido para o nível.
 Mudança de 01/10/2026 no texto do módulo 4, pergunta 4 (o curso fica no presente): "A Noa queria ficar mais um dia."
 passou a "A Noa quer ficar mais um dia.", e a explicação diz "quero mais um dia!".
 
-## RASCUNHO NOVO · Módulo 2 · O peixe grande (28/10/2026, aguardando o dono)
+## RASCUNHO NOVO · Módulo 2 · O peixe (28/10/2026, aguardando o dono)
 *Conversa* · `"revisado": false` em `data/textos.json`: **não aparece para o aluno até ser aprovado.**
 
 Até hoje o módulo 2 só tinha a leitura de revisão ("Sorvete para todos"). Este seria o primeiro mini-texto do
-módulo, com as mesmas personagens (Maya, Dani e a tia), agora na praia. Usa só as letras dos módulos 1 e 2 e,
-fora os nomes, uma palavra nova (שֶׁלִי). Escrito sem o ponto que dobra a letra (הַדָג, e não הַדָּג), como tudo o
-que o aluno lê nos módulos 1 e 2: esse ponto só é ensinado no módulo 5. Os mini-textos do módulo 3 em diante
-usam o ponto; se preferir assim também aqui, eu acrescento.
+módulo, com a Maya e o Dani, agora na praia com a mãe dele. Usa só as letras dos módulos 1 e 2, **sem o Vav nem
+como sinal de vogal** (o Vav só é ensinado no módulo 3; a primeira versão usava גָדוֹל, הוּא e דוֹדָה e foi
+refeita), e, fora os nomes, uma palavra nova (שֶׁלִי). Escrito sem o ponto que dobra a letra (הַדָג, e não הַדָּג),
+como tudo o que o aluno lê nos módulos 1 e 2: esse ponto só é ensinado no módulo 5. Os mini-textos do módulo 3
+em diante usam o ponto; se preferir assim também aqui, eu acrescento.
 
 | Quem | Hebraico | Transliteração | Tradução |
 |---|---|---|---|
 | Dani | מַיָה, הִנֵה הַיָם! | Máya, hiné hayám! | Maya, olha o mar! |
 | Maya | יֵשׁ שָׁם דָג? | yesh sham dag? | Tem peixe ali? |
-| Dani | יֵשׁ! דָג גָדוֹל! | yesh! dag gadól! | Tem! Um peixe grande! |
-| Tia | מָה יֵשׁ שָׁם, דָנִי? | ma yesh sham, Dáni? | O que tem ali, Dani? |
-| Dani | דָג, דוֹדָה! הִנֵה הוּא, שָׁם. | dag, dodá! hiné hu, sham. | Um peixe, tia! Olha ele ali. |
-| Maya | הוּא שֶׁלִי! | hu shelí! | Ele é meu! |
-| Tia | לֹא, מַיָה. הַדָג שֶׁל הַיָם. | lo, Máya. hadág shel hayám. | Não, Maya. O peixe é do mar. |
+| Dani | יֵשׁ! הִנֵה דָג! | yesh! hiné dag! | Tem! Olha um peixe! |
+| Mãe | מָה יֵשׁ שָׁם, דָנִי? | ma yesh sham, Dáni? | O que tem ali, Dani? |
+| Dani | דָג, אִמָא! הִנֵה, שָׁם. | dag, íma! hiné, sham. | Um peixe, mãe! Olha, ali. |
+| Maya | הַדָג שֶׁלִי! | hadág shelí! | O peixe é meu! |
+| Mãe | לֹא, מַיָה. הַדָג שֶׁל הַיָם. | lo, Máya. hadág shel hayám. | Não, Maya. O peixe é do mar. |
 
 **Palavras novas** (fora do vocabulário do curso):
 
@@ -44,9 +45,9 @@ usam o ponto; se preferir assim também aqui, eu acrescento.
 
 **Perguntas de compreensão:**
 
-1. O que as crianças veem no mar? Um peixe (certa) · Um sorvete · A mãe. Porquê: דָג גָדוֹל, um peixe grande.
-2. Quem diz que o peixe é seu? A Maya (certa) · O Dani · A tia. Porquê: a Maya diz הוּא שֶׁלִי, ele é meu.
-3. Verdadeiro ou falso: para a tia, o peixe é do mar. Verdadeiro. Porquê: הַדָג שֶׁל הַיָם, o peixe é do mar.
+1. O que as crianças veem no mar? Um peixe (certa) · Um sorvete · A mãe. Porquê: הִנֵה דָג, olha um peixe.
+2. Quem diz que o peixe é seu? A Maya (certa) · O Dani · A mãe. Porquê: a Maya diz הַדָג שֶׁלִי, o peixe é meu.
+3. Verdadeiro ou falso: para a mãe, o peixe é do mar. Verdadeiro. Porquê: הַדָג שֶׁל הַיָם, o peixe é do mar.
 
 **Para aprovar:** mudar `"revisado": false` para `true` neste texto em `data/textos.json` (ou me dizer o que
 corrigir). Depois de aprovado, as linhas entram no roteiro de gravação (onda 4) para o áudio.
