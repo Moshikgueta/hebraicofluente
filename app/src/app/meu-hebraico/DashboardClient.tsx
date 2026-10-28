@@ -19,7 +19,7 @@ import { He } from '@/components/hebrew/He';
 import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import {
-  CartaoCurso, CartaoNumero, CartaoRevisao, CartaoSemana,
+  CartaoCurso, CartaoNumero, CartaoRevisao, CartaoSemana, PlanoDeHoje,
   IconeLetras, IconeLicoes, IconeRevisar, IconeTempo
 } from '@/components/platform/Painel';
 import { flagship } from '@/lib/catalog';
@@ -150,33 +150,49 @@ export function DashboardClient() {
     || account.session?.account.name.trim().split(/\s+/)[0]
     || '';
 
+  /* A frase de orientação do topo: onde a pessoa está e o que vem agora. */
+  const totalLetras = course.totalLetters;
+  const orientacao = aula0Primeiro
+    ? 'Seu primeiro passo é a Aula 0: uns dez minutos, e a primeira letra abre.'
+    : terminar
+      ? `Falta terminar os exercícios de ${terminar.nome} para a próxima lição abrir.`
+      : next.kind === 'letter'
+        ? (p.mastered === 0
+            ? `Hoje você aprende a sua primeira letra: ${next.letter.namePt}.`
+            : `Você já concluiu ${p.mastered} de ${totalLetras} letras. A próxima é ${next.letter.namePt}.`)
+        : next.kind === 'som'
+          ? `Você já concluiu ${p.mastered} de ${totalLetras} letras. A próxima lição é ${ehContraste(next.som) ? next.nome.toLowerCase() : `o som ${next.nome}`}.`
+          : next.kind === 'checkpoint'
+            ? `Você fechou as letras do módulo ${next.module.n}. Falta o checkpoint para seguir.`
+            : next.kind === 'extra'
+              ? `Agora o módulo ${next.module.n}: ${next.module.titlePt}.`
+              : 'Você chegou ao fim do alfabeto. Falta o desafio final.';
+
+  /* A lição do plano de hoje: a mesma do botão principal. */
+  const licaoDeHoje = aula0Primeiro ? { nome: 'Aula 0', href: '/inicio' }
+    : terminar ? { nome: terminar.nome, href: rotaDaLicao(terminar.id) }
+    : next.kind === 'letter' ? { nome: next.letter.namePt, href: `/licao/${next.letter.id}` }
+    : next.kind === 'som' ? { nome: next.nome, href: `/som/${next.som}` }
+    : next.kind === 'checkpoint' ? { nome: `checkpoint ${next.module.n}`, href: `/checkpoint/${next.module.n}` }
+    : next.kind === 'extra' ? { nome: `módulo ${next.module.n}`, href: `/modulo/${next.module.n}` }
+    : null;
+
   return (
     <div className="grid gap-6 sm:gap-8">
-      <header className="flex items-start gap-5 flex-wrap">
-        <div className="flex-1 min-w-[240px]">
-          <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1] tracking-[-0.028em] mb-1">
-            {greeting()}{name ? `, ${name}` : ''}.
-          </h1>
-          <p className="font-ui text-[16px] sm:text-[16.5px] text-ink-muted">
-            {p.mastered === 0
-              ? 'Vamos continuar seu hebraico? Começamos pela primeira letra.'
-              : 'Continue de onde você parou.'}
-          </p>
-        </div>
-        {/* A sequência sai do cartão e vira pílula no cabeçalho: é o número
-            que a pessoa quer ver primeiro, e ele não precisa de um cartão
-            inteiro para ser lido. */}
-        {p.streak > 0 && (
-          <p className="flex items-center gap-2.5 rounded-full bg-[var(--gold-soft)] px-4 py-2.5">
-            <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden>
-              <path d="M9 2c1.8 2.8.7 4.3-.6 5.7-1.2 1.3-2.2 2.5-2.2 4.3a2.8 2.8 0 0 0 5.6 0c0-.8-.2-1.4-.6-2.1 1.9.9 3 2.4 3 4.2A5.2 5.2 0 0 1 9 16a5.2 5.2 0 0 1-5.2-5.2C3.8 7 7.4 5.6 9 2Z"
-                    stroke="var(--gold)" strokeWidth="1.35" strokeLinejoin="round" />
-            </svg>
-            <span className="font-ui text-[15px] font-bold text-[var(--gold-ink)] tabular-nums">
-              {p.streak} {p.streak === 1 ? 'dia seguido' : 'dias seguidos'}
-            </span>
-          </p>
-        )}
+      {/* A boas-vindas (28/10/2026, pedido do dono: "feia e sem informação
+          que oriente"). Data, saudação e UMA frase que diz em que ponto do
+          curso a pessoa está e o que vem agora. O detalhe do dia fica no
+          "Seu plano de hoje", logo abaixo do botão principal. */}
+      <header className="grid gap-1">
+        <p className="m-0 font-ui text-[13px] font-semibold uppercase tracking-[.1em] text-[var(--accent)]">
+          {hojePorExtenso()}
+        </p>
+        <h1 className="m-0 font-display text-[28px] sm:text-[32px] font-semibold leading-[1.1] tracking-[-0.028em]">
+          {greeting()}{name ? `, ${name}` : ''}.
+        </h1>
+        <p className="m-0 font-ui text-[16px] sm:text-[16.5px] leading-snug text-ink-body max-w-[52ch]">
+          {orientacao}
+        </p>
       </header>
 
       <AccessNotice />
@@ -292,6 +308,8 @@ export function DashboardClient() {
         )}
       </section>
 
+      <PlanoDeHoje licao={licaoDeHoje} />
+
       {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
       {!aula0Primeiro && primeiraPendente && (
         <Card tone="wash" className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
@@ -367,17 +385,23 @@ export function DashboardClient() {
         {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
             (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
             etapas com 75% (`p.mastered`), a mesma do alfabeto abaixo. */}
-        <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
-                      tom="teal" icone={<IconeLetras />} />
+        {/* Um zero não informa nada e desanima (28/10/2026): o cartão
+            aparece quando há o que contar. */}
+        {dominio.contagem.dominada > 0 && (
+          <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
+                        tom="teal" icone={<IconeLetras />} />
+        )}
         <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'lição concluída' : 'lições concluídas'}
                       tom="teal" icone={<IconeLicoes />} />
-        <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
-        <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
+        {p.dueCount > 0 && (
+          <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
+        )}
+        {minutosSemana > 0 && <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />}
       </section>
 
       {/* Meu domínio das letras (11/10/2026): o que ele SABE, por habilidade,
           ao lado do que ele concluiu. Some até haver um exercício feito. */}
-      {dominio.letras.length > 0 && (
+      {(dominio.contagem.dominada + dominio.contagem.quase > 0 || dominio.paraPraticar.length > 0) && (
         <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
             <p className="font-display text-[17px] font-semibold text-ink m-0">Meu domínio das letras</p>
@@ -496,6 +520,11 @@ export function DashboardClient() {
   );
 }
 
+function hojePorExtenso(): string {
+  const t = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 function greeting(): string {
   const h = new Date().getHours();
   if (h < 12) return 'Bom dia';
@@ -511,40 +540,69 @@ function greeting(): string {
  * o nome e a meta diária. */
 function Welcome() {
   const m1 = getModule(1);
+  /* O caminho até a primeira letra, em três passos (28/10/2026): quem acabou
+     de pagar quer saber o que acontece agora e quanto tempo leva. */
+  const caminho = [
+    { t: 'Quatro perguntas rápidas', d: 'Por que você quer aprender, quanto tempo por dia, o que já sabe e como te chamar. Um minuto.' },
+    { t: 'Aula 0', d: 'Como o hebraico funciona: a direção da leitura, as vogais e os pontinhos. Uns dez minutos.' },
+    { t: m1 ? `Módulo 1: ${m1.titlePt}` : 'A primeira letra', d: 'Uma letra por lição, com som, escrita à mão e as primeiras palavras.' }
+  ];
   return (
     <>
-      <Card tone="wash" className="p-7 sm:p-10 grid gap-5 text-center">
-        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-          Bem-vindo ao Hebraico Fluente
-        </p>
-        <div className="flex justify-center gap-3 py-2">
-          {['מ', 'ת', 'א', 'נ', 'ה', 'י'].map(l => (
-            <He key={l} size="lg" dim>{l}</He>
+      <section aria-labelledby="bem-vindo"
+               className="relative overflow-hidden rounded-[20px] bg-[var(--navy)] text-white px-6 py-8 sm:px-10 sm:py-11 grid gap-6">
+        <span aria-hidden className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(70% 140% at 92% 0%, rgba(143,214,200,.2), transparent 60%)' }} />
+        <div className="relative grid gap-3">
+          <p className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.14em] text-[var(--teal-lite)]">
+            Bem-vindo ao Hebraico Fluente
+          </p>
+          <h1 id="bem-vindo" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-[1.12]">
+            Seu curso está liberado.
+          </h1>
+          <p className="m-0 text-[16.5px] leading-relaxed text-white max-w-[48ch]">
+            {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
+                números diferentes na vitrine: letra e lição são grandezas
+                parecidas, e a cópia manual erra em silêncio. */}
+            São {course.totalLetters} letras, em {course.modules.length} módulos. Antes da primeira,
+            quatro perguntas rápidas para o curso se ajustar a você.
+          </p>
+        </div>
+        <div aria-hidden className="relative flex justify-center gap-3 py-1">
+          {['מ', 'ת', 'א', 'נ', 'ה', 'י'].map((l, k) => (
+            <span key={l} className="animate-rise" style={{ animationDelay: `${k * 90}ms` }}>
+              <He size="lg" className="text-white/85">{l}</He>
+            </span>
           ))}
         </div>
-        <h1 className="text-[30px] sm:text-[38px] font-bold leading-[1.15]">
-          Seu curso está liberado.
-        </h1>
-        <p className="text-[17px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-          {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
-              números diferentes na vitrine: letra e lição são grandezas
-              parecidas, e a cópia manual erra em silêncio. */}
-          São {course.totalLetters} letras, em {course.modules.length} módulos.
-          Antes da primeira, quatro perguntas rápidas: por que você quer aprender, quanto
-          tempo por dia dá para estudar, o que você já sabe e como podemos te chamar.
-        </p>
-        <div className="pt-2">
-          <LinkButton href="/onboarding" size="lg">Começar</LinkButton>
+        <div className="relative">
+          <LinkButton href="/onboarding" size="lg" full className="!bg-white !text-[var(--navy)] sm:!w-auto">
+            Começar
+          </LinkButton>
         </div>
-      </Card>
+      </section>
 
-      {m1 && (
-        <Card className="p-6 grid gap-3">
-          <Badge tone="accent">Começa assim</Badge>
-          <p className="font-display text-[18px] font-semibold">{m1.titlePt}</p>
-          <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={m1.milestonePt} /></p>
-        </Card>
-      )}
+      <Card className="p-6 sm:p-7 grid gap-4">
+        <h2 className="m-0 font-display text-[19px] font-semibold text-ink">O que vem agora</h2>
+        <ol className="grid gap-4 list-none p-0 m-0">
+          {caminho.map((c, k) => (
+            <li key={c.t} className="grid grid-cols-[auto_1fr] gap-3.5 items-start">
+              <span aria-hidden
+                    className="grid place-items-center w-8 h-8 rounded-full bg-[var(--teal-soft)]
+                               text-[var(--teal-ink)] font-ui text-[14px] font-bold tabular-nums">{k + 1}</span>
+              <span className="grid gap-0.5">
+                <span className="font-ui text-[15.5px] font-semibold text-ink">{c.t}</span>
+                <span className="font-ui text-[14px] leading-relaxed text-ink-body">{c.d}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        {m1 && (
+          <p className="m-0 border-t border-[color:var(--line-soft)] pt-4 text-[14.5px] leading-relaxed text-ink-body">
+            <Prose text={m1.milestonePt} />
+          </p>
+        )}
+      </Card>
     </>
   );
 }
