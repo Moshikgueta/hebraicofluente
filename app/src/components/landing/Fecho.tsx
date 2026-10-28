@@ -483,9 +483,9 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 : !temPix()
                   ? <>Acesso liberado na hora da confirmação, por {c.accessMonths} meses.</>
                   : confirmaSozinho()
-                    ? <>No PIX sai por {brl(pix)}. Acesso liberado na hora da confirmação,
+                    ? <>No PIX sai por {brl(pix)} ({c.price.pixDiscountPct}% de desconto). Acesso liberado na hora da confirmação,
                        por {c.accessMonths} meses.</>
-                    : <>No PIX sai por {brl(pix)}. Acesso liberado à mão depois de
+                    : <>No PIX sai por {brl(pix)} ({c.price.pixDiscountPct}% de desconto). Acesso liberado à mão depois de
                        conferido o pagamento, por {c.accessMonths} meses.</>}
             </p>
             {/* A desistência (CDC art. 49) é o maior redutor de risco que o
