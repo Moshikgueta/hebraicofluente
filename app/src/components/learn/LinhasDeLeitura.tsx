@@ -9,6 +9,7 @@
  * texto todo - e a pessoa decide quando pedir.
  */
 
+import { vigiarGravacao } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/licao-linhas-de-leitura';
 import { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/Card';
@@ -47,6 +48,7 @@ export function LinhasDeLeitura({ linhas, rotulo, semPontos = false, heClassName
     if (!l?.audioId) { setTocando(null); return; }
     const corte = clipeDoPainel(l.audioId);
     const el = new Audio(urlDoClipe(l.audioId));
+    vigiarGravacao(el);
     player.current?.pause();
     player.current = el;
     setTocando(i);

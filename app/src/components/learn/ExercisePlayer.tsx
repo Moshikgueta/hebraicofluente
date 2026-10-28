@@ -33,6 +33,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Yael } from '@/components/aventura/Yael';
+import { tocarSom } from '@/lib/som-do-acerto';
 import type { Exercise } from '@/lib/engine/exercises';
 import { isChoice } from '@/lib/engine/exercises';
 import { reenfileirar } from '@/lib/engine/fila-de-revisao';
@@ -141,7 +142,12 @@ export function ExercisePlayer({
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null, troca });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
-    setSeguidas(n => (correct ? n + 1 : 0));
+    /* O som acompanha a Yael: plim no acerto, a comemoração na sequência.
+       No erro, silêncio (lib/som-do-acerto.ts). Fora do atualizador do
+       estado, que o React pode chamar duas vezes. */
+    const nova = correct ? seguidas + 1 : 0;
+    setSeguidas(nova);
+    if (correct) tocarSom(MARCOS.includes(nova) ? 'comemora' : 'acerto');
 
     /* The moment the course is actually selling.
        Reading a whole word right, correctly, at a point where the course has
@@ -157,7 +163,7 @@ export function ExercisePlayer({
       itemId: ex.id, letterId: ex.letterId, correct, skill: ex.skill,
       expected: opts.expected, chosen: opts.chosenGlyph, kind: ex.kind
     });
-  }, [settled, ex, i, answer]);
+  }, [settled, ex, i, answer, seguidas]);
 
   /* Choice kinds go through here so option feedback and confusion reporting
      happen in one place. */

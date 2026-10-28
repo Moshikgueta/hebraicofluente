@@ -66,10 +66,10 @@ function comSistema<T>(escuro: boolean, corpo: () => T): T {
 describe('os dois caminhos carimbam a mesma coisa', () => {
   const CASOS: Prefs[] = [
     { ...PADRAO },
-    { texto: 150, tema: 'escuro', contraste: true, movimento: true, links: true, espaco: true, voz: true },
-    { texto: 115, tema: 'claro', contraste: true, movimento: false, links: false, espaco: false, voz: false },
-    { texto: 100, tema: 'auto', contraste: false, movimento: true, links: false, espaco: true, voz: true },
-    { texto: 130, tema: 'auto', contraste: false, movimento: false, links: true, espaco: false, voz: false }
+    { texto: 150, tema: 'escuro', contraste: true, movimento: true, links: true, espaco: true, voz: true, semSons: true },
+    { texto: 115, tema: 'claro', contraste: true, movimento: false, links: false, espaco: false, voz: false, semSons: false },
+    { texto: 100, tema: 'auto', contraste: false, movimento: true, links: false, espaco: true, voz: true, semSons: true },
+    { texto: 130, tema: 'auto', contraste: false, movimento: false, links: true, espaco: false, voz: false, semSons: false }
   ];
 
   for (const caso of CASOS) for (const escuro of [false, true]) {
@@ -134,13 +134,13 @@ describe('o que estava guardado pode ser qualquer coisa', () => {
        vazio - que é o padrão, e por isso não muda nada para essa pessoa. */
     const velho = { texto: 130, contraste: true };
     expect(normalizar(velho)).toEqual({
-      texto: 130, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false, voz: false
+      texto: 130, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false, voz: false, semSons: false
     });
   });
 
   it('um tema desconhecido vira automático, e não derruba o resto', () => {
     expect(normalizar({ texto: 115, tema: 'sepia', contraste: true }))
-      .toEqual({ texto: 115, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false, voz: false });
+      .toEqual({ texto: 115, tema: 'auto', contraste: true, movimento: false, links: false, espaco: false, voz: false, semSons: false });
   });
 
   it('só aceita os tamanhos que o CSS conhece', () => {

@@ -21,6 +21,7 @@
  * a recording made for the printed workbook plays here with no second naming
  * scheme and no renaming when a lesson is reordered. */
 
+import { vigiarGravacao } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/licao-audio-button';
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { track } from '@/lib/analytics';
@@ -56,6 +57,7 @@ export function tocarClipe(audioId: string | null | undefined, rate = 1): void {
     tocador?.pause();
     tocador = new Audio(src);
     tocador.dataset.src = src;
+    vigiarGravacao(tocador);
   }
   const el = tocador;
   const corte = clipeDoPainel(audioId);
@@ -98,6 +100,7 @@ export function AudioButton({
       ref.current?.pause();
       ref.current = new Audio(src);
       ref.current.dataset.src = src;
+      vigiarGravacao(ref.current);
     }
     const el = ref.current;
     /* O trecho da voz, quando o painel mediu um: o arquivo gravado no
