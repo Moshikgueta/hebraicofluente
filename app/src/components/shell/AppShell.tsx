@@ -38,6 +38,7 @@ import {
   IconePalavras, IconeRecompensas
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
+import { FLAGSHIP } from '@/lib/catalog';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
 
@@ -111,6 +112,17 @@ const naNavegacao = (href: string, aula0Concluida: boolean): boolean =>
  * dashboard was rendering with no item marked current, in the sidebar and in
  * the bottom bar, and with no `aria-current` for a screen reader either.
  */
+/* Pré-carregar as rotas da navegação só para quem tem o curso (28/10/2026).
+   As rotas do curso passam pelo portão, e o Next pré-carrega todo link que
+   aparece na tela: enquanto a sessão não respondia, ou numa conta que ainda
+   não tem o curso (o PIX esperando, em /perfil), cada link virava um 403 no
+   servidor. Para o aluno com o curso nada muda: depois de a sessão responder,
+   o pré-carregamento volta. É a mesma regra do LinkButton (components/ui). */
+function usePreCarregar(): false | undefined {
+  const account = useAccount();
+  return account.ready && account.signedIn && account.can(FLAGSHIP) ? undefined : false;
+}
+
 export function isActive(pathname: string | null, href: string): boolean {
   const here = (pathname ?? '/').replace(/\/+$/, '') || '/';
   const target = href.replace(/\/+$/, '') || '/';
@@ -119,6 +131,7 @@ export function isActive(pathname: string | null, href: string): boolean {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const p = useProgress();
+  const preCarregar = usePreCarregar();
   const pathname = usePathname();
   const { remember } = p;
 
@@ -186,7 +199,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {/* Abaixo de 380 px só o quadrado ע: a 360 px o nome passava por
               baixo do "◆ XP" (auditoria de 01/10, VIS-003). O site público
               já faz o mesmo abaixo de sm. */}
-          <Link href="/meu-hebraico" className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
+          <Link href="/meu-hebraico" prefetch={preCarregar} className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
             <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
             <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
             <span className="sr-only min-[380px]:hidden">Hebraico Fluente</span>
@@ -194,7 +207,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-4">
             {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
             {p.ready && (
-              <Link href="/loja" aria-label={`${p.state.xp} XP. Abrir as recompensas`}
+              <Link href="/loja" prefetch={preCarregar} aria-label={`${p.state.xp} XP. Abrir as recompensas`}
                     className="inline-flex items-center min-h-[40px] px-1.5 rounded-[var(--r-md)] hover:bg-surface-2">
                 <XPIndicator xp={p.state.xp} />
               </Link>
@@ -202,7 +215,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             {/* E o ícone próprio delas. O ponto dourado: há saldo para trocar
                 pelo item mais barato - como o ponto da Revisão na barra. */}
             {p.ready && (
-              <Link href="/loja" aria-label="Recompensas"
+              <Link href="/loja" prefetch={preCarregar} aria-label="Recompensas"
                     aria-current={isActive(pathname, '/loja') ? 'page' : undefined}
                     className={`relative inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2
                       ${isActive(pathname, '/loja') ? 'text-[var(--navy)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
@@ -318,10 +331,11 @@ function RodapeDeAjuda() {
    compra um A1. */
 function Sidebar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
+  const preCarregar = usePreCarregar();
 
   return (
     <aside className="hidden lg:flex flex-col gap-[26px] bg-[var(--navy)] px-[18px] py-[26px]">
-      <Link href="/meu-hebraico" className="flex items-center gap-2.5 px-2 rounded-md">
+      <Link href="/meu-hebraico" prefetch={preCarregar} className="flex items-center gap-2.5 px-2 rounded-md">
         <span aria-hidden className="w-8 h-8 rounded-[9px] bg-white/[.12] grid place-items-center shrink-0">
           <span style={{ fontSize: 16, marginTop: -2, lineHeight: 1 }}>
             <He size="inline" tone="lite" className="leading-none">ע</He>
@@ -341,6 +355,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={preCarregar}
                   aria-current={active ? 'page' : undefined}
                   className={`flex items-center gap-[11px] rounded-[11px] px-3 py-2.5
                     font-ui text-[15px] transition-colors
@@ -422,6 +437,7 @@ export function Key({ children, dark = false }: { children: ReactNode; dark?: bo
 /* ── the thumb ──────────────────────────────────────────────────────────── */
 function BottomBar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
+  const preCarregar = usePreCarregar();
   const itens = NAV.filter(item => item.movel === 'barra' && naNavegacao(item.href, p.ready && aula0Feita(p.state)));
   /* O rótulo cresce quando a Aula 0 sai da barra (28/10/2026): com seis
      itens, cada um tem 58,7 px num celular de 360px, e "Progresso" a 11,5 px
@@ -447,6 +463,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
             <li key={item.href} className="flex-1 min-w-0">
               <Link
                 href={item.href}
+                prefetch={preCarregar}
                 aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
