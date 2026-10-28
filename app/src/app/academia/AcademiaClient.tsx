@@ -797,7 +797,7 @@ export function AcademiaClient() {
                 ['/revisao', tx.revisao, p.dueCount > 0
                   ? tx.revisaoEspera(p.dueCount)
                   : tx.revisaoEmDia, p.dueCount > 0],
-                ['/leitura', tx.laboratorio, tx.laboratorioDesc, false],
+                ['/leituras', tx.leituras, tx.leiturasDesc, false],
                 ['/vocabulario', tx.suasPalavras, tx.suasPalavrasDesc(nPalavras), false]
               ] as const).map(([href, titulo, desc, destaque]) => (
                 <li key={href}>

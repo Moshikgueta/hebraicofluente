@@ -110,6 +110,8 @@ const pt = {
   revisaoEmDia: 'Em dia. Uma rodada rápida do que deu mais trabalho',
   laboratorio: 'Laboratório de leitura',
   laboratorioDesc: 'Uma palavra por vez, com a ajuda que você escolher',
+  leituras: 'Leituras',
+  leiturasDesc: 'O laboratório, a Primeira Leitura e os mini-textos de cada módulo',
   suasPalavras: 'Suas palavras',
   suasPalavrasDesc: (n: number) => `${n} ${n === 1 ? 'palavra' : 'palavras'} que você já lê`,
 
@@ -250,6 +252,8 @@ const en: Traducao<typeof pt> = {
   revisaoEmDia: 'All caught up. A quick round of what gave you the most trouble',
   laboratorio: 'Reading lab',
   laboratorioDesc: 'One word at a time, with the help you choose',
+  leituras: 'Readings',
+  leiturasDesc: 'The lab, the First Reading and the short texts of each module',
   suasPalavras: 'Your words',
   suasPalavrasDesc: n => `${n} ${n === 1 ? 'word' : 'words'} you can already read`,
 

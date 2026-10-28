@@ -332,7 +332,7 @@ export function DashboardClient() {
               ['/academia?treino=desafio', desafioFeitoHoje(p.state, p.day) ? '✓' : '5', tx.atalhoDesafio,
                 desafioFeitoHoje(p.state, p.day) ? tx.atalhoDesafioFeito : tx.atalhoDesafioTempo],
               ['/academia?treino=flashcards-letras', 'א', tx.atalhoFlashcards, tx.atalhoFlashcardsDesc],
-              ['/leitura', 'אב', tx.atalhoLeitura, tx.atalhoLeituraDesc]
+              ['/leituras', 'אב', tx.atalhoLeitura, tx.atalhoLeituraDesc]
             ] as const).map(([href, icone, titulo, desc]) => (
               <li key={href} className="min-w-0">
                 <Link href={href}
