@@ -27,12 +27,13 @@ describe('as cenas exploráveis', () => {
           const w = vocab.find(x => clean(x.he) === clean(p.he));
           expect(w, p.he).toBeDefined();
           expect(w!.he, 'mesma grafia do curso').toBe(p.he);
-          /* E já se lê no fim do PRÓPRIO módulo (6 e 7 não têm letra nova). */
-          expect(w!.desde, `${p.he} é de antes do fim do módulo`).toBeLessThanOrEqual(Math.max(...ate.map(l => l.order)));
+          /* E já se lê no fim do PRÓPRIO módulo (6 e 7 não têm letra nova).
+             O ponto `depois` é justamente o que não se lê ainda. */
+          if (!p.depois) expect(w!.desde, `${p.he} é de antes do fim do módulo`).toBeLessThanOrEqual(Math.max(...ate.map(l => l.order)));
         }
-        expect(ds.find(d => d.he === p.he)?.legivel, `${p.he} se lê no fim do módulo`).toBe(true);
+        if (!p.depois) expect(ds.find(d => d.he === p.he)?.legivel, `${p.he} se lê no fim do módulo`).toBe(true);
       }
-      expect(ds).toHaveLength(pontos!.length);
+      expect(ds.filter(d => !d.depois)).toHaveLength(pontos!.filter(p => !p.depois).length);
     });
 
     it(`módulo ${modulo}: os pontos não se cobrem e ficam dentro do desenho`, () => {
@@ -62,6 +63,17 @@ describe('as cenas exploráveis', () => {
     const pij = descobertasDaCena(7, letras, letras, extras, [6]).find(d => d.fonte === 'gueresh')!;
     expect(pij.faltaModulo).toBe(7);
     expect(pij.palavra.translit).toBeNull();
+  });
+
+  it('a cena cresce: o ponto `depois` não existe antes de a palavra se ler, e aparece depois', () => {
+    const depois = Object.entries(PONTOS_DA_CENA).flatMap(([n, ps]) => ps!.filter(p => p.depois).map(p => ({ n: Number(n), p })));
+    expect(depois.length).toBeGreaterThanOrEqual(5);
+    for (const { n, p } of depois) {
+      const ate = letras.filter(l => l.module <= n);
+      expect(descobertasDaCena(n, letras, ate, extras).some(d => d.he === p.he), `${p.he} escondido no fim do módulo ${n}`).toBe(false);
+      const d = descobertasDaCena(n, letras, letras, extras, ambos).find(x => x.he === p.he);
+      expect(d?.legivel, `${p.he} aparece com todas as letras`).toBe(true);
+    }
   });
 
   it('todo módulo tem cena', () => {
