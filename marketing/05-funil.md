@@ -81,7 +81,7 @@ Com o volume de hoje, uma semana sozinha engana: comparar sempre as 4 últimas.
 
 ## Próximos passos
 
-- [ ] **Dono:** aprovar o pedido de depoimento (lacuna 1).
+- [x] **Dono:** aprovar o pedido de depoimento (lacuna 1). Aprovado em 28/10/2026; falta enviar.
 - [ ] **Dono:** enviar as mensagens aos parceiros (lacuna 4).
 - [ ] **Dono:** um story com o link `/stories` no dia de cada post da série (lacuna 2).
 - [ ] **Claude, 02/11:** primeira leitura do funil inteiro, com as taxas da tabela acima.
