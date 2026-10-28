@@ -15,7 +15,7 @@
 
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
-import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
@@ -326,57 +326,67 @@ function StageConhecer({
   const [completa, setCompleta] = useState(false);
   const [comparar, setComparar] = useState(false);
   const mostraTudo = !enxuta || completa;
-  return (
-    <div className="grid gap-5">
-      <Card className="p-6 sm:p-8 grid gap-6">
-        <HebrewLetterCard letter={letter} />
-        {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            O que vamos aprender hoje?
-          </p>
-          <p className="text-[16px] leading-relaxed text-ink-body">
-            Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
-            <He size="inline">{glifoDaLicao(letter)}</He>
-            {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
-          </p>
-        </div>}
-      </Card>
+  const [passo, setPasso] = useState(0);
+  const topo = useRef<HTMLDivElement>(null);
+  const temChecagem = (letter.ensino?.checagem?.length ?? 0) > 0;
 
-      <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
-        textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
-
-      <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
-        <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <Prose text={letter.soundNotePt} />
-        </p>
-        {/* O lugar de onde o som sai, desenhado - em toda letra. */}
-        <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
-        {letter.id === 'het' && (
-          <GravacaoDoProfessor id="letter-het-pronunciation"
-            textoPt="O ח sozinho e em palavras, comparado ao R de alguns sotaques brasileiros." />
-        )}
-      </Card>
-
-      {/* As duas (ou três) leituras, com um botão de som para cada uma.
-          ──────────────────────────────────────────────────────────────
-          O curso explicava em prosa que {{ש}} tem duas leituras e dava ao
-          aluno UM botão de áudio - o da letra. Quem precisa ouvir a
-          diferença entre "ch" e "s" não tinha onde ouvir a diferença.
-          Cada variante tem `audioId` próprio; enquanto não há gravação,
-          o botão simplesmente não aparece, e o quadro continua ensinando
-          pelo desenho e pelo texto. */}
-      <Leituras letter={letter} />
-
-      {/* O que a letra FAZ, e não só que som ela tem.
-          ──────────────────────────────────────────────────────────────
-          Era o buraco da lição: o curso dizia "esta letra faz /m/" e
-          seguia para as sílabas. As perguntas que o adulto brasileiro
-          realmente tem - "por que essa letra está aí se eu não a escuto?",
-          "por que ela mudou de formato?", "isso é vogal ou consoante?" -
-          não eram respondidas em lugar nenhum, e a conclusão que sobrava
-          era a de que o hebraico é arbitrário. */}
-      {mostraTudo ? (
+  /* Os passos da etapa (28/10/2026, decisão do dono: "em telas curtas").
+     ─────────────────────────────────────────────────────────────────────
+     Era uma página só, de 4.000 a 5.000 px no celular: a letra, a pronúncia,
+     a explicação, as sílabas e as perguntas, tudo de uma vez. O conteúdo é o
+     mesmo; ele chega um bloco por vez, na ordem em que se aprende: ver a
+     letra, ouvir, entender, praticar com as vogais, conferir. Voltar é
+     livre, e nenhum passo é cobrado: "Próximo" sempre anda. */
+  const passos: { nome: string; corpo: ReactNode }[] = [
+    {
+      nome: 'Descobrir',
+      corpo: (
+        <>
+          <Card className="p-6 sm:p-8 grid gap-6">
+            <HebrewLetterCard letter={letter} />
+            {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
+              <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
+                O que vamos aprender hoje?
+              </p>
+              <p className="text-[16px] leading-relaxed text-ink-body">
+                Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
+                <He size="inline">{glifoDaLicao(letter)}</He>
+                {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
+              </p>
+            </div>}
+          </Card>
+          <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
+            textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
+        </>
+      )
+    },
+    {
+      nome: 'Ouvir',
+      corpo: (
+        <>
+          <Card className="p-6 grid gap-3">
+            <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
+            <p className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={letter.soundNotePt} />
+            </p>
+            {/* O lugar de onde o som sai, desenhado - em toda letra. */}
+            <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
+            {letter.id === 'het' && (
+              <GravacaoDoProfessor id="letter-het-pronunciation"
+                textoPt="O ח sozinho e em palavras, comparado ao R de alguns sotaques brasileiros." />
+            )}
+          </Card>
+          {/* As duas (ou três) leituras, com um botão de som para cada uma:
+              quem precisa ouvir a diferença entre "ch" e "s" tem onde ouvir. */}
+          <Leituras letter={letter} />
+        </>
+      )
+    },
+    {
+      nome: 'Entender',
+      /* O que a letra FAZ, e não só que som ela tem: "por que essa letra está
+         aí se eu não a escuto?", "por que ela mudou de formato?". */
+      corpo: mostraTudo ? (
         <>
           <Ensinamento letter={letter} />
           <BrazilianTip mistake={letter.brazilianMistake} />
@@ -391,57 +401,52 @@ function StageConhecer({
             Ver a explicação completa
           </button>
         </>
-      )}
-
-      <Card className="p-6 grid gap-4">
-        <div className="grid gap-1">
-          <h2 className="text-[19px] font-semibold">A letra com cada vogal</h2>
-          <p className="font-ui text-[13.5px] text-ink-muted">
-            {letter.syllables.some(s => hasAudio(s.audioId))
-              ? 'Toque numa sílaba para ouvir. Depois grave a sua e compare.'
-              : 'Toque numa sílaba para ver a dica de pronúncia.'}
-          </p>
-        </div>
-        {/* Uma coisa só (27/09/2026): tocar na sílaba toca o som dela, e o
-            gravar-e-comparar fica logo abaixo, para a sílaba escolhida. Eram
-            três blocos - a grade, "Leia as sílabas em voz alta" e a comparação
-            com as mesmas sílabas de novo. Sem nenhuma sílaba gravada, volta a
-            grade de dicas. */}
-        {letter.syllables.some(s => hasAudio(s.audioId)) ? (
-          <>
-            <CompararPronuncia itens={letter.syllables} grade />
-            <div className="flex flex-wrap items-center gap-3">
-              <AudioButton audioId={letter.audioId} label={`Ouvir o nome: ${letter.namePt}`} slow />
+      )
+    },
+    {
+      nome: 'Praticar',
+      corpo: (
+        <>
+          <Card className="p-6 grid gap-4">
+            <div className="grid gap-1">
+              <h2 className="text-[19px] font-semibold">A letra com cada vogal</h2>
+              <p className="font-ui text-[13.5px] text-ink-muted">
+                {letter.syllables.some(s => hasAudio(s.audioId))
+                  ? 'Toque numa sílaba para ouvir. Depois grave a sua e compare.'
+                  : 'Toque numa sílaba para ver a dica de pronúncia.'}
+              </p>
             </div>
-          </>
-        ) : <SyllableTrainer letter={letter} />}
-      </Card>
-
-      {/* The same five vowels on the letters already learned. Seeing the column
-          is what turns "מַ se lê ma" into "o patach faz a" - the generalisation
-          the course depends on and used to leave the learner to make alone. */}
-      {/* A tabela fica a um toque (27/10/2026, rodada 2 da experiência): com
-          ela aberta, a etapa 1 do Guímel tinha 4.816 px no celular, e era o
-          maior bloco que não é pergunta nem som da letra nova. */}
-      {mostraTudo && history.length > 1 && (comparar ? (
-        <SoundLab
-          letters={history}
-          compact
-          title="Compare com as letras que você já sabe"
-        />
-      ) : (
-        <button type="button" onClick={() => setComparar(true)} aria-expanded={false}
-                className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
-                           text-[var(--accent)] underline underline-offset-2">
-          Comparar com as letras que você já sabe
-        </button>
-      ))}
-
-      {/* Explicação → exemplo → PERGUNTAS → prática. A checagem fecha a
-          etapa: duas a quatro perguntas sobre o que foi EXPLICADO, e não
-          sobre o desenho da letra - reconhecer a forma o resto da lição já
-          cobra. Ver components/learn/Compreensao.tsx. */}
-      {letter.ensino?.checagem?.length > 0 && (
+            {/* Tocar na sílaba toca o som dela, e o gravar-e-comparar fica logo
+                abaixo, para a sílaba escolhida. Sem nenhuma sílaba gravada, volta
+                a grade de dicas. */}
+            {letter.syllables.some(s => hasAudio(s.audioId)) ? (
+              <>
+                <CompararPronuncia itens={letter.syllables} grade />
+                <div className="flex flex-wrap items-center gap-3">
+                  <AudioButton audioId={letter.audioId} label={`Ouvir o nome: ${letter.namePt}`} slow />
+                </div>
+              </>
+            ) : <SyllableTrainer letter={letter} />}
+          </Card>
+          {/* As mesmas vogais nas letras já aprendidas, a um toque: ver a coluna
+              é o que transforma "מַ se lê ma" em "o patach faz a". */}
+          {mostraTudo && history.length > 1 && (comparar ? (
+            <SoundLab letters={history} compact title="Compare com as letras que você já sabe" />
+          ) : (
+            <button type="button" onClick={() => setComparar(true)} aria-expanded={false}
+                    className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                               text-[var(--accent)] underline underline-offset-2">
+              Comparar com as letras que você já sabe
+            </button>
+          ))}
+        </>
+      )
+    },
+    ...(temChecagem ? [{
+      nome: 'Conferir',
+      /* Explicação → exemplo → PERGUNTAS → prática: duas a quatro perguntas
+         sobre o que foi EXPLICADO. Ver components/learn/Compreensao.tsx. */
+      corpo: (
         <Compreensao
           id={`checagem-${letter.id}`}
           titulo="Entendeu? Perguntas rápidas"
@@ -449,12 +454,57 @@ function StageConhecer({
           perguntas={letter.ensino.checagem}
           fecho={{
             bom: 'Boa. Agora as palavras que esta letra abre.',
-            parcial: 'Vale reler os quadros acima - são duas ou três ideias, e elas voltam nas próximas letras.'
+            parcial: 'Vale reler os passos anteriores - são duas ou três ideias, e elas voltam nas próximas letras.'
           }}
         />
-      )}
+      )
+    }] : [])
+  ];
 
-      <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+  const ultimo = passo === passos.length - 1;
+  const ir = (n: number) => {
+    setPasso(n);
+    /* O passo novo começa do alto, e o foco vai junto: quem usa leitor de
+       tela ouve o nome do passo, e não o fim do anterior. */
+    requestAnimationFrame(() => {
+      topo.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
+      topo.current?.focus({ preventScroll: true });
+    });
+  };
+
+  return (
+    <div className="grid gap-5">
+      {/* Pontos, e não uma barra: logo acima ficam as abas das etapas, e uma
+          segunda barra cheia ali parecia outra fileira de abas. */}
+      <div ref={topo} tabIndex={-1}
+           className="flex items-center justify-between gap-3 outline-none scroll-mt-[76px]">
+        <p className="m-0 font-ui text-[14px] font-semibold text-ink">{passos[passo]!.nome}</p>
+        <p className="m-0 flex items-center gap-2.5 font-ui text-[13px] text-ink-muted">
+          <span aria-hidden className="flex gap-1.5">
+            {passos.map((x, k) => (
+              <span key={x.nome}
+                    className={`w-2 h-2 rounded-full transition-colors duration-[var(--dur-toque)]
+                      ${k <= passo ? 'bg-[var(--accent)]' : 'bg-[var(--line)]'}`} />
+            ))}
+          </span>
+          <span className="tabular-nums">Passo {passo + 1} de {passos.length}</span>
+        </p>
+      </div>
+
+      <div key={passo} className="grid gap-5 hf-passo">
+        {passos[passo]!.corpo}
+      </div>
+
+      <div className="grid grid-cols-[auto_1fr] gap-2">
+        {passo > 0 ? (
+          <Button variant="secondary" size="lg" onClick={() => ir(passo - 1)}>Voltar</Button>
+        ) : <span />}
+        {ultimo
+          ? <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+          : <Button size="lg" onClick={() => ir(passo + 1)} full>
+              Próximo: {passos[passo + 1]!.nome.toLowerCase()}
+            </Button>}
+      </div>
     </div>
   );
 }

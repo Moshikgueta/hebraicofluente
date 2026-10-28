@@ -1089,6 +1089,12 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
 - LinkButton para rota paga não pré-carrega (evita 403 para quem não comprou). Conta criada
   há menos de 24 h vê o preço antes do aviso "já pagou com outro e-mail?".
 
+## Etapa 1 da lição em passos (28/10/2026, decisão do dono)
+- `StageConhecer` (LessonClient) mostra um bloco por tela: Descobrir, Ouvir, Entender, Praticar e
+  Conferir (sem `checagem`, quatro passos). Voltar e Próximo sempre andam; o último botão é
+  "Continuar para as palavras". O conteúdo de cada bloco é o mesmo de antes (a etapa enxuta e o
+  "Ver mais sobre esta letra" continuam valendo dentro de "Entender").
+
 ## Etapa 1 da lição mais curta (30/09/2026)
 - Em toda letra, `Ensinamento` mostra à vista só "O que esta letra faz" e "O que você precisa
   lembrar" (e o detalhe, quando a letra tem forma final). Detalhe, nota para brasileiro,
