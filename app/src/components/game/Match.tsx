@@ -22,6 +22,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Button } from '@/components/ui/Button';
+import { tx } from '@/i18n/telas/academia-match';
 import { cartasDoMatch, type Par } from '@/lib/engine/deck';
 
 type Estado = 'parado' | 'certo' | 'errado';
@@ -118,7 +119,7 @@ export function Match({
     <div className="grid gap-4">
       <div className="flex items-center gap-3 flex-wrap">
         <p className="font-ui text-[14px] text-ink-muted flex-1 min-w-[180px]">
-          Toque num cartão e depois no que combina com ele.
+          {tx.instrucao}
         </p>
         <p className="font-ui text-[13px] text-ink-muted tabular-nums">
           {feitos.length} / {baralho.length}
@@ -129,7 +130,7 @@ export function Match({
           onClick={() => { setLigado(v => !v); inicio.current = Date.now(); setSegundos(0); }}
           aria-pressed={ligado}
         >
-          {ligado ? `${segundos}s` : 'Cronômetro'}
+          {ligado ? `${segundos}s` : tx.cronometro}
         </Button>
       </div>
 
@@ -176,7 +177,7 @@ export function Match({
       </ul>
 
       <p aria-live="polite" className="sr-only">
-        {marca.estado === 'certo' ? 'Par correto.' : marca.estado === 'errado' ? 'Esses dois não combinam.' : ''}
+        {marca.estado === 'certo' ? tx.parCorreto : marca.estado === 'errado' ? tx.naoCombinam : ''}
       </p>
     </div>
   );

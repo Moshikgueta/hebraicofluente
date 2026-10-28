@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import { useProgress } from '@/lib/state/store';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-teclado-client';
 
 export function TecladoClient() {
   const p = useProgress();
@@ -18,11 +19,10 @@ export function TecladoClient() {
        rolava 15 px de lado (auditoria de 28/09, UX-010). */
     <div className="focus-col grid grid-cols-[minmax(0,1fr)] gap-6 py-2 [overflow-wrap:anywhere]">
       <header className="grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Ferramentas</p>
-        <h1 className="text-[28px] font-bold m-0 text-balance">O teclado hebraico no seu aparelho</h1>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.ferramentas}</p>
+        <h1 className="text-[28px] font-bold m-0 text-balance">{tx.titulo}</h1>
         <p className="font-ui text-[16px] leading-relaxed text-ink-body m-0">
-          Ele só é necessário para os exercícios de digitação da academia. Todo o
-          resto do curso se faz tocando.
+          {tx.texto}
         </p>
       </header>
       <GuiaTeclado
@@ -34,8 +34,8 @@ export function TecladoClient() {
       />
       {confirmado && (
         <p className="font-ui text-[15px] text-[var(--mint-ink)] m-0">
-          ✓ Você já confirmou o teclado.{' '}
-          <Link href="/academia" className="underline">Ir para a digitação, na academia</Link>.
+          {tx.confirmado}{' '}
+          <Link href="/academia" className="underline">{tx.irDigitacao}</Link>.
         </p>
       )}
     </div>
