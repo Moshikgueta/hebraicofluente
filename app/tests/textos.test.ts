@@ -23,7 +23,7 @@ const letrasDe = (he: string) => [...he.normalize('NFD')].filter(c => /[א-ת]/.
 const hebraicoEm = (t: string) => [...t.matchAll(/\{\{([^}]+)\}\}/g)].map(m => m[1]!);
 
 describe('os mini-textos', () => {
-  /* O do módulo 2 entrou em 28/10/2026 como rascunho (revisado: false). Ele
+  /* O do módulo 2 entrou em 28/10/2026 (aprovado pelo dono no mesmo dia). Ele
      segue a mesma régua das letras: sem o Vav, nem como sinal de vogal. */
   it('há um texto em cada módulo do 2 ao 7', () => {
     expect(textos.map(t => t.modulo).sort()).toEqual([2, 3, 4, 5, 6, 7]);

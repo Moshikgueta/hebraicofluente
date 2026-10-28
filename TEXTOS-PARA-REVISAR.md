@@ -16,10 +16,10 @@ e a tradução, e se as palavras novas fazem sentido para o nível.
 Mudança de 01/10/2026 no texto do módulo 4, pergunta 4 (o curso fica no presente): "A Noa queria ficar mais um dia."
 passou a "A Noa quer ficar mais um dia.", e a explicação diz "quero mais um dia!".
 
-## RASCUNHO NOVO · Módulo 2 · O peixe (28/10/2026, aguardando o dono)
-*Conversa* · `"revisado": false` em `data/textos.json`: **não aparece para o aluno até ser aprovado.**
+## Módulo 2 · O peixe (APROVADO pelo dono em 28/10/2026, sem mudanças)
+*Conversa* · `"revisado": true` em `data/textos.json`: aparece para o aluno do módulo 2.
 
-Até hoje o módulo 2 só tinha a leitura de revisão ("Sorvete para todos"). Este seria o primeiro mini-texto do
+Até hoje o módulo 2 só tinha a leitura de revisão ("Sorvete para todos"). É o primeiro mini-texto do
 módulo, com a Maya e o Dani, agora na praia com a mãe dele. Usa só as letras dos módulos 1 e 2, **sem o Vav nem
 como sinal de vogal** (o Vav só é ensinado no módulo 3; a primeira versão usava גָדוֹל, הוּא e דוֹדָה e foi
 refeita), e, fora os nomes, uma palavra nova (שֶׁלִי). Escrito sem o ponto que dobra a letra (הַדָג, e não הַדָּג),
