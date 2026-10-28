@@ -9,13 +9,12 @@ import { somPt } from '@/lib/som-pt';
 import { FORMAS_FINAIS, letraPublica } from '@/lib/alfabeto-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { jsonLdTexto, migalhas } from '@/lib/jsonld';
+import { tx } from '@/i18n/telas/venda-alfabeto-hebraico';
 
 export const metadata: Metadata = meta({
   rota: '/alfabeto-hebraico',
-  title: 'Alfabeto hebraico: as 22 letras, o som e como ler - Hebraico Fluente',
-  description:
-    'As 22 letras do alfabeto hebraico com o nome e o som em português, as cinco formas finais e ' +
-    'como funcionam as vogais. Teste grátis da primeira letra.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 /* A página principal do alfabeto (23/10/2026, plano de marketing, opção B de
@@ -28,16 +27,15 @@ export default function AlfabetoHebraicoPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
-        { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' }
+        { nome: tx.alfabeto, rota: '/alfabeto-hebraico' }
       ])) }} />
       <PageHead
-        trilha={[{ nome: 'Alfabeto hebraico' }]}
-        eyebrowPt="Alfabeto hebraico"
-        titlePt="As 22 letras do hebraico, uma por uma."
+        trilha={[{ nome: tx.alfabeto }]}
+        eyebrowPt={tx.alfabeto}
+        titlePt={tx.titulo}
         leadPt={
           <>
-            O alfabeto hebraico tem 22 letras, e todas são consoantes. As vogais são sinais pequenos embaixo,
-            em cima ou ao lado das letras: o nikud. E tudo se lê da direita para a esquerda.
+            {tx.lead}
           </>
         }
       />
@@ -45,18 +43,18 @@ export default function AlfabetoHebraicoPage() {
       <Section labelledBy="tabela">
         <SectionHead
           id="tabela"
-          eyebrowPt="A tabela"
-          titlePt="O nome e o som de cada letra."
-          leadPt={`Na ordem em que o curso as ensina, que vem do método do ${METODO_ORIGINAL.autor}. As cinco letras que mudam de forma no fim da palavra aparecem com a forma final ao lado.`}
+          eyebrowPt={tx.tabelaEyebrow}
+          titlePt={tx.tabelaTitulo}
+          leadPt={tx.tabelaLead(METODO_ORIGINAL.autor)}
         />
         <div className="overflow-x-auto">
           <table className="w-full font-ui text-[15px] border-collapse">
             <thead>
               <tr className="text-left text-ink-muted">
-                <th className="py-2 pr-4">Letra</th>
-                <th className="py-2 pr-4">Nome</th>
-                <th className="py-2 pr-4">Som</th>
-                <th className="py-2">Forma final</th>
+                <th className="py-2 pr-4">{tx.colLetra}</th>
+                <th className="py-2 pr-4">{tx.colNome}</th>
+                <th className="py-2 pr-4">{tx.colSom}</th>
+                <th className="py-2">{tx.colFinal}</th>
               </tr>
             </thead>
             <tbody>
@@ -82,26 +80,24 @@ export default function AlfabetoHebraicoPage() {
       </Section>
 
       <Section tone="surface" labelledBy="como">
-        <SectionHead id="como" eyebrowPt="Como se lê" titlePt="Três coisas para saber antes da primeira letra." />
+        <SectionHead id="como" eyebrowPt={tx.comoEyebrow} titlePt={tx.comoTitulo} />
         <div className="grid gap-8 sm:grid-cols-3">
           <div className="grid gap-2 content-start">
-            <h3 className="font-display text-[20px] font-semibold text-ink m-0">Da direita para a esquerda</h3>
+            <h3 className="font-display text-[20px] font-semibold text-ink m-0">{tx.direitaTitulo}</h3>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              A linha começa do lado direito da página, e o livro também abre pelo lado que, para nós, é o fim.
+              {tx.direitaTexto}
             </p>
           </div>
           <div className="grid gap-2 content-start">
-            <h3 className="font-display text-[20px] font-semibold text-ink m-0">As letras são consoantes</h3>
+            <h3 className="font-display text-[20px] font-semibold text-ink m-0">{tx.consoantesTitulo}</h3>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              Cada uma das 22 letras é uma consoante. Uma delas, o <He>א</He>, não tem som próprio: ela só segura a
-              vogal.
+              {tx.consoantesTexto(<He>א</He>)}
             </p>
           </div>
           <div className="grid gap-2 content-start">
-            <h3 className="font-display text-[20px] font-semibold text-ink m-0">As vogais são sinais</h3>
+            <h3 className="font-display text-[20px] font-semibold text-ink m-0">{tx.vogaisTitulo}</h3>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              Os pontos e traços embaixo ou em cima das letras são as vogais, o nikud. Com eles, dá para ler em voz
-              alta qualquer palavra, mesmo sem saber o que ela quer dizer.
+              {tx.vogaisTexto}
             </p>
           </div>
         </div>
@@ -109,8 +105,8 @@ export default function AlfabetoHebraicoPage() {
 
       <Section labelledBy="cta">
         <FaixaCta
-          titulo="Aprenda as 22 letras, uma por vez."
-          linha={<>Comece pelo teste grátis do Álef, na página do curso: 6 exercícios curtos, sem cadastro.</>}
+          titulo={tx.ctaTitulo}
+          linha={<>{tx.ctaLinha}</>}
           onde="alfabeto-hebraico"
         />
       </Section>

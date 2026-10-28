@@ -28,6 +28,8 @@
  * (`AMOSTRA_TRACADO`), e o tipo de `letterId` abaixo é o espelho dela.
  */
 
+import { tx } from '@/i18n/telas/venda-diagrama-de-tracado';
+
 /** As letras publicadas em /tracado-amostra/. Ver AMOSTRA_TRACADO. */
 export type LetraDaAmostra = 'alef' | 'shin';
 
@@ -40,13 +42,13 @@ export function DiagramaDeTracado({
   movimentos: number;
   className?: string;
 }) {
-  const quantos = `${movimentos} ${movimentos === 1 ? 'movimento' : 'movimentos'}`;
+  const quantos = tx.movimentos(movimentos);
   return (
     <figure className={`m-0 grid gap-2.5 justify-items-center ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`/tracado-amostra/${letterId}.svg`}
-        alt={`Ordem dos traços da letra ${label}: ${quantos}, com o ponto de partida marcado.`}
+        alt={tx.alt(label, quantos)}
         width={200}
         height={200}
         loading="lazy"

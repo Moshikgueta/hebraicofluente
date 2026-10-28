@@ -33,6 +33,7 @@ import { Container, H2, Reveal, Rubrica, Check, CheckList, Chevron } from './bas
 import { precoDeVitrine } from '@/lib/vitrine';
 import { oQueOCursoInclui } from '@/lib/inclui';
 import { perguntasDaCapa } from './faq-capa';
+import { tx } from '@/i18n/telas/venda-fecho';
 
 const TEM_AUDIO = audioAvailable();
 
@@ -42,14 +43,14 @@ const TEM_AUDIO = audioAvailable();
    dez segundos - quem é, o que junta, e o link para o resto. Só fatos que o
    dono deu, e nenhum além (ver Trajetoria.tsx). */
 const RESUMO = [
-  'Israelense, fala cinco idiomas',
-  'Professor de hebraico no Brasil',
-  'Gerente Pedagógico em Tel Aviv',
+  tx.resumo1,
+  tx.resumo2,
+  tx.resumo3,
   /* Letras está em curso (UNINTER): "Formação CELTA e Letras" se lê como
      graduação concluída (auditoria de 01/10, CONV-005). Mesma forma em
      /sobre (Trajetoria.tsx, REUNE). O dono confirmou em 01/10/2026: não
      concluiu; a forma é "estudos em Letras" em todo lugar. */
-  'Formação CELTA e estudos em Letras'
+  tx.resumo4
 ];
 
 export function Professor({ retrato }: { retrato: string | null }) {
@@ -63,7 +64,7 @@ export function Professor({ retrato }: { retrato: string | null }) {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={retrato}
-                alt="Moshik Gueta, professor e criador do Hebraico Fluente"
+                alt={tx.retratoAlt}
                 width={680} height={850} loading="lazy" decoding="async"
                 className="aspect-[4/5] w-full max-w-[240px] sm:max-w-none rounded-[16px]
                            shadow-[0_0_0_1px_rgba(27,33,31,.06)] object-cover object-top bg-[var(--sand)]"
@@ -80,16 +81,14 @@ export function Professor({ retrato }: { retrato: string | null }) {
             )}
           </Reveal>
           <Reveal delay={100}>
-            <Rubrica letra="ז" className="mb-5">Quem está por trás do Hebraico Fluente</Rubrica>
+            <Rubrica letra="ז" className="mb-5">{tx.rubricaProfessor}</Rubrica>
             <h2 id="sobre-titulo"
                 className="font-display font-semibold text-[clamp(26px,3vw,38px)] leading-[1.1]
                            tracking-[-0.03em] text-balance m-0 mb-4 max-w-[24ch]">
-              De Israel ao Brasil: um professor que ensina, aprende e pensa idiomas.
+              {tx.tituloProfessor}
             </h2>
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[56ch] mb-5">
-              Sou Moshik Gueta. Foi ensinando hebraico a brasileiros, em Curitiba, que entendi onde
-              quem começa do zero trava. O Hebraico Fluente transforma o que funcionava nas minhas
-              aulas em uma metodologia que você segue no seu ritmo.
+              {tx.apresentacao}
             </p>
             {/* Os quatro fatos eram quatro selos com borda. Viraram uma ficha
                 de duas colunas sob fios: credencial se lê como currículo, não
@@ -107,33 +106,34 @@ export function Professor({ retrato }: { retrato: string | null }) {
               <Link href="/sobre"
                     className="group inline-flex items-center gap-2 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
                                hover:text-[var(--teal-ink)]">
-                Conheça a minha história
+                {tx.historia}
                 <span aria-hidden className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
               </Link>
               <a href={PERFIL_LINKEDIN} target="_blank" rel="noopener noreferrer me"
                  className="inline-flex items-center gap-1.5 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
                             underline underline-offset-[3px] decoration-[1.5px]">
-                Ver meu perfil no LinkedIn
+                {tx.linkedin}
                 <span aria-hidden>↗</span>
-                <span className="sr-only"> (abre em outra aba)</span>
+                <span className="sr-only">{tx.abreAba}</span>
               </a>
               <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer"
                  className="inline-flex items-center gap-1.5 font-ui text-[16px] font-semibold text-[var(--teal-ink)]
                             underline underline-offset-[3px] decoration-[1.5px]">
-                Instagram
+                {tx.instagram}
                 <span aria-hidden>↗</span>
-                <span className="sr-only"> do Hebraico Fluente (abre em outra aba)</span>
+                <span className="sr-only">{tx.instagramSr}</span>
               </a>
             </div>
             {/* O crédito ao método de origem fica na capa também: é aqui que
                 ela fala de quem fez o curso. Ver lib/credito.ts. */}
             <p className="mt-6 pt-5 border-t border-[color:var(--line-soft)]
                           font-ui text-[14.5px] leading-[1.6] text-ink-muted max-w-[60ch]">
-              O método parte do trabalho de <strong className="font-semibold text-ink">
-              {METODO_ORIGINAL.autor}</strong>, autor de{' '}
-              <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
-              ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do
-              que esta plataforma ensina. {METODO_ORIGINAL.adaptacoesPt}
+              {tx.metodo(
+                <strong className="font-semibold text-ink">{METODO_ORIGINAL.autor}</strong>,
+                <He size="inline">{METODO_ORIGINAL.obraHe}</He>,
+                METODO_ORIGINAL.obraTranslit,
+                METODO_ORIGINAL.adaptacoesPt
+              )}
             </p>
           </Reveal>
         </div>
@@ -147,26 +147,26 @@ type Recurso = { t: string; d: string; paths: string[] };
 
 const RECURSOS: Recurso[] = [
   {
-    t: TEM_AUDIO ? 'Áudio e pronúncia' : 'Pronúncia explicada',
+    t: TEM_AUDIO ? tx.recursoAudioT : tx.recursoSemAudioT,
     d: TEM_AUDIO
-      ? 'Cada letra, sílaba e palavra gravada por falante nativo.'
-      : 'Cada som comparado com um som que você já faz em português.',
+      ? tx.recursoAudioD
+      : tx.recursoSemAudioD,
     paths: ['M4 8v4M7 5.5v9M10 3v14M13 5.5v9M16 8v4']
   },
-  { t: 'Correção imediata', d: 'Você sabe na hora se acertou - e por que errou.', paths: ['M4 10.5 8 14.5 16 5.5'] },
-  { t: 'Sequência de estudos', d: 'Os dias seguidos contam. Faltar um dia não apaga seu XP nem seu recorde, e uma folga guardada protege a sequência.', paths: ['M10 2.5c1.9 3 .8 4.5-.6 6-1.3 1.4-2.4 2.7-2.4 4.6a3 3 0 0 0 6 0c0-.9-.3-1.6-.7-2.3 2 1 3.2 2.6 3.2 4.6'] },
-  { t: 'Progresso visual', d: 'Percentual por módulo e mapa de domínio das letras.', paths: ['M4 16V9M9 16V4M14 16v-5'] },
-  { t: 'Revisão inteligente', d: 'O que escapa volta sozinho, no intervalo certo.', paths: ['M16 6.5A6.5 6.5 0 1 0 17 10', 'M16 3v3.5h-3.5'] },
-  { t: 'Estude no celular', d: 'Uma atividade por tela, botão de continuar sempre à mão.', paths: ['M6.5 2.5h7a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 16V4a1.5 1.5 0 0 1 1.5-1.5Z', 'M9 15h2'] },
-  { t: 'Explicações em português', d: 'Comparações com o som que você já conhece, sempre.', paths: ['M3 10a7 7 0 1 1 7 7H3.5l1.8-2.1A6.97 6.97 0 0 1 3 10Z'] },
-  { t: 'Hebraico desde o zero', d: 'Nenhum conhecimento prévio. Começa na primeira letra.', paths: ['M10 3.5 3 7l7 3.5L17 7l-7-3.5Z', 'M3 13l7 3.5L17 13'] }
+  { t: tx.correcaoT, d: tx.correcaoD, paths: ['M4 10.5 8 14.5 16 5.5'] },
+  { t: tx.sequenciaT, d: tx.sequenciaD, paths: ['M10 2.5c1.9 3 .8 4.5-.6 6-1.3 1.4-2.4 2.7-2.4 4.6a3 3 0 0 0 6 0c0-.9-.3-1.6-.7-2.3 2 1 3.2 2.6 3.2 4.6'] },
+  { t: tx.progressoT, d: tx.progressoD, paths: ['M4 16V9M9 16V4M14 16v-5'] },
+  { t: tx.revisaoT, d: tx.revisaoD, paths: ['M16 6.5A6.5 6.5 0 1 0 17 10', 'M16 3v3.5h-3.5'] },
+  { t: tx.celularT, d: tx.celularD, paths: ['M6.5 2.5h7a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 5 16V4a1.5 1.5 0 0 1 1.5-1.5Z', 'M9 15h2'] },
+  { t: tx.explicacoesT, d: tx.explicacoesD, paths: ['M3 10a7 7 0 1 1 7 7H3.5l1.8-2.1A6.97 6.97 0 0 1 3 10Z'] },
+  { t: tx.zeroT, d: tx.zeroD, paths: ['M10 3.5 3 7l7 3.5L17 7l-7-3.5Z', 'M3 13l7 3.5L17 13'] }
 ];
 
 export function Recursos() {
   return (
     <section>
       <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="mb-8">O que vem junto com o curso.</H2></Reveal>
+        <Reveal><H2 className="mb-8">{tx.recursosTitulo}</H2></Reveal>
         <ul className="grid gap-3.5 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
           {RECURSOS.map((f, i) => (
             <Reveal as="li" key={f.t} delay={i * 55}
@@ -211,26 +211,25 @@ export function AulaAmostra({ href }: { href: string }) {
           <div>
             <h2 className="font-display font-semibold text-[clamp(30px,3.6vw,42px)] leading-[1.08]
                            tracking-[-0.03em] text-white m-0 mb-4">
-              Experimente antes de começar.
+              {tx.amostraTitulo}
             </h2>
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.6] text-white/70 max-w-[40ch] mb-6">
-              Uma questão real da Lição 3, do jeito que ela aparece dentro da plataforma.
-              Escolha uma opção.
+              {tx.amostraTexto}
             </p>
             <Link href={href}
                   className="inline-flex items-center rounded-[13px] bg-white text-[var(--navy)]
                              font-ui font-semibold text-[17px] px-7 py-[15px]
                              transition-transform duration-[180ms] hover:-translate-y-[2px]">
-              Ver o curso por dentro
+              {tx.amostraVer}
             </Link>
           </div>
 
           <div className="rounded-[22px] bg-[var(--card)] p-6 sm:px-[26px] sm:py-7">
             <p className="font-ui text-[13px] font-semibold uppercase tracking-[.08em] text-ink-muted mb-2">
-              Lição 3 · Reconhecimento
+              {tx.amostraRotulo}
             </p>
             <p className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink mb-5">
-              Qual letra faz o som N?
+              {tx.amostraPergunta}
             </p>
             <div className="grid grid-cols-2 gap-3 mb-4.5">
               {AMOSTRA.map(([he, nome], i) => {
@@ -263,19 +262,18 @@ export function AulaAmostra({ href }: { href: string }) {
             <div className="min-h-[74px]" aria-live="polite">
               {escolha === null && (
                 <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted pt-1.5">
-                  Escolha uma das quatro letras acima.
+                  {tx.amostraEscolha}
                 </p>
               )}
               {escolha !== null && certo && (
                 <div className="rounded-[14px] bg-[var(--teal-soft)] px-4 py-3.5 animate-pop">
                   <p className="flex items-center gap-2.5 mb-1">
                     <Check size={17} color="var(--teal-ink)" />
-                    <span className="font-ui font-bold text-[16px] text-[var(--teal-ink)]">Muito bem!</span>
-                    <span className="ml-auto font-ui font-bold text-[14px] text-[var(--teal-ink)]">+10 XP</span>
+                    <span className="font-ui font-bold text-[16px] text-[var(--teal-ink)]">{tx.muitoBem}</span>
+                    <span className="ml-auto font-ui font-bold text-[14px] text-[var(--teal-ink)]">+10 {tx.xp}</span>
                   </p>
                   <p className="font-ui text-[14.5px] leading-[1.55] text-[var(--teal-body)]">
-                    Nun faz o som N. Mem faz M, Tav faz T e He faz o H aspirado: as quatro
-                    vêm das duas primeiras lições.
+                    {tx.amostraCerto}
                   </p>
                 </div>
               )}
@@ -285,11 +283,10 @@ export function AulaAmostra({ href }: { href: string }) {
                     <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden>
                       <path d="M9 4.6v5.2M9 12.9v.1" stroke="var(--gold-ink)" strokeWidth="2" strokeLinecap="round" />
                     </svg>
-                    <span className="font-ui font-bold text-[16px] text-[var(--gold-ink)]">Quase.</span>
+                    <span className="font-ui font-bold text-[16px] text-[var(--gold-ink)]">{tx.quase}</span>
                   </p>
                   <p className="font-ui text-[14.5px] leading-[1.55] text-[var(--gold-body)]">
-                    {AMOSTRA[escolha]![1]} tem outro som. Procure a letra estreita, de base
-                    curta - pode tentar de novo.
+                    {tx.amostraErrado(AMOSTRA[escolha]![1])}
                   </p>
                 </div>
               )}
@@ -309,7 +306,7 @@ export function Depoimentos() {
 
   /* O título diz quantos são. "Quem já está lendo." sobre um depoimento só
      sugeria uma turma inteira (auditoria de persuasão de 20/10/2026). */
-  const titulo = DEPOIMENTOS.length === 1 ? 'O que diz uma aluna.' : 'O que dizem os alunos.';
+  const titulo = DEPOIMENTOS.length === 1 ? tx.depoimentoUm : tx.depoimentosVarios;
   const paragrafos = (c: string) => c.split(/\n\s*\n/);
 
   return (
@@ -326,7 +323,7 @@ export function Depoimentos() {
             <figure className="m-0 grid gap-8 lg:gap-16 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)]
                                border-t border-line pt-10">
               <div className="grid content-start gap-6">
-                <Rubrica>Depoimento</Rubrica>
+                <Rubrica>{tx.depoimento}</Rubrica>
                 <H2 id="depoimentos-titulo" className="!text-[clamp(28px,3vw,38px)]">{titulo}</H2>
                 <figcaption className="grid gap-1">
                   <span className="font-ui text-[16px] font-semibold text-ink">{t.nome}</span>
@@ -355,7 +352,7 @@ export function Depoimentos() {
           );
         })() : (
           <>
-            <Rubrica className="mb-5">Depoimentos</Rubrica>
+            <Rubrica className="mb-5">{tx.depoimentos}</Rubrica>
             <H2 id="depoimentos-titulo" className="mb-8">{titulo}</H2>
             {/* `min(275px,100%)`: com o texto em 150% num telefone, sobram
                 ~260px, e um mínimo fixo empurrava a página (npm run a11y). */}
@@ -414,7 +411,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                         grid grid-cols-[minmax(0,1fr)] gap-10 lg:gap-[52px]
                         lg:grid-cols-[minmax(0,1fr)_minmax(0,330px)] lg:items-center">
           <div className="min-w-0">
-            <Rubrica className="mb-5">Pagamento único, sem mensalidade</Rubrica>
+            <Rubrica className="mb-5">{tx.precoRubrica}</Rubrica>
             {/* O nome do catálogo, o mesmo de /cursos e do checkout. Aqui
                 estava "Curso de Alfabetização Hebraica", um terceiro nome
                 para o mesmo produto. */}
@@ -423,8 +420,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
               {c.titlePt}
             </h2>
             <p className="font-ui text-[17px] sm:text-[17.5px] leading-[1.6] text-ink-muted max-w-[46ch] mb-6">
-              Acesso completo à plataforma, com progresso salvo e revisões liberadas
-              conforme você avança.
+              {tx.precoTexto}
             </p>
             <CheckList items={inclui} columns={2} />
           </div>
@@ -432,10 +428,10 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
           <div className="min-w-0 rounded-[16px] bg-[var(--sand)] px-6 sm:px-7 py-8 text-center">
             {owned ? (
               <>
-                <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">Na sua conta</p>
+                <p className="font-ui text-[14.5px] text-ink-muted mb-1.5">{tx.naSuaConta}</p>
                 <p className="font-display text-[26px] sm:text-[29px] font-semibold tracking-[-0.025em]
                               leading-[1.15] text-ink mb-6">
-                  Este curso já é seu.
+                  {tx.jaESeu}
                 </p>
               </>
             ) : (
@@ -445,7 +441,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                     pré-lançamento" explica, e é o que está sendo praticado. */}
                 <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em]
                               text-[var(--teal-ink)] mb-1.5">
-                  {cheio ? 'Preço de pré-lançamento' : 'Acesso completo'}
+                  {cheio ? tx.precoPreLancamento : tx.acessoCompleto}
                 </p>
                 <p className="font-display text-[48px] sm:text-[54px] font-semibold tracking-[-0.04em]
                               leading-none text-ink tabular-nums mb-2">
@@ -456,8 +452,8 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                       é repassada ao comprador, então quem fecha o valor da
                       parcela é a operadora. Ver `parcelasMax` em catalog.ts. */}
                   {soPix()
-                    ? <>no PIX, à vista</>
-                    : <>ou {parcelasTexto(parcelas)} no cartão</>}
+                    ? <>{tx.noPix}</>
+                    : <>{tx.noCartao(parcelasTexto(parcelas))}</>}
                 </p>
               </>
             )}
@@ -479,14 +475,12 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 não dá é o erro que só aparece depois do clique. */}
             <p className="font-ui text-[13.5px] leading-[1.5] text-ink-muted tabular-nums">
               {owned
-                ? 'Seu progresso continua exatamente onde você parou.'
+                ? tx.continua
                 : !temPix()
-                  ? <>Acesso liberado na hora da confirmação, por {c.accessMonths} meses.</>
+                  ? <>{tx.liberadoNaHora(c.accessMonths)}</>
                   : confirmaSozinho()
-                    ? <>No PIX sai por {brl(pix)} ({c.price.pixDiscountPct}% de desconto). Acesso liberado na hora da confirmação,
-                       por {c.accessMonths} meses.</>
-                    : <>No PIX sai por {brl(pix)} ({c.price.pixDiscountPct}% de desconto). Acesso liberado à mão depois de
-                       conferido o pagamento, por {c.accessMonths} meses.</>}
+                    ? <>{tx.pixNaHora(brl(pix), c.price.pixDiscountPct, c.accessMonths)}</>
+                    : <>{tx.pixAMao(brl(pix), c.price.pixDiscountPct, c.accessMonths)}</>}
             </p>
             {/* A desistência (CDC art. 49) é o maior redutor de risco que o
                 site tem para quem não conhece o criador, e até 01/10/2026 ela
@@ -498,7 +492,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 dito como ele é. */}
             {!owned && (
               <p className="mt-2 font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-                {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.
+                {tx.desistir(empresa.politicas.arrependimentoDias)}
               </p>
             )}
             {/* O número riscado diz "é mais barato"; esta linha diz o que ele
@@ -508,8 +502,8 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
             {!owned && cheio && (
               <p className="mt-2 font-ui text-[13.5px] leading-[1.5] font-medium text-[var(--teal-ink)]">
                 {fimDoPreLancamento(c.price)
-                  ? <>Preço de pré-lançamento até {fimDoPreLancamento(c.price)}. Depois, o curso passa a custar {brl(cheio)}.</>
-                  : <>Depois do pré-lançamento, o curso passa a custar {brl(cheio)}.</>}
+                  ? <>{tx.preLancamentoAte(fimDoPreLancamento(c.price)!, brl(cheio))}</>
+                  : <>{tx.depoisDoPreLancamento(brl(cheio))}</>}
               </p>
             )}
           </div>
@@ -528,13 +522,13 @@ export function Faq() {
     <section id="duvidas" aria-labelledby="duvidas-titulo">
       <Container className="pt-20 sm:pt-28 grid gap-8 lg:gap-16 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)]">
         <div>
-          <Rubrica className="mb-5">Antes de começar</Rubrica>
-          <H2 id="duvidas-titulo" className="mb-3">Dúvidas frequentes</H2>
+          <Rubrica className="mb-5">{tx.faqRubrica}</Rubrica>
+          <H2 id="duvidas-titulo" className="mb-3">{tx.faqTitulo}</H2>
           {/* Uma linha de apoio, e ela diz o ESCOPO - não pede desculpa por
               nada e não anuncia o que falta. Onde há limitação, ela está na
               resposta que a pergunta pede. */}
           <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[40ch]">
-            O que o curso cobre, como funciona o acesso e o que esperar por dentro da plataforma.
+            {tx.faqTexto}
           </p>
         </div>
         {/* Perguntas sob fios, e não oito caixas: a lista se lê de cima a
@@ -574,9 +568,9 @@ export function Faq() {
 
 /* ── 14 · o fecho ───────────────────────────────────────────────────────── */
 const PALAVRAS: readonly { he: string; tr: string; pt: string }[] = [
-  { he: 'שָׁלוֹם', tr: 'shalóm', pt: 'olá, paz' },
-  { he: 'תוֹדָה', tr: 'todá', pt: 'obrigado' },
-  { he: 'מַיִם', tr: 'máyim', pt: 'água' }
+  { he: 'שָׁלוֹם', tr: tx.shalomTr, pt: tx.shalomPt },
+  { he: 'תוֹדָה', tr: tx.todaTr, pt: tx.todaPt },
+  { he: 'מַיִם', tr: tx.mayimTr, pt: tx.mayimPt }
 ];
 
 /* O `id` não é para link nenhum: é o alvo que a barra fixa do celular
@@ -600,7 +594,7 @@ export function CtaFinal({ href, label }: { href: string; label: string }) {
             </ul>
             <h2 className="font-display font-semibold text-[clamp(28px,3.9vw,46px)] leading-[1.1]
                            tracking-[-0.032em] text-white text-balance max-w-[19ch] mx-auto mb-7">
-              A próxima palavra em hebraico pode ser a primeira que você realmente consegue ler.
+              {tx.fechoTitulo}
             </h2>
             <Link href={href}
                   className="group inline-flex items-center gap-2 rounded-[12px] bg-white text-[var(--navy)]

@@ -51,6 +51,7 @@ import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
 import type { HeroMedia } from '@/components/landing/media';
+import { tx } from '@/i18n/telas/venda-curso-de-hebraico';
 
 export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; retrato: string | null }) {
   const account = useAccount();
@@ -73,8 +74,7 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
     <>
       {daParceria !== null && parceria && (
         <p className="m-0 bg-[var(--gold-soft)] text-[var(--gold-ink)] text-center font-ui text-[14.5px] px-4 py-2.5 border-b border-[#EADCC0]">
-          Seu link garante um preço especial: o curso sai por <strong>{brl(daParceria)}</strong> no checkout
-          {curso && fimDaParceria(curso) ? `, até ${fimDaParceria(curso)}` : ''}.
+          {tx.parceria(<strong>{brl(daParceria)}</strong>, curso ? fimDaParceria(curso) : null)}
         </p>
       )}
       <Hero
@@ -85,7 +85,7 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
            preço é o mesmo que a caixa de preço mostra (`precoDeVitrine`).
            Para um aluno pagante segue valendo lib/cta.ts ("Continuar de
            onde parei"). */
-        primaryLabel={passo.vende ? `Começar o curso · ${brl(precoDeVitrine())}` : passo.label}
+        primaryLabel={passo.vende ? tx.comecar(brl(precoDeVitrine())) : passo.label}
         primaryMicro={passo.micro}
         secondaryHref="#experimente"
         midia={midia}
