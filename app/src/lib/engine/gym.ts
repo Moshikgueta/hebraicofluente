@@ -32,6 +32,8 @@ import {
   palavrasAcumuladas, type ModoCursiva, type PalavraDoCurso
 } from './palavras';
 import { rng, shuffled, type Rand } from './rng';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-gym';
 
 export type GymModeId =
   | 'letras' | 'vogais' | 'silabas' | 'palavras' | 'ouvir'
@@ -83,58 +85,58 @@ function exWordLike(): Gen {
 
 export const GYM_MODES: GymMode[] = [
   {
-    id: 'revisao', titlePt: 'Revisão personalizada', icon: '↻',
-    descPt: 'O que você errou, no dia certo de rever.',
+    id: 'revisao', titlePt: tx.revisaoTitulo, icon: '↻',
+    descPt: tx.revisaoDesc,
     skills: ['rec', 'som', 'ler'], count: 8
   },
   {
-    id: 'letras', titlePt: 'Letras', icon: 'א',
-    descPt: 'Reconhecer a forma, rápido, fora de ordem.',
+    id: 'letras', titlePt: tx.letrasTitulo, icon: 'א',
+    descPt: tx.letrasDesc,
     skills: ['rec'], count: 10
   },
   {
-    id: 'vogais', titlePt: 'Vogais', icon: 'ָ',
-    descPt: 'Os sinais: que som fazem e onde ficam.',
+    id: 'vogais', titlePt: tx.vogaisTitulo, icon: 'ָ',
+    descPt: tx.vogaisDesc,
     skills: ['som'], count: 10
   },
   {
-    id: 'silabas', titlePt: 'Sílabas', icon: 'מַ',
-    descPt: 'Consoante mais vogal - a operação da leitura.',
+    id: 'silabas', titlePt: tx.silabasTitulo, icon: 'מַ',
+    descPt: tx.silabasDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'palavras', titlePt: 'Palavras', icon: '◉',
-    descPt: 'Ler palavras inteiras, montar, escrever.',
+    id: 'palavras', titlePt: tx.palavrasTitulo, icon: '◉',
+    descPt: tx.palavrasDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'ouvir', titlePt: 'Ouvir e escolher', icon: '♪',
-    descPt: 'Só o som, sem ver antes.',
+    id: 'ouvir', titlePt: tx.ouvirTitulo, icon: '♪',
+    descPt: tx.ouvirDesc,
     skills: ['ouvir'], needsAudio: true, count: 10
   },
   {
-    id: 'parecidas', titlePt: 'Letras parecidas', icon: '◫',
-    descPt: 'As que você está trocando, lado a lado.',
+    id: 'parecidas', titlePt: tx.parecidasTitulo, icon: '◫',
+    descPt: tx.parecidasDesc,
     skills: ['rec'], count: 8
   },
   {
-    id: 'construir', titlePt: 'Construir palavras', icon: '⌂',
-    descPt: 'O som na tela, as letras na mesa: monte a palavra, da direita para a esquerda.',
+    id: 'construir', titlePt: tx.construirTitulo, icon: '⌂',
+    descPt: tx.construirDesc,
     skills: ['ler'], count: 8
   },
   {
-    id: 'palavras-cursiva', titlePt: 'Palavras à mão', icon: '✎',
-    descPt: 'Palavras inteiras em cursiva: reconhecer, entender e montar.',
+    id: 'palavras-cursiva', titlePt: tx.cursivaTitulo, icon: '✎',
+    descPt: tx.cursivaDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'digitar', titlePt: 'Digitar em hebraico', icon: '⌨',
-    descPt: 'Escreva palavras no teclado hebraico do seu aparelho.',
+    id: 'digitar', titlePt: tx.digitarTitulo, icon: '⌨',
+    descPt: tx.digitarDesc,
     skills: ['escrever'], needsKeyboard: true, count: 8
   },
   {
-    id: 'relogio', titlePt: 'Contra o relógio', icon: '◷',
-    descPt: 'O mesmo que você já sabe, mais rápido que da última vez.',
+    id: 'relogio', titlePt: tx.relogioTitulo, icon: '◷',
+    descPt: tx.relogioDesc,
     skills: ['rec', 'ler'], timed: true, count: 12
   }
 ];
@@ -148,28 +150,28 @@ export function availableModes(
 ): { mode: GymMode; ready: boolean; whyNot?: string }[] {
   return GYM_MODES.map(mode => {
     if (mode.needsAudio && !audioAvailable) {
-      return { mode, ready: false, whyNot: 'Esperando as gravações.' };
+      return { mode, ready: false, whyNot: tx.esperandoGravacoes };
     }
     if (!unlocked.length) {
-      return { mode, ready: false, whyNot: 'Faça a primeira lição.' };
+      return { mode, ready: false, whyNot: tx.primeiraLicao };
     }
     if (mode.id === 'revisao' && !weakLetters(state, day, 5).length) {
-      return { mode, ready: false, whyNot: 'Nada pendente - você está em dia.' };
+      return { mode, ready: false, whyNot: tx.emDia };
     }
     if (mode.id === 'parecidas' && !confusionPair(state, unlocked)) {
-      return { mode, ready: false, whyNot: 'Nenhuma troca registrada ainda.' };
+      return { mode, ready: false, whyNot: tx.semTroca };
     }
     if (mode.id === 'palavras' && !unlocked.some(l => l.wordsToRead.length)) {
-      return { mode, ready: false, whyNot: 'Ainda não há palavras para ler.' };
+      return { mode, ready: false, whyNot: tx.semPalavras };
     }
     /* Montar, ver à mão e digitar pedem uma palavra cujas letras TODAS o
        aluno já tem - inclusive o ו que numa leitura seria só vogal. */
     if (MODOS_DE_PALAVRA.has(mode.id)) {
       if (!palavrasAcumuladas(unlocked).length) {
-        return { mode, ready: false, whyNot: 'Chega com a primeira palavra, na lição do Mem.' };
+        return { mode, ready: false, whyNot: tx.chegaComMem };
       }
       if (mode.id === 'palavras-cursiva' && unlocked.length < 3) {
-        return { mode, ready: false, whyNot: 'Chega na lição do Tav.' };
+        return { mode, ready: false, whyNot: tx.chegaComTav };
       }
     }
     return { mode, ready: true };
@@ -222,7 +224,7 @@ export function buildGym(
     const weak = weakLetters(state, day, 5);
     return {
       exercises: buildReview(weak, letters, { audioAvailable, count: mode.count, seed }),
-      label: weak.length ? 'Tirado dos seus erros' : 'As letras mais recentes'
+      label: weak.length ? tx.dosErros : tx.maisRecentes
     };
   }
 
@@ -233,14 +235,14 @@ export function buildGym(
       exercises: buildConfusionDrill(pair[0], pair[1], {
         audioAvailable, count: mode.count, seed, history: letters
       }),
-      label: `${pair[0].namePt} e ${pair[1].namePt}`
+      label: fmt(tx.par, { a: pair[0].namePt, b: pair[1].namePt })
     };
   }
 
   if (MODOS_DE_PALAVRA.has(mode.id)) {
     const exercises = rodadaDePalavras(mode, state, letters, rng(seed));
     const n = palavrasAcumuladas(letters).length;
-    return { exercises, label: `Das ${n} palavras que você já acumulou` };
+    return { exercises, label: fmt(tx.acumuladas, { n }) };
   }
 
   /* Everything else: aim at the letters this learner is weakest on, then fill
@@ -258,7 +260,7 @@ export function buildGym(
     exercises: buildFromGens(ranked, letters, GENS[mode.id], {
       audioAvailable, count: mode.count, seed
     }),
-    label: ranked.length > 6 ? 'Começando pelo que está mais fraco' : ''
+    label: ranked.length > 6 ? tx.maisFraco : ''
   };
 }
 

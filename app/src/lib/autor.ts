@@ -3,9 +3,11 @@
  * Só o que /sobre afirma (components/landing/Trajetoria.tsx). Nenhum número
  * de alunos, nenhum "anos de experiência" contado: a regra do dono é nunca
  * inventar fato sobre ele. A capa e a página de venda do livro leem daqui. */
+import { tx } from '@/i18n/telas/motor-autor';
+
 export const FATOS_DO_AUTOR = [
-  'Israelense, com o hebraico como língua materna',
-  'No Brasil desde 2021, ensinando hebraico a brasileiros',
-  'Gerente Pedagógico da New School, em Tel Aviv',
-  'Formação CELTA e estudos em Letras'
+  tx.israelense,
+  tx.brasil,
+  tx.gerente,
+  tx.formacao
 ] as const;

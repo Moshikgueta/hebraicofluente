@@ -24,6 +24,7 @@ import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from '@/components/landing/faq-capa';
+import { tx } from '@/i18n/telas/motor-jsonld';
 
 type Json = Record<string, unknown>;
 
@@ -93,7 +94,7 @@ export function professor(retrato: string | null): Json {
     '@type': 'Person',
     '@id': ID_PROFESSOR,
     name: 'Moshik Gueta',
-    description: 'Israelense, professor de idiomas e educador, criador do Hebraico Fluente.',
+    description: tx.professorDescricao,
     url: url('/sobre'),
     knowsLanguage: ['he', 'pt', 'en', 'es', 'it'],
     worksFor: { '@id': ID_ORG },
@@ -133,7 +134,7 @@ export function migalhas(itens: { nome: string; rota: string }[]): Json {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [{ nome: 'Início', rota: '/' }, ...itens].map((it, i) => ({
+    itemListElement: [{ nome: tx.inicio, rota: '/' }, ...itens].map((it, i) => ({
       '@type': 'ListItem', position: i + 1, name: it.nome, item: url(it.rota)
     }))
   };

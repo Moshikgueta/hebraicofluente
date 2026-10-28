@@ -17,6 +17,7 @@
  */
 
 import type { Compra, LearnerState } from '@/lib/state/types';
+import { tx } from '@/i18n/telas/motor-loja';
 
 /* ── o catálogo ─────────────────────────────────────────────────────────── */
 
@@ -31,16 +32,16 @@ export type ItemDaLoja = {
    lição e a fixação perfeita) vale uns 55; o curso todo, uns 2.000. */
 export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
   folga: {
-    id: 'folga', titulo: 'Dia de folga', custo: 100,
-    descricao: 'Se você passar um dia sem cumprir a meta, a folga é usada sozinha e a sua sequência continua. Dá para guardar até duas.'
+    id: 'folga', titulo: tx.folgaTitulo, custo: 100,
+    descricao: tx.folgaDesc
   },
   carta: {
-    id: 'carta', titulo: 'Carta de cultura antecipada', custo: 150,
-    descricao: 'Abre agora a próxima carta da viagem pela história do hebraico, sem esperar concluir mais lições.'
+    id: 'carta', titulo: tx.cartaTitulo, custo: 150,
+    descricao: tx.cartaDesc
   },
   'nome-decorado': {
-    id: 'nome-decorado', titulo: 'Seu nome em hebraico decorado', custo: 300,
-    descricao: 'O seu nome em letra de fôrma e à mão, numa imagem para baixar: papel de parede do celular ou para imprimir.'
+    id: 'nome-decorado', titulo: tx.nomeTitulo, custo: 300,
+    descricao: tx.nomeDesc
   },
   /* As leituras bônus (lib/engine/bonus.ts): 200 XP cada, trecho ou
      versículo (30/09/2026, decisão do dono; antes o versículo custava 100).
@@ -48,12 +49,12 @@ export const ITENS: Record<ItemDaLoja['id'], ItemDaLoja> = {
      saldo de quem já trocou. O id `bencao` ficou
      do tempo em que havia bênçãos de reza aqui: mudar quebraria compras. */
   'texto-bonus': {
-    id: 'texto-bonus', titulo: 'Texto bíblico bônus', custo: 200,
-    descricao: 'Um trecho do Antigo Testamento em hebraico, com transliteração, tradução e a leitura gravada, linha a linha.'
+    id: 'texto-bonus', titulo: tx.textoTitulo, custo: 200,
+    descricao: tx.textoDesc
   },
   bencao: {
-    id: 'bencao', titulo: 'Versículo bíblico', custo: 200,
-    descricao: 'Um versículo conhecido do Antigo Testamento, com transliteração, tradução e a leitura gravada.'
+    id: 'bencao', titulo: tx.versiculoTitulo, custo: 200,
+    descricao: tx.versiculoDesc
   }
 };
 

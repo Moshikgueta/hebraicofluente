@@ -11,30 +11,32 @@
  * ligar letra e som precisa enxergar (CONT-001).
  */
 
+import { tx } from '@/i18n/telas/motor-som-pt';
+
 /** Rótulo legível de cada som do curso, pela grafia IPA do dado. */
 export const SOM_PT: Readonly<Record<string, string>> = {
-  '(mudo)': 'mudo: só a vogal soa',
-  '(mudo para a maioria)': 'mudo para a maioria: só a vogal soa',
-  '/m/': 'm, como em "mãe"',
-  '/t/': 't, como em "tatu"',
-  '/n/': 'n, como em "nada"',
-  '/h/': 'h soprado, como no inglês "hello"',
-  '/j/': 'i, como em "iate"',
-  '/ɡ/': 'g, como em "gato"',
-  '/d/': 'd, como em "dado"',
-  '/ʃ/': 'ch, como em "chave"',
-  '/l/': 'l, como em "lua"',
-  '/ʁ/': 'r macio do fundo da boca, como o francês',
-  '/v/': 'v, como em "vaca"',
-  '/z/': 'z, como em "zebra"',
+  '(mudo)': tx.mudo,
+  '(mudo para a maioria)': tx.mudoMaioria,
+  '/m/': tx.m,
+  '/t/': tx.t,
+  '/n/': tx.n,
+  '/h/': tx.h,
+  '/j/': tx.j,
+  '/ɡ/': tx.g,
+  '/d/': tx.d,
+  '/ʃ/': tx.sh,
+  '/l/': tx.l,
+  '/ʁ/': tx.r,
+  '/v/': tx.v,
+  '/z/': tx.z,
   /* Alinhado ao texto do ח aprovado em 11/10/2026: o R carioca é aproximação. */
-  '/χ/': 'som produzido na parte de trás da boca, parecido com alguns tipos de R carioca',
-  '/s/': 's, como em "sapo"',
-  '/ts/': 'ts, como em "tsunami"',
-  '/k/': 'k, como o c de "casa"',
-  '/b/': 'b, como em "bola"',
-  '/p/': 'p, como em "pato"',
-  '/f/': 'f, como em "faca"'
+  '/χ/': tx.ch,
+  '/s/': tx.s,
+  '/ts/': tx.ts,
+  '/k/': tx.k,
+  '/b/': tx.b,
+  '/p/': tx.p,
+  '/f/': tx.f
 };
 
 /* As partes de um `sound`: "/b/ ou /v/" são duas, "(mudo)" é uma. */
@@ -49,7 +51,7 @@ function partes(sound: string): string[] {
  * garante que nenhuma letra do curso cai nesse caso).
  */
 export function somPt(sound: string): string {
-  return partes(sound).map(p => SOM_PT[p] ?? p).join(' ou ');
+  return partes(sound).map(p => SOM_PT[p] ?? p).join(tx.ou);
 }
 
 /**

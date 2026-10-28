@@ -25,6 +25,8 @@ import { rng, shuffled, type Rand } from './rng';
 import { clusters } from '@/lib/hebrew';
 import type { Letter } from '@/lib/content-publico';
 import type { Extras } from './extras';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-posicao-do-ponto';
 
 const DAGUESH = 'ּ';
 const SHEVA = 'ְ';
@@ -42,9 +44,9 @@ export const LETRAS_DO_PONTO: readonly LetraDoPonto[] = [
 export type Posicao = 'comeco' | 'depois-de-consoante' | 'depois-de-vogal';
 
 export const POSICAO_PT: Record<Posicao, string> = {
-  'comeco': 'no começo da palavra',
-  'depois-de-consoante': 'depois de consoante que fecha a sílaba (shva no meio da palavra)',
-  'depois-de-vogal': 'depois de vogal'
+  'comeco': tx.comeco,
+  'depois-de-consoante': tx.depoisDeConsoante,
+  'depois-de-vogal': tx.depoisDeVogal
 };
 
 export type Analise = {
@@ -171,9 +173,11 @@ export function exerciciosDoPonto(certas: readonly Classificada[], opts: { seed:
     const { options, answer } = comOpcoes(w.translit, errada, rand);
     out.push({
       id: `ponto-${letra.id}-${i}`, kind: 'syllable-reading', letterId: letra.id, skill: 'ler',
-      promptPt: 'O ponto não foi impresso. Como se lê?', he: semOPonto(w.he, indice), options, answer,
-      explainPt: `A letra ${letra.he} está ${POSICAO_PT[posicao]}: ${real ? 'leva o ponto' : 'fica sem o ponto'}, `
-        + `e soa ${(real ? letra.forte : letra.suave).toUpperCase()}. ${w.he} - "${w.translit}", ${w.pt}.`
+      promptPt: tx.pergunta, he: semOPonto(w.he, indice), options, answer,
+      explainPt: fmt(tx.explica, {
+        letra: letra.he, posicao: POSICAO_PT[posicao], decisao: real ? tx.levaOPonto : tx.semOPonto,
+        som: (real ? letra.forte : letra.suave).toUpperCase(), he: w.he, leitura: w.translit, sentido: w.pt
+      })
     });
   }
   return out;

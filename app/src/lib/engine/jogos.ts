@@ -33,15 +33,16 @@ import type { ParDeSom } from './pares-de-som';
 import type { LearnerState } from '@/lib/state/types';
 import { letterMastery, topConfusions } from '@/lib/state/rules';
 import { pick, shuffled, take, type Rand } from './rng';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 /* ── o nível ───────────────────────────────────────────────────────────── */
 
 export type Nivel = 'facil' | 'medio' | 'dificil';
 
 export const NIVEL_LABEL: Record<Nivel, string> = {
-  facil: 'Aquecimento',
-  medio: 'Treino',
-  dificil: 'Difícil'
+  facil: tx.nivelFacil,
+  medio: tx.nivelMedio,
+  dificil: tx.nivelDificil
 };
 
 /**

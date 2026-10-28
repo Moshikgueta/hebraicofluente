@@ -93,6 +93,7 @@ describe('uma frase só (LEGAL-102, LEGAL-109, CONV-013, PAY-B-011)', () => {
       expect(s, f).not.toMatch(/mesmo dia útil|resolve na hora|confirmação de recebimento chega na hora/);
     }
     expect(ler('lib/account/types.ts')).not.toContain('resolve na hora');
+    expect(ler('i18n/telas/motor-account-types.ts')).not.toContain('resolve na hora');
   });
 });
 

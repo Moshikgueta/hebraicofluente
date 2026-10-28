@@ -26,6 +26,8 @@
  *   · quantos exercícios de revisão por dia, para o histórico (o maior).
  */
 
+import { tx } from '@/i18n/telas/motor-a1-estado';
+
 export type GeneroA1 = 'm' | 'f';
 
 export type UnidadeFeita = {
@@ -40,8 +42,8 @@ export type ItemRevisao = { caixa: number; vence: string; acertos: number; erros
 export const HABILIDADES_A1 = ['leitura', 'escuta', 'vocabulario', 'gramatica', 'comunicacao', 'escrita'] as const;
 export type HabilidadeA1 = typeof HABILIDADES_A1[number];
 export const NOME_DA_HABILIDADE: Record<HabilidadeA1, string> = {
-  leitura: 'Leitura', escuta: 'Escuta', vocabulario: 'Vocabulário',
-  gramatica: 'Gramática', comunicacao: 'Comunicação', escrita: 'Escrita'
+  leitura: tx.leitura, escuta: tx.escuta, vocabulario: tx.vocabulario,
+  gramatica: tx.gramatica, comunicacao: tx.comunicacao, escrita: tx.escrita
 };
 
 export type TranslitA1 = 'auto' | 'mostrar' | 'esconder';
@@ -300,7 +302,7 @@ export function responderRevisao(e: EstadoA1, chave: string, certo: boolean, hoj
 
 export type SituacaoRevisao = 'agora' | 'logo' | 'depois' | 'dominado';
 export const NOME_DA_SITUACAO: Record<SituacaoRevisao, string> = {
-  agora: 'Rever agora', logo: 'Rever logo', depois: 'Rever depois', dominado: 'Dominado'
+  agora: tx.agora, logo: tx.logo, depois: tx.depois, dominado: tx.dominado
 };
 
 export function situacaoRevisao(r: ItemRevisao, hoje: string): SituacaoRevisao {

@@ -15,37 +15,30 @@
  * O motivo está aqui.
  */
 
+import { tx } from '@/i18n/telas/motor-cursiva';
+
 /** Onde cada forma é usada de verdade. */
 export const ONDE_IMPRESSA = [
-  'livros', 'sites', 'jornais', 'aplicativos',
-  'placas', 'legendas', 'documentos', 'material de estudo'
+  tx.impLivros, tx.impSites, tx.impJornais, tx.impAplicativos,
+  tx.impPlacas, tx.impLegendas, tx.impDocumentos, tx.impMaterial
 ] as const;
 
 export const ONDE_CURSIVA = [
-  'caderno', 'anotações', 'listas', 'recados',
-  'formulários', 'quadro da sala', 'qualquer coisa escrita à mão'
+  tx.curCaderno, tx.curAnotacoes, tx.curListas, tx.curRecados,
+  tx.curFormularios, tx.curQuadro, tx.curQualquer
 ] as const;
 
 /** A regra, em duas linhas. É o que fica quando tudo o mais sumir. */
 export const REGRA_CURSIVA = {
-  ler: 'letra impressa',
-  escrever: 'letra cursiva'
+  ler: tx.regraLer,
+  escrever: tx.regraEscrever
 } as const;
 
 /** Por que não basta copiar a forma impressa à mão. */
-export const ANALOGIA_CURSIVA =
-  'Dá para desenhar as letras impressas à mão, sim. Só que ninguém faz isso - '
-  + 'seria como escrever um bilhete em português tentando copiar exatamente a '
-  + 'fonte de um livro, letra por letra, toda vez.';
+export const ANALOGIA_CURSIVA = tx.analogia;
 
 /** A ressalva que evita o medo de "então são dois alfabetos?". */
-export const MESMA_LETRA =
-  'São duas representações da MESMA letra, e não dois alfabetos. O nome é o '
-  + 'mesmo, o som é o mesmo, o lugar no alfabeto é o mesmo - muda o desenho, '
-  + 'como entre a letra de forma e a letra de mão em português.';
+export const MESMA_LETRA = tx.mesmaLetra;
 
 /** O que o curso cobra de cursiva, e quando - a expectativa, dita cedo. */
-export const CURSIVA_NO_CURSO =
-  'No começo, ler continua sendo com a forma impressa: é ela que está nos '
-  + 'livros e nas placas. A cursiva entra como escrita e como reconhecimento, '
-  + 'uma letra de cada vez, junto com a lição dessa letra.';
+export const CURSIVA_NO_CURSO = tx.noCurso;

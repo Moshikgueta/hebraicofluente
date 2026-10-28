@@ -324,6 +324,7 @@ describe('CONT-010: o exame cobra só o que o aluno estudou', () => {
     const r = examReport([{ partId: 'letras', correct: 10, total: 10 }]);
     expect(r.bandPt.bodyPt).not.toContain('não viu antes');
     expect(fonte('lib/engine/exam.ts')).not.toContain('não viu antes');
+    expect(fonte('i18n/telas/motor-exam.ts')).not.toContain('não viu antes');
   });
 });
 
