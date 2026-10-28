@@ -35,6 +35,7 @@
  */
 
 import type { ReactNode } from 'react';
+import { tx } from '@/i18n/telas/academia-aventura';
 
 export type IdDoCenario = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -46,13 +47,14 @@ export type IdDoCenario = 1 | 2 | 3 | 4 | 5 | 6 | 7;
    todas ensinadas no módulo 5, e o dono a aprovou. O hebraico vai no <He>,
    fora do desenho. */
 export const LUGAR: Record<IdDoCenario, { he: string; translit: string; pt: string }> = {
-  1: { he: 'הַיָם', translit: 'hayám', pt: 'o mar' },
-  2: { he: 'הַגַן', translit: 'hagán', pt: 'o jardim' },
-  3: { he: 'הַחַלוֹן', translit: 'hachalón', pt: 'a janela' },
-  4: { he: 'הָעִיר', translit: "ha'ír", pt: 'a cidade' },
-  5: { he: 'הַשּׁוּק', translit: 'hashúk', pt: 'o mercado' },
-  6: { he: 'רחוב', translit: 'rechóv', pt: 'a rua, sem os pontos' },
-  7: { he: 'הַגַּג', translit: 'hagág', pt: 'o telhado' }
+  /* A transliteração fica como está: o inglês terá sistema próprio (etapa 3). */
+  1: { he: 'הַיָם', translit: 'hayám', pt: tx.lugar1 }, // i18n-ok transliteração
+  2: { he: 'הַגַן', translit: 'hagán', pt: tx.lugar2 }, // i18n-ok transliteração
+  3: { he: 'הַחַלוֹן', translit: 'hachalón', pt: tx.lugar3 }, // i18n-ok transliteração
+  4: { he: 'הָעִיר', translit: "ha'ír", pt: tx.lugar4 }, // i18n-ok transliteração
+  5: { he: 'הַשּׁוּק', translit: 'hashúk', pt: tx.lugar5 }, // i18n-ok transliteração
+  6: { he: 'רחוב', translit: 'rechóv', pt: tx.lugar6 }, // i18n-ok transliteração
+  7: { he: 'הַגַּג', translit: 'hagág', pt: tx.lugar7 } // i18n-ok transliteração
 };
 
 const W = 320, H = 120;

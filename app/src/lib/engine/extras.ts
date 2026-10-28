@@ -21,6 +21,8 @@ import type { Exercise } from './exercises';
 import { rng, shuffled, take, type Rand } from './rng';
 import { analisar } from './posicao-do-ponto';
 import { stripNikud } from '@/lib/hebrew';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-extras';
 
 export type DageshLetter = {
   id: string;
@@ -155,14 +157,14 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-dag-${row.D.id}-${i}`,
       kind: 'word-meaning',
       letterId: row.D.id, skill: 'ler',
-      promptPt: `Sem os pontos, como num jornal: nesta palavra («${row.w.pt}»), que som tem a letra ${row.D.namePt}?`,
+      promptPt: fmt(tx.dagueshPergunta, { sentido: row.w.pt, nome: row.D.namePt }),
       he: stripNikud(row.w.he),
       options,
       answer,
-      explainPt: `${row.w.he} - ${row.w.translit} - ${row.w.pt}. ` +
+      explainPt: fmt(tx.palavraExplica, { he: row.w.he, leitura: row.w.translit, sentido: row.w.pt }) +
         (row.isHard
-          ? 'Com daguesh: no começo da palavra ou depois de consoante que fecha a sílaba.'
-          : 'Sem daguesh: quase sempre entre vogais, e no fim da palavra.')
+          ? tx.dagueshExplicaForte
+          : tx.dagueshExplicaSuave)
     });
   }
 
@@ -174,11 +176,11 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-fin-${i}`,
       kind: 'final-form',
       letterId: 'mod6', skill: 'rec',
-      promptPt: `Qual destas é a forma final de ${F.namePt.replace(' sofit', '')}?`,
+      promptPt: fmt(tx.finalPergunta, { nome: F.namePt.replace(' sofit', '') }),
       letter: F.base,
       options,
       answer,
-      explainPt: `${F.base} vira ${F.fin} no fim da palavra - como em ${F.word} (${F.translit}), "${F.pt}".`
+      explainPt: fmt(tx.finalExplica, { base: F.base, final: F.fin, palavra: F.word, leitura: F.translit, sentido: F.pt })
     });
   }
 
@@ -190,11 +192,11 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-unp-${i}`,
       kind: 'word-meaning',
       letterId: 'mod6', skill: 'ler',
-      promptPt: 'Sem nikud, como num jornal. O que está escrito?',
+      promptPt: tx.semNikudPergunta,
       he: u.bare,
       options,
       answer,
-      explainPt: `${u.bare} é ${u.pointed} - ${u.translit} - "${u.pt}".`
+      explainPt: fmt(tx.semNikudExplica, { nua: u.bare, pontuada: u.pointed, leitura: u.translit, sentido: u.pt })
     });
   }
 
@@ -215,22 +217,22 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       id: `mod7-snd-${i}`,
       kind: 'syllable-reading',
       letterId: 'mod7', skill: 'som',
-      promptPt: 'Que som esta letra tem?',
+      promptPt: tx.gerechPergunta,
       he: g.he,
       options,
       answer,
-      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o guéresh, ${g.base} é ${g.basePt}.`
+      explainPt: fmt(tx.gerechExplica, { he: g.he, som: g.pt, como: g.likePt, base: g.base, baseSom: g.basePt })
     });
     const bare = optionsWith(g.basePt, G.map(x => x.pt), rand);
     out.push({
       id: `mod7-base-${i}`,
       kind: 'syllable-reading',
       letterId: 'mod7', skill: 'som',
-      promptPt: 'E sem o sinal - que som ela tem?',
+      promptPt: tx.semSinalPergunta,
       he: g.base,
       options: bare.options,
       answer: bare.answer,
-      explainPt: `Sem o guéresh, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
+      explainPt: fmt(tx.semSinalExplica, { base: g.base, baseSom: g.basePt, he: g.he, som: g.pt })
     });
   }
 
@@ -243,11 +245,11 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       id: `mod7-word-${i}`,
       kind: 'word-meaning',
       letterId: 'mod7', skill: 'ler',
-      promptPt: 'Leia em voz alta. Que palavra é esta?',
+      promptPt: tx.palavraPergunta,
       he: w.he,
       options,
       answer,
-      explainPt: `${w.he} - "${w.pt}". O ${g.he} faz o som ${g.pt}.`
+      explainPt: fmt(tx.palavraGerechExplica, { he: w.he, sentido: w.pt, letra: g.he, som: g.pt })
     });
   }
 

@@ -38,9 +38,11 @@ import { empresa, whatsappUrl } from '@/lib/empresa';
 import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desistencia';
 import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
 import { IdentificacaoCurta } from '@/components/legal/Legal';
+import { tx } from '@/i18n/telas/conta-perfil';
+import { LOCALE_INTL } from '@/i18n';
 
 const date = (iso: string) =>
-  new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  new Date(iso).toLocaleDateString(LOCALE_INTL, { day: '2-digit', month: 'long', year: 'numeric' });
 
 export function PerfilClient() {
   const account = useAccount();
@@ -68,31 +70,29 @@ export function PerfilClient() {
   return (
     <div className="focus-col grid gap-6 py-2">
       <header className="grid gap-2">
-        <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">Sua conta</h1>
+        <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">{tx.titulo}</h1>
         <p className="font-ui text-[15px] text-ink-muted">
-          Seus dados, seus cursos e o que você já fez.
+          {tx.subtitulo}
         </p>
       </header>
 
       {/* ── dados ─────────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
-        <h2 className="font-display text-[17px] font-bold text-ink">Dados</h2>
+        <h2 className="font-display text-[17px] font-bold text-ink">{tx.dados}</h2>
         <dl className="grid gap-3 sm:grid-cols-2">
-          <Row k="Nome" v={me.name || '-'} />
-          <Row k="E-mail" v={me.email} />
-          <Row k="Conta criada em" v={date(me.createdAt)} />
+          <Row k={tx.nome} v={me.name || '-'} />
+          <Row k={tx.email} v={me.email} />
+          <Row k={tx.contaCriadaEm} v={date(me.createdAt)} />
         </dl>
         <ConfirmarEmailAviso verificado={me.emailVerified} email={me.email} />
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
-          Para trocar o e-mail, escreva para{' '}
+          {tx.trocarEmailAntes}{' '}
           <a href={`mailto:${empresa.contato.emailSuporte}`}
              className="text-[var(--accent)] hover:underline break-all">
             {empresa.contato.emailSuporte}
           </a>
-          . O e-mail é o que identifica a conta e o que recebe o link de
-          recuperação, então trocá-lo sozinho pela tela é o caminho mais curto
-          para perder a conta por um erro de digitação.
+          {tx.trocarEmailDepois}
         </p>
       </Card>
 
@@ -105,7 +105,7 @@ export function PerfilClient() {
 
       {/* ── cursos ────────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
-        <h2 className="font-display text-[17px] font-bold text-ink">Seus cursos</h2>
+        <h2 className="font-display text-[17px] font-bold text-ink">{tx.seusCursos}</h2>
         <ul className="grid gap-3 list-none p-0 m-0">
           {allCourses().map(c => {
             const ent = account.session!.entitlements.find(e => e.courseSlug === c.slug);
@@ -120,24 +120,24 @@ export function PerfilClient() {
                   <span className="font-ui text-[15px] font-medium text-ink">{c.titlePt}</span>
                   <span className="font-ui text-[12.5px] text-ink-muted">
                     {owned && ent?.expiresAt
-                      ? `Acesso até ${date(ent.expiresAt)}${left !== null && left <= 30 ? ` · ${left} ${left === 1 ? 'dia' : 'dias'}` : ''}`
+                      ? tx.acessoAte(date(ent.expiresAt), left !== null && left <= 30 ? left : null)
                       : venceuEm
                         ? fraseDeVencido(venceuEm)
                         : ent
-                          ? 'Acesso encerrado'
-                          : c.status === 'soon' ? 'Ainda não lançado' : 'Não está na sua conta'}
+                          ? tx.acessoEncerrado
+                          : c.status === 'soon' ? tx.aindaNaoLancado : tx.naoEstaNaConta}
                   </span>
                 </span>
                 {owned
-                  ? <Badge tone="mint">Ativo</Badge>
+                  ? <Badge tone="mint">{tx.ativo}</Badge>
                   : venceuEm
                     ? <LinkButton href={`/checkout/${c.slug}`} size="sm">
-                        Renovar por mais {c.accessMonths} meses
+                        {tx.renovar(c.accessMonths)}
                       </LinkButton>
                   : c.status === 'soon'
-                    ? <Badge>Em breve</Badge>
+                    ? <Badge>{tx.emBreve}</Badge>
                     : <LinkButton href={paginaDeVenda(c.slug)} variant="secondary" size="sm">
-                        Ver o curso
+                        {tx.verOCurso}
                       </LinkButton>}
               </li>
             );
@@ -146,19 +146,19 @@ export function PerfilClient() {
         {/* Minha Biblioteca (23/10/2026): tudo que a conta tem, com o Israel
             Além do Óbvio e o Raízes, que não são cursos e não aparecem acima. */}
         <Link href="/minha-biblioteca" className="justify-self-start font-ui text-[14.5px] font-semibold text-[var(--accent)] hover:underline">
-          Abrir a Minha Biblioteca
+          {tx.abrirBiblioteca}
         </Link>
       </Card>
 
       {/* ── números ───────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
-        <h2 className="font-display text-[17px] font-bold text-ink">Seu progresso</h2>
+        <h2 className="font-display text-[17px] font-bold text-ink">{tx.seuProgresso}</h2>
         <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {([
-            ['Letras', `${p.mastered}/${course.totalLetters}`],
-            ['Curso', `${Math.round(p.progress * 100)}%`],
-            ['Sequência', p.streak === 0 ? '-' : `${p.streak} d`],
-            ['Conquistas', `${p.state.achievements.length}/${ACHIEVEMENTS.length}`]
+            [tx.letras, `${p.mastered}/${course.totalLetters}`],
+            [tx.curso, `${Math.round(p.progress * 100)}%`],
+            [tx.sequencia, p.streak === 0 ? '-' : tx.dias(p.streak)],
+            [tx.conquistas, `${p.state.achievements.length}/${ACHIEVEMENTS.length}`]
           ] as const).map(([k, v]) => (
             <div key={k} className="grid gap-0.5">
               <dt className="font-ui text-[10.5px] uppercase tracking-[.07em] text-ink-muted">{k}</dt>
@@ -173,36 +173,30 @@ export function PerfilClient() {
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
                       border-t border-[color:var(--line-soft)] pt-3">
           {account.demo
-            ? <>Estes números são deste aparelho. Nesta versão o progresso é
-                guardado no navegador e não viaja com a conta.</>
+            ? <>{tx.progressoDemo}</>
             /* O servidor só guarda progresso de quem tem curso
                (worker/src/api/progress.js). Sem curso, prometer a sincronização
                seria a mesma mentira da build de demonstração. */
             : (account.session?.entitlements.length ?? 0) === 0
-            ? <>Estes números são deste aparelho. O progresso passa a viajar com a
-                conta quando você tiver um curso - e o que estiver aqui vai junto.</>
-            : <>Seu progresso fica na sua conta e é sincronizado entre os
-                aparelhos: o que você fizer no celular aparece no computador.
-                Uma cópia continua neste aparelho: o que você fizer com a
-                conexão caída fica guardado e sobe quando ela voltar. Funciona
-                em qualquer conexão; precisa de internet para abrir cada aula.</>}
+            ? <>{tx.progressoSemCurso}</>
+            : <>{tx.progressoNaConta}</>}
         </p>
         <div className="flex flex-wrap gap-2">
-          <LinkButton href="/conquistas" variant="secondary" size="sm">Ver conquistas</LinkButton>
+          <LinkButton href="/conquistas" variant="secondary" size="sm">{tx.verConquistas}</LinkButton>
           {p.state.finalChallenge.passedAt && (
-            <LinkButton href="/certificado" variant="secondary" size="sm">Meu certificado</LinkButton>
+            <LinkButton href="/certificado" variant="secondary" size="sm">{tx.meuCertificado}</LinkButton>
           )}
         </div>
       </Card>
 
       {/* ── compras ───────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-4">
-        <h2 className="font-display text-[17px] font-bold text-ink">Compras</h2>
+        <h2 className="font-display text-[17px] font-bold text-ink">{tx.compras}</h2>
         {orders === null ? (
-          <p className="font-ui text-[14px] text-ink-muted">Carregando…</p>
+          <p className="font-ui text-[14px] text-ink-muted">{tx.carregando}</p>
         ) : orders.length === 0 ? (
           <p className="font-ui text-[14px] leading-relaxed text-ink-muted">
-            Nenhuma compra registrada nesta conta.
+            {tx.nenhumaCompra}
           </p>
         ) : (
           <ul className="grid gap-3 list-none p-0 m-0">
@@ -215,13 +209,13 @@ export function PerfilClient() {
                     {getCourse(o.courseSlug)?.titlePt ?? o.courseSlug}
                   </span>
                   <span className="font-ui text-[12.5px] text-ink-muted tabular-nums">
-                    {date(o.createdAt)} · {o.method === 'pix' ? 'PIX' : 'Cartão'} ·{' '}
+                    {date(o.createdAt)} · {o.method === 'pix' ? tx.pix : tx.cartao} ·{' '}
                     {brl(o.amountCents / 100)}
                   </span>
                 </span>
                 <Badge tone={o.status === 'paid' ? 'mint' : o.status === 'pending' ? 'neutral' : 'ember'}>
-                  {{ paid: 'Pago', pending: 'Aguardando', failed: 'Não concluído',
-                     refunded: 'Estornado', expired: 'Expirado' }[o.status]}
+                  {{ paid: tx.statusPago, pending: tx.statusAguardando, failed: tx.statusNaoConcluido,
+                     refunded: tx.statusEstornado, expired: tx.statusExpirado }[o.status]}
                 </Badge>
                 {pixAindaPagavel(o) && <VerCodigoPix order={o} />}
                 <DesistirDaCompra
@@ -238,7 +232,7 @@ export function PerfilClient() {
 
       {/* ── sair ──────────────────────────────────────────────────── */}
       <Card className="p-5 grid gap-3">
-        <h2 className="font-display text-[17px] font-bold text-ink">Sair</h2>
+        <h2 className="font-display text-[17px] font-bold text-ink">{tx.sair}</h2>
         {confirming ? (
           <>
             {/* Esta frase dizia "seu progresso neste aparelho continua onde
@@ -252,38 +246,33 @@ export function PerfilClient() {
                 01/10/2026, UXQA-006), senão o celular pede a senha no dia
                 seguinte sem ninguém saber por quê. */}
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Isto desconecta a sua conta em todos os aparelhos: no celular, no
-              tablet e em qualquer computador onde ela estiver aberta.
+              {tx.sairTodosAparelhos}
             </p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Você vai precisar do e-mail e da senha para voltar. Seu progresso
-              fica guardado na sua conta e volta assim que você entrar de novo,
-              aqui ou em qualquer outro aparelho. Ele sai deste navegador para
-              que ninguém que use este computador depois de você veja o que
-              você estudou.
+              {tx.sairProgresso}
             </p>
             <div className="flex flex-wrap gap-2">
               <Button
                 variant="secondary"
                 onClick={async () => { await account.signOut(); router.replace('/'); }}
               >
-                Sair mesmo assim
+                {tx.sairMesmoAssim}
               </Button>
-              <Button variant="ghost" onClick={() => setConfirming(false)}>Cancelar</Button>
+              <Button variant="ghost" onClick={() => setConfirming(false)}>{tx.cancelar}</Button>
             </div>
           </>
         ) : (
           <Button variant="secondary" className="justify-self-start"
                   onClick={() => setConfirming(true)}>
-            Sair da conta
+            {tx.sairDaConta}
           </Button>
         )}
       </Card>
 
       {!account.can(FLAGSHIP) && (
         <p className="font-ui text-[13px] text-ink-muted">
-          Você está logado, mas ainda não tem nenhum curso ativo.{' '}
-          <LinkButton href={paginaDeVenda(FLAGSHIP)} variant="ghost" size="sm">Ver os cursos</LinkButton>
+          {tx.semCursoAtivo}{' '}
+          <LinkButton href={paginaDeVenda(FLAGSHIP)} variant="ghost" size="sm">{tx.verOsCursos}</LinkButton>
         </p>
       )}
 
@@ -327,16 +316,14 @@ function MeusDados() {
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') return null;
   return (
     <Card className="p-5 grid gap-2">
-      <h2 className="font-display text-[17px] font-bold text-ink">Meus dados</h2>
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.meusDados}</h2>
       <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-        Uma cópia, em arquivo, de tudo o que guardamos sobre a sua conta: cadastro, compras,
-        aceites, registros de acesso e progresso. Por segurança, a senha e os identificadores de
-        sessão não vão no arquivo.
+        {tx.meusDadosTexto}
       </p>
       <a href="/api/account/dados" download
          className="justify-self-start inline-flex items-center min-h-[44px] px-4 rounded-[var(--r-md)]
                     border border-line bg-surface font-ui text-[14px] font-semibold text-ink-body hover:bg-surface-2">
-        Baixar meus dados
+        {tx.baixarMeusDados}
       </a>
     </Card>
   );
@@ -350,7 +337,7 @@ function ApagarConta() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const PALAVRA = 'APAGAR';
+  const PALAVRA = tx.palavraApagar;
 
   function fechar() {
     setAberto(false);
@@ -363,7 +350,7 @@ function ApagarConta() {
     setError(null);
 
     if (palavra.trim().toUpperCase() !== PALAVRA) {
-      setError(`Escreva ${PALAVRA} no campo acima para confirmar.`);
+      setError(tx.escrevaParaConfirmar(PALAVRA));
       return;
     }
 
@@ -396,7 +383,7 @@ function ApagarConta() {
 
   return (
     <Card tone="ember" className="p-5 grid gap-4">
-      <h2 className="font-display text-[17px] font-bold text-ink">Apagar minha conta</h2>
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.apagarTitulo}</h2>
 
       {aberto ? (
         <form onSubmit={submit} className="grid gap-4 max-w-[420px]" noValidate>
@@ -407,42 +394,37 @@ function ApagarConta() {
               fica guardado, e por quê, está na tela de confirmação e na
               Política de Privacidade, que é onde ele é procurado. */}
           <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-            <strong className="font-semibold">Isto não tem volta.</strong> Somem o seu
-            e-mail, o seu nome, a sua senha, todo o seu progresso e o seu acesso ao
-            curso.
+            <strong className="font-semibold">{tx.semVolta}</strong>{tx.semVoltaResto}
           </p>
 
           <Campo
-            id="apagar-senha" label="Sua senha" value={senha} onChange={setSenha}
+            id="apagar-senha" label={tx.suaSenha} value={senha} onChange={setSenha}
             type="password" autoComplete="current-password" required autoFocus
           />
           <Campo
-            id="apagar-palavra" label={`Escreva ${PALAVRA}`} value={palavra}
+            id="apagar-palavra" label={tx.escreva(PALAVRA)} value={palavra}
             onChange={setPalavra} type="text" autoComplete="off" required
-            hint="Para ter certeza de que não foi um clique sem querer."
+            hint={tx.cliqueSemQuerer}
           />
 
           {error && <Erro>{error}</Erro>}
 
           <div className="flex flex-wrap gap-2">
             <Button type="submit" disabled={busy}>
-              {busy ? 'Apagando…' : 'Apagar minha conta para sempre'}
+              {busy ? tx.apagando : tx.apagarParaSempre}
             </Button>
-            <Button type="button" variant="ghost" onClick={fechar}>Cancelar</Button>
+            <Button type="button" variant="ghost" onClick={fechar}>{tx.cancelar}</Button>
           </div>
         </form>
       ) : (
         <>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-            Você pode apagar a sua conta e todos os seus dados aqui mesmo, sem
-            precisar pedir a ninguém. É definitivo, e encerra também o acesso aos
-            cursos comprados, <strong>sem reembolso</strong> - para receber o valor
-            de volta dentro do prazo de desistência, use antes{' '}
-            <strong>Desistir da compra</strong>, em Compras.
+            {tx.apagarExplicacaoAntes}<strong>{tx.semReembolso}</strong>{tx.apagarExplicacaoMeio}{' '}
+            <strong>{tx.desistirDaCompra}</strong>{tx.apagarExplicacaoFim}
           </p>
           <Button variant="ghost" className="justify-self-start"
                   onClick={() => setAberto(true)}>
-            Apagar minha conta
+            {tx.apagarTitulo}
           </Button>
         </>
       )}
@@ -486,22 +468,21 @@ function AvisoDoProximoCurso() {
 
   return (
     <Card className="p-5 grid gap-3">
-      <h2 className="font-display text-[17px] font-bold text-ink">Aviso do próximo curso</h2>
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.avisoTitulo}</h2>
       <label className="flex items-start gap-3 cursor-pointer min-h-[44px]">
         <input type="checkbox" checked={marcado} aria-busy={busy}
                onChange={e => { if (!busy) void trocar(e.target.checked); }}
                aria-describedby="novidades-nota"
                className="mt-1 w-5 h-5 shrink-0 accent-[var(--navy)]" />
         <span className="font-ui text-[15px] leading-relaxed text-ink">
-          Quero receber um e-mail quando o {proximo.titlePt} abrir.
+          {tx.avisoQuero(proximo.titlePt)}
         </span>
       </label>
       <p id="novidades-nota" className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-        Um aviso só, quando o curso abrir, e nada mais. Você sai quando quiser,
-        desmarcando aqui ou pelo link que vai no próprio e-mail.
+        {tx.avisoNota}
       </p>
       <p role="status" className="font-ui text-[13px] text-[var(--ember)] m-0 empty:hidden">
-        {erro ? 'Não consegui salvar agora. Tente de novo em instantes.' : ''}
+        {erro ? tx.avisoErro : ''}
       </p>
     </Card>
   );
@@ -529,8 +510,8 @@ function TrocarSenha() {
     setError(null);
 
     if (!passwordOk(senha)) { setError(MESSAGES['weak-password']); return; }
-    if (senha !== repeat) { setError('As duas senhas não são iguais.'); return; }
-    if (senha === current) { setError('A senha nova é igual à atual.'); return; }
+    if (senha !== repeat) { setError(tx.senhasDiferentes); return; }
+    if (senha === current) { setError(tx.senhaIgualAtual); return; }
 
     setBusy(true);
     try {
@@ -545,7 +526,7 @@ function TrocarSenha() {
       /* Aqui não se digita e-mail: `bad-credentials` só pode ser a senha
          atual (auditoria de 01/10/2026, UXQA-011). */
       setError(err instanceof AuthError
-        ? (err.code === 'bad-credentials' ? 'A senha atual não confere.' : err.message)
+        ? (err.code === 'bad-credentials' ? tx.senhaAtualNaoConfere : err.message)
         : MESSAGES.server);
     } finally {
       setBusy(false);
@@ -554,28 +535,27 @@ function TrocarSenha() {
 
   return (
     <Card className="p-5 grid gap-4">
-      <h2 className="font-display text-[17px] font-bold text-ink">Senha</h2>
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.senhaTitulo}</h2>
 
       {pronto && !aberto && (
         <Aviso>
-          Senha trocada. Os outros aparelhos onde você estava logado foram
-          desconectados - este continua.
+          {tx.senhaTrocada}
         </Aviso>
       )}
 
       {aberto ? (
         <form onSubmit={submit} className="grid gap-4 max-w-[420px]" noValidate>
           <Campo
-            id="senha-atual" label="Senha atual" value={current} onChange={setCurrent}
+            id="senha-atual" label={tx.senhaAtual} value={current} onChange={setCurrent}
             type="password" autoComplete="current-password" required autoFocus
           />
           <Campo
-            id="senha-nova" label="Senha nova" value={senha} onChange={setSenha}
+            id="senha-nova" label={tx.senhaNova} value={senha} onChange={setSenha}
             type="password" autoComplete="new-password" required
-            hint={`Pelo menos ${MIN_PASSWORD} caracteres.`}
+            hint={tx.peloMenos(MIN_PASSWORD)}
           />
           <Campo
-            id="senha-nova2" label="Repita a senha nova" value={repeat} onChange={setRepeat}
+            id="senha-nova2" label={tx.repitaSenhaNova} value={repeat} onChange={setRepeat}
             type="password" autoComplete="new-password" required
           />
 
@@ -583,20 +563,19 @@ function TrocarSenha() {
 
           <div className="flex flex-wrap gap-2">
             <Button type="submit" disabled={busy}>
-              {busy ? 'Trocando…' : 'Trocar a senha'}
+              {busy ? tx.trocando : tx.trocarASenha}
             </Button>
-            <Button type="button" variant="ghost" onClick={fechar}>Cancelar</Button>
+            <Button type="button" variant="ghost" onClick={fechar}>{tx.cancelar}</Button>
           </div>
         </form>
       ) : (
         <>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-            Trocar a senha desconecta os outros aparelhos. É o que você quer se
-            achar que alguém entrou na sua conta.
+            {tx.trocarSenhaExplicacao}
           </p>
           <Button variant="secondary" className="justify-self-start"
                   onClick={() => { setPronto(false); setAberto(true); }}>
-            Trocar a senha
+            {tx.trocarASenha}
           </Button>
         </>
       )}
@@ -635,18 +614,17 @@ function ConfirmarEmailAviso({ verificado, email }: { verificado?: boolean | nul
   return (
     <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-3">
       <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-        Seu e-mail ainda não foi confirmado. No cadastro mandamos um link para{' '}
-        <span className="break-all">{email}</span> - abra esse e-mail com a conta
-        aberta aqui, e pronto. Nada fica bloqueado enquanto isso.
+        {tx.emailNaoConfirmadoAntes}{' '}
+        <span className="break-all">{email}</span>{tx.emailNaoConfirmadoDepois}
       </p>
       {estado === 'enviado' ? (
         <Aviso>
-          Link enviado. Ele vale por sete dias.
-          {demoLink && <> Demonstração: <a href={demoLink} className="underline">abrir o link</a>.</>}
+          {tx.linkEnviado}
+          {demoLink && <>{tx.demonstracao}<a href={demoLink} className="underline">{tx.abrirOLink}</a>.</>}
         </Aviso>
       ) : (
         <Button variant="secondary" onClick={reenviar} disabled={estado === 'enviando'}>
-          {estado === 'enviando' ? 'Enviando…' : 'Mandar o link de novo'}
+          {estado === 'enviando' ? tx.enviando : tx.mandarDeNovo}
         </Button>
       )}
       {error && <Erro>{error}</Erro>}
@@ -687,15 +665,14 @@ function DesistirDaCompra({ order, email, onPedido }: {
     const prazo = Number(empresa.politicas?.prazoReembolsoUteis) || 10;
     return order.status === 'paid' ? (
       <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-        Desistência pedida em {dataHora(order.desistenciaEm)}.{' '}
+        {tx.desistenciaPedidaEm(dataHora(order.desistenciaEm))}{' '}
         {order.estorno === 'automatico'
-          ? 'O estorno já foi pedido à Mercado Pago e o valor volta pela mesma forma de pagamento. O acesso fecha quando ela confirmar.'
-          : `O valor volta pela mesma forma de pagamento, em até ${prazo} dias úteis.`}{' '}
+          ? tx.estornoAutomatico
+          : tx.estornoManual(prazo)}{' '}
         {/* O e-mail sai por `waitUntil` (worker/src/api/pay.js, desistir):
             a resposta chega antes de o envio terminar, então a tela não sabe
             se ele saiu e não pode afirmar (auditoria de 01/10/2026, UXQA-019). */}
-        Vamos confirmar também por e-mail, em {email}. Se a mensagem não
-        chegar, esta linha, com a data e a hora, é o registro do seu pedido.
+        {tx.confirmaPorEmail(email)}
       </p>
     ) : null;
   }
@@ -721,7 +698,7 @@ function DesistirDaCompra({ order, email, onPedido }: {
     <div className="basis-full grid gap-2">
       {confirmando ? (
         <>
-          <p className="font-ui text-[14px] font-semibold text-ink m-0">Tem certeza que quer desistir?</p>
+          <p className="font-ui text-[14px] font-semibold text-ink m-0">{tx.temCerteza}</p>
           {/* O que a pessoa perde, dito com a verdade (04/10/2026, a pedido do
               dono): o que o curso tem e o progresso REAL dela. Informa, não
               assusta - a conta e o progresso continuam, e isso também é dito.
@@ -729,62 +706,59 @@ function DesistirDaCompra({ order, email, onPedido }: {
               Só para a alfabetização, que é o curso que esta lista descreve. */}
           {order.courseSlug === FLAGSHIP && (
             <div className="grid gap-1">
-              <p className="font-ui text-[13px] text-ink-body m-0">Ao desistir, você perde o acesso a:</p>
+              <p className="font-ui text-[13px] text-ink-body m-0">{tx.perdeAcesso}</p>
               <ul className="list-disc pl-5 m-0 grid gap-0.5 font-ui text-[13px] text-ink-body">
                 {[
-                  `${totalLicoes()} lições, com o áudio do professor`,
-                  'Os exercícios de escrita, leitura e revisão',
-                  'Os jogos de prática e o certificado de conclusão'
+                  tx.perdeLicoes(totalLicoes()),
+                  tx.perdeExercicios,
+                  tx.perdeJogos
                 ].map(t => <li key={t}>{t}</li>)}
               </ul>
               {p.mastered > 0 && (
                 <p className="font-ui text-[13px] text-ink-body m-0">
-                  Até agora, você já domina {p.mastered} de {course.totalLetters} letras.
+                  {tx.jaDomina(p.mastered, course.totalLetters)}
                 </p>
               )}
             </div>
           )}
           <label className="grid gap-1 font-ui text-[12.5px] leading-relaxed text-ink-muted">
-            Se quiser, conte o motivo: isso nos ajuda a melhorar o curso. É opcional.
+            {tx.motivoOpcional}
             <select value={motivo ?? ''} disabled={busy}
                     onChange={e => setMotivo((e.target.value || null) as MotivoDesistencia | null)}
                     className="min-h-[44px] max-w-full rounded-[var(--r-md)] border border-line bg-surface px-3
                                font-ui text-[13px] text-ink">
-              <option value="">Prefiro não dizer</option>
+              <option value="">{tx.prefiroNaoDizer}</option>
               {(Object.keys(MOTIVOS_DESISTENCIA) as MotivoDesistencia[]).map(m => (
                 <option key={m} value={m}>{MOTIVOS_DESISTENCIA[m]}</option>
               ))}
             </select>
           </label>
           <p className="font-ui text-[13px] leading-relaxed text-ink-body m-0">
-            Você recebe <strong>100% do valor de volta</strong>, sem precisar explicar
-            o motivo, e o acesso ao curso é encerrado quando o reembolso for
-            processado. Seu progresso fica guardado.
+            {tx.recebeAntes}<strong>{tx.recebeForte}</strong>{tx.recebeDepois}
           </p>
           <div className="flex flex-wrap gap-2">
             <Button size="sm" variant="secondary" onClick={pedir} disabled={busy}>
-              {busy ? 'Enviando…' : 'Confirmar desistência'}
+              {busy ? tx.enviando : tx.confirmarDesistencia}
             </Button>
             <Button size="sm" variant="ghost" onClick={() => { setConfirmando(false); setMotivo(null); }} disabled={busy}>
-              Voltar
+              {tx.voltar}
             </Button>
           </div>
           {whatsappUrl() && (
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-              Travou em alguma lição ou teve um problema técnico? Se preferir, fale antes com o
-              professor{' '}
+              {tx.whatsappAntes}{' '}
               <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
-                 className="text-[var(--accent)] font-medium hover:underline">pelo WhatsApp</a>.
-              Você pode desistir do mesmo jeito depois, dentro do prazo.
+                 className="text-[var(--accent)] font-medium hover:underline">{tx.peloWhatsapp}</a>
+              {tx.whatsappDepois}
             </p>
           )}
         </>
       ) : (
         <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-          Você pode desistir até {dataHora(order.desistirAte!)}.{' '}
+          {tx.podeDesistirAte(dataHora(order.desistirAte!))}{' '}
           <button type="button" onClick={() => setConfirmando(true)}
                   className="text-[var(--accent)] font-medium hover:underline">
-            Desistir da compra
+            {tx.desistirDaCompra}
           </button>
         </p>
       )}
@@ -800,7 +774,7 @@ function DesistirDaCompra({ order, email, onPedido }: {
 function VerCodigoPix({ order }: { order: Order }) {
   const [aberto, setAberto] = useState(false);
   const [copiado, setCopiado] = useState(false);
-  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString(LOCALE_INTL, {
     hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
   });
   if (!aberto) {
@@ -808,7 +782,7 @@ function VerCodigoPix({ order }: { order: Order }) {
       <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
         <button type="button" onClick={() => setAberto(true)}
                 className="text-[var(--accent)] font-medium hover:underline min-h-[44px]">
-          Ver código PIX
+          {tx.verCodigoPix}
         </button>
       </p>
     );
@@ -816,7 +790,7 @@ function VerCodigoPix({ order }: { order: Order }) {
   return (
     <div className="basis-full grid gap-2">
       <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-        PIX copia e cola deste pedido, válido até as {ate}. Se você já pagou, não pague de novo.
+        {tx.pixValidoAte(ate)}
       </p>
       <code className="block break-all rounded-[var(--r-md)] border border-line bg-surface-2
                        px-3 py-2 font-mono text-[12px] leading-relaxed text-ink-body">
@@ -830,14 +804,14 @@ function VerCodigoPix({ order }: { order: Order }) {
                   setTimeout(() => setCopiado(false), 2500);
                 } catch { setCopiado(false); }
               }}>
-        {copiado ? 'Copiado ✓' : 'Copiar código'}
+        {copiado ? tx.copiado : tx.copiarCodigo}
       </Button>
     </div>
   );
 }
 
 const dataHora = (iso: string) =>
-  new Date(iso).toLocaleString('pt-BR', {
+  new Date(iso).toLocaleString(LOCALE_INTL, {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
     timeZone: 'America/Sao_Paulo'
   });

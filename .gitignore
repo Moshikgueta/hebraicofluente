@@ -28,6 +28,9 @@ audio/conferir/
 .dev.vars
 .wrangler/
 app/out/
+app/out-en/
+# As cópias de trabalho dos agentes do Claude Code (git worktree).
+.claude/worktrees/
 app/.shots/
 
 # Cópias do banco (scripts/backup-d1.sh). Cada arquivo tem e-mail de todo

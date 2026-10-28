@@ -18,13 +18,14 @@ import Link from 'next/link';
 import { useAccount } from '@/lib/account/store';
 import { numeroDaCopia } from '@/lib/content';
 import { mascararEmail } from '@/lib/marca-dagua';
+import { tx } from '@/i18n/telas/conta-shell-pecas';
 
 export function MarcaDagua() {
   const account = useAccount();
   const email = account.session?.account.email;
   const copia = numeroDaCopia();
   if (!email && !copia) return null;
-  const texto = [email ? `Licenciado para ${mascararEmail(email)}` : null, copia ? `cópia ${copia}` : null]
+  const texto = [email ? tx.licenciadoPara(mascararEmail(email)) : null, copia ? tx.copia(copia) : null]
     .filter(Boolean).join(' · ');
   return (
     <div aria-hidden
@@ -42,10 +43,8 @@ export function MarcaDagua() {
 export function AvisoDeDireitos() {
   return (
     <p className="mx-auto max-w-[720px] px-4 pt-8 pb-4 text-center font-ui text-[12px] leading-relaxed text-ink-muted">
-      Conteúdo protegido por direito autoral (Lei 9.610/1998), licenciado para uso pessoal
-      desta conta. Copiar, gravar para distribuir ou revender sem autorização pode gerar
-      responsabilização civil e criminal.{' '}
-      <Link href="/termos" className="underline underline-offset-2">Termos de Uso, artigo 5</Link>.
+      {tx.avisoDeDireitos}{' '}
+      <Link href="/termos" className="underline underline-offset-2">{tx.termosArtigo5}</Link>.
     </p>
   );
 }

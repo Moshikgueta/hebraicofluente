@@ -19,18 +19,19 @@
 import { Container, Check, Reveal, Rubrica } from './base';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { flagship } from '@/lib/catalog';
+import { tx } from '@/i18n/telas/venda-promessa';
 
 const APRENDE = [
-  `as ${course.totalLetters} letras`,
-  'os sons',
-  'o nikud, os sinais de vogal',
-  'a escrita cursiva',
-  'palavras reais, passo a passo'
+  tx.aprendeLetras(course.totalLetters),
+  tx.aprendeSons,
+  tx.aprendeNikud,
+  tx.aprendeCursiva,
+  tx.aprendePalavras
 ];
 
 const NADA_DE = [
-  'Nada de decorar uma tabela inteira no primeiro dia.',
-  'Nada de depender eternamente de transliteração.'
+  tx.nadaTabela,
+  tx.nadaTransliteracao
 ];
 
 export function Promessa() {
@@ -39,7 +40,7 @@ export function Promessa() {
       <Container className="pt-16 sm:pt-24 grid gap-10 lg:gap-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
         <Reveal>
           <Rubrica as="h2" id="promessa" letra="א" className="mb-6">
-            O que você aprende no Hebraico Fluente
+            {tx.titulo}
           </Rubrica>
           <ul className="grid gap-3 list-none p-0 m-0 mb-7">
             {APRENDE.map(t => (
@@ -51,12 +52,10 @@ export function Promessa() {
             ))}
           </ul>
           <p className="font-ui text-[16.5px] sm:text-[17px] leading-[1.6] text-ink-muted max-w-[46ch] m-0">
-            Com exercícios interativos e correção imediata em cada etapa, em português, feito para
-            brasileiros.
+            {tx.exercicios}
           </p>
           <p className="font-ui text-[14px] text-ink-body font-medium m-0 mt-5 pt-5 border-t border-line tabular-nums">
-            {course.totalLetters} letras em {totalLicoes()} lições · progresso salvo na sua conta ·
-            acesso por {flagship().accessMonths} meses
+            {tx.numeros(course.totalLetters, totalLicoes(), flagship().accessMonths)}
           </p>
         </Reveal>
 
@@ -80,8 +79,7 @@ export function Promessa() {
           <div className="flex gap-4 items-stretch">
             <span aria-hidden className="w-[2px] bg-[var(--teal)] shrink-0" />
             <p className="font-display text-[19px] sm:text-[20px] leading-[1.45] font-medium tracking-[-0.015em] text-ink m-0">
-              Você aprende a entender o alfabeto de verdade e constrói a base para ler hebraico em
-              Israel, estudar o idioma e se aproximar dos textos na língua original.
+              {tx.base}
             </p>
           </div>
         </Reveal>

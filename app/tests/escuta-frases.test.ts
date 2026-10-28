@@ -109,7 +109,9 @@ describe('a etapa 1 enxuta', () => {
   it('a partir da letra 12, a explicação completa fica a um toque', () => {
     const fonte = readFileSync(new URL('../src/app/licao/[letterId]/LessonClient.tsx', import.meta.url), 'utf8');
     expect(fonte).toMatch(/export const ENXUTA_DESDE = 12;/);
-    expect(fonte).toMatch(/Ver a explicação completa/);
+    expect(fonte).toMatch(/\{tx\.explicacaoCompleta\}/);
+    expect(readFileSync(new URL('../src/i18n/telas/licao-lesson-client.tsx', import.meta.url), 'utf8'))
+      .toMatch(/explicacaoCompleta: 'Ver a explicação completa'/);
     /* O resumo continua à vista em toda letra. */
     expect(fonte).toMatch(/<Lembre texto=\{letter\.ensino\.lembrePt\} \/>/);
   });

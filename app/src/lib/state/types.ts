@@ -4,6 +4,7 @@
 import { A1_VAZIO, type EstadoA1 } from './a1-estado';
 import type { EstadoRaizes } from './raizes-estado';
 import type { Rodadas } from '@/lib/rodadas';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
 
@@ -65,11 +66,11 @@ export type Skill = 'rec' | 'som' | 'ler' | 'ouvir' | 'escrever';
 export const SKILLS: readonly Skill[] = ['rec', 'som', 'ler', 'ouvir', 'escrever'];
 
 export const SKILL_LABEL: Record<Skill, string> = {
-  rec: 'Reconhecimento',
-  som: 'Som',
-  ler: 'Leitura',
-  ouvir: 'Audição',
-  escrever: 'Escrita'
+  rec: tx.skillRec,
+  som: tx.skillSom,
+  ler: tx.skillLer,
+  ouvir: tx.skillOuvir,
+  escrever: tx.skillEscrever
 };
 
 export type SkillStat = {

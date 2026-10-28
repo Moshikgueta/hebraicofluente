@@ -45,6 +45,8 @@ import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { api } from '@/lib/account/api';
 import { deveRetomarPix } from './retomada';
+import { tx } from '@/i18n/telas/conta-checkout-client';
+import { LOCALE_INTL } from '@/i18n';
 
 /** De quanto em quanto tempo perguntar, e por quanto tempo insistir.
  *
@@ -117,7 +119,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
      fora do app: navegação de verdade, não a do roteador. */
   const destino = c.abre ?? '/meu-hebraico';
   const irPara = (href: string) => { if (href.startsWith('/israel')) window.location.assign(href); else router.push(href); };
-  const oQue = tipo === 'livro' ? 'O Israel Além do Óbvio' : tipo === 'pacote' ? 'O combo' : 'O curso';
+  const oQue = tipo === 'livro' ? tx.oLivro : tipo === 'pacote' ? tx.oCombo : tx.oCurso;
   const parcelas = parcelasMax(c.price);
   const total = method === 'pix' ? pixPrice(c.price) : c.price.brl;
 
@@ -239,14 +241,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card tone="amber" className="p-6 grid gap-3">
-          <Badge>Em configuração</Badge>
+          <Badge>{tx.emConfiguracao}</Badge>
           <h1 className="font-display text-[21px] font-bold text-ink">
-            O pagamento ainda não está ativado.
+            {tx.pagamentoDesligado}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            A plataforma já está no ar, mas o meio de pagamento está sendo
-            configurado. Sua conta ficou criada - escreva para o endereço abaixo
-            com este e-mail e liberamos o acesso na mão enquanto isso.
+            {tx.pagamentoDesligadoTexto}
           </p>
           <p className="font-ui text-[14px] text-ink">
             <a href={`mailto:${empresa.contato.emailSuporte}`}
@@ -255,7 +255,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
             </a>
           </p>
           <LinkButton href={paginaDeVenda(c.slug)} variant="secondary" className="justify-self-start">
-            Voltar ao curso
+            {tx.voltarAoCurso}
           </LinkButton>
         </Card>
       </Shell>
@@ -269,16 +269,16 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card tone="mint" className="p-6 grid gap-3">
-          <Badge tone="mint">Você já tem parte do pacote</Badge>
+          <Badge tone="mint">{tx.jaTemParte}</Badge>
           <h1 className="font-display text-[21px] font-bold text-ink">
-            Leve só o que falta.
+            {tx.leveSoOQueFalta}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            O pacote cobraria de novo o que já está na sua conta.
+            {tx.pacoteCobrariaDeNovo}
           </p>
           {falta.map(x => (
             <LinkButton key={x.slug} href={`/checkout/${x.slug}`} size="lg" className="justify-self-start">
-              Comprar {x.titlePt} · {brl(x.price.brl)}
+              {tx.comprar(x.titlePt, brl(x.price.brl))}
             </LinkButton>
           ))}
         </Card>
@@ -291,16 +291,16 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card tone="mint" className="p-6 grid gap-3">
-          <Badge tone="mint">Já é seu</Badge>
+          <Badge tone="mint">{tx.jaESeu}</Badge>
           <h1 className="font-display text-[21px] font-bold text-ink">
-            {tipo === 'livro' ? 'O Israel Além do Óbvio já está na sua conta.' : 'Este curso já está na sua conta.'}
+            {tipo === 'livro' ? tx.livroJaNaConta : tx.cursoJaNaConta}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            {tipo === 'livro' ? 'Nada a pagar.' : 'Nada a pagar. Continue de onde você parou.'}
+            {tipo === 'livro' ? tx.nadaAPagar : tx.nadaAPagarContinue}
           </p>
           {tipo === 'livro'
-            ? <a href={destino} className="justify-self-start inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o Israel Além do Óbvio</a>
-            : <LinkButton href="/meu-hebraico" size="lg" className="justify-self-start">Ir para Meu Hebraico</LinkButton>}
+            ? <a href={destino} className="justify-self-start inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">{tx.abrirLivro}</a>
+            : <LinkButton href="/meu-hebraico" size="lg" className="justify-self-start">{tx.irParaMeuHebraico}</LinkButton>}
         </Card>
       </Shell>
     );
@@ -312,18 +312,18 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Shell course={c}>
         <Card tone="mint" className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
           <He size="lg" dim>ע</He>
-          <Badge tone="mint">Pagamento confirmado</Badge>
+          <Badge tone="mint">{tx.pagamentoConfirmado}</Badge>
           <h1 className="font-display text-[24px] sm:text-[28px] font-bold text-ink max-w-[20ch]">
-            Pronto. {oQue} é seu.
+            {tx.prontoESeu(oQue)}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             {tipo === 'livro'
-              ? `Versão interativa liberada por ${c.accessMonths} meses.`
+              ? tx.livroLiberado(c.accessMonths)
               : tipo === 'pacote'
-                ? 'O curso e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
-                : `Acesso liberado por ${c.accessMonths} meses. A primeira letra leva cerca de dez minutos.`}
+                ? tx.comboLiberado
+                : tx.cursoLiberado(c.accessMonths)}
           </p>
-          <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? 'Abrir o Israel Além do Óbvio' : tipo === 'pacote' ? 'Abrir a Minha Biblioteca' : 'Começar agora'}</Button>
+          <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? tx.abrirLivro : tipo === 'pacote' ? tx.abrirBiblioteca : tx.comecarAgora}</Button>
         </Card>
       </Shell>
     );
@@ -334,13 +334,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
     return (
       <Shell course={c}>
         <Card className="p-5 grid gap-2">
-          <Badge tone="accent">Passo 1 de 2</Badge>
+          <Badge tone="accent">{tx.passo1}</Badge>
           <h1 className="font-display text-[19px] font-bold text-ink">
-            Primeiro, sua conta.
+            {tx.primeiroSuaConta}
           </h1>
           <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-            É ela que guarda o acesso. Leva quinze segundos e o pagamento vem logo
-            em seguida, nesta mesma página.
+            {tx.primeiroSuaContaTexto}
           </p>
         </Card>
         {/* O mesmo formulário do /criar-conta, com o retorno apontando de volta
@@ -359,15 +358,15 @@ export function CheckoutClient({ slug }: { slug: string }) {
       <Card className="p-5 sm:p-6 grid gap-5">
         {daParceria !== null && parceria && (
           <p className="m-0 rounded-[var(--r-md)] bg-[var(--gold-soft)] px-4 py-3 font-ui text-[14.5px] text-[var(--gold-ink)]">
-            Preço especial garantido pelo seu link: <strong>{brl(daParceria)}</strong>
-            {fimDaParceria(getCourse(slug)!) ? `, até ${fimDaParceria(getCourse(slug)!)}` : ''}.
+            {tx.parceriaAntes}<strong>{brl(daParceria)}</strong>
+            {fimDaParceria(getCourse(slug)!) ? tx.parceriaAte(fimDaParceria(getCourse(slug)!)!) : ''}.
           </p>
         )}
         <div className="grid gap-1">
-          <Badge tone="accent">Passo 2 de 2</Badge>
+          <Badge tone="accent">{tx.passo2}</Badge>
           {/* Um h1 por passo (auditoria de 01/10/2026, VIS-012): o título que já
               existia, promovido. "Seu pedido", no resumo, é o h2. */}
-          <h1 className="font-display text-[19px] font-bold text-ink mt-1">Como você quer pagar?</h1>
+          <h1 className="font-display text-[19px] font-bold text-ink mt-1">{tx.comoQuerPagar}</h1>
         </div>
 
         {/* A escolha só aparece quando existe escolha.
@@ -392,33 +391,30 @@ export function CheckoutClient({ slug }: { slug: string }) {
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             {SO_CARTAO ? (
               <>
-                <strong>Cartão de crédito</strong> · {brl(c.price.brl)} à vista,
-                ou parcelado {parcelasTexto(parcelas)} (o total aparece antes de confirmar).
+                <strong>{tx.cartaoDeCredito}</strong>{tx.soCartao(brl(c.price.brl), parcelasTexto(parcelas))}
               </>
             ) : (
               <>
-                <strong>PIX</strong> · {brl(total)}
-                {c.price.pixDiscountPct > 0 && ` (${c.price.pixDiscountPct}% de desconto)`}.
-                Você paga pelo aplicativo do seu banco.
+                <strong>{tx.pix}</strong>{tx.soPix(brl(total), c.price.pixDiscountPct)}
               </>
             )}
           </p>
         ) : (
           <fieldset className="grid gap-3" disabled={order?.status === 'pending'} data-a11y-desvia>
-            <legend className="sr-only">Forma de pagamento</legend>
+            <legend className="sr-only">{tx.formaDePagamento}</legend>
 
             <MethodOption
               checked={method === 'pix'} onSelect={() => setMethod('pix')}
-              titlePt="PIX"
+              titlePt={tx.pix}
               detailPt={c.price.pixDiscountPct > 0
-                ? `${brl(pixPrice(c.price))} - ${c.price.pixDiscountPct}% de desconto. Cai em segundos.`
-                : `${brl(c.price.brl)}. Cai em segundos.`}
+                ? tx.pixComDesconto(brl(pixPrice(c.price)), c.price.pixDiscountPct)
+                : tx.pixSemDesconto(brl(c.price.brl))}
             />
 
             <MethodOption
               checked={method === 'card'} onSelect={() => setMethod('card')}
-              titlePt="Cartão de crédito"
-              detailPt={`${brl(c.price.brl)} à vista, ou parcelado ${parcelasTexto(parcelas)} (o total aparece antes de confirmar).`}
+              titlePt={tx.cartaoDeCredito}
+              detailPt={tx.cartaoDetalhe(brl(c.price.brl), parcelasTexto(parcelas))}
             />
           </fieldset>
         )}
@@ -426,10 +422,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
         {method === 'card' && (
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
-            O número do cartão é digitado na tela da Mercado Pago, não aqui. Esta
-            plataforma nunca recebe os dados do seu cartão. É lá também que você
-            escolhe em quantas vezes pagar e vê o valor de cada parcela e o total,
-            com os juros do parcelamento, antes de confirmar.
+            {tx.cartaoNaMercadoPago}
           </p>
         )}
 
@@ -457,24 +450,24 @@ export function CheckoutClient({ slug }: { slug: string }) {
           />
         ) : order?.status === 'pending' ? (
           <p aria-live="polite" className="font-ui text-[14px] text-ink-body">
-            Aguardando a confirmação do pagamento…
+            {tx.aguardandoConfirmacao}
           </p>
         ) : (
           <>
             <CondicoesDaCompra curso={c} renovacao={restam !== null && restam <= JANELA_DE_RENOVACAO_DIAS} />
             <Button size="lg" full onClick={pay} disabled={busy}>
-              {busy ? 'Gerando…' : `Pagar ${brl(total)}`}
+              {busy ? tx.gerando : tx.pagar(brl(total))}
             </Button>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
               {/* A declaração de idade está só nos Termos, art. 3 (pedido do dono,
                   30/09/2026): concordar com eles é fazê-la. */}
-              Ao continuar você concorda com os{' '}
+              {tx.aoContinuar}{' '}
               <Link href="/termos" className="text-[var(--accent)] hover:underline">
-                Termos de Uso
+                {tx.termosDeUso}
               </Link>{' '}
-              e com a{' '}
+              {tx.eComA}{' '}
               <Link href="/privacidade" className="text-[var(--accent)] hover:underline">
-                Política de Privacidade
+                {tx.politicaDePrivacidade}
               </Link>.
             </p>
           </>
@@ -496,48 +489,45 @@ export function CheckoutClient({ slug }: { slug: string }) {
  */
 function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse; renovacao?: boolean }) {
   const LINHAS: [string, React.ReactNode][] = [
-    ['O que você leva', tipoDe(curso) === 'livro'
-      ? `${curso.titlePt}: uma experiência digital interativa, pelo navegador.`
+    [tx.oQueVoceLeva, tipoDe(curso) === 'livro'
+      ? tx.levaLivro(curso.titlePt)
       : tipoDe(curso) === 'pacote'
-        ? 'Acesso completo ao curso interativo de Alfabetização em Hebraico e à plataforma Israel Além do Óbvio.'
-        : `Acesso completo ao ${curso.titlePt}, dentro da plataforma, pelo navegador.`],
+        ? tx.levaCombo
+        : tx.levaCurso(curso.titlePt)],
     /* PAY-B-011 (auditoria de 01/10/2026): na renovação os meses SOMAM ao
        fim do acesso atual (`grantAccess`), e o quadro dizia o contrário. */
-    ['Por quanto tempo', renovacao
-      ? `Mais ${curso.accessMonths} meses, somados ao fim do acesso atual.`
+    [tx.porQuantoTempo, renovacao
+      ? tx.tempoRenovacao(curso.accessMonths)
       : tipoDe(curso) === 'livro'
-        ? `A versão interativa por ${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`
-        : `${curso.accessMonths} meses, ${INICIO_DO_ACESSO}.`],
+        ? tx.tempoLivro(curso.accessMonths, INICIO_DO_ACESSO)
+        : tx.tempoCurso(curso.accessMonths, INICIO_DO_ACESSO)],
     /* 30/09/2026 (CDC, art. 6º, III): dito com todas as letras, e não
        deduzido de "12 meses". Renovar é uma compra nova, feita pela pessoa. */
-    ['Cobrança', 'Pagamento único. Não há assinatura nem renovação automática: ao fim do prazo, o acesso termina e nada mais é cobrado.'],
+    [tx.cobranca, tx.cobrancaTexto],
     /* COM-007 (auditoria de 28/09): o que NÃO vem junto, antes de pagar. */
-    ['O que não vem junto', tipoDe(curso) === 'livro' ? <>
-      O curso de hebraico: o Israel Além do Óbvio é sobre Israel, e não ensina a
-      ler hebraico como as lições do curso.{' '}
-      <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
+    [tx.naoVemJunto, tipoDe(curso) === 'livro' ? <>
+      {tx.naoVemLivro}{' '}
+      <Link href="/termos" className="text-[var(--accent)] hover:underline">{tx.termos}</Link>.
     </> : <>
-      Aulas ao vivo e correção por professor: o curso é autoinstrucional, e a
-      plataforma corrige cada exercício na hora.{' '}
-      <Link href="/termos" className="text-[var(--accent)] hover:underline">Termos</Link>.
+      {tx.naoVemCurso}{' '}
+      <Link href="/termos" className="text-[var(--accent)] hover:underline">{tx.termos}</Link>.
     </>],
     /* O prazo prometido aqui é o prazo que a plataforma consegue cumprir, e
        ele muda com o trilho de cobrança: com confirmação automática o acesso
        abre sozinho; no PIX direto alguém confere o extrato e libera. Uma
        condição de oferta que promete o que o sistema não faz é justamente o
        que o Decreto 7.962 existe para impedir. */
-    ['Quando abre', confirmaSozinho()
+    [tx.quandoAbre, confirmaSozinho()
       ? (temPix()
-        ? 'Na hora em que o pagamento for confirmado - em minutos, no PIX.'
-        : 'Na hora em que o pagamento for confirmado.')
+        ? tx.abreComPix
+        : tx.abreSemPix)
       /* PIX direto: a liberação é À MÃO. "Em alguns minutos" prometia o que
          só a confirmação automática faz (auditoria de 28/09, LEGAL-017). */
-      : `Depois que conferirmos o pagamento: a liberação é feita à mão, em até ${empresa.atendimento.prazoRespostaUteis} dias úteis. Você entra na plataforma com seu e-mail e senha.`],
-    ['Se você desistir', <>
-      {empresa.politicas.arrependimentoDias} dias para cancelar e receber 100% de volta,
-      sem justificar.{' '}
+      : tx.abreManual(empresa.atendimento.prazoRespostaUteis)],
+    [tx.seDesistir, <>
+      {tx.desistirTexto(empresa.politicas.arrependimentoDias)}{' '}
       <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
-        Política de reembolso
+        {tx.politicaDeReembolso}
       </Link>.
     </>]
   ];
@@ -545,7 +535,7 @@ function CondicoesDaCompra({ curso, renovacao = false }: { curso: CatalogCourse;
   return (
     <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3.5 grid gap-2">
       <p className="font-ui text-[11.5px] uppercase tracking-[.08em] text-ink-muted">
-        Condições desta compra
+        {tx.condicoes}
       </p>
       <dl className="grid gap-1.5 m-0">
         {LINHAS.map(([rotulo, valor]) => (
@@ -586,7 +576,7 @@ function PixPanel({
   order: Order; copied: boolean; gaveUp: boolean; automatico: boolean; retomado: boolean;
   onCopy: () => void; onRetry: () => void;
 }) {
-  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString(LOCALE_INTL, {
     hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
   });
   return (
@@ -594,20 +584,19 @@ function PixPanel({
       {retomado && (
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body
                       bg-[var(--accent-wash)] rounded-[var(--r-md)] px-4 py-3">
-          Este é o mesmo código PIX que você gerou antes, e ele vale até as {ate}.
-          Se você já pagou, não pague de novo: o acesso entra sozinho.
+          {tx.pixRetomado(ate)}
         </p>
       )}
       <div className="grid gap-2">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-          PIX copia e cola
+          {tx.pixCopiaECola}
         </p>
         <code className="block break-all rounded-[var(--r-md)] border border-line bg-surface-2
                          px-4 py-3 font-mono text-[12.5px] leading-relaxed text-ink-body">
           {order.pix!.code}
         </code>
         <Button variant="secondary" onClick={onCopy} full>
-          {copied ? 'Copiado ✓' : 'Copiar código'}
+          {copied ? tx.copiado : tx.copiarCodigo}
         </Button>
       </div>
 
@@ -615,34 +604,28 @@ function PixPanel({
         <div className="grid gap-2">
           <p aria-live="polite" className="font-ui text-[14px] leading-relaxed text-ink-body
                                            bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
-            Pague pelo aplicativo do seu banco. Conferimos o pagamento e
-            liberamos seu acesso à mão, em até {empresa.atendimento.prazoRespostaUteis} dias úteis. Você pode
-            fechar esta página: para ver o curso, entre com o mesmo e-mail e a
-            mesma senha que você acabou de usar.
+            {tx.pixManual(empresa.atendimento.prazoRespostaUteis)}
           </p>
           <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-            Se passar desse prazo, escreva para{' '}
+            {tx.sePassarDoPrazo}{' '}
             <a href={`mailto:${empresa.contato.emailSuporte}`}
                className="text-[var(--accent)] hover:underline">
               {empresa.contato.emailSuporte}
             </a>{' '}
-            com o número do pedido: <code className="font-mono">{order.id}</code>.
+            {tx.comONumero}<code className="font-mono">{order.id}</code>.
           </p>
         </div>
       ) : gaveUp ? (
         <div className="grid gap-3">
           <p role="alert" className="font-ui text-[14px] leading-relaxed text-ink-body
                                      bg-[var(--amber-wash)] rounded-[var(--r-md)] px-4 py-3">
-            O pagamento ainda não apareceu por aqui. Se você já pagou, o acesso
-            entra sozinho assim que o banco confirmar - recarregue esta página
-            em alguns minutos. Se não pagou, dá para gerar um código novo.
+            {tx.pagamentoNaoApareceu}
           </p>
-          <Button variant="secondary" onClick={onRetry} full>Gerar outro código</Button>
+          <Button variant="secondary" onClick={onRetry} full>{tx.gerarOutroCodigo}</Button>
         </div>
       ) : (
         <p aria-live="polite" className="font-ui text-[14px] leading-relaxed text-ink-body">
-          Esperando o pagamento cair. Pode deixar esta página aberta - ela se
-          atualiza sozinha.
+          {tx.esperandoPagamento}
         </p>
       )}
     </div>
@@ -689,12 +672,12 @@ function Shell({ course, children }: {
     <div className="mx-auto w-full max-w-[880px] px-4 sm:px-6 py-10 sm:py-14
                     grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start">
       <div className="grid gap-5">
-        <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
+        <nav aria-label={tx.voceEstaEm} className="font-ui text-[13px] text-ink-muted">
           <Link href={paginaDeVenda(c.slug)} className="hover:text-[var(--accent)]">
             {c.titlePt}
           </Link>
           <span aria-hidden> · </span>
-          <span>Pagamento</span>
+          <span>{tx.pagamento}</span>
         </nav>
         {children}
       </div>
@@ -704,15 +687,15 @@ function Shell({ course, children }: {
           que não consegue ver. */}
       <Card tone="wash" className="p-5 grid gap-3 content-start order-first lg:order-last">
         <h2 className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
-          Seu pedido
+          {tx.seuPedido}
         </h2>
         <p className="font-display text-[17px] font-bold text-ink leading-snug">{c.titlePt}</p>
         <p className="font-ui text-[13px] text-ink-muted">
           {tipoDe(c) === 'livro'
-            ? `Experiência interativa · ${c.modules.length} capítulos · ${c.accessMonths} meses de acesso`
+            ? tx.resumoLivro(c.modules.length, c.accessMonths)
             : tipoDe(c) === 'pacote'
-              ? `Combo: curso de alfabetização + Israel Além do Óbvio · ${c.accessMonths} meses de acesso`
-              : <>{c.stats.modules} módulos{c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}{' · '}{c.accessMonths} meses de acesso</>}
+              ? tx.resumoCombo(c.accessMonths)
+              : tx.resumoCurso(c.stats.modules, c.stats.lessons || null, c.accessMonths)}
         </p>
         {/* O número grande é o número que vai ser cobrado.
             ──────────────────────────────────────────────────────────────
@@ -733,9 +716,9 @@ function Shell({ course, children }: {
               {brl(pixPrice(c.price))}
             </p>
             <p className="font-ui text-[12.5px] text-ink-body">
-              no PIX
+              {tx.noPix}
               {c.price.pixDiscountPct > 0
-                && ` · ${c.price.pixDiscountPct}% de desconto sobre ${brl(c.price.brl)}`}
+                && tx.descontoSobre(c.price.pixDiscountPct, brl(c.price.brl))}
             </p>
           </div>
         ) : (
@@ -745,18 +728,18 @@ function Shell({ course, children }: {
                 sozinho não responde isso. Ver `ancora()` em lib/catalog.ts. */}
             {cheio && (
               <p className="font-ui text-[11px] uppercase tracking-[.08em] text-[var(--accent)]">
-                Pré-lançamento{fimDoPreLancamento(c.price) ? ` até ${fimDoPreLancamento(c.price)}` : ''} · depois, {brl(cheio)}
+                {tx.preLancamento(fimDoPreLancamento(c.price) || null, brl(cheio))}
               </p>
             )}
             <p className="font-display text-[26px] font-bold text-ink leading-none">
               {brl(c.price.brl)}
             </p>
             <p className="font-ui text-[12.5px] text-ink-body">
-              ou {parcelasTexto(parcelas)} no cartão
+              {tx.ouNoCartao(parcelasTexto(parcelas))}
             </p>
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
-                {brl(pixPrice(c.price))} no PIX · {c.price.pixDiscountPct}% de desconto
+                {tx.pixDesconto(brl(pixPrice(c.price)), c.price.pixDiscountPct)}
               </p>
             )}
           </div>
@@ -766,7 +749,7 @@ function Shell({ course, children }: {
             mostrar as condições, e o direito do CDC é o que mais pesa para quem
             ainda não conhece o curso. Mesmo prazo de data/empresa.json. */}
         <p className="border-t border-[color:var(--line-soft)] pt-3 font-ui text-[12.5px] leading-[1.5] text-ink-body">
-          {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.
+          {tx.resumoDesistir(empresa.politicas.arrependimentoDias)}
         </p>
       </Card>
     </div>

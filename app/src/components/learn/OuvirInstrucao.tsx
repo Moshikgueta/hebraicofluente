@@ -20,6 +20,7 @@
 import { IconeSom } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { textoParaVoz } from '@/lib/voz-instrucao';
+import { tx } from '@/i18n/telas/licao-ouvir-instrucao';
 
 const ATRIBUTO = 'data-a11y-voz';
 
@@ -38,7 +39,7 @@ export function useVozDasInstrucoes(): boolean {
 
 function vozPortuguesa(): SpeechSynthesisVoice | null {
   const vozes = window.speechSynthesis.getVoices();
-  return vozes.find(v => v.lang === 'pt-BR') ?? vozes.find(v => v.lang.startsWith('pt')) ?? null;
+  return vozes.find(v => v.lang === tx.vozLang) ?? vozes.find(v => v.lang.startsWith(tx.vozPrefixo)) ?? null;
 }
 
 export function OuvirInstrucao({ texto }: { texto: string }) {
@@ -65,7 +66,7 @@ export function OuvirInstrucao({ texto }: { texto: string }) {
     if (estado === 'pausado' && s.paused) { s.resume(); setEstado('falando'); return; }
     s.cancel();
     const u = new SpeechSynthesisUtterance(textoParaVoz(texto));
-    u.lang = 'pt-BR';
+    u.lang = tx.vozLang;
     const v = vozPortuguesa();
     if (v) u.voice = v;
     u.rate = 0.95;
@@ -77,8 +78,8 @@ export function OuvirInstrucao({ texto }: { texto: string }) {
 
   if (!ligada || !temVoz) return null;
 
-  const rotulo = estado === 'falando' ? 'Pausar a instrução'
-    : estado === 'pausado' ? 'Continuar a instrução' : 'Ouvir a instrução em português';
+  const rotulo = estado === 'falando' ? tx.pausarInstrucao
+    : estado === 'pausado' ? tx.continuarInstrucao : tx.ouvirInstrucaoNoIdioma;
 
   return (
     <button type="button" onClick={alternar} aria-label={rotulo}
@@ -86,7 +87,7 @@ export function OuvirInstrucao({ texto }: { texto: string }) {
                        border border-line bg-surface font-ui text-[14px] font-semibold text-ink-body
                        hover:bg-surface-2">
       <span aria-hidden>{estado === 'falando' ? '❚❚' : <IconeSom size={17} />}</span>
-      <span>{estado === 'falando' ? 'Pausar' : estado === 'pausado' ? 'Continuar' : 'Ouvir a instrução'}</span>
+      <span>{estado === 'falando' ? tx.pausar : estado === 'pausado' ? tx.continuar : tx.ouvirInstrucao}</span>
     </button>
   );
 }

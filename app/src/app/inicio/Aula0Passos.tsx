@@ -25,22 +25,24 @@ import { useCallback, useEffect, useState } from 'react';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { Yael } from '@/components/aventura/Yael';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-aula0-passos';
 
 export type ModoDaAula0 = 'capa' | 'passos' | 'pagina' | 'fim';
 
 /* Onze passos. A ordem é a da página, e cada id é o de uma <Parte>. */
 export const PASSOS_DA_AULA0: { nome: string; partes: ReadonlySet<string> }[] = [
-  { nome: 'Não é o sistema do português', partes: new Set(['o-sistema', 'a-comparacao']) },
-  { nome: 'Onde estão as vogais', partes: new Set(['as-vogais']) },
-  { nome: 'O nikud', partes: new Set(['o-niqqud']) },
-  { nome: 'Entendeu o nikud?', partes: new Set(['checagem-niqqud']) },
-  { nome: 'Quatro letras especiais', partes: new Set(['as-quatro-letras']) },
-  { nome: 'Da direita para a esquerda', partes: new Set(['a-direcao', 'duas-direcoes']) },
-  { nome: 'Formas finais e letra muda', partes: new Set(['maiuscula-e-finais']) },
-  { nome: 'Impressa e cursiva', partes: new Set(['impressa-e-cursiva']) },
-  { nome: 'Que hebraico é este', partes: new Set(['que-hebraico']) },
-  { nome: 'O caminho do curso', partes: new Set(['o-caminho', 'como-funciona', 'como-praticar']) },
-  { nome: 'Checagem final', partes: new Set(['atividade']) }
+  { nome: tx.passo1, partes: new Set(['o-sistema', 'a-comparacao']) },
+  { nome: tx.passo2, partes: new Set(['as-vogais']) },
+  { nome: tx.passo3, partes: new Set(['o-niqqud']) },
+  { nome: tx.passo4, partes: new Set(['checagem-niqqud']) },
+  { nome: tx.passo5, partes: new Set(['as-quatro-letras']) },
+  { nome: tx.passo6, partes: new Set(['a-direcao', 'duas-direcoes']) },
+  { nome: tx.passo7, partes: new Set(['maiuscula-e-finais']) },
+  { nome: tx.passo8, partes: new Set(['impressa-e-cursiva']) },
+  { nome: tx.passo9, partes: new Set(['que-hebraico']) },
+  { nome: tx.passo10, partes: new Set(['o-caminho', 'como-funciona', 'como-praticar']) },
+  { nome: tx.passo11, partes: new Set(['atividade']) }
 ];
 
 const CHAVE = 'hf-aula0-passo';
@@ -84,9 +86,9 @@ export function useModoDaAula0() {
 /* ── a capa ────────────────────────────────────────────────────────────── */
 
 const O_QUE_ENTREGA = [
-  'Por que o hebraico quase não escreve as vogais, e onde elas estão.',
-  'Para que lado se lê, e o que acontece com os números.',
-  'O que são os pontinhos, as formas finais e a letra muda.'
+  tx.entrega1,
+  tx.entrega2,
+  tx.entrega3
 ];
 
 export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
@@ -104,10 +106,10 @@ export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
       <Yael className="absolute right-2 top-2 w-[84px] sm:w-[110px]" />
       <p className="m-0 justify-self-start rounded-full bg-white/12 px-3 py-1 font-ui text-[12.5px]
                     font-semibold uppercase tracking-[.1em] text-white">
-        Aula 0 · {PASSOS_DA_AULA0.length} passos curtos
+        {fmt(tx.capaSelo, { n: PASSOS_DA_AULA0.length })}
       </p>
       <h1 id="aula0-titulo" className="m-0 text-white text-[30px] sm:text-[40px] font-bold leading-[1.12]">
-        O segredo do alfabeto, antes da primeira letra
+        {tx.capaTitulo}
       </h1>
 
       {/* A palavra se revela da direita para a esquerda, que é a primeira
@@ -118,7 +120,7 @@ export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
           <span className="seta-rtl absolute top-0 font-ui text-[16px] text-white/85">←</span>
         </div>
         <p className="m-0 font-ui text-[13.5px] text-white/85">
-          shalóm · lê-se da direita para a esquerda
+          {tx.capaLeitura}
         </p>
       </div>
 
@@ -138,19 +140,19 @@ export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
                 className="min-h-[56px] w-full rounded-[var(--r-md)] bg-white px-7 font-ui text-[16.5px]
                            font-semibold text-[var(--navy)] shadow-[var(--sh)]
                            transition-[transform,scale] duration-[var(--dur)] active:scale-[.97]">
-          {feita ? 'Rever passo a passo'
-            : continuar ? `Continuar do passo ${guardado + 1}`
-            : 'Começar a Aula 0'}
+          {feita ? tx.rever
+            : continuar ? fmt(tx.continuarDo, { n: guardado + 1 })
+            : tx.comecar}
         </button>
         <p className="m-0 text-center font-ui text-[13.5px] text-white/85">
           {feita
-            ? 'Aula 0 concluída: as letras estão abertas.'
-            : 'Uns dez minutos. No fim, uma checagem rápida abre a primeira letra.'}
+            ? tx.capaFeita
+            : tx.capaDuracao}
         </p>
         <button type="button" onClick={paginaInteira}
                 className="justify-self-center min-h-[44px] px-3 font-ui text-[14.5px] font-semibold
                            text-white underline underline-offset-4">
-          Ver tudo numa página
+          {tx.verTudo}
         </button>
       </div>
     </section>
@@ -164,7 +166,7 @@ export function Aula0BarraDoPasso({ passo, sair }: { passo: number; sair: () => 
   return (
     <div className="grid gap-3">
       <div className="flex items-center gap-3">
-        <button type="button" onClick={sair} aria-label="Sair dos passos e voltar à capa da Aula 0"
+        <button type="button" onClick={sair} aria-label={tx.sairAria}
                 className="shrink-0 grid place-items-center w-11 h-11 -ml-2 rounded-full font-ui text-[20px]
                            text-ink-muted hover:bg-surface-2 active:scale-[.94]">
           ✕
@@ -183,7 +185,7 @@ export function Aula0BarraDoPasso({ passo, sair }: { passo: number; sair: () => 
       </div>
       <p id="aula0-topo" tabIndex={-1}
          className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--accent)] outline-none">
-        Aula 0 · passo {passo + 1} de {total}
+        {fmt(tx.passoDe, { n: passo + 1, total })}
       </p>
     </div>
   );
@@ -194,14 +196,14 @@ export function Aula0NavDoPasso({ passo, irPara }: { passo: number; irPara: (n: 
   return (
     <div className="grid grid-cols-[auto_1fr] gap-2">
       {passo > 0
-        ? <Button variant="secondary" size="lg" onClick={() => irPara(passo - 1)}>Voltar</Button>
+        ? <Button variant="secondary" size="lg" onClick={() => irPara(passo - 1)}>{tx.voltar}</Button>
         : <span />}
       {ultimo
         ? <p className="m-0 self-center font-ui text-[14px] leading-snug text-ink-muted">
-            Responda a checagem acima: ela abre a primeira letra.
+            {tx.respondaChecagem}
           </p>
         : <Button size="lg" full onClick={() => irPara(passo + 1)}>
-            Próximo: {PASSOS_DA_AULA0[passo + 1]!.nome.toLowerCase()}
+            {fmt(tx.proximo, { nome: PASSOS_DA_AULA0[passo + 1]!.nome.toLowerCase() })}
           </Button>}
     </div>
   );
@@ -237,20 +239,19 @@ export function Aula0Fim({ primeiraLicao, letra, paginaInteira }: {
         <Yael pulando className="w-[84px]" />
       </div>
       <h1 id="aula0-fim" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-tight">
-        Aula 0 concluída!
+        {tx.fimTitulo}
       </h1>
       <p className="m-0 max-w-[40ch] font-ui text-[16px] leading-relaxed text-white">
-        Você já sabe para que lado se lê, onde estão as vogais e o que são os pontinhos.
-        A primeira letra está aberta.
+        {tx.fimTexto}
       </p>
       <He size="display" className="text-white hf-revela">{letra}</He>
       <LinkButton href={`/licao/${primeiraLicao}`} size="lg" full
                   className="!bg-white !text-[var(--navy)] max-w-[420px]">
-        Começar a primeira letra
+        {tx.fimComecar}
       </LinkButton>
       <button type="button" onClick={paginaInteira}
               className="min-h-[44px] px-3 font-ui text-[14.5px] font-semibold text-white underline underline-offset-4">
-        Ver a Aula 0 numa página
+        {tx.fimVerPagina}
       </button>
     </section>
   );

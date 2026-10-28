@@ -1,0 +1,80 @@
+import type { Traducao } from '..';
+
+/* app/mapa/CourseMapClient.tsx - o mapa do curso, a linha do tempo. */
+const pt = {
+  meuCurso: 'Meu curso',
+  resumo: '{modulos} módulos · {licoes} lições · {letras} letras',
+  concluido: 'concluído',
+
+  /* a Aula 0 */
+  tagConcluido: 'Concluído',
+  comeceAqui: 'Comece por aqui',
+  aula0Rotulo: 'Aula 0 · antes da primeira letra',
+  comoFunciona: 'Como o hebraico funciona',
+  aula0Feita: 'A direção da leitura, o alfabeto e o nikud. Fica aqui para você reler quando quiser.',
+  aula0Falta: 'A direção da leitura, o alfabeto, o nikud e como o curso funciona. Termina com uma checagem curta, e aí o Álef abre.',
+
+  /* um módulo */
+  emAndamento: 'Em andamento',
+  faltaCheckpoint: 'Falta o checkpoint',
+  abreDepoisAula0: 'Abre depois da Aula 0',
+  abreDepoisModulo: 'Abre depois do módulo {n}',
+  moduloLicoes: (n: number, licoes: number) => `Módulo ${n} · ${licoes} ${licoes === 1 ? 'lição' : 'lições'}`,
+  letraConcluida: ' - concluída',
+  letraEtapas: ' - {n} de {total} etapas',
+  letraBloqueada: ' - bloqueada',
+  letraProxima: ' - a próxima',
+  abrirLicao: 'Abrir a lição de {nome}',
+  metaAlcancada: '✓ Meta alcançada: ',
+  meta: 'Meta: ',
+
+  /* o desafio final */
+  aprovado: 'Aprovado',
+  disponivel: 'Disponível',
+  abreQuando: 'Abre quando você concluir as lições das 22 letras',
+  finalFeito: 'Você passou no exame final. O seu certificado do curso está pronto.',
+  finalFalta: 'Um exame com as letras, os sons, as sílabas, palavras, frases e palavras sem nikud. No fim, o certificado do curso.',
+
+  naoEncontrado: 'Mapa não encontrado.',
+  lugarNovo: 'Lugar novo',
+  lugarNovoAberto: (lugar: string) => `Lugar novo aberto: ${lugar}.`,
+} as const;
+
+const en: Traducao<typeof pt> = {
+  meuCurso: 'My course',
+  resumo: '{modulos} modules · {licoes} lessons · {letras} letters',
+  concluido: 'complete',
+
+  tagConcluido: 'Complete',
+  comeceAqui: 'Start here',
+  aula0Rotulo: 'Lesson 0 · before the first letter',
+  comoFunciona: 'How Hebrew works',
+  aula0Feita: 'The reading direction, the alphabet and nikud. It stays here for you to reread whenever you like.',
+  aula0Falta: 'The reading direction, the alphabet, nikud and how the course works. It ends with a short check, and then Aleph opens.',
+
+  emAndamento: 'In progress',
+  faltaCheckpoint: 'Checkpoint to go',
+  abreDepoisAula0: 'Opens after Lesson 0',
+  abreDepoisModulo: 'Opens after module {n}',
+  moduloLicoes: (n: number, licoes: number) => `Module ${n} · ${licoes} ${licoes === 1 ? 'lesson' : 'lessons'}`,
+  letraConcluida: ' - completed',
+  letraEtapas: ' - {n} of {total} stages',
+  letraBloqueada: ' - locked',
+  letraProxima: ' - up next',
+  abrirLicao: 'Open the lesson for {nome}',
+  metaAlcancada: '✓ Goal reached: ',
+  meta: 'Goal: ',
+
+  aprovado: 'Passed',
+  disponivel: 'Available',
+  abreQuando: 'Opens when you complete the lessons for the 22 letters',
+  finalFeito: 'You passed the final exam. Your course certificate is ready.',
+  finalFalta: 'An exam with the letters, the sounds, syllables, words, sentences and words without nikud. At the end, the course certificate.',
+
+  naoEncontrado: 'Map not found.',
+  lugarNovo: 'New place',
+  lugarNovoAberto: (lugar: string) => `New place unlocked: ${lugar}.`
+};
+
+export const DICIONARIO = { pt, en };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;

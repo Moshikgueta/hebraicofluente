@@ -27,6 +27,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import {
   PADRAO, TAMANHOS, TEMAS, aplicar, carregar, guardar, type Prefs
 } from '@/lib/acessibilidade';
+import { tx } from '@/i18n/telas/conta-botao-acessibilidade';
 
 export function BotaoAcessibilidade() {
   const [prefs, setPrefs] = useState<Prefs>(PADRAO);
@@ -148,20 +149,20 @@ export function BotaoAcessibilidade() {
           ref={painel}
           role="dialog"
           aria-modal="false"
-          aria-label="Ajustes de acessibilidade"
+          aria-label={tx.ajustes}
           className="hf-a11y-painel w-[min(300px,calc(100vw-32px))] rounded-[var(--r-lg)]
                      bg-surface border border-line shadow-[var(--sh)] p-4 grid gap-4"
         >
           <div className="grid gap-1">
-            <p className="font-display text-[15px] font-bold text-ink">Acessibilidade</p>
+            <p className="font-display text-[15px] font-bold text-ink">{tx.titulo}</p>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-              Fica guardado neste aparelho, e vale em todas as páginas.
+              {tx.guardado}
             </p>
           </div>
 
           <fieldset className="grid gap-2 m-0 p-0 border-0">
             <legend className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted p-0 mb-1">
-              Tamanho do texto
+              {tx.tamanhoDoTexto}
             </legend>
             <div className="grid grid-cols-4 gap-1.5">
               {TAMANHOS.map(t => {
@@ -203,12 +204,12 @@ export function BotaoAcessibilidade() {
               achar que quebrou: a vitrine é clara de propósito. */}
           <fieldset className="grid gap-2 m-0 p-0 border-0">
             <legend className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted p-0 mb-1">
-              Tema
+              {tx.tema}
             </legend>
             <div className="grid grid-cols-3 gap-1.5">
               {TEMAS.map(t => {
                 const ativo = prefs.tema === t;
-                const rotulo = { auto: 'Automático', claro: 'Claro', escuro: 'Escuro' }[t];
+                const rotulo = { auto: tx.temaAuto, claro: tx.temaClaro, escuro: tx.temaEscuro }[t];
                 return (
                   <button
                     key={t}
@@ -227,45 +228,45 @@ export function BotaoAcessibilidade() {
               })}
             </div>
             <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted">
-              Vale nas telas do curso. As páginas de venda são claras sempre.
+              {tx.temaNota}
             </p>
           </fieldset>
 
           <div className="grid gap-1.5">
             <Opcao
               id="a11y-contraste"
-              rotulo="Mais contraste"
-              nota="Tinta mais escura e bordas visíveis."
+              rotulo={tx.contraste}
+              nota={tx.contrasteNota}
               ligada={prefs.contraste}
               aoMudar={v => mudar({ contraste: v })}
             />
             <Opcao
               id="a11y-espaco"
-              rotulo="Mais espaço entre linhas"
-              nota="Entrelinha e espaço entre palavras maiores."
+              rotulo={tx.espaco}
+              nota={tx.espacoNota}
               ligada={prefs.espaco}
               aoMudar={v => mudar({ espaco: v })}
             />
             <Opcao
               id="a11y-links"
-              rotulo="Sublinhar links"
-              nota="Todo link do texto fica sublinhado."
+              rotulo={tx.links}
+              nota={tx.linksNota}
               ligada={prefs.links}
               aoMudar={v => mudar({ links: v })}
             />
             <Opcao
               id="a11y-voz"
-              rotulo={<><IconeSom size={16} className="inline -mt-0.5 mr-1.5" />Ouvir instruções em português</>}
+              rotulo={<><IconeSom size={16} className="inline -mt-0.5 mr-1.5" />{tx.voz}</>}
               nota={vozDisponivel
-                ? 'Cada exercício ganha um botão que lê o enunciado em voz alta. Não lê as respostas.'
-                : 'Este navegador não tem voz para ler em português.'}
+                ? tx.vozNota
+                : tx.vozIndisponivel}
               ligada={prefs.voz}
               aoMudar={v => mudar({ voz: v })}
             />
             <Opcao
               id="a11y-movimento"
-              rotulo="Menos animação"
-              nota="Nada entra deslizando nem fica pulsando."
+              rotulo={tx.movimento}
+              nota={tx.movimentoNota}
               ligada={prefs.movimento}
               aoMudar={v => mudar({ movimento: v })}
             />
@@ -278,7 +279,7 @@ export function BotaoAcessibilidade() {
               className="min-h-[40px] font-ui text-[13px] font-semibold text-ink-body
                          hover:text-[var(--accent)] underline underline-offset-2"
             >
-              Voltar ao normal
+              {tx.voltarAoNormal}
             </button>
             <button
               type="button"
@@ -286,12 +287,12 @@ export function BotaoAcessibilidade() {
               className="min-h-[40px] px-4 rounded-[var(--r-md)] bg-[var(--navy)] text-white
                          font-ui text-[13.5px] font-semibold hover:bg-[var(--navy-2)]"
             >
-              Fechar
+              {tx.fechar}
             </button>
           </div>
 
           <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted">
-            Atalho: Alt + Shift + A.
+            {tx.atalho}
           </p>
         </div>
       )}
@@ -303,10 +304,10 @@ export function BotaoAcessibilidade() {
         aria-expanded={aberto}
         aria-label={
           ligadas > 0
-            ? `Ajustes de acessibilidade (${ligadas} ativo${ligadas > 1 ? 's' : ''})`
-            : 'Ajustes de acessibilidade'
+            ? tx.ajustesAtivos(ligadas)
+            : tx.ajustes
         }
-        title="Acessibilidade (Alt + Shift + A)"
+        title={tx.tituloDoBotao}
         className="hf-a11y-botao relative w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-full bg-[var(--navy)] text-white
                    border-2 border-[var(--cream)] shadow-[var(--sh)] grid place-items-center
                    transition-[background-color,transform] duration-[180ms]

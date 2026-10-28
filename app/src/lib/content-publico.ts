@@ -29,6 +29,8 @@
 
 import courseJson from '@content/course.json';
 import bibliaJson from '@content/biblia.json';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-content-publico';
 
 export type Word = {
   he: string;
@@ -436,9 +438,7 @@ export function tempoDoCursoPt(): string {
   const letras = course.letters.length;
   const sons = course.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
   const unidades = letras + sons;
-  const umPorDia = unidades <= 31 ? 'cerca de um mês' : `cerca de ${Math.round(unidades / 30)} meses`;
+  const umPorDia = unidades <= 31 ? tx.umMes : tx.meses(Math.round(unidades / 30));
   const tresPorSemana = Math.max(1, Math.round(unidades / 3 / 4.3));
-  return `Cada letra leva cerca de dez minutos, e são ${letras}, mais ${sons} lições de som e os checkpoints. ` +
-    `Quem estuda uma por dia termina em ${umPorDia}; ` +
-    `quem estuda três por semana leva ${tresPorSemana === 1 ? 'cerca de um mês' : `uns ${tresPorSemana} meses`}.`;
+  return fmt(tx.tempo, { letras, sons, umPorDia, tresPorSemana: tx.tresPorSemana(tresPorSemana) });
 }

@@ -45,6 +45,7 @@ import * as depoimentos from './api/depoimentos.js';
 import * as avaliacoes from './api/avaliacoes.js';
 import * as estatisticas from './api/estatisticas.js';
 import { campanhaValida } from './lib/origem.js';
+import { idiomaDoWorker, FORA_DO_SITE_EN } from './lib/idioma.js';
 import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
@@ -232,6 +233,18 @@ async function responder(request, env, ctx) {
     if (url.hostname.startsWith('www.')) {
       url.hostname = url.hostname.slice(4);
       return Response.redirect(url.toString(), 301);
+    }
+
+    /* ── o que o site em inglês não tem ─────────────────────────────────
+       Os produtos só em português e os painéis do dono existem no export em
+       inglês (é o mesmo código), mas não fazem parte dele: 404, com a página
+       de erro do próprio site (lib/idioma.js, PLANO-INGLES.md). */
+    if (idiomaDoWorker(env) === 'en' && FORA_DO_SITE_EN.test(path)) {
+      if (path.startsWith('/api/')) return json({ error: 'not-found' }, 404);
+      const pagina = env.ASSETS ? await env.ASSETS.fetch(new Request(new URL('/404.html', url))) : null;
+      return new Response(pagina && pagina.ok ? pagina.body : 'Not found', {
+        status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
     }
 
     /* ── links de campanha ───────────────────────────────────────────

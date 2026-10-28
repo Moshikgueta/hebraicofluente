@@ -18,6 +18,8 @@
  *   iniciais - usadas no círculo enquanto não houver foto.
  */
 
+import { tx } from '@/i18n/telas/motor-testimonials';
+
 export type Depoimento = {
   nome: string;
   contexto: string;
@@ -39,20 +41,15 @@ export const DEPOIMENTOS: readonly Depoimento[] = [
      autorização por escrito dela fica com o dono, fora do repositório
      (ANTES-DE-VENDER.md). */
   {
-    nome: 'Natália',
+    nome: 'Natália', // i18n-ok: nome próprio
     /* Ela é aluna particular do professor (dono, 01/10/2026). O vínculo vai
        junto do depoimento, à vista: quem lê precisa saber que ela não é uma
        compradora qualquer (CONAR; PARA-O-ADVOGADO.md, item 16). */
-    contexto: 'Búzios, Rio de Janeiro · aluna particular do professor',
+    contexto: tx.natContexto,
     /* Confirmado com a aluna pelo dono do curso (25/09/2026). Fica como
        etiqueta, fora das aspas: a citação é só o que ela escreveu. */
-    resultado: 'Lê e escreve em hebraico',
-    citacao:
-      'Eu já havia estudado hebraico com outros professores, mas encontrei no Moshik uma abordagem ' +
-      'diferente. Ele faz você prestar atenção em cada palavra, cada letra e cada pronúncia [...].\n\n' +
-      'A plataforma também demonstra esse cuidado, com áudio, texto, imagens e exercícios de leitura, ' +
-      'escrita e pronúncia. Existe uma preocupação real em fazer o aluno aprender de verdade.\n\n' +
-      'Hoje consigo perceber que estou aprendendo hebraico de uma maneira diferente.',
+    resultado: tx.natResultado,
+    citacao: tx.natCitacao,
     iniciais: 'N'
   }
 ];

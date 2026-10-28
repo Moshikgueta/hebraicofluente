@@ -5,15 +5,17 @@
  * que o aluno consegue fazer no fim dele é o `milestonePt` do próprio módulo
  * (data/modules.json), que já era revisado. */
 
-export const ETAPA_AULA0 = 'Primeiros passos';
-export const ETAPA_FINAL = 'Meu desafio final';
+import { tx } from '@/i18n/telas/motor-jornada';
+
+export const ETAPA_AULA0 = tx.aula0;
+export const ETAPA_FINAL = tx.final;
 
 export const ETAPA_DO_MODULO: Readonly<Record<number, string>> = {
-  1: 'Reconhecendo as letras',
-  2: 'Descobrindo os sons',
-  3: 'Lendo minhas primeiras palavras',
-  4: 'Separando as letras parecidas',
-  5: 'Completando o alfabeto',
-  6: 'Lendo com mais autonomia',
-  7: 'Os sons do hebraico moderno'
+  1: tx.m1,
+  2: tx.m2,
+  3: tx.m3,
+  4: tx.m4,
+  5: tx.m5,
+  6: tx.m6,
+  7: tx.m7
 };

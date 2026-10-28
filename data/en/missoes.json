@@ -1,0 +1,198 @@
+{
+  "missoes/#0/tituloPt": {
+    "pt": "No mercado, na primeira semana",
+    "en": null
+  },
+  "missoes/#0/situacaoPt": {
+    "pt": "Você acabou de chegar em Israel e vai ao mercado da esquina. Ainda não sabe quase nada de hebraico - mas já sabe ler seis letras, e é disso que vai precisar.",
+    "en": null
+  },
+  "missoes/#0/passos/#0/ondePt": {
+    "pt": "Na prateleira de bebidas, o rótulo de uma garrafa",
+    "en": null
+  },
+  "missoes/#0/passos/#1/ondePt": {
+    "pt": "Ao lado, uma caixinha de saquinhos",
+    "en": null
+  },
+  "missoes/#0/passos/#2/promptPt": {
+    "pt": "Na fila do caixa, perguntam quem é o próximo. Qual destas palavras diz “eu”?",
+    "en": null
+  },
+  "missoes/#0/passos/#3/promptPt": {
+    "pt": "O caixa devolve o troco dizendo esta palavra. Escreva como ela se lê.",
+    "en": null
+  },
+  "missoes/#0/fechoPt": {
+    "pt": "Água, chá, “eu” e “aqui está”: uma ida ao mercado inteira, lida por você.",
+    "en": null
+  },
+  "missoes/#1/tituloPt": {
+    "pt": "A ficha da escola",
+    "en": null
+  },
+  "missoes/#1/situacaoPt": {
+    "pt": "Você foi matricular seu filho numa escola em Israel, e a secretaria entregou uma ficha. Ninguém vai preencher por você.",
+    "en": null
+  },
+  "missoes/#1/passos/#0/ondePt": {
+    "pt": "O primeiro campo da ficha",
+    "en": null
+  },
+  "missoes/#1/passos/#1/ondePt": {
+    "pt": "Num formulário, dentro de expressões como \"nome da criança\"",
+    "en": null
+  },
+  "missoes/#1/passos/#2/promptPt": {
+    "pt": "A secretária pergunta quando você pode vir às reuniões. Qual destas palavras diz “noite”?",
+    "en": null
+  },
+  "missoes/#1/passos/#3/promptPt": {
+    "pt": "No mural da escola, o cartaz da festa diz esta palavra. Escreva como ela se lê.",
+    "en": null
+  },
+  "missoes/#1/fechoPt": {
+    "pt": "Nome, menino, noite e canção: a ficha está preenchida, e você não precisou pedir ajuda.",
+    "en": null
+  },
+  "missoes/#2/tituloPt": {
+    "pt": "Na padaria",
+    "en": null
+  },
+  "missoes/#2/situacaoPt": {
+    "pt": "É sexta de manhã e você vai à padaria do bairro. Desta vez quer entrar, pedir e sair sem apontar para nada.",
+    "en": null
+  },
+  "missoes/#2/passos/#0/ondePt": {
+    "pt": "Na porta da padaria, uma plaquinha",
+    "en": null
+  },
+  "missoes/#2/passos/#1/ondePt": {
+    "pt": "Na etiqueta da prateleira",
+    "en": null
+  },
+  "missoes/#2/passos/#2/promptPt": {
+    "pt": "Você quer levar só um pão. Qual destas palavras diz “um”?",
+    "en": null
+  },
+  "missoes/#2/passos/#3/promptPt": {
+    "pt": "No fim do recibo vem esta palavra. Escreva como ela se lê.",
+    "en": null
+  },
+  "missoes/#2/fechoPt": {
+    "pt": "Olá, pão, um e obrigado: você entrou, pediu e agradeceu, tudo por escrito.",
+    "en": null
+  },
+  "missoes/#3/tituloPt": {
+    "pt": "Pela cidade",
+    "en": null
+  },
+  "missoes/#3/situacaoPt": {
+    "pt": "Um dia inteiro resolvendo coisas no centro: uma loja, a biblioteca, um quiosque. As placas agora usam quase todo o alfabeto.",
+    "en": null
+  },
+  "missoes/#3/passos/#0/ondePt": {
+    "pt": "Em expressões de horário, como o horário de funcionamento de uma loja",
+    "en": null
+  },
+  "missoes/#3/passos/#1/ondePt": {
+    "pt": "Na parede da biblioteca",
+    "en": null
+  },
+  "missoes/#3/passos/#2/promptPt": {
+    "pt": "Com sede, você procura suco na geladeira do quiosque. Qual caixinha diz “suco”?",
+    "en": null
+  },
+  "missoes/#3/passos/#3/promptPt": {
+    "pt": "No alto do mapa do centro vem esta palavra. Escreva como ela se lê.",
+    "en": null
+  },
+  "missoes/#3/fechoPt": {
+    "pt": "Hora, silêncio, suco e cidade: as placas do centro deixaram de ser desenho.",
+    "en": null
+  },
+  "missoes/#4/tituloPt": {
+    "pt": "Um sábado com a família",
+    "en": null
+  },
+  "missoes/#4/situacaoPt": {
+    "pt": "O alfabeto está completo. É sábado, a família está em casa, e o celular não para de apitar.",
+    "en": null
+  },
+  "missoes/#4/passos/#0/ondePt": {
+    "pt": "A primeira mensagem do dia no grupo da família",
+    "en": null
+  },
+  "missoes/#4/passos/#1/promptPt": {
+    "pt": "Seu filho pede para adotar um bicho. Qual destas palavras diz “cachorro”?",
+    "en": null
+  },
+  "missoes/#4/passos/#2/ondePt": {
+    "pt": "Na vitrine da livraria, no passeio da tarde",
+    "en": null
+  },
+  "missoes/#4/passos/#3/promptPt": {
+    "pt": "À noite, você escreve a legenda da foto de todos juntos. Escreva como esta palavra se lê.",
+    "en": null
+  },
+  "missoes/#4/fechoPt": {
+    "pt": "Bom dia, cachorro, livro e família: um dia inteiro lido com as 22 letras.",
+    "en": null
+  },
+  "missoes/#5/tituloPt": {
+    "pt": "A rua sem pontinhos",
+    "en": null
+  },
+  "missoes/#5/situacaoPt": {
+    "pt": "Fora do curso, quase nada vem com nikud. Placas, vitrines e telas escrevem só as letras, e quem lê é que sabe o som.",
+    "en": null
+  },
+  "missoes/#5/passos/#0/ondePt": {
+    "pt": "Na vitrine da casa de câmbio",
+    "en": null
+  },
+  "missoes/#5/passos/#1/ondePt": {
+    "pt": "Na placa de uma rua",
+    "en": null
+  },
+  "missoes/#5/passos/#2/promptPt": {
+    "pt": "Na plaquinha de uma prateleira de livros, sem nenhum ponto. Sem os pontos, as mesmas letras podem ter mais de uma leitura, e quem decide é o lugar onde a palavra está. Escreva como esta palavra se lê.",
+    "en": null
+  },
+  "missoes/#5/passos/#3/ondePt": {
+    "pt": "Na tela, quando o filme acaba",
+    "en": null
+  },
+  "missoes/#5/fechoPt": {
+    "pt": "Dinheiro, rei, livro e fim, sem um ponto sequer: é assim que o hebraico aparece na rua.",
+    "en": null
+  },
+  "missoes/#6/tituloPt": {
+    "pt": "Uma viagem",
+    "en": null
+  },
+  "missoes/#6/situacaoPt": {
+    "pt": "Você vai viajar saindo de Israel. No aeroporto, no hotel e no passeio, aparecem as palavras que o hebraico pegou emprestadas de outras línguas.",
+    "en": null
+  },
+  "missoes/#6/passos/#0/ondePt": {
+    "pt": "No painel de partidas do aeroporto",
+    "en": null
+  },
+  "missoes/#6/passos/#1/promptPt": {
+    "pt": "No banheiro do hotel há uma fileira de frasquinhos. Qual etiqueta diz “gel”?",
+    "en": null
+  },
+  "missoes/#6/passos/#2/ondePt": {
+    "pt": "No mapa do zoológico, num passeio",
+    "en": null
+  },
+  "missoes/#6/passos/#3/promptPt": {
+    "pt": "Arrumando a mala para voltar. Qual etiqueta diz “pijama”?",
+    "en": null
+  },
+  "missoes/#6/fechoPt": {
+    "pt": "Chile, gel, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira.",
+    "en": null
+  }
+}

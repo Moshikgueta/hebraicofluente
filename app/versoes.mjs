@@ -40,6 +40,15 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync, append
 import { join } from 'node:path';
 
 const OUT = 'out';
+
+/* O site em inglês terá Termos próprios, escritos com o advogado (etapa 6 do
+   PLANO-INGLES.md), e as versões dele não podem cair em atual.json, que é o
+   que o Worker grava no aceite do site brasileiro. Até lá, a build em inglês
+   não registra versão nenhuma. */
+if (process.env.NEXT_PUBLIC_LOCALE === 'en' && process.argv[1]?.endsWith('versoes.mjs')) {
+  console.log('versoes: build em inglês, políticas ainda sem versão própria (PLANO-INGLES.md, etapa 6).');
+  process.exit(0);
+}
 const ARQUIVO = '../data/politicas-versoes';
 const ATUAL = join(ARQUIVO, 'atual.json');
 

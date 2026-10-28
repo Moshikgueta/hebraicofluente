@@ -30,6 +30,12 @@ const COM_SOM = new Set(['ב', 'כ', 'ך', 'פ', 'ף']);
 /** Os arquivos cuja pontuação não é do curso. */
 export const FORA = ['data/biblia.json', 'data/bonus.json', 'data/audio.json', 'data/audio-alias.json'];
 
+/** Fora também: data/en/ (o inglês do curso, tools/i18n.mjs). O hebraico de
+    lá é cópia do da fonte, já conferido aqui, e o próprio i18n exige que o
+    inglês traga exatamente o mesmo hebraico. Mexer na cópia só a desataria
+    da fonte. */
+export const foraDoDaguesh = rel => FORA.includes(rel) || rel.startsWith('data/en/');
+
 /** Um daguesh que este cluster pode perder? */
 function inutil(cluster) {
   if (!cluster.includes(DAGUESH)) return false;
@@ -78,7 +84,7 @@ function arquivos(ROOT) {
     }
   };
   andar(join(ROOT, 'data'));
-  return out.filter(p => !FORA.includes(relative(ROOT, p)));
+  return out.filter(p => !foraDoDaguesh(relative(ROOT, p)));
 }
 
 if (process.argv[1] && process.argv[1].endsWith('daguesh.mjs')) {

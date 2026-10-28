@@ -23,6 +23,7 @@ import {
 } from './types';
 import { getCourse } from '@/lib/catalog';
 import { cents } from '@/lib/catalog';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 const KEY = 'hf-platform-local-v1';
 
@@ -356,7 +357,7 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     const order = a.orders.find(o => o.id === orderId);
-    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
 
     const age = Date.now() - new Date(order.createdAt).getTime();
     if (order.status === 'pending' && age > 3_000) {
@@ -417,7 +418,7 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     const order = a.orders.find(o => o.id === orderId);
-    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
     if (order.desistenciaEm) return { pedidoEm: order.desistenciaEm };
     if (order.status !== 'paid') throw new AuthError('nao-pago');
     if (!order.desistirAte || Date.now() > new Date(order.desistirAte).getTime()) {

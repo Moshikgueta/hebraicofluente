@@ -24,6 +24,8 @@ import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from '@/components/landing/faq-capa';
+import { tx } from '@/i18n/telas/motor-jsonld';
+import { LANG_HTML } from '@/i18n';
 
 type Json = Record<string, unknown>;
 
@@ -62,7 +64,7 @@ export function curso(): Json {
     '@type': 'Course',
     name: c.titlePt,
     description: c.taglinePt,
-    inLanguage: 'pt-BR',
+    inLanguage: LANG_HTML,
     url: url(paginaDeVenda(c.slug)),
     provider: { '@id': ID_ORG },
     offers: {
@@ -93,7 +95,7 @@ export function professor(retrato: string | null): Json {
     '@type': 'Person',
     '@id': ID_PROFESSOR,
     name: 'Moshik Gueta',
-    description: 'Israelense, professor de idiomas e educador, criador do Hebraico Fluente.',
+    description: tx.professorDescricao,
     url: url('/sobre'),
     knowsLanguage: ['he', 'pt', 'en', 'es', 'it'],
     worksFor: { '@id': ID_ORG },
@@ -121,7 +123,7 @@ export function grafoDaCapa(retrato: string | null): Json {
     '@graph': [
       organizacao(),
       { '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
-        inLanguage: 'pt-BR', publisher: { '@id': ID_ORG } },
+        inLanguage: LANG_HTML, publisher: { '@id': ID_ORG } },
       professor(retrato)
     ]
   };
@@ -133,7 +135,7 @@ export function migalhas(itens: { nome: string; rota: string }[]): Json {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [{ nome: 'Início', rota: '/' }, ...itens].map((it, i) => ({
+    itemListElement: [{ nome: tx.inicio, rota: '/' }, ...itens].map((it, i) => ({
       '@type': 'ListItem', position: i + 1, name: it.nome, item: url(it.rota)
     }))
   };

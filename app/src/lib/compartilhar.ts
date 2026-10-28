@@ -10,28 +10,30 @@
  * marco que o curso de fato registrou - nunca uma promessa.
  */
 
+import { tx } from '@/i18n/telas/motor-compartilhar';
+
 /** A frase da imagem, em primeira pessoa, por conquista. Só as que estão aqui
  *  ganham o botão. `modulo-N` vem do checkpoint aprovado. */
 export const FRASES: Record<string, string> = {
-  'primeira-letra': 'Aprendi a minha primeira letra em hebraico',
-  'primeira-palavra': 'Li a minha primeira palavra em hebraico',
-  'sem-apoio': 'Li uma palavra em hebraico sem transliteração',
-  'tres-dias': 'Três dias seguidos estudando hebraico',
-  'dez-letras': 'Já sei 10 letras do alfabeto hebraico',
-  'metade': 'Já sei metade do alfabeto hebraico',
-  'vinte-e-duas': 'Aprendi as 22 letras do alfabeto hebraico',
-  'checkpoint-perfeito': 'Fiz um checkpoint sem nenhum erro',
-  'le-10': 'Já consigo ler 10 palavras em hebraico',
-  'le-25': 'Já consigo ler 25 palavras em hebraico',
-  'le-50': 'Já consigo ler 50 palavras em hebraico',
-  'le-100': 'Já consigo ler 100 palavras em hebraico',
-  'meu-nome': 'Escrevi o meu nome em hebraico',
-  'leitor': 'Concluí o curso de alfabetização em hebraico',
-  'modulo-1': 'Concluí o módulo 1 do curso de hebraico',
-  'sem-o-ponto': 'Concluí o módulo 6 do curso de hebraico',
-  'sons-modernos': 'Concluí o módulo 7 do curso de hebraico'
+  'primeira-letra': tx.primeiraLetra,
+  'primeira-palavra': tx.primeiraPalavra,
+  'sem-apoio': tx.semApoio,
+  'tres-dias': tx.tresDias,
+  'dez-letras': tx.dezLetras,
+  'metade': tx.metade,
+  'vinte-e-duas': tx.vinteEDuas,
+  'checkpoint-perfeito': tx.checkpointPerfeito,
+  'le-10': tx.lePalavras(10),
+  'le-25': tx.lePalavras(25),
+  'le-50': tx.lePalavras(50),
+  'le-100': tx.lePalavras(100),
+  'meu-nome': tx.meuNome,
+  'leitor': tx.leitor,
+  'modulo-1': tx.modulo(1),
+  'sem-o-ponto': tx.modulo(6),
+  'sons-modernos': tx.modulo(7)
 };
-for (const n of [2, 3, 4, 5]) FRASES[`modulo-${n}`] = `Concluí o módulo ${n} do curso de hebraico`;
+for (const n of [2, 3, 4, 5]) FRASES[`modulo-${n}`] = tx.modulo(n);
 
 /** A conquista que compartilha o checkpoint do módulo `n` aprovado. */
 export const conquistaDoModulo = (n: number): string =>
@@ -40,7 +42,7 @@ export const conquistaDoModulo = (n: number): string =>
 export const podeCompartilhar = (id: string): boolean => id in FRASES;
 
 /** O texto que acompanha a imagem, quando o app de destino aceita texto. */
-export const LEGENDA = 'Aprendendo a ler hebraico com o @hebraicofluente · hebraicofluente.com.br';
+export const LEGENDA = tx.legenda;
 
 const W = 1080, H = 1920;
 const COR = { fundo: '#0E3B43', creme: '#F7F3EA', menta: '#8FD6C8', suave: 'rgba(255,255,255,.72)' };
@@ -71,7 +73,7 @@ export async function desenharConquista(frase: string, quando: string): Promise<
   const canvas = document.createElement('canvas');
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('sem canvas');
+  if (!ctx) throw new Error('sem canvas'); // i18n-ok: erro interno
 
   const display = familia('--font-display-loaded', 'Georgia, serif');
   const ui = familia('--font-ui-loaded', 'system-ui, sans-serif');
@@ -85,7 +87,7 @@ export async function desenharConquista(frase: string, quando: string): Promise<
 
   ctx.fillStyle = COR.menta;
   ctx.font = `600 34px ${ui}`;
-  ctx.fillText('C O N Q U I S T A', W / 2, 330);
+  ctx.fillText(tx.selo, W / 2, 330);
 
   /* "hebraico", em hebraico: עִבְרִית */
   ctx.save();
@@ -113,5 +115,5 @@ export async function desenharConquista(frase: string, quando: string): Promise<
   ctx.fillText('hebraicofluente.com.br', W / 2, 1616);
 
   /* JPEG: um quinto do PNG, e é o que o Instagram guarda de qualquer jeito. */
-  return new Promise((ok, erro) => canvas.toBlob(b => (b ? ok(b) : erro(new Error('sem imagem'))), 'image/jpeg', 0.92));
+  return new Promise((ok, erro) => canvas.toBlob(b => (b ? ok(b) : erro(new Error('sem imagem' /* i18n-ok: erro interno */))), 'image/jpeg', 0.92));
 }

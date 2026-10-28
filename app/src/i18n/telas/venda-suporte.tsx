@@ -1,0 +1,113 @@
+import type { ReactNode } from 'react';
+import type { Traducao } from '..';
+
+/* app/suporte/page.tsx */
+const pt = {
+  metaTitulo: 'Suporte - Hebraico Fluente',
+  metaDescricao:
+    'Como falar com quem faz o curso: e-mail de atendimento, horário, prazo de ' +
+    'resposta, e os atalhos para os problemas mais comuns.',
+
+  pagueiTitulo: 'Paguei e o acesso não liberou',
+  pagueiAMao: (prazo: string) =>
+    `Depois do PIX, conferimos o pagamento e liberamos o acesso à mão, ${prazo}. Passou disso, escreva do e-mail que você usou na compra: resolvemos sem custo.`,
+  pagueiPix: 'No PIX o acesso costuma sair em minutos.',
+  pagueiCartao: 'No cartão, assim que a operadora aprova.',
+  pagueiAutomatico: (frases: string) =>
+    `${frases} Passou disso, é falha nossa e resolvemos sem custo - escreva do e-mail que você usou na compra.`,
+  pagueiAssunto: 'Paguei e o acesso não liberou',
+  pagueiAcao: 'Avisar sobre acesso não liberado →',
+
+  reembolsoTitulo: 'Quero meu dinheiro de volta',
+  reembolsoCorpo: (dias: number, conta: ReactNode, confirmacao: string, politica: ReactNode): ReactNode => (
+    <>Você tem {dias} dias para desistir, sem precisar explicar por quê e sem taxa. O caminho mais rápido é em{' '}{conta}, na compra: <strong>Desistir da compra</strong>. {confirmacao} A{' '}{politica}{' '}diz em quanto tempo o valor retorna.</>
+  ),
+  suaConta: 'Sua conta',
+  politicaCompleta: 'política completa',
+  reembolsoAssunto: 'Pedido de reembolso',
+  reembolsoAcao: 'Pedir reembolso →',
+
+  dadosTitulo: 'Quero acessar, corrigir ou apagar meus dados',
+  dadosCorpo: (dias: number, politica: ReactNode): ReactNode => (
+    <>É um direito seu, e respondemos em até {dias} dias. O que cada pedido significa está na{' '}{politica}.</>
+  ),
+  politicaPrivacidade: 'Política de Privacidade',
+  dadosAssunto: 'Pedido LGPD - titular de dados',
+  dadosAcao: 'Fazer um pedido sobre meus dados →',
+
+  rubrica: 'Atendimento',
+  titulo: 'Fale com a gente',
+  lead: (horario: string, prazo: string) =>
+    `Um e-mail, respondido por quem faz o curso. ${horario}. Respondemos ${prazo}.`,
+  emailAtendimento: 'E-mail de atendimento',
+  telefone: (tel: string) => `Telefone: ${tel}`,
+  whatsapp: 'WhatsApp:',
+  antesTitulo: 'Antes de escrever, veja se é um destes',
+  cursoTitulo: 'Dúvida sobre o curso em si',
+  cursoTexto: (faq: ReactNode, duvidas: string): ReactNode => (
+    <>As perguntas que aparecem antes da compra - preço, prazo, celular, áudio, certificado - estão respondidas nas{' '}{faq}. O que não estiver lá, escreva: a lista cresce com o que vocês perguntam. {duvidas}</>
+  ),
+  duvidasFrequentes: 'dúvidas frequentes',
+  ctaTitulo: 'Ainda não é aluno?',
+  ctaLinha: 'A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê.'
+} as const;
+
+const en: Traducao<typeof pt> = {
+  metaTitulo: 'Support - Hebraico Fluente',
+  metaDescricao:
+    'How to reach the people who make the course: support email, hours, response ' +
+    'time, and shortcuts for the most common problems.',
+
+  pagueiTitulo: 'I paid and my access was not granted',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagueiAMao: (prazo: string) =>
+    `After a PIX payment, we check the payment and grant access by hand, ${prazo}. If it takes longer than that, write from the email you used to buy: we will fix it at no cost.`,
+  // etapa 5/6: Brasil, rever (PIX)
+  pagueiPix: 'With PIX, access usually comes through in minutes.',
+  pagueiCartao: 'With a card, as soon as the card company approves it.',
+  pagueiAutomatico: (frases: string) =>
+    `${frases} If it takes longer than that, it is our fault and we will fix it at no cost - write from the email you used to buy.`,
+  pagueiAssunto: 'I paid and my access was not granted',
+  pagueiAcao: 'Report access not granted →',
+
+  reembolsoTitulo: 'I want my money back',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  reembolsoCorpo: (dias: number, conta: ReactNode, confirmacao: string, politica: ReactNode): ReactNode => (
+    <>You have {dias} days to cancel, without having to explain why and with no fee. The fastest way is in{' '}{conta}, under the purchase: <strong>Cancel purchase</strong>. {confirmacao} The{' '}{politica}{' '}says how long it takes for the money to come back.</>
+  ),
+  suaConta: 'Your account',
+  politicaCompleta: 'full policy',
+  /* O Worker confirma na hora os assuntos com "cancel" (worker/src/email.js). */
+  reembolsoAssunto: 'Cancellation and refund request',
+  reembolsoAcao: 'Request a refund →',
+
+  dadosTitulo: 'I want to access, correct or delete my data',
+  // etapa 5/6: Brasil, rever (LGPD)
+  dadosCorpo: (dias: number, politica: ReactNode): ReactNode => (
+    <>It is your right, and we reply within {dias} days. What each request means is in the{' '}{politica}.</>
+  ),
+  politicaPrivacidade: 'Privacy Policy',
+  // etapa 5/6: Brasil, rever (LGPD)
+  dadosAssunto: 'LGPD request - data subject',
+  dadosAcao: 'Make a request about my data →',
+
+  rubrica: 'Support',
+  titulo: 'Talk to us',
+  lead: (horario: string, prazo: string) =>
+    `One email address, answered by the people who make the course. ${horario}. We reply ${prazo}.`,
+  emailAtendimento: 'Support email',
+  telefone: (tel: string) => `Phone: ${tel}`,
+  whatsapp: 'WhatsApp:',
+  antesTitulo: 'Before you write, see if it is one of these',
+  cursoTitulo: 'A question about the course itself',
+  cursoTexto: (faq: ReactNode, duvidas: string): ReactNode => (
+    <>The questions that come up before buying - price, timing, phone, audio, certificate - are answered in the{' '}{faq}. If yours is not there, write to us: the list grows with what you ask. {duvidas}</>
+  ),
+  duvidasFrequentes: 'frequently asked questions',
+  ctaTitulo: 'Not a student yet?',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  ctaLinha: 'The first letter takes ten minutes, and you have seven days to cancel without having to explain why.'
+};
+
+export const DICIONARIO = { pt, en };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;

@@ -17,6 +17,7 @@
  * pontilhado (◌ַ), a convenção para mostrar um sinal sem letra.
  */
 
+import { tx } from '@/i18n/telas/licao-teclado-hebraico';
 import { useEffect, useState, type RefObject } from 'react';
 import { FINAIS, LETRAS, NIKUD, apagar, inserir, type Edicao, type Selecao, type Tecla } from '@/lib/teclado-hebraico';
 
@@ -80,42 +81,42 @@ export function TecladoHebraico({ campo, valor, selecao, aoEditar, desligado }: 
       <button type="button" onClick={alternar} aria-expanded={aberto} aria-controls="teclado-hebraico"
               className="justify-self-start min-h-[44px] font-ui text-[14px] font-semibold text-[var(--accent)]
                          underline underline-offset-4">
-        {aberto ? 'Esconder o teclado hebraico da tela' : 'Mostrar o teclado hebraico na tela'}
+        {aberto ? tx.esconder : tx.mostrar}
       </button>
       {aberto && (
-        <div id="teclado-hebraico" role="group" aria-label="Teclado hebraico"
+        <div id="teclado-hebraico" role="group" aria-label={tx.teclado}
              className="grid gap-2 rounded-[var(--r-md)] bg-surface-2 p-2 sm:p-3">
           <div dir="rtl" className="grid grid-cols-[repeat(auto-fill,minmax(40px,1fr))] gap-1.5">
             {LETRAS.map(t => tecla(t))}
           </div>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 justify-between">
-            <div dir="rtl" className="flex flex-wrap gap-1.5" role="group" aria-label="Letras finais">
+            <div dir="rtl" className="flex flex-wrap gap-1.5" role="group" aria-label={tx.finais}>
               {FINAIS.map(t => tecla(t))}
             </div>
             <div className="flex gap-1.5">
               <button type="button" disabled={desligado}
                       onPointerDown={e => e.preventDefault()}
                       onClick={() => aplicar(inserir(valor, onde(), ' '))}
-                      aria-label="Espaço"
+                      aria-label={tx.espacoRotulo}
                       className="min-h-[44px] px-4 rounded-[var(--r-sm)] border border-line bg-surface font-ui text-[13px]
                                  hover:bg-surface-2 disabled:opacity-50">
-                espaço
+                {tx.espaco}
               </button>
               <button type="button" disabled={desligado}
                       onPointerDown={e => e.preventDefault()}
                       onClick={voltar}
-                      aria-label="Apagar"
+                      aria-label={tx.apagarRotulo}
                       className="min-h-[44px] px-4 rounded-[var(--r-sm)] border border-line bg-surface font-ui text-[15px]
                                  hover:bg-surface-2 disabled:opacity-50">
-                <span aria-hidden>⌫</span> <span className="text-[13px]">apagar</span>
+                <span aria-hidden>⌫</span> <span className="text-[13px]">{tx.apagar}</span>
               </button>
             </div>
           </div>
-          <div dir="rtl" className="flex flex-wrap gap-1.5" role="group" aria-label="Sinais de vogal (nikud)">
+          <div dir="rtl" className="flex flex-wrap gap-1.5" role="group" aria-label={tx.sinais}>
             {NIKUD.map(t => tecla(t, true))}
           </div>
           <p className="font-ui text-[12px] text-ink-muted m-0">
-            Toque a letra e depois o sinal dela. O teclado do seu aparelho continua funcionando.
+            {tx.dica}
           </p>
         </div>
       )}

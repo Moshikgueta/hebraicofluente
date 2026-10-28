@@ -9,6 +9,7 @@
  * pergunta de novo. Falhar ao enviar não atrapalha nada da lição.
  */
 
+import { tx } from '@/i18n/telas/licao-avaliar-licao';
 import { useEffect, useState } from 'react';
 import { asset } from '@/lib/asset';
 import { Card } from '@/components/ui/Card';
@@ -16,9 +17,9 @@ import { Button } from '@/components/ui/Button';
 
 type Nota = 'facil' | 'ok' | 'dificil';
 const NOTAS: readonly { id: Nota; rotulo: string; emoji: string }[] = [
-  { id: 'facil', rotulo: 'Fácil', emoji: '😊' },
-  { id: 'ok', rotulo: 'Ok', emoji: '🙂' },
-  { id: 'dificil', rotulo: 'Difícil', emoji: '😓' }
+  { id: 'facil', rotulo: tx.facil, emoji: '😊' },
+  { id: 'ok', rotulo: tx.ok, emoji: '🙂' },
+  { id: 'dificil', rotulo: tx.dificil, emoji: '😓' }
 ];
 export const COMENTARIO_MAX = 600;
 const chave = (licao: string) => `hf-avaliou-${licao}`;
@@ -59,7 +60,7 @@ export function AvaliarLicao({ licao }: { licao: string }) {
     return (
       <Card className="p-5">
         <p role="status" className="font-ui text-[15px] m-0">
-          <strong>Obrigado!</strong> A sua resposta ajuda a melhorar as lições.
+          {tx.obrigado(t => <strong>{t}</strong>)}
         </p>
       </Card>
     );
@@ -68,12 +69,12 @@ export function AvaliarLicao({ licao }: { licao: string }) {
   return (
     <Card className="p-5 grid gap-4">
       <div className="grid gap-1">
-        <h2 className="font-display text-[18px] font-semibold m-0">Como foi esta lição?</h2>
+        <h2 className="font-display text-[18px] font-semibold m-0">{tx.pergunta}</h2>
         <p className="font-ui text-[13.5px] text-ink-muted m-0">
-          Opcional. A sua resposta não fica ligada à sua conta.
+          {tx.opcional}
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-2.5" role="group" aria-label="Como foi esta lição?">
+      <div className="grid grid-cols-3 gap-2.5" role="group" aria-label={tx.pergunta}>
         {NOTAS.map(n => (
           <button key={n.id} type="button" aria-pressed={nota === n.id}
                   onClick={() => setNota(n.id)}
@@ -88,18 +89,18 @@ export function AvaliarLicao({ licao }: { licao: string }) {
       {nota && (
         <>
           <label className="grid gap-1.5 font-ui text-[14.5px]">
-            Quer contar algo? (opcional)
+            {tx.contar}
             <textarea value={comentario} maxLength={COMENTARIO_MAX} rows={3}
                       onChange={e => setComentario(e.target.value)}
-                      placeholder="O que ajudou, o que ficou confuso..."
+                      placeholder={tx.exemplo}
                       className="rounded-[12px] border border-line bg-[var(--card)] p-3 font-ui text-[15px] leading-relaxed" />
           </label>
           {estado === 'erro' && (
-            <p role="alert" className="font-ui text-[14px] m-0">Não consegui enviar agora. Tente de novo em instantes.</p>
+            <p role="alert" className="font-ui text-[14px] m-0">{tx.erro}</p>
           )}
           <div>
             <Button onClick={() => void enviar()} disabled={estado === 'enviando'}>
-              {estado === 'enviando' ? 'Enviando…' : 'Enviar'}
+              {estado === 'enviando' ? tx.enviando : tx.enviar}
             </Button>
           </div>
         </>

@@ -22,6 +22,7 @@ import { useAccount } from '@/lib/account/store';
 import { cursoSeguinte, proximoCurso, proximoPasso } from '@/lib/cta';
 import { FLAGSHIP, paginaDeVenda } from '@/lib/catalog';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/conta-proximo-passo';
 
 /** O botão sozinho, com a microcópia embaixo. Serve em qualquer lugar. */
 export function BotaoPasso({
@@ -118,19 +119,19 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
     return (
       <Card tone="wash" className="p-6 sm:p-7 grid gap-3">
         <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--accent)]">
-          Depois desta etapa
+          {tx.depoisDestaEtapa}
         </p>
         <h2 className="font-display text-[20px] sm:text-[23px] font-bold leading-snug text-ink">
           {seguinte.titlePt}
         </h2>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[52ch]">
-          Este curso já está na sua conta. {seguinte.summaryPt}
+          {tx.jaNaConta}{seguinte.summaryPt}
         </p>
         <div className="pt-1">
           <Link href={ABRE[seguinte.slug] ?? '/minha-biblioteca/'}
                 className="inline-flex items-center gap-2 min-h-[48px] px-5 rounded-[var(--r-md)]
                            bg-[var(--accent-bg)] text-white font-ui font-semibold text-[15px]">
-            Abrir o {seguinte.titlePt}<span aria-hidden>→</span>
+            {tx.abrir(seguinte.titlePt)}<span aria-hidden>→</span>
           </Link>
         </div>
       </Card>
@@ -144,7 +145,7 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
   return (
     <Card tone="wash" className="p-6 sm:p-7 grid gap-3">
       <p className="font-ui text-[12px] uppercase tracking-[.12em] text-[var(--accent)]">
-        Depois desta etapa
+        {tx.depoisDestaEtapa}
       </p>
       <h2 className="font-display text-[20px] sm:text-[23px] font-bold leading-snug text-ink">
         {curso.titlePt}
@@ -172,23 +173,23 @@ export function OfertaProximoCurso({ atual = FLAGSHIP }: { atual?: string }) {
                      bg-[var(--accent-bg)] text-white font-ui font-semibold text-[15px]
                      transition-transform duration-[180ms] hover:-translate-y-[2px]"
         >
-          {abre ? `Conhecer o ${curso.levelPt}` : 'Ver o plano deste curso'}
+          {abre ? tx.conhecer(curso.levelPt) : tx.verOPlano}
           <span aria-hidden
                 className="transition-transform duration-[180ms] group-hover:translate-x-[3px]">→</span>
         </Link>
       </div>
       <p className="font-ui text-[12.5px] text-ink-muted">
         {abre
-          ? 'Compra separada. O curso que você já tem continua aberto.'
-          : 'Ainda não abriu. A página mostra o que ele vai cobrir.'}
+          ? tx.compraSeparada
+          : tx.aindaNaoAbriu}
       </p>
       {/* O aviso por e-mail mora SÓ em Sua conta (a única porta da lista,
           LEGAL-019): daqui sai um link para lá, e não outra caixa. */}
       {!abre && account.signedIn && (
         <p className="font-ui text-[13.5px] text-ink-body">
-          Quer saber quando ele abrir?{' '}
+          {tx.querSaber}{' '}
           <Link href="/perfil/" className="font-semibold text-[var(--accent)] underline underline-offset-[3px]">
-            Peça o aviso em Sua conta
+            {tx.pecaOAviso}
           </Link>.
         </p>
       )}

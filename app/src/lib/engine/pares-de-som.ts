@@ -14,6 +14,8 @@
  * gravada em estúdio; sem gravação das duas, o par não entra.
  */
 
+import { tx } from '@/i18n/telas/motor-pares-de-som';
+
 export type ParDeSom = {
   /** As duas letras, pelo glifo de base em letters.json. */
   a: string;
@@ -23,11 +25,11 @@ export type ParDeSom = {
 };
 
 export const PARES_DE_SOM: readonly ParDeSom[] = [
-  { a: 'ה', b: 'ח', notaPt: 'O ה é um H leve e soprado, como no inglês "hello". O ח é raspado, na parte de trás da boca.' },
-  { a: 'ש', b: 'ס', notaPt: 'O שׁ soa como o CH de "chave". O ס soa como o S de "sapo".' },
-  { a: 'ז', b: 'ס', notaPt: 'O ז tem voz, como o Z de "zebra". O ס não tem voz, como o S de "sapo".' },
-  { a: 'צ', b: 'ס', notaPt: 'O צ soa TS, como em "tsunami". O ס é só S, como em "sapo".' },
-  { a: 'ד', b: 'ת', notaPt: 'O ד tem voz, como o D de "dado". O ת não tem voz, como o T de "tatu".' },
-  { a: 'ג', b: 'ק', notaPt: 'O ג tem voz, como o G de "gato". O ק não tem voz, como o K de "casa".' },
-  { a: 'ב', b: 'פ', notaPt: 'O בּ tem voz, como o B de "bola". O פּ não tem voz, como o P de "pato".' }
+  { a: 'ה', b: 'ח', notaPt: tx.heHet },
+  { a: 'ש', b: 'ס', notaPt: tx.shinSamech },
+  { a: 'ז', b: 'ס', notaPt: tx.zayinSamech },
+  { a: 'צ', b: 'ס', notaPt: tx.tsadiSamech },
+  { a: 'ד', b: 'ת', notaPt: tx.daletTav },
+  { a: 'ג', b: 'ק', notaPt: tx.guimelKuf },
+  { a: 'ב', b: 'פ', notaPt: tx.betPe }
 ];

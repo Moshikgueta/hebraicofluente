@@ -1050,7 +1050,7 @@ function saudacao(nome) {
 }
 
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */
-function escapar(s) {
+export function escapar(s) {
   return String(s === null || s === undefined ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');

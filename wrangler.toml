@@ -120,6 +120,11 @@ crons = ["*/5 * * * *"]
 # link de recuperação de senha sai DAQUI, nunca do cabeçalho Host, que é
 # escolhido por quem chama (ver a nota em worker/src/api/auth.js).
 SITE_ORIGIN = "https://hebraicofluente.com.br"
+# A origem do site em inglês (PLANO-INGLES.md). Este Worker roda o
+# agendamento para as contas dos DOIS sites (lembretes, vencimento, estorno),
+# e os links de uma conta do site em inglês saem daqui (lib/idioma.js). Entra
+# quando o domínio em inglês existir; sem ela, os links ficam no SITE_ORIGIN.
+# SITE_ORIGIN_EN = "https://<dominio-em-ingles>"
 # De quem sai o e-mail de recuperação de senha. Precisa ser de um domínio
 # verificado na Resend: sem a verificação ela recusa a entrega com 403, e o
 # sintoma é "ninguém recebe o link" com tudo o mais funcionando.

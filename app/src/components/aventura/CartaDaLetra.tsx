@@ -23,11 +23,12 @@ import { somPt } from '@/lib/som-pt';
 import type { Letter } from '@/lib/content';
 import { Cenario, type IdDoCenario } from '@/components/aventura/Cenarios';
 import { Yael } from '@/components/aventura/Yael';
+import { tx } from '@/i18n/telas/academia-aventura';
 
 export type EstadoDaCarta = 'dominada' | 'concluida' | 'adiante';
 
 const ROTULO: Record<EstadoDaCarta, string> = {
-  dominada: 'Dominada', concluida: 'Concluída', adiante: 'Ainda não'
+  dominada: tx.rotuloDominada, concluida: tx.rotuloConcluida, adiante: tx.rotuloAdiante
 };
 
 export function CartaDaLetra({ letter, estado, grande = false, href }: {
@@ -65,9 +66,9 @@ export function CartaDaLetra({ letter, estado, grande = false, href }: {
   const classe = `relative grid overflow-hidden rounded-[16px] border bg-[var(--card)] text-left
                   ${ganha ? 'border-line shadow-[var(--sh)]' : 'border-dashed border-line'}
                   ${estado === 'dominada' ? 'ring-2 ring-[var(--gold)] ring-offset-0' : ''}`;
-  const rotulo = `${letter.namePt}: ${ROTULO[estado].toLowerCase()}`;
+  const rotulo = tx.cartaAria(letter.namePt, ROTULO[estado]);
   return href && ganha
-    ? <Link href={href} aria-label={`${rotulo}. Abrir a lição`}
+    ? <Link href={href} aria-label={tx.abrirLicao(rotulo)}
             className={`${classe} transition-[transform,box-shadow] duration-[var(--dur)] hover:-translate-y-[2px] active:scale-[.97]`}>{corpo}</Link>
     : <div role="img" aria-label={rotulo} className={classe}>{corpo}</div>;
 }
@@ -94,13 +95,13 @@ export function CelebracaoDaLetra({ letter }: { letter: Letter }) {
               style={{ left: f.x, top: f.y, animationDelay: f.d }} />
       ))}
       <p className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.12em] text-[var(--teal-lite)]">
-        Letra conquistada
+        {tx.letraConquistada}
       </p>
       <div className="w-[180px] animate-pop text-ink">
         <CartaDaLetra letter={letter} estado="concluida" grande />
       </div>
       <h2 id="carta-nova" className="m-0 text-white text-[22px] sm:text-[26px] font-bold leading-tight">
-        {letter.namePt} entrou na sua coleção.
+        {tx.entrouNaColecao(letter.namePt)}
       </h2>
       {/* No Áyin, o aluno passa a ler o nome da Yael, a companheira da
           aventura: יָעֵל tem י, ע e ל, e o ע é o que faltava (28/10/2026). */}
@@ -108,16 +109,15 @@ export function CelebracaoDaLetra({ letter }: { letter: Letter }) {
         <div className="flex items-center gap-3 rounded-[var(--r-md)] bg-white/10 px-4 py-3 text-left">
           <Yael className="w-[64px] shrink-0" />
           <p className="m-0 font-ui text-[15px] leading-snug text-white">
-            Agora você lê o nome da Yael:{' '}
-            <span className="text-[22px]"><He size="inline" tone="lite">יָעֵל</He></span>
-            <span className="block text-[13px] text-white/85">ya'él · o íbex</span>
+            {tx.leNomeYael(<span className="text-[22px]"><He size="inline" tone="lite">יָעֵל</He></span>)}
+            <span className="block text-[13px] text-white/85">{tx.yaelLegenda}</span>
           </p>
         </div>
       )}
       <Link href="/conquistas#colecao"
             className="min-h-[44px] inline-flex items-center px-3 font-ui text-[14.5px] font-semibold
                        text-white underline underline-offset-4">
-        Ver a coleção de letras
+        {tx.verColecao}
       </Link>
     </section>
   );

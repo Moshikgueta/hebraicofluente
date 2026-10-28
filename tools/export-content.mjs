@@ -26,10 +26,23 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync
 import { join } from 'node:path';
 import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
+import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
-const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+/* Na build em inglês (NEXT_PUBLIC_LOCALE=en), cada arquivo do curso sai com
+   os textos de data/en/ no lugar do português (tools/i18n.mjs). Na build em
+   português o arquivo é lido como sempre. */
+const FALTAS = new Map();
+const readJson = p => {
+  const json = JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+  const nome = p.match(/^data\/([\w-]+)\.json$/)?.[1];
+  if (LOCALE !== 'en' || !TRADUZIDOS.includes(nome)) return json;
+  const faltas = [];
+  traduzir(nome, json, faltas);
+  for (const f of faltas) FALTAS.set(`${f.arquivo}:${f.caminho}`, f);
+  return json;
+};
 const NFC = s => String(s ?? '').normalize('NFC');
 
 /* Same id as tools/gen-audio.mjs (tools/audio-id.mjs), so a clip recorded for
@@ -942,6 +955,23 @@ function main() {
   console.log(`  ${letters.length} letras · ${modules.length} módulos · ${words} palavras → app/content/`);
   console.log(`  áudio: ${clips.length} arquivo(s) em app/public/audio` +
     (clips.length ? '' : ' - os exercícios de audição ficam marcados como indisponíveis'));
+
+  if (LOCALE === 'en') relatarTraducao();
+}
+
+/* O que ficou sem inglês vai para app/content/_traducao.json e para o resumo.
+   Com HF_I18N_ESTRITO=1 (a publicação do site em inglês), qualquer falta
+   para a build: português no site de fora é defeito, não rascunho. */
+function relatarTraducao() {
+  const faltas = [...FALTAS.values()];
+  writeFileSync(join(OUT, '_traducao.json'), JSON.stringify({ faltas }, null, 2) + '\n');
+  const por = {};
+  for (const f of faltas) por[f.motivo] = (por[f.motivo] ?? 0) + 1;
+  const resumo = Object.entries(por).map(([m, n]) => `${n} ${m}`).join(', ');
+  console.log(`  inglês: ${faltas.length ? resumo : 'completo'} (app/content/_traducao.json)`);
+  if (faltas.length && process.env.HF_I18N_ESTRITO === '1') {
+    throw new Error(`build em inglês com ${faltas.length} texto(s) sem tradução válida: ${resumo}`);
+  }
 }
 
 main();

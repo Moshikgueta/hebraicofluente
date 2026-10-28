@@ -34,7 +34,8 @@ describe('a troca entre duas letras', () => {
   it('o retorno de um par aparece no tocador de exercícios', () => {
     const s = fonte('components/learn/ExercisePlayer.tsx');
     expect(s).toContain('trocaDeLetras(opts.expected, opts.chosenGlyph, allLetters())');
-    expect(s).toContain('Observe as duas letras.');
+    expect(s).toContain('{settled.troca.textoPt} {tx.observeAsDuas}');
+    expect(fonte('i18n/telas/licao-exercise-player.ts')).toContain("observeAsDuas: 'Observe as duas letras.'");
   });
 });
 
@@ -81,7 +82,10 @@ describe('as rodadas de som da Batalha', () => {
   it('a rodada de som não grava troca de desenho', () => {
     const s = fonte('components/game/Batalha.tsx');
     expect(s).toMatch(/fechar\(certa, certa \? null : r\.notaPt, r\.alvo\.id, `som:batalha:/);
-    expect(s).toContain("'Parecidas no som'");
-    expect(s).toContain("'Parecidas no desenho'");
+    /* Os rótulos moram no dicionário da tela (i18n), lidos como tx.chave. */
+    const d = fonte('i18n/telas/academia-batalha.tsx');
+    expect(s).toContain("meta === 'som' ? tx.parecidasSom : tx.parecidasDesenho");
+    expect(d).toContain("parecidasSom: 'Parecidas no som'");
+    expect(d).toContain("parecidasDesenho: 'Parecidas no desenho'");
   });
 });

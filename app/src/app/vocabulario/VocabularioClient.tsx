@@ -24,6 +24,7 @@ import { consonantsToKnow } from '@/lib/hebrew';
 import { normalizeTyped } from '@/lib/engine/types';
 import { stripNikud } from '@/lib/hebrew';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-vocabulario-client';
 
 /* Sem acento e com o "ss" do curso (kissé) igual a um s: quem busca "kise"
    acha a palavra. */
@@ -51,13 +52,10 @@ export function VocabularioClient() {
   return (
     <div className="grid gap-6 py-2">
       <header className="grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Meu vocabulário</p>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.meuVocabulario}</p>
         <h1 className="text-[28px] font-bold m-0 text-balance">{fraseDeLeitura(n)}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          São as palavras do curso escritas só com as {leitura.letras.length} letras que você
-          já concluiu.{faltam > 0
-            ? ` Mais ${faltam} chegam com as próximas letras.`
-            : ' É o vocabulário inteiro do curso.'}
+          {tx.intro(leitura.letras.length, faltam)}
         </p>
         {/* A forma à mão de cada palavra está logo abaixo; aqui é onde se
             pratica escrevê-la. */}
@@ -65,14 +63,14 @@ export function VocabularioClient() {
           <Link href="/academia?treino=palavras-a-mao"
                 className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
                            text-[var(--teal-ink)] underline">
-            Praticar estas palavras à mão, em cursiva
+            {tx.praticarAMao}
           </Link>
         )}
         {n > 0 && (
           <Link href="/leitura"
                 className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
                            text-[var(--teal-ink)] underline">
-            Pratique a leitura destas palavras no Laboratório de Leitura.
+            {tx.praticarLeitura}
           </Link>
         )}
       </header>
@@ -80,32 +78,32 @@ export function VocabularioClient() {
       {n > 0 && (
         <div className="grid gap-1.5">
           <label htmlFor="busca-vocab" className="font-ui text-[14px] font-semibold text-ink">
-            Procurar
+            {tx.procurar}
           </label>
           <input
             id="busca-vocab"
             type="search"
             value={busca}
             onChange={e => setBusca(e.target.value)}
-            placeholder="em hebraico, transliteração ou português"
+            placeholder={tx.placeholder}
             dir="auto"
             autoComplete="off" autoCapitalize="off" spellCheck={false}
             className="min-h-[48px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                        font-ui text-[16px] text-ink focus:border-[var(--accent-soft)]"
           />
           <p className="font-ui text-[13px] text-ink-muted m-0" role="status">
-            {busca.trim() ? `${achadas.length} de ${n}` : `${n} palavras`}
+            {busca.trim() ? tx.achadas(achadas.length, n) : tx.nPalavras(n)}
           </p>
         </div>
       )}
 
       {n === 0 ? (
         <p className="font-ui text-[15px] text-ink-body">
-          Conclua a lição do Mem e a primeira palavra aparece aqui.{' '}
-          <Link href="/mapa" className="underline">Ir para o curso</Link>
+          {tx.vazio}{' '}
+          <Link href="/mapa" className="underline">{tx.irCurso}</Link>
         </p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0" aria-label="Palavras" data-vocabulario>
+        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0" aria-label={tx.palavras} data-vocabulario>
           {achadas.map(w => (
             <li key={w.he} className="rounded-[var(--r-lg)] border border-line bg-surface p-4 grid gap-3">
               <div className="flex items-start gap-4">
@@ -124,15 +122,15 @@ export function VocabularioClient() {
                 </div>
                 {/* O nome no botão: eram 32 botões "Ouvir" iguais para o leitor
                     de tela (auditoria de 28/09, UX-011). */}
-                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={`Ouvir ${w.translit}`} />}
+                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={tx.ouvir(w.translit)} />}
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {/* As LETRAS que é preciso conhecer para ler a palavra - pela
                     mesma regra da leitura: o ו de לוֹ, antes do Vav, é vogal e
                     não entra aqui. Mostrá-lo como letra seria ensinar o Vav
                     antes da hora, que foi o que a primeira versão fez. */}
-                <div className="flex items-center gap-2" aria-label="As letras desta palavra" data-letras>
-                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Letras</span>
+                <div className="flex items-center gap-2" aria-label={tx.letrasDaPalavra} data-letras>
+                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.letras}</span>
                   <span className="he-seq">
                     {[...new Set(consonantsToKnow(w.he))].map(g => (
                       <span key={g} className="rounded-md bg-surface-2 px-1.5"><He size="inline">{g}</He></span>
@@ -148,7 +146,7 @@ export function VocabularioClient() {
                     pede, e por isso a escrita de palavras (palavrasAcumuladas)
                     continua com a régua estrita. */}
                 <div className="flex items-center gap-2" data-cursiva>
-                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">À mão</span>
+                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.aMao}</span>
                   <He size="lg" cursive>{stripNikud(w.he)}</He>
                 </div>
               </div>
@@ -158,8 +156,7 @@ export function VocabularioClient() {
       )}
       {busca.trim() && n > 0 && achadas.length === 0 && (
         <p className="font-ui text-[15px] text-ink-body">
-          Nenhuma palavra que você já lê tem “{busca}”. A palavra pode usar uma letra que
-          ainda vem pela frente.
+          {tx.nenhuma(busca)}
         </p>
       )}
     </div>

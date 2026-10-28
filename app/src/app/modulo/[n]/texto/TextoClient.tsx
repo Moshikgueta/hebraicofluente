@@ -9,6 +9,7 @@
  * checagens da lição: não vale nota, não tranca nada, e o motivo aparece
  * sempre. O motor e a regra da revisão estão em lib/engine/textos.ts. */
 
+import { tx } from '@/i18n/telas/licao-texto-client';
 import Link from 'next/link';
 import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
@@ -34,10 +35,10 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
     return (
       <div className="focus-col grid gap-5">
         <p className="text-[16px] text-ink-body m-0">
-          {revisao ? 'Este módulo ainda não tem leitura de revisão.' : 'Este módulo ainda não tem texto de leitura.'}
+          {revisao ? tx.semRevisao : tx.semTexto}
         </p>
         <LinkButton href={`/modulo/${mod.n}`} variant="secondary" className="justify-self-start">
-          Voltar ao módulo
+          {tx.voltarAoModulo}
         </LinkButton>
       </div>
     );
@@ -48,9 +49,9 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
       <header className="grid gap-3">
         <Link href={`/modulo/${mod.n}`}
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Módulo {mod.n}
+          {tx.modulo(mod.n)}
         </Link>
-        <Badge tone="accent">{revisao ? `Leitura de revisão · módulo ${mod.n}` : `Leitura do módulo ${mod.n}`}</Badge>
+        <Badge tone="accent">{revisao ? tx.leituraDeRevisao(mod.n) : tx.leituraDoModulo(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight m-0">{texto.tituloPt}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body m-0">{texto.introPt}</p>
       </header>
@@ -60,20 +61,20 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
       {/* Ler o texto inteiro em voz alta é a leitura corrida de verdade: sem
           parar em cada palavra. Gravar e se ouvir mostra onde a voz travou. */}
       <GravarLeitura
-        titulo="Leia o texto em voz alta"
-        instrucao="Leia o texto inteiro, sem parar em cada palavra, grave e se ouça. Depois leia de novo e compare."
+        titulo={tx.leiaEmVozAlta}
+        instrucao={tx.leiaInstrucao}
       />
 
       {texto.novas.length > 0 && (
         <Card tone="wash" className="p-5 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">
-            {revisao ? 'Nomes e partes grudadas na palavra' : 'Palavras novas neste texto'}
+            {revisao ? tx.nomesEPartes : tx.palavrasNovas}
           </p>
           <ul className="grid gap-2 list-none p-0 m-0">
             {texto.novas.map(w => (
               <li key={w.he} className="flex items-baseline gap-3 flex-wrap">
                 <He size="word">{w.he}</He>
-                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId!} ariaLabel={`Ouvir ${w.translit}`} size="sm" />}
+                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId!} ariaLabel={tx.ouvir(w.translit)} size="sm" />}
                 <span className="font-ui text-[14px] text-ink">
                   <span className="font-semibold">{w.translit}</span>
                   <span className="text-ink-muted"> · {w.pt}</span>
@@ -86,12 +87,12 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
 
       <Compreensao
         id={revisao ? `revisao-texto-${mod.n}` : `texto-${mod.n}`}
-        titulo="Você entendeu?"
-        intro="Responda pelo que leu. Não vale nota: o motivo aparece a cada resposta."
+        titulo={tx.entendeu}
+        intro={tx.responda}
         perguntas={texto.perguntas}
         fecho={{
-          bom: 'Você leu um texto inteiro em hebraico e entendeu. É para isto que o alfabeto serve.',
-          parcial: 'Volte ao texto e toque nas linhas que travaram. Na segunda leitura ele fica mais fácil.'
+          bom: tx.fechoBom,
+          parcial: tx.fechoParcial
         }}
         /* Respondidas as perguntas, o texto conta como lido, e as palavras
            novas dele passam a fazer parte do vocabulário do aluno. */
@@ -99,12 +100,12 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
       />
       {p.state.firsts[lidoId] && palavrasDoTexto(texto).length > 0 && (
         <p className="font-ui text-[14px] text-[var(--teal-ink)] m-0">
-          ✓ As palavras novas deste texto entraram no seu vocabulário e no treino de palavras à mão.
+          {tx.entraram}
         </p>
       )}
 
       <LinkButton href={`/modulo/${mod.n}`} variant="secondary" className="justify-self-start">
-        Voltar ao módulo
+        {tx.voltarAoModulo}
       </LinkButton>
     </div>
   );

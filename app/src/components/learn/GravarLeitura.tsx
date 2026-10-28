@@ -21,6 +21,7 @@
  * lado, para comparar. Sem ela, o valor continua: é se ouvir.
  */
 
+import { tx } from '@/i18n/telas/licao-gravar-leitura';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { AudioButton, hasAudio } from './AudioButton';
@@ -30,7 +31,7 @@ type Estado = 'parado' | 'gravando' | 'gravado' | 'negado' | 'sem-suporte' | 'er
 const formata = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
 export function GravarLeitura({
-  titulo = 'Leia em voz alta e se ouça',
+  titulo = tx.titulo,
   instrucao, audioId, maxSegundos = 90
 }: {
   titulo?: string;
@@ -113,50 +114,49 @@ export function GravarLeitura({
       <div className="flex flex-wrap items-center gap-2.5">
         {estado === 'gravando' ? (
           <>
-            <Button size="md" onClick={parar}>Parar</Button>
+            <Button size="md" onClick={parar}>{tx.parar}</Button>
             <span role="status" className="inline-flex items-center gap-2 font-ui text-[14px] text-ink-body">
               <span aria-hidden className="w-2.5 h-2.5 rounded-full bg-[var(--gold)] motion-safe:animate-pulse" />
-              Gravando · {formata(segundos)}
+              {tx.gravando(formata(segundos))}
             </span>
           </>
         ) : (
           <Button size="md" variant={estado === 'gravado' ? 'secondary' : 'primary'} onClick={gravar}>
-            {estado === 'gravado' ? 'Gravar de novo' : 'Gravar minha leitura'}
+            {estado === 'gravado' ? tx.gravarDeNovo : tx.gravarMinha}
           </Button>
         )}
-        {hasAudio(audioId) && <AudioButton audioId={audioId!} label="Ouvir o original" size="sm" />}
+        {hasAudio(audioId) && <AudioButton audioId={audioId!} label={tx.ouvirOriginal} size="sm" />}
       </div>
 
       {estado === 'gravado' && url && (
         <div className="grid gap-1.5">
-          <p className="font-ui text-[13px] text-ink-muted m-0">A sua leitura:</p>
+          <p className="font-ui text-[13px] text-ink-muted m-0">{tx.suaLeitura}</p>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <audio controls src={url} className="w-full max-w-[420px]" />
           <p className="font-ui text-[13px] text-ink-muted m-0">
-            Ouça procurando onde a voz parou ou hesitou: é ali que vale ler de novo.
+            {tx.procure}
           </p>
         </div>
       )}
 
       {estado === 'negado' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          O navegador não deixou usar o microfone. Para gravar, toque no cadeado ao lado do
-          endereço do site e permita o microfone, depois tente de novo.
+          {tx.negado}
         </p>
       )}
       {estado === 'sem-suporte' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          Este navegador não grava áudio. Tente pelo Chrome, Edge, Firefox ou Safari atualizados.
+          {tx.semSuporte}
         </p>
       )}
       {estado === 'erro' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          Não foi possível abrir o microfone. Confira se ele não está sendo usado por outro app.
+          {tx.erro}
         </p>
       )}
 
       <p className="font-ui text-[12.5px] text-ink-muted m-0">
-        A gravação fica só neste aparelho e some quando você sai da página. Nada é enviado.
+        {tx.soNoAparelho}
       </p>
     </section>
   );

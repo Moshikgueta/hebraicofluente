@@ -44,6 +44,7 @@ import { carregarConteudo, conteudoPronto } from '@/lib/content';
 import { CURSO_A1, a1Pronto, carregarA1, rotaDoA1 } from '@/lib/a1';
 import { CURSO_RAIZES, carregarRaizes, raizesPronto, rotaDasRaizes } from '@/lib/raizes';
 import { AvisoDeDireitos, MarcaDagua } from '@/components/shell/MarcaDagua';
+import { tx } from '@/i18n/telas/conta-course-gate';
 
 /** Rotas de aluno que não exigem compra: a conta, e nada mais. */
 const FREE_FOR_ACCOUNT = ['/perfil'];
@@ -135,11 +136,10 @@ export function CourseGate({ children }: { children: ReactNode }) {
       <div className="focus-col grid gap-5 py-6">
         <Card className="p-6 grid gap-3">
           <h1 className="font-display text-[20px] font-bold text-ink">
-            Não consegui carregar a aula.
+            {tx.naoCarregou}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Seu acesso está em dia - o que falhou foi buscar o conteúdo. Quase
-            sempre é a conexão.
+            {tx.acessoEmDia}
           </p>
           <button
             type="button"
@@ -147,7 +147,7 @@ export function CourseGate({ children }: { children: ReactNode }) {
             className="justify-self-start rounded-[var(--r-md)] bg-[var(--navy)] text-white
                        font-ui font-semibold text-[15px] px-5 py-2.5 hover:bg-[var(--navy-2)]"
           >
-            Tentar de novo
+            {tx.tentarDeNovo}
           </button>
         </Card>
       </div>
@@ -161,20 +161,20 @@ export function CourseGate({ children }: { children: ReactNode }) {
     <div className="focus-col grid gap-5 py-6">
       <Card className="p-6 grid gap-3">
         <h1 className="font-display text-[20px] font-bold text-ink">
-          {account.signedIn ? 'Este curso ainda não está na sua conta.' : 'Entre para continuar.'}
+          {account.signedIn ? tx.semCurso : tx.entreParaContinuar}
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
           {account.signedIn
             ? (dasRaizes
-              ? 'Raízes Sefarditas ainda não está à venda. Ele aparece aqui quando o acesso for liberado na sua conta.'
-              : `O ${getCourse(curso)?.titlePt ?? ''} é liberado assim que o pagamento é confirmado.`)
-            : 'Suas aulas, seu progresso e seu certificado ficam na sua conta.'}
+              ? tx.raizesNaoAVenda
+              : tx.liberadoAoPagar(getCourse(curso)?.titlePt ?? ''))
+            : tx.ficamNaConta}
         </p>
         <LinkButton
           href={account.signedIn ? paginaDoCurso : `/entrar?next=${encodeURIComponent(here)}`}
           className="justify-self-start"
         >
-          {account.signedIn ? 'Ver o curso' : 'Entrar'}
+          {account.signedIn ? tx.verOCurso : tx.entrar}
         </LinkButton>
       </Card>
     </div>

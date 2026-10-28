@@ -17,6 +17,8 @@
 import type { LearnerState } from '@/lib/state/types';
 import type { CourseModule, Letter } from '@/lib/content';
 import { AULA0_CONCLUIDA, ACHIEVEMENTS } from '@/lib/state/rules';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-diario';
 
 export type TipoDeEntrada = 'aula0' | 'letra' | 'checkpoint' | 'leitura' | 'texto' | 'missao' | 'conquista';
 
@@ -39,27 +41,27 @@ export function entradasDoDiario(
   const f = state.firsts ?? {};
 
   if (valida(f[AULA0_CONCLUIDA])) {
-    e.push({ id: 'aula0', quando: f[AULA0_CONCLUIDA]!, tipo: 'aula0', texto: 'Concluiu a Aula 0: entendeu como o hebraico funciona.', href: '/inicio' });
+    e.push({ id: 'aula0', quando: f[AULA0_CONCLUIDA]!, tipo: 'aula0', texto: tx.aula0, href: '/inicio' });
   }
   for (const l of letras) {
     const quando = state.lessons[l.id]?.completedAt;
     if (valida(quando)) {
-      e.push({ id: `letra-${l.id}`, quando, tipo: 'letra', texto: `Aprendeu a letra ${l.namePt}.`, letra: l.letter, href: `/licao/${l.id}` });
+      e.push({ id: `letra-${l.id}`, quando, tipo: 'letra', texto: fmt(tx.letra, { nome: l.namePt }), letra: l.letter, href: `/licao/${l.id}` });
     }
   }
   for (const m of modulos) {
     const cp = m.checkpoint ? state.checkpoints[m.checkpoint.id]?.passedAt : null;
-    if (valida(cp)) e.push({ id: `cp-${m.n}`, quando: cp, tipo: 'checkpoint', texto: `Passou no checkpoint do módulo ${m.n}.`, href: `/modulo/${m.n}` });
+    if (valida(cp)) e.push({ id: `cp-${m.n}`, quando: cp, tipo: 'checkpoint', texto: fmt(tx.checkpoint, { n: m.n }), href: `/modulo/${m.n}` });
     const pl = f[`primeira-leitura-m${m.n}`];
-    if (valida(pl)) e.push({ id: `pl-${m.n}`, quando: pl, tipo: 'leitura', texto: `Fez a Primeira Leitura do módulo ${m.n}.`, href: `/leitura?primeira=${m.n}` });
-    const tx = f[`texto-${m.n}`];
-    if (valida(tx)) e.push({ id: `tx-${m.n}`, quando: tx, tipo: 'texto', texto: `Leu o mini-texto do módulo ${m.n}.`, href: `/modulo/${m.n}/texto` });
+    if (valida(pl)) e.push({ id: `pl-${m.n}`, quando: pl, tipo: 'leitura', texto: fmt(tx.leitura, { n: m.n }), href: `/leitura?primeira=${m.n}` });
+    const lido = f[`texto-${m.n}`];
+    if (valida(lido)) e.push({ id: `tx-${m.n}`, quando: lido, tipo: 'texto', texto: fmt(tx.texto, { n: m.n }), href: `/modulo/${m.n}/texto` });
     const mi = f[`missao-${m.n}`];
-    if (valida(mi)) e.push({ id: `mi-${m.n}`, quando: mi, tipo: 'missao', texto: `Cumpriu a missão do módulo ${m.n}.`, href: `/modulo/${m.n}/missao` });
+    if (valida(mi)) e.push({ id: `mi-${m.n}`, quando: mi, tipo: 'missao', texto: fmt(tx.missao, { n: m.n }), href: `/modulo/${m.n}/missao` });
   }
   for (const a of state.achievements ?? []) {
     const def = ACHIEVEMENTS.find(d => d.id === a.id);
-    if (def && valida(a.unlockedAt)) e.push({ id: `cq-${a.id}`, quando: a.unlockedAt, tipo: 'conquista', texto: `Conquista: ${def.titlePt}.` });
+    if (def && valida(a.unlockedAt)) e.push({ id: `cq-${a.id}`, quando: a.unlockedAt, tipo: 'conquista', texto: fmt(tx.conquista, { titulo: def.titlePt }) });
   }
   /* A mais recente primeiro: o diário abre na última página escrita. */
   return e.sort((a, b) => Date.parse(b.quando) - Date.parse(a.quando) || a.id.localeCompare(b.id));

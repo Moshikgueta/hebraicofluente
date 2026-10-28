@@ -9,12 +9,13 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/Button';
 import { asset } from '@/lib/asset';
+import { tx } from '@/i18n/telas/conta-codigo-do-admin';
 
 const ERROS: Record<string, string> = {
-  'codigo-invalido': 'Código errado. Confira os seis números do e-mail.',
-  'codigo-vencido': 'Este código venceu ou foi errado vezes demais. Peça outro.',
-  'sem-email': 'O envio de e-mail do site não está funcionando agora, então o código não pode sair.',
-  'rate-limited-hora': 'Muitos códigos pedidos na última hora. Espere um pouco e tente de novo.'
+  'codigo-invalido': tx.codigoInvalido,
+  'codigo-vencido': tx.codigoVencido,
+  'sem-email': tx.semEmail,
+  'rate-limited-hora': tx.muitosPedidos
 };
 
 /** A resposta 403 é o pedido de código? Lê o corpo sem consumir o original. */
@@ -43,8 +44,8 @@ export function CodigoDoAdmin({ onPronto }: { onPronto: () => void }) {
     try {
       const r = await post('/api/admin/codigo');
       if (r.ok) setEnviado(true);
-      else setErro(ERROS[r.erro ?? ''] ?? 'Não deu para mandar o código agora. Tente de novo.');
-    } catch { setErro('Sem conexão. Tente de novo.'); }
+      else setErro(ERROS[r.erro ?? ''] ?? tx.naoDeuMandar);
+    } catch { setErro(tx.semConexao); }
     finally { setOcupado(false); }
   };
 
@@ -54,32 +55,31 @@ export function CodigoDoAdmin({ onPronto }: { onPronto: () => void }) {
     try {
       const r = await post('/api/admin/codigo/conferir', { codigo });
       if (r.ok) onPronto();
-      else setErro(ERROS[r.erro ?? ''] ?? 'Não deu para conferir agora. Tente de novo.');
-    } catch { setErro('Sem conexão. Tente de novo.'); }
+      else setErro(ERROS[r.erro ?? ''] ?? tx.naoDeuConferir);
+    } catch { setErro(tx.semConexao); }
     finally { setOcupado(false); }
   };
 
   return (
     <section className="rounded-lg border border-[var(--line)] bg-surface p-5 grid gap-3 max-w-[460px]">
-      <h2 className="text-[19px] font-semibold m-0">Confirme que é você</h2>
+      <h2 className="text-[19px] font-semibold m-0">{tx.titulo}</h2>
       <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-        Os painéis de administrador pedem, além da senha, um código de seis números mandado ao e-mail desta
-        conta. Ele abre os painéis por 12 horas, só neste aparelho.
+        {tx.texto}
       </p>
       {!enviado ? (
-        <Button onClick={enviar} disabled={ocupado}>{ocupado ? 'Enviando…' : 'Mandar o código para o meu e-mail'}</Button>
+        <Button onClick={enviar} disabled={ocupado}>{ocupado ? tx.enviando : tx.mandarCodigo}</Button>
       ) : (
         <form onSubmit={conferir} className="grid gap-3">
           <label className="grid gap-1 font-ui text-[14px] font-semibold">
-            Código recebido por e-mail (vale 10 minutos)
+            {tx.codigoRecebido}
             <input value={codigo} onChange={e => setCodigo(e.target.value.replace(/\D/g, '').slice(0, 6))}
                    inputMode="numeric" autoComplete="one-time-code" autoFocus
                    className="min-h-[52px] rounded-md border border-[var(--line)] bg-surface px-4 font-ui text-[20px] tracking-[.3em]" />
           </label>
-          <Button type="submit" disabled={ocupado || codigo.length !== 6}>{ocupado ? 'Conferindo…' : 'Entrar no painel'}</Button>
+          <Button type="submit" disabled={ocupado || codigo.length !== 6}>{ocupado ? tx.conferindo : tx.entrarNoPainel}</Button>
           <button type="button" onClick={enviar} disabled={ocupado}
                   className="justify-self-start min-h-[44px] font-ui text-[14px] text-[var(--accent)] underline">
-            Mandar outro código
+            {tx.mandarOutro}
           </button>
         </form>
       )}

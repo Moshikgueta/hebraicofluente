@@ -50,6 +50,7 @@
  *     dois quadros. Sem ele, um dedo rápido desenha um polígono.
  */
 
+import { tx } from '@/i18n/telas/licao-trace-board';
 import {
   forwardRef, useCallback, useEffect, useImperativeHandle, useRef
 } from 'react';
@@ -304,7 +305,7 @@ export const TraceBoard = forwardRef<QuadroHandle, {
            medido está errado assim que a página tem zoom. Porcentagem é
            sempre resolvida na unidade da moldura. */
         className="absolute inset-0 w-full h-full touch-none cursor-crosshair"
-        aria-label={`Área de escrita para a letra ${label}`}
+        aria-label={tx.areaDeEscrita(label)}
         role="img"
       />
     </div>
@@ -321,7 +322,7 @@ export const TraceBoard = forwardRef<QuadroHandle, {
    falso negativo. Nada disso é culpa de quem está aprendendo. */
 const ANIMAR: Veredito = {
   score: 1, tone: 'good',
-  message: 'Feito. Compare com o modelo e veja o que você mudaria.'
+  message: tx.feito
 };
 
 function pontuar(

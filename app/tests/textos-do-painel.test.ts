@@ -7,19 +7,25 @@ const fonte = (p: string) => readFileSync(new URL(`../src/${p}`, import.meta.url
 describe('o que o painel promete bate com o curso', () => {
   it('conta todos os módulos, e não só os de letra', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toContain('em {course.modules.length} módulos');
+    /* O texto mora no dicionário da tela; o número vem do curso. */
+    expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain('em {modulos} módulos');
+    expect(d).toContain('modulos: course.modules.length');
     expect(d).not.toContain('course.modules.filter(m => m.letterIds.length).length} módulos');
+    expect(d).not.toContain('modulos: course.modules.filter(');
   });
 
   it('as perguntas do começo são as quatro do /onboarding, e a Aula 0 é de dez minutos nos dois lugares', () => {
-    const d = fonte('app/meu-hebraico/DashboardClient.tsx');
+    /* O painel e a Aula 0 com os seus dicionários (app/src/i18n/telas/). */
+    const d = fonte('app/meu-hebraico/DashboardClient.tsx') + fonte('i18n/telas/painel-dashboard-client.tsx');
     /* O painel dizia "três" depois de o /onboarding ganhar a pergunta do nome
        (28/10/2026): o número do painel é o do contador "N de 4". */
-    expect(fonte('app/onboarding/page.tsx')).toContain('{step + 1} de 4');
+    expect(fonte('app/onboarding/page.tsx')).toContain('fmt(tx.contador, { n: step + 1 })');
+    expect(fonte('i18n/telas/painel-onboarding.ts')).toContain("contador: '{n} de 4'");
     expect(d).toContain('quatro perguntas rápidas');
     expect(d).not.toMatch(/(duas|três) perguntas/);
     expect(d).toContain('Dez minutos de leitura');
-    expect(fonte('app/inicio/StartHereClient.tsx')).toContain('Dez minutos de leitura');
+    expect(fonte('i18n/telas/painel-start-here-client.tsx')).toContain("lead: 'Dez minutos de leitura");
+    expect(fonte('app/inicio/StartHereClient.tsx')).toContain('{tx.lead}');
   });
 
   it('botão para rota paga não pré-carrega a página', () => {
@@ -33,7 +39,7 @@ describe('o que o painel promete bate com o curso', () => {
   });
 
   it('o checkout diz que é pagamento único, sem renovação automática (CDC, art. 6º, III)', () => {
-    expect(fonte('app/checkout/[slug]/CheckoutClient.tsx'))
+    expect(fonte('app/checkout/[slug]/CheckoutClient.tsx') + fonte('i18n/telas/conta-checkout-client.ts'))
       .toContain('Pagamento único. Não há assinatura nem renovação automática');
   });
 });

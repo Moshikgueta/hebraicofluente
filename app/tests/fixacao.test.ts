@@ -5,6 +5,9 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { conteudoPago } from '@/lib/content-servidor';
 import { alvoDaLetra, alvoDoSom } from '@/lib/fixacao';
+import { DICIONARIO as TX_LICAO } from '@/i18n/telas/licao-lesson-client';
+import { DICIONARIO as TX_SOM } from '@/i18n/telas/licao-som-lesson-client';
+import { DICIONARIO as TX_CONTRASTE } from '@/i18n/telas/licao-contraste-client';
 
 const L = [...conteudoPago.letters].sort((a, b) => a.order - b.order);
 const sons = conteudoPago.extras.sons;
@@ -45,11 +48,19 @@ describe('fixação e exercícios não são o mesmo bloco duas vezes', () => {
     const fix = fonte('components/learn/FixacaoGuiada.tsx');
     expect(fix).not.toContain('ExercisePlayer');
     expect(fix).not.toContain('finishQuiz');
-    for (const tela of ['app/licao/[letterId]/LessonClient.tsx', 'app/som/[id]/SomLessonClient.tsx', 'app/som/[id]/ContrasteClient.tsx']) {
+    /* Os rótulos das abas moram no dicionário de cada tela (i18n). */
+    const telas = [
+      ['app/licao/[letterId]/LessonClient.tsx', TX_LICAO.pt],
+      ['app/som/[id]/SomLessonClient.tsx', TX_SOM.pt],
+      ['app/som/[id]/ContrasteClient.tsx', TX_CONTRASTE.pt]
+    ] as const;
+    for (const [tela, pt] of telas) {
       const t = fonte(tela);
       expect(t, tela).toContain('<FixacaoGuiada');
-      expect(t, tela).toContain("{ n: 4, label: 'Fixação' }");
-      expect(t, tela).toContain("{ n: 5, label: 'Exercícios' }");
+      expect(t, tela).toContain('{ n: 4, label: tx.fixacao }');
+      expect(t, tela).toContain('{ n: 5, label: tx.exercicios }');
+      expect(pt.fixacao, tela).toBe('Fixação');
+      expect(pt.exercicios, tela).toBe('Exercícios');
       expect(t, tela).not.toContain('buildLetterPractice');
       expect(t, tela).not.toContain('-pratica');
     }
