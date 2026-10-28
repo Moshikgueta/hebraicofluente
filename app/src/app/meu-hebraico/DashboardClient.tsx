@@ -18,24 +18,18 @@ import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
-import {
-  CartaoCurso, CartaoNumero, CartaoRevisao, CartaoSemana, PlanoDeHoje,
-  IconeLetras, IconeLicoes, IconeRevisar, IconeTempo
-} from '@/components/platform/Painel';
+import { CartaoCurso, PlanoDeHoje } from '@/components/platform/Painel';
 import { flagship } from '@/lib/catalog';
 import { TesteFinalCard } from '@/components/game/TesteFinal';
-import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
-import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { alphabetComplete, aula0Feita, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
-import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
-import { AntesEDepois } from '@/components/platform/AntesEDepois';
+import { TrilhaDoModulo } from '@/components/platform/TrilhaDoModulo';
+import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { resumoDoDominio } from '@/lib/dominio';
 import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
@@ -123,17 +117,6 @@ export function DashboardClient() {
   const licoesFeitas = Object.values(p.state.lessons)
     .filter(l => (l?.stagesDone.length ?? 0) >= 5).length;
 
-  /* `units` são blocos de 20 segundos - ver a nota em Painel.tsx. */
-  const minutosSemana = Math.round(
-    Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(`${p.day}T12:00:00Z`);
-      d.setUTCDate(d.getUTCDate() - i);
-      return p.state.days[d.toISOString().slice(0, 10)]?.units ?? 0;
-    }).reduce((a, b) => a + b, 0) / 3
-  );
-  const tempoSemana = minutosSemana >= 60
-    ? `${Math.floor(minutosSemana / 60)}h${String(minutosSemana % 60).padStart(2, '0')}`
-    : `${minutosSemana}min`;
 
   if (!p.ready) return <DashboardSkeleton />;
 
@@ -238,6 +221,7 @@ export function DashboardClient() {
               pct={p.progress}
               href="/inicio"
               cta={tx.aula0Cta}
+              modulo={1}
             />
           </div>
         )}
@@ -251,6 +235,7 @@ export function DashboardClient() {
             pct={p.progress}
             href={rotaDaLicao(terminar.id)}
             cta={fmt(tx.terminarCta, { nome: terminar.nome })}
+            modulo={next.kind !== 'done' ? next.module.n : undefined}
           />
         )}
 
@@ -266,6 +251,8 @@ export function DashboardClient() {
             href={`/licao/${next.letter.id}`}
             cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
               ? tx.continuarAprendendo : tx.comecarLicao}
+            modulo={next.module.n}
+            letra={next.letter.letraComPonto ?? next.letter.letter}
           />
         )}
 
@@ -281,6 +268,7 @@ export function DashboardClient() {
             href={`/som/${next.som}`}
             cta={(p.state.lessons[idDoSom(next.som)]?.stagesDone.length ?? 0) > 0
               ? tx.continuarAprendendo : tx.comecarLicao}
+            modulo={next.module.n}
           />
         )}
 
@@ -292,6 +280,7 @@ export function DashboardClient() {
             pct={p.progress}
             href={`/checkpoint/${next.module.n}`}
             cta={tx.checkpointCta}
+            modulo={next.module.n}
           />
         )}
 
@@ -304,6 +293,7 @@ export function DashboardClient() {
             href={`/modulo/${next.module.n}`}
             cta={(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0
               ? tx.continuarAprendendo : tx.comecarModulo}
+            modulo={next.module.n}
           />
         )}
 
@@ -315,11 +305,52 @@ export function DashboardClient() {
             pct={1}
             href="/desafio-final"
             cta={tx.fimCta}
+            modulo={7}
           />
         )}
       </section>
 
-      <PlanoDeHoje licao={licaoDeHoje} />
+      {/* O caminho do módulo (28/10/2026): as letras dele, tocáveis. */}
+      {!aula0Primeiro && next.kind !== 'done' && <TrilhaDoModulo modulo={next.module} />}
+
+      <PlanoDeHoje licao={licaoDeHoje} semDesafio={!aula0Primeiro} />
+
+      {/* Três atalhos de prática, numa fileira (28/10/2026). Antes eram
+          quatro cartões de jogo e um teste final, a duas telas daqui. */}
+      {!aula0Primeiro && (
+        <section aria-labelledby="praticar" className="grid gap-2.5 min-w-0">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 id="praticar" className="m-0 font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              {tx.praticarPoucos}
+            </h2>
+            <Link href="/academia" className="inline-flex items-center min-h-[44px] font-ui text-[13px] text-[var(--teal-ink)] hover:underline">
+              {tx.verTudo}
+            </Link>
+          </div>
+          <ul className="min-w-0 grid grid-cols-3 gap-2.5 list-none p-0 m-0">
+            {([
+              ['/academia?treino=desafio', desafioFeitoHoje(p.state, p.day) ? '✓' : '5', tx.atalhoDesafio,
+                desafioFeitoHoje(p.state, p.day) ? tx.atalhoDesafioFeito : tx.atalhoDesafioTempo],
+              ['/academia?treino=flashcards-letras', 'א', tx.atalhoFlashcards, tx.atalhoFlashcardsDesc],
+              ['/leitura', 'אב', tx.atalhoLeitura, tx.atalhoLeituraDesc]
+            ] as const).map(([href, icone, titulo, desc]) => (
+              <li key={href} className="min-w-0">
+                <Link href={href}
+                      className="h-full grid justify-items-center content-start gap-1 text-center rounded-[16px] border border-line
+                                 bg-[var(--card)] px-2 py-3.5 transition-[box-shadow,border-color,transform] duration-[200ms]
+                                 hover:shadow-[var(--sh)] hover:border-[var(--teal)] active:scale-[.96]">
+                  <span aria-hidden className="grid place-items-center w-11 h-11 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
+                                               font-ui text-[17px] font-bold">
+                    {/[א-ת]/.test(icone) ? <He size="inline" tone="teal">{icone}</He> : icone}
+                  </span>
+                  <span className="font-display text-[14.5px] font-semibold leading-tight text-ink [overflow-wrap:anywhere]">{titulo}</span>
+                  <span className="font-ui text-[12px] leading-tight text-ink-muted">{desc}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
       {!aula0Primeiro && primeiraPendente && (
@@ -360,21 +391,8 @@ export function DashboardClient() {
           </div>
           <LinkButton href="/inicio" variant="secondary" className="shrink-0">{tx.lerAgora}</LinkButton>
         </Card>
-      ) : (
-        <p className="font-ui text-[13.5px] text-ink-muted">
-          {tx.reler(t => (
-            <Link href="/inicio" className="hover:text-[var(--accent)]">
-              {t}
-            </Link>
-          ))}
-        </p>
-      )}
+      ) : null}
 
-      {/* Logo depois da ação de hoje, e antes dos números: os quatro
-          contadores dizem QUANTO foi feito, e este cartão diz o que aquilo
-          virou. Ele só aparece quando há frase legível - por volta da metade
-          do alfabeto - e some sozinho antes disso. */}
-      <AntesEDepois />
 
       {/* O pedido de depoimento (29/09/2026), só depois de seis lições - antes
           disso a pessoa ainda não tem o que contar. Discreto e sem troca:
@@ -389,134 +407,27 @@ export function DashboardClient() {
         </p>
       )}
 
-      {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
-          e ela responde na sequência certa: o que eu já fiz, o que está
-          pendente, e como foi a semana. */}
-      <section aria-label={tx.seusNumeros} className="grid gap-3
-                          [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
-        {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
-            (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
-            etapas com 75% (`p.mastered`), a mesma do alfabeto abaixo. */}
-        {/* Um zero não informa nada e desanima (28/10/2026): o cartão
-            aparece quando há o que contar. */}
-        {dominio.contagem.dominada > 0 && (
-          <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? tx.letraDominada : tx.letrasDominadas}
-                        tom="teal" icone={<IconeLetras />} />
-        )}
-        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? tx.licaoConcluida : tx.licoesConcluidas}
-                      tom="teal" icone={<IconeLicoes />} />
-        {p.dueCount > 0 && (
-          <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? tx.itemARevisar : tx.itensARevisar} tom="gold" icone={<IconeRevisar />} />
-        )}
-        {minutosSemana > 0 && <CartaoNumero n={tempoSemana} rotulo={tx.nestaSemana} tom="neutro" icone={<IconeTempo />} />}
-      </section>
-
-      {/* Meu domínio das letras (11/10/2026): o que ele SABE, por habilidade,
-          ao lado do que ele concluiu. Some até haver um exercício feito. */}
-      {(dominio.contagem.dominada + dominio.contagem.quase > 0 || dominio.paraPraticar.length > 0) && (
-        <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
-          <div className="grid gap-1 min-w-0">
-            <p className="font-display text-[17px] font-semibold text-ink m-0">{tx.dominioTitulo}</p>
-            <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
-              {fmt(tx.dominioResumo, { dominadas: dominio.contagem.dominada, quase: dominio.contagem.quase })}
-              {dominio.paraPraticar.length > 0 &&
-                fmt(tx.paraReforcar, { letras: dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ') })}
-            </p>
-          </div>
-          <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">{tx.verDominio}</LinkButton>
-        </Card>
+      {/* Os números numa faixa só (28/10/2026, painel mais curto): o que já
+          foi feito, e a porta para o Progresso, onde ficam o domínio, as
+          palavras que você lê, a semana e o seu nome. Um zero não informa
+          nada e desanima: o número aparece quando há o que contar. */}
+      {licoesFeitas > 0 && (
+        <Link href="/conquistas"
+              className="flex items-center gap-4 rounded-[16px] border border-line
+                         bg-[var(--card)] px-4 py-3.5 transition-[box-shadow,border-color] duration-[200ms]
+                         hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
+          <MiniNumero n={p.mastered} rotulo={p.mastered === 1 ? tx.licaoConcluida : tx.licoesConcluidas} />
+          {dominio.contagem.dominada > 0 && (
+            <MiniNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? tx.letraDominada : tx.letrasDominadas} />
+          )}
+          {p.streak > 0 && <MiniNumero n={p.streak} rotulo={p.streak === 1 ? tx.diaSeguido : tx.diasSeguidos} />}
+          <span aria-hidden className="ml-auto font-ui text-[18px] text-[var(--teal-ink)]">→</span>
+          <span className="sr-only">{tx.verSeuProgresso}</span>
+        </Link>
       )}
 
-      {/* "Letras dominadas" é o que o curso mede; "palavras que você lê" é o
-          que o aluno sente. Os dois ficam juntos, e o segundo leva ao
-          vocabulário. Some enquanto não há letra concluída. */}
-      {licoesFeitas > 0 && <ContadorDeLeitura />}
-      <CartaoMeuNome />
-
-      <div className="grid gap-3.5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-start">
-        <CartaoRevisao />
-        <CartaoSemana />
-      </div>
-
-      {/* Os exercícios disponíveis, num lugar só. Antes eles existiam apenas
-          dentro da Academia, a dois toques de distância - e um jogo que é
-          preciso procurar não é jogado. O teste final fecha a fileira, com o
-          cadeado dizendo quantas letras faltam. */}
-      <section aria-labelledby="praticar" className="grid gap-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 id="praticar" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-            {tx.praticarAgora}
-          </h2>
-          <Link href="/academia"
-                className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                           text-[var(--teal-ink)] hover:underline">
-            {tx.verTudo}
-          </Link>
-        </div>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
-          {([
-            ['/leitura', tx.leituraTitulo, tx.leituraDesc],
-            ['/academia?jogo=match', tx.matchTitulo, tx.matchDesc],
-            ['/academia?jogo=blast', tx.blastTitulo, tx.blastDesc],
-            ['/academia?jogo=teste', tx.testeTitulo, tx.testeDesc]
-          ] as const).map(([href, titulo, desc]) => (
-            <li key={href}>
-              <Link href={href}
-                    className="h-full flex flex-col gap-1 rounded-[16px] border border-line
-                               bg-[var(--card)] p-4 transition-[box-shadow,border-color]
-                               duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
-                <span className="font-display text-[16px] font-semibold tracking-[-0.018em] text-ink">
-                  {titulo}
-                </span>
-                <span className="font-ui text-[13px] leading-[1.45] text-ink-muted">{desc}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <TesteFinalCard compacto />
-      </section>
-
-      {/* A grade do alfabeto e a lista de módulos. Ficam DEPOIS dos números
-          e do cartão de revisão: são a resposta para "onde estou no curso
-          inteiro", que é uma pergunta mais calma do que "o que faço agora". */}
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(250px,1fr)] lg:gap-6 lg:items-start">
-        <section aria-labelledby="alfabeto" className="grid gap-3">
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 id="alfabeto" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              {tx.alfabeto}
-            </h2>
-            {/* 44px de altura mesmo com texto de 13px: um link no telefone é
-                acertado com a ponta do dedo, e não com um cursor. */}
-            <Link href="/mapa"
-                  className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                             text-[var(--teal-ink)] hover:underline">
-              {tx.verMapa}
-            </Link>
-          </div>
-          <Card className="p-4 sm:p-5">
-            <AlphabetGrid />
-          </Card>
-
-          {/* Fechado no telefone: a grade logo acima já responde "onde estou",
-              e a lista de sete módulos repetia a mesma informação por mais
-              600px. Quem quer o detalhe abre. */}
-          <details className="lg:hidden group">
-            <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer
-                                font-display text-[18px] font-semibold text-ink list-none
-                                [&::-webkit-details-marker]:hidden">
-              {tx.modulos}
-              <span aria-hidden className="font-ui text-[13px] font-normal text-ink-muted
-                                           transition-transform group-open:rotate-180">▾</span>
-            </summary>
-            <div className="pt-2"><ModuleProgress /></div>
-          </details>
-        </section>
-
-        <aside className="hidden lg:grid gap-2 content-start">
-          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">{tx.modulos}</h2>
-          <ModuleProgress />
-        </aside>
-      </div>
+      {/* O teste final só aparece quando importa: com o alfabeto fechado. */}
+      {alfabetoFechado && <TesteFinalCard compacto />}
 
       {/* A oferta do curso seguinte aparece num momento só: quando as 22
           letras estão fechadas. Antes disso o aluno está no meio de uma
@@ -525,10 +436,16 @@ export function DashboardClient() {
           pergunta que ele mesmo está fazendo. */}
       {alfabetoFechado && <OfertaProximoCurso />}
 
-      {/* No fim, e não no topo: o painel é de quem já comprou. Em linhas, e
-          não em cards de venda. */}
-      <CourseShelf headingPt={tx.seusCursos} variant="rows" />
     </div>
+  );
+}
+
+function MiniNumero({ n, rotulo }: { n: number; rotulo: string }) {
+  return (
+    <span className="grid gap-0.5 min-w-0">
+      <span className="font-display text-[22px] font-semibold leading-none text-[var(--teal-ink)] tabular-nums">{n}</span>
+      <span className="font-ui text-[12px] leading-tight text-ink-muted">{rotulo}</span>
+    </span>
   );
 }
 
