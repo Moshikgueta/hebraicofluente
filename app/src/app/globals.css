@@ -210,6 +210,15 @@
 @keyframes il-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .il-entra > svg { animation: il-entra 600ms var(--ease-out) both; }
 
+/* A poupa (components/aventura/Poupa.tsx, protótipo): a crista balança, o
+   olho pisca, e no fim da Aula 0 ela dá três pulinhos. Só transform. */
+@keyframes poupa-crista { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
+@keyframes poupa-pisca  { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes poupa-pulo   { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } }
+.poupa .poupa-crista { transform-box: view-box; transform-origin: 78px 38px; animation: poupa-crista 3.2s ease-in-out infinite; }
+.poupa .poupa-olho { transform-box: fill-box; transform-origin: center; animation: poupa-pisca 4.6s linear infinite; }
+.poupa-pula { animation: poupa-pulo 520ms var(--ease-out) 3; }
+
 /* A folha do "Me explica, Moshik": sobe 12 px ao abrir, 220 ms. */
 @keyframes hf-folha-sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .hf-folha[open] { animation: hf-folha-sobe 220ms var(--ease-out) both; }

@@ -24,6 +24,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
+import { Poupa } from '@/components/aventura/Poupa';
 
 export type ModoDaAula0 = 'capa' | 'passos' | 'pagina' | 'fim';
 
@@ -99,6 +100,8 @@ export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
     <section aria-labelledby="aula0-titulo"
              className="relative overflow-hidden rounded-[var(--r-lg)] bg-[var(--accent-bg)] text-white
                         px-6 py-8 sm:px-10 sm:py-12 grid gap-6 shadow-[var(--sh)]">
+      {/* A poupa, protótipo do companheiro da aventura (Poupa.tsx). */}
+      <Poupa className="absolute right-3 top-3 w-[76px] sm:w-[96px]" />
       <p className="m-0 justify-self-start rounded-full bg-white/12 px-3 py-1 font-ui text-[12.5px]
                     font-semibold uppercase tracking-[.1em] text-white">
         Aula 0 · {PASSOS_DA_AULA0.length} passos curtos
@@ -227,9 +230,12 @@ export function Aula0Fim({ primeiraLicao, letra, paginaInteira }: {
               className="animate-spark absolute w-3 h-3 rounded-[2px] bg-[var(--gold)]"
               style={{ left: f.x, top: f.y, animationDelay: f.d }} />
       ))}
-      <span aria-hidden
-            className="animate-pop grid place-items-center w-20 h-20 rounded-full bg-white
-                       text-[var(--navy)] text-[38px] font-bold">✓</span>
+      <div className="flex items-end gap-2">
+        <span aria-hidden
+              className="animate-pop grid place-items-center w-20 h-20 rounded-full bg-white
+                         text-[var(--navy)] text-[38px] font-bold">✓</span>
+        <Poupa pulando className="w-[72px]" />
+      </div>
       <h1 id="aula0-fim" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-tight">
         Aula 0 concluída!
       </h1>
