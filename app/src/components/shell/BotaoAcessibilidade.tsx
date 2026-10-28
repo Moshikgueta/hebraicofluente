@@ -137,7 +137,7 @@ export function BotaoAcessibilidade() {
 
   const ligadas = pronto
     ? Number(prefs.texto !== 100) + Number(prefs.tema !== 'auto') + Number(prefs.contraste)
-      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco) + Number(prefs.voz)
+      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco) + Number(prefs.voz) + Number(prefs.semSons)
     : 0;
 
   return (
@@ -262,6 +262,13 @@ export function BotaoAcessibilidade() {
                 : tx.vozIndisponivel}
               ligada={prefs.voz}
               aoMudar={v => mudar({ voz: v })}
+            />
+            <Opcao
+              id="a11y-sons"
+              rotulo={tx.sons}
+              nota={tx.sonsNota}
+              ligada={!prefs.semSons}
+              aoMudar={v => mudar({ semSons: !v })}
             />
             <Opcao
               id="a11y-movimento"

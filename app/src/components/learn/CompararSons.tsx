@@ -16,6 +16,7 @@
  * com dois ou mais itens. Os acertos ficam só nesta tela, para o aluno se
  * situar; não contam nota e não travam nada.
  */
+import { vigiarGravacao } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/licao-comparar-sons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -41,6 +42,7 @@ function useTocador() {
     if (!el.current || el.current.dataset.src !== src) {
       el.current?.pause();
       el.current = new Audio(src);
+      vigiarGravacao(el.current);
       el.current.dataset.src = src;
       el.current.preload = 'auto';
     }
