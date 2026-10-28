@@ -36,7 +36,7 @@ const en: Traducao<typeof pt> = {
   concluido: (pct: number) => `${pct}% complete`,
   // etapa 5/6: Brasil, rever
   noPix: 'with PIX',
-  ouNoCartao: (parcelas: string) => `or ${parcelas} by card`,
+  ouNoCartao: () => '· one-time payment',
   preLancamento: (ate: string | null, depois: string) =>
     `· pre-launch${ate ? ` until ${ate}` : ''}, then ${depois}`,
 

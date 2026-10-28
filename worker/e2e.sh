@@ -9,7 +9,7 @@
 #
 # Rodar:
 #   npm run build:platform
-#   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --local
+#   npx wrangler d1 execute fluent-hebrew --file=worker/schema.sql --local
 #   npx wrangler dev --local --port 8787 &
 #   bash worker/e2e.sh
 #
@@ -32,6 +32,14 @@ MAIL="hf-e2e-$RANDOM@example.invalid"
 fails=0
 
 G() { curl -s --noproxy '*' "$@"; }
+
+# O site em inglês (LOCALE = "en" no wrangler.toml deste repositório) cobra
+# pelo Paddle, em dólar, e não tem a prévia do e-book nem o curso A1. As
+# conferências que dependem disso escolhem pelo mesmo arquivo que a
+# publicação usou.
+RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
+EM_INGLES=0
+grep -qE '^LOCALE *= *"en"' "$RAIZ/wrangler.toml" 2>/dev/null && EM_INGLES=1
 
 # espera <descrição> <esperado> <obtido>
 espera() {
@@ -137,7 +145,12 @@ espera "tabela de recuperação criada"  true "$(campo recuperacao)"
 espera "tabela de confirmação de e-mail criada" true "$(campo verificacao)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
-  echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
+  if [ "$EM_INGLES" = 1 ]; then
+    echo "  · pagamento desligado (PADDLE_API_KEY ou PADDLE_CLIENT_TOKEN ausente ou de"
+    echo "    outro ambiente) - o site funciona assim"
+  else
+    echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
+  fi
 fi
 # Sem provedor de e-mail o site sobe inteiro e "esqueci minha senha" não
 # entrega o link a ninguém. Não é falha de publicação - é uma peça que falta,
@@ -169,8 +182,10 @@ fi  # fim das conferências que pedem HF_ADMIN_TOKEN
 # abriu", e um 302 - mesmo que fosse para algum lugar bonito - é exatamente a
 # falha que este bloco existe para pegar.
 echo "Site público, sem conta"
-for p in "/" "/metodo/" "/cursos/" "/curso-de-hebraico/" "/cursos/hebraico-a1/" \
-         "/sobre/" "/faq/" "/entrar/" "/criar-conta/" "/checkout/alfabetizacao/"; do
+PUBLICAS="/ /metodo/ /cursos/ /curso-de-hebraico/ /sobre/ /faq/ /entrar/ /criar-conta/ /checkout/alfabetizacao/"
+# O A1 não entra no catálogo em inglês (sem price.usd): a página não existe lá.
+[ "$EM_INGLES" = 1 ] || PUBLICAS="$PUBLICAS /cursos/hebraico-a1/"
+for p in $PUBLICAS; do
   c="$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
   espera "$p abre" 200 "$c"
   # A primeira página que não abre já diz quem respondeu. Sem isto, as dez
@@ -181,14 +196,20 @@ done
 # A prévia grátis do e-book (23/10/2026): o link que vai no direct a quem
 # comenta EBOOK. Abre sem conta, fica fora da busca e não vende o livro (que
 # continua aVenda: false). O nome antigo do livro não pode aparecer.
-echo "A prévia do e-book, sem conta"
-PREVIA_HTML="$(G -H 'Sec-Fetch-Dest: document' "$B/previa/")"
-espera "/previa/ abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
-espera "/previa/ fora da busca (cabeçalho)" 1 "$(G -o /dev/null -D - "$B/previa/" | grep -ci '^x-robots-tag:.*noindex')"
-espera "/previa/ fora da busca (meta)" 1 "$(grep -c 'name="robots" content="noindex' <<<"$PREVIA_HTML")"
-espera "/previa/ tem a mochila, o monte e a roleta" 1 "$(grep -q '"tipo":"mochila"' <<<"$PREVIA_HTML" && grep -q '"tipo":"monte"' <<<"$PREVIA_HTML" && grep -q '"jogo":"roleta"' <<<"$PREVIA_HTML" && echo 1 || echo 0)"
-espera "/previa/ não vende o livro" 0 "$(grep -cE 'R\$|/checkout|/cursos/israel' <<<"$PREVIA_HTML")"
-espera "/previa/ sem o nome antigo do livro" 0 "$(grep -ci 'al[eé]m do roteiro' <<<"$PREVIA_HTML")"
+if [ "$EM_INGLES" = 1 ]; then
+  # O site em inglês não monta a prévia (o livro é só do site brasileiro).
+  echo "A prévia do e-book: fora do site em inglês"
+  espera "/previa/ não existe" 404 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+else
+  echo "A prévia do e-book, sem conta"
+  PREVIA_HTML="$(G -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+  espera "/previa/ abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+  espera "/previa/ fora da busca (cabeçalho)" 1 "$(G -o /dev/null -D - "$B/previa/" | grep -ci '^x-robots-tag:.*noindex')"
+  espera "/previa/ fora da busca (meta)" 1 "$(grep -c 'name="robots" content="noindex' <<<"$PREVIA_HTML")"
+  espera "/previa/ tem a mochila, o monte e a roleta" 1 "$(grep -q '"tipo":"mochila"' <<<"$PREVIA_HTML" && grep -q '"tipo":"monte"' <<<"$PREVIA_HTML" && grep -q '"jogo":"roleta"' <<<"$PREVIA_HTML" && echo 1 || echo 0)"
+  espera "/previa/ não vende o livro" 0 "$(grep -cE 'R\$|/checkout|/cursos/israel' <<<"$PREVIA_HTML")"
+  espera "/previa/ sem o nome antigo do livro" 0 "$(grep -ci 'al[eé]m do roteiro' <<<"$PREVIA_HTML")"
+fi
 # Só o curso de alfabetização no site (27/10/2026, decisão do dono): o link da
 # bio vai direto à página do curso, e as páginas das jornadas, das experiências
 # "Em breve" e o "Comece aqui" levam à capa, com a consulta junto. O curl é robô
@@ -354,16 +375,20 @@ case "$B" in
     fi
     ;;
 esac
+# No site em inglês o meio é um só (o checkout do Paddle), e o preço é o
+# price.usd do catálogo, sem desconto de PIX.
+MEIO=pix
+[ "$EM_INGLES" = 1 ] && MEIO=paddle
 if [ "$MODO" = "producao" ]; then
   echo "  · token de PRODUÇÃO: pulando a criação de pedido para não deixar"
   echo "    uma cobrança pendente no painel a cada publicação."
   espera "a rota de pagamento exige sessão" 401 \
     "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
-       -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')"
+       -H 'content-type: application/json' -d "{\"courseSlug\":\"alfabetizacao\",\"method\":\"$MEIO\"}")"
   pay_code=pulado
 else
   pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
-    -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
+    -H 'content-type: application/json' -d "{\"courseSlug\":\"alfabetizacao\",\"method\":\"$MEIO\"}")
 fi
 case "$pay_code" in
   pulado) ;;
@@ -383,18 +408,23 @@ case "$pay_code" in
     espera "o pedido ficou registrado com o preço do servidor" \
       "$(node -e '
         const c = require(process.argv[1]).courses.find(x => x.slug === "alfabetizacao").price;
-        console.log(Math.round(c.brl * (1 - c.pixDiscountPct / 100) * 100));' \
-        "$(cd "$(dirname "$0")/.." && pwd)/data/courses.json")" \
+        console.log(process.argv[2] === "1" ? Math.round(c.usd * 100)
+          : Math.round(c.brl * (1 - c.pixDiscountPct / 100) * 100));' \
+        "$RAIZ/data/courses.json" "$EM_INGLES")" \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
 esac
 espera "curso fora de venda é recusado" 404 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' \
   -X POST $B/api/pay/create -H 'content-type: application/json' \
-  -d '{"courseSlug":"hebraico-a1","method":"pix"}')"
+  -d "{\"courseSlug\":\"hebraico-a1\",\"method\":\"$MEIO\"}")"
 espera "pedido de outra pessoa não é lido" 404 "$(code -b "$JAR" "$B/api/pay/verify?order=HFNAOEXISTE")"
 
 echo "Webhook"
 espera "sem assinatura, recusa" 401 "$(code -X POST "$B/api/pay/webhook?type=payment&data.id=1")"
+if [ "$EM_INGLES" = 1 ]; then
+  espera "aviso do Paddle sem assinatura, recusa" 401 \
+    "$(code -X POST "$B/api/pay/paddle" -H 'content-type: application/json' -d '{"event_type":"transaction.completed","data":{}}')"
+fi
 
 # ── senha ────────────────────────────────────────────────────────────────
 # O que dá para provar de FORA, sem ler a caixa de entrada de ninguém.
@@ -486,7 +516,7 @@ if [ "$B" != "http://127.0.0.1:8787" ]; then
 Esta passagem criou a conta de teste $MAIL.
 Para apagá-la do banco de produção:
 
-  npx wrangler d1 execute hebraico-fluente --remote --command \\
+  npx wrangler d1 execute fluent-hebrew --remote --command \\
     "DELETE FROM arrependimentos     WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM novidades           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM lembretes_estudo    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');

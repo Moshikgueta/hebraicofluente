@@ -33,6 +33,7 @@
 
   "atendimento": {
     "horarioPt": "Segunda a sexta, das 9h às 18h (horário de Brasília)",
+    "horarioEn": "Monday to Friday, 9 am to 6 pm (Brazil time, UTC-3)",
     "prazoRespostaUteis": 2
   },
 
@@ -48,7 +49,8 @@
     "arrependimentoDias": 7,
     "garantiaDias": 7,
     "prazoReembolsoUteis": 10,
-    "atualizadoEm": "2026-10-28"
+    "atualizadoEm": "2026-10-28",
+    "atualizadoEmEn": "2026-10-28"
   },
 
   "_notaFormas": [

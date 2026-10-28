@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { meta } from '@/lib/seo';
+import { PrivacyEn } from '@/components/legal/en/PrivacyEn';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { empresa, lembreteLigado, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/privacidade',
-  title: 'Política de Privacidade - Hebraico Fluente',
-  description:
-    'Quais dados são coletados, para quê, com quem são compartilhados, por quanto ' +
+  title: process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'Privacy Policy - Hebraico Fluente' : 'Política de Privacidade - Hebraico Fluente',
+  description: process.env.NEXT_PUBLIC_LOCALE === 'en'
+    ? 'What data is collected, what for, who it is shared with, how long it is kept, and how to use your data protection rights.'
+    : 'Quais dados são coletados, para quê, com quem são compartilhados, por quanto ' +
     'tempo ficam guardados, e como exercer seus direitos de titular pela LGPD.'
 });
 
@@ -24,6 +26,8 @@ export const metadata: Metadata = meta({
  * nenhuma: ela promete o que ninguém conferiu.
  */
 export default function Page() {
+  /* O site em inglês tem o próprio documento (PLANO-INGLES.md, etapa 6). */
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return <PrivacyEn />;
   const { contato, privacidade, nomeFantasia } = empresa;
 
   const DADOS: [string, string, string][] = [

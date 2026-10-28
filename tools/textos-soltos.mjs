@@ -42,6 +42,8 @@ export const FORA_DO_ESCOPO = [
   'src/app/aprender-hebraico/', 'src/app/descobrir-israel/',
   'src/app/israel-alem-do-obvio/', 'src/app/comece-aqui/', 'src/app/PortalClient.tsx',
   'src/app/termos/', 'src/app/privacidade/', 'src/app/reembolso/',
+  /* As políticas do site em inglês, escritas direto em inglês (etapa 6). */
+  'src/components/legal/en/',
   'src/lib/raizes', 'src/lib/a1', 'src/lib/state/raizes-estado.ts',
   'src/lib/audio-manifest.ts', 'src/lib/painel-estatisticas.ts', 'src/lib/ecossistema.ts',
   'src/components/portal/', 'src/app/cursos/[slug]/LivroClient.tsx',
@@ -71,11 +73,16 @@ export function pareceTexto(s) {
   return DUAS_PALAVRAS.test(s) && PALAVRA_PT.test(s);
 }
 
+/* Peças de pastas fora do escopo que as páginas do site em inglês usam. */
+export const DENTRO_DO_ESCOPO = ['src/components/portal/Migalhas.tsx'];
+
 function arquivos(alvos) {
   const out = [];
   const andar = p => {
     const rel = relative(APP, p);
-    if (FORA_DO_ESCOPO.some(f => rel.startsWith(f) || rel === f.replace(/\/$/, ''))) return;
+    const fora = FORA_DO_ESCOPO.some(f => rel.startsWith(f) || rel === f.replace(/\/$/, ''));
+    const levaADentro = DENTRO_DO_ESCOPO.some(d => d === rel || d.startsWith(`${rel}/`));
+    if (fora && !levaADentro) return;
     if (statSync(p).isDirectory()) { for (const f of readdirSync(p)) andar(join(p, f)); return; }
     if (/\.(tsx?|mts)$/.test(p) && !p.endsWith('.d.ts')) out.push(p);
   };

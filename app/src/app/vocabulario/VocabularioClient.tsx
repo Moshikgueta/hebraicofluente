@@ -129,10 +129,13 @@ export function VocabularioClient() {
           <Link href="/mapa" className="underline">{tx.irCurso}</Link>
         </p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0" aria-label={tx.palavras} data-vocabulario>
+        <ul className="grid gap-3 grid-cols-[minmax(0,1fr)] sm:grid-cols-2 list-none p-0 m-0" aria-label={tx.palavras} data-vocabulario>
           {achadas.map(w => (
             <li key={w.he} className="rounded-[var(--r-lg)] border border-line bg-surface p-4 grid gap-3">
-              <div className="flex items-start gap-4">
+              {/* flex-wrap: uma palavra longa no tamanho grande (מִשְׁפָּחָה) não
+                  cabe ao lado do botão de ouvir num telefone de 390 px, e o
+                  cartão empurrava a página para o lado. O botão desce. */}
+              <div className="flex flex-wrap items-start gap-4">
                 {w.image ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img src={w.image} alt={w.imageAlt ?? ''} width={72} height={72}

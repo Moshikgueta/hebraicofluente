@@ -15,7 +15,7 @@ const pt = {
 } as const;
 
 const en: Traducao<typeof pt> = {
-  natContexto: 'Búzios, Rio de Janeiro, Brazil · the teacher\'s private student',
+  natContexto: 'Buzios, Rio de Janeiro, Brazil · the teacher\'s private student',
   natResultado: 'Reads and writes Hebrew',
   // tradução do depoimento: o dono confere com a aluna antes de publicar
   natCitacao:

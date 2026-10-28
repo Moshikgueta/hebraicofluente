@@ -23,6 +23,7 @@
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { OUT } from './saida.mjs';
 
 const curso = JSON.parse(readFileSync(new URL('./content/course.json', import.meta.url), 'utf8'));
 
@@ -57,7 +58,11 @@ const PARCIAIS = {
 const UNIDADE = {
   'lições': 'licoes', 'lição': 'licoes',
   'letras': 'letras', 'letra': 'letras',
-  'módulos': 'modulos', 'módulo': 'modulos'
+  'módulos': 'modulos', 'módulo': 'modulos',
+  /* O site em inglês (NEXT_PUBLIC_LOCALE=en): as mesmas grandezas. */
+  'lessons': 'licoes', 'lesson': 'licoes',
+  'letters': 'letras', 'letter': 'letras',
+  'modules': 'modulos', 'module': 'modulos'
 };
 
 /* Duas regras, e as duas foram escolhidas para não gritar à toa.
@@ -117,7 +122,7 @@ const texto = html => html
 const problemas = [];
 let conferidas = 0;
 
-for (const [rota, arquivo] of paginas('out').sort()) {
+for (const [rota, arquivo] of paginas(OUT).sort()) {
   if (!LIVRES.has(rota)) continue;
   conferidas++;
   /* Na vitrine de cursos, cada cartão fala do SEU curso: "11 módulos" no
@@ -130,7 +135,7 @@ for (const [rota, arquivo] of paginas('out').sort()) {
   const t = texto(html);
   const vistos = new Map();
 
-  for (const [, n, palavra] of t.matchAll(/(\d+)\s+(lições|lição|letras|letra|módulos|módulo)\b/g)) {
+  for (const [, n, palavra] of t.matchAll(/(\d+)\s+(lições|lição|letras|letra|módulos|módulo|lessons|lesson|letters|letter|modules|module)\b/g)) {
     const chave = `${n} ${palavra}`;
     if (vistos.has(chave)) continue;
     vistos.set(chave, true);
@@ -143,14 +148,14 @@ for (const [rota, arquivo] of paginas('out').sort()) {
      é a lição que ENSINA aquela letra. Em 01/10/2026 /biblia dizia "lição 20
      das 22": a ordem da letra lida como lição, e o total de letras como total
      de lições (auditoria, CONV-006). */
-  for (const [trecho, palavra, n, m] of t.matchAll(/\b(letra|lição)\s+(\d+)\s+das\s+(\d+)/g)) {
+  for (const [trecho, palavra, n, m] of t.matchAll(/\b(letra|lição|letter|lesson)\s+(\d+)\s+(?:das|of)\s+(\d+)/g)) {
     const unidade = UNIDADE[palavra];
     if (Number(m) !== TOTAL[unidade]) {
       problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}", mas o curso tem ${TOTAL[unidade]} ${unidade}`);
     }
     if (Number(n) > Number(m)) problemas.push(`${rota.padEnd(28)} diz "${trecho}"`);
   }
-  for (const [trecho, ordem, licao] of t.matchAll(/letra\s+(\d+)\s+das\s+\d+\s*\(\s*lição\s+(\d+)/g)) {
+  for (const [trecho, ordem, licao] of t.matchAll(/(?:letra|letter)\s+(\d+)\s+(?:das|of)\s+\d+\s*\(\s*(?:lição|lesson)\s+(\d+)/g)) {
     const certa = licaoDaLetra(Number(ordem));
     if (certa !== Number(licao)) {
       problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}…", mas a letra ${ordem} entra na lição ${certa}`);

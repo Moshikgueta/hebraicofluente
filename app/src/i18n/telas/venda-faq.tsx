@@ -119,15 +119,15 @@ const en: Traducao<typeof pt> = {
   pagoSemCartao: 'No credit card yet. When it is added, it will show up at checkout.',
   // etapa 5/6: Brasil, rever (PIX e parcelamento)
   pagoPixCartao: (parcelas: string) => `PIX, credit card paid in full or in installments ${parcelas}.`,
-  // etapa 5/6: Brasil, rever (PIX e parcelamento)
-  pagoCartao: (parcelas: string) =>
-    `Credit card, paid in full or in installments ${parcelas}. PIX is not available yet; when it is added, it will show up at checkout.`,
+  // etapa 5: o site em inglês cobra pelo Paddle
+  pagoCartao: () =>
+    'Card, PayPal, Apple Pay or Google Pay, on the secure checkout of Paddle, our authorized reseller. One-time payment, taxes included.',
   // etapa 5/6: Brasil, rever (PIX)
   pagoAVista: (preco: string, pix: string | null) => `Paid in full, the course comes to ${preco}${pix ? `, or ${pix} by PIX` : ''}.`,
   pagoPreLancamento: (fim: string | null, cheio: string, meses: number) =>
     `That is the pre-launch price${fim ? `, valid until ${fim}` : ''}. After that, the course will cost ${cheio}. If you buy now, you pay once and get the ${meses} months of access.`,
-  // etapa 5/6: Brasil, rever (parcelamento e Mercado Pago)
-  pagoJuros: 'Installments carry interest, charged by Mercado Pago. The amount of each installment and the total appear on its payment screen before you confirm.',
+  // etapa 5: o site em inglês cobra pelo Paddle
+  pagoJuros: 'Paddle processes the payment and handles the sales tax for your country. The total in US dollars appears before you confirm, and this platform never receives your card details.',
 
   liberadoQ: 'When is access granted?',
   liberadoCartao: 'By card, right away - confirmation comes in seconds.',
@@ -146,7 +146,7 @@ const en: Traducao<typeof pt> = {
   incluidoQ: 'What is not included?',
   incluidoA1: (duvidas: string) =>
     `The course is self-paced: you study at your own pace, and the platform corrects each exercise right away. That is why there are no live classes, and no grading or follow-up by a teacher. Support by email and WhatsApp is for access, payment and your account. ${duvidas}`,
-  incluidoA2: 'Also not included: the other courses (A1, A2 and B1, sold separately when they launch), an app to install (everything works in the browser) and physical materials. The certificate of completion is not an official certificate.',
+  incluidoA2: 'Also not included: other courses, an app to install (everything works in the browser) and physical materials. The certificate of completion is not an official certificate.',
 
   falarQ: 'Does the course teach you to speak and understand Hebrew?',
   falarA: 'Here you learn to decode: recognize each letter and each vowel sign, read words aloud and write them.',
@@ -184,10 +184,10 @@ const en: Traducao<typeof pt> = {
   gostarQ: 'What if I do not like it?',
   // etapa 5/6: Brasil, rever (CDC, direito de arrependimento)
   gostarA1: (dias: number, inicio: string) =>
-    `Brazil's Consumer Protection Code gives you ${dias} days to cancel a purchase made online, ${inicio}. Within that period, just ask: you get the full amount back, no questions and no extra steps.`,
+    `You have ${dias} days to cancel, ${inicio}. Within that period, just ask: you get the full amount back, no questions and no extra steps.`,
   // etapa 5/6: Brasil, rever (Mercado Pago)
   gostarA2: (sozinho: boolean, email: string, confirmacao: string) =>
-    `In Your account, under the purchase, use "Cancel purchase"${sozinho ? ': the refund is requested from Mercado Pago right away, automatically' : ''}. If you prefer, write to ${email} with the email you used to buy. ${confirmacao}`,
+    `In Your account, under the purchase, use "Cancel the purchase"${sozinho ? ': the refund is requested from Paddle right away, automatically' : ''}. If you prefer, write to ${email} with the email you used to buy. ${confirmacao}`,
 
   niveisQ: 'Are you really going to launch the other levels?',
   niveisA1: 'A1 is in production and comes next. A2 and B1 come after, in that order.',

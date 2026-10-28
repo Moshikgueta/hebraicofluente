@@ -708,9 +708,9 @@ export async function createOrder(env, o) {
   await env.DB.prepare(
     `INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method,
                          installments, status, provider, created_at, parceria, origem, campanha)
-     VALUES (?, ?, ?, ?, 'BRL', ?, ?, 'pending', 'mercadopago', ?, ?, ?, ?)`
-  ).bind(id, o.accountId, o.courseSlug, o.amountCents, o.method,
-         o.installments || 1, now(), o.parceria || null, o.origem || null, o.campanha || null).run();
+     VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)`
+  ).bind(id, o.accountId, o.courseSlug, o.amountCents, o.currency || 'BRL', o.method,
+         o.installments || 1, o.provider || 'mercadopago', now(), o.parceria || null, o.origem || null, o.campanha || null).run();
   return getOrder(env, id);
 }
 

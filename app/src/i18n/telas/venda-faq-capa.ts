@@ -41,7 +41,7 @@ const en: Traducao<typeof pt> = {
   // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
   r7: (dias: number) => `You have ${dias} days, counted from when your access is granted, to cancel on the site and get 100% back, no reason needed. The refund goes back through the same payment method.`,
   p8: 'What happens after I finish?',
-  r8: 'The next level is Hebrew A1, a separate course, still in production and with no date yet. If you like, check the box in Your account to get an email when it opens.'
+  r8: 'You keep your access for the full 12 months: to review, play the Reading Academy games and take the final exam whenever you are ready. For now, this is the only course on this site.'
 };
 
 export const DICIONARIO = { pt, en };

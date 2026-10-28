@@ -21,17 +21,17 @@ const pt = {
 
 const en: Traducao<typeof pt> = {
   dagueshPergunta: 'Without the dots, as in a newspaper: in this word («{sentido}»), what sound does the letter {nome} have?',
-  dagueshExplicaForte: 'With daguesh: at the beginning of the word or after a consonant that closes the syllable.',
-  dagueshExplicaSuave: 'Without daguesh: almost always between vowels, and at the end of the word.',
+  dagueshExplicaForte: 'With dagesh: at the beginning of the word or after a consonant that closes the syllable.',
+  dagueshExplicaSuave: 'Without dagesh: almost always between vowels, and at the end of the word.',
   palavraExplica: '{he} - {leitura} - {sentido}. ',
   finalPergunta: 'Which of these is the final form of {nome}?',
   finalExplica: '{base} turns into {final} at the end of a word - as in {palavra} ({leitura}), "{sentido}".',
   semNikudPergunta: 'Without nikud, as in a newspaper. What does it say?',
   semNikudExplica: '{nua} is {pontuada} - {leitura} - "{sentido}".',
   gerechPergunta: 'What sound does this letter have?',
-  gerechExplica: '{he} is {som} - {como}. Without the guéresh, {base} is {baseSom}.',
+  gerechExplica: '{he} is {som} - {como}. Without the geresh, {base} is {baseSom}.',
   semSinalPergunta: 'And without the sign - what sound does it have?',
-  semSinalExplica: 'Without the guéresh, {base} is {baseSom}. With it, {he} is {som}.',
+  semSinalExplica: 'Without the geresh, {base} is {baseSom}. With it, {he} is {som}.',
   palavraPergunta: 'Read it out loud. Which word is this?',
   palavraGerechExplica: '{he} - "{sentido}". The {letra} makes the sound {som}.'
 };

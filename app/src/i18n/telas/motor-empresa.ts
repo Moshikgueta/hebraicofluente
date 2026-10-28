@@ -27,7 +27,7 @@ const en: Traducao<typeof pt> = {
   inicioDoAcesso: 'counted from when access is granted',
   renovacao: 'In the last {dias} days of access, you can renew with a new purchase, at the current price. The {meses} months of the renewal are added to the end of your current access, not counted from the payment date: renewing early does not cost you a single day. Nothing is renewed or charged automatically.',
   duvidasDeConteudo: 'Questions about the content are also welcome by e-mail, within the same time frame.',
-  oQueOCursoEnsina: 'This course teaches you to read and write Hebrew. Conversation starts in Hebraico A1, which is a separate course.'
+  oQueOCursoEnsina: 'This course teaches you to read and write Hebrew. It does not teach conversation.'
 };
 
 export const DICIONARIO = { pt, en };

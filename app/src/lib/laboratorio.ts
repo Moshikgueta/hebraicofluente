@@ -29,6 +29,7 @@ import { FINAL_TO_BASE, clean, clusters, stripNikud } from '@/lib/hebrew';
 import { letrasDaGrafia, consegueLer, type PalavraDoCurso } from '@/lib/engine/palavras';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/motor-laboratorio';
+import { translit as grafia } from '@/i18n/translit';
 
 export type NivelDeApoio = 'guiada' | 'menos-ajuda' | 'independente';
 
@@ -97,9 +98,9 @@ export type PalavraDoBanco = {
 
 /* Os sinais, pelo ponto de código. Os nomes são os de data/nikud.json. */
 const SINAIS: Record<string, { nome: string; vogal: Vogal | null }> = {
-  'ַ': { nome: 'pátach', vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
+  'ַ': { nome: grafia('pátach'), vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
   'ָ': { nome: 'kamats', vogal: 'a' },
-  'ֲ': { nome: 'chataf pátach', vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
+  'ֲ': { nome: grafia('chataf pátach'), vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
   'ֶ': { nome: 'segol', vogal: 'e' },
   'ֵ': { nome: 'tsere', vogal: 'e' },
   'ֱ': { nome: 'chataf segol', vogal: 'e' },
@@ -156,7 +157,7 @@ export function pedacosDe(he: string, letras: readonly Letter[], translit = ''):
     if (cholamMale || shuruk) {
       return {
         grafia: g, letra, nomePt: L?.namePt ?? 'Vav', somPt: '',
-        vogal: cholamMale ? 'o' : 'u', sinaisPt: [cholamMale ? 'cholam malê' : 'shuruk'], // i18n-ok: nome do sinal (transliteração, etapa 3)
+        vogal: cholamMale ? 'o' : 'u', sinaisPt: [cholamMale ? grafia('cholam malê') : 'shuruk'], // i18n-ok: nome do sinal (transliteração, etapa 3)
         apoioDeVogal: true, papel: 'vogal',
         notaPt: cholamMale ? tx.vavO : tx.vavU
       };

@@ -17,8 +17,11 @@
 
 import { activeEntitlements, findAccountByEmail, pegarTrava } from './lib/db.js';
 import { getCourse } from './lib/catalog.js';
-import { mailReady, mensagemDaSequencia, sendMail } from './lib/mail.js';
+import { mailReady, sendMail } from './lib/mail.js';
+import { mensagens } from './lib/mensagens.js';
+import { idiomaDoWorker } from './lib/idioma.js';
 import { DIAS_DA_SEQUENCIA, SEQUENCIA_FEITA, linkDeSaida } from './api/interessados.js';
+import { DIAS_PADDLE } from './api/pay.js';
 import empresa from '../../data/empresa.json';
 
 const DIA = 86_400_000;
@@ -54,10 +57,15 @@ export async function runSequencia(env, at = Date.now()) {
 
   const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
   const c = getCourse(CURSO);
+  /* A lista não tem conta: o idioma é o do Worker, que neste repositório
+     tem banco próprio (lib/idioma.js). No inglês, o preço é o price.usd e o
+     prazo de desistência é o do Paddle. */
+  const idioma = idiomaDoWorker(env);
   const preco = c && c.price ? {
+    usd: idioma === 'en' ? (c.price.usd || null) : null,
     brl: c.price.brl, listBrl: c.price.listBrl || null, pixPct: c.price.pixDiscountPct || 0,
     parcelas: c.price.installments || 12, meses: c.accessMonths || 12,
-    desistir: Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7
+    desistir: idioma === 'en' ? DIAS_PADDLE : (Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7)
   } : null;
 
   let enviados = 0;
@@ -70,7 +78,7 @@ export async function runSequencia(env, at = Date.now()) {
       const sair = await linkDeSaida(env, l.id);
       const r = await sendMail(env, {
         to: l.email,
-        ...mensagemDaSequencia({
+        ...mensagens(idioma).sequencia({
           passo: l.passo, site, sair, preco,
           suporte: empresa.contato?.emailSuporte || '', marca: empresa.nomeFantasia || 'Hebraico Fluente'
         }),

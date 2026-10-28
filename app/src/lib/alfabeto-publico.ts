@@ -15,6 +15,7 @@
  */
 import type { NomeAmostra } from '@/lib/amostra-audio';
 import { tx } from '@/i18n/telas/motor-alfabeto-publico';
+import { translit as grafia } from '@/i18n/translit';
 
 export type LetraPublica = {
   id: string;
@@ -29,7 +30,7 @@ export type LetraPublica = {
 export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   {
     id: 'alef', audioNome: 'alef',
-    exemplo: { he: 'אַבָּא', translit: 'ába', pt: tx.alefSentido, audio: 'aba' }, // i18n-ok: transliteração, etapa 3
+    exemplo: { he: 'אַבָּא', translit: grafia('ába'), pt: tx.alefSentido, audio: 'aba' }, // i18n-ok: transliteração, etapa 3
     erro: {
       errado: tx.alefErrado,
       certo: tx.alefCerto
@@ -38,7 +39,7 @@ export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   },
   {
     id: 'mem', audioNome: 'mem',
-    exemplo: { he: 'אִמָא', translit: 'íma', pt: tx.memSentido, audio: 'ima' }, // i18n-ok: transliteração, etapa 3
+    exemplo: { he: 'אִמָא', translit: grafia('íma'), pt: tx.memSentido, audio: 'ima' }, // i18n-ok: transliteração, etapa 3
     erro: {
       errado: tx.memErrado,
       certo: tx.memCerto
@@ -47,7 +48,7 @@ export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   },
   {
     id: 'tav', audioNome: 'tav',
-    exemplo: { he: 'אֶמֶת', translit: 'émet', pt: tx.tavSentido, audio: 'emet' }, // i18n-ok: transliteração, etapa 3
+    exemplo: { he: 'אֶמֶת', translit: grafia('émet'), pt: tx.tavSentido, audio: 'emet' }, // i18n-ok: transliteração, etapa 3
     erro: {
       errado: tx.tavErrado,
       certo: tx.tavCerto
@@ -56,7 +57,7 @@ export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   },
   {
     id: 'shin', audioNome: 'shin',
-    exemplo: { he: 'שָׁלוֹם', translit: 'shalóm', pt: tx.shinSentido, audio: 'shalom' }, // i18n-ok: transliteração, etapa 3
+    exemplo: { he: 'שָׁלוֹם', translit: grafia('shalóm'), pt: tx.shinSentido, audio: 'shalom' }, // i18n-ok: transliteração, etapa 3
     erro: {
       errado: tx.shinErrado,
       certo: tx.shinCerto
@@ -65,7 +66,7 @@ export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   },
   {
     id: 'lamed', audioNome: 'lamed',
-    exemplo: { he: 'לַיְלָה', translit: 'láyla', pt: tx.lamedSentido, audio: 'laila' }, // i18n-ok: transliteração, etapa 3
+    exemplo: { he: 'לַיְלָה', translit: grafia('láyla'), pt: tx.lamedSentido, audio: 'laila' }, // i18n-ok: transliteração, etapa 3
     erro: {
       errado: tx.lamedErrado,
       certo: tx.lamedCerto

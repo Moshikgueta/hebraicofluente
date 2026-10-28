@@ -10,9 +10,15 @@
  */
 
 import atual from '../../../data/politicas-versoes/atual.json';
+import atualEn from '../../../data/politicas-versoes-en/atual.json';
 
-/** A versão em vigor de um documento ('termos', 'reembolso', 'privacidade'), ou ''. */
-export const versaoAtual = doc => String((atual && atual[doc]) || '');
+/** A versão em vigor de um documento ('termos', 'reembolso', 'privacidade'), ou ''.
+ *  O Worker em inglês (LOCALE = "en") lê as versões das políticas em inglês,
+ *  guardadas à parte em data/politicas-versoes-en (PLANO-INGLES.md, etapa 6). */
+export const versaoAtual = (doc, env) => {
+  const lista = env && env.LOCALE === 'en' ? atualEn : atual;
+  return String((lista && lista[doc]) || '');
+};
 
 /** O endereço fixo de uma versão; sem versão, a página de hoje. */
 export const linkDaVersao = (site, doc, versao) =>
@@ -26,7 +32,7 @@ export const linkDaVersao = (site, doc, versao) =>
  * atual.
  */
 export async function gravarTermosDoPedido(env, orderId) {
-  const v = versaoAtual('termos');
+  const v = versaoAtual('termos', env);
   if (!v) return;
   try {
     await env.DB.prepare('UPDATE orders SET termos_versao = ? WHERE id = ?').bind(v, orderId).run();

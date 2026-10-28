@@ -78,6 +78,7 @@ import type { NikudIntro, NikudSound } from '@/lib/content';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-start-here-client';
 import { tx as tq } from '@/i18n/telas/painel-start-here-perguntas';
+import { translit as grafia } from '@/i18n/translit';
 
 /* ── as oito perguntas do nikud ──────────────────────────────────────────
    Cada uma existe contra um mal-entendido específico, e não para cobrir o
@@ -1111,9 +1112,9 @@ function PrimeiraEUltima() {
    são três palavras diferentes. E os sinais ficam embaixo, em cima ou
    dentro da letra, conforme o sinal. */
 const MESMAS = [
-  { he: 'סֵפֶר', translit: 'séfer', pt: tx.sentidoLivro }, // i18n-ok: transliteração (etapa 3)
-  { he: 'סָפַר', translit: 'safár', pt: tx.sentidoContou }, // i18n-ok: transliteração (etapa 3)
-  { he: 'סַפָּר', translit: 'sapár', pt: tx.sentidoBarbeiro } // i18n-ok: transliteração (etapa 3)
+  { he: 'סֵפֶר', translit: grafia('séfer'), pt: tx.sentidoLivro }, // i18n-ok: transliteração (etapa 3)
+  { he: 'סָפַר', translit: grafia('safár'), pt: tx.sentidoContou }, // i18n-ok: transliteração (etapa 3)
+  { he: 'סַפָּר', translit: grafia('sapár'), pt: tx.sentidoBarbeiro } // i18n-ok: transliteração (etapa 3)
 ];
 
 function MesmasConsoantes() {

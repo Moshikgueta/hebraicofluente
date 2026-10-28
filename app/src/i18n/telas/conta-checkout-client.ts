@@ -140,7 +140,20 @@ const pt = {
   ouNoCartao: (parcelas: string) => `ou ${parcelas} no cartão`,
   pixDesconto: (preco: string, desconto: number) => `${preco} no PIX · ${desconto}% de desconto`,
   resumoDesistir: (dias: string | number) =>
-    `${dias} dias para desistir e receber 100% de volta, sem justificar.`
+    `${dias} dias para desistir e receber 100% de volta, sem justificar.`,
+  /* O checkout do Paddle (site em inglês, etapa 5). O português existe só
+     porque todo dicionário tem os dois lados: a build brasileira não usa. */
+  paddleComoPaga: 'Cartão, PayPal, Apple Pay ou Google Pay',
+  paddleTexto: (preco: string) =>
+    `${preco}, impostos incluídos, em pagamento único. Você paga no checkout seguro do Paddle, nosso ` +
+    'revendedor oficial: ele processa o pagamento e recolhe o imposto do seu país. Esta plataforma ' +
+    'nunca recebe os dados do seu cartão.',
+  paddleAbrindo: 'Abrindo o pagamento…',
+  paddleFechou: 'A janela de pagamento foi fechada sem concluir. Quando quiser, é só clicar de novo.',
+  paddleNaoCarregou:
+    'A janela de pagamento não abriu. Confira a conexão, desligue bloqueadores nesta página e tente de novo.',
+  paddleConfirmando: 'Pagamento recebido. Confirmando o seu acesso…',
+  paddleResumo: 'Pagamento único · impostos incluídos',
 } as const;
 
 /* etapa 5/6: Brasil, rever - quase tudo aqui é a cobrança brasileira (PIX,
@@ -148,7 +161,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   metaTitulo: (titulo: string) => `Buy ${titulo} - Hebraico Fluente`,
   metaTituloPadrao: 'Checkout - Hebraico Fluente',
-  oLivro: 'Israel Além do Óbvio',
+  oLivro: 'Israel Alem do Obvio',
   oCombo: 'The bundle',
   oCurso: 'The course',
 
@@ -166,18 +179,18 @@ const en: Traducao<typeof pt> = {
   comprar: (titulo: string, preco: string) => `Buy ${titulo} · ${preco}`,
 
   jaESeu: 'Already yours',
-  livroJaNaConta: 'Israel Além do Óbvio is already in your account.',
+  livroJaNaConta: 'Israel Alem do Obvio is already in your account.',
   cursoJaNaConta: 'This course is already in your account.',
   nadaAPagar: 'Nothing to pay.',
   nadaAPagarContinue: 'Nothing to pay. Pick up where you left off.',
-  abrirLivro: 'Open Israel Além do Óbvio',
+  abrirLivro: 'Open Israel Alem do Obvio',
   irParaMeuHebraico: 'Go to My Hebrew',
 
   pagamentoConfirmado: 'Payment confirmed',
   prontoESeu: (oQue: string) => `Done. ${oQue} is yours.`,
   livroLiberado: (meses: number) => `Interactive version unlocked for ${meses} months.`,
   comboLiberado:
-    'The course and Israel Além do Óbvio are unlocked, under the same login. Both are in My Library.',
+    'The course and Israel Alem do Obvio are unlocked, under the same login. Both are in My Library.',
   cursoLiberado: (meses: number) =>
     `Access unlocked for ${meses} months. The first letter takes about ten minutes.`,
   abrirBiblioteca: 'Open My Library',
@@ -220,7 +233,7 @@ const en: Traducao<typeof pt> = {
   oQueVoceLeva: 'What you get',
   levaLivro: (titulo: string) => `${titulo}: an interactive digital experience, in your browser.`,
   levaCombo:
-    'Full access to the interactive Hebrew Literacy course and to the Israel Além do Óbvio platform.',
+    'Full access to the interactive Hebrew Literacy course and to the Israel Alem do Obvio platform.',
   levaCurso: (titulo: string) => `Full access to ${titulo}, on the platform, in your browser.`,
   porQuantoTempo: 'For how long',
   tempoRenovacao: (meses: number) => `${meses} more months, added to the end of your current access.`,
@@ -232,7 +245,7 @@ const en: Traducao<typeof pt> = {
     'period, access ends and nothing else is charged.',
   naoVemJunto: 'What is not included',
   naoVemLivro:
-    'The Hebrew course: Israel Além do Óbvio is about Israel, and does not teach you to read ' +
+    'The Hebrew course: Israel Alem do Obvio is about Israel, and does not teach you to read ' +
     'Hebrew like the course lessons do.',
   naoVemCurso:
     'Live classes and grading by a teacher: the course is self-paced, and the platform checks ' +
@@ -275,7 +288,7 @@ const en: Traducao<typeof pt> = {
   resumoLivro: (capitulos: number, meses: number) =>
     `Interactive experience · ${capitulos} chapters · ${meses} months of access`,
   resumoCombo: (meses: number) =>
-    `Bundle: literacy course + Israel Além do Óbvio · ${meses} months of access`,
+    `Bundle: literacy course + Israel Alem do Obvio · ${meses} months of access`,
   resumoCurso: (modulos: number, licoes: number | null, meses: number) =>
     `${modulos} modules${licoes ? ` · ${licoes} lessons` : ''} · ${meses} months of access`,
   noPix: 'with PIX',
@@ -285,7 +298,18 @@ const en: Traducao<typeof pt> = {
   ouNoCartao: (parcelas: string) => `or ${parcelas} by card`,
   pixDesconto: (preco: string, desconto: number) => `${preco} with PIX · ${desconto}% off`,
   resumoDesistir: (dias: string | number) =>
-    `${dias} days to cancel and get 100% back, no reason needed.`
+    `${dias} days to cancel and get 100% back, no reason needed.`,
+  paddleComoPaga: 'Card, PayPal, Apple Pay or Google Pay',
+  paddleTexto: (preco: string) =>
+    `${preco}, taxes included, one-time payment. You pay on the secure checkout of Paddle, our ` +
+    'authorized reseller: Paddle processes the payment and handles the sales tax for your country. ' +
+    'This platform never receives your card details.',
+  paddleAbrindo: 'Opening checkout…',
+  paddleFechou: 'The payment window was closed before finishing. Click again whenever you are ready.',
+  paddleNaoCarregou:
+    'The payment window did not open. Check your connection, turn off any blocker on this page and try again.',
+  paddleConfirmando: 'Payment received. Confirming your access…',
+  paddleResumo: 'One-time payment · taxes included',
 };
 
 export const DICIONARIO = { pt, en };

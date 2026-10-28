@@ -46,6 +46,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Nenhum pedido mudou de verdade (o push só passou pelo arquivo): nada a devolver.
+          [ -d fotos-candidatas ] || exit 0
           git add fotos-candidatas
           git commit -m "Fotos candidatas (Wikimedia Commons)" || exit 0
           git push

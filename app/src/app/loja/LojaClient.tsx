@@ -20,6 +20,7 @@ import { concluidasSemDominio, REGRA_DA_CONCLUSAO, REGRA_DO_DOMINIO_CURTA } from
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import { tx } from '@/i18n/telas/academia-loja-client';
 
 const MOTIVO: Record<Recusa, string> = {
@@ -87,8 +88,8 @@ export function LojaClient() {
             onTrocar={() => proxima && trocar('carta', proxima.id, tx.cartaFeito)}
             depois={compradas.size > 0 ? <Link href="/historia" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline">{tx.lerCartas}</Link> : null} />
 
-      {/* Nome decorado */}
-      {temNomeDecorado(s) && s.nomeHebraico ? (
+      {/* Nome decorado (só onde a "Meu nome em hebraico" existe, lib/recursos.ts) */}
+      {!MEU_NOME_EM_HEBRAICO ? null : temNomeDecorado(s) && s.nomeHebraico ? (
         <NomeDecorado nomeHe={s.nomeHebraico.texto} nomePt={s.onboarding?.name ?? ''} />
       ) : (
         <Item titulo={nomeItem.titulo} custo={nomeItem.custo} icone={<IconeBrilho size={26} />}

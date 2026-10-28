@@ -56,7 +56,7 @@ const en: Traducao<typeof pt> = {
   resumoCurso: 'Read and write Hebrew from zero, letter by letter.',
   resumoLivro: 'An interactive digital experience through the history, culture and places of Israel.',
   resumoA1: 'Everyday Hebrew, after the alphabet.',
-  nomeRaizes: 'Raízes Sefarditas',
+  nomeRaizes: 'Raizes Sefarditas',
   resumoRaizes: 'Sephardic history, journeys and memory.',
 
   abrindo: 'Opening your library...',
@@ -73,8 +73,7 @@ const en: Traducao<typeof pt> = {
   pagamentoEsperando: 'A payment is waiting for confirmation',
   // etapa 5/6: Brasil, rever
   pendente: (nome: string, pix: boolean) =>
-    `${nome}, ${pix ? 'by PIX' : 'by card'}. As soon as the payment is confirmed, the course ` +
-    'shows up here. If you have not paid yet, the PIX code is in Your account.',
+    `${nome}${pix ? ', by PIX' : ''}. As soon as the payment is confirmed, the course shows up here.`,
   conferirPagamento: 'Check the payment',
   verCodigoPix: 'See the PIX code in Your account',
   acessoTerminou: (data: string) => `Your access ended on ${data}`,

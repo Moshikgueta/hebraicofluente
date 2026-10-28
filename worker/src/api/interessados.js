@@ -35,7 +35,9 @@
 import { fail, json, readJson } from '../lib/http.js';
 import { hmacB64, sha256hex, timingSafeEqual } from '../lib/crypto.js';
 import { normalizeEmail, throttled } from '../lib/db.js';
-import { mailReady, mensagemDeConfirmacaoDaLista, sendMail } from '../lib/mail.js';
+import { mailReady, sendMail } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { idiomaDoWorker } from '../lib/idioma.js';
 import { fonteValida } from '../lib/origem.js';
 import { emailOk, ip } from './auth.js';
 
@@ -124,7 +126,7 @@ export async function entrar({ request, env }) {
   const r = await inscrever(env, { email, interesse, origem: b.origem });
   if (!r) return fail('erro', 503);
   if (!r.confirmado) {
-    const m = mensagemDeConfirmacaoDaLista({
+    const m = mensagens(idiomaDoWorker(env)).confirmacaoDaLista({
       interesses: [interesse], confirmar: await linkDeConfirmacao(env, r.id), suporte: env.SUPPORT_EMAIL || ''
     });
     const enviado = await sendMail(env, { to: email, ...m });

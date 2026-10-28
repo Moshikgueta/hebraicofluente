@@ -80,8 +80,11 @@ export type Empresa = {
      *               aprovação de ninguém - e NÃO CONFIRMA SOZINHO: o acesso
      *               é liberado à mão depois de olhar o extrato.
      * `mercadopago` PIX e cartão, com confirmação automática.
+     * `paddle`      o site em inglês: cartão, PayPal, Apple Pay e Google Pay
+     *               no checkout do Paddle, em dólar, com confirmação
+     *               automática. Escrito pelo exportador na build em inglês.
      */
-    modo: 'pix-direto' | 'mercadopago';
+    modo: 'pix-direto' | 'mercadopago' | 'paddle';
     /**
      * O que DÁ para oferecer nesta build.
      *
@@ -207,7 +210,10 @@ export const formasAtivas = (): ('pix' | 'card')[] =>
  * dizer isso - prometer liberação instantânea e entregar em duas horas gera
  * mais suporte do que prometer "em algumas horas" e entregar em dez minutos.
  */
-export const confirmaSozinho = (): boolean => empresa.pagamento.modo === 'mercadopago';
+export const confirmaSozinho = (): boolean => empresa.pagamento.modo !== 'pix-direto';
+
+/** O site em inglês: o pagamento é o checkout do Paddle (lib/paddle-checkout.ts). */
+export const pagaPeloPaddle = (): boolean => empresa.pagamento.modo === 'paddle';
 
 /* ── as frases que se repetem, num lugar só (auditoria de 01/10/2026) ──────
  * Cada uma destas aparecia escrita à mão em três a nove páginas, e cada

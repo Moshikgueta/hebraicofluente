@@ -137,8 +137,8 @@ const en: Traducao<typeof pt> = {
   // etapa 5/6: Brasil, rever (PIX)
   noPix: 'by PIX',
   descontoSobre: (pct: number, preco: string) => ` · ${pct}% off ${preco}`,
-  // etapa 5/6: Brasil, rever (parcelamento no cartão)
-  noCartao: (parcelas: string) => `or ${parcelas} on a card`,
+  // etapa 5: o site em inglês cobra pelo Paddle
+  noCartao: () => 'one-time payment, taxes included',
   // etapa 5/6: Brasil, rever (PIX)
   descontoNoPix: (pct: number, preco: string) => `${pct}% off by PIX: ${preco}`,
   desbloquear: 'Unlock the course',
@@ -146,8 +146,8 @@ const en: Traducao<typeof pt> = {
   pagamentoPix: 'Payment by PIX, in your bank\'s app.',
   // etapa 5/6: Brasil, rever (PIX e parcelamento)
   pixCartao: (parcelas: string) => `PIX, card or installments ${parcelas}.`,
-  // etapa 5/6: Brasil, rever (parcelamento no cartão)
-  cartao: (parcelas: string) => `Credit card, or installments ${parcelas}.`,
+  // etapa 5: o site em inglês cobra pelo Paddle
+  cartao: () => 'Card, PayPal, Apple Pay or Google Pay, through Paddle.',
   automatico: 'Access granted automatically.',
   aMao: (prazo: string) => `Access granted by hand, ${prazo} after payment.`,
   mesesAparelhos: (meses: number) => `${meses} months, from phone to computer.`,

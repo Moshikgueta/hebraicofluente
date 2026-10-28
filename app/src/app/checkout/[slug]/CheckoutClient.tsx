@@ -40,7 +40,8 @@ import { AuthError, MESSAGES, daysLeft, type Order, type PaymentMethod } from '@
 import { ancora, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice, tipoDe, type CatalogCourse, paginaDeVenda } from '@/lib/catalog';
 import { comParceria, fimDaParceria, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { contarComOrigem, origemAtual } from '@/lib/origem';
-import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, parcelasTexto, soPix, temPix } from '@/lib/empresa';
+import { confirmaSozinho, empresa, formasAtivas, INICIO_DO_ACESSO, JANELA_DE_RENOVACAO_DIAS, pagaPeloPaddle, parcelasTexto, soPix, temPix } from '@/lib/empresa';
+import { abrirCheckout } from '@/lib/paddle-checkout';
 import { AuthForm } from '@/components/platform/AuthForm';
 import { track } from '@/lib/analytics';
 import { api } from '@/lib/account/api';
@@ -78,11 +79,15 @@ export function CheckoutClient({ slug }: { slug: string }) {
      forma só, a tela para de perguntar e passa a informar: uma escolha com
      uma opção não é uma escolha, e dá ao comprador a impressão de que ele
      perdeu alguma coisa. */
+  /* O site em inglês: um botão só, que abre o checkout do Paddle. */
+  const PADDLE = pagaPeloPaddle();
   const FORMAS = formasAtivas();
   const UMA_FORMA = FORMAS.length === 1;
   const SO_CARTAO = UMA_FORMA && FORMAS[0] === 'card';
 
-  const [method, setMethod] = useState<PaymentMethod>(FORMAS[0] ?? 'pix');
+  const [method, setMethod] = useState<PaymentMethod>(PADDLE ? 'paddle' : (FORMAS[0] ?? 'pix'));
+  /* O aviso do checkout do Paddle (fechou sem pagar, não carregou). */
+  const [avisoPaddle, setAvisoPaddle] = useState<string | null>(null);
   const [order, setOrder] = useState<Order | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -133,6 +138,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
      código" não pode ser desfeito por esta busca. */
   const procurouPix = useRef(false);
   useEffect(() => {
+    if (PADDLE) return;
     if (!deveRetomarPix({
       pronto: account.ready, logado: account.signedIn, dono: owned,
       temPedido: !!order, jaProcurou: procurouPix.current
@@ -152,7 +158,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
       } catch { /* sem PIX para reabrir: a tela segue como sempre */ }
     })();
     return () => { stop = true; };
-  }, [account.ready, account.signedIn, owned, order, slug]);
+  }, [account.ready, account.signedIn, owned, order, slug, PADDLE]);
 
   /* ── a consulta ──────────────────────────────────────────────────── */
   const startedAt = useRef<number>(0);
@@ -212,6 +218,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     setBusy(true);
     setError(null);
     setGaveUp(false);
+    setAvisoPaddle(null);
     startedAt.current = 0;
     try {
       const created = await account.startOrder({
@@ -227,6 +234,22 @@ export function CheckoutClient({ slug }: { slug: string }) {
         window.location.href = created.redirectUrl;
         return;
       }
+      /* O Paddle abre por cima desta página. A consulta ao servidor só
+         começa quando ele diz que o pagamento passou (o pedido entra em
+         `order`); fechar sem pagar deixa a pessoa clicar de novo, e cada
+         clique é um pedido novo, como no cartão da Mercado Pago. */
+      if (created.paddle) {
+        try {
+          await abrirCheckout(created.paddle, {
+            email: account.session?.account.email,
+            aoConcluir: () => { setAvisoPaddle(null); setOrder(created); },
+            aoFechar: () => setAvisoPaddle(tx.paddleFechou)
+          });
+        } catch {
+          setError(tx.paddleNaoCarregou);
+        }
+        return;
+      }
       setOrder(created);
     } catch (e) {
       if (e instanceof AuthError && e.code === 'payments-off') setPaymentsOff(true);
@@ -234,7 +257,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
     } finally {
       setBusy(false);
     }
-  }, [account, slug, method, parcelas]);
+  }, [account, slug, method, parcelas, parceria]);
 
   /* ── o pagamento ainda não foi ligado ────────────────────────────── */
   if (paymentsOff) {
@@ -386,7 +409,12 @@ export function CheckoutClient({ slug }: { slug: string }) {
             volta SOZINHA na publicação seguinte ao dia em que a forma voltar
             a existir - não há nada comentado no código esperando alguém
             lembrar de descomentar. */}
-        {UMA_FORMA ? (
+        {PADDLE ? (
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body
+                        bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
+            <strong>{tx.paddleComoPaga}</strong>{' · '}{tx.paddleTexto(brl(c.price.brl))}
+          </p>
+        ) : UMA_FORMA ? (
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body
                         bg-surface-2 rounded-[var(--r-md)] px-4 py-3">
             {SO_CARTAO ? (
@@ -426,6 +454,14 @@ export function CheckoutClient({ slug }: { slug: string }) {
           </p>
         )}
 
+        {avisoPaddle && (
+          <p aria-live="polite"
+             className="font-ui text-[13.5px] leading-relaxed text-ink-body
+                        bg-[var(--amber-wash)] rounded-[var(--r-md)] px-4 py-3">
+            {avisoPaddle}
+          </p>
+        )}
+
         {error && (
           <p role="alert"
              className="font-ui text-[13.5px] leading-relaxed text-[var(--ember)]
@@ -450,13 +486,13 @@ export function CheckoutClient({ slug }: { slug: string }) {
           />
         ) : order?.status === 'pending' ? (
           <p aria-live="polite" className="font-ui text-[14px] text-ink-body">
-            {tx.aguardandoConfirmacao}
+            {order.method === 'paddle' ? tx.paddleConfirmando : tx.aguardandoConfirmacao}
           </p>
         ) : (
           <>
             <CondicoesDaCompra curso={c} renovacao={restam !== null && restam <= JANELA_DE_RENOVACAO_DIAS} />
             <Button size="lg" full onClick={pay} disabled={busy}>
-              {busy ? tx.gerando : tx.pagar(brl(total))}
+              {busy ? (PADDLE ? tx.paddleAbrindo : tx.gerando) : tx.pagar(brl(PADDLE ? c.price.brl : total))}
             </Button>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted text-center">
               {/* A declaração de idade está só nos Termos, art. 3 (pedido do dono,
@@ -735,7 +771,7 @@ function Shell({ course, children }: {
               {brl(c.price.brl)}
             </p>
             <p className="font-ui text-[12.5px] text-ink-body">
-              {tx.ouNoCartao(parcelasTexto(parcelas))}
+              {pagaPeloPaddle() ? tx.paddleResumo : tx.ouNoCartao(parcelasTexto(parcelas))}
             </p>
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">

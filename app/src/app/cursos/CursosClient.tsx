@@ -107,7 +107,8 @@ export function CursosClient() {
       </Section>
 
 
-      <Section labelledBy="ordem">
+      {/* Só onde há cursos depois deste: o site em inglês só tem a alfabetização. */}
+      {allCourses().length > 1 && <Section labelledBy="ordem">
         {/* Uma afirmação, não um cartão: o fio teal à esquerda é o mesmo das
             citações da capa. */}
         <div className="grid gap-4 max-w-[760px] pl-6 border-l-2 border-[var(--teal)]">
@@ -119,7 +120,7 @@ export function CursosClient() {
             {tx.pularTexto}
           </p>
         </div>
-      </Section>
+      </Section>}
     </>
   );
 }

@@ -287,7 +287,7 @@ const en: Traducao<typeof pt> = {
   avisoErro: 'I could not save that right now. Try again in a moment.',
 
   lembreteTitulo: 'Study reminder',
-  lembreteQuero: 'I want an email at 7 pm (Brasília time) on days when I have not studied yet.',
+  lembreteQuero: 'I want an email at 7 pm Brazil time (UTC-3) on days when I have not studied yet.',
   lembreteNota:
     'At most one a day. After three reminders without study, they stop on their own until you come back. ' +
     'You can turn it off whenever you want, here or through the link in the email itself.',

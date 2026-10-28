@@ -18,6 +18,7 @@
 
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
 const BASE = process.env.HF_BASE;
 if (!BASE) { console.error('Defina HF_BASE (um wrangler dev).'); process.exit(2); }
@@ -49,7 +50,9 @@ if (!email) {
     SELECT 'HFa11y' || id, id, 'alfabetizacao', 0, 'pix', 'paid', 'manual', unixepoch()*1000, unixepoch()*1000 FROM accounts WHERE email = '${email}';
     INSERT OR REPLACE INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
     SELECT id, 'alfabetizacao', unixepoch()*1000, unixepoch()*1000 + 31536000000, 'HFa11y' || id FROM accounts WHERE email = '${email}'`;
-  execFileSync('npx', ['wrangler', 'd1', 'execute', 'hebraico-fluente', '--local', ...persist, '--command', sql],
+  /* O nome do banco sai do wrangler.toml deste repositório (fluent-hebrew). */
+  const banco = (readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8').match(/^database_name\s*=\s*"([^"]+)"/m) || [])[1];
+  execFileSync('npx', ['wrangler', 'd1', 'execute', banco, '--local', ...persist, '--command', sql],
     { cwd: new URL('..', import.meta.url), stdio: 'ignore' });
   ok('conta nova com o curso liberado no D1 local');
 }

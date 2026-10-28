@@ -26,9 +26,9 @@ const pt = {
 const en: Traducao<typeof pt> = {
   licenciadoPara: (email: string) => `Licensed to ${email}`,
   copia: (numero: string) => `copy ${numero}`,
-  // etapa 5/6: Brasil, rever (a lei citada é a brasileira)
+  // etapa 6: escrito para o site de fora
   avisoDeDireitos:
-    'Content protected by copyright (Brazilian Law 9,610/1998), licensed for the personal use of ' +
+    'Content protected by copyright, licensed for the personal use of ' +
     'this account. Copying, recording for distribution or reselling without permission may lead ' +
     'to civil and criminal liability.',
   termosArtigo5: 'Terms of Use, article 5',
