@@ -76,6 +76,8 @@ export const NAO_LISTADAS = [
   '/comece-aqui',
   /* A Minha Biblioteca (23/10/2026): da conta, sem nada para a busca. */
   '/minha-biblioteca',
+  /* O desafio com um amigo (28/10/2026): cada link é de uma pessoa. */
+  '/desafio-amigo',
   /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
      Existem para quem aceitou aquela versão; na busca, só a de hoje. */
   '/termos/v', '/reembolso/v', '/privacidade/v',
