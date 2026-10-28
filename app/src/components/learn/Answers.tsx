@@ -20,6 +20,7 @@
  *     - remove a tile, clear the build, change the pairing.
  */
 
+import { Yael } from '@/components/aventura/Yael';
 import { tx } from '@/i18n/telas/licao-answers';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -625,7 +626,10 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
   return (
     <div className="grid gap-2">
       {shown > 0 && (
-        <ul className="grid gap-1.5" aria-live="polite">
+        <div className="flex items-start gap-2">
+        {/* A Yael pensa junto com o aluno enquanto ele lê a dica (28/10/2026). */}
+        <Yael humor="pensando" className="w-[44px] shrink-0 -mt-1" />
+        <ul className="grid gap-1.5 flex-1 min-w-0" aria-live="polite">
           {hints?.slice(0, shown).map((h, i) => (
             <li key={i} ref={i === shown - 1 ? ultimaRef : undefined} tabIndex={-1}
                 className="outline-none font-ui text-[13.5px] leading-relaxed text-ink-muted
@@ -634,6 +638,7 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
             </li>
           ))}
         </ul>
+        </div>
       )}
       <div className="flex flex-wrap items-center gap-3">
         {shown < available && (

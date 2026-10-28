@@ -39,7 +39,7 @@ export function ExerciciosA1Client({ n }: { n: number }) {
     const prox = proximaUnidade(n);
     return (
       <div className="focus-col grid gap-5">
-        <Milestone
+        <Milestone yael={false}
           tone={passou ? 'bom' : 'parcial'}
           kicker={`Unidade ${n} · ${fim.certas} de ${fim.total} na primeira tentativa (${pct}%)`}
           title={fim.nota >= 0.85 ? 'Você domina esta unidade.' : passou ? 'Unidade concluída.' : 'Quase lá.'}

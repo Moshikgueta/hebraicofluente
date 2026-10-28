@@ -97,8 +97,10 @@ export function CelebracaoDaLetra({ letter }: { letter: Letter }) {
       <p className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.12em] text-[var(--teal-lite)]">
         {tx.letraConquistada}
       </p>
-      <div className="w-[180px] animate-pop text-ink">
+      <div className="relative w-[180px] animate-pop text-ink">
         <CartaDaLetra letter={letter} estado="concluida" grande />
+        {/* A Yael comemora a carta nova, encostada no canto. */}
+        <Yael humor="comemora" className="absolute -right-12 -bottom-3 w-[72px]" />
       </div>
       <h2 id="carta-nova" className="m-0 text-white text-[22px] sm:text-[26px] font-bold leading-tight">
         {tx.entrouNaColecao(letter.namePt)}
@@ -107,7 +109,7 @@ export function CelebracaoDaLetra({ letter }: { letter: Letter }) {
           aventura: יָעֵל tem י, ע e ל, e o ע é o que faltava (28/10/2026). */}
       {letter.id === 'ayin' && (
         <div className="flex items-center gap-3 rounded-[var(--r-md)] bg-white/10 px-4 py-3 text-left">
-          <Yael className="w-[64px] shrink-0" />
+          <Yael humor="feliz" className="w-[64px] shrink-0" />
           <p className="m-0 font-ui text-[15px] leading-snug text-white">
             {tx.leNomeYael(<span className="text-[22px]"><He size="inline" tone="lite">יָעֵל</He></span>)}
             <span className="block text-[13px] text-white/85">{tx.yaelLegenda}</span>

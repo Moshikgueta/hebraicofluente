@@ -68,7 +68,7 @@ export function RevisaoA1Client() {
     const pct = Math.round(fim.nota * 100);
     return (
       <div className="focus-col grid gap-5">
-        <Milestone tone={fim.nota >= 0.7 ? 'bom' : 'parcial'}
+        <Milestone yael={false} tone={fim.nota >= 0.7 ? 'bom' : 'parcial'}
           kicker={`${fim.certas} de ${fim.total} na primeira tentativa (${pct}%)`}
           title={rodada.tipo === 'dia' ? 'Revisão do dia feita.' : 'Desafio feito.'}
           body="O que você errou volta logo; o que acertou sobe de caixa e volta mais tarde. Quando um item sobe até o fim, ele fica dominado." />
