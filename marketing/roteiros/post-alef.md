@@ -4,6 +4,11 @@ O primeiro da série "O erro do brasileiro", agora com a explicação do curso, 
 posts de 26 e 27/10 prometeram que "o próximo post é sobre o Álef". Artes (8 imagens, 1080x1350)
 entregues ao dono num zip em 28/10.
 
+**Versão 2 (28/10, pedido do dono: "mais gancho, mais chamativo"):** capa com o gancho "Essa letra
+não tem som. E quase todo brasileiro lê errado.", a letra gigante com o selo de mudo, a vogal em
+dourado (duas camadas do mesmo texto) para o olho achar o som, barra de progresso, "arraste →",
+sombras em camadas e o desafio no slide 7 com a resposta no 8. Mesmo conteúdo do curso.
+
 **Tudo vem de `data/letters.json`, entrada `alef`:** `ensino.funcaoPt` (slides 2 e 3), `syllables`
 (4), `brazilianMistake` com o porquê (5; o porquê é conteúdo do curso, usado aqui a pedido do dono),
 `contrastes.ע` (6) e a palavra `אֹכֶל` de `wordsToRecognize` (7, com gravação em
