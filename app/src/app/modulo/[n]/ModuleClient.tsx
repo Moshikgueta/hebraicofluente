@@ -17,7 +17,7 @@ import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { EXTRA_STAGE_COUNT, isLessonComplete } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
-import { allLetters, missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
+import { allLetters, extras, missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
 import { CenaExploravel } from '@/components/aventura/CenaExploravel';
 import { textoLidoId } from '@/lib/engine/textos';
 import { missaoId } from '@/lib/engine/missao';
@@ -50,6 +50,10 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const comecadas = useMemo(
     () => todas.filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
     [todas, p.state.lessons]
+  );
+  const modulosComecados = useMemo(
+    () => course.modules.filter(m => !m.letterIds.length && (p.state.lessons[m.id]?.stagesDone.length ?? 0) > 0).map(m => m.n),
+    [p.state.lessons]
   );
 
   /* O checkpoint e a prática focada num cartão só (05/10/2026). Antes o
@@ -109,7 +113,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         <GravacaoDoProfessor id={`module-${mod.n}-welcome`} />
       </Card>
 
-      <CenaExploravel modulo={mod.n} todas={todas} comecadas={comecadas} />
+      <CenaExploravel modulo={mod.n} todas={todas} comecadas={comecadas} extras={extras()} modulosComecados={modulosComecados} />
 
       <Card className="p-6 grid gap-4">
         <h2 className="font-display text-[18px] font-semibold">As lições</h2>

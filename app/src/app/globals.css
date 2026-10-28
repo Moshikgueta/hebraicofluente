@@ -208,6 +208,8 @@
 /* O ponto da cena explorável ainda não tocado (CenaExploravel). */
 @keyframes hf-cena-pulso { from { transform: scale(1); opacity: .85; } to { transform: scale(2.1); opacity: 0; } }
 .hf-cena-pulso { animation: hf-cena-pulso 1.8s ease-out infinite; }
+/* Na cena explorável o ônibus fica parado: o ponto dele não anda junto. */
+.hf-cena .il-onibus { animation: none; }
 .il-vivo .il-vapor { animation: il-pisca 3s ease-in-out infinite; }
 .il-vivo .il-peixe { transform-box: fill-box; transform-origin: center; animation: il-pula-peixe 4s ease-in-out infinite; }
 .il-trancado { filter: grayscale(.75) brightness(.97); opacity: .72; }
