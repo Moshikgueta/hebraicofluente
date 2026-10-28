@@ -1082,5 +1082,425 @@
   "textos/#12/perguntas/#2/porque": {
     "pt": "{{פיג׳מה}} é pijama.",
     "en": null
+  },
+  "textos/#13/tituloPt": {
+    "pt": "A rosa",
+    "en": null
+  },
+  "textos/#13/tipoPt": {
+    "pt": "Conversa",
+    "en": null
+  },
+  "textos/#13/introPt": {
+    "pt": "O Dani e a mãe estão no jardim.",
+    "en": null
+  },
+  "textos/#13/linhas/#0/pt": {
+    "pt": "Mãe, o que é isto?",
+    "en": null
+  },
+  "textos/#13/linhas/#1/pt": {
+    "pt": "É uma rosa.",
+    "en": null
+  },
+  "textos/#13/linhas/#2/pt": {
+    "pt": "Uma rosa grande!",
+    "en": null
+  },
+  "textos/#13/linhas/#3/pt": {
+    "pt": "Olha, tem uma rosa lá também.",
+    "en": null
+  },
+  "textos/#13/linhas/#4/pt": {
+    "pt": "Uma rosa para a mamãe!",
+    "en": null
+  },
+  "textos/#13/linhas/#5/pt": {
+    "pt": "Obrigada, Dani!",
+    "en": null
+  },
+  "textos/#13/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "en": null
+  },
+  "textos/#13/novas/#1/pt": {
+    "pt": "para (grudado na palavra)",
+    "en": null
+  },
+  "textos/#13/perguntas/#0/q": {
+    "pt": "O que a mãe mostra ao Dani?",
+    "en": null
+  },
+  "textos/#13/perguntas/#0/porque": {
+    "pt": "{{זֶה וֶרֶד}}: é uma rosa.",
+    "en": null
+  },
+  "textos/#13/perguntas/#1/q": {
+    "pt": "A rosa é pequena.",
+    "en": null
+  },
+  "textos/#13/perguntas/#1/porque": {
+    "pt": "{{וֶרֶד גָדוֹל!}}: uma rosa grande.",
+    "en": null
+  },
+  "textos/#13/perguntas/#2/q": {
+    "pt": "Para quem o Dani quer a rosa?",
+    "en": null
+  },
+  "textos/#13/perguntas/#2/porque": {
+    "pt": "{{וֶרֶד לְאִמָא!}}: uma rosa para a mamãe.",
+    "en": null
+  },
+  "textos/#14/tituloPt": {
+    "pt": "Um suco gelado",
+    "en": null
+  },
+  "textos/#14/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": null
+  },
+  "textos/#14/introPt": {
+    "pt": "É meio-dia, faz calor, e a Noa manda uma mensagem para o Dan.",
+    "en": null
+  },
+  "textos/#14/linhas/#0/pt": {
+    "pt": "Oi, Dan, o que você está fazendo?",
+    "en": null
+  },
+  "textos/#14/linhas/#1/pt": {
+    "pt": "Estou tomando um suco gelado.",
+    "en": null
+  },
+  "textos/#14/linhas/#2/pt": {
+    "pt": "Que suco?",
+    "en": null
+  },
+  "textos/#14/linhas/#3/pt": {
+    "pt": "Suco fresco.",
+    "en": null
+  },
+  "textos/#14/linhas/#4/pt": {
+    "pt": "Eu também quero!",
+    "en": null
+  },
+  "textos/#14/linhas/#5/pt": {
+    "pt": "Tem mais.",
+    "en": null
+  },
+  "textos/#14/linhas/#6/pt": {
+    "pt": "Estou aí num instante!",
+    "en": null
+  },
+  "textos/#14/novas/#0/pt": {
+    "pt": "Dan (nome)",
+    "en": null
+  },
+  "textos/#14/novas/#1/pt": {
+    "pt": "oi",
+    "en": null
+  },
+  "textos/#14/novas/#2/pt": {
+    "pt": "faz, está fazendo",
+    "en": null
+  },
+  "textos/#14/novas/#3/pt": {
+    "pt": "bebe, está tomando",
+    "en": null
+  },
+  "textos/#14/novas/#4/pt": {
+    "pt": "gelado, frio",
+    "en": null
+  },
+  "textos/#14/novas/#5/pt": {
+    "pt": "qual, que",
+    "en": null
+  },
+  "textos/#14/novas/#6/pt": {
+    "pt": "quer (para mulher)",
+    "en": null
+  },
+  "textos/#14/perguntas/#0/q": {
+    "pt": "O que o Dan está tomando?",
+    "en": null
+  },
+  "textos/#14/perguntas/#0/porque": {
+    "pt": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: estou tomando um suco gelado.",
+    "en": null
+  },
+  "textos/#14/perguntas/#1/q": {
+    "pt": "O suco está quente.",
+    "en": null
+  },
+  "textos/#14/perguntas/#1/porque": {
+    "pt": "{{מִיץ קַר}}: um suco gelado.",
+    "en": null
+  },
+  "textos/#14/perguntas/#2/q": {
+    "pt": "A Noa também quer suco.",
+    "en": null
+  },
+  "textos/#14/perguntas/#2/porque": {
+    "pt": "{{גַם אֲנִי רוֹצָה!}}: eu também quero!",
+    "en": null
+  },
+  "textos/#15/tituloPt": {
+    "pt": "No mercado",
+    "en": null
+  },
+  "textos/#15/tipoPt": {
+    "pt": "Conversa",
+    "en": null
+  },
+  "textos/#15/introPt": {
+    "pt": "A Maya passa no mercado de manhã.",
+    "en": null
+  },
+  "textos/#15/linhas/#0/pt": {
+    "pt": "Bom dia! O que você quer?",
+    "en": null
+  },
+  "textos/#15/linhas/#1/pt": {
+    "pt": "Um pão sírio, por favor.",
+    "en": null
+  },
+  "textos/#15/linhas/#2/pt": {
+    "pt": "Mais alguma coisa?",
+    "en": null
+  },
+  "textos/#15/linhas/#3/pt": {
+    "pt": "Sim, um café.",
+    "en": null
+  },
+  "textos/#15/linhas/#4/pt": {
+    "pt": "Aqui está. São vinte shekels.",
+    "en": null
+  },
+  "textos/#15/linhas/#5/pt": {
+    "pt": "Muito obrigada!",
+    "en": null
+  },
+  "textos/#15/novas/#0/pt": {
+    "pt": "alguma coisa",
+    "en": null
+  },
+  "textos/#15/novas/#1/pt": {
+    "pt": "shekel (a moeda de Israel)",
+    "en": null
+  },
+  "textos/#15/novas/#2/pt": {
+    "pt": "muita (תוֹדָה רַבָּה: muito obrigado)",
+    "en": null
+  },
+  "textos/#15/novas/#3/pt": {
+    "pt": "quer (para mulher)",
+    "en": null
+  },
+  "textos/#15/perguntas/#0/q": {
+    "pt": "O que a Maya pede primeiro?",
+    "en": null
+  },
+  "textos/#15/perguntas/#0/porque": {
+    "pt": "{{פִּתָה, בְּבַקָשָׁה}}: um pão sírio, por favor.",
+    "en": null
+  },
+  "textos/#15/perguntas/#1/q": {
+    "pt": "A Maya também quer um café.",
+    "en": null
+  },
+  "textos/#15/perguntas/#1/porque": {
+    "pt": "{{כֵּן, קָפֶה}}: sim, um café.",
+    "en": null
+  },
+  "textos/#15/perguntas/#2/q": {
+    "pt": "Quanto custa?",
+    "en": null
+  },
+  "textos/#15/perguntas/#2/porque": {
+    "pt": "{{עֶשְׂרִים שֶׁקֶל}}: vinte shekels.",
+    "en": null
+  },
+  "textos/#16/tituloPt": {
+    "pt": "O bilhete da mãe",
+    "en": null
+  },
+  "textos/#16/tipoPt": {
+    "pt": "Bilhete",
+    "en": null
+  },
+  "textos/#16/introPt": {
+    "pt": "O Dani chega em casa e encontra um bilhete da mãe.",
+    "en": null
+  },
+  "textos/#16/linhas/#0/pt": {
+    "pt": "Para o Dani,",
+    "en": null
+  },
+  "textos/#16/linhas/#1/pt": {
+    "pt": "Tem pão e queijo na mesa.",
+    "en": null
+  },
+  "textos/#16/linhas/#2/pt": {
+    "pt": "O suco está na geladeira.",
+    "en": null
+  },
+  "textos/#16/linhas/#3/pt": {
+    "pt": "Estou no trabalho até as quatro.",
+    "en": null
+  },
+  "textos/#16/linhas/#4/pt": {
+    "pt": "Com amor, mãe",
+    "en": null
+  },
+  "textos/#16/novas/#0/pt": {
+    "pt": "para (grudado na palavra)",
+    "en": null
+  },
+  "textos/#16/novas/#1/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": null
+  },
+  "textos/#16/novas/#2/pt": {
+    "pt": "queijo",
+    "en": null
+  },
+  "textos/#16/novas/#3/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": null
+  },
+  "textos/#16/novas/#4/pt": {
+    "pt": "mesa",
+    "en": null
+  },
+  "textos/#16/novas/#5/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "en": null
+  },
+  "textos/#16/novas/#6/pt": {
+    "pt": "geladeira",
+    "en": null
+  },
+  "textos/#16/novas/#7/pt": {
+    "pt": "trabalho",
+    "en": null
+  },
+  "textos/#16/novas/#8/pt": {
+    "pt": "até",
+    "en": null
+  },
+  "textos/#16/novas/#9/pt": {
+    "pt": "ama (ela ama); no fim do bilhete, com amor",
+    "en": null
+  },
+  "textos/#16/perguntas/#0/q": {
+    "pt": "Onde está o suco?",
+    "en": null
+  },
+  "textos/#16/perguntas/#0/porque": {
+    "pt": "{{הַמִיץ בַּמְקָרֵר}}: o suco está na geladeira.",
+    "en": null
+  },
+  "textos/#16/perguntas/#1/q": {
+    "pt": "Tem pão na mesa.",
+    "en": null
+  },
+  "textos/#16/perguntas/#1/porque": {
+    "pt": "{{יֵשׁ לֶחֶם}}: tem pão.",
+    "en": null
+  },
+  "textos/#16/perguntas/#2/q": {
+    "pt": "Até que horas a mãe trabalha?",
+    "en": null
+  },
+  "textos/#16/perguntas/#2/porque": {
+    "pt": "{{עַד אַרְבַּע}}: até as quatro.",
+    "en": null
+  },
+  "textos/#17/tituloPt": {
+    "pt": "A girafa",
+    "en": null
+  },
+  "textos/#17/tipoPt": {
+    "pt": "Conversa",
+    "en": null
+  },
+  "textos/#17/introPt": {
+    "pt": "O Dani e o pai passeiam no zoológico.",
+    "en": null
+  },
+  "textos/#17/linhas/#0/pt": {
+    "pt": "Pai, olha! Uma girafa!",
+    "en": null
+  },
+  "textos/#17/linhas/#1/pt": {
+    "pt": "É. Ela é muito grande.",
+    "en": null
+  },
+  "textos/#17/linhas/#2/pt": {
+    "pt": "O que ela come?",
+    "en": null
+  },
+  "textos/#17/linhas/#3/pt": {
+    "pt": "Folhas da árvore.",
+    "en": null
+  },
+  "textos/#17/linhas/#4/pt": {
+    "pt": "Eu também quero comer!",
+    "en": null
+  },
+  "textos/#17/linhas/#5/pt": {
+    "pt": "Tem pão sírio na mochila.",
+    "en": null
+  },
+  "textos/#17/novas/#0/pt": {
+    "pt": "olha! (para homem)",
+    "en": null
+  },
+  "textos/#17/novas/#1/pt": {
+    "pt": "grande (para feminino)",
+    "en": null
+  },
+  "textos/#17/novas/#2/pt": {
+    "pt": "come (ela come)",
+    "en": null
+  },
+  "textos/#17/novas/#3/pt": {
+    "pt": "folhas",
+    "en": null
+  },
+  "textos/#17/novas/#4/pt": {
+    "pt": "de o, da (grudado na palavra)",
+    "en": null
+  },
+  "textos/#17/novas/#5/pt": {
+    "pt": "comer",
+    "en": null
+  },
+  "textos/#17/novas/#6/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "en": null
+  },
+  "textos/#17/perguntas/#0/q": {
+    "pt": "Que animal o Dani vê?",
+    "en": null
+  },
+  "textos/#17/perguntas/#0/porque": {
+    "pt": "{{ג׳ירפה}}: girafa.",
+    "en": null
+  },
+  "textos/#17/perguntas/#1/q": {
+    "pt": "A girafa é pequena.",
+    "en": null
+  },
+  "textos/#17/perguntas/#1/porque": {
+    "pt": "{{הִיא גְדוֹלָה מְאוֹד}}: ela é muito grande.",
+    "en": null
+  },
+  "textos/#17/perguntas/#2/q": {
+    "pt": "O que a girafa come?",
+    "en": null
+  },
+  "textos/#17/perguntas/#2/porque": {
+    "pt": "{{עָלִים מֵהָעֵץ}}: folhas da árvore.",
+    "en": null
   }
 }
