@@ -22,6 +22,9 @@ da palavra, o Mem final, a altura do Lámed), as 5 sílabas, errado e certo com 
 hebraico e toda a explicação vêm de `data/letters.json` (ensino, sílabas, erro, contrastes,
 palavras); nada novo. Zip entregue ao dono em 28/10. As legendas abaixo continuam valendo.
 
+**Versão 3 (28/10, pedido do dono):** a capa no creme e a ordem das cores invertida, na identidade
+do site: creme nos slides 1, 4 e 8; azul-escuro nos 2, 3, 5 e 6; verde no desafio (7).
+
 ## Ordem trocada em 28/10/2026: o Álef primeiro
 
 Os posts do dono de 26/10 ("os 3 erros", Xanucá) e de 27/10 (eleições em Israel) prometeram ao
