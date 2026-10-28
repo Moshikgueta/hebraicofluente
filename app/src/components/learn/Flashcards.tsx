@@ -27,27 +27,31 @@ import type { Letter } from '@/lib/content';
 import { somPt } from '@/lib/som-pt';
 import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
+import { palavrasDoCaderno, type Caderno } from '@/lib/caderno';
 
-export type Baralho = 'letras' | 'palavras';
+/** `caderno`: só as palavras do caderno do aluno (lib/caderno.ts). */
+export type Baralho = 'letras' | 'palavras' | 'caderno';
 
 type Carta = { id: string; frente: string; titulo: string; detalhe: string; audioId: string | null; cursiva?: string };
 
 const POR_RODADA = 12;
 
-export function cartasDoBaralho(baralho: Baralho, letras: readonly Letter[], todas: readonly Letter[]): Carta[] {
+export function cartasDoBaralho(baralho: Baralho, letras: readonly Letter[], todas: readonly Letter[], caderno?: Caderno): Carta[] {
   if (baralho === 'letras') {
     return letras.map(l => ({
       id: l.id, frente: l.letraComPonto ?? l.letter, titulo: l.namePt,
       detalhe: somPt(l.sound), audioId: l.audioId ?? null, cursiva: l.letter
     }));
   }
-  return palavrasLegiveis(vocabularioDoCurso(todas), alfabetoDe(letras)).map(w => ({
+  const legiveis = palavrasLegiveis(vocabularioDoCurso(todas), alfabetoDe(letras));
+  return (baralho === 'caderno' ? palavrasDoCaderno(caderno, legiveis) : legiveis).map(w => ({
     id: w.he, frente: w.he, titulo: w.translit, detalhe: w.pt, audioId: w.audioId ?? null
   }));
 }
 
-export function Flashcards({ baralho, letras, todas, semente, onBack }: {
+export function Flashcards({ baralho, letras, todas, semente, onBack, caderno }: {
   baralho: Baralho;
+  caderno?: Caderno;
   letras: readonly Letter[];
   todas: readonly Letter[];
   semente: string;
@@ -55,8 +59,8 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
 }) {
   const [rodada, setRodada] = useState(0);
   const inicial = useMemo(
-    () => shuffled(cartasDoBaralho(baralho, letras, todas), rng(`${semente}-${baralho}-${rodada}`)).slice(0, POR_RODADA),
-    [baralho, letras, todas, semente, rodada]
+    () => shuffled(cartasDoBaralho(baralho, letras, todas, caderno), rng(`${semente}-${baralho}-${rodada}`)).slice(0, POR_RODADA),
+    [baralho, letras, todas, semente, rodada, caderno]
   );
   const [fila, setFila] = useState<Carta[] | null>(null);
   const [virada, setVirada] = useState(false);
@@ -72,6 +76,7 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
         <p className="m-0 font-ui text-[15px] text-ink-body">
           {baralho === 'letras'
             ? tx.semLetras
+            : baralho === 'caderno' ? tx.semCaderno
             : tx.semPalavras}
         </p>
         <Button variant="secondary" onClick={onBack}>{tx.voltar}</Button>

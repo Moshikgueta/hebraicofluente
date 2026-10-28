@@ -233,6 +233,7 @@ export function AcademiaClient() {
     if (treino === 'desafio') setScreen({ kind: 'desafio', startedAt: Date.now() });
     if (treino === 'flashcards-letras') setScreen({ kind: 'flashcards', baralho: 'letras' });
     if (treino === 'flashcards-palavras') setScreen({ kind: 'flashcards', baralho: 'palavras' });
+    if (treino === 'flashcards-caderno') setScreen({ kind: 'flashcards', baralho: 'caderno' });
   }, [treino]);
 
   /* As letras que mais custam entram primeiro no baralho. É o mesmo sinal que
@@ -686,15 +687,16 @@ export function AcademiaClient() {
 
   if (screen.kind === 'flashcards') {
     const deLetras = screen.baralho === 'letras';
+    const doCaderno = screen.baralho === 'caderno';
     return (
       <div className="grid gap-5">
         <GymHeader
-          mode={{ titlePt: deLetras ? tx.flashLetrasTitulo : tx.flashPalavrasTitulo } as GymMode}
-          label={deLetras ? tx.flashLetrasRotulo : tx.flashPalavrasRotulo}
+          mode={{ titlePt: deLetras ? tx.flashLetrasTitulo : doCaderno ? tx.flashCadernoTitulo : tx.flashPalavrasTitulo } as GymMode}
+          label={deLetras ? tx.flashLetrasRotulo : doCaderno ? tx.flashCadernoRotulo : tx.flashPalavrasRotulo}
           onBack={() => setScreen({ kind: 'menu' })}
         />
         <Flashcards baralho={screen.baralho} letras={unlocked} todas={allLetters()}
-                    semente={`flash-${p.day}`} onBack={() => setScreen({ kind: 'menu' })} />
+                    semente={`flash-${p.day}`} caderno={p.state.caderno} onBack={() => setScreen({ kind: 'menu' })} />
       </div>
     );
   }

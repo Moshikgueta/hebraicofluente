@@ -4,6 +4,7 @@ import type { Traducao } from '..';
 const pt = {
   semLetras: 'As cartas de letras aparecem depois da primeira lição.',
   semPalavras: 'As cartas de palavras aparecem quando você já lê a primeira palavra do curso.',
+  semCaderno: 'Seu caderno está vazio. Marque palavras no seu vocabulário para treinar só elas aqui.',
   voltar: 'Voltar',
   completa: 'Rodada completa',
   todasSabidas: (n: number) => `${n} cartas, todas sabidas no fim.`,
@@ -23,6 +24,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   semLetras: 'Letter cards appear after the first lesson.',
   semPalavras: 'Word cards appear once you can read the first word of the course.',
+  semCaderno: 'Your notebook is empty. Mark words in your vocabulary to practice only them here.',
   voltar: 'Back',
   completa: 'Round complete',
   todasSabidas: n => `${n} cards, all known by the end.`,

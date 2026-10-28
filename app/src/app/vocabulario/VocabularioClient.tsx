@@ -25,6 +25,8 @@ import { normalizeTyped } from '@/lib/engine/types';
 import { stripNikud } from '@/lib/hebrew';
 import { track } from '@/lib/analytics';
 import { tx } from '@/i18n/telas/academia-vocabulario-client';
+import { useProgress } from '@/lib/state/store';
+import { noCaderno, palavrasDoCaderno } from '@/lib/caderno';
 
 /* Sem acento e com o "ss" do curso (kissé) igual a um s: quem busca "kise"
    acha a palavra. */
@@ -32,7 +34,12 @@ const semAcento = (s: string) => normalizeTyped(s).replace(/ss/g, 's');
 
 export function VocabularioClient() {
   const leitura = useLeitura();
+  const p = useProgress();
   const [busca, setBusca] = useState('');
+  /* Meu caderno (lib/caderno.ts): a estrela guarda a palavra, e o filtro
+     mostra só as guardadas. Guardar não muda nada no curso: é para rever. */
+  const [soCaderno, setSoCaderno] = useState(false);
+  const guardadas = palavrasDoCaderno(p.state.caderno, leitura.legiveis).length;
   const n = leitura.legiveis.length;
   const faltam = leitura.total - n;
 
@@ -40,14 +47,15 @@ export function VocabularioClient() {
 
   const achadas = useMemo(() => {
     const q = busca.trim();
-    if (!q) return leitura.legiveis;
+    const base = soCaderno ? palavrasDoCaderno(p.state.caderno, leitura.legiveis) : leitura.legiveis;
+    if (!q) return base;
     const qHe = stripNikud(q);
     const qLat = semAcento(q);
-    return leitura.legiveis.filter(w =>
+    return base.filter(w =>
       (qHe && /[א-ת]/.test(qHe) && stripNikud(w.he).includes(qHe))
       || semAcento(w.translit).includes(qLat)
       || semAcento(w.pt).includes(qLat));
-  }, [busca, leitura.legiveis]);
+  }, [busca, leitura.legiveis, soCaderno, p.state.caderno]);
 
   return (
     <div className="grid gap-6 py-2">
@@ -92,8 +100,22 @@ export function VocabularioClient() {
                        font-ui text-[16px] text-ink focus:border-[var(--accent-soft)]"
           />
           <p className="font-ui text-[13px] text-ink-muted m-0" role="status">
-            {busca.trim() ? tx.achadas(achadas.length, n) : tx.nPalavras(n)}
+            {busca.trim() || soCaderno ? tx.achadas(achadas.length, n) : tx.nPalavras(n)}
           </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <button type="button" aria-pressed={soCaderno} onClick={() => setSoCaderno(v => !v)}
+                    className={`inline-flex items-center gap-1.5 min-h-[44px] rounded-full border px-3.5 font-ui text-[14px] font-semibold
+                                ${soCaderno ? 'border-[var(--gold-solid)] bg-[var(--gold-solid)] text-white' : 'border-line bg-surface text-ink'}`}>
+              <span aria-hidden>★</span>{tx.soOCaderno(guardadas)}
+            </button>
+            {guardadas > 0 && (
+              <Link href="/academia?treino=flashcards-caderno"
+                    className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
+                {tx.treinarCaderno}
+              </Link>
+            )}
+          </div>
+          {guardadas === 0 && <p className="font-ui text-[13px] text-ink-muted m-0">{tx.cadernoDica}</p>}
         </div>
       )}
 
@@ -122,7 +144,21 @@ export function VocabularioClient() {
                 </div>
                 {/* O nome no botão: eram 32 botões "Ouvir" iguais para o leitor
                     de tela (auditoria de 28/09, UX-011). */}
+                <div className="grid gap-2 justify-items-end shrink-0">
                 {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={tx.ouvir(w.translit)} />}
+                {(() => {
+                  const guardada = noCaderno(p.state.caderno, w.he);
+                  return (
+                    <button type="button" aria-pressed={guardada} onClick={() => p.alternarCaderno(w.he)}
+                            aria-label={guardada ? tx.tirarDoCaderno(w.translit) : tx.porNoCaderno(w.translit)}
+                            className={`grid place-items-center w-11 h-11 shrink-0 rounded-full border text-[20px] leading-none
+                                        transition-transform duration-150 active:scale-90
+                                        ${guardada ? 'border-[var(--gold-solid)] bg-[var(--gold-solid)] text-white' : 'border-line bg-surface text-ink-muted'}`}>
+                      <span aria-hidden>{guardada ? '★' : '☆'}</span>
+                    </button>
+                  );
+                })()}
+                </div>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {/* As LETRAS que é preciso conhecer para ler a palavra - pela
@@ -153,6 +189,9 @@ export function VocabularioClient() {
             </li>
           ))}
         </ul>
+      )}
+      {soCaderno && !busca.trim() && n > 0 && achadas.length === 0 && (
+        <p className="font-ui text-[15px] text-ink-body">{tx.cadernoVazio}</p>
       )}
       {busca.trim() && n > 0 && achadas.length === 0 && (
         <p className="font-ui text-[15px] text-ink-body">
