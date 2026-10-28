@@ -823,7 +823,7 @@ export function mensagemDeArrependimentoDono({
 export function mensagemDeEstorno({
   nome, curso, valor, pedido, cartao, contestacao = false, restaAte = '', marca, suporte
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   const abertura = contestacao
     ? `A compra do curso ${curso} está contestada junto ao banco ou à operadora, e o valor está devolvido.`
@@ -889,7 +889,7 @@ export function mensagemDeEstorno({
 export function mensagemDeVencimento({
   nome, curso, quando, dias, marco, meses, renovar, marca, suporte
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   const fim = marco === 'fim';
   const faltam = Number(dias) === 1 ? 'amanhã' : `daqui a ${dias} dias`;
