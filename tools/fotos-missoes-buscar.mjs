@@ -5,7 +5,7 @@
    ficha de cada uma em fotos-candidatas/missoes/candidatas.json. Nenhuma vai
    ao ar daqui: a escolha é do dono, e a foto escolhida passa para
    data/fotos-missoes.json com aprovada: true. */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const RAIZ = new URL('..', import.meta.url).pathname;
@@ -16,9 +16,14 @@ const UA = 'HebraicoFluente/1.0 (https://hebraicofluente.com.br; contato@hebraic
 const LIVRE = /^(public domain|pd|cc0|cc by(-sa)? \d(\.\d)?)/i;
 const texto = h => String(h ?? '').replace(/<[^>]+>/g, ' ').replace(/&[a-z#0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim();
 
-const candidatas = [];
-const vistas = new Set();
+/* Uma busca nova SOMA às candidatas que já existem: os ids das que o dono
+   já viu não mudam. */
+const ARQ = join(DESTINO, 'candidatas.json');
+const candidatas = existsSync(ARQ) ? JSON.parse(readFileSync(ARQ, 'utf8')).candidatas : [];
+const vistas = new Set(candidatas.map(c => c.titulo));
+const feitas = new Set(candidatas.map(c => c.busca));
 for (const b of pedido.buscas) {
+  if (feitas.has(b.q)) continue;
   const url = 'https://commons.wikimedia.org/w/api.php?' + new URLSearchParams({
     action: 'query', format: 'json', generator: 'search', gsrsearch: `${b.q} filetype:bitmap`,
     gsrnamespace: '6', gsrlimit: '20', prop: 'imageinfo', iiprop: 'url|extmetadata|size', iiurlwidth: '1200'
