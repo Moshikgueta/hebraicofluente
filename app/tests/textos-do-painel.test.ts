@@ -39,7 +39,7 @@ describe('o que o painel promete bate com o curso', () => {
   });
 
   it('o checkout diz que é pagamento único, sem renovação automática (CDC, art. 6º, III)', () => {
-    expect(fonte('app/checkout/[slug]/CheckoutClient.tsx'))
+    expect(fonte('app/checkout/[slug]/CheckoutClient.tsx') + fonte('i18n/telas/conta-checkout-client.ts'))
       .toContain('Pagamento único. Não há assinatura nem renovação automática');
   });
 });

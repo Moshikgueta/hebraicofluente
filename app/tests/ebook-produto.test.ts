@@ -503,7 +503,8 @@ describe('o e-book não tem PDF para baixar', () => {
     for (const rel of ['../src/app/cursos/[slug]/ProdutoClient.tsx', '../src/app/cursos/[slug]/LivroClient.tsx', '../src/app/checkout/[slug]/CheckoutClient.tsx',
                        '../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', '../src/app/termos/page.tsx',
                        '../src/app/reembolso/page.tsx', '../src/lib/ecossistema.ts', '../src/app/israel-alem-do-obvio/page.tsx',
-                       '../../worker/src/lib/mail.js']) {
+                       '../../worker/src/lib/mail.js',
+                       '../src/i18n/telas/conta-checkout-client.ts', '../src/i18n/telas/conta-obrigado.ts']) {
       expect(semComentarios(rel), rel).not.toMatch(/PDF/);
     }
     const cat = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8')).courses as { summaryPt: string; taglinePt: string }[];

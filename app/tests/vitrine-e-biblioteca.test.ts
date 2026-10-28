@@ -90,7 +90,7 @@ describe('a Minha Biblioteca', () => {
 /* 27/10/2026: uma aluna entrou, viu a biblioteca vazia e escreveu "não
  * consegui...". A tela vazia passou a dizer a conta e o caminho. */
 describe('a Minha Biblioteca vazia diz o que fazer', () => {
-  const c = () => codigo(BIBLIOTECA);
+  const c = () => codigo(BIBLIOTECA) + codigo('../src/i18n/telas/conta-biblioteca.ts');
   it('diz em qual conta a pessoa está', () => {
     expect(c()).toContain('Você está conectado como');
   });
@@ -111,7 +111,7 @@ describe('a Minha Biblioteca vazia diz o que fazer', () => {
 
 describe('o topo para quem entrou sem o curso', () => {
   it('mostra a conta e o botão de começar o curso', () => {
-    const shell = codigo('../src/components/shell/PublicShell.tsx');
+    const shell = codigo('../src/components/shell/PublicShell.tsx') + codigo('../src/i18n/telas/conta-public-shell.ts');
     expect(shell).toContain('Minha conta');
     expect(shell).toContain('href={`/checkout/${FLAGSHIP}`}');
     expect(shell).not.toContain('MenuExperiencias');

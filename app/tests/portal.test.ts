@@ -236,7 +236,8 @@ describe('o livro se chama Israel Além do Óbvio (23/10/2026)', () => {
   it('nenhum texto público usa o nome antigo', () => {
     const publicos = ['../src/app/israel-alem-do-obvio/page.tsx', '../src/lib/ecossistema.ts', '../src/components/shell/PublicShell.tsx',
       '../src/app/checkout/[slug]/CheckoutClient.tsx', '../src/app/reembolso/page.tsx', '../../worker/src/lib/mail.js',
-      '../../worker/src/api/livro.js', '../../data/courses.json'];
+      '../../worker/src/api/livro.js', '../../data/courses.json',
+      '../src/i18n/telas/conta-public-shell.ts', '../src/i18n/telas/conta-checkout-client.ts'];
     for (const rel of publicos) expect(fonte(rel), rel).not.toMatch(/Além do Roteiro|alem-do-roteiro\.pdf"/);
   });
 });

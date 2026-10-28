@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { AuthForm } from '@/components/platform/AuthForm';
+import { tx } from '@/i18n/telas/conta-auth-form';
 
 export const metadata: Metadata = meta({
   rota: '/entrar',
-  title: 'Entrar - Hebraico Fluente',
-  description:
-    'Entre na sua conta e continue de onde parou.'
+  title: tx.metaEntrarTitulo,
+  description: tx.metaEntrarDescricao
 });
 
 export default function EntrarPage() {

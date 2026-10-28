@@ -69,7 +69,9 @@ describe('o aceite dos Termos de Uso', () => {
   });
 
   it('o formulário tem a caixa, desmarcada, com o link dos Termos', () => {
-    const f = readFileSync(new URL('../src/components/platform/AuthForm.tsx', import.meta.url), 'utf8');
+    /* O texto da tela mora no dicionário desde o site em inglês (28/10/2026). */
+    const f = readFileSync(new URL('../src/components/platform/AuthForm.tsx', import.meta.url), 'utf8')
+      + readFileSync(new URL('../src/i18n/telas/conta-auth-form.ts', import.meta.url), 'utf8');
     expect(f).toContain('useState(false)');
     expect(f).toMatch(/type="checkbox" checked=\{aceite\}/);
     expect(f).toContain('Li e aceito os');

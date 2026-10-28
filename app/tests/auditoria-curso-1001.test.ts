@@ -240,7 +240,7 @@ describe('UXQA-015: /concluido não afirma o que não aconteceu', () => {
 describe('VIS-004: o painel e a revisão contam a mesma fila, e dizem "itens"', () => {
   it('a revisão aceita as letras que têm item na fila', () => {
     expect(fonte('app/revisao/ReviewClient.tsx')).toContain('Object.values(p.state.srs).some(i => i.letterId === l.id)');
-    const painel = fonte('components/platform/Painel.tsx');
+    const painel = fonte('components/platform/Painel.tsx') + fonte('i18n/telas/conta-painel.ts');
     expect(painel).toContain('itens precisam de uma revisão rápida');
     expect(painel).not.toContain('letras precisam de uma revisão rápida');
   });

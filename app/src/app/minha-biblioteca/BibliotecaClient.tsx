@@ -23,35 +23,36 @@ import { empresa, whatsappUrl } from '@/lib/empresa';
 import { proximoPasso } from '@/lib/cta';
 import { Container, Rubrica } from '@/components/landing/base';
 import { nomeNaVitrine } from '@/components/portal/OpcoesDeCompra';
+import { tx } from '@/i18n/telas/conta-biblioteca';
 
 /** Os produtos que viram direito na conta, na ordem da estante, e onde abrem.
  *  `html`: página estática atrás do portão, aberta com link comum. */
 const ESTANTE: { slug: string; abre: string; html?: boolean; nome?: string; resumo: string }[] = [
-  { slug: FLAGSHIP, abre: '', resumo: 'Ler e escrever hebraico do zero, letra por letra.' },
-  { slug: 'israel-alem-do-roteiro', abre: '/israel/', html: true, resumo: 'Uma experiência digital interativa pela história, a cultura e os lugares de Israel.' },
-  { slug: 'hebraico-a1', abre: '/a1/', resumo: 'O hebraico do dia a dia, depois do alfabeto.' },
-  { slug: 'raizes-sefarditas', abre: '/raizes/', nome: 'Raízes Sefarditas', resumo: 'A história, os caminhos e a memória sefardita.' }
+  { slug: FLAGSHIP, abre: '', resumo: tx.resumoCurso },
+  { slug: 'israel-alem-do-roteiro', abre: '/israel/', html: true, resumo: tx.resumoLivro },
+  { slug: 'hebraico-a1', abre: '/a1/', resumo: tx.resumoA1 },
+  { slug: 'raizes-sefarditas', abre: '/raizes/', nome: tx.nomeRaizes, resumo: tx.resumoRaizes }
 ];
 
-const data = (iso: string) => new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+const data = (iso: string) => new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }); // etapa 1: data em pt-BR
 
 export function BibliotecaClient() {
   const account = useAccount();
   const passo = proximoPasso(account);
 
   if (!account.ready) {
-    return <Moldura><p className="m-0 font-ui text-[16px] text-ink-muted">Abrindo a sua biblioteca...</p></Moldura>;
+    return <Moldura><p className="m-0 font-ui text-[16px] text-ink-muted">{tx.abrindo}</p></Moldura>;
   }
   if (!account.signedIn) {
     return (
       <Moldura>
         <p className="m-0 font-ui text-[17px] leading-[1.6] text-ink-body max-w-[52ch]">
-          Entre na sua conta para ver os cursos e as experiências que você tem.
+          {tx.entreNaConta}
         </p>
         <Link href={`/entrar?next=${encodeURIComponent('/minha-biblioteca')}`}
               className="justify-self-start inline-flex items-center justify-center min-h-[52px] px-6 rounded-[var(--r-md)]
                          bg-[var(--navy)] text-white font-ui text-[15.5px] font-semibold">
-          Entrar
+          {tx.entrar}
         </Link>
       </Moldura>
     );
@@ -71,7 +72,7 @@ export function BibliotecaClient() {
             const c = getCourse(i.slug);
             const nome = i.nome ?? (c ? nomeNaVitrine(c) : i.slug);
             const href = i.slug === FLAGSHIP ? passo.href : i.abre;
-            const rotulo = i.slug === FLAGSHIP ? passo.label : 'Abrir';
+            const rotulo = i.slug === FLAGSHIP ? passo.label : tx.abrir;
             const classe = `justify-self-start inline-flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-[var(--r-md)]
                             bg-[var(--navy)] text-white font-ui text-[15px] font-semibold
                             transition-[background-color,transform] duration-[var(--dur)] hover:bg-[var(--navy-2)] active:scale-[.98]`;
@@ -80,7 +81,7 @@ export function BibliotecaClient() {
                 <h2 className="m-0 font-display text-[21px] font-semibold leading-[1.2] tracking-[-0.02em] text-ink">{nome}</h2>
                 <p className="m-0 font-ui text-[15px] leading-[1.55] text-ink-body">{i.resumo}</p>
                 <p className="m-0 font-ui text-[13.5px] text-ink-muted">
-                  {i.direito!.expiresAt ? `Acesso até ${data(i.direito!.expiresAt)}` : 'Acesso sem data de fim'}
+                  {i.direito!.expiresAt ? tx.acessoAte(data(i.direito!.expiresAt)) : tx.acessoSemFim}
                 </p>
                 {i.html
                   ? <a href={href} className={classe}>{rotulo}<span aria-hidden>→</span></a>
@@ -91,7 +92,7 @@ export function BibliotecaClient() {
         </ul>
       )}
       <p className="m-0 font-ui text-[14px] text-ink-muted">
-        Compras, recibos e desistência ficam em <Link href="/perfil" className="underline underline-offset-[3px]">Sua conta</Link>.
+        {tx.comprasEmSuaContaAntes}<Link href="/perfil" className="underline underline-offset-[3px]">{tx.suaConta}</Link>.
       </p>
     </Moldura>
   );
@@ -141,65 +142,62 @@ function Vazia({ email }: { email: string }) {
   return (
     <div className="grid gap-5">
       <p className="m-0 font-ui text-[17px] leading-[1.6] text-ink-body max-w-[56ch]">
-        Você está conectado como <strong className="break-all text-ink">{email}</strong>, e esta conta
-        ainda não tem nenhum curso.
+        {tx.conectadoComo}<strong className="break-all text-ink">{email}</strong>{tx.semNenhumCurso}
       </p>
 
       {compras === null ? null : pendente ? (
         <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
           <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
-            Há um pagamento esperando confirmação
+            {tx.pagamentoEsperando}
           </h2>
           <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
-            {nomeDe(pendente.courseSlug)}, {pendente.method === 'pix' ? 'por PIX' : 'no cartão'}. Assim que o pagamento
-            for confirmado, o curso aparece aqui. Se você ainda não pagou, o código PIX está em Sua conta.
+            {tx.pendente(nomeDe(pendente.courseSlug), pendente.method === 'pix')}
           </p>
           <Link href={`/checkout/${pendente.courseSlug}/obrigado?order=${encodeURIComponent(pendente.id)}`} className={botao}>
-            Conferir o pagamento<span aria-hidden>→</span>
+            {tx.conferirPagamento}<span aria-hidden>→</span>
           </Link>
-          <Link href="/perfil" className={`justify-self-start text-[15px] ${link}`}>Ver o código PIX em Sua conta</Link>
+          <Link href="/perfil" className={`justify-self-start text-[15px] ${link}`}>{tx.verCodigoPix}</Link>
         </div>
       ) : vencido ? (
         <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
           <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
-            Seu acesso terminou em {data(vencido.expiredAt)}
+            {tx.acessoTerminou(data(vencido.expiredAt))}
           </h2>
           <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
-            {nomeDe(vencido.courseSlug)}. Seu progresso continua guardado e volta inteiro quando você renovar.
+            {tx.vencido(nomeDe(vencido.courseSlug))}
           </p>
-          <Link href={`/checkout/${vencido.courseSlug}`} className={botao}>Renovar o acesso<span aria-hidden>→</span></Link>
+          <Link href={`/checkout/${vencido.courseSlug}`} className={botao}>{tx.renovar}<span aria-hidden>→</span></Link>
         </div>
       ) : pago ? (
         <div className="grid gap-3 rounded-[18px] border border-line bg-[var(--card)] p-6">
           <h2 className="m-0 font-display text-[20px] font-semibold leading-[1.25] text-ink">
-            Seu pagamento consta como pago
+            {tx.constaComoPago}
           </h2>
           <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
-            <strong>Não pague de novo.</strong> O acesso ainda não apareceu nesta conta: fale com a gente e a
-            gente libera.
+            <strong>{tx.naoPagueDeNovo}</strong>{tx.pagoSemAcesso}
           </p>
         </div>
       ) : (
         <div className="grid gap-3">
           <Link href={paginaDeVenda(FLAGSHIP)} className={botao}>
-            Começar o curso de hebraico<span aria-hidden>→</span>
+            {tx.comecarCurso}<span aria-hidden>→</span>
           </Link>
           <Link href="/cursos/" className={`justify-self-start text-[15px] ${link}`}>
-            Ver tudo o que o Hebraico Fluente oferece
+            {tx.verTudo}
           </Link>
         </div>
       )}
 
       <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5 max-w-[60ch]">
         <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
-          Comprou com outro e-mail? O curso fica na conta do e-mail que pagou.{' '}
-          <Link href={`/entrar?next=${encodeURIComponent('/minha-biblioteca')}`} className={link}>Entrar com outro e-mail</Link>
+          {tx.outroEmail}{' '}
+          <Link href={`/entrar?next=${encodeURIComponent('/minha-biblioteca')}`} className={link}>{tx.entrarComOutro}</Link>
         </p>
         <p className="m-0 font-ui text-[15px] leading-[1.6] text-ink-body">
-          Já pagou e o curso não aparece? <strong>Não pague de novo.</strong> Fale com a gente
-          {zap ? <> pelo <a href={zap} target="_blank" rel="noopener noreferrer" className={link}>WhatsApp</a> ou</> : null}
-          {' '}por <a href={`mailto:${empresa.contato.emailSuporte}`} className={`break-all ${link}`}>{empresa.contato.emailSuporte}</a>,
-          com o e-mail da compra.
+          {tx.jaPagou}<strong>{tx.naoPagueDeNovo}</strong>{tx.faleComAGente}
+          {zap ? <>{tx.pelo}<a href={zap} target="_blank" rel="noopener noreferrer" className={link}>{tx.whatsapp}</a>{tx.ou}</> : null}
+          {' '}{tx.por}<a href={`mailto:${empresa.contato.emailSuporte}`} className={`break-all ${link}`}>{empresa.contato.emailSuporte}</a>
+          {tx.comEmailDaCompra}
         </p>
       </div>
     </div>
@@ -210,10 +208,10 @@ function Moldura({ children }: { children: ReactNode }) {
   return (
     <section aria-labelledby="biblioteca-titulo">
       <Container className="py-12 sm:py-16 grid gap-6 max-w-[920px]">
-        <Rubrica>Sua conta</Rubrica>
+        <Rubrica>{tx.suaConta}</Rubrica>
         <h1 id="biblioteca-titulo"
             className="m-0 font-display font-semibold text-[clamp(32px,4.6vw,48px)] leading-[1.05] tracking-[-0.03em] text-ink">
-          Minha Biblioteca
+          {tx.minhaBiblioteca}
         </h1>
         {children}
       </Container>

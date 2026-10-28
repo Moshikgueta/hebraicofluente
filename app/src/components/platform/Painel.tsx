@@ -20,6 +20,7 @@ import { Card } from '@/components/ui/Card';
 import { useProgress } from '@/lib/state/store';
 import { getLetter } from '@/lib/content';
 import { desafioFeitoHoje } from '@/lib/desafio-feito';
+import { tx } from '@/i18n/telas/conta-painel';
 
 /* ── o cartão do curso ──────────────────────────────────────────────────── */
 export function CartaoCurso({
@@ -52,7 +53,7 @@ export function CartaoCurso({
           <div className="flex items-center gap-3.5 max-w-[420px]">
             <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden"
                   role="progressbar" aria-valuenow={Math.round(pct * 100)}
-                  aria-valuemin={0} aria-valuemax={100} aria-label="Progresso no curso">
+                  aria-valuemin={0} aria-valuemax={100} aria-label={tx.progressoNoCurso}>
               <span className="block h-full rounded-full transition-[width] duration-[1200ms] ease-[var(--ease-fill)]"
                     style={{ width: `${Math.round(largura * 100)}%`,
                              background: 'linear-gradient(90deg,var(--teal),var(--teal-lite))' }} />
@@ -112,16 +113,16 @@ export function CartaoRevisao() {
           <path d="M17 3.2V7h-3.8" stroke="var(--gold)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-[var(--gold-ink)]">
-          Hora de revisar
+          {tx.horaDeRevisar}
         </span>
       </p>
       <p className="font-ui text-[15.5px] leading-[1.55] text-[var(--gold-body)] mb-4">
         {/* `dueCount` conta ITENS da fila, não letras (VIS-004): "2 letras"
             com uma letra só na lista era a contagem errada com a palavra errada. */}
         {p.dueCount === 1
-          ? 'Um item precisa de uma revisão rápida.'
-          : `${p.dueCount} itens precisam de uma revisão rápida.`}{' '}
-        Leva cerca de {minutos} minutos.
+          ? tx.umItem
+          : tx.nItens(p.dueCount)}{' '}
+        {tx.levaCerca(minutos)}
       </p>
       {letras.length > 0 && (
         <div className="flex flex-wrap gap-[7px] mb-[18px]">
@@ -137,14 +138,14 @@ export function CartaoRevisao() {
             className="inline-flex items-center rounded-[12px] bg-[var(--gold-solid)] text-white
                        font-ui font-semibold text-[15.5px] px-[22px] py-3
                        transition-transform duration-[180ms] hover:-translate-y-[2px]">
-        Começar revisão
+        {tx.comecarRevisao}
       </Link>
     </Card>
   );
 }
 
 /* ── a semana ───────────────────────────────────────────────────────────── */
-const DIA = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+const DIA = tx.diasDaSemana;
 
 export function CartaoSemana() {
   const p = useProgress();
@@ -167,11 +168,11 @@ export function CartaoSemana() {
 
   return (
     <Card className="p-6">
-      <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">Sua semana</p>
+      <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">{tx.suaSemana}</p>
       <p className="font-ui text-[14px] text-ink-muted mb-5">
         {total === 0
-          ? 'Nada estudado ainda esta semana.'
-          : `${h > 0 ? `${h}h ` : ''}${minutos % 60}min estudados`}
+          ? tx.nadaEstudado
+          : tx.estudados(h, minutos % 60)}
       </p>
       <div className="flex items-end gap-[9px] h-[92px]">
         {dias.map((d, i) => {
@@ -249,19 +250,19 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
   const linhas: { feito: boolean; titulo: string; detalhe: string; href?: string; acao?: string }[] = [
     {
       feito: metaFeita,
-      titulo: metaFeita ? 'Meta do dia cumprida' : `Meta do dia: ${alvo} minutos`,
+      titulo: metaFeita ? tx.metaCumprida : tx.metaDoDia(alvo),
       detalhe: metaFeita
-        ? (p.streak > 0 ? `A sequência de ${p.streak} ${p.streak === 1 ? 'dia' : 'dias'} está garantida hoje.` : 'Amanhã a sequência continua daqui.')
-        : `${minutos} de ${alvo} min hoje.` + (p.streak > 0 ? ` Cumpra para manter os ${p.streak} ${p.streak === 1 ? 'dia seguido' : 'dias seguidos'}.` : '')
+        ? (p.streak > 0 ? tx.sequenciaGarantida(p.streak) : tx.amanhaContinua)
+        : tx.minutosHoje(minutos, alvo) + (p.streak > 0 ? tx.cumpraParaManter(p.streak) : '')
     },
     licaoHoje
-      ? { feito: true, titulo: 'Lição de hoje feita', detalhe: licao ? `A próxima é ${licao.nome}, quando quiser.` : 'Bom trabalho.' }
-      : { feito: false, titulo: licao ? `Lição: ${licao.nome}` : 'Lição de hoje',
-          detalhe: 'Uma lição leva uns dez minutos.', href: licao?.href, acao: 'Abrir' },
+      ? { feito: true, titulo: tx.licaoFeita, detalhe: licao ? tx.aProxima(licao.nome) : tx.bomTrabalho }
+      : { feito: false, titulo: licao ? tx.licao(licao.nome) : tx.licaoDeHoje,
+          detalhe: tx.umaLicaoLeva, href: licao?.href, acao: tx.abrir },
     revisaoEmDia
-      ? { feito: true, titulo: 'Revisão em dia', detalhe: 'Nada esperando por você.' }
-      : { feito: false, titulo: `Revisão: ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'}`,
-          detalhe: 'Três minutos no que está escapando.', href: '/revisao', acao: 'Revisar' }
+      ? { feito: true, titulo: tx.revisaoEmDia, detalhe: tx.nadaEsperando }
+      : { feito: false, titulo: tx.revisaoItens(p.dueCount),
+          detalhe: tx.tresMinutos, href: '/revisao', acao: tx.revisar }
   ];
   const feitos = linhas.filter(l => l.feito).length;
 
@@ -270,9 +271,9 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
       <div className="flex items-center gap-4">
         <AnelDaMeta fracao={Math.min(1, p.goalUnits / Math.max(1, p.goalTargetToday))} minutos={minutos} />
         <div className="grid gap-0.5 min-w-0">
-          <h2 className="m-0 font-display text-[19px] font-semibold tracking-[-0.018em] text-ink">Seu plano de hoje</h2>
+          <h2 className="m-0 font-display text-[19px] font-semibold tracking-[-0.018em] text-ink">{tx.seuPlano}</h2>
           <p className="m-0 font-ui text-[14px] text-ink-muted tabular-nums">
-            {feitos === linhas.length ? 'Tudo feito hoje. Até amanhã!' : `${feitos} de ${linhas.length} feitos`}
+            {feitos === linhas.length ? tx.tudoFeito : tx.feitosDe(feitos, linhas.length)}
           </p>
         </div>
       </div>
@@ -286,7 +287,7 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
             </span>
             <span className="grid min-w-0 flex-1">
               <span className={`font-ui text-[15px] font-semibold ${l.feito ? 'text-ink-muted' : 'text-ink'}`}>
-                <span className="sr-only">{l.feito ? 'Feito: ' : 'A fazer: '}</span>{l.titulo}
+                <span className="sr-only">{l.feito ? tx.feito : tx.aFazer}</span>{l.titulo}
               </span>
               <span className="font-ui text-[13.5px] leading-snug text-ink-muted">{l.detalhe}</span>
             </span>
@@ -304,11 +305,11 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
           fazê-lo não deixa nada por fazer (28/10/2026). */}
       {p.state.lessons && Object.keys(p.state.lessons).length > 0 && (
         desafioFeitoHoje(p.state, p.day)
-          ? <p className="m-0 font-ui text-[13.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">✓ Desafio do dia feito.</p>
+          ? <p className="m-0 font-ui text-[13.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">{tx.desafioFeito}</p>
           : <Link href="/academia?treino=desafio"
                   className="flex items-center justify-between gap-3 border-t border-[color:var(--line-soft)] pt-3 min-h-[44px]
                              font-ui text-[14px] text-[var(--teal-ink)] font-semibold hover:underline">
-              <span>Opcional: o desafio do dia, cinco perguntas rápidas</span>
+              <span>{tx.desafioOpcional}</span>
               <span aria-hidden>→</span>
             </Link>
       )}
@@ -335,7 +336,7 @@ function AnelDaMeta({ fracao, minutos }: { fracao: number; minutos: number }) {
       </svg>
       <span className="absolute grid justify-items-center leading-none font-ui text-ink tabular-nums">
         <span className="text-[15px] font-bold">{minutos}</span>
-        <span className="text-[10px] text-ink-muted">min</span>
+        <span className="text-[10px] text-ink-muted">{tx.min}</span>
       </span>
     </span>
   );
