@@ -140,3 +140,15 @@ letras, e só a fixação de cada letra são 20 questões. A estimativa passou p
 
 Continua sendo estimativa. Quando houver alunos, o tempo real por letra pode ser medido e o
 número ajustado.
+
+## 11. As boas-vindas depois da compra (/onboarding, 28/10/2026)
+
+- O painel novo prometia "três perguntas rápidas", e o /onboarding tem quatro ("1 de 4": motivo,
+  tempo por dia, o que já sabe e o nome). Agora o painel diz quatro e nomeia as quatro.
+- A pergunta do motivo dizia "Isso muda o tom das mensagens ao longo do curso", e nada no curso lê
+  essa resposta. Agora: "Fica na sua conta, para a gente conhecer você. Não muda o conteúdo: todo
+  mundo faz o mesmo curso."
+- "Voltar" passou de 13 px de texto sem área de toque para 44 px de altura; a barra de progresso
+  anda por transform, como as outras.
+- Conferido: o tempo por dia vira a meta diária de verdade, e a pergunta "o que você já sabe" diz
+  que todo mundo começa pela primeira letra (a decisão do dono de 01/10). O fluxo termina na Aula 0.
