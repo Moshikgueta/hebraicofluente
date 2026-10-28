@@ -13,6 +13,15 @@
   de exemplo com a gravação, o jeito errado e o certo. O "porquê" do erro continua só no curso.
 - **Puxa a busca junto:** cada legenda aponta a página da letra no site, que tem a gravação.
 
+## Versão 2 das artes (28/10/2026, pedido do dono: "mais gancho, mais chamativo")
+
+Os 5 posts foram refeitos no padrão do post do Álef (`post-alef.md`): 8 slides cada, capa com
+gancho e selo do erro riscado, a vogal em dourado, o segredo da letra (o ponto do Shin, o T no fim
+da palavra, o Mem final, a altura do Lámed), as 5 sílabas, errado e certo com o porquê do curso,
+"não confunda", um desafio com a resposta no slide seguinte e o fecho de salvar e seguir. Todo o
+hebraico e toda a explicação vêm de `data/letters.json` (ensino, sílabas, erro, contrastes,
+palavras); nada novo. Zip entregue ao dono em 28/10. As legendas abaixo continuam valendo.
+
 ## Ordem trocada em 28/10/2026: o Álef primeiro
 
 Os posts do dono de 26/10 ("os 3 erros", Xanucá) e de 27/10 (eleições em Israel) prometeram ao
