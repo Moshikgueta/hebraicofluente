@@ -21,12 +21,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import type { Pergunta } from '@/lib/engine/deck';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-blast';
 
 const ELOGIO: readonly [number, string][] = [
-  [3, '3 acertos seguidos!'],
-  [5, 'Você está pegando o jeito!'],
-  [8, '8 seguidos - isso é leitura automática.'],
-  [12, 'Doze. Pode parar quando quiser, você já provou.']
+  [3, tx.elogio3],
+  [5, tx.elogio5],
+  [8, tx.elogio8],
+  [12, tx.elogio12]
 ];
 
 export function Blast({
@@ -150,11 +151,11 @@ export function Blast({
         <span className="font-ui text-[13px] tabular-nums text-ink-muted">{i + 1} / {perguntas.length}</span>
         <span className={`font-ui text-[13px] font-bold tabular-nums transition-colors
           ${sequencia >= 3 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}`}>
-          {sequencia > 0 ? `${sequencia} seguidos` : `${acertos} acertos`}
+          {sequencia > 0 ? tx.seguidos(sequencia) : tx.acertos(acertos)}
         </span>
       </div>
 
-      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Pergunta ${i + 1} de ${perguntas.length}`}
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={tx.perguntaDe(i + 1, perguntas.length)}
            className="grid gap-4 outline-none">
       <div className="rounded-[20px] bg-[var(--sand)] px-5 py-7 text-center relative overflow-hidden">
         <p className="font-ui text-[14.5px] text-ink-muted mb-3">{q.enunciadoPt}</p>
@@ -200,9 +201,9 @@ export function Blast({
 
       <p aria-live="polite" className="min-h-[22px] font-ui text-[14px] text-center">
         {escolha === null ? '' : escolha === q.resposta
-          ? <span className="text-[var(--teal-ink)] font-semibold">Boa!</span>
+          ? <span className="text-[var(--teal-ink)] font-semibold">{tx.boa}</span>
           : <span className="text-[var(--gold-ink)] font-semibold">
-              Quase. A resposta era {q.opcoes[q.resposta]}.
+              {tx.quase(q.opcoes[q.resposta])}
             </span>}
       </p>
       </div>

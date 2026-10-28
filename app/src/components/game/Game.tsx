@@ -11,6 +11,7 @@ import { IconeChama } from '@/components/shell/NavIcons';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
+import { tx } from '@/i18n/telas/academia-game';
 
 export function ProgressBar({
   value, label, sublabel
@@ -27,7 +28,7 @@ export function ProgressBar({
       <div
         className="h-2 rounded-full bg-surface-2 overflow-hidden"
         role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}
-        aria-label={label ?? 'Progresso'}
+        aria-label={label ?? tx.progresso}
       >
         <div
           className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500 ease-[var(--ease)]"
@@ -47,19 +48,19 @@ export function StreakCard({ days, goalUnits, goalTarget }: {
       <div className="flex items-center gap-2.5">
         <span aria-hidden className={days > 0 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}><IconeChama size={22} /></span>
         <p className="font-display text-[19px] font-bold text-ink">
-          {days === 0 ? 'Comece hoje'
-            : days === 1 ? '1 dia seguido'
-            : `${days} dias seguidos`}
+          {days === 0 ? tx.comeceHoje
+            : days === 1 ? tx.umDia
+            : tx.dias(days)}
         </p>
       </div>
       <ProgressBar
         value={goalTarget ? goalUnits / goalTarget : 0}
-        label={met ? 'Meta de hoje concluída' : 'Meta de hoje'}
+        label={met ? tx.metaConcluida : tx.meta}
         sublabel={`${Math.round((Math.min(goalUnits, goalTarget) / goalTarget) * 100)}%`}
       />
       {days === 0 && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          Seu progresso continua aqui, sem prazo. Vamos retomar?
+          {tx.retomar}
         </p>
       )}
     </Card>
@@ -70,8 +71,8 @@ export function XPIndicator({ xp }: { xp: number }) {
   return (
     <span className="inline-flex items-center gap-1.5 font-ui text-[13px] font-semibold text-ink-body">
       <span aria-hidden className="text-[var(--accent)]">◆</span>
-      <span className="tabular-nums">{xp.toLocaleString('pt-BR')}</span>
-      <span className="text-ink-muted font-normal">XP</span>
+      <span className="tabular-nums">{xp.toLocaleString(tx.localeNumero)}</span>
+      <span className="text-ink-muted font-normal">{tx.xp}</span>
     </span>
   );
 }
@@ -101,7 +102,7 @@ export function AchievementBadge({
         )}
         <p className={`font-display text-[15px] font-semibold ${unlocked ? 'text-ink' : 'text-ink-body'}`}>
           {def.titlePt}
-          {!unlocked && <span className="sr-only"> (ainda não conquistada)</span>}
+          {!unlocked && <span className="sr-only">{tx.naoConquistada}</span>}
         </p>
       </div>
       {!compact && (

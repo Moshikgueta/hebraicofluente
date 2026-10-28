@@ -19,6 +19,7 @@ import { leiturasCompradas } from '@/lib/loja';
 import { He } from '@/components/hebrew/He';
 import { stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
+import { tx } from '@/i18n/telas/academia-bonus-client';
 
 export function BonusClient() {
   const p = useProgress();
@@ -35,9 +36,9 @@ export function BonusClient() {
       return (
         <div className="focus-col grid gap-5">
           <p className="text-[16px] text-ink-body m-0">
-            {leitura ? 'Esta leitura ainda não é sua. Ela se abre com XP, em Recompensas.' : 'Esta leitura não existe.'}
+            {leitura ? tx.naoESua : tx.naoExiste}
           </p>
-          <LinkButton href="/loja" variant="secondary" className="justify-self-start">Ir para Recompensas</LinkButton>
+          <LinkButton href="/loja" variant="secondary" className="justify-self-start">{tx.irRecompensas}</LinkButton>
         </div>
       );
     }
@@ -46,7 +47,7 @@ export function BonusClient() {
         <header className="grid gap-3">
           <Link href="/bonus"
                 className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-            ← Leituras bônus
+            {tx.voltarBonus}
           </Link>
           <Badge tone="accent">{leitura.fontePt}</Badge>
           <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight m-0">{leitura.tituloPt}</h1>
@@ -57,11 +58,9 @@ export function BonusClient() {
             chegar antes das letras. Dizer isso aqui, onde a pessoa tenta ler. */}
         {p.mastered < leitura.after && (
           <Card tone="wash" className="p-4 grid gap-1">
-            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Este texto ainda está à sua frente</p>
+            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">{tx.aFrente}</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-              Para ler este texto sozinho, você precisa dominar {leitura.after} letras, e hoje domina {p.mastered}. Por enquanto,
-              ouça cada linha e acompanhe pela transliteração e pela tradução. Quando dominar as letras, volte aqui e leia
-              direto do hebraico. Ele continua guardado em Leituras bônus.
+              {tx.aFrenteTexto(leitura.after, p.mastered)}
             </p>
           </Card>
         )}
@@ -71,12 +70,10 @@ export function BonusClient() {
             este aviso, o aluno ouve uma palavra que não está no texto. */}
         {temONome(leitura.linhas) && (
           <Card tone="wash" className="p-4 grid gap-1">
-            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">Por que a gravação diz «Hashém»?</p>
+            <p className="font-ui text-[14.5px] font-semibold text-ink m-0">{tx.porQueHashem}</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-              Onde está escrito <He size="inline">יְהוָה</He>, o nome de Deus, a gravação diz «Hashém», «o Nome».
-              É um costume judaico: o Nome não se pronuncia, e fora da reza muitos evitam até «Adonái», que é
-              como se lê na reza e na sinagoga. A transliteração mostra o que se ouve.{' '}
-              <Link href="/nikud-biblico#nome" className="underline">Mais no guia</Link>.
+              {tx.hashemTexto(<He size="inline">יְהוָה</He>,
+                <Link href="/nikud-biblico#nome" className="underline">{tx.maisNoGuia}</Link>)}
             </p>
           </Card>
         )}
@@ -85,12 +82,12 @@ export function BonusClient() {
                          heClassName="!text-[24px] sm:!text-[30px] !leading-[1.7]" />
 
         <GravarLeitura
-          titulo="Leia em voz alta"
-          instrucao="Leia devagar, uma linha de cada vez, grave e se ouça. Depois compare com a gravação de cada linha."
+          titulo={tx.leiaEmVozAlta}
+          instrucao={tx.leiaInstrucao}
         />
 
         <p className="font-ui text-[13.5px] text-ink-muted m-0">
-          A tradução é literal, para acompanhar o hebraico linha a linha.
+          {tx.traducaoLiteral}
         </p>
         <GuiaCartao />
       </div>
@@ -100,17 +97,16 @@ export function BonusClient() {
   return (
     <div className="grid gap-6">
       <header className="grid gap-3">
-        <h1 className="text-[27px] sm:text-[33px] font-bold m-0">Leituras bônus</h1>
+        <h1 className="text-[27px] sm:text-[33px] font-bold m-0">{tx.titulo}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada.
-          Você abre cada uma com XP, em Recompensas.
+          {tx.intro}
         </p>
       </header>
       <GuiaCartao />
       {abertas.length === 0 ? (
         <Card tone="wash" className="p-5 grid gap-3">
-          <p className="font-ui text-[15px] text-ink-body m-0">Você ainda não abriu nenhuma leitura.</p>
-          <LinkButton href="/loja" variant="secondary" className="justify-self-start">Ver em Recompensas</LinkButton>
+          <p className="font-ui text-[15px] text-ink-body m-0">{tx.nenhuma}</p>
+          <LinkButton href="/loja" variant="secondary" className="justify-self-start">{tx.verRecompensas}</LinkButton>
         </Card>
       ) : (
         <ul className="grid gap-3 list-none p-0 m-0">
@@ -136,10 +132,10 @@ function GuiaCartao() {
   return (
     <Link href="/nikud-biblico"
           className="block rounded-[var(--r-lg)] border border-line bg-[var(--accent-wash)] p-4 hover:bg-surface-2">
-      <span className="block font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Guia opcional · sem XP</span>
-      <span className="block font-display text-[18px] font-semibold text-ink">{guia.tituloPt} →</span>
+      <span className="block font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.guiaOpcional}</span>
+      <span className="block font-display text-[18px] font-semibold text-ink">{tx.guiaSeta(guia.tituloPt)}</span>
       <span className="block font-ui text-[13.5px] text-ink-body">
-        O Nome, o shva, as vogais rápidas e os outros pontos que a Bíblia usa além do curso.
+        {tx.guiaTexto}
       </span>
     </Link>
   );

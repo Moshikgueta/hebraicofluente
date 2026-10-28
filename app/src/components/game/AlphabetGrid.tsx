@@ -23,6 +23,7 @@ import { nomeDaLicao, ordemDeEnsino } from '@/lib/sons';
 import {
   isLessonComplete, isLessonMastered, letraLiberada, LIBERA_MARK, porQueTrancada, STAGE_COUNT
 } from '@/lib/state/rules';
+import { tx } from '@/i18n/telas/academia-alphabet-grid';
 
 /* Os quatro estados do mapa de domínio, com os nomes e as cores do design.
    Cada um é cor + ícone + palavra, nunca cor sozinha - a mesma regra do
@@ -30,15 +31,15 @@ import {
 export type EstadoLetra = 'dominada' | 'revisar' | 'progresso' | 'nova' | 'bloqueada';
 
 const ESTADO: Record<EstadoLetra, { fundo: string; borda: string; tinta: string; rotulo: string }> = {
-  dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: 'Concluída' },
-  revisar:   { fundo: 'var(--gold-soft)', borda: 'var(--edge-gold)', tinta: 'var(--gold)',     rotulo: 'Revisar' },
-  progresso: { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--teal)',     rotulo: 'Em progresso' },
+  dominada:  { fundo: 'var(--teal-soft)', borda: 'var(--edge-teal)', tinta: 'var(--teal-ink)', rotulo: tx.rotuloConcluida },
+  revisar:   { fundo: 'var(--gold-soft)', borda: 'var(--edge-gold)', tinta: 'var(--gold)',     rotulo: tx.rotuloRevisar },
+  progresso: { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--teal)',     rotulo: tx.rotuloProgresso },
   /* "Aberta" e "bloqueada" são coisas diferentes, e misturá-las era o que
      fazia o mapa parecer um cartaz em vez de um caminho: a próxima letra,
      que o aluno PODE estudar agora, tinha a mesma cara das dezesseis que
      ele ainda não pode. */
-  nova:      { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--ink-muted)', rotulo: 'Aberta' },
-  bloqueada: { fundo: 'var(--sand)',      borda: 'var(--line)',      tinta: 'var(--locked)',   rotulo: 'Bloqueada' }
+  nova:      { fundo: 'var(--card)',      borda: 'var(--line)',      tinta: 'var(--ink-muted)', rotulo: tx.rotuloAberta },
+  bloqueada: { fundo: 'var(--sand)',      borda: 'var(--line)',      tinta: 'var(--locked)',   rotulo: tx.rotuloBloqueada }
 };
 
 export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
@@ -81,7 +82,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
       <div
         dir="rtl"
         role="list"
-        aria-label="As 22 letras, na ordem do curso"
+        aria-label={tx.listaAria}
         className={`grid gap-2 ${compact
           ? 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))]'
           : 'grid-cols-[repeat(auto-fill,minmax(52px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(64px,1fr))]'}`}
@@ -111,8 +112,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
       <div className="grid gap-1.5">
         <div className="flex items-baseline justify-between gap-3">
           <p className="font-ui text-[13px] text-ink-body">
-            <strong className="font-semibold text-ink tabular-nums">{dominadas}</strong>
-            {' '}de {letters.length} lições concluídas
+            {tx.licoesConcluidas(<strong className="font-semibold text-ink tabular-nums">{dominadas}</strong>, letters.length)}
           </p>
           <p className="font-ui text-[12px] tabular-nums text-ink-muted">
             {Math.round((dominadas / letters.length) * 100)}%
@@ -128,7 +128,7 @@ export function AlphabetGrid({ compact = false }: { compact?: boolean }) {
         {(['dominada', 'revisar', 'progresso', 'nova', 'bloqueada'] as const).map(e => {
           const quantas = letters.filter(L => estadoDe(L) === e).length;
           if (quantas === 0) return null;
-          return <Legend key={e} estado={e} label={`${quantas} ${ESTADO[e].rotulo.toLowerCase()}`} />;
+          return <Legend key={e} estado={e} label={tx.legenda(quantas, ESTADO[e].rotulo)} />;
         })}
       </div>
     </div>
@@ -192,8 +192,8 @@ function LetterCell({
      5/5 diria a coisa certa pelo motivo errado. */
   const parcial = !feita && stages > 0;
   const dito = estado === 'progresso' && stages > 0
-    ? `${stages} de ${STAGE_COUNT} etapas`
-    : revisarFeita ? 'concluída, revisar hoje'
+    ? tx.etapas(stages, STAGE_COUNT)
+    : revisarFeita ? tx.concluidaRevisar
     : e.rotulo.toLowerCase();
 
   const trancada = estado === 'bloqueada';
@@ -201,11 +201,10 @@ function LetterCell({
      maçaneta é a forma mais rápida de alguém achar que o produto quebrou. */
   const motivo = porque
     ? porque.falta === 'aula0'
-      ? 'Conclua a Aula 0 para abrir a primeira letra.'
+      ? tx.motivoAula0
       : porque.falta === 'licao'
-      ? `Termine a lição de ${nomeAnterior(porque.anterior)} para abrir esta.`
-      : `Sua melhor nota em ${nomeAnterior(porque.anterior)} foi ${Math.round((porque.nota ?? 0) * 100)}%. `
-        + `Refaça os exercícios e chegue a ${Math.round(LIBERA_MARK * 100)}% para abrir esta.`
+      ? tx.motivoLicao(nomeAnterior(porque.anterior))
+      : tx.motivoNota(nomeAnterior(porque.anterior), Math.round((porque.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))
     : null;
 
   const dizer = trancada && motivo ? motivo : dito;
@@ -256,7 +255,7 @@ function LetterCell({
       <button
         type="button"
         title={`${L.order}. ${L.namePt} - ${dizer}`}
-        aria-label={`Letra ${L.order}, ${L.namePt}: bloqueada. ${motivo ?? ''}`}
+        aria-label={tx.ariaBloqueada(L.order, L.namePt, motivo ?? '')}
         onClick={e => {
           const el = e.currentTarget.nextElementSibling as HTMLElement | null;
           el?.classList.toggle('hidden');
@@ -273,7 +272,7 @@ function LetterCell({
     <Link
       href={`/licao/${L.id}`}
       title={`${L.order}. ${L.namePt} - ${dizer}`}
-      aria-label={`Letra ${L.order}, ${L.namePt}: ${dizer}${atual ? '. Você está aqui' : ''}`}
+      aria-label={tx.ariaLetra(L.order, L.namePt, dizer, atual)}
       aria-current={atual ? 'step' : undefined}
       style={{ background: e.fundo, borderColor: e.borda }}
       className={comum}
@@ -315,7 +314,7 @@ export function ModuleProgress() {
             >
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="font-ui text-[10.5px] uppercase tracking-[.07em] text-ink-muted shrink-0">
-                  Mód {m.n}
+                  {tx.modCurto(m.n)}
                 </span>
                 <span className="font-ui text-[13px] font-medium text-ink truncate">{m.titlePt}</span>
                 <span className="ml-auto font-ui text-[11.5px] tabular-nums text-ink-muted shrink-0">

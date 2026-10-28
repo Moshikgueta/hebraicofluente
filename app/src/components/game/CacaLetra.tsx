@@ -40,6 +40,7 @@ import type { Caca } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
 import { allLetters, type Letter } from '@/lib/content';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-caca-letra';
 
 /* O nome que o leitor de tela anuncia para uma célula. Antes todas diziam
    "letra", doze vezes, e o jogo era injogável sem visão (auditoria de 28/09,
@@ -47,8 +48,8 @@ import type { ResultadoJogo } from './Match';
    treina a forma, e quem não a vê precisa do nome para jogar. */
 function nomeDaCelula(letterId: string, glifo: string): string {
   const l = allLetters().find(x => x.id === letterId);
-  if (!l) return 'letra';
-  return glifo !== l.letter ? `${l.namePt} final` : l.namePt;
+  if (!l) return tx.letra;
+  return glifo !== l.letter ? tx.nomeFinal(l.namePt) : l.namePt;
 }
 
 /* Uma CAÇADA, e não uma caça.
@@ -169,17 +170,17 @@ export function CacaLetra({
             <He size="word" tone="teal">{caca.glifo}</He>
           </span>
           <p className="font-ui text-[15px] leading-snug text-ink-body">
-            Encontre todas as letras iguais a esta.
-            <span className="sr-only"> A letra é {nomeDaCelula(caca.alvo.id, caca.glifo)}.</span>
+            {tx.encontre}
+            <span className="sr-only">{tx.aLetraE(nomeDaCelula(caca.alvo.id, caca.glifo))}</span>
           </p>
         </div>
         <div className="shrink-0 grid justify-items-end gap-0.5">
           <p className="font-ui text-[13px] text-ink-muted tabular-nums" aria-live="polite">
-            {achadas.length} de {caca.quantas} nesta grade
+            {tx.nestaGrade(achadas.length, caca.quantas)}
           </p>
           {cacas.length > 1 && (
             <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted tabular-nums">
-              Letra {rodada + 1} de {cacas.length}
+              {tx.letraDe(rodada + 1, cacas.length)}
             </p>
           )}
         </div>
@@ -214,7 +215,7 @@ export function CacaLetra({
                 onClick={() => tocar(c.id)}
                 disabled={achada || acabou}
                 aria-pressed={achada}
-                aria-label={achada ? `${nomeDaCelula(c.letterId, c.glifo)}, encontrada` : nomeDaCelula(c.letterId, c.glifo)}
+                aria-label={achada ? tx.encontrada(nomeDaCelula(c.letterId, c.glifo)) : nomeDaCelula(c.letterId, c.glifo)}
                 className={`w-full min-h-[60px] rounded-[var(--r-md)] border grid place-items-center
                   relative transition-[background-color,border-color,transform] duration-150
                   ${achada
@@ -254,9 +255,7 @@ export function CacaLetra({
              className="rounded-[var(--r-md)] border border-[color:var(--edge-teal)]
                         bg-[var(--teal-soft)] px-4 py-2.5
                         font-ui text-[14px] font-semibold text-[var(--teal-ink)]">
-            Achou as {caca.quantas}{' '}
-            <He size="inline" tone="teal">{caca.glifo}</He>.{' '}
-            {ultima ? 'Fim da partida.' : 'Agora outra letra.'}
+            {tx.achou(caca.quantas, <He size="inline" tone="teal">{caca.glifo}</He>, ultima)}
           </p>
         )}
       </div>
@@ -268,7 +267,7 @@ export function CacaLetra({
 export function CacaResumo({ cacas }: { cacas: readonly Caca[] }) {
   return (
     <Button variant="ghost" size="sm" disabled className="pointer-events-none">
-      {cacas.length} letras
+      {tx.nLetras(cacas.length)}
     </Button>
   );
 }

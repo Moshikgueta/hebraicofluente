@@ -294,19 +294,26 @@ describe('VIS-005, VIS-008, VIS-013: teclado e leitor de tela', () => {
 describe('VIS-009 e UXQA-012: a Academia', () => {
   it('os jogos sem material dizem quando abrem, e o vazio tem título', () => {
     const a = fonte('app/academia/AcademiaClient.tsx');
-    expect(a).toContain('`Abre com ${info.minimo} letras`');
+    /* Os textos moram no dicionário da tela (i18n), lidos como tx.chave. */
+    const d = fonte('i18n/telas/academia-academia-client.tsx');
+    expect(a).toContain('fmt(tx.abreCom, { n: info.minimo })');
+    expect(d).toContain("abreCom: 'Abre com {n} letras'");
     expect(a).toContain('disabled={!!fechados[jogo]}');
-    expect(a).toContain('<h1 className="text-[23px] font-bold">Ainda não há material suficiente</h1>');
+    expect(a).toContain('<h1 className="text-[23px] font-bold">{tx.semMaterialTitulo}</h1>');
+    expect(d).toContain("semMaterialTitulo: 'Ainda não há material suficiente'");
   });
 
   it('o teclado da tela vem primeiro; o guia do sistema fica recolhido', () => {
     const a = fonte('app/academia/AcademiaClient.tsx');
-    const tela = a.indexOf('Usar o teclado da tela');
+    const d = fonte('i18n/telas/academia-academia-client.tsx');
+    expect(d).toContain("usarTecladoTela: 'Usar o teclado da tela'");
+    const tela = a.indexOf('{tx.usarTecladoTela}');
     const guia = a.indexOf('<GuiaTeclado');
     expect(tela).toBeGreaterThan(0);
     expect(guia).toBeGreaterThan(tela);
     expect(a).toContain('<details');
     expect(a).not.toContain('Este é o único exercício do curso que pede o teclado hebraico');
+    expect(d).not.toContain('Este é o único exercício do curso que pede o teclado hebraico');
   });
 });
 

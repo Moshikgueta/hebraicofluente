@@ -23,6 +23,7 @@ import { partsFor } from '@/lib/engine/exam';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { alphabetComplete, lettersLeft } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-teste-final';
 
 /* Função, e não constante.
    ──────────────────────────────────────────────────────────────────────────
@@ -77,14 +78,14 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
           </span>
           <span className="font-display text-[17px] sm:text-[18px] font-semibold
                            tracking-[-0.018em] text-ink-muted">
-            Teste final do alfabeto
+            {tx.titulo}
           </span>
         </p>
         <p className="font-ui text-[14px] leading-[1.5] text-ink-muted">
-          Complete todas as letras para desbloquear o teste final.
+          {tx.complete}
           {' '}
           <strong className="font-semibold text-ink-body tabular-nums">
-            {faltam === 1 ? 'Falta 1 letra.' : `Faltam ${faltam} letras.`}
+            {tx.faltam(faltam)}
           </strong>
         </p>
         <span className="h-1.5 rounded-full bg-[var(--card)] overflow-hidden">
@@ -107,7 +108,7 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
         </span>
         <span className={`font-display text-[17px] sm:text-[18px] font-semibold tracking-[-0.018em]
           ${celebrar ? 'text-[var(--teal-ink)]' : 'text-white'}`}>
-          {celebrar ? 'Teste final desbloqueado!' : 'Teste final do alfabeto'}
+          {celebrar ? tx.desbloqueado : tx.titulo}
         </span>
       </p>
       <p className={`font-ui text-[14px] leading-[1.5] relative
@@ -116,10 +117,8 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
             fica errado no dia em que uma parte entra ou sai - e foi o que
             aconteceu quando "As letras difíceis" virou uma parte própria. */}
         {celebrar
-          ? `Você fechou as ${course.totalLetters} letras. O teste final mede o alfabeto
-             inteiro, em ${PARTES} partes.`
-          : `As ${course.totalLetters} letras, em ${PARTES} partes, sem transliteração
-             para se apoiar.`}
+          ? tx.fechou(course.totalLetters, PARTES)
+          : tx.resumo(course.totalLetters, PARTES)}
       </p>
       <Link
         href="/desafio-final"
@@ -128,7 +127,7 @@ export function TesteFinalCard({ compacto = false }: { compacto?: boolean }) {
                     hover:-translate-y-[2px]
           ${celebrar ? 'bg-[var(--teal-solid)] text-white' : 'bg-white text-[var(--navy)]'}`}
       >
-        {p.state.finalChallenge.completedAt ? 'Refazer o teste final' : 'Fazer o teste final'}
+        {p.state.finalChallenge.completedAt ? tx.refazer : tx.fazer}
       </Link>
     </Card>
   );

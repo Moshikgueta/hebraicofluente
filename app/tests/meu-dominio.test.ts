@@ -109,7 +109,9 @@ describe('cada número com o seu nome', () => {
       const visivel = fonte(f).split('\n').filter(l => !/^\s*(\*|\/\/|\/\*|\{\/\*)/.test(l)).join('\n');
       expect(visivel, f).not.toMatch(/letras dominadas|Letras dominadas|· dominada|Dominar (é|uma)|Domine as/);
     }
-    expect(fonte('components/game/AlphabetGrid.tsx')).toContain('lições concluídas');
+    /* O texto mora no dicionário da tela (i18n), lido pelo AlphabetGrid. */
+    expect(fonte('components/game/AlphabetGrid.tsx')).toContain('tx.licoesConcluidas(');
+    expect(fonte('i18n/telas/academia-alphabet-grid.tsx')).toContain('lições concluídas');
   });
 
   it('os níveis do domínio têm os nomes combinados', () => {

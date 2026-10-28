@@ -81,7 +81,10 @@ describe('as rodadas de som da Batalha', () => {
   it('a rodada de som não grava troca de desenho', () => {
     const s = fonte('components/game/Batalha.tsx');
     expect(s).toMatch(/fechar\(certa, certa \? null : r\.notaPt, r\.alvo\.id, `som:batalha:/);
-    expect(s).toContain("'Parecidas no som'");
-    expect(s).toContain("'Parecidas no desenho'");
+    /* Os rótulos moram no dicionário da tela (i18n), lidos como tx.chave. */
+    const d = fonte('i18n/telas/academia-batalha.tsx');
+    expect(s).toContain("meta === 'som' ? tx.parecidasSom : tx.parecidasDesenho");
+    expect(d).toContain("parecidasSom: 'Parecidas no som'");
+    expect(d).toContain("parecidasDesenho: 'Parecidas no desenho'");
   });
 });

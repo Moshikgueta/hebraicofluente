@@ -38,6 +38,7 @@ import type { RodadaCursiva } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
 import type { Letter } from '@/lib/content';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-impressa-cursiva';
 
 type Marca = { ok: boolean; texto: string | null } | null;
 
@@ -93,14 +94,14 @@ export function ImpressaCursiva({
     <div className="grid gap-5">
       <div className="flex items-center gap-3 flex-wrap">
         <p className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted flex-1">
-          Impressa e cursiva
+          {tx.titulo}
         </p>
         <p className="font-ui text-[13px] text-ink-muted tabular-nums" aria-live="polite">
-          {Math.min(i + 1, total)} / {total} · {acertos} {acertos === 1 ? 'acerto' : 'acertos'}
+          {tx.placar(Math.min(i + 1, total), total, acertos)}
         </p>
       </div>
 
-      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Rodada ${Math.min(i + 1, total)} de ${total}`}
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={tx.rodadaDe(Math.min(i + 1, total), total)}
            className="grid gap-5 outline-none">
       {r.tipo === 'pares'
         ? <Pares key={i} r={r} idx={i} responder={responder} />
@@ -113,7 +114,7 @@ export function ImpressaCursiva({
                ${marca.ok
                  ? 'border-[color:var(--edge-teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)] font-semibold'
                  : 'border-[color:var(--edge-gold)] bg-[var(--gold-soft)] text-[var(--gold-body)]'}`}>
-            {marca.ok ? 'Exatamente.' : marca.texto ?? 'Compare os dois desenhos com calma.'}
+            {marca.ok ? tx.exatamente : marca.texto ?? tx.compare}
           </p>
         )}
       </div>
@@ -134,7 +135,7 @@ function Escolha({
   return (
     <div className="grid gap-4 justify-items-center">
       <p className="font-ui text-[15px] text-ink-body text-center">
-        {mostrarCursiva ? 'Qual é esta letra em cursiva?' : 'Qual é esta letra na forma impressa?'}
+        {mostrarCursiva ? tx.qualCursiva : tx.qualImpressa}
       </p>
 
       {/* O enunciado: a letra na forma OPOSTA à das alternativas. */}
@@ -156,7 +157,7 @@ function Escolha({
                 onClick={() => responder(
                   certa,
                   certa ? null : porQueErrou(r.alvo, o)
-                    ?? `Esta é a ${o.namePt}. A que você procura é a ${r.alvo.namePt}.`,
+                    ?? tx.estaEOutra(o.namePt, r.alvo.namePt),
                   r.alvo.id, `cursiva:${r.alvo.id}:${idx}`,
                   certa ? undefined : o.letter
                 )}
@@ -222,14 +223,14 @@ function Pares({
   return (
     <div className="grid gap-3">
       <p className="font-ui text-[15px] text-ink-body text-center">
-        Toque numa letra impressa e depois na mesma letra em cursiva.
+        {tx.paresInstrucao}
       </p>
       <p className="font-ui text-[13px] text-ink-muted text-center tabular-nums">
-        {feitos.length} de {r.esquerda.length}
+        {tx.deTotal(feitos.length, r.esquerda.length)}
       </p>
 
       <div className="grid sm:grid-cols-2 gap-3">
-        <Coluna titulo="Impressa">
+        <Coluna titulo={tx.impressa}>
           {r.esquerda.map(o => {
             const feito = feitos.includes(o.id);
             const ativa = escolhida?.id === o.id;
@@ -241,7 +242,7 @@ function Pares({
             );
           })}
         </Coluna>
-        <Coluna titulo="Cursiva">
+        <Coluna titulo={tx.cursiva}>
           {r.direita.map(o => (
             <Peca
               key={o.id} letra={o} cursiva feito={feitos.includes(o.id)}
@@ -279,7 +280,7 @@ function Peca({
         onClick={onClick}
         disabled={feito}
         aria-pressed={ativa}
-        aria-label={`${letra.namePt}${cursiva ? ' em cursiva' : ' impressa'}`}
+        aria-label={tx.ariaPeca(letra.namePt, cursiva)}
         className={`w-full min-h-[72px] rounded-[var(--r-md)] border grid place-items-center
           relative transition-[background-color,border-color,transform] duration-150
           ${feito

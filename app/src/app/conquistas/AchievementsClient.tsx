@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { cartasCompradas, saldo } from '@/lib/loja';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
 import { podeCompartilhar } from '@/lib/compartilhar';
+import { tx } from '@/i18n/telas/academia-achievements-client';
 
 export function AchievementsClient() {
   const p = useProgress();
@@ -32,16 +33,16 @@ export function AchievementsClient() {
           aqui se chama Progresso, e a página abria com 17 cartões trancados,
           deixando os números do aluno lá embaixo. Agora vêm os números, e nas
           conquistas as ganhas antes das que faltam. */}
-      <h1 className="text-[27px] sm:text-[33px] font-bold">Seu progresso</h1>
+      <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.titulo}</h1>
 
       <Card className="p-5 grid gap-3">
-        <h2 className="font-display text-[17px] font-semibold">Seus números</h2>
+        <h2 className="font-display text-[17px] font-semibold">{tx.seusNumeros}</h2>
         <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            ['XP', p.state.xp],
-            ['Letras', `${p.mastered}/${course.totalLetters}`],
-            ['Sequência', p.streak],
-            ['Recorde', p.state.streak.longest]
+            [tx.xp, p.state.xp],
+            [tx.letras, `${p.mastered}/${course.totalLetters}`],
+            [tx.sequencia, p.streak],
+            [tx.recorde, p.state.streak.longest]
           ].map(([k, v]) => (
             <div key={String(k)} className="grid gap-0.5">
               <dt className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{k}</dt>
@@ -62,14 +63,14 @@ export function AchievementsClient() {
       <section id="colecao" aria-labelledby="t-colecao" className="grid gap-3 scroll-mt-20">
         <div className="grid gap-2">
           <div className="flex items-end justify-between gap-3">
-            <h2 id="t-colecao" className="font-display text-[17px] font-semibold">Sua coleção de letras</h2>
+            <h2 id="t-colecao" className="font-display text-[17px] font-semibold">{tx.colecao}</h2>
             {/* A Yael, a companheira da aventura, guarda a coleção. */}
             <Yael className="w-[64px] -mb-1 shrink-0" />
           </div>
           <ProgressBar value={colecao.ganhas / Math.max(1, colecao.cartas.length)}
-                       label={`${colecao.ganhas} de ${colecao.cartas.length}`} />
+                       label={tx.deTotal(colecao.ganhas, colecao.cartas.length)} />
           <p className="m-0 font-ui text-[13.5px] text-ink-muted">
-            Cada letra concluída vira uma carta, e o selo dourado marca as dominadas. Toque numa carta para rever a lição.
+            {tx.colecaoTexto}
           </p>
         </div>
         <ul className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5 list-none p-0 m-0">
@@ -83,10 +84,10 @@ export function AchievementsClient() {
 
       <section aria-labelledby="t-conquistas" className="grid gap-3">
         <div className="grid gap-2">
-          <h2 id="t-conquistas" className="font-display text-[17px] font-semibold">Conquistas</h2>
+          <h2 id="t-conquistas" className="font-display text-[17px] font-semibold">{tx.conquistas}</h2>
           <ProgressBar
             value={ACHIEVEMENTS.length ? have.size / ACHIEVEMENTS.length : 0}
-            label={`${have.size} de ${ACHIEVEMENTS.length}`}
+            label={tx.deTotal(have.size, ACHIEVEMENTS.length)}
           />
         </div>
         <div className="grid sm:grid-cols-2 gap-3">
@@ -113,10 +114,10 @@ export function AchievementsClient() {
       >
         <span className="grid gap-0.5 min-w-0">
           <span className="font-ui text-[14.5px] font-medium text-ink">
-            Viagem pela história do hebraico
+            {tx.viagem}
           </span>
           <span className="font-ui text-[12.5px] text-ink-muted">
-            {cultureUnlocked(p.mastered).length + cultureCards().filter(c => c.unlockAt > p.mastered && cartasCompradas(p.state).has(c.id)).length} de {cultureCards().length} cartas abertas
+            {tx.cartasAbertas(cultureUnlocked(p.mastered).length + cultureCards().filter(c => c.unlockAt > p.mastered && cartasCompradas(p.state).has(c.id)).length, cultureCards().length)}
           </span>
         </span>
         <span aria-hidden className="text-ink-muted">→</span>
@@ -128,31 +129,30 @@ export function AchievementsClient() {
                    border-line bg-surface px-4 py-3.5 hover:bg-surface-2 transition-colors"
       >
         <span className="grid gap-0.5 min-w-0">
-          <span className="font-ui text-[14.5px] font-medium text-ink">Recompensas</span>
+          <span className="font-ui text-[14.5px] font-medium text-ink">{tx.recompensas}</span>
           <span className="font-ui text-[12.5px] text-ink-muted">
-            ◆ {saldo(p.state).toLocaleString('pt-BR')} de saldo para trocar
+            {tx.saldo(saldo(p.state).toLocaleString(tx.localeNumero))}
           </span>
         </span>
         <span aria-hidden className="text-ink-muted">→</span>
       </Link>
 
       <Card className="p-5 grid gap-3">
-        <h2 className="font-display text-[17px] font-semibold">Recomeçar do zero</h2>
+        <h2 className="font-display text-[17px] font-semibold">{tx.recomecar}</h2>
         {/* "Da conta" e não "deste navegador": agora o apagar também limpa o
             servidor, e prometer menos do que o botão faz é pior do que o
             contrário - a pessoa acharia que o progresso volta noutro
             aparelho. */}
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted max-w-[52ch]">
-          Apaga todo o seu progresso, em todos os aparelhos: XP, sequência,
-          lições e revisões. Não dá para desfazer.
+          {tx.recomecarTexto}
         </p>
         <button
           type="button"
-          onClick={() => { if (confirm('Apagar todo o seu progresso? Isso não pode ser desfeito.')) p.reset(); }}
+          onClick={() => { if (confirm(tx.confirmarApagar)) p.reset(); }}
           className="justify-self-start min-h-[44px] px-4 rounded-[var(--r-md)] border border-line
                      font-ui text-[14px] text-ink-muted hover:text-ink hover:bg-surface-2"
         >
-          Apagar progresso
+          {tx.apagar}
         </button>
       </Card>
     </div>

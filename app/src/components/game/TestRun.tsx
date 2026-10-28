@@ -24,6 +24,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { getLetter } from '@/lib/content';
 import type { Pergunta } from '@/lib/engine/deck';
+import { tx } from '@/i18n/telas/academia-test-run';
 
 export type RespostaTeste = { q: Pergunta; escolhida: number };
 
@@ -128,7 +129,7 @@ export function TestRun({
       });
       return;
     }
-    setAviso(`Resposta registrada. Pergunta ${i + 2} de ${perguntas.length}.`);
+    setAviso(tx.registrada(i + 2, perguntas.length));
     setI(n => n + 1);
   }, [escolha, q, dadas, i, perguntas.length, onFim, onResposta, inicio]);
 
@@ -167,7 +168,7 @@ export function TestRun({
         </span>
         {cronometro && (
           <span className="font-ui text-[13px] font-semibold tabular-nums text-ink shrink-0"
-                aria-label={`Tempo decorrido: ${decorridos} segundos`}>
+                aria-label={tx.tempoDecorrido(decorridos)}>
             {Math.floor(decorridos / 60)}:{String(decorridos % 60).padStart(2, '0')}
           </span>
         )}
@@ -212,8 +213,8 @@ export function TestRun({
       </Card>
 
       <Button size="lg" full onClick={confirmar} disabled={escolha === null}>
-        {escolha === null ? 'Escolha uma opção'
-          : i + 1 >= perguntas.length ? 'Terminar o teste' : 'Confirmar e continuar'}
+        {escolha === null ? tx.escolhaOpcao
+          : i + 1 >= perguntas.length ? tx.terminar : tx.confirmar}
       </Button>
     </div>
   );
@@ -233,28 +234,28 @@ export function RelatorioTeste({
       <Card tone={forte ? 'mint' : 'ember'} className="p-6 sm:p-8 grid gap-3 text-center">
         <p className={`font-ui text-[13px] font-bold uppercase tracking-[.1em]
           ${forte ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
-          Teste concluído
+          {tx.concluido}
         </p>
         <p className="font-display text-[40px] sm:text-[48px] font-semibold tracking-[-0.03em]
                       leading-none text-ink tabular-nums">
           {pct}%
         </p>
         <p className="font-ui text-[16px] text-ink-body">
-          Você acertou {r.acertos} de {r.total}.
+          {tx.acertou(r.acertos, r.total)}
         </p>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[46ch] mx-auto">
           {forte
-            ? 'Isso é leitura firme. O que escapou volta sozinho na revisão, no dia certo.'
+            ? tx.forte
             : meio
-              ? 'Boa base, com buracos localizados. A lista abaixo diz exatamente quais.'
-              : 'Ainda é cedo para este conjunto, e isso não é um problema. Reveja as letras abaixo e refaça - não há limite de tentativas.'}
+              ? tx.meio
+              : tx.cedo}
         </p>
       </Card>
 
       {r.erradas.length > 0 && (
         <Card className="p-5 sm:p-6 grid gap-3">
           <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-            O que escapou
+            {tx.escapou}
           </p>
           <ul className="grid gap-2 list-none p-0 m-0">
             {r.erradas.map(({ q, escolhida }, k) => {
@@ -272,13 +273,13 @@ export function RelatorioTeste({
                       {q.sentido === 'he' ? certa : q.alvo}
                     </span>
                     <span className="block font-ui text-[13px] text-[var(--gold-ink)]">
-                      {q.sentido === 'he' ? `você marcou ${dada}` : 'você marcou outra letra'}
+                      {q.sentido === 'he' ? tx.voceMarcou(dada) : tx.outraLetra}
                     </span>
                   </span>
                   {L && (
                     <Link href={`/licao/${L.id}`}
                           className="font-ui text-[13px] text-[var(--teal-ink)] hover:underline shrink-0">
-                      Rever {L.namePt}
+                      {tx.rever(L.namePt)}
                     </Link>
                   )}
                 </li>
@@ -289,7 +290,7 @@ export function RelatorioTeste({
       )}
 
       <div className="flex flex-wrap gap-3">
-        <Button variant={forte ? 'secondary' : 'primary'} onClick={onRefazer}>Refazer o teste</Button>
+        <Button variant={forte ? 'secondary' : 'primary'} onClick={onRefazer}>{tx.refazer}</Button>
         {children}
       </div>
     </div>

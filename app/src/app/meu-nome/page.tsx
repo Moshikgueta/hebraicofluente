@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
+import { tx } from '@/i18n/telas/academia-meu-nome-client';
 import { MeuNomeClient } from './MeuNomeClient';
 
 export const metadata: Metadata = meta({
   rota: '/meu-nome',
-  title: 'Meu nome em hebraico - Hebraico Fluente',
-  description: 'Escreva o seu nome em hebraico, em letra impressa e à mão.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 export default function MeuNomePage() { return <MeuNomeClient />; }
