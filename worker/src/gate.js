@@ -56,6 +56,7 @@ const GATED = [
   '/leitura',
   /* 28/10/2026: as leituras todas num lugar só (app/leituras). */
   '/leituras',
+  '/hebraico-na-rua',
   /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
      portão em vez de serem descobertos públicos depois. Atenção: o
      AudioButton também aparece em página livre (a landing, `Fecho.tsx`), e

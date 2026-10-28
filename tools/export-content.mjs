@@ -640,6 +640,29 @@ function main() {
     }
   }
 
+  /* ── o Hebraico na rua (28/10/2026) ──────────────────────────────────
+     Fotos reais de placas, do Wikimedia Commons, com as mesmas regras de
+     crédito das fotos das missões. Cada placa cita uma palavra do curso
+     (`palavra`) e lista todas as palavras do curso que aparecem nela
+     (`naPlaca`); só sai a aprovada pelo dono. Vai junto das missões, no
+     missoes.json (conteúdo pago). tests/hebraico-na-rua.test.ts. */
+  const placasDaRua = [];
+  for (const f of readJson('data/hebraico-na-rua.json').placas) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'palavra', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`hebraico-na-rua.json: a placa ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`hebraico-na-rua.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`hebraico-na-rua.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/rua', f.arquivo))) throw new Error(`hebraico-na-rua.json: falta o arquivo app/public/media/rua/${f.arquivo}`);
+    if (!Array.isArray(f.naPlaca) || !f.naPlaca.map(NFC).includes(NFC(f.palavra))) {
+      throw new Error(`hebraico-na-rua.json: ${f.id} precisa listar a própria palavra em naPlaca`);
+    }
+    const { aprovada, ...publica } = f;
+    void aprovada;
+    placasDaRua.push({ ...publica, palavra: NFC(f.palavra), naPlaca: f.naPlaca.map(NFC) });
+  }
+
   /* ── os mini-textos de leitura corrida ─────────────────────────────
      Um texto curto por módulo, do 3 ao 7. São as únicas frases do curso
      escritas para ele, e por isso cada um nasce com `revisado: false`: o
@@ -739,7 +762,8 @@ function main() {
         he: NFC(p.he),
         ...(p.erradas ? { erradas: p.erradas.map(NFC) } : {})
       }))
-    }))
+    })),
+    rua: placasDaRua
   }, null, 2) + '\n');
 
   /* ── o curso Hebraico A1 (06/10/2026) ────────────────────────────────

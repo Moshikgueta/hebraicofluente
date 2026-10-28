@@ -86,6 +86,8 @@ const MOLDE = JSON.stringify({
   strokes: strokes.letters,
   culture: culture.cards.map(c => ({ ...c, bodyPt: (c.bodyPt || []).map(marcar) })),
   missoes: missoes.missoes,
+  /* O Hebraico na rua vem no mesmo arquivo das missões (28/10/2026). */
+  rua: missoes.rua || [],
   textos: textos.textos,
   bonus: bonus.leituras,
   guiaNikud: bonus.guia ?? null

@@ -15,7 +15,7 @@
 
 import Link from 'next/link';
 import { useProgress } from '@/lib/state/store';
-import { course, revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
+import { course, placasDaRua, revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { textoLidoId } from '@/lib/engine/textos';
@@ -81,6 +81,24 @@ export function LeiturasClient() {
         </span>
         <span aria-hidden className="font-ui text-[20px]">→</span>
       </Link>
+
+      {/* O Hebraico na rua (28/10/2026): só com alguma placa aprovada. */}
+      {placasDaRua().length > 0 && (
+        <Link href="/hebraico-na-rua"
+              className="flex items-center gap-4 rounded-[18px] border border-line bg-[var(--card)] p-5 shadow-[var(--sh)]
+                         transition-transform duration-200 hover:-translate-y-[2px] active:scale-[.98]">
+          <span aria-hidden className="grid place-items-center w-12 h-12 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="16" height="9" rx="2" /><path d="M11 13v6M8 19h6M7 8.5h8" />
+            </svg>
+          </span>
+          <span className="grid gap-0.5 min-w-0 flex-1">
+            <span className="font-display text-[18px] font-semibold text-ink">{tx.rua}</span>
+            <span className="font-ui text-[14px] text-ink-muted">{tx.ruaDesc}</span>
+          </span>
+          <span aria-hidden className="font-ui text-[20px] text-ink-muted">→</span>
+        </Link>
+      )}
 
       {porModulo.map(({ m, leituras }) => (
         <section key={m.id} aria-labelledby={`lt-${m.n}`} className="grid gap-2.5 min-w-0">
