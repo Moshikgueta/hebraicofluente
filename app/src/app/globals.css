@@ -189,6 +189,23 @@
 @keyframes hf-seta-rtl { from { transform: translateX(84px); opacity: .25; } 20% { opacity: 1; } to { transform: translateX(0); opacity: 1; } }
 .seta-rtl { left: 0; animation: hf-seta-rtl 2.4s ease-in-out infinite; }
 
+/* O movimento dos cenários (components/aventura/Cenarios.tsx): só no
+   cenário `il-vivo`, só transform e opacidade, e para com "reduzir
+   movimento" pelas duas regras de cima. O trancado dessatura. */
+@keyframes il-onda   { from { transform: translateX(0); } to { transform: translateX(-20px); } }
+@keyframes il-deriva { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+@keyframes il-balanca { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes il-pisca  { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes il-anda   { 0% { transform: translateX(-24px); } 100% { transform: translateX(24px); } }
+.il-vivo .il-onda { animation: il-onda 2.6s linear infinite; }
+.il-vivo .il-onda-2 { animation-duration: 3.8s; }
+.il-vivo .il-nuvem > path { animation: il-deriva 14s ease-in-out infinite; }
+.il-vivo .il-passaros { animation: il-deriva 9s ease-in-out infinite; }
+.il-vivo .il-barco { transform-box: fill-box; transform-origin: 50% 100%; animation: il-balanca 4s ease-in-out infinite; }
+.il-vivo .il-luz { animation: il-pisca 2.4s ease-in-out infinite; }
+.il-vivo .il-onibus { animation: il-anda 7s ease-in-out infinite alternate; }
+.il-trancado { filter: grayscale(.75) brightness(.97); opacity: .72; }
+
 /* As vogais de CASA que se apagam na Aula 0 (28/10/2026). Só opacidade. */
 @keyframes hf-vogal-some { 0%, 25% { opacity: 1; } 50%, 85% { opacity: .12; } 100% { opacity: 1; } }
 .vogal-some { color: var(--accent); animation: hf-vogal-some 3.4s ease-in-out infinite; }

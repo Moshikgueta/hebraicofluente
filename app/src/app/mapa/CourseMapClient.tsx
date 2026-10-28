@@ -19,6 +19,7 @@
  * não "não pode entrar". Um adulto que quer espiar o módulo 6 pode.
  */
 
+import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
@@ -270,6 +271,25 @@ function Trecho({ module: m, estado, ultimo }: {
               : estado === 'adiante' ? 'bg-[var(--paper)] border-line border-dashed'
               : 'bg-[var(--card)] border-line'}`}
         >
+          {/* O lugar do módulo (28/10/2026, a aventura ilustrada). Só o
+              módulo em que o aluno está se mexe; o trancado aparece
+              desbotado, e o concluído ganha o selo. O desenho é decorativo:
+              o que ele diz está no texto do cartão. */}
+          {m.n >= 1 && m.n <= 7 && (
+            <div className="relative -mx-5 -mt-5 sm:-mx-6 sm:-mt-[22px] mb-4 h-[104px] sm:h-[132px]
+                            overflow-hidden rounded-t-[17px] border-b border-line">
+              <Cenario n={m.n as IdDoCenario} vivo={estado === 'agora'} trancado={estado === 'adiante'} />
+              <span className="absolute left-3 bottom-2.5 rounded-full bg-[var(--card)]/90 px-2.5 py-1
+                               font-ui text-[12px] font-semibold text-ink shadow-[var(--sh)]">
+                {LUGAR[m.n as IdDoCenario]}
+              </span>
+              {estado === 'feito' && (
+                <span aria-hidden
+                      className="absolute right-3 top-3 grid place-items-center w-9 h-9 rounded-full
+                                 bg-[var(--gold-solid)] text-white text-[17px] font-bold shadow-[var(--sh)]">✓</span>
+              )}
+            </div>
+          )}
           <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
             <span className={`inline-flex items-center gap-1.5 font-ui text-[12.5px] font-bold uppercase tracking-[.1em] ${TAG.cor}`}>
               {estado === 'adiante' && (
