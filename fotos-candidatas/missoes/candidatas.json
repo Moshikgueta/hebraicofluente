@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-28T19:03:25.033Z",
+  "geradoEm": "2026-10-28T19:05:01.121Z",
   "candidatas": [
     {
       "id": "m1-1",
@@ -720,6 +720,66 @@
       "descricao": "Аэропорт им. Бен Гуриона. Зал ожидания",
       "largura": 1200,
       "altura": 675
+    },
+    {
+      "id": "m5-5",
+      "missao": 5,
+      "busca": "Yarkon Park Tel Aviv lawn",
+      "titulo": "File:Environmental sculptures in Yehoshua Gardens Hayarkon Park Tel Aviv Yafo Avney Moreshet 5b8741b0.jpg",
+      "arquivo": "m5-5.jpg",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Environmental_sculptures_in_Yehoshua_Gardens_Hayarkon_Park_Tel_Aviv_Yafo_Avney_Moreshet_5b8741b0.jpg",
+      "autor": "Zeev Stein ( זאב שטיין )",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "2026-08-30",
+      "descricao": "Name: Environmental sculptures in Yehoshua Gardens - Hayarkon Park - Tel Aviv-Yafo Description: They Beaten (Yigael Tumarkin, 1985) – A sculpture inspired by Isaiah’s vision, “And they beat their swords into plowshares.” Throughout the Yehoshua Gardens in the Yarkon Park, eight environmental sculptures by the best artists in Israel are placed. The sculptures blend perfectly into the green natural ",
+      "largura": 1200,
+      "altura": 554
+    },
+    {
+      "id": "m5-6",
+      "missao": 5,
+      "busca": "Yarkon Park Tel Aviv lawn",
+      "titulo": "File:Environmental sculptures in Yehoshua Gardens Hayarkon Park Tel Aviv Yafo Avney Moreshet 6b96398d.jpg",
+      "arquivo": "m5-6.jpg",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Environmental_sculptures_in_Yehoshua_Gardens_Hayarkon_Park_Tel_Aviv_Yafo_Avney_Moreshet_6b96398d.jpg",
+      "autor": "Zeev Stein ( זאב שטיין )",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "2026-08-30",
+      "descricao": "Name: Environmental sculptures in Yehoshua Gardens - Hayarkon Park - Tel Aviv-Yafo Description: • Beaten (Yigael Tumarkin, 1985) – A sculpture inspired by Isaiah’s vision, “And they shall beat their swords into spades.” Throughout the Yehoshua Gardens in the Yarkon Park, eight environmental sculptures by the best artists in Israel are placed. The sculptures blend perfectly into the green natural s",
+      "largura": 1200,
+      "altura": 547
+    },
+    {
+      "id": "m5-7",
+      "missao": 5,
+      "busca": "Yarkon Park Tel Aviv lawn",
+      "titulo": "File:Environmental sculptures in Yehoshua Gardens Hayarkon Park Tel Aviv Yafo Avney Moreshet b62ba0f4.jpg",
+      "arquivo": "m5-7.jpg",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Environmental_sculptures_in_Yehoshua_Gardens_Hayarkon_Park_Tel_Aviv_Yafo_Avney_Moreshet_b62ba0f4.jpg",
+      "autor": "Zeev Stein ( זאב שטיין )",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "2026-08-30",
+      "descricao": "Name: Environmental sculptures in Yehoshua Gardens - Hayarkon Park - Tel Aviv-Yafo Description: • Beaten (Yigael Tumarkin, 1985) – A sculpture inspired by Isaiah’s vision, “And they shall beat their swords into spades.” Throughout the Yehoshua Gardens in the Yarkon Park, eight environmental sculptures by the best artists in Israel are placed. The sculptures blend perfectly into the green natural s",
+      "largura": 1200,
+      "altura": 619
+    },
+    {
+      "id": "m5-8",
+      "missao": 5,
+      "busca": "Yarkon Park Tel Aviv lawn",
+      "titulo": "File:Environmental sculptures in Yehoshua Gardens Hayarkon Park Tel Aviv Yafo Avney Moreshet d1756854.jpg",
+      "arquivo": "m5-8.jpg",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Environmental_sculptures_in_Yehoshua_Gardens_Hayarkon_Park_Tel_Aviv_Yafo_Avney_Moreshet_d1756854.jpg",
+      "autor": "Zeev Stein (זאב שטיין )",
+      "licenca": "CC BY 2.5",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.5",
+      "data": "2026-08-30",
+      "descricao": "Name: Environmental sculptures in Yehoshua Gardens - Hayarkon Park - Tel Aviv-Yafo Description: Yakin and Boaz (Yigael Tumarkin, 1987) – an impressive steel sculpture composed of dark geometric columns. Throughout the Yehoshua Gardens in the Yarkon Park, eight environmental sculptures by the best artists in Israel are placed. The sculptures blend perfectly into the green natural spaces, along the ",
+      "largura": 1200,
+      "altura": 554
     }
   ]
 }
