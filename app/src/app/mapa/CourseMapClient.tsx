@@ -442,6 +442,7 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                    cadeado, continua sem link e é alcançada na ordem. */
                 return liberada ? (
                   <Link key={L.id} href={L.href} className={classe}
+                        aria-current={ehAProxima ? 'step' : undefined}
                         title={`${L.nome}${estadoDaLetra}`}
                         aria-label={`${fmt(tx.abrirLicao, { nome: L.nome })}${estadoDaLetra}`}>
                     {miolo}

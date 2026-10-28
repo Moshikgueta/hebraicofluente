@@ -394,6 +394,18 @@ export function DashboardClient() {
       ) : null}
 
 
+      {/* A Aula 0 para reler, numa linha (o mapa também a tem). O painel
+          precisa linkar /inicio: é a regra da varredura do curso. */}
+      {!aula0Primeiro && licoesFeitas > 0 && (
+        <p className="font-ui text-[13.5px] text-ink-muted">
+          {tx.reler(t => (
+            <Link href="/inicio" className="inline-flex items-center min-h-[44px] hover:text-[var(--accent)] underline underline-offset-2">
+              {t}
+            </Link>
+          ))}
+        </p>
+      )}
+
       {/* O pedido de depoimento (29/09/2026), só depois de seis lições - antes
           disso a pessoa ainda não tem o que contar. Discreto e sem troca:
           nada de XP ou desconto por depoimento. Ver /depoimento. */}

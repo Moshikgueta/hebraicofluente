@@ -91,7 +91,7 @@ const estado = () => p.evaluate(() => {
   const txt = (main?.innerText || '').replace(/\s+/g, ' ');
   const marca = main?.querySelector('[data-progresso]')?.getAttribute('data-progresso') || '';
   const [feito, total] = marca.split('/').map(Number);
-  const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
+  const botoes = [...main.querySelectorAll('button:not([aria-haspopup]):not(dialog *)')].map((el, i) => ({
     i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
     /* aria-disabled conta como desligado: o ligar da lição e as perguntas
        da etapa 1 mantêm o botão focável depois de respondido (VIS-005/008). */
@@ -194,7 +194,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       if (e.julgado && !/Isso|Boa|resposta certa|Quase|Não é|Errou|certa é/.test(e.txt)) {
         erro(`${letraId}/${rotulo}: item julgado e nenhuma explicação na tela`);
       }
-      await p.locator('main button').nth(seguir.i).click();
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(seguir.i).click();
       await p.waitForTimeout(300);
       continue;
     }
@@ -246,7 +246,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
        resposta" - e o robô faz o mesmo que ele. */
     const desistir = e.botoes.find(x => !x.off && /^Mostrar a resposta/.test(x.txt));
     if (desistir) {
-      await p.locator('main button').nth(desistir.i).click();
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(desistir.i).click();
       await p.waitForTimeout(300);
       continue;
     }
@@ -282,7 +282,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       const colunas = await p.evaluate(() => {
         const uls = [...document.querySelectorAll('main ul')]
           .filter(u => u.querySelectorAll('button').length >= 3);
-        const todos = [...document.querySelectorAll('main button')];
+        const todos = [...document.querySelectorAll('main button:not([aria-haspopup]):not(dialog *)')];
         const idx = el => todos.indexOf(el);
         return uls.slice(0, 2).map(u => [...u.querySelectorAll('button')]
           .map(b => ({ i: idx(b), off: b.disabled || b.getAttribute('aria-disabled') === 'true' })));
@@ -292,19 +292,19 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       const aberto = esq.find(x => !x.off);
       if (!aberto) { await p.waitForTimeout(300); continue; }
       for (const alvo of dir.filter(x => !x.off)) {
-        await p.locator('main button').nth(aberto.i).click().catch(() => {});
+        await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(aberto.i).click().catch(() => {});
         await p.waitForTimeout(90);
-        await p.locator('main button').nth(alvo.i).click().catch(() => {});
+        await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvo.i).click().catch(() => {});
         await p.waitForTimeout(160);
         /* aria-disabled também fecha: o ligar mantém o botão focável (VIS-005). */
-        const fechou = await p.locator('main button').nth(aberto.i)
+        const fechou = await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(aberto.i)
           .evaluate(b => b.disabled || b.getAttribute('aria-disabled') === 'true').catch(() => false);
         if (fechou) break;
       }
       continue;
     }
 
-    await p.locator('main button').nth(alvos[0].i).click();
+    await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvos[0].i).click();
     await p.waitForTimeout(250);
 
     const depois = await estado();
@@ -316,7 +316,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
     const jaRespondido = depois.botoes[alvos[0].i]?.off;
     if (jaRespondido) {
       const antes = depois.feito;
-      await p.locator('main button').nth(alvos[0].i).click({ force: true }).catch(() => {});
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvos[0].i).click({ force: true }).catch(() => {});
       await p.waitForTimeout(200);
       const agora2 = await estado();
       if (agora2.feito !== antes) {

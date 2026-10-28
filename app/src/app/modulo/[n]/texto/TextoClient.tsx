@@ -21,6 +21,7 @@ import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
 import { revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { palavrasDoTexto, textoLidoId } from '@/lib/engine/textos';
+import { Prose } from '@/components/learn/Blocks';
 
 /* `revisao` (05/10/2026): a mesma página serve à leitura de revisão do
    módulo, que só usa palavras que o aluno já acumulou (/modulo/N/revisao). */
@@ -53,7 +54,7 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
         </Link>
         <Badge tone="accent">{revisao ? tx.leituraDeRevisao(mod.n) : tx.leituraDoModulo(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight m-0">{texto.tituloPt}</h1>
-        <p className="text-[16px] leading-relaxed text-ink-body m-0">{texto.introPt}</p>
+        <p className="text-[16px] leading-relaxed text-ink-body m-0"><Prose text={texto.introPt} /></p>
       </header>
 
       <LinhasDeLeitura linhas={texto.linhas} rotulo={texto.tipoPt} semPontos={!!texto.semPontos} />
