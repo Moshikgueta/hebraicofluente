@@ -97,7 +97,7 @@ describe('ligar e desligar o lembrete', () => {
     const t = await tokenDeSaida(env, ana.id);
     expect(e.text).toContain(encodeURIComponent(t));
     expect(e.headers?.['List-Unsubscribe']).toContain('/sair-da-lista/?t=');
-    expect((await sair(env, t.replace(/.$/, c => (c === 'A' ? 'B' : 'A')))).status).toBe(400);
+    expect((await sair(env, t.replace(/.$/, (c: string) => (c === 'A' ? 'B' : 'A')))).status).toBe(400);
     expect((await sair(env, `l${ana.id + 1}.${t.split('.')[1]}`)).status).toBe(400);
     /* O token da lista de novidades não serve aqui. */
     expect((await sair(env, t.slice(1))).status).toBe(400);

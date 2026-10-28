@@ -95,7 +95,8 @@ export type Empresa = {
      * "oferece os dois", que era o comportamento de antes.
      */
     formas?: { pix: boolean; cartao: boolean };
-    pix: {
+    /** A chave do PIX direto. A build em inglês (Paddle) sai sem ela. */
+    pix?: {
       /** Só os caracteres da chave: CNPJ vai sem ponto, barra nem traço. */
       chave: string;
       tipoChave: 'cnpj' | 'cpf' | 'email' | 'telefone' | 'aleatoria';
