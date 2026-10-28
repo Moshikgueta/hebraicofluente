@@ -8,7 +8,7 @@
  */
 
 import { flagship } from '@/lib/catalog';
-import { course, tempoDoCursoPt } from '@/lib/content-publico';
+import { tempoDoCursoPt } from '@/lib/content-publico';
 import { empresa } from '@/lib/empresa';
 import { TEM_AUDIO } from './copy';
 
@@ -20,7 +20,7 @@ export function perguntasDaCapa(): readonly (readonly [string, string])[] {
     ['É hebraico moderno ou bíblico?',
      'A leitura é a mesma: as letras e os sinais de vogal do texto bíblico são os que este curso ensina. O curso usa a pronúncia do hebraico moderno e vocabulário do dia a dia, o que abre os dois caminhos. Ler em voz alta e entender, porém, são coisas diferentes - a página /biblia responde isso por inteiro.'],
     ['Quanto tempo leva?',
-     `${tempoDoCursoPt()} São ${course.totalLetters} letras, mais os checkpoints de revisão, e o ritmo é seu.`],
+     `${tempoDoCursoPt()} O ritmo é seu.`],
     ['O curso funciona no celular?',
      'Sim. A plataforma foi desenhada primeiro para o celular: uma atividade por tela e o botão de continuar sempre à mão.'],
     ['Tem áudio?',

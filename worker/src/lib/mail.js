@@ -956,17 +956,17 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
 
   let subject; let corpo; let link; let rotulo;
   if (marco === 'd1') {
-    subject = 'Sua primeira lição leva dez minutos';
+    subject = 'Sua primeira letra leva dez minutos';
     corpo = [
       `Seu acesso ao curso ${curso} está liberado.`,
-      'O jeito mais simples de começar é a Aula 0, que mostra como o hebraico funciona, e depois a primeira letra, o Álef. A primeira lição leva dez minutos.'
+      'O jeito mais simples de começar é a Aula 0, que mostra como o hebraico funciona, e depois a primeira letra, o Álef, que leva cerca de dez minutos.'
     ];
     link = inicio; rotulo = 'Começar pela Aula 0';
   } else if (marco === 'd3') {
     subject = 'Ficou alguma dúvida para começar?';
     corpo = [
       `O seu curso ${curso} ainda não tem nenhuma lição concluída.`,
-      'Às vezes o que segura é uma coisa pequena. A primeira letra é o Álef, e ela já leva você à primeira palavra na lição seguinte.',
+      'Às vezes o que segura é uma coisa pequena. A primeira letra é o Álef, e com a letra seguinte, o Mem, você já lê a primeira palavra.',
       ajuda
     ];
     link = primeira; rotulo = 'Abrir a primeira letra';
@@ -979,7 +979,7 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
         ]
       : [
           `Faz uma semana que o seu acesso ao curso ${curso} foi liberado.`,
-          'Uma letra por vez: a primeira lição leva dez minutos.',
+          'Uma letra por vez: cada uma leva cerca de dez minutos.',
           ajuda
         ];
     link = feitas > 0 ? painel : primeira; rotulo = feitas > 0 ? 'Continuar o curso' : 'Abrir a primeira letra';

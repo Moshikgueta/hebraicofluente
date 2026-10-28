@@ -121,3 +121,22 @@ o texto tirado do navegador.
   e-book na Privacidade é a da prévia em /previa, que continua no ar.
 - **Pede evidência (a mesma pergunta 1):** "cerca de dez minutos" por lição aparece também em
   /metodo ("Dez minutos, cinco etapas") e em /suporte ("A primeira letra leva dez minutos").
+
+## 10. O tempo, por letra (28/10/2026, decisão do dono)
+
+A pergunta 1 deste relatório foi respondida pela conta e por uma decisão do dono. O site dizia
+"27 lições de cerca de dez minutos" e "a primeira lição leva dez minutos", mas a lição 1 tem três
+letras, e só a fixação de cada letra são 20 questões. A estimativa passou para a letra:
+
+- "Quanto tempo leva?" (FAQ e capa, `tempoDoCursoPt`): "Cada letra leva cerca de dez minutos, e
+  são 22, mais 8 lições de som e os checkpoints. Quem estuda uma por dia termina em cerca de um
+  mês; quem estuda três por semana leva uns 2 meses." A conta usa letras + lições de som.
+- Checkout, página de obrigado e os lembretes por e-mail: "a primeira letra leva cerca de dez
+  minutos" (o assunto do 1º dia virou "Sua primeira letra leva dez minutos").
+- A meta diária do /onboarding acompanha a mesma conta (10 minutos = cerca de uma letra por dia)
+  e perdeu "O ritmo da maioria", que não tinha dado por trás.
+- O lembrete do 3º dia dizia que a primeira palavra vinha "na lição seguinte"; vem com a letra
+  seguinte, o Mem.
+
+Continua sendo estimativa. Quando houver alunos, o tempo real por letra pode ser medido e o
+número ajustado.
