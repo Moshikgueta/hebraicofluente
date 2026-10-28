@@ -453,6 +453,40 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                   </span>
                 );
               })}
+              {/* O checkpoint do módulo, a última peça do caminho (28/10/2026,
+                  pedido do dono). Aprovado: dourado, com a melhor nota. Com as
+                  letras feitas: o anel da vez. Antes disso fica quieto, mas
+                  abre - o checkpoint nunca foi trancado (ver ModuleClient). */}
+              {m.checkpoint && estado !== 'adiante' && (() => {
+                const cp = p.state.checkpoints[m.checkpoint!.id];
+                const aprovado = !!cp?.passedAt;
+                const pronto = !aprovado && !pendente;
+                const estadoDoCp = aprovado
+                  ? tx.checkpointAprovado(cp?.best != null ? Math.round(cp.best * 100) : null)
+                  : pronto ? tx.checkpointPronto : tx.checkpointDepois;
+                return (
+                  <Link href={`/checkpoint/${m.n}`}
+                        title={`${tx.checkpointRotulo}${estadoDoCp}`}
+                        aria-label={`${tx.abrirCheckpoint(m.n)}${estadoDoCp}`}
+                        className={`relative z-[1] min-w-[58px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
+                                    hover:shadow-[var(--sh)] transition-[box-shadow,border-color]
+                                    ${aprovado ? 'bg-[var(--gold-soft)] border-[var(--gold)]'
+                                      : pronto ? 'bg-[var(--card)] border-[var(--gold)] border-2 hf-chama'
+                                      : 'bg-[var(--sand)] border-line border-dashed'}`}>
+                    {aprovado && (
+                      <span aria-hidden className="absolute -top-1.5 -right-1.5 w-[17px] h-[17px] rounded-full bg-[var(--gold-solid)]
+                                                  grid place-items-center text-white text-[10px] font-bold shadow-[0_1px_2px_rgba(0,0,0,.18)]">✓</span>
+                    )}
+                    <svg aria-hidden width="20" height="20" viewBox="0 0 20 20" fill="none"
+                         className={aprovado || pronto ? 'text-[var(--gold)]' : 'text-ink-muted'}>
+                      <path d="M5 17V3.5M5 4h9l-2 3 2 3H5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className="font-ui text-[9.5px] tracking-[.04em] text-ink-muted">
+                      {aprovado && cp?.best != null ? `${Math.round(cp.best * 100)}%` : tx.checkpointRotulo}
+                    </span>
+                  </Link>
+                );
+              })()}
             </div>
           )}
           {m.milestonePt && (

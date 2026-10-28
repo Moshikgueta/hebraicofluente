@@ -75,7 +75,7 @@ const NAV = [
   { href: '/mapa', label: tx.navCurso, icon: IconeMapa, movel: 'barra',
     secao: ['/inicio', '/licao', '/som', '/extra', '/modulo', '/checkpoint', '/desafio-final', '/concluido'] },
   { href: '/academia', label: tx.navPraticar, icon: IconePraticar, movel: 'barra',
-    secao: ['/revisao', '/vocabulario', '/leitura', '/meu-nome', '/teclado-hebraico', '/bonus', '/nikud-biblico'] },
+    secao: ['/revisao', '/vocabulario', '/leitura', '/leituras', '/meu-nome', '/teclado-hebraico', '/bonus', '/nikud-biblico'] },
   { href: '/conquistas', label: tx.navProgresso, icon: IconeConquistas, movel: 'barra',
     secao: ['/historia', '/certificado', '/meu-hebraico/dominio'] },
   /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta

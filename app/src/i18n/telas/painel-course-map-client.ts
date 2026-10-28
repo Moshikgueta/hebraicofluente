@@ -25,6 +25,11 @@ const pt = {
   letraBloqueada: ' - bloqueada',
   letraProxima: ' - a próxima',
   abrirLicao: 'Abrir a lição de {nome}',
+  checkpointRotulo: 'Checkpoint',
+  abrirCheckpoint: (n: number) => `Abrir o checkpoint do módulo ${n}`,
+  checkpointAprovado: (nota: number | null) => nota != null ? ` - aprovado com ${nota}%` : ' - aprovado',
+  checkpointPronto: ' - pronto para fazer',
+  checkpointDepois: ' - melhor depois das lições do módulo',
   metaAlcancada: '✓ Meta alcançada: ',
   meta: 'Meta: ',
 
@@ -62,6 +67,11 @@ const en: Traducao<typeof pt> = {
   letraBloqueada: ' - locked',
   letraProxima: ' - up next',
   abrirLicao: 'Open the lesson for {nome}',
+  checkpointRotulo: 'Checkpoint',
+  abrirCheckpoint: (n: number) => `Open the module ${n} checkpoint`,
+  checkpointAprovado: (nota: number | null) => nota != null ? ` - passed with ${nota}%` : ' - passed',
+  checkpointPronto: ' - ready to take',
+  checkpointDepois: ' - best after the module lessons',
   metaAlcancada: '✓ Goal reached: ',
   meta: 'Goal: ',
 
