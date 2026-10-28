@@ -29,6 +29,7 @@ import { useAccount } from '@/lib/account/store';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
 import { TrilhaDoModulo } from '@/components/platform/TrilhaDoModulo';
+import { InstalarApp } from '@/components/platform/InstalarApp';
 import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { resumoDoDominio } from '@/lib/dominio';
@@ -351,6 +352,10 @@ export function DashboardClient() {
           </ul>
         </section>
       )}
+
+      {/* O curso como app no celular, depois da primeira letra (28/10/2026).
+          Some de vez com "Agora não". */}
+      {!aula0Primeiro && licoesFeitas > 0 && <InstalarApp variante="cartao" />}
 
       {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
       {!aula0Primeiro && primeiraPendente && (

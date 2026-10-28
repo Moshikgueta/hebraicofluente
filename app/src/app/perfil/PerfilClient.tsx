@@ -39,6 +39,7 @@ import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desis
 import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
 import { IdentificacaoCurta } from '@/components/legal/Legal';
 import { tx } from '@/i18n/telas/conta-perfil';
+import { InstalarApp } from '@/components/platform/InstalarApp';
 import { LOCALE_INTL } from '@/i18n';
 
 const date = (iso: string) =>
@@ -101,6 +102,9 @@ export function PerfilClient() {
 
       {/* ── o aviso do próximo curso ──────────────────────────────── */}
       <AvisoDoProximoCurso />
+
+      {/* ── o curso como app no celular ───────────────────────────── */}
+      <InstalarApp variante="perfil" />
 
       {/* ── o lembrete para estudar (desligado até o dono aprovar) ──── */}
       <LembreteDeEstudo />

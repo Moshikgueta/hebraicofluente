@@ -625,6 +625,17 @@ Pedido do dono ("faz tudo", item 6). Desligado até ele aprovar o parágrafo da 
   máximo 3 seguidos sem estudo (`seguidos`); estudar zera. Texto sem cobrança nem sequência perdida.
 - `tests/lembrete.test.ts` (chave ligada por mock) e `tests/lembrete-desligado.test.ts`.
 
+## Instalar no celular (28/10/2026)
+Pedido do dono ("faz tudo", item 7). `app/src/app/manifest.ts` (vira `/manifest.webmanifest`): abre
+`/meu-hebraico/` em tela cheia, ícones `public/icone-192.png`, `icone-512.png` e `icone-mascara-512.png`
+(o ע do `icon.svg`, renderizado no Chromium com a Noto Serif Hebrew 600). `appleWebApp` no layout.
+- **Sem service worker, de propósito:** ele guardaria aula e áudio no aparelho, fora do portão.
+  `tests/instalar.test.ts` falha se alguém registrar um.
+- `InstalarApp` (components/platform): botão do navegador quando há `beforeinstallprompt`
+  (`lib/instalar.ts` o guarda ao carregar), os dois toques do Safari no iPhone, ou a linha do menu.
+  No painel só no celular, depois da primeira letra, e "Agora não" some para sempre
+  (`hf-instalar-dispensado`); em Sua conta, sempre.
+
 ## Mini-textos de leitura corrida
 
 Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),

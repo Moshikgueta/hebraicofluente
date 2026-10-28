@@ -112,7 +112,10 @@ export const metadata: Metadata = {
   description: tx.descricao,
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
-  applicationName: tx.marca
+  applicationName: tx.marca,
+  /* Aberto pela tela de início do iPhone, o curso vem em tela cheia, com o
+     nome curto embaixo do ícone (ver app/manifest.ts). */
+  appleWebApp: { capable: true, title: tx.marca, statusBarStyle: 'default' }
 };
 
 export const viewport: Viewport = {
