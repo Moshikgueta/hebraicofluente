@@ -104,3 +104,20 @@ novo qualquer regra lida há mais de 6 meses.
    subir para o topo ("lições de 10 minutos"); se não, a resposta da FAQ precisa mudar.
 2. Já há depoimentos de alunos da plataforma em `/admin/depoimentos`, com autorização? Um deles,
    com o resultado e o tempo, é a prova que falta.
+
+## 9. As outras páginas públicas (28/10/2026)
+
+/cursos, /faq, /metodo, /sobre, /biblia, /suporte, /alfabeto-hebraico e as três políticas, com
+o texto tirado do navegador.
+
+- **Corrigido:** /cursos e /metodo diziam que se lê "uma palavra de verdade já na terceira lição".
+  Pelos dados, Álef, Mem e Tav são a lição 1, e a Mem já lê אִמָא: a primeira palavra vem na
+  primeira lição, na segunda letra. A frase era da ordem antiga (Mem, Tav, Álef). Agora:
+  "já na primeira lição" (`data/courses.json`) e "a primeira lição já lê uma palavra inteira,
+  logo na segunda letra" (/metodo).
+- **Conferido e certo:** nenhuma página fora da capa e do checkout cita preço; nenhuma leva ao
+  livro, ao Raízes ou às páginas desligadas em 27/10; "volta na questão em que você parou" existe
+  (`retomar` no ExercisePlayer); a etapa Escrever não tranca nada, como a FAQ diz; a menção ao
+  e-book na Privacidade é a da prévia em /previa, que continua no ar.
+- **Pede evidência (a mesma pergunta 1):** "cerca de dez minutos" por lição aparece também em
+  /metodo ("Dez minutos, cinco etapas") e em /suporte ("A primeira letra leva dez minutos").
