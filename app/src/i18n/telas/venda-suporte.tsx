@@ -73,7 +73,7 @@ const en: Traducao<typeof pt> = {
   reembolsoTitulo: 'I want my money back',
   // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
   reembolsoCorpo: (dias: number, conta: ReactNode, confirmacao: string, politica: ReactNode): ReactNode => (
-    <>You have {dias} days to cancel, without having to explain why and with no fee. The fastest way is in{' '}{conta}, under the purchase: <strong>Cancel purchase</strong>. {confirmacao} The{' '}{politica}{' '}says how long it takes for the money to come back.</>
+    <>You have {dias} days to cancel, without having to explain why and with no fee. The fastest way is in{' '}{conta}, under the purchase: <strong>Cancel the purchase</strong>. {confirmacao} The{' '}{politica}{' '}says how long it takes for the money to come back.</>
   ),
   suaConta: 'Your account',
   politicaCompleta: 'full policy',
@@ -87,8 +87,8 @@ const en: Traducao<typeof pt> = {
     <>It is your right, and we reply within {dias} days. What each request means is in the{' '}{politica}.</>
   ),
   politicaPrivacidade: 'Privacy Policy',
-  // etapa 5/6: Brasil, rever (LGPD)
-  dadosAssunto: 'LGPD request - data subject',
+  // etapa 6: escrito para o site de fora
+  dadosAssunto: 'Data protection request',
   dadosAcao: 'Make a request about my data →',
 
   rubrica: 'Support',
@@ -105,8 +105,8 @@ const en: Traducao<typeof pt> = {
   ),
   duvidasFrequentes: 'frequently asked questions',
   ctaTitulo: 'Not a student yet?',
-  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
-  ctaLinha: 'The first letter takes ten minutes, and you have seven days to cancel without having to explain why.'
+  // etapa 5: o site em inglês cobra pelo Paddle
+  ctaLinha: 'The first letter takes ten minutes, and you have 14 days to cancel without having to explain why.'
 };
 
 export const DICIONARIO = { pt, en };

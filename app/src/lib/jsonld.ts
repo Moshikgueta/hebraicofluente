@@ -19,7 +19,7 @@
  */
 
 import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
-import { ancora, flagship, paginaDeVenda } from '@/lib/catalog';
+import { ancora, currency, flagship, paginaDeVenda } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
 import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
@@ -71,7 +71,7 @@ export function curso(): Json {
       '@type': 'Offer',
       category: 'Paid',
       price: precoDeVitrine().toFixed(2),
-      priceCurrency: 'BRL',
+      priceCurrency: currency,
       availability: 'https://schema.org/InStock',
       url: url(paginaDeVenda(c.slug)),
       ...(validade ? { priceValidUntil: validade } : {})

@@ -77,12 +77,12 @@ const en: Traducao<typeof pt> = {
   pagamentoSoPix: 'Payment by PIX. Access unlocked once the payment is checked.',
   pagamentoPixECartao: (parcelas: string) =>
     `Payment by PIX or card, ${parcelas}. Access unlocked instantly.`,
-  pagamentoCartao: (parcelas: string) =>
-    `Payment by credit card, ${parcelas}. Access unlocked instantly.`,
+  pagamentoCartao: () =>
+    'Payment by card, PayPal, Apple Pay or Google Pay through Paddle, our authorized reseller. Access unlocked instantly.',
   pagamentoPixNaHora: 'Payment by PIX. Access unlocked instantly.',
 
   aprender: 'Learn',
-  alfabetizacao: 'Hebrew Literacy',
+  alfabetizacao: 'Learn to Read Hebrew',
   osCursos: 'The courses',
   alfabetoHebraico: 'Hebrew alphabet',
   lerABiblia: 'Read the Bible?',
@@ -96,8 +96,8 @@ const en: Traducao<typeof pt> = {
   termosDeUso: 'Terms of Use',
   politicaDePrivacidade: 'Privacy Policy',
   reembolso: 'Refunds and Cancellation',
-  // etapa 5/6: Brasil, rever
-  cnpj: (numero: string) => `CNPJ ${numero}`,
+  // etapa 6: escrito para o site de fora
+  cnpj: (numero: string) => `Brazilian company number (CNPJ) ${numero}`,
   direitos: (ano: number, nome: string) => `© ${ano} ${nome}. All rights reserved.`
 };
 

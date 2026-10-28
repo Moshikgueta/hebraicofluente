@@ -26,8 +26,8 @@ const en: Traducao<typeof pt> = {
   metaTitulo: 'Confirm subscription - Hebraico Fluente',
   metaDescricao: 'Confirm that you want to receive the emails you asked for.',
   oQueCurso: 'the next letters of the alphabet and the course news',
-  oQueIsrael: 'the notice for when Israel Além do Óbvio opens',
-  oQueRaizes: 'the notice for when Raízes Sefarditas opens',
+  oQueIsrael: 'the notice for when Israel Alem do Obvio opens',
+  oQueRaizes: 'the notice for when Raizes Sefarditas opens',
   oQueA1: 'the notice for when the Hebrew A1 course opens',
   titulo: 'Confirm subscription',
   confirmada: (oQue: string) =>

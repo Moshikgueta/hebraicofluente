@@ -1067,6 +1067,8 @@ export function dataHoraBR(ms) {
 /** Centavos em reais, como o site escreve. */
 export function reaisBR(centavos, moeda = 'BRL') {
   const v = Number(centavos || 0) / 100;
+  /* O site em inglês cobra em dólar (Paddle): "$47.00", no formato de lá. */
+  if (moeda === 'USD') return `$${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   const n = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return moeda === 'BRL' ? `R$ ${n}` : `${n} ${moeda}`;
 }

@@ -18,6 +18,7 @@
  */
 
 import { tx } from '@/i18n/telas/licao-meu-nome';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -126,7 +127,13 @@ export function EditorDeNome({
  *     "agora você já consegue escrever o seu nome", no fim da letra que o
  *     tornou possível.
  */
-export function CartaoMeuNome({ contexto = 'painel' }: { contexto?: 'painel' | 'licao' }) {
+export function CartaoMeuNome(props: { contexto?: 'painel' | 'licao' }) {
+  /* Desligado no site em inglês (lib/recursos.ts). */
+  if (!MEU_NOME_EM_HEBRAICO) return null;
+  return <CartaoDoNome {...props} />;
+}
+
+function CartaoDoNome({ contexto = 'painel' }: { contexto?: 'painel' | 'licao' }) {
   const p = useProgress();
   const nome = nomeDoAluno(p.state.onboarding?.name);
   const aprendidas = useMemo(() => letrasConcluidas(p.state).map(l => l.letter), [p.state]);

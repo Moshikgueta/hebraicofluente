@@ -12,7 +12,7 @@ const pt = {
 
 const en: Traducao<typeof pt> = {
   final: (nome: string): string => `final ${nome}`,
-  daguesh: 'daguesh (dot inside)',
+  daguesh: 'dagesh (dot inside)',
   pontoShin: 'Shin dot',
   pontoSin: 'Sin dot'
 };

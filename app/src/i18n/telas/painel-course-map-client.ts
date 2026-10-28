@@ -40,6 +40,25 @@ const pt = {
   finalFeito: 'Você passou no exame final. O seu certificado do curso está pronto.',
   finalFalta: 'Um exame com as letras, os sons, as sílabas, palavras, frases e palavras sem nikud. No fim, o certificado do curso.',
 
+  /* o próximo passo, no topo (28/10/2026) */
+  proximoPasso: 'Seu próximo passo',
+  continuar: 'Continuar',
+  comecar: 'Começar',
+  aula0Curto: 'Aula 0',
+  licaoDe: (nome: string) => `A lição de ${nome}`,
+  checkpointDo: (n: number) => `O checkpoint do módulo ${n}`,
+  faltaSoCheckpoint: 'As letras deste módulo estão feitas. Falta só o checkpoint para abrir o próximo lugar.',
+  faltamLicoes: (n: number) => (n === 1 ? 'Falta 1 lição para fechar o caminho.' : `Faltam ${n} lições para fechar o caminho.`),
+  dominarAntes: (nome: string) => `Revisar a lição de ${nome}`,
+  dominarDetalhe: (regra: string) => `O desafio final abre com todas as letras dominadas: ${regra}.`,
+  certificadoPronto: 'O seu certificado está pronto',
+  verCertificado: 'Ver o certificado',
+
+  /* o caminho */
+  reler: 'reler',
+  moduloLugar: (n: number) => `Módulo ${n}`,
+  chegada: 'A chegada',
+
   naoEncontrado: 'Mapa não encontrado.',
   lugarNovo: 'Lugar novo',
   lugarNovoAberto: (lugar: string) => `Lugar novo aberto: ${lugar}.`,
@@ -80,6 +99,23 @@ const en: Traducao<typeof pt> = {
   abreQuando: 'Opens when you complete the lessons for the 22 letters',
   finalFeito: 'You passed the final exam. Your course certificate is ready.',
   finalFalta: 'An exam with the letters, the sounds, syllables, words, sentences and words without nikud. At the end, the course certificate.',
+
+  proximoPasso: 'Your next step',
+  continuar: 'Continue',
+  comecar: 'Start',
+  aula0Curto: 'Lesson 0',
+  licaoDe: (nome: string) => `The ${nome} lesson`,
+  checkpointDo: (n: number) => `The module ${n} checkpoint`,
+  faltaSoCheckpoint: 'The letters in this module are done. Only the checkpoint is left to open the next place.',
+  faltamLicoes: (n: number) => (n === 1 ? '1 lesson left to finish the path.' : `${n} lessons left to finish the path.`),
+  dominarAntes: (nome: string) => `Review the ${nome} lesson`,
+  dominarDetalhe: (regra: string) => `The final challenge opens once every letter is mastered: ${regra}.`,
+  certificadoPronto: 'Your certificate is ready',
+  verCertificado: 'See the certificate',
+
+  reler: 'reread',
+  moduloLugar: (n: number) => `Module ${n}`,
+  chegada: 'The finish line',
 
   naoEncontrado: 'Map not found.',
   lugarNovo: 'New place',

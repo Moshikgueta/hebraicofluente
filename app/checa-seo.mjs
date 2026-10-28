@@ -41,7 +41,8 @@ const SITE = toml.match(/^\s*SITE_ORIGIN\s*=\s*"([^"]+)"/m)[1].replace(/\/+$/, '
 const problemas = [];
 const nota = (s) => problemas.push(s);
 
-const html = (rota) => readFileSync(`out${rota}index.html`, 'utf8');
+const DIR = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'out-en' : 'out';
+const html = (rota) => readFileSync(`${DIR}${rota}index.html`, 'utf8');
 const tag = (h, re) => (h.match(re) || [])[1] || null;
 
 const canonicalDe = h => tag(h, /<link rel="canonical" href="([^"]+)"/);
@@ -50,15 +51,15 @@ const descDe      = h => tag(h, /<meta name="description" content="([^"]*)"/);
 const ogDe        = (h, p) => tag(h, new RegExp(`<meta property="og:${p}" content="([^"]*)"`));
 
 /* ── o sitemap e o robots existem e são coerentes ───────────────────── */
-if (!existsSync('out/sitemap.xml')) nota('out/sitemap.xml não existe - rode seo.mjs');
-if (!existsSync('out/robots.txt')) nota('out/robots.txt não existe - rode seo.mjs');
+if (!existsSync(`${DIR}/sitemap.xml`)) nota('out/sitemap.xml não existe - rode seo.mjs');
+if (!existsSync(`${DIR}/robots.txt`)) nota('out/robots.txt não existe - rode seo.mjs');
 if (problemas.length) { fim(); }
 
-const sitemap = readFileSync('out/sitemap.xml', 'utf8');
+const sitemap = readFileSync(`${DIR}/sitemap.xml`, 'utf8');
 const noSitemap = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map(m => m[1].replace(SITE, '')));
 
-const robots = readFileSync('out/robots.txt', 'utf8');
+const robots = readFileSync(`${DIR}/robots.txt`, 'utf8');
 if (!robots.includes(`Sitemap: ${SITE}/sitemap.xml`)) {
   nota('robots.txt não aponta o sitemap no domínio do SITE_ORIGIN');
 }
@@ -116,7 +117,7 @@ if (!/X-Robots-Tag['"],\s*['"]noindex/.test(trecho)) {
 /* ── a imagem do cartão existe de verdade ───────────────────────────── */
 const og = ogDe(html('/'), 'image');
 if (og) {
-  const caminho = 'out' + og.replace(SITE, '');
+  const caminho = DIR + og.replace(SITE, '');
   if (!existsSync(caminho)) nota(`og:image aponta para ${og}, que não existe em out/`);
   else {
     const kb = readFileSync(caminho).length / 1024;
@@ -164,7 +165,7 @@ for (const rota of listadas) {
   if (!curso) nota('JSON-LD da página do curso sem Course');
   else {
     if (curso.offers?.price !== esperado) nota(`JSON-LD: preço ${curso.offers?.price}, o catálogo cobra ${esperado}`);
-    if (curso.offers?.priceCurrency !== 'BRL') nota('JSON-LD: moeda do Course não é BRL');
+    if (curso.offers?.priceCurrency !== catalogo.currency) nota(`JSON-LD: moeda do Course não é ${catalogo.currency}`);
     const ate = c.price.listBrl && c.price.listBrl > c.price.brl ? c.price.preLancamentoAte || null : null;
     if ((curso.offers?.priceValidUntil || null) !== ate) {
       nota(`JSON-LD: priceValidUntil ${curso.offers?.priceValidUntil}, o catálogo diz ${ate}`);

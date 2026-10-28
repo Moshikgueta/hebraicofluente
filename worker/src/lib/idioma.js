@@ -1,16 +1,11 @@
 /* O idioma do site e o de cada conta (PLANO-INGLES.md).
  * ─────────────────────────────────────────────────────────────────────────
- * Os dois sites são o mesmo código sobre o mesmo banco. Cada Worker sabe o
- * seu idioma pela variável LOCALE (wrangler.en.toml diz "en"; o wrangler.toml
- * não diz nada, e é português). A conta guarda o idioma do site em que foi
- * criada (accounts.idioma, migração 0004).
- *
- * Quem escolhe o idioma de um e-mail:
- *   - o que a pessoa pediu agora (cadastro, esqueci a senha): o do site em
- *     que ela está, `idiomaDoWorker`;
- *   - o que sai do agendamento ou de um aviso do provedor (lembretes,
- *     vencimento, estorno): o da conta, porque quem roda é o Worker
- *     brasileiro, para todas as contas.
+ * Este é o repositório do site em inglês, com banco próprio: o
+ * wrangler.toml daqui diz LOCALE = "en", e toda conta nasce em inglês. O
+ * código veio do repositório brasileiro, onde os dois sites dividiam o banco;
+ * por isso a conta ainda guarda o idioma (accounts.idioma, migração 0004) e
+ * o e-mail do agendamento lê o idioma da conta. Com o banco separado, as duas
+ * perguntas dão a mesma resposta, e o código continua certo para os dois.
  */
 
 /** 'en' no Worker do site em inglês, 'pt' em qualquer outro. */
@@ -39,9 +34,10 @@ export const tituloDoCurso = (curso, idioma, reserva = '') =>
 
 /**
  * O que o site em inglês não tem: os produtos que só existem em português
- * (Raízes, A1, o livro e a prévia dele) e os painéis do dono, que ficam no
+ * (Raízes, A1, o livro e a prévia dele), a "Meu nome em hebraico" (regras do
+ * português, lib/recursos.ts do app) e os painéis do dono, que ficam no
  * site brasileiro (o banco é o mesmo). Página e API. O Worker em inglês
  * responde 404 a isso tudo; o brasileiro não olha esta lista.
  */
 export const FORA_DO_SITE_EN =
-  /^\/(raizes|a1|israel|previa|admin)(\/|$)|^\/api\/(admin|a1|livro|content\/(raizes|a1))(\/|$)/i;
+  /^\/(raizes|a1|israel|previa|admin|meu-nome)(\/|$)|^\/api\/(admin|a1|livro|content\/(raizes|a1))(\/|$)/i;

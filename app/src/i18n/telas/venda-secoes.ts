@@ -93,10 +93,10 @@ const en: Traducao<typeof pt> = {
   escritaTexto: 'This is the diagram the lesson shows. After you see the movement, you trace the letter with your finger and the course checks it. The shape is the cursive written in Israel - the one you will see on a handwritten note, not the print form.',
   reproduzir: 'Play audio',
 
-  samech: 'Sámech',
-  ayin: 'Áyin',
+  samech: 'Samech',
+  ayin: 'Ayin',
   tet: 'Tet',
-  het: 'Het',
+  het: 'Chet',
   confundidaMem: 'Confused with ם',
   confundidaAlef: 'Confused with א',
   tresErros: '3 mistakes in a row',

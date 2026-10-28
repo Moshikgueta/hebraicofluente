@@ -38,6 +38,12 @@
     "Enquadramento): não publicar antes de o contador confirmar."
   ],
 
+  "_usd": [
+    "usd é o preço do site em inglês, em dólares inteiros, cobrado pelo Paddle",
+    "(decisão do dono, 28/10/2026: US$ 47). Só o curso que tem usd está à venda",
+    "lá: a build em inglês tira da vitrine e do checkout quem não tem, e o",
+    "Worker recusa o pedido. Sem parcelas, sem desconto e sem preço riscado."
+  ],
   "currency": "BRL",
 
   "courses": [
@@ -47,6 +53,21 @@
       "n": 1,
       "titlePt": "Alfabetização em Hebraico",
       "titleEn": "Learn to Read Hebrew",
+      "levelEn": "From zero",
+      "taglineEn": "The 22 letters, the vowel signs and reading whole words.",
+      "summaryEn": "Do you look at Hebrew and not know where to start? Here you learn letter by letter, in the order that pays off most, and read a real word in the very first lesson.",
+      "outcomesEn": [
+        "Recognize the 22 letters - including the five final forms - out of order and out of context.",
+        "Read new words with nikud on your own, even without knowing what they mean.",
+        "Read the most common words without nikud, which is how Hebrew really appears.",
+        "Write the letters by hand in cursive, with the stroke order shown, and recognize the printed form.",
+        "Decode signs, labels and tags - Hebrew as it appears on the street."
+      ],
+      "forWhomEn": [
+        "People who have never seen the Hebrew alphabet and think they will not manage.",
+        "People who tried before and stopped at the first wall of look-alike letters.",
+        "People who are traveling, have Israeli family or read for religious reasons and want to decode on their own."
+      ],
       "levelPt": "Do zero",
       "cefr": null,
       "status": "available",
@@ -67,7 +88,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10 },
+      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "usd": 47 },
       "accessMonths": 12
     },
 

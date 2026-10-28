@@ -50,16 +50,16 @@ const pt = {
 const en: Traducao<typeof pt> = {
   nomeShin: 'Shin',
   nomeMem: 'Mem',
-  nomeLamed: 'Lámed',
-  porqueSamech: 'This is Sámech: it makes «s», without the hiss.',
-  porqueTsadi: 'This is Tsádi: it makes «ts».',
+  nomeLamed: 'Lamed',
+  porqueSamech: 'This is Samech: it makes «s», without the hiss.',
+  porqueTsadi: 'This is Tsadi: it makes «ts».',
   porqueTav: 'This is Tav: it makes «t».',
   porqueNun: 'This is Nun: it makes «n».',
   porqueBet: 'This is Bet: it makes «b».',
   porqueKaf: 'This is Kaf: it makes «k».',
   porqueResh: 'This is Resh: it makes «r».',
-  porqueDalet: 'This is Dálet: it makes «d».',
-  porqueGuimel: 'This is Guímel: it makes «g».',
+  porqueDalet: 'This is Dalet: it makes «d».',
+  porqueGuimel: 'This is Gimel: it makes «g».',
 
   rubrica: 'Listen and speak',
   titulo: 'Hear the letter. Then speak and get corrected.',
@@ -80,11 +80,11 @@ const en: Traducao<typeof pt> = {
   fim: 'Three letters recognized by name. In the course there are 22, one at a time, with the name and the sound.',
 
   passo2: 'Now it is your turn',
-  shalomTr: 'shalóm',
+  shalomTr: 'shalom',
   shalomPt: 'hello, peace',
   ouvirProfessor: 'Hear the teacher',
   graveTitulo: 'Record and compare',
-  graveInstrucao: 'Say «shalóm», record yourself and listen. Then hear the teacher and compare.',
+  graveInstrucao: 'Say «shalom», record yourself and listen. Then hear the teacher and compare.',
   toqueMicrofone: (palavra: ReactNode): ReactNode => (
     <>Tap the microphone and say {palavra}. The course listens and tells you if it matched.</>
   ),

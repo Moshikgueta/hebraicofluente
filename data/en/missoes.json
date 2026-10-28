@@ -1,198 +1,198 @@
 {
   "missoes/#0/tituloPt": {
     "pt": "No mercado, na primeira semana",
-    "en": null
+    "en": "At the grocery store, your first week"
   },
   "missoes/#0/situacaoPt": {
     "pt": "Você acabou de chegar em Israel e vai ao mercado da esquina. Ainda não sabe quase nada de hebraico - mas já sabe ler seis letras, e é disso que vai precisar.",
-    "en": null
+    "en": "You've just arrived in Israel and you're going to the corner grocery store. You hardly know any Hebrew yet - but you can already read six letters, and that's what you'll need."
   },
   "missoes/#0/passos/#0/ondePt": {
     "pt": "Na prateleira de bebidas, o rótulo de uma garrafa",
-    "en": null
+    "en": "On the drinks shelf, the label on a bottle"
   },
   "missoes/#0/passos/#1/ondePt": {
     "pt": "Ao lado, uma caixinha de saquinhos",
-    "en": null
+    "en": "Next to it, a little box of bags"
   },
   "missoes/#0/passos/#2/promptPt": {
     "pt": "Na fila do caixa, perguntam quem é o próximo. Qual destas palavras diz “eu”?",
-    "en": null
+    "en": "In the checkout line, someone asks who's next. Which of these words says “I”?"
   },
   "missoes/#0/passos/#3/promptPt": {
     "pt": "O caixa devolve o troco dizendo esta palavra. Escreva como ela se lê.",
-    "en": null
+    "en": "The cashier hands back your change saying this word. Write how it's read."
   },
   "missoes/#0/fechoPt": {
     "pt": "Água, chá, “eu” e “aqui está”: uma ida ao mercado inteira, lida por você.",
-    "en": null
+    "en": "Water, tea, “I” and “here you go”: a whole trip to the grocery store, read by you."
   },
   "missoes/#1/tituloPt": {
     "pt": "A ficha da escola",
-    "en": null
+    "en": "The school form"
   },
   "missoes/#1/situacaoPt": {
     "pt": "Você foi matricular seu filho numa escola em Israel, e a secretaria entregou uma ficha. Ninguém vai preencher por você.",
-    "en": null
+    "en": "You went to enroll your child in a school in Israel, and the office handed you a form. Nobody is going to fill it out for you."
   },
   "missoes/#1/passos/#0/ondePt": {
     "pt": "O primeiro campo da ficha",
-    "en": null
+    "en": "The first field on the form"
   },
   "missoes/#1/passos/#1/ondePt": {
     "pt": "Num formulário, dentro de expressões como \"nome da criança\"",
-    "en": null
+    "en": "On a form, inside phrases like \"child's name\""
   },
   "missoes/#1/passos/#2/promptPt": {
     "pt": "A secretária pergunta quando você pode vir às reuniões. Qual destas palavras diz “noite”?",
-    "en": null
+    "en": "The secretary asks when you can come to meetings. Which of these words says “night”?"
   },
   "missoes/#1/passos/#3/promptPt": {
     "pt": "No mural da escola, o cartaz da festa diz esta palavra. Escreva como ela se lê.",
-    "en": null
+    "en": "On the school bulletin board, the party poster says this word. Write how it's read."
   },
   "missoes/#1/fechoPt": {
     "pt": "Nome, menino, noite e canção: a ficha está preenchida, e você não precisou pedir ajuda.",
-    "en": null
+    "en": "Name, boy, night and song: the form is filled out, and you didn't have to ask for help."
   },
   "missoes/#2/tituloPt": {
     "pt": "Na padaria",
-    "en": null
+    "en": "At the bakery"
   },
   "missoes/#2/situacaoPt": {
     "pt": "É sexta de manhã e você vai à padaria do bairro. Desta vez quer entrar, pedir e sair sem apontar para nada.",
-    "en": null
+    "en": "It's Friday morning and you're going to the neighborhood bakery. This time you want to walk in, order, and walk out without pointing at anything."
   },
   "missoes/#2/passos/#0/ondePt": {
     "pt": "Na porta da padaria, uma plaquinha",
-    "en": null
+    "en": "On the bakery door, a little sign"
   },
   "missoes/#2/passos/#1/ondePt": {
     "pt": "Na etiqueta da prateleira",
-    "en": null
+    "en": "On the shelf label"
   },
   "missoes/#2/passos/#2/promptPt": {
     "pt": "Você quer levar só um pão. Qual destas palavras diz “um”?",
-    "en": null
+    "en": "You want to take just one loaf. Which of these words says “one”?"
   },
   "missoes/#2/passos/#3/promptPt": {
     "pt": "No fim do recibo vem esta palavra. Escreva como ela se lê.",
-    "en": null
+    "en": "This word comes at the bottom of the receipt. Write how it's read."
   },
   "missoes/#2/fechoPt": {
     "pt": "Olá, pão, um e obrigado: você entrou, pediu e agradeceu, tudo por escrito.",
-    "en": null
+    "en": "Hello, bread, one and thank you: you walked in, ordered and said thanks, all in writing."
   },
   "missoes/#3/tituloPt": {
     "pt": "Pela cidade",
-    "en": null
+    "en": "Around town"
   },
   "missoes/#3/situacaoPt": {
     "pt": "Um dia inteiro resolvendo coisas no centro: uma loja, a biblioteca, um quiosque. As placas agora usam quase todo o alfabeto.",
-    "en": null
+    "en": "A whole day running errands downtown: a store, the library, a kiosk. The signs now use almost the whole alphabet."
   },
   "missoes/#3/passos/#0/ondePt": {
     "pt": "Em expressões de horário, como o horário de funcionamento de uma loja",
-    "en": null
+    "en": "In time phrases, like a store's opening hours"
   },
   "missoes/#3/passos/#1/ondePt": {
     "pt": "Na parede da biblioteca",
-    "en": null
+    "en": "On the library wall"
   },
   "missoes/#3/passos/#2/promptPt": {
     "pt": "Com sede, você procura suco na geladeira do quiosque. Qual caixinha diz “suco”?",
-    "en": null
+    "en": "Thirsty, you look for juice in the kiosk fridge. Which carton says “juice”?"
   },
   "missoes/#3/passos/#3/promptPt": {
     "pt": "No alto do mapa do centro vem esta palavra. Escreva como ela se lê.",
-    "en": null
+    "en": "This word is at the top of the downtown map. Write how it's read."
   },
   "missoes/#3/fechoPt": {
     "pt": "Hora, silêncio, suco e cidade: as placas do centro deixaram de ser desenho.",
-    "en": null
+    "en": "Hour, quiet, juice and city: the downtown signs are no longer just drawings."
   },
   "missoes/#4/tituloPt": {
     "pt": "Um sábado com a família",
-    "en": null
+    "en": "A Saturday with the family"
   },
   "missoes/#4/situacaoPt": {
     "pt": "O alfabeto está completo. É sábado, a família está em casa, e o celular não para de apitar.",
-    "en": null
+    "en": "The alphabet is complete. It's Saturday, the family is home, and the phone won't stop buzzing."
   },
   "missoes/#4/passos/#0/ondePt": {
     "pt": "A primeira mensagem do dia no grupo da família",
-    "en": null
+    "en": "The first message of the day in the family group"
   },
   "missoes/#4/passos/#1/promptPt": {
     "pt": "Seu filho pede para adotar um bicho. Qual destas palavras diz “cachorro”?",
-    "en": null
+    "en": "Your son asks to adopt a pet. Which of these words says “dog”?"
   },
   "missoes/#4/passos/#2/ondePt": {
     "pt": "Na vitrine da livraria, no passeio da tarde",
-    "en": null
+    "en": "In the bookstore window, on the afternoon walk"
   },
   "missoes/#4/passos/#3/promptPt": {
     "pt": "À noite, você escreve a legenda da foto de todos juntos. Escreva como esta palavra se lê.",
-    "en": null
+    "en": "In the evening, you write the caption for the photo of everyone together. Write how this word is read."
   },
   "missoes/#4/fechoPt": {
     "pt": "Bom dia, cachorro, livro e família: um dia inteiro lido com as 22 letras.",
-    "en": null
+    "en": "Good morning, dog, book and family: a whole day read with all 22 letters."
   },
   "missoes/#5/tituloPt": {
     "pt": "A rua sem pontinhos",
-    "en": null
+    "en": "The street without the dots"
   },
   "missoes/#5/situacaoPt": {
     "pt": "Fora do curso, quase nada vem com nikud. Placas, vitrines e telas escrevem só as letras, e quem lê é que sabe o som.",
-    "en": null
+    "en": "Outside the course, almost nothing comes with nikud. Signs, shop windows and screens write only the letters, and the reader is the one who knows the sound."
   },
   "missoes/#5/passos/#0/ondePt": {
     "pt": "Na vitrine da casa de câmbio",
-    "en": null
+    "en": "In the window of a currency exchange"
   },
   "missoes/#5/passos/#1/ondePt": {
     "pt": "Na placa de uma rua",
-    "en": null
+    "en": "On a street sign"
   },
   "missoes/#5/passos/#2/promptPt": {
     "pt": "Na plaquinha de uma prateleira de livros, sem nenhum ponto. Sem os pontos, as mesmas letras podem ter mais de uma leitura, e quem decide é o lugar onde a palavra está. Escreva como esta palavra se lê.",
-    "en": null
+    "en": "On the little sign of a bookshelf, without a single dot. Without the dots, the same letters can have more than one reading, and what decides is where the word appears. Write how this word is read."
   },
   "missoes/#5/passos/#3/ondePt": {
     "pt": "Na tela, quando o filme acaba",
-    "en": null
+    "en": "On the screen, when the movie ends"
   },
   "missoes/#5/fechoPt": {
     "pt": "Dinheiro, rei, livro e fim, sem um ponto sequer: é assim que o hebraico aparece na rua.",
-    "en": null
+    "en": "Money, king, book and end, without a single dot: this is how Hebrew appears on the street."
   },
   "missoes/#6/tituloPt": {
     "pt": "Uma viagem",
-    "en": null
+    "en": "A trip"
   },
   "missoes/#6/situacaoPt": {
     "pt": "Você vai viajar saindo de Israel. No aeroporto, no hotel e no passeio, aparecem as palavras que o hebraico pegou emprestadas de outras línguas.",
-    "en": null
+    "en": "You're traveling out of Israel. At the airport, at the hotel and on an outing, you'll see the words Hebrew borrowed from other languages."
   },
   "missoes/#6/passos/#0/ondePt": {
     "pt": "No painel de partidas do aeroporto",
-    "en": null
+    "en": "On the airport departures board"
   },
   "missoes/#6/passos/#1/promptPt": {
     "pt": "No banheiro do hotel há uma fileira de frasquinhos. Qual etiqueta diz “gel”?",
-    "en": null
+    "en": "In the hotel bathroom there's a row of little bottles. Which label says “gel”?"
   },
   "missoes/#6/passos/#2/ondePt": {
     "pt": "No mapa do zoológico, num passeio",
-    "en": null
+    "en": "On the zoo map, on an outing"
   },
   "missoes/#6/passos/#3/promptPt": {
     "pt": "Arrumando a mala para voltar. Qual etiqueta diz “pijama”?",
-    "en": null
+    "en": "Packing your suitcase to go home. Which label says “pajamas”?"
   },
   "missoes/#6/fechoPt": {
     "pt": "Chile, gel, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira.",
-    "en": null
+    "en": "Chile, gel, giraffe and pajamas: sounds the ancient alphabet didn't have, read on the first try."
   }
 }

@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { Badge, Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
+import { Prose } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
@@ -21,7 +22,6 @@ import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
 import { revisaoDoModulo, segundoTextoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { palavrasDoTexto, textoLidoId } from '@/lib/engine/textos';
-import { Prose } from '@/components/learn/Blocks';
 
 /* `revisao` (05/10/2026): a mesma página serve à leitura de revisão do
    módulo, que só usa palavras que o aluno já acumulou (/modulo/N/revisao). */

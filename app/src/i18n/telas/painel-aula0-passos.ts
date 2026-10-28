@@ -58,7 +58,7 @@ const en: Traducao<typeof pt> = {
   entrega3: 'What the little dots, the final forms and the silent letter are.',
   capaSelo: 'Lesson 0 · {n} short steps',
   capaTitulo: 'The secret of the alphabet, before the first letter',
-  capaLeitura: 'shalóm · read from right to left',
+  capaLeitura: 'shalom · read from right to left',
   rever: 'Review step by step',
   continuarDo: 'Continue from step {n}',
   comecar: 'Start Lesson 0',

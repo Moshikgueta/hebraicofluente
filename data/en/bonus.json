@@ -1,734 +1,744 @@
 {
   "leituras/genesis-1/tituloPt": {
     "pt": "No princípio",
-    "en": null
+    "en": "In the beginning"
   },
   "leituras/genesis-1/fontePt": {
     "pt": "Gênesis 1:1-5",
-    "en": null
+    "en": "Genesis 1:1-5"
   },
   "leituras/genesis-1/introPt": {
     "pt": "O começo da Bíblia: a criação da luz e o primeiro dia. É hebraico bíblico, que conta no passado (וַיֹּאמֶר é «e disse»), então leia pelo som e use a tradução para acompanhar.",
-    "en": null
+    "en": "The opening of the Bible: the creation of light and the first day. This is biblical Hebrew, which tells its story in the past (וַיֹּאמֶר means \"and he said\"), so read it by sound and use the translation to follow along."
   },
   "leituras/genesis-1/linhas/#0/pt": {
     "pt": "No princípio, Deus criou os céus e a terra.",
-    "en": null
+    "en": "In the beginning, God created the heavens and the earth."
   },
   "leituras/genesis-1/linhas/#1/pt": {
     "pt": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas.",
-    "en": null
+    "en": "The earth was formless and empty, darkness was over the deep, and the spirit of God hovered over the waters."
   },
   "leituras/genesis-1/linhas/#2/pt": {
     "pt": "Deus disse: haja luz! E houve luz.",
-    "en": null
+    "en": "God said: let there be light! And there was light."
   },
   "leituras/genesis-1/linhas/#3/pt": {
     "pt": "Deus viu que a luz era boa, e Deus separou a luz da escuridão.",
-    "en": null
+    "en": "God saw that the light was good, and God separated the light from the darkness."
   },
   "leituras/genesis-1/linhas/#4/pt": {
     "pt": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»).",
-    "en": null
+    "en": "God called the light day, and the darkness he called night. There was evening and there was morning: the first day (in the Hebrew, \"day one\")."
   },
   "leituras/shema/tituloPt": {
     "pt": "Shemá Israel",
-    "en": null
+    "en": "Shema Israel"
   },
   "leituras/shema/fontePt": {
     "pt": "Deuteronômio 6:4-9",
-    "en": null
+    "en": "Deuteronomy 6:4-9"
   },
   "leituras/shema/introPt": {
     "pt": "O Shemá, a declaração de fé que se diz de manhã e à noite. O último versículo é a origem da mezuzá, no batente da porta: o pergaminho dela traz este trecho inteiro (e mais Deuteronômio 11:13-21).",
-    "en": null
+    "en": "The Shema, the declaration of faith said in the morning and at night. The last verse is the origin of the mezuzah on the doorpost: its parchment carries this entire passage (plus Deuteronomy 11:13-21).",
+    "comentario": "Mantive \"Shemá\" como no português (transliteração); \"mezuzá\" virou \"mezuzah\", a grafia comum em inglês: rever na etapa 3."
   },
   "leituras/shema/linhas/#0/pt": {
     "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um.",
-    "en": null
+    "en": "Hear, O Israel: the LORD is our God, the LORD is one.",
+    "comentario": "Usei \"the LORD\" (convenção das Bíblias em inglês para o Nome); rever se o app preferir \"the Lord\"."
   },
   "leituras/shema/linhas/#1/pt": {
     "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força.",
-    "en": null
+    "en": "You shall love the LORD your God with all your heart, with all your soul, and with all your might."
   },
   "leituras/shema/linhas/#2/pt": {
     "pt": "Estas palavras que hoje eu te ordeno estarão no teu coração.",
-    "en": null
+    "en": "These words that I command you today shall be on your heart."
   },
   "leituras/shema/linhas/#3/pt": {
     "pt": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar.",
-    "en": null
+    "en": "You shall teach them to your children and speak of them when you sit in your house and when you walk by the way, when you lie down and when you rise up."
   },
   "leituras/shema/linhas/#4/pt": {
     "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos.",
-    "en": null
+    "en": "You shall bind them as a sign on your hand, and they shall be as a band between your eyes."
   },
   "leituras/shema/linhas/#5/pt": {
     "pt": "E as escreverás nos batentes da tua casa e nos teus portões.",
-    "en": null
+    "en": "And you shall write them on the doorposts of your house and on your gates."
   },
   "leituras/salmo-23/tituloPt": {
     "pt": "O Senhor é o meu pastor",
-    "en": null
+    "en": "The LORD is my shepherd"
   },
   "leituras/salmo-23/fontePt": {
     "pt": "Salmo 23",
-    "en": null
+    "en": "Psalm 23"
   },
   "leituras/salmo-23/introPt": {
     "pt": "O salmo mais conhecido, inteiro, nos seis versículos. Muita gente já o sabe de cor em português: ler em hebraico é reconhecer o que já conhece.",
-    "en": null
+    "en": "The best-known psalm, complete, in all six verses. Many people already know it by heart in English: reading it in Hebrew is recognizing what you already know.",
+    "comentario": "Adaptado: \"de cor em português\" virou \"in English\"."
   },
   "leituras/salmo-23/linhas/#0/pt": {
     "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará.",
-    "en": null
+    "en": "A Psalm of David. The LORD is my shepherd; I shall not want."
   },
   "leituras/salmo-23/linhas/#1/pt": {
     "pt": "Em pastos verdes me faz deitar, a águas tranquilas me conduz.",
-    "en": null
+    "en": "He makes me lie down in green pastures; he leads me beside still waters."
   },
   "leituras/salmo-23/linhas/#2/pt": {
     "pt": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome.",
-    "en": null
+    "en": "He restores my soul; he guides me in paths of righteousness for his name's sake."
   },
   "leituras/salmo-23/linhas/#3/pt": {
     "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam.",
-    "en": null
+    "en": "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me; your rod and your staff, they comfort me."
   },
   "leituras/salmo-23/linhas/#4/pt": {
     "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda.",
-    "en": null
+    "en": "You prepare a table before me in the presence of my enemies; you anoint my head with oil; my cup overflows."
   },
   "leituras/salmo-23/linhas/#5/pt": {
     "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias.",
-    "en": null
+    "en": "Surely goodness and mercy shall follow me all the days of my life, and I shall dwell in the house of the LORD for length of days."
   },
   "leituras/salmo-121/tituloPt": {
     "pt": "Levanto os meus olhos para os montes",
-    "en": null
+    "en": "I lift up my eyes to the hills"
   },
   "leituras/salmo-121/fontePt": {
     "pt": "Salmo 121",
-    "en": null
+    "en": "Psalm 121"
   },
   "leituras/salmo-121/introPt": {
     "pt": "Um salmo de viagem, dos «cânticos das subidas» que, segundo uma tradição, se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
-    "en": null
+    "en": "A travel psalm, one of the \"Songs of Ascents\" that, according to one tradition, were sung on the way up to Jerusalem. The root that repeats the most is שׁ־מ־ר, \"to guard\": count how many times it appears."
   },
   "leituras/salmo-121/linhas/#0/pt": {
     "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?",
-    "en": null
+    "en": "A Song of Ascents. I lift up my eyes to the hills: where will my help come from?"
   },
   "leituras/salmo-121/linhas/#1/pt": {
     "pt": "O meu socorro vem do Senhor, que fez os céus e a terra.",
-    "en": null
+    "en": "My help comes from the LORD, who made the heavens and the earth."
   },
   "leituras/salmo-121/linhas/#2/pt": {
     "pt": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda.",
-    "en": null
+    "en": "He will not let your foot stumble; the one who guards you does not slumber."
   },
   "leituras/salmo-121/linhas/#3/pt": {
     "pt": "Não cochila nem dorme o guarda de Israel.",
-    "en": null
+    "en": "The guardian of Israel neither slumbers nor sleeps."
   },
   "leituras/salmo-121/linhas/#4/pt": {
     "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita.",
-    "en": null
+    "en": "The LORD is the one who guards you; the LORD is your shade at your right hand."
   },
   "leituras/salmo-121/linhas/#5/pt": {
     "pt": "De dia o sol não te ferirá, nem a lua de noite.",
-    "en": null
+    "en": "The sun will not strike you by day, nor the moon by night."
   },
   "leituras/salmo-121/linhas/#6/pt": {
     "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida.",
-    "en": null
+    "en": "The LORD will guard you from all evil; he will guard your life."
   },
   "leituras/salmo-121/linhas/#7/pt": {
     "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.",
-    "en": null
+    "en": "The LORD will guard your going out and your coming in, from now and forever."
   },
   "leituras/rute-1/tituloPt": {
     "pt": "O teu povo é o meu povo",
-    "en": null
+    "en": "Your people shall be my people"
   },
   "leituras/rute-1/fontePt": {
     "pt": "Rute 1:16-17",
-    "en": null
+    "en": "Ruth 1:16-17"
   },
   "leituras/rute-1/introPt": {
     "pt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
-    "en": null
+    "en": "Ruth, who was not an Israelite, refuses to leave her mother-in-law, Naomi, and chooses her people and her God. For many, it is the text of those who return to or join the Jewish people."
   },
   "leituras/rute-1/linhas/#0/pt": {
     "pt": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir.",
-    "en": null
+    "en": "Ruth said: do not urge me to leave you and turn back from following you."
   },
   "leituras/rute-1/linhas/#1/pt": {
     "pt": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei.",
-    "en": null
+    "en": "For where you go, I will go, and where you lodge, I will lodge."
   },
   "leituras/rute-1/linhas/#2/pt": {
     "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus.",
-    "en": null
+    "en": "Your people shall be my people, and your God, my God."
   },
   "leituras/rute-1/linhas/#3/pt": {
     "pt": "Onde tu morreres, eu morrerei, e ali serei sepultada.",
-    "en": null
+    "en": "Where you die, I will die, and there I will be buried."
   },
   "leituras/rute-1/linhas/#4/pt": {
     "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti.",
-    "en": null
+    "en": "May the LORD do so to me, and more, if anything but death separates me from you.",
+    "comentario": "O português diz \"me castigue\"; usei a fórmula tradicional inglesa \"May the LORD do so to me, and more\" (sentido de juramento). Rever."
   },
   "leituras/eclesiastes-3/tituloPt": {
     "pt": "Tudo tem o seu tempo",
-    "en": null
+    "en": "A time for everything"
   },
   "leituras/eclesiastes-3/fontePt": {
     "pt": "Eclesiastes 3:1-8",
-    "en": null
+    "en": "Ecclesiastes 3:1-8"
   },
   "leituras/eclesiastes-3/introPt": {
     "pt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes nos pares dos versos 2 a 8, e cada linha é um par de opostos. Um bom primeiro texto longo.",
-    "en": null
+    "en": "The easiest biblical text to read aloud: the word עֵת, \"time\", repeats 28 times in the pairs of verses 2 to 8, and each line is a pair of opposites. A good first long text."
   },
   "leituras/eclesiastes-3/linhas/#0/pt": {
     "pt": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:",
-    "en": null
+    "en": "For everything there is a season, and a time for every matter under heaven:"
   },
   "leituras/eclesiastes-3/linhas/#1/pt": {
     "pt": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;",
-    "en": null
+    "en": "a time to be born and a time to die, a time to plant and a time to uproot what was planted;"
   },
   "leituras/eclesiastes-3/linhas/#2/pt": {
     "pt": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;",
-    "en": null
+    "en": "a time to kill and a time to heal, a time to break down and a time to build up;"
   },
   "leituras/eclesiastes-3/linhas/#3/pt": {
     "pt": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;",
-    "en": null
+    "en": "a time to weep and a time to laugh, a time to mourn and a time to dance;"
   },
   "leituras/eclesiastes-3/linhas/#4/pt": {
     "pt": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;",
-    "en": null
+    "en": "a time to scatter stones and a time to gather stones, a time to embrace and a time to refrain from embracing;"
   },
   "leituras/eclesiastes-3/linhas/#5/pt": {
     "pt": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;",
-    "en": null
+    "en": "a time to seek and a time to lose, a time to keep and a time to throw away;"
   },
   "leituras/eclesiastes-3/linhas/#6/pt": {
     "pt": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;",
-    "en": null
+    "en": "a time to tear and a time to sew, a time to keep silent and a time to speak;"
   },
   "leituras/eclesiastes-3/linhas/#7/pt": {
     "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz.",
-    "en": null
+    "en": "a time to love and a time to hate, a time for war and a time for peace."
   },
   "leituras/jeremias-29/tituloPt": {
     "pt": "Planos de paz",
-    "en": null
+    "en": "Plans of peace"
   },
   "leituras/jeremias-29/fontePt": {
     "pt": "Jeremias 29:11",
-    "en": null
+    "en": "Jeremiah 29:11"
   },
   "leituras/jeremias-29/introPt": {
     "pt": "Um dos versículos mais amados e citados: a promessa de um futuro e de uma esperança, numa carta de Jeremias aos exilados na Babilônia.",
-    "en": null
+    "en": "One of the most loved and quoted verses: the promise of a future and a hope, in a letter from Jeremiah to the exiles in Babylon."
   },
   "leituras/jeremias-29/linhas/#0/pt": {
     "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:",
-    "en": null
+    "en": "For I know the plans I have for you, declares the LORD:"
   },
   "leituras/jeremias-29/linhas/#1/pt": {
     "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança.",
-    "en": null
+    "en": "plans of peace and not of evil, to give you a future and a hope."
   },
   "leituras/josue-1/tituloPt": {
     "pt": "Sê forte e corajoso",
-    "en": null
+    "en": "Be strong and courageous"
   },
   "leituras/josue-1/fontePt": {
     "pt": "Josué 1:9",
-    "en": null
+    "en": "Joshua 1:9"
   },
   "leituras/josue-1/introPt": {
     "pt": "O que Deus diz a Josué antes de ele entrar na terra prometida. חֲזַק וֶאֱמָץ, «chazák veemáts», se diz até hoje para dar coragem a alguém.",
-    "en": null
+    "en": "What God tells Joshua before he enters the promised land. חֲזַק וֶאֱמָץ, «chazak veemats», is still said today to give someone courage."
   },
   "leituras/josue-1/linhas/#0/pt": {
     "pt": "Não fui eu que te ordenei? Sê forte e corajoso.",
-    "en": null
+    "en": "Have I not commanded you? Be strong and courageous."
   },
   "leituras/josue-1/linhas/#1/pt": {
     "pt": "Não tenhas medo nem desanimes,",
-    "en": null
+    "en": "Do not be afraid or dismayed,"
   },
   "leituras/josue-1/linhas/#2/pt": {
     "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores.",
-    "en": null
+    "en": "for the LORD your God is with you wherever you go."
   },
   "leituras/proverbios-3/tituloPt": {
     "pt": "Confia no Senhor",
-    "en": null
+    "en": "Trust in the LORD"
   },
   "leituras/proverbios-3/fontePt": {
     "pt": "Provérbios 3:5-6",
-    "en": null
+    "en": "Proverbs 3:5-6"
   },
   "leituras/proverbios-3/introPt": {
     "pt": "O conselho de Salomão para as decisões da vida: confiar no Senhor, e não só no próprio entendimento.",
-    "en": null
+    "en": "Solomon's advice for life's decisions: to trust in the LORD, and not only in your own understanding."
   },
   "leituras/proverbios-3/linhas/#0/pt": {
     "pt": "Confia no Senhor de todo o teu coração",
-    "en": null
+    "en": "Trust in the LORD with all your heart"
   },
   "leituras/proverbios-3/linhas/#1/pt": {
     "pt": "e não te apoies no teu próprio entendimento.",
-    "en": null
+    "en": "and do not lean on your own understanding."
   },
   "leituras/proverbios-3/linhas/#2/pt": {
     "pt": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.",
-    "en": null
+    "en": "In all your ways acknowledge him, and he will make your paths straight."
   },
   "leituras/isaias-41/tituloPt": {
     "pt": "Não temas",
-    "en": null
+    "en": "Fear not"
   },
   "leituras/isaias-41/fontePt": {
     "pt": "Isaías 41:10",
-    "en": null
+    "en": "Isaiah 41:10"
   },
   "leituras/isaias-41/introPt": {
     "pt": "Uma das promessas mais repetidas da Bíblia, «não temas», com três verbos seguidos no fim: fortaleço, ajudo, sustento.",
-    "en": null
+    "en": "One of the most repeated promises in the Bible, \"fear not\", with three verbs in a row at the end: I strengthen, I help, I uphold."
   },
   "leituras/isaias-41/linhas/#0/pt": {
     "pt": "Não temas, porque eu estou contigo;",
-    "en": null
+    "en": "Fear not, for I am with you;"
   },
   "leituras/isaias-41/linhas/#1/pt": {
     "pt": "não te assustes, porque eu sou o teu Deus.",
-    "en": null
+    "en": "do not be dismayed, for I am your God."
   },
   "leituras/isaias-41/linhas/#2/pt": {
     "pt": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça.",
-    "en": null
+    "en": "I strengthen you, I help you, I uphold you with the right hand of my righteousness."
   },
   "leituras/isaias-40/tituloPt": {
     "pt": "Asas como águias",
-    "en": null
+    "en": "Wings like eagles"
   },
   "leituras/isaias-40/fontePt": {
     "pt": "Isaías 40:31",
-    "en": null
+    "en": "Isaiah 40:31"
   },
   "leituras/isaias-40/introPt": {
     "pt": "O versículo das águias: três imagens, subir como águias, correr e caminhar sem se cansar.",
-    "en": null
+    "en": "The eagles verse: three images, rising up like eagles, running and walking without growing tired."
   },
   "leituras/isaias-40/linhas/#0/pt": {
     "pt": "Mas os que esperam no Senhor renovam as suas forças;",
-    "en": null
+    "en": "But those who hope in the LORD renew their strength;"
   },
   "leituras/isaias-40/linhas/#1/pt": {
     "pt": "sobem com asas, como águias;",
-    "en": null
+    "en": "they rise up on wings, like eagles;"
   },
   "leituras/isaias-40/linhas/#2/pt": {
     "pt": "correm e não se cansam, caminham e não se fatigam.",
-    "en": null
+    "en": "they run and do not grow weary, they walk and do not faint."
   },
   "leituras/jeremias-33/tituloPt": {
     "pt": "Clama a mim",
-    "en": null
+    "en": "Call to me"
   },
   "leituras/jeremias-33/fontePt": {
     "pt": "Jeremias 33:3",
-    "en": null
+    "en": "Jeremiah 33:3"
   },
   "leituras/jeremias-33/introPt": {
     "pt": "Um convite à oração, dito a Jeremias quando ele estava preso: «clama a mim, e eu te responderei».",
-    "en": null
+    "en": "An invitation to prayer, spoken to Jeremiah while he was imprisoned: \"call to me, and I will answer you\"."
   },
   "leituras/jeremias-33/linhas/#0/pt": {
     "pt": "Clama a mim, e eu te responderei;",
-    "en": null
+    "en": "Call to me, and I will answer you;"
   },
   "leituras/jeremias-33/linhas/#1/pt": {
     "pt": "e te anunciarei coisas grandes e escondidas, que tu não conheces.",
-    "en": null
+    "en": "and I will tell you great and hidden things that you do not know."
   },
   "leituras/josue-24/tituloPt": {
     "pt": "Eu e a minha casa",
-    "en": null
+    "en": "As for me and my house"
   },
   "leituras/josue-24/fontePt": {
     "pt": "Josué 24:15",
-    "en": null
+    "en": "Joshua 24:15"
   },
   "leituras/josue-24/introPt": {
     "pt": "A decisão de Josué diante de todo o povo, que muita gente escreve na parede de casa. São só cinco palavras.",
-    "en": null
+    "en": "Joshua's decision before all the people, which many people write on a wall at home. It is only five words."
   },
   "leituras/josue-24/linhas/#0/pt": {
     "pt": "Eu e a minha casa serviremos ao Senhor.",
-    "en": null
+    "en": "As for me and my house, we will serve the LORD."
   },
   "leituras/salmo-91/tituloPt": {
     "pt": "À sombra do Todo-Poderoso",
-    "en": null
+    "en": "In the shadow of the Almighty"
   },
   "leituras/salmo-91/fontePt": {
     "pt": "Salmo 91:1-2",
-    "en": null
+    "en": "Psalm 91:1-2"
   },
   "leituras/salmo-91/introPt": {
     "pt": "O salmo da proteção, que muita gente lê nos tempos difíceis. Aqui, os dois primeiros versículos. שַׁדַּי, «Shadái», é o Todo-Poderoso.",
-    "en": null
+    "en": "The psalm of protection, which many people read in hard times. Here, the first two verses. שַׁדַּי, «Shadai», is the Almighty."
   },
   "leituras/salmo-91/linhas/#0/pt": {
     "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso.",
-    "en": null
+    "en": "Whoever dwells in the shelter of the Most High rests in the shadow of the Almighty."
   },
   "leituras/salmo-91/linhas/#1/pt": {
     "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio.",
-    "en": null
+    "en": "I say to the LORD: my refuge and my fortress, my God, in whom I trust."
   },
   "leituras/lamentacoes-3/tituloPt": {
     "pt": "Novas a cada manhã",
-    "en": null
+    "en": "New every morning"
   },
   "leituras/lamentacoes-3/fontePt": {
     "pt": "Lamentações 3:22-23",
-    "en": null
+    "en": "Lamentations 3:22-23"
   },
   "leituras/lamentacoes-3/introPt": {
     "pt": "No meio do livro mais triste da Bíblia, uma esperança: as misericórdias do Senhor se renovam a cada manhã.",
-    "en": null
+    "en": "In the middle of the saddest book in the Bible, a hope: the LORD's mercies are renewed every morning."
   },
   "leituras/lamentacoes-3/linhas/#0/pt": {
     "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;",
-    "en": null
+    "en": "The mercies of the LORD never end, his compassions never fail;"
   },
   "leituras/lamentacoes-3/linhas/#1/pt": {
     "pt": "elas se renovam a cada manhã. Grande é a tua fidelidade!",
-    "en": null
+    "en": "they are new every morning. Great is your faithfulness!"
   },
   "leituras/salmo-119/tituloPt": {
     "pt": "Lâmpada para os meus pés",
-    "en": null
+    "en": "A lamp to my feet"
   },
   "leituras/salmo-119/fontePt": {
     "pt": "Salmo 119:105",
-    "en": null
+    "en": "Psalm 119:105"
   },
   "leituras/salmo-119/introPt": {
     "pt": "Do maior capítulo da Bíblia, o versículo sobre a própria Palavra.",
-    "en": null
+    "en": "From the longest chapter in the Bible, the verse about the Word itself."
   },
   "leituras/salmo-119/linhas/#0/pt": {
     "pt": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.",
-    "en": null
+    "en": "Your word is a lamp to my feet and a light to my path."
   },
   "leituras/bencao-sacerdotal/tituloPt": {
     "pt": "A bênção sacerdotal",
-    "en": null
+    "en": "The Priestly Blessing"
   },
   "leituras/bencao-sacerdotal/fontePt": {
     "pt": "Números 6:24-26",
-    "en": null
+    "en": "Numbers 6:24-26"
   },
   "leituras/bencao-sacerdotal/introPt": {
     "pt": "A bênção que Deus manda Aarão e os seus filhos darem ao povo de Israel. Três versículos, cada um maior que o anterior.",
-    "en": null
+    "en": "The blessing God tells Aaron and his sons to give the people of Israel. Three verses, each one longer than the one before."
   },
   "leituras/bencao-sacerdotal/linhas/#0/pt": {
     "pt": "O Senhor te abençoe e te guarde.",
-    "en": null
+    "en": "The LORD bless you and keep you."
   },
   "leituras/bencao-sacerdotal/linhas/#1/pt": {
     "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti.",
-    "en": null
+    "en": "The LORD make his face shine upon you and be gracious to you."
   },
   "leituras/bencao-sacerdotal/linhas/#2/pt": {
     "pt": "O Senhor volte o seu rosto para ti e te dê a paz.",
-    "en": null
+    "en": "The LORD turn his face toward you and give you peace."
   },
   "leituras/isaias-6/tituloPt": {
     "pt": "Santo, santo, santo",
-    "en": null
+    "en": "Holy, holy, holy"
   },
   "leituras/isaias-6/fontePt": {
     "pt": "Isaías 6:3",
-    "en": null
+    "en": "Isaiah 6:3"
   },
   "leituras/isaias-6/introPt": {
     "pt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
-    "en": null
+    "en": "What the angels proclaim in Isaiah's vision. The word קָדוֹשׁ, \"holy\", comes three times in a row."
   },
   "leituras/isaias-6/linhas/#0/pt": {
     "pt": "E um clamava ao outro, dizendo:",
-    "en": null
+    "en": "And one called to another, saying:"
   },
   "leituras/isaias-6/linhas/#1/pt": {
     "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
-    "en": null
+    "en": "Holy, holy, holy is the LORD of hosts; the whole earth is full of his glory."
   },
   "leituras/isaias-9/tituloPt": {
     "pt": "Um menino nos nasceu",
-    "en": null
+    "en": "Unto us a child is born"
   },
   "leituras/isaias-9/fontePt": {
     "pt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
-    "en": null
+    "en": "Isaiah 9:6 (9:5 in the Hebrew Bible)"
   },
   "leituras/isaias-9/introPt": {
     "pt": "Um dos textos mais conhecidos da Bíblia. Na Bíblia hebraica a numeração é um versículo antes: 9:5. Há mais de uma leitura tradicional deste versículo; a tradução abaixo é a mais conhecida no Brasil.",
-    "en": null
+    "en": "One of the best-known texts in the Bible. In the Hebrew Bible the numbering is one verse earlier: 9:5. There is more than one traditional reading of this verse; the translation below is the best known in English.",
+    "comentario": "Adaptado: \"a mais conhecida no Brasil\" virou \"the best known in English\" (a tradução segue a linha da King James)."
   },
   "leituras/isaias-9/linhas/#0/pt": {
     "pt": "Porque um menino nos nasceu, um filho nos foi dado;",
-    "en": null
+    "en": "For unto us a child is born, unto us a son is given;"
   },
   "leituras/isaias-9/linhas/#1/pt": {
     "pt": "o governo está sobre os seus ombros,",
-    "en": null
+    "en": "the government is upon his shoulders,"
   },
   "leituras/isaias-9/linhas/#2/pt": {
     "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz.",
-    "en": null
+    "en": "and his name is called: Wonderful, Counselor, Mighty God, Everlasting Father, Prince of Peace."
   },
   "leituras/isaias-53/tituloPt": {
     "pt": "Pelas suas feridas",
-    "en": null
+    "en": "By his wounds"
   },
   "leituras/isaias-53/fontePt": {
     "pt": "Isaías 53:5",
-    "en": null
+    "en": "Isaiah 53:5"
   },
   "leituras/isaias-53/introPt": {
     "pt": "Do capítulo do servo sofredor, um dos textos do Antigo Testamento mais citados pelos cristãos.",
-    "en": null
+    "en": "From the chapter of the suffering servant, one of the Old Testament texts most quoted by Christians."
   },
   "leituras/isaias-53/linhas/#0/pt": {
     "pt": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;",
-    "en": null
+    "en": "But he was wounded for our transgressions, crushed for our iniquities;"
   },
   "leituras/isaias-53/linhas/#1/pt": {
     "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados.",
-    "en": null
+    "en": "the punishment that brings us peace was upon him, and by his wounds we are healed."
   },
   "leituras/levitico-19/tituloPt": {
     "pt": "Amarás o teu próximo",
-    "en": null
+    "en": "Love your neighbor"
   },
   "leituras/levitico-19/fontePt": {
     "pt": "Levítico 19:18",
-    "en": null
+    "en": "Leviticus 19:18"
   },
   "leituras/levitico-19/introPt": {
     "pt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
-    "en": null
+    "en": "The verse that gives us \"love your neighbor as yourself\". It ends with the signature the Torah repeats so often: אֲנִי יְהוָה, \"I am the LORD\"."
   },
   "leituras/levitico-19/linhas/#0/pt": {
     "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;",
-    "en": null
+    "en": "You shall not take vengeance or bear a grudge against the children of your people;"
   },
   "leituras/levitico-19/linhas/#1/pt": {
     "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor.",
-    "en": null
+    "en": "you shall love your neighbor as yourself. I am the LORD."
   },
   "leituras/salmo-133/tituloPt": {
     "pt": "Como é bom",
-    "en": null
+    "en": "How good"
   },
   "leituras/salmo-133/fontePt": {
     "pt": "Salmo 133:1",
-    "en": null
+    "en": "Psalm 133:1"
   },
   "leituras/salmo-133/introPt": {
     "pt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
-    "en": null
+    "en": "A single verse, and perhaps the most sung: הִנֵּה מַה־טּוֹב becomes a song at weddings, parties and gatherings of friends."
   },
   "leituras/salmo-133/linhas/#0/pt": {
     "pt": "Cântico das subidas, de Davi.",
-    "en": null
+    "en": "A Song of Ascents, of David."
   },
   "leituras/salmo-133/linhas/#1/pt": {
     "pt": "Vejam como é bom e agradável os irmãos viverem juntos.",
-    "en": null
+    "en": "Behold, how good and how pleasant it is for brothers to dwell together."
   },
   "guia/tituloPt": {
     "pt": "O nikud da Bíblia",
-    "en": null
+    "en": "The nikud of the Bible"
   },
   "guia/introPt": {
     "pt": "Um guia opcional, para quem quer ler as leituras bônus ou abrir uma Bíblia em hebraico. Os pontos são os mesmos que você aprendeu no curso; a Bíblia só usa alguns a mais, e tem umas poucas regras de leitura. Os exemplos são todos das leituras bônus.",
-    "en": null
+    "en": "An optional guide, for anyone who wants to read the bonus readings or open a Hebrew Bible. The points are the same ones you learned in the course; the Bible just uses a few more, and has a handful of reading rules. The examples all come from the bonus readings."
   },
   "guia/secoes/nome/tituloPt": {
     "pt": "O Nome não se pronuncia",
-    "en": null
+    "en": "The Name is not pronounced"
   },
   "guia/secoes/nome/textoPt": {
     "pt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito. Na reza e na leitura da Torá na sinagoga, diz-se «Adonái», «meu Senhor». Fora da reza, muitos judeus evitam até essa palavra, por respeito ao Nome, e dizem «Hashém», que quer dizer «o Nome». As gravações deste curso seguem esse costume: por isso você ouve «Hashém», e a transliteração mostra o que se ouve. Ao ler sozinho, cada um segue o costume da sua casa: «Adonái», «Hashém» ou, nas traduções, «o Senhor». Por escrito, muita gente abrevia para {{ה׳}}.",
-    "en": null
+    "en": "The name of God, {{יְהוָה}}, is never read as it is written. In prayer and in the Torah reading at the synagogue, people say «Adonai», \"my Lord\". Outside of prayer, many Jews avoid even that word, out of respect for the Name, and say «Hashem», which means \"the Name\". The recordings in this course follow that custom: that is why you hear «Hashem», and the transliteration shows what you hear. When reading on your own, each person follows the custom of their home: «Adonai», «Hashem» or, in translations, \"the LORD\". In writing, many people abbreviate it as {{ה׳}}.",
+    "comentario": "Mantidas as transliterações «Adonái» e «Hashém»; \"o Senhor\" das traduções virou \"the LORD\", como nas Bíblias em inglês."
   },
   "guia/secoes/nome/exemplos/#0/pt": {
     "pt": "como está no texto bíblico; na gravação, «Hashém»",
-    "en": null
+    "en": "as it is in the biblical text; in the recording, «Hashem»"
   },
   "guia/secoes/nome/exemplos/#1/pt": {
     "pt": "o Senhor, nosso Deus (do Shemá)",
-    "en": null
+    "en": "the LORD, our God (from the Shema)"
   },
   "guia/secoes/sheva/tituloPt": {
     "pt": "O shva no começo soa «e»",
-    "en": null
+    "en": "The shva at the start sounds «e»",
+    "comentario": "etapa 3: o som «e» do shva é o da transliteração portuguesa; rever para o leitor de inglês."
   },
   "guia/secoes/sheva/textoPt": {
     "pt": "O shva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
-    "en": null
+    "en": "The shva ({{ְ}}) under the first letter of a word sounds like a quick «e». In the middle of a word, after another vowel, it is usually silent: the letter closes the syllable before it.",
+    "comentario": "etapa 3: som «e» (transliteração), rever."
   },
   "guia/secoes/sheva/exemplos/#0/pt": {
     "pt": "shva no começo: «be»",
-    "en": null
+    "en": "shva at the start: «be»"
   },
   "guia/secoes/sheva/exemplos/#1/pt": {
     "pt": "shva no começo: «she»",
-    "en": null
+    "en": "shva at the start: «she»"
   },
   "guia/secoes/sheva/exemplos/#2/pt": {
     "pt": "shva no meio, mudo: «Yis-ra-él»",
-    "en": null
+    "en": "shva in the middle, silent: «Yis-ra-el»"
   },
   "guia/secoes/chataf/tituloPt": {
     "pt": "As vogais rápidas (chataf)",
-    "en": null
+    "en": "The quick vowels (chataf)"
   },
   "guia/secoes/chataf/textoPt": {
     "pt": "Um shva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o shva simples.",
-    "en": null
+    "en": "A shva with another vowel beside it is a short vowel, said quickly: {{ֲ}} sounds «a», {{ֱ}} sounds «e» and {{ֳ}} sounds «o». They almost always appear under {{א}}, {{ה}}, {{ח}} and {{ע}}, the letters that do not take a plain shva.",
+    "comentario": "etapa 3: sons «a», «e», «o» como na transliteração, rever."
   },
   "guia/secoes/chataf/exemplos/#0/pt": {
     "pt": "«e» rápido",
-    "en": null
+    "en": "quick «e»"
   },
   "guia/secoes/chataf/exemplos/#1/pt": {
     "pt": "«a» rápido",
-    "en": null
+    "en": "quick «a»"
   },
   "guia/secoes/kamats-katan/tituloPt": {
     "pt": "Quando o kamats soa «o»?",
-    "en": null
+    "en": "When does the kamats sound «o»?"
   },
   "guia/secoes/kamats-katan/textoPt": {
     "pt": "Em algumas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
-    "en": null
+    "en": "In some words, the kamats ({{ָ}}) sounds «o», not «a». The most common of all is {{כָּל}}, \"all\", which shows up on almost every page. In the bonus readings, the transliteration always shows which case it is."
   },
   "guia/secoes/kamats-katan/exemplos/#0/pt": {
     "pt": "todos os dias de",
-    "en": null
+    "en": "all the days of"
   },
   "guia/secoes/kamats-katan/exemplos/#1/pt": {
     "pt": "com todo o teu coração",
-    "en": null
+    "en": "with all your heart"
   },
   "guia/secoes/patach-furtivo/tituloPt": {
     "pt": "O «a» que vem antes da letra",
-    "en": null
+    "en": "The «a» that comes before the letter"
   },
   "guia/secoes/patach-furtivo/textoPt": {
     "pt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{הּ}} (com o ponto dentro) e há um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
-    "en": null
+    "en": "When a word ends in {{ח}}, {{ע}} or {{הּ}} (with the dot inside) and there is a patach underneath, the «a» is said BEFORE the letter: «ru-ach», not «ru-cha»."
   },
   "guia/secoes/patach-furtivo/exemplos/#0/pt": {
     "pt": "e o espírito",
-    "en": null
+    "en": "and the spirit"
   },
   "guia/secoes/maqaf/tituloPt": {
     "pt": "O tracinho que liga palavras",
-    "en": null
+    "en": "The little dash that links words"
   },
   "guia/secoes/maqaf/textoPt": {
     "pt": "O tracinho no alto da linha ({{־}}), o maqaf, junta duas palavras que se leem de um fôlego só, como se fossem uma.",
-    "en": null
+    "en": "The little dash at the top of the line ({{־}}), the maqaf, joins two words that are read in a single breath, as if they were one."
   },
   "guia/secoes/maqaf/exemplos/#0/pt": {
     "pt": "sobre a face de",
-    "en": null
+    "en": "upon the face of"
   },
   "guia/secoes/maqaf/exemplos/#1/pt": {
     "pt": "que era bom",
-    "en": null
+    "en": "that it was good"
   },
   "guia/secoes/dagesh/tituloPt": {
     "pt": "O daguesh, de novo",
-    "en": null
+    "en": "The dagesh, again"
   },
   "guia/secoes/dagesh/textoPt": {
     "pt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o daguesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
-    "en": null
+    "en": "You already know that the dot inside {{ב}}, {{כ}} and {{פ}} changes the sound. The Bible marks everything, so you will see the dagesh in many other letters too: in those, it changes nothing you need to say."
   },
   "guia/secoes/dagesh/exemplos/#0/pt": {
     "pt": "com daguesh: «b»",
-    "en": null
+    "en": "with dagesh: «b»"
   },
   "guia/secoes/dagesh/exemplos/#1/pt": {
     "pt": "sem daguesh: «v»",
-    "en": null
+    "en": "without dagesh: «v»"
   },
   "guia/secoes/dagesh/exemplos/#2/pt": {
     "pt": "daguesh no ש: o som não muda",
-    "en": null
+    "en": "dagesh in the ש: the sound does not change"
   },
   "guia/secoes/yod/tituloPt": {
     "pt": "O י que não se lê como «y»",
-    "en": null
+    "en": "The י that is not read as «y»"
   },
   "guia/secoes/yod/textoPt": {
     "pt": "Quando o {{י}} vem depois de um chirik ({{ִ}}) só para marcar a vogal, ele não acrescenta outro som: juntos, {{ִי}} representam o som «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
-    "en": null
+    "en": "When {{י}} comes after a chirik ({{ִ}}) just to mark the vowel, it adds no sound of its own: together, {{ִי}} stand for the sound «i». In the ending {{ֶיךָ}}, it is silent. After a tsere ({{ֵ}}), in today's pronunciation, it sounds «ei».",
+    "comentario": "etapa 3: sons «i» e «ei» na grafia portuguesa (em inglês, \"ee\" e \"ay\"); rever."
   },
   "guia/secoes/yod/exemplos/#0/pt": {
     "pt": "temerei",
-    "en": null
+    "en": "I will fear"
   },
   "guia/secoes/yod/exemplos/#1/pt": {
     "pt": "a teus filhos",
-    "en": null
+    "en": "to your children"
   },
   "guia/secoes/yod/exemplos/#2/pt": {
     "pt": "nosso Deus",
-    "en": null
+    "en": "our God"
   },
   "guia/secoes/vav/tituloPt": {
     "pt": "O ו do «e disse»",
-    "en": null
+    "en": "The ו of \"and he said\""
   },
   "guia/secoes/vav/textoPt": {
     "pt": "A Bíblia conta o que aconteceu com um {{וַ}} na frente do verbo: {{וַיֹּאמֶר}} é «e disse», {{וַיְהִי}} é «e houve». É a forma bíblica de narrar no passado, e o hebraico de hoje não a usa. Para ler, basta dizer «va» e seguir.",
-    "en": null
+    "en": "The Bible tells what happened with a {{וַ}} in front of the verb: {{וַיֹּאמֶר}} is \"and he said\", {{וַיְהִי}} is \"and there was\". It is the biblical way of narrating the past, and today's Hebrew does not use it. To read it, just say «va» and keep going."
   },
   "guia/secoes/vav/exemplos/#0/pt": {
     "pt": "e disse",
-    "en": null
+    "en": "and he said"
   },
   "guia/secoes/vav/exemplos/#1/pt": {
     "pt": "e houve",
-    "en": null
+    "en": "and there was"
   },
   "guia/secoes/teamim/tituloPt": {
     "pt": "Os sinais a mais numa Bíblia impressa",
-    "en": null
+    "en": "The extra signs in a printed Bible"
   },
   "guia/secoes/teamim/textoPt": {
     "pt": "Numa Bíblia hebraica você vai ver ainda outros sinais, em cima e embaixo das letras: são os te'amim, as notas do canto da leitura na sinagoga. Para ler, pode ignorá-los. O {{׃}} marca o fim do versículo, e um {{פ}} ou {{ס}} sozinho entre versículos marca um parágrafo: nenhum dos dois se lê.",
-    "en": null
+    "en": "In a Hebrew Bible you will see still other signs, above and below the letters: these are the te'amim, the notes for chanting the reading in the synagogue. For reading, you can ignore them. The {{׃}} marks the end of a verse, and a {{פ}} or {{ס}} standing alone between verses marks a paragraph: neither one is read aloud."
   },
   "guia/secoes/teamim/exemplos/#0/pt": {
     "pt": "Gênesis 1:1 como numa Bíblia impressa, com os te'amim e o ׃",
-    "en": null
+    "en": "Genesis 1:1 as in a printed Bible, with the te'amim and the ׃"
   }
 }

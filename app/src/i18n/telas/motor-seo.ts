@@ -9,7 +9,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   // a imagem do cartão ainda é a do site em português (tools/og.mjs)
   ogCurso: 'Hebraico Fluente: learn to read Hebrew from zero',
-  ogLivro: 'Israel Além do Óbvio, by Moshik Gueta: coming soon'
+  ogLivro: 'Israel Alem do Obvio, by Moshik Gueta: coming soon'
 };
 
 export const DICIONARIO = { pt, en };

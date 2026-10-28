@@ -26,14 +26,25 @@
  */
 
 import { dataHoraBR, sendMail } from './lib/mail.js';
+import { dataEN } from './lib/mail-en.js';
 import { log, throttled } from './lib/db.js';
+import { idiomaDoWorker } from './lib/idioma.js';
 
 const DOMINIO = 'hebraicofluente.com.br';
+
+/* O domínio do próprio site, do remetente da Resend (EMAIL_FROM) ou do
+   SITE_ORIGIN: o site em inglês terá o seu, e uma resposta que só conhece o
+   domínio brasileiro trataria o próprio contato@ dele como gente. */
+export function dominioDe(env) {
+  const m = String((env && env.EMAIL_FROM) || '').match(/@([^>\s]+)/);
+  if (m) return m[1].toLowerCase();
+  try { return new URL(env.SITE_ORIGIN).hostname.replace(/^www\./, ''); } catch { return DOMINIO; }
+}
 
 /** O assunto pede desistência ou reembolso? Sem acento e sem caixa. */
 export function pedeDesistencia(assunto) {
   const s = String(assunto || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  return /reembols|desist|estorn|arrepend|cancel|devolu/.test(s);
+  return /reembols|desist|estorn|arrepend|cancel|devolu|refund|withdraw|money back|chargeback/.test(s);
 }
 
 /** O endereço dentro de `Nome <a@b.c>` ou um endereço solto. */
@@ -44,17 +55,38 @@ export function enderecoDe(cabecalho) {
 }
 
 /** Mensagem automática, de lista ou de robô: não se responde. */
-export function ehAutomatica(headers, remetente) {
+export function ehAutomatica(headers, remetente, dominio = DOMINIO) {
   const h = n => String(headers.get(n) || '').toLowerCase();
   const auto = h('auto-submitted');
   if (auto && auto !== 'no') return true;
   if (/bulk|list|junk/.test(h('precedence'))) return true;
   if (h('list-id') || h('list-unsubscribe')) return true;
   if (/^(no-?reply|noreply|mailer-daemon|postmaster|bounce)/.test(remetente)) return true;
-  return remetente.endsWith('@' + DOMINIO);
+  return remetente.endsWith('@' + dominio);
 }
 
-export function confirmacaoTexto(recebidaEm) {
+/* A hora em inglês, no mesmo fuso de dataHoraBR (o de Brasília). */
+function horaEN(ms) {
+  const d = new Date(Number(ms) - 3 * 60 * 60 * 1000);
+  const h = d.getUTCHours(), m = String(d.getUTCMinutes()).padStart(2, '0');
+  return `${h % 12 || 12}:${m} ${h < 12 ? 'am' : 'pm'}`;
+}
+
+export function confirmacaoTexto(recebidaEm, idioma = 'pt', contato = `contato@${DOMINIO}`) {
+  if (idioma === 'en') {
+    return [
+      'Hello,',
+      '',
+      `We received your message on ${dataEN(recebidaEm)} at ${horaEN(recebidaEm)} (Brazil time, UTC-3). This is an automatic confirmation, sent the moment it arrived, and it is a record that we received it.`,
+      '',
+      'If you are asking to cancel your purchase, the date that counts is the date you wrote, not the date of our reply. We reply personally within 2 business days.',
+      '',
+      'If you prefer, you can cancel on the site itself: sign in, open Your account and, under Purchases, use "Cancel the purchase". The request is recorded right away.',
+      '',
+      'Hebraico Fluente',
+      contato
+    ].join('\n');
+  }
   return [
     'Olá,',
     '',
@@ -65,7 +97,7 @@ export function confirmacaoTexto(recebidaEm) {
     'Se preferir, dá para desistir pelo próprio site: entre na sua conta, abra Perfil e, em Compras, use "Desistir da compra". O pedido fica registrado na hora.',
     '',
     'Hebraico Fluente',
-    `contato@${DOMINIO}`
+    contato
   ].join('\n');
 }
 
@@ -78,10 +110,18 @@ export async function receberEmail(message, env, agora = Date.now()) {
   if (!pedeDesistencia(assunto)) return;
 
   const para = enderecoDe(message.headers.get('reply-to')) || enderecoDe(message.headers.get('from'));
-  if (!para || ehAutomatica(message.headers, para)) return;
+  const dominio = dominioDe(env);
+  if (!para || ehAutomatica(message.headers, para, dominio)) return;
   if (await throttled(env, `autoresposta:${para}`, 1, 3_600_000)) return;
 
-  const r = await sendMail(env, { to: para, subject: 'Recebemos a sua mensagem', text: confirmacaoTexto(agora) });
+  /* No idioma do site que recebeu (lib/idioma.js). */
+  const idioma = idiomaDoWorker(env);
+  const contato = env.SUPPORT_EMAIL || `contato@${dominio}`;
+  const r = await sendMail(env, {
+    to: para,
+    subject: idioma === 'en' ? 'We received your message' : 'Recebemos a sua mensagem',
+    text: confirmacaoTexto(agora, idioma, contato)
+  });
   /* O registro do recebimento, também do nosso lado. Sem o endereço: a
      trilha guarda o fato, a caixa do dono guarda a mensagem. */
   await log(env, null, r.ok ? 'autoresposta-enviada' : 'autoresposta-falhou', r.ok ? '' : `${r.motivo} ${r.detalhe || ''}`);

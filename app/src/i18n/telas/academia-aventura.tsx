@@ -64,7 +64,7 @@ const en: Traducao<typeof pt> = {
   letraConquistada: 'Letter earned',
   entrouNaColecao: nome => `${nome} has joined your collection.`,
   leNomeYael: he => <>Now you can read Yael&apos;s name:{' '}{he}</>,
-  yaelLegenda: "ya'él · the ibex",
+  yaelLegenda: "ya'el · the ibex",
   verColecao: 'See the letter collection',
 
   moduloLugar: (n, lugar) => `Module ${n} · ${lugar}`,

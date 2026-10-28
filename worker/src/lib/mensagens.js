@@ -16,6 +16,11 @@ const PT = {
   estorno: pt.mensagemDeEstorno,
   vencimento: pt.mensagemDeVencimento,
   ativacao: pt.mensagemDeAtivacao,
+  compra: pt.mensagemDeCompra,
+  arrependimento: pt.mensagemDeArrependimento,
+  segundaLetra: pt.mensagemDaSegundaLetra,
+  confirmacaoDaLista: pt.mensagemDeConfirmacaoDaLista,
+  sequencia: pt.mensagemDaSequencia,
   lembrete: pt.mensagemDeLembrete,
   data: pt.dataBR
 };
@@ -26,6 +31,11 @@ const EN = {
   estorno: en.mensagemDeEstorno,
   vencimento: en.mensagemDeVencimento,
   ativacao: en.mensagemDeAtivacao,
+  compra: en.mensagemDeCompra,
+  arrependimento: en.mensagemDeArrependimento,
+  segundaLetra: en.mensagemDaSegundaLetra,
+  confirmacaoDaLista: en.mensagemDeConfirmacaoDaLista,
+  sequencia: en.mensagemDaSequencia,
   lembrete: en.mensagemDeLembrete,
   data: en.dataEN
 };

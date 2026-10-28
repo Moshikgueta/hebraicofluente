@@ -158,8 +158,8 @@ const en: Traducao<typeof pt> = {
   acessoCompleto: 'Full access',
   // etapa 5/6: Brasil, rever (PIX)
   noPix: 'by PIX, paid in full',
-  // etapa 5/6: Brasil, rever (parcelamento no cartão)
-  noCartao: (parcelas: string) => `or ${parcelas} on a card`,
+  // etapa 5: o site em inglês cobra pelo Paddle
+  noCartao: () => 'one-time payment, taxes included',
   continua: 'Your progress picks up exactly where you left off.',
   liberadoNaHora: (meses: number) => `Access granted as soon as payment is confirmed, for ${meses} months.`,
   // etapa 5/6: Brasil, rever (PIX)
@@ -178,11 +178,11 @@ const en: Traducao<typeof pt> = {
   faqTitulo: 'Frequently asked questions',
   faqTexto: 'What the course covers, how access works and what to expect inside the platform.',
 
-  shalomTr: 'shalóm',
+  shalomTr: 'shalom',
   shalomPt: 'hello, peace',
-  todaTr: 'todá',
+  todaTr: 'toda',
   todaPt: 'thank you',
-  mayimTr: 'máyim',
+  mayimTr: 'mayim',
   mayimPt: 'water',
   fechoTitulo: 'Your next word in Hebrew could be the first one you can truly read.'
 };

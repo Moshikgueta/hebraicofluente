@@ -5,6 +5,8 @@ const pt = {
   /** O idioma da voz do aparelho que lê o enunciado. */
   vozLang: 'pt-BR',
   vozPrefixo: 'pt',
+  /** O que a voz diz no lugar do hebraico citado (lib/voz-instrucao.ts). */
+  hebraicoMostrado: 'o hebraico mostrado',
   pausarInstrucao: 'Pausar a instrução',
   continuarInstrucao: 'Continuar a instrução',
   ouvirInstrucaoNoIdioma: 'Ouvir a instrução em português',
@@ -16,6 +18,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   vozLang: 'en-US',
   vozPrefixo: 'en',
+  hebraicoMostrado: 'the Hebrew shown',
   pausarInstrucao: 'Pause the instructions',
   continuarInstrucao: 'Resume the instructions',
   ouvirInstrucaoNoIdioma: 'Listen to the instructions in English',

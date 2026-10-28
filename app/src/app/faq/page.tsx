@@ -7,7 +7,7 @@ import {
   O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
 } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { ancora, flagship, brl, fimDoPreLancamento, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, flagship, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
 import { tempoDoCursoPt } from '@/lib/content-publico';
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 import { tx } from '@/i18n/telas/venda-faq';
@@ -209,13 +209,14 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
       tx.gostarA2(confirmaSozinho(), empresa.contato.emailSuporte, confirmacaoDaDesistencia())
     ]
   },
-  {
+  /* Só onde os outros níveis estão no catálogo: o site em inglês não os tem. */
+  ...(getCourse('hebraico-a1') ? [{
     q: tx.niveisQ,
     a: [
       tx.niveisA1,
       tx.niveisA2
     ]
-  }
+  }] : [])
 ];
 
 export default function FaqPage() {

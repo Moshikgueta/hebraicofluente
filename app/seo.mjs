@@ -28,6 +28,12 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { isGatedPath } from '../worker/src/gate.js';
+import { FORA_DO_SITE_EN } from '../worker/src/lib/idioma.js';
+
+/* A build em inglês sai em out-en, e o Worker em inglês responde 404 ao que
+   só existe no site brasileiro (FORA_DO_SITE_EN): isso não vai ao sitemap. */
+const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+export const DIR = EM_INGLES ? 'out-en' : 'out';
 
 /* Lido do TOML sem dependência: é uma linha `SITE_ORIGIN = "..."` dentro de
    [vars], e um parser inteiro para isso seria mais coisa para quebrar. */
@@ -66,7 +72,7 @@ const CADENCIA = (rota) =>
   : ['/termos/', '/privacidade/', '/reembolso/', '/suporte/', '/acessibilidade/'].includes(rota) ? 'yearly'
   : 'monthly';
 
-export function rotas(dir = 'out', base = '') {
+export function rotas(dir = DIR, base = '') {
   const achadas = [];
   for (const nome of readdirSync(dir)) {
     const cheio = join(dir, nome);
@@ -82,7 +88,8 @@ const TECNICAS = ['/404', '/500'];
 
 const semBarra = (r) => r.replace(/\/+$/, '') || '/';
 const naoListada = (r) =>
-  [...NAO_LISTADAS, ...TECNICAS].some(x => semBarra(r) === x || semBarra(r).startsWith(x + '/'));
+  [...NAO_LISTADAS, ...TECNICAS].some(x => semBarra(r) === x || semBarra(r).startsWith(x + '/'))
+  || (EM_INGLES && FORA_DO_SITE_EN.test(semBarra(r)));
 
 /** As rotas que entram no sitemap, e por quê as outras não entram. */
 export function classificar(todas) {
@@ -142,7 +149,7 @@ export function llmsTxt(site, paginas) {
   const nome = (capa && capa.titulo ? capa.titulo.split(' | ')[0] : 'Hebraico Fluente');
   const linhas = [`# ${nome}`, ''];
   if (capa && capa.descricao) linhas.push(`> ${capa.descricao}`, '');
-  linhas.push('## Páginas', '');
+  linhas.push(EM_INGLES ? '## Pages' : '## Páginas', '');
   for (const p of paginas) {
     if (!p.titulo) continue;
     linhas.push(`- [${p.titulo}](${site}${p.rota})${p.descricao ? `: ${p.descricao}` : ''}`);
@@ -156,14 +163,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const { listadas, pagas, ocultas } = classificar(rotas());
   const hoje = new Date().toISOString().slice(0, 10);
 
-  writeFileSync('out/sitemap.xml', sitemapXml(site, listadas, hoje));
-  writeFileSync('out/robots.txt', robotsTxt(site));
-  const paginas = listadas.map(rota => ({ rota, ...cabecalho(readFileSync(join('out', rota, 'index.html'), 'utf8')) }));
-  writeFileSync('out/llms.txt', llmsTxt(site, paginas));
+  writeFileSync(`${DIR}/sitemap.xml`, sitemapXml(site, listadas, hoje));
+  writeFileSync(`${DIR}/robots.txt`, robotsTxt(site));
+  const paginas = listadas.map(rota => ({ rota, ...cabecalho(readFileSync(join(DIR, rota, 'index.html'), 'utf8')) }));
+  writeFileSync(`${DIR}/llms.txt`, llmsTxt(site, paginas));
 
   console.log(`  site: ${site}`);
   console.log(`  no sitemap (${listadas.length}): ${listadas.join(' ')}`);
   console.log(`  fora, por serem pagas (${pagas.length})`);
   console.log(`  fora, por não responderem a busca (${ocultas.length}): ${ocultas.join(' ')}`);
-  console.log('\n✓ out/sitemap.xml, out/robots.txt e out/llms.txt escritos');
+  console.log(`\n✓ ${DIR}/sitemap.xml, ${DIR}/robots.txt e ${DIR}/llms.txt escritos`);
 }

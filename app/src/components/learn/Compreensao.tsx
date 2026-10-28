@@ -138,7 +138,9 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                                 aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
                   >
                     {feita && j === p.certa && <span aria-hidden>✓ </span>}
-                    {o}
+                    {/* A alternativa pode citar hebraico ({{ק}}): passa pelo
+                        Prose, como o enunciado, senão as chaves vão à tela. */}
+                    <Prose text={o} />
                   </button>
                 ))}
               </div>

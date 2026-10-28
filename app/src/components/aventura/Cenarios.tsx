@@ -36,6 +36,7 @@
 
 import type { ReactNode } from 'react';
 import { tx } from '@/i18n/telas/academia-aventura';
+import { translit as grafia } from '@/i18n/translit';
 
 export type IdDoCenario = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -48,13 +49,13 @@ export type IdDoCenario = 1 | 2 | 3 | 4 | 5 | 6 | 7;
    fora do desenho. */
 export const LUGAR: Record<IdDoCenario, { he: string; translit: string; pt: string }> = {
   /* A transliteração fica como está: o inglês terá sistema próprio (etapa 3). */
-  1: { he: 'הַיָם', translit: 'hayám', pt: tx.lugar1 }, // i18n-ok transliteração
-  2: { he: 'הַגַן', translit: 'hagán', pt: tx.lugar2 }, // i18n-ok transliteração
-  3: { he: 'הַחַלוֹן', translit: 'hachalón', pt: tx.lugar3 }, // i18n-ok transliteração
-  4: { he: 'הָעִיר', translit: "ha'ír", pt: tx.lugar4 }, // i18n-ok transliteração
-  5: { he: 'הַשּׁוּק', translit: 'hashúk', pt: tx.lugar5 }, // i18n-ok transliteração
-  6: { he: 'רחוב', translit: 'rechóv', pt: tx.lugar6 }, // i18n-ok transliteração
-  7: { he: 'הַגַּג', translit: 'hagág', pt: tx.lugar7 } // i18n-ok transliteração
+  1: { he: 'הַיָם', translit: grafia('hayám'), pt: tx.lugar1 }, // i18n-ok transliteração
+  2: { he: 'הַגַן', translit: grafia('hagán'), pt: tx.lugar2 }, // i18n-ok transliteração
+  3: { he: 'הַחַלוֹן', translit: grafia('hachalón'), pt: tx.lugar3 }, // i18n-ok transliteração
+  4: { he: 'הָעִיר', translit: grafia("ha'ír"), pt: tx.lugar4 }, // i18n-ok transliteração
+  5: { he: 'הַשּׁוּק', translit: grafia('hashúk'), pt: tx.lugar5 }, // i18n-ok transliteração
+  6: { he: 'רחוב', translit: grafia('rechóv'), pt: tx.lugar6 }, // i18n-ok transliteração
+  7: { he: 'הַגַּג', translit: grafia('hagág'), pt: tx.lugar7 } // i18n-ok transliteração
 };
 
 const W = 320, H = 120;

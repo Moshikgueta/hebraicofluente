@@ -65,17 +65,17 @@ const en: Traducao<typeof pt> = {
   confirmando: 'Confirming your payment…',
   naoFeche: 'This usually takes a few seconds. Do not close this page.',
   pagamentoConfirmado: 'Payment confirmed',
-  prontoLivro: 'Done. Israel Além do Óbvio is yours.',
+  prontoLivro: 'Done. Israel Alem do Obvio is yours.',
   prontoCombo: 'Done. The bundle is yours.',
   prontoCurso: 'Done. The course is yours.',
   livroLiberado: (titulo: string, meses: number) =>
     `${titulo}: interactive version unlocked for ${meses} months.`,
   comboLiberado:
-    'The literacy course and Israel Além do Óbvio are unlocked, under the same login. Both are ' +
+    'The literacy course and Israel Alem do Obvio are unlocked, under the same login. Both are ' +
     'in My Library.',
   cursoLiberado: (titulo: string, meses: number) =>
     `${titulo}, unlocked for ${meses} months. The first letter takes about ten minutes.`,
-  abrirLivro: 'Open Israel Além do Óbvio',
+  abrirLivro: 'Open Israel Alem do Obvio',
   abrirBiblioteca: 'Open My Library',
   comecarAgora: 'Start now',
 
