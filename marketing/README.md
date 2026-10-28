@@ -14,6 +14,7 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 | `emails/pedido-de-depoimento.md` | pedido de depoimento da semana 7 | para o dono aprovar (23/10/2026) |
 | `testes/c4-condicoes-antes-do-cadastro.md` | especificação do teste C4 (semana 5) | para o dono aprovar (23/10/2026) |
 | `roteiros/chanuca.md` | carrossel e stories de Chanucá (semana 6) | para o dono aprovar (24/10/2026) |
+| `05-funil.md` | o funil de vendas, etapa por etapa, com as lacunas | 28/10/2026 |
 | `04-painel.md` | 4. Painel de indicadores | definido; construção na semana 1 do plano (23/10/2026) |
 
 ## Regras de trabalho (do dono, 23/10/2026)
@@ -52,3 +53,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 27/10/2026: teste A1 de anúncio pago no Instagram, antecipado a pedido do dono (`anuncios/a1-teste-meta.md`): espera o teto de gasto.
 - 27/10/2026: anúncio pago em discussão; recomendação: orgânico até ~09/11 e teste entre 09 e 19/11.
 - 28/10/2026: série refeita (versão 3, 8 slides por post, cores na identidade) e legendas novas; nome decorado como presente a quem comenta o nome (gerado com `lib/nome-decorado.ts`).
+- 28/10/2026: o funil de vendas (`05-funil.md`): 7 etapas, métricas e lacunas; a maior é a prova social.
