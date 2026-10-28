@@ -14,6 +14,11 @@ import { cartasCompradas, saldo } from '@/lib/loja';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
 import { podeCompartilhar } from '@/lib/compartilhar';
 import { tx } from '@/i18n/telas/academia-achievements-client';
+import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
+import { CartaoMeuNome } from '@/components/learn/MeuNome';
+import { AntesEDepois } from '@/components/platform/AntesEDepois';
+import { CartaoSemana } from '@/components/platform/Painel';
+import { CartaoDominio } from '@/components/platform/CartaoDominio';
 
 export function AchievementsClient() {
   const p = useProgress();
@@ -51,6 +56,15 @@ export function AchievementsClient() {
           ))}
         </dl>
       </Card>
+
+      {/* Vieram do painel (28/10/2026, painel mais curto): o domínio por
+          habilidade, as palavras que o aluno lê, o antes e depois, a semana e
+          o nome. Cada um some sozinho enquanto não tem o que mostrar. */}
+      <CartaoDominio />
+      {Object.values(p.state.lessons).some(l => (l?.stagesDone.length ?? 0) >= 5) && <ContadorDeLeitura />}
+      <AntesEDepois />
+      <CartaoSemana />
+      <CartaoMeuNome />
 
       {/* O Diário de descobertas (28/10/2026, master prompt 3.0): o que o
           aluno fez, com a data, os lugares visitados e as palavras que lê. */}

@@ -21,12 +21,19 @@ import { useProgress } from '@/lib/state/store';
 import { getLetter } from '@/lib/content';
 import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { tx } from '@/i18n/telas/conta-painel';
+import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { Yael } from '@/components/aventura/Yael';
 
 /* ── o cartão do curso ──────────────────────────────────────────────────── */
 export function CartaoCurso({
-  kicker, titulo, sub, pct, href, cta
+  kicker, titulo, sub, pct, href, cta, modulo, letra
 }: {
   kicker: string; titulo: string; sub: string; pct: number; href: string; cta: string;
+  /** O lugar do módulo em que o aluno está (28/10/2026): o cartão abre com
+   *  o desenho dele, vivo, e a Yael. Sem ele, o cartão de sempre. */
+  modulo?: number;
+  /** A letra da vez, grande, ao lado do título. */
+  letra?: string;
 }) {
   /* A barra começa em zero e cresce depois de montada: o movimento é o que
      diz "você avançou até aqui". Pintada já no lugar final, ela é só uma
@@ -41,14 +48,31 @@ export function CartaoCurso({
     <div className="relative overflow-hidden rounded-[20px] bg-[var(--navy)] px-6 py-7 sm:px-[30px] sm:pb-[26px] sm:pt-[30px]">
       <span aria-hidden className="absolute inset-0 pointer-events-none"
             style={{ background: 'radial-gradient(70% 140% at 92% 0%, rgba(143,214,200,.18), transparent 60%)' }} />
+      {modulo != null && modulo >= 1 && modulo <= 7 && (
+        <div aria-hidden className="relative -mx-6 -mt-7 sm:-mx-[30px] sm:-mt-[30px] mb-5 h-[112px] sm:h-[150px] overflow-hidden">
+          <Cenario n={modulo as IdDoCenario} vivo />
+          <span className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[var(--navy)] to-transparent" />
+          <span className="absolute left-4 top-3 rounded-full bg-[var(--card)]/92 px-3 py-0.5 font-ui text-[12.5px] font-semibold text-ink shadow-[var(--sh)]">
+            {tx.moduloELugar(modulo, LUGAR[modulo as IdDoCenario].pt.split(',')[0]!)}
+          </span>
+          <span className="absolute right-3 bottom-1 w-[58px] sm:w-[70px]"><Yael /></span>
+        </div>
+      )}
       <div className="relative grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <div className="min-w-0">
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal-lite)] mb-2.5">
             {kicker}
           </p>
-          <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.025em] text-white mb-1.5">
-            {titulo}
-          </p>
+          <div className="flex items-center gap-3.5 mb-1.5">
+            {letra && (
+              <span aria-hidden className="shrink-0 grid place-items-center w-[60px] h-[60px] rounded-[16px] bg-white/10 border border-white/15">
+                <He size="lg" tone="lite">{letra}</He>
+              </span>
+            )}
+            <p className="m-0 font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.025em] text-white">
+              {titulo}
+            </p>
+          </div>
           <p className="font-ui text-[15.5px] text-white/[.66] mb-5">{sub}</p>
           <div className="flex items-center gap-3.5 max-w-[420px]">
             <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden"
@@ -238,7 +262,11 @@ export const IconeTempo = () => (
 
    Nada aqui é ação principal: o botão grande continua sendo o do cartão
    navy, logo acima. */
-export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } | null }) {
+export function PlanoDeHoje({ licao, semDesafio = false }: {
+  licao: { nome: string; href: string } | null;
+  /** O painel mostra o desafio nos atalhos; aqui ele sairia repetido. */
+  semDesafio?: boolean;
+}) {
   const p = useProgress();
   const minutos = Math.floor(p.goalUnits / 3);
   const alvo = Math.max(1, Math.round(p.goalTargetToday / 3));
@@ -303,7 +331,7 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
       </ul>
       {/* O desafio do dia fica FORA da conta "N de 3": é opcional, e não
           fazê-lo não deixa nada por fazer (28/10/2026). */}
-      {p.state.lessons && Object.keys(p.state.lessons).length > 0 && (
+      {!semDesafio && p.state.lessons && Object.keys(p.state.lessons).length > 0 && (
         desafioFeitoHoje(p.state, p.day)
           ? <p className="m-0 font-ui text-[13.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">{tx.desafioFeito}</p>
           : <Link href="/academia?treino=desafio"

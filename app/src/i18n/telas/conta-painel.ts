@@ -3,6 +3,7 @@ import type { Traducao } from '..';
 /* components/platform/Painel.tsx */
 const pt = {
   progressoNoCurso: 'Progresso no curso',
+  moduloELugar: (n: number, lugar: string) => `Módulo ${n} · ${lugar}`,
   horaDeRevisar: 'Hora de revisar',
   umItem: 'Um item precisa de uma revisão rápida.',
   nItens: (n: number) => `${n} itens precisam de uma revisão rápida.`,
@@ -44,6 +45,7 @@ const pt = {
 
 const en: Traducao<typeof pt> = {
   progressoNoCurso: 'Course progress',
+  moduloELugar: (n: number, lugar: string) => `Module ${n} · ${lugar}`,
   horaDeRevisar: 'Time to review',
   umItem: 'One item needs a quick review.',
   nItens: (n: number) => `${n} items need a quick review.`,
