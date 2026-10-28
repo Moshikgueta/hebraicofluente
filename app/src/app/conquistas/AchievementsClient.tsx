@@ -5,6 +5,7 @@ import { AchievementBadge, ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
 import { ACHIEVEMENTS, isLessonComplete, isLessonMastered } from '@/lib/state/rules';
 import { CartaDaLetra, type EstadoDaCarta } from '@/components/aventura/CartaDaLetra';
+import { Diario } from '@/components/aventura/Diario';
 import { useMemo } from 'react';
 import { allLetters, course, cultureCards, cultureUnlocked } from '@/lib/content';
 import Link from 'next/link';
@@ -48,6 +49,11 @@ export function AchievementsClient() {
           ))}
         </dl>
       </Card>
+
+      {/* O Diário de descobertas (28/10/2026, master prompt 3.0): o que o
+          aluno fez, com a data, os lugares visitados e as palavras que lê. */}
+      <Diario state={p.state} letras={allLetters()} modulos={course.modules}
+              comecadas={allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0)} />
 
       {/* A coleção de letras (28/10/2026, a aventura ilustrada): o alfabeto
           que o aluno montou, na ordem do curso. A carta ganha leva à lição
