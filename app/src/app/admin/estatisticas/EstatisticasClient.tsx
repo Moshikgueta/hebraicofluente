@@ -9,13 +9,14 @@ import Link from 'next/link';
 import { asset } from '@/lib/asset';
 import { CodigoDoAdmin, pedeCodigo } from '@/components/platform/CodigoDoAdmin';
 import { course } from '@/lib/content-publico';
+import { ROTULO_FAIXA } from '@/lib/tempo-de-etapa';
 import {
-  crescimentoPorFonte, FONTES_PT, funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, TIPO_PT,
-  type Etapa, type PedidosDaFonte, type Resposta
+  crescimentoPorFonte, FONTES_PT, funilDaDemo, funilDaPrevia, funilDoComece, funilDoPortal, MOTIVOS_PT, ondeErram, ondeParam, ordemDoPlano, tempoPorLetra, TIPO_PT,
+  type Etapa, type PedidosDaFonte, type Resposta, type Tempo
 } from '@/lib/painel-estatisticas';
 
 type Campanha = { origem: string; visitas: number };
-type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
+type Dados = { dias: number; desde: string; respostas: Resposta[]; etapas: Etapa[]; tempos?: Tempo[]; campanhas?: Campanha[]; demo?: { etapa: string; n: number }[]; portal?: { evento: string; n: number }[]; motivos?: { motivo: string; n: number }[];
   porFonte?: { evento: string; fonte: string; n: number }[]; pedidos?: PedidosDaFonte[]; pedidosDeTeste?: number;
   interessados?: Interessados | null; semanas?: Semana[] };
 type Semana = { semana: string; capa: number; venda: number; teste: number; testeFeito: number; checkout: number; conta: number;
@@ -232,6 +233,7 @@ export function EstatisticasClient() {
       {estado.tipo === 'pronto' && (() => {
         const erros = ondeErram(estado.dados.respostas);
         const param = ondeParam(estado.dados.etapas, ordem);
+        const tempo = tempoPorLetra(estado.dados.tempos || [], ordem);
         const totalRespostas = estado.dados.respostas.reduce((a, r) => a + r.total, 0);
         return (
           <>
@@ -397,6 +399,42 @@ export function EstatisticasClient() {
                   </li>
                 ))}
               </ul>
+            </section>
+
+            {/* Quanto tempo leva cada letra (28/10/2026): o site promete "cerca de
+                dez minutos por letra", e é aqui que a promessa se confere. */}
+            <section className="grid gap-3">
+              <h2 className="text-[20px] font-semibold m-0">Quanto tempo leva cada letra</h2>
+              <p className="font-ui text-[14px] text-ink-muted m-0">
+                Tempo ativo (a página à vista e o aluno mexendo nela), medido na primeira vez que cada etapa é
+                concluída. O servidor guarda só faixas de tempo, então cada etapa mostra a faixa do meio, e a
+                estimativa da letra soma o meio dessas faixas. Com poucas amostras, a conta ainda não diz muito.
+              </p>
+              {tempo.length ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full font-ui text-[14px] border-collapse">
+                    <thead><tr className="text-left text-ink-muted">
+                      <th className="py-2 pr-3">Lição</th>
+                      {[1, 2, 3, 4, 5].map(e => <th key={e} className="py-2 pr-3">Etapa {e}</th>)}
+                      <th className="py-2 pr-3 text-right">Estimativa</th><th className="py-2 text-right">Amostras</th>
+                    </tr></thead>
+                    <tbody>{tempo.map(l => (
+                      <tr key={l.id} className="border-t border-[color:var(--line-soft)]">
+                        <td className="py-2 pr-3">{nome(l.id)}</td>
+                        {[0, 1, 2, 3, 4].map(i => (
+                          <td key={i} className="py-2 pr-3 whitespace-nowrap">
+                            {l.etapas[i] == null ? '-' : ROTULO_FAIXA[l.etapas[i]!]}
+                          </td>
+                        ))}
+                        <td className="py-2 pr-3 text-right tabular-nums whitespace-nowrap">
+                          {Math.round(l.minutos)} min
+                        </td>
+                        <td className="py-2 text-right tabular-nums">{l.amostras}</td>
+                      </tr>
+                    ))}</tbody>
+                  </table>
+                </div>
+              ) : <p className="font-ui text-[14px] m-0">Ainda não há etapas medidas.</p>}
             </section>
 
             <section className="grid gap-3">

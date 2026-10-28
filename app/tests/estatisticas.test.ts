@@ -3,7 +3,8 @@
  * tabelas do painel (lib/painel-estatisticas.ts). */
 import { describe, expect, it } from 'vitest';
 import { criarEnviador, LOTE_MAX, paraEnvio } from '@/lib/estatisticas';
-import { funilDaDemo, ondeErram, ondeParam, ordemDoPlano } from '@/lib/painel-estatisticas';
+import { faixaMediana, funilDaDemo, ondeErram, ondeParam, ordemDoPlano, tempoPorLetra } from '@/lib/painel-estatisticas';
+import { faixaDe, MEIO_MIN, N_FAIXAS } from '@/lib/tempo-de-etapa';
 import { course } from '@/lib/content-publico';
 import { cookieDe, envDeTeste, pedido, comoAdmin } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
@@ -11,7 +12,7 @@ import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
-import { chaveDe, estatisticasPurge, ETAPAS_DA_DEMO } from '../../worker/src/api/estatisticas.js';
+import { chaveDe, chaveDoTempo, estatisticasPurge, ETAPAS_DA_DEMO, FAIXAS } from '../../worker/src/api/estatisticas.js';
 // @ts-expect-error - idem
 import { grantAccess } from '../../worker/src/lib/db.js';
 
@@ -206,5 +207,67 @@ describe('as tabelas do painel', () => {
     expect(f[0]).toMatchObject({ etapa: 'visto', n: 2, deQuemViu: 1 });
     expect(f.find(x => x.etapa === 'pronto')).toMatchObject({ n: 1, deQuemViu: 0.5 });
     expect(f.map(x => x.etapa)).toEqual(ETAPAS_DA_DEMO);
+  });
+});
+
+/* Quanto tempo leva cada letra (28/10/2026, decisão do dono): só a FAIXA de
+   tempo ativo de cada etapa, na primeira vez, e nunca os segundos. */
+describe('o tempo por letra', () => {
+  it('as faixas: o limite de cada uma cai na de cima, e tempo inválido não tem faixa', () => {
+    expect([0, 59, 60, 119, 120, 239, 240, 419, 420, 719, 720, 1199, 1200, 99999].map(faixaDe))
+      .toEqual([0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]);
+    expect(faixaDe(-1)).toBeNull();
+    expect(faixaDe(Number.NaN)).toBeNull();
+    expect(MEIO_MIN).toHaveLength(N_FAIXAS);
+    expect(FAIXAS).toBe(N_FAIXAS);
+  });
+
+  it('o app manda só a faixa, junto da etapa, e só na primeira vez', () => {
+    expect(paraEnvio(ev('stage_completed', { letterId: 'alef', stage: 2, primeira: true, faixa: 3 })))
+      .toEqual({ e: 'etapa', l: 'alef', s: 2, f: 3 });
+    /* Faixa fora da escala: a etapa sai, o tempo não. */
+    expect(paraEnvio(ev('stage_completed', { letterId: 'alef', stage: 2, primeira: true, faixa: 9 })))
+      .toEqual({ e: 'etapa', l: 'alef', s: 2 });
+    expect(paraEnvio(ev('stage_completed', { letterId: 'alef', stage: 2, primeira: false, faixa: 3 }))).toBeNull();
+  });
+
+  it('o servidor soma a faixa à parte da etapa, e recusa faixa inválida', async () => {
+    expect(chaveDoTempo({ e: 'etapa', l: 'alef', s: 2, f: 3 })).toBe('t|alef|2|3');
+    expect(chaveDoTempo({ e: 'etapa', l: 'alef', s: 2 })).toBeNull();
+    expect(chaveDoTempo({ e: 'etapa', l: 'alef', s: 2, f: 7 })).toBeNull();
+    expect(chaveDoTempo({ e: 'etapa', l: 'alef', s: 2, f: 1.5 })).toBeNull();
+    expect(chaveDoTempo({ e: 'etapa', l: 'alef', s: 9, f: 1 })).toBeNull();
+    expect(chaveDoTempo({ e: 'resposta', k: 'match', l: 'alef', c: true, f: 1 })).toBeNull();
+
+    const env = envDeTeste({ ADMIN_EMAILS: 'dono@exemplo.com' }) as Env;
+    const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
+      { aceitouTermos: true, declarouIdade: true, name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' }), env, ctx });
+    const { account } = await r.clone().json() as { account: { id: string } };
+    await grantAccess(env, { accountId: Number(account.id), courseSlug: 'alfabetizacao', orderId: 'T', months: 12 });
+    const cookie = cookieDe(r);
+    await worker.fetch(new Request(`${SITE}/api/estatisticas`, {
+      method: 'POST', headers: { cookie, Origin: SITE, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ eventos: [{ e: 'etapa', l: 'alef', s: 1, f: 2 }, { e: 'etapa', l: 'alef', s: 2, f: 99 }] })
+    }), env, ctx);
+    const linhas = env.DB.bruto.prepare('SELECT chave, n FROM estatisticas ORDER BY chave').all();
+    expect(linhas).toEqual([{ chave: 'e|alef|1', n: 1 }, { chave: 'e|alef|2', n: 1 }, { chave: 't|alef|1|2', n: 1 }]);
+
+    const dono = await comoAdmin(env, cookieDe(await auth.signup({ request: pedido(`${SITE}/api/auth/signup`,
+      { aceitouTermos: true, declarouIdade: true, name: 'Dono', email: 'dono@exemplo.com', password: 'senha-boa-123' }), env, ctx })));
+    const d = await (await worker.fetch(new Request(`${SITE}/api/admin/estatisticas?dias=7`, { headers: { cookie: dono } }), env, ctx)).json() as { tempos: unknown[] };
+    expect(d.tempos).toEqual([{ licao: 'alef', etapa: 1, faixa: 2, n: 1 }]);
+  });
+
+  it('o painel: a faixa do meio por etapa, e a estimativa soma o meio delas', () => {
+    expect(faixaMediana([0, 0, 0])).toBeNull();
+    expect(faixaMediana([1, 1, 5, 0])).toBe(2);
+    expect(faixaMediana([3, 0, 0, 3])).toBe(0);
+    const ordem = [{ id: 'alef', etapas: 5 }, { id: 'mem', etapas: 5 }];
+    const t = tempoPorLetra([
+      { licao: 'alef', etapa: 1, faixa: 2, n: 4 }, { licao: 'alef', etapa: 1, faixa: 3, n: 1 },
+      { licao: 'alef', etapa: 4, faixa: 3, n: 2 }, { licao: 'alef', etapa: 4, faixa: 99, n: 50 }
+    ], ordem);
+    /* Mem sem medida não aparece; Álef: 3 + 5,5 minutos, e a menor amostra é 2. */
+    expect(t).toEqual([{ id: 'alef', etapas: [2, null, null, 3, null], minutos: 8.5, amostras: 2 }]);
   });
 });
