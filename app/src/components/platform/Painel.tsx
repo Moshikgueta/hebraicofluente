@@ -222,3 +222,108 @@ export const IconeTempo = () => (
     <path d="M10 6.2V10l2.6 1.8" stroke="currentColor" />
   </svg>
 );
+
+/* ── o plano de hoje (28/10/2026, pedido do dono) ──────────────────────────
+   "A boas-vindas está feia e sem informação que oriente." O painel dizia
+   "Boa noite, Ana. Continue de onde você parou." e mais nada: o aluno não
+   sabia quanto estudar, se a revisão estava em dia, nem se a sequência
+   estava garantida. Agora são três linhas, cada uma com um estado que se vê
+   de longe (o círculo cheio é feito), e as três leem o progresso real:
+
+     · a meta do dia, em minutos (os mesmos `units` da meta e da sequência);
+     · a lição: concluída hoje, ou a próxima;
+     · a revisão: em dia, ou quantos itens esperam.
+
+   Nada aqui é ação principal: o botão grande continua sendo o do cartão
+   navy, logo acima. */
+export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } | null }) {
+  const p = useProgress();
+  const minutos = Math.floor(p.goalUnits / 3);
+  const alvo = Math.max(1, Math.round(p.goalTargetToday / 3));
+  const metaFeita = p.goalUnits >= p.goalTargetToday;
+  const licaoHoje = Object.values(p.state.lessons)
+    .some(l => l?.completedAt?.slice(0, 10) === p.day);
+  const revisaoEmDia = p.dueCount === 0;
+
+  const linhas: { feito: boolean; titulo: string; detalhe: string; href?: string; acao?: string }[] = [
+    {
+      feito: metaFeita,
+      titulo: metaFeita ? 'Meta do dia cumprida' : `Meta do dia: ${alvo} minutos`,
+      detalhe: metaFeita
+        ? (p.streak > 0 ? `A sequência de ${p.streak} ${p.streak === 1 ? 'dia' : 'dias'} está garantida hoje.` : 'Amanhã a sequência continua daqui.')
+        : `${minutos} de ${alvo} min hoje.` + (p.streak > 0 ? ` Cumpra para manter os ${p.streak} ${p.streak === 1 ? 'dia seguido' : 'dias seguidos'}.` : '')
+    },
+    licaoHoje
+      ? { feito: true, titulo: 'Lição de hoje feita', detalhe: licao ? `A próxima é ${licao.nome}, quando quiser.` : 'Bom trabalho.' }
+      : { feito: false, titulo: licao ? `Lição: ${licao.nome}` : 'Lição de hoje',
+          detalhe: 'Uma lição leva uns dez minutos.', href: licao?.href, acao: 'Abrir' },
+    revisaoEmDia
+      ? { feito: true, titulo: 'Revisão em dia', detalhe: 'Nada esperando por você.' }
+      : { feito: false, titulo: `Revisão: ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'}`,
+          detalhe: 'Três minutos no que está escapando.', href: '/revisao', acao: 'Revisar' }
+  ];
+  const feitos = linhas.filter(l => l.feito).length;
+
+  return (
+    <Card className="p-5 sm:p-6 grid gap-4">
+      <div className="flex items-center gap-4">
+        <AnelDaMeta fracao={Math.min(1, p.goalUnits / Math.max(1, p.goalTargetToday))} minutos={minutos} />
+        <div className="grid gap-0.5 min-w-0">
+          <h2 className="m-0 font-display text-[19px] font-semibold tracking-[-0.018em] text-ink">Seu plano de hoje</h2>
+          <p className="m-0 font-ui text-[14px] text-ink-muted tabular-nums">
+            {feitos === linhas.length ? 'Tudo feito hoje. Até amanhã!' : `${feitos} de ${linhas.length} feitos`}
+          </p>
+        </div>
+      </div>
+      <ul className="grid gap-1 list-none p-0 m-0">
+        {linhas.map(l => (
+          <li key={l.titulo} className="flex items-center gap-3 rounded-[12px] py-2">
+            <span aria-hidden
+                  className={`shrink-0 grid place-items-center w-7 h-7 rounded-full border-2 text-[14px] font-bold
+                              ${l.feito ? 'bg-[var(--teal)] border-[var(--teal)] text-white' : 'border-[var(--line)] text-transparent'}`}>
+              ✓
+            </span>
+            <span className="grid min-w-0 flex-1">
+              <span className={`font-ui text-[15px] font-semibold ${l.feito ? 'text-ink-muted' : 'text-ink'}`}>
+                <span className="sr-only">{l.feito ? 'Feito: ' : 'A fazer: '}</span>{l.titulo}
+              </span>
+              <span className="font-ui text-[13.5px] leading-snug text-ink-muted">{l.detalhe}</span>
+            </span>
+            {l.href && l.acao && (
+              <Link href={l.href}
+                    className="shrink-0 inline-flex items-center min-h-[44px] px-3 rounded-[10px] font-ui text-[14px]
+                               font-semibold text-[var(--teal-ink)] hover:bg-[var(--teal-soft)]">
+                {l.acao} →
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
+
+/* O anel da meta: começa vazio e enche depois de montado, como a barra do
+   cartão navy. Só `stroke-dashoffset`, que não mexe no layout. */
+function AnelDaMeta({ fracao, minutos }: { fracao: number; minutos: number }) {
+  const [f, setF] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setF(fracao), 260);
+    return () => clearTimeout(t);
+  }, [fracao]);
+  const r = 24, c = 2 * Math.PI * r;
+  return (
+    <span className="relative shrink-0 grid place-items-center w-[60px] h-[60px]">
+      <svg width="60" height="60" viewBox="0 0 60 60" aria-hidden className="-rotate-90">
+        <circle cx="30" cy="30" r={r} fill="none" stroke="var(--line)" strokeWidth="6" />
+        <circle cx="30" cy="30" r={r} fill="none" stroke="var(--teal)" strokeWidth="6" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={c * (1 - f)}
+                style={{ transition: 'stroke-dashoffset 1100ms var(--ease-fill, ease-out)' }} />
+      </svg>
+      <span className="absolute grid justify-items-center leading-none font-ui text-ink tabular-nums">
+        <span className="text-[15px] font-bold">{minutos}</span>
+        <span className="text-[10px] text-ink-muted">min</span>
+      </span>
+    </span>
+  );
+}
