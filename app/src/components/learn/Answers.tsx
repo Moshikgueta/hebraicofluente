@@ -10,9 +10,11 @@
  *
  * Three rules hold across all of them, and they are all mobile rules:
  *
- *   · nothing is dragged. Drag-and-drop on a phone is a precision task done
- *     with the blunt end of a finger; tap-one-then-tap-the-other works at any
- *     size, and is also the only version that works from a keyboard;
+ *   · nothing is ONLY dragged. Drag-and-drop on a phone is a precision task
+ *     done with the blunt end of a finger; tap-one-then-tap-the-other works at
+ *     any size, and is also the only version that works from a keyboard. The
+ *     two "monte a palavra" surfaces accept a drag as well (28/10/2026, at the
+ *     owner's request; `useArrastarPecas`), on top of the taps, never instead;
  *   · every target is at least 44px on its shortest side;
  *   · nothing is undoable only by getting it right. There is always a way back
  *     - remove a tile, clear the build, change the pairing.
@@ -30,6 +32,7 @@ import { stripNikud } from '@/lib/hebrew';
 import { hebraicoDigitadoCerto, pareceTecladoLatino } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
 import { TecladoHebraico } from './TecladoHebraico';
+import { useArrastarPecas } from './useArrastarPecas';
 import type { Selecao } from '@/lib/teclado-hebraico';
 
 /* ── build a syllable ───────────────────────────────────────────────────
@@ -94,6 +97,10 @@ export function BuildWord({
   const [built, setBuilt] = useState<number[]>([]);
   const used = new Set(built);
   const done = built.length === tiles.length;
+  const arraste = useArrastarPecas({
+    montada: built, setMontada: setBuilt, podePor: () => true, desligado: settled,
+    peca: i => <He size="word">{tiles[i]!}</He>
+  });
 
   const check = () => {
     const word = built.map(i => tiles[i]!).join('');
@@ -103,8 +110,10 @@ export function BuildWord({
   return (
     <div className="grid gap-4">
       <div
-        className="he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed border-line
-                   bg-surface-2 px-4 py-3 justify-center"
+        ref={arraste.bandeja}
+        className={`he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed
+                   px-4 py-3 justify-center transition-colors
+                   ${arraste.sobre ? 'border-[var(--teal)] bg-[var(--teal-soft)]' : 'border-line bg-surface-2'}`}
         aria-label={tx.palavraEmConstrucao}
       >
         {built.length === 0 ? (
@@ -115,11 +124,14 @@ export function BuildWord({
           <button
             key={`${t}-${pos}`}
             type="button"
+            data-posta
             disabled={settled}
             onClick={() => setBuilt(b => b.filter((_, k) => k !== pos))}
+            {...arraste.handlers(t, 'palavra')}
             aria-label={tx.tirarPeca(pos + 1)}
-            className="min-h-[56px] min-w-[52px] px-2 rounded-[var(--r-md)] bg-surface
-                       border border-line grid place-items-center disabled:cursor-default"
+            className={`min-h-[56px] min-w-[52px] px-2 rounded-[var(--r-md)] bg-surface touch-none
+                       border border-line grid place-items-center disabled:cursor-default
+                       ${arraste.arrastando === t ? 'opacity-35' : ''}`}
           >
             <He size="word">{tiles[t]!}</He>
           </button>
@@ -133,9 +145,10 @@ export function BuildWord({
               type="button"
               disabled={settled || used.has(i)}
               onClick={() => setBuilt(b => [...b, i])}
-              className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2
+              {...arraste.handlers(i, 'mesa')}
+              className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2 touch-none
                 grid place-items-center transition-colors
-                ${used.has(i)
+                ${arraste.arrastando === i ? 'opacity-35 ' : ''}${used.has(i)
                   ? 'border-line-soft bg-surface-2 opacity-35'
                   : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
             >
@@ -152,6 +165,7 @@ export function BuildWord({
         )}
         <span className="font-ui text-[13px] text-ink-muted ml-auto">{tx.soa(hintPt)}</span>
       </div>
+      {arraste.flutuante}
     </div>
   );
 }
@@ -186,6 +200,10 @@ export function BuildLetters({
   const primeiroErro = useRef<ErroDeConstrucao | null>(null);
   const used = new Set(built);
   const cheia = built.length === letras.length;
+  const arraste = useArrastarPecas({
+    montada: built, setMontada: setBuilt, podePor: () => built.length < letras.length, desligado: settled,
+    peca: i => <He size="word" cursive={cursiva}>{tiles[i]!}</He>
+  });
 
   const conferir = () => {
     const postas = built.map(i => tiles[i]!);
@@ -224,8 +242,10 @@ export function BuildLetters({
         </p>
       )}
       <div
-        className="he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed border-line
-                   bg-surface-2 px-4 py-3 justify-center"
+        ref={arraste.bandeja}
+        className={`he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed
+                   px-4 py-3 justify-center transition-colors
+                   ${arraste.sobre ? 'border-[var(--teal)] bg-[var(--teal-soft)]' : 'border-line bg-surface-2'}`}
         aria-label={tx.emConstrucao(built.length, letras.length)}
       >
         {built.length === 0 ? (
@@ -236,11 +256,14 @@ export function BuildLetters({
           <button
             key={`${t}-${pos}`}
             type="button"
+            data-posta
             disabled={settled}
             onClick={() => setBuilt(b => b.filter((_, k) => k !== pos))}
+            {...arraste.handlers(t, 'palavra')}
             aria-label={tx.tirarLetra(pos + 1)}
-            className="min-h-[56px] min-w-[48px] px-2 rounded-[var(--r-md)] bg-surface
-                       border border-line grid place-items-center disabled:cursor-default"
+            className={`min-h-[56px] min-w-[48px] px-2 rounded-[var(--r-md)] bg-surface touch-none
+                       border border-line grid place-items-center disabled:cursor-default
+                       ${arraste.arrastando === t ? 'opacity-35' : ''}`}
           >
             <He size="word" cursive={cursiva}>{tiles[t]!}</He>
           </button>
@@ -262,10 +285,11 @@ export function BuildLetters({
               type="button"
               disabled={settled || used.has(i) || cheia}
               onClick={() => setBuilt(b => (b.length < letras.length ? [...b, i] : b))}
+              {...arraste.handlers(i, 'mesa')}
               aria-label={tx.letra(t)}
-              className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2
+              className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2 touch-none
                 grid place-items-center transition-colors
-                ${used.has(i)
+                ${arraste.arrastando === i ? 'opacity-35 ' : ''}${used.has(i)
                   ? 'border-line-soft bg-surface-2 opacity-35'
                   : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
             >
@@ -284,6 +308,7 @@ export function BuildLetters({
           <Button variant="ghost" size="sm" onClick={desistir}>{tx.mostrarResposta}</Button>
         )}
       </div>
+      {arraste.flutuante}
     </div>
   );
 }
