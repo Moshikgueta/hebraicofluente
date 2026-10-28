@@ -18,6 +18,7 @@
  *     - remove a tile, clear the build, change the pairing.
  */
 
+import { tx } from '@/i18n/telas/licao-answers';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
@@ -49,7 +50,7 @@ export function BuildSyllable({
       <div className="rounded-[var(--r-lg)] bg-surface-2 py-8 grid place-items-center gap-2">
         <He size="display">{shown}</He>
         <p className="font-ui text-[13px] text-ink-muted">
-          {picked == null ? 'toque num sinal para montar' : `deve soar “${sound}”`}
+          {picked == null ? tx.toqueNumSinal : tx.deveSoar(sound)}
         </p>
       </div>
 
@@ -60,7 +61,7 @@ export function BuildSyllable({
               type="button"
               disabled={settled}
               onClick={() => { setPicked(i); onAnswer(i === answer, v); }}
-              aria-label={`Sinal ${i + 1}`}
+              aria-label={tx.sinal(i + 1)}
               className={`w-full min-h-[76px] rounded-[var(--r-md)] border-2 grid place-items-center
                 transition-colors disabled:cursor-default
                 ${settled && i === answer ? 'border-[var(--green)] bg-mint'
@@ -104,11 +105,11 @@ export function BuildWord({
       <div
         className="he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed border-line
                    bg-surface-2 px-4 py-3 justify-center"
-        aria-label="Palavra em construção"
+        aria-label={tx.palavraEmConstrucao}
       >
         {built.length === 0 ? (
           <span className="font-ui text-[13px] text-ink-muted">
-            toque nas peças na ordem - a primeira letra fica à direita
+            {tx.toqueNasPecas}
           </span>
         ) : built.map((t, pos) => (
           <button
@@ -116,7 +117,7 @@ export function BuildWord({
             type="button"
             disabled={settled}
             onClick={() => setBuilt(b => b.filter((_, k) => k !== pos))}
-            aria-label={`Tirar a peça ${pos + 1}`}
+            aria-label={tx.tirarPeca(pos + 1)}
             className="min-h-[56px] min-w-[52px] px-2 rounded-[var(--r-md)] bg-surface
                        border border-line grid place-items-center disabled:cursor-default"
           >
@@ -145,11 +146,11 @@ export function BuildWord({
       </ul>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button onClick={check} disabled={!done || settled} size="md">Conferir</Button>
+        <Button onClick={check} disabled={!done || settled} size="md">{tx.conferir}</Button>
         {built.length > 0 && !settled && (
-          <Button variant="ghost" size="sm" onClick={() => setBuilt([])}>Recomeçar</Button>
+          <Button variant="ghost" size="sm" onClick={() => setBuilt([])}>{tx.recomecar}</Button>
         )}
-        <span className="font-ui text-[13px] text-ink-muted ml-auto">soa “{hintPt}”</span>
+        <span className="font-ui text-[13px] text-ink-muted ml-auto">{tx.soa(hintPt)}</span>
       </div>
     </div>
   );
@@ -199,8 +200,7 @@ export function BuildLetters({
     setTentativa(t => t + 1);
     /* Fica o que estava certo antes do erro; o resto volta para a mesa. */
     setBuilt(b => b.slice(0, p));
-    setAviso(`A ${p + 1}ª letra, contando da direita, é ${letras[p]} - você pôs ${postas[p]}. `
-      + 'As letras certas ficaram; continue dali.');
+    setAviso(tx.avisoDeErro(p + 1, letras[p]!, postas[p]!));
   };
 
   const desistir = () => {
@@ -218,19 +218,19 @@ export function BuildLetters({
           avançado não há significado, e a linha some se não houver nada. */}
       {(pt || cursiva) && (
         <p className="font-ui text-[14px] text-ink-muted m-0">
-          {pt ? <>Quer dizer <strong className="text-ink">{pt}</strong></> : null}
+          {pt ? tx.querDizer(<strong className="text-ink">{pt}</strong>) : null}
           {pt && cursiva ? ' · ' : null}
-          {cursiva ? (pt ? 'as letras estão escritas à mão' : 'As letras estão escritas à mão.') : null}
+          {cursiva ? (pt ? tx.aMaoCurto : tx.aMao) : null}
         </p>
       )}
       <div
         className="he-seq min-h-[96px] rounded-[var(--r-lg)] border-2 border-dashed border-line
                    bg-surface-2 px-4 py-3 justify-center"
-        aria-label={`Palavra em construção: ${built.length} de ${letras.length} letras`}
+        aria-label={tx.emConstrucao(built.length, letras.length)}
       >
         {built.length === 0 ? (
           <span className="font-ui text-[13px] text-ink-muted" dir="ltr">
-            toque nas letras na ordem - a primeira fica à direita
+            {tx.toqueNasLetras}
           </span>
         ) : built.map((t, pos) => (
           <button
@@ -238,7 +238,7 @@ export function BuildLetters({
             type="button"
             disabled={settled}
             onClick={() => setBuilt(b => b.filter((_, k) => k !== pos))}
-            aria-label={`Tirar a letra ${pos + 1}`}
+            aria-label={tx.tirarLetra(pos + 1)}
             className="min-h-[56px] min-w-[48px] px-2 rounded-[var(--r-md)] bg-surface
                        border border-line grid place-items-center disabled:cursor-default"
           >
@@ -255,14 +255,14 @@ export function BuildLetters({
       )}
 
       <ul className="flex flex-wrap gap-2.5 justify-center list-none p-0 m-0" dir="rtl"
-          aria-label="Letras para montar">
+          aria-label={tx.letrasParaMontar}>
         {tiles.map((t, i) => (
           <li key={`${t}-${i}`}>
             <button
               type="button"
               disabled={settled || used.has(i) || cheia}
               onClick={() => setBuilt(b => (b.length < letras.length ? [...b, i] : b))}
-              aria-label={`Letra ${t}`}
+              aria-label={tx.letra(t)}
               className={`min-h-[64px] min-w-[60px] px-3 rounded-[var(--r-md)] border-2
                 grid place-items-center transition-colors
                 ${used.has(i)
@@ -276,12 +276,12 @@ export function BuildLetters({
       </ul>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button onClick={conferir} disabled={!cheia || settled} size="md">Conferir</Button>
+        <Button onClick={conferir} disabled={!cheia || settled} size="md">{tx.conferir}</Button>
         {built.length > 0 && !settled && (
-          <Button variant="ghost" size="sm" onClick={() => setBuilt([])}>Recomeçar</Button>
+          <Button variant="ghost" size="sm" onClick={() => setBuilt([])}>{tx.recomecar}</Button>
         )}
         {tentativa >= 2 && !settled && (
-          <Button variant="ghost" size="sm" onClick={desistir}>Mostrar a resposta</Button>
+          <Button variant="ghost" size="sm" onClick={desistir}>{tx.mostrarResposta}</Button>
         )}
       </div>
     </div>
@@ -335,17 +335,17 @@ export function TypeHebrew({
           dir="rtl"
           lang="he"
           autoComplete="off" autoCapitalize="off" autoCorrect="off" spellCheck={false}
-          aria-label="Sua resposta, em hebraico"
+          aria-label={tx.respostaEmHebraico}
           /* Em português: um exemplo em hebraico usaria letras que o aluno
              ainda não aprendeu - a digitação abre na lição do Mem. */
-          placeholder="digite aqui, em hebraico"
+          placeholder={tx.digiteAqui}
           className={`flex-1 min-w-[180px] min-h-[56px] px-4 rounded-[var(--r-md)] border-2
             bg-surface he text-[24px] text-ink placeholder:text-ink-muted placeholder:text-[16px]
             ${settled && correct === true ? 'border-[var(--green)]'
               : settled && correct === false ? 'border-[var(--amber)]'
               : 'border-line focus:border-[var(--accent-soft)]'}`}
         />
-        <Button onClick={submit} disabled={settled || !value.trim()} size="md">Conferir</Button>
+        <Button onClick={submit} disabled={settled || !value.trim()} size="md">{tx.conferir}</Button>
       </div>
       {!settled && (
         <TecladoHebraico campo={campo} valor={value} selecao={selecao} desligado={settled}
@@ -353,13 +353,12 @@ export function TypeHebrew({
       )}
       {latino && (
         <p role="status" className="font-ui text-[14px] text-[var(--amber)] m-0">
-          Isso chegou em letras latinas: o teclado ainda está em português. Troque para
-          o hebraico (o globo ou a tecla de idioma) e digite de novo.
+          {tx.latino}
         </p>
       )}
       {settled && correct === false && (
         <p className="font-ui text-[14px] text-ink-body m-0">
-          O certo era <He size="word">{accept[0]!}</He>.
+          {tx.oCertoEra(<He size="word">{accept[0]!}</He>)}
         </p>
       )}
     </div>
@@ -410,7 +409,7 @@ export function MatchPairs({
     if (settled || matched.includes(i)) return;
     if (!picked || picked.side === side) {            // first tap, or changed their mind
       setPicked({ side, i });
-      setAnuncio(`Escolhido: ${valor(side, i)}. Agora escolha o par na outra coluna.`);
+      setAnuncio(tx.escolhido(valor(side, i)));
       return;
     }
 
@@ -420,12 +419,11 @@ export function MatchPairs({
       setMatched(m => [...m, l]);
       setWrong(null);
       const faltam = pairs.length - matched.length - 1;
-      setAnuncio(`Par certo: ${pairs[l]!.left} com ${pairs[r]!.right}.`
-        + (faltam > 0 ? ` Faltam ${faltam}.` : ' Todos ligados.'));
+      setAnuncio(tx.parCerto(pairs[l]!.left, pairs[r]!.right, faltam));
     } else {
       missesRef.current.push([pairs[l]!.left, pairs[r]!.right]);
       setWrong({ l, r });
-      setAnuncio(`Não combinam: ${pairs[l]!.left} e ${pairs[r]!.right}. Tente outro par.`);
+      setAnuncio(tx.naoCombinam(pairs[l]!.left, pairs[r]!.right));
       setTimeout(() => setWrong(null), 550);
     }
     setPicked(null);
@@ -449,6 +447,7 @@ export function MatchPairs({
               const isMatched = matched.includes(i);
               const isPicked = picked?.side === side && picked.i === i;
               const isWrong = wrong && (side === 'left' ? wrong.l === i : wrong.r === i);
+              const doOutroLado = side === 'left' ? pairs[i]!.right : pairs[i]!.left;
               return (
                 <li key={`${side}-${i}`}>
                   <button
@@ -459,7 +458,7 @@ export function MatchPairs({
                     aria-disabled={settled || isMatched}
                     aria-pressed={isPicked}
                     aria-label={isMatched
-                      ? `${valor(side, i)}, ligado a ${side === 'left' ? pairs[i]!.right : pairs[i]!.left}`
+                      ? tx.ligadoA(valor(side, i), doOutroLado)
                       : undefined}
                     onClick={() => tap(side, i)}
                     /* A fixed row height on BOTH sides, so row 3 on the left
@@ -545,30 +544,30 @@ export function TypeAnswer({
              exercício de ouvir), e "auto" a escreve da direita para a
              esquerda quando a pessoa digita em hebraico. */
           dir="auto"
-          lang="pt-BR"
+          lang={tx.campoLang}
           autoComplete="off"
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck={false}
           inputMode="text"
-          aria-label="Sua resposta"
+          aria-label={tx.suaResposta}
           className={`flex-1 min-w-[180px] min-h-[52px] px-4 rounded-[var(--r-md)] border-2
             bg-surface font-ui text-[17px] text-ink placeholder:text-ink-muted
             ${settled && correct === true ? 'border-[var(--green)]'
               : settled && correct === false ? 'border-[var(--amber)]'
               : 'border-line focus:border-[var(--accent-soft)]'}`}
         />
-        <Button onClick={submit} disabled={settled || !value.trim()} size="md">Conferir</Button>
+        <Button onClick={submit} disabled={settled || !value.trim()} size="md">{tx.conferir}</Button>
       </div>
       {settled && correct === false && (
         <p className="font-ui text-[14px] text-ink-body">
-          Você escreveu <strong>{value}</strong>. O certo era <strong>{accept[0]}</strong>
-          {accept.slice(1).some(a => /[\u05D0-\u05EA]/.test(a)) && (
-            /* Sem nikud: é como a palavra se digita no teclado do celular
-               (04/10/2026, pedido do dono). A forma com nikud aparece no
-               retorno logo abaixo, que é onde se ensina a ler. */
-            <> (<He size="inline">{stripNikud(accept.slice(1).find(a => /[\u05D0-\u05EA]/.test(a))!)}</He>)</>
-          )}.
+          {tx.voceEscreveu(<strong>{value}</strong>, <strong>{accept[0]}</strong>,
+            accept.slice(1).some(a => /[\u05D0-\u05EA]/.test(a)) && (
+              /* Sem nikud: é como a palavra se digita no teclado do celular
+                 (04/10/2026, pedido do dono). A forma com nikud aparece no
+                 retorno logo abaixo, que é onde se ensina a ler. */
+              <> (<He size="inline">{stripNikud(accept.slice(1).find(a => /[\u05D0-\u05EA]/.test(a))!)}</He>)</>
+            ))}
         </p>
       )}
     </div>
@@ -618,10 +617,10 @@ export function Hints({ hints, audioId }: { hints?: string[]; audioId?: string |
             onClick={() => { pediuPeloBotao.current = true; setShown(s => s + 1); }}
             className="min-h-[44px] font-ui text-[13px] text-[var(--accent)] hover:underline"
           >
-            {shown === 0 ? 'Precisa de uma dica?' : 'Mais uma dica'}
+            {shown === 0 ? tx.precisaDica : tx.maisUmaDica}
           </button>
         )}
-        {playable && <AudioButton audioId={audioId!} label="Ouvir" size="sm" slow />}
+        {playable && <AudioButton audioId={audioId!} label={tx.ouvir} size="sm" slow />}
       </div>
     </div>
   );

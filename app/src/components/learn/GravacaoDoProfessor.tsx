@@ -9,6 +9,7 @@
  * mesmo botão. */
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { gravacaoDoProfessor } from '@/lib/gravacoes-professor';
+import { tx } from '@/i18n/telas/licao-gravacao-do-professor';
 
 export function GravacaoDoProfessor({ id, textoPt }: {
   id: string;
@@ -25,7 +26,7 @@ export function GravacaoDoProfessor({ id, textoPt }: {
         <p className="font-ui text-[14.5px] font-semibold text-ink m-0">{g.tituloPt}</p>
         {textoPt && <p className="font-ui text-[13.5px] leading-snug text-ink-body m-0">{textoPt}</p>}
       </div>
-      <AudioButton audioId={g.audioId} label="Ouvir" ariaLabel={g.tituloPt} />
+      <AudioButton audioId={g.audioId} label={tx.ouvir} ariaLabel={g.tituloPt} />
     </div>
   );
 }

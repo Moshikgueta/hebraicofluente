@@ -8,6 +8,7 @@
  * missão e o checkpoint. Não tranca nada.
  */
 
+import { tx } from '@/i18n/telas/licao-pratica-client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
@@ -78,6 +79,8 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
   const missao = missaoDoModulo(mod.n);
   const numero = licaoDePratica(mod);
   const concluida = !!p.state.firsts[praticaId(mod.n)];
+  const correcaoFeita = feitas.has('correcao');
+  const parecidasFeita = feitas.has('parecidas');
 
   const terminar = (qual: Parte, itens: readonly { id: string }[], certas: number, total: number) => {
     registrarRodada(`pratica-${qual}-${mod.n}`, itens as never);
@@ -93,7 +96,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <ExercisePlayer
         key={`correcao-${rodada}`}
         exercises={correcao.itens}
-        title={`${numero ? `Lição ${numero}` : 'Prática focada'} · correção`}
+        title={`${tx.prefixo(numero)} · ${tx.correcao}`}
         repetirErros
         onDone={r => terminar('correcao', correcao.itens, r.correct, r.total)}
       />
@@ -104,7 +107,7 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <ExercisePlayer
         key={`parecidas-${rodada}`}
         exercises={parecidas.itens}
-        title={`${numero ? `Lição ${numero}` : 'Prática focada'} · ${parecidas.par[0].namePt} e ${parecidas.par[1].namePt}`}
+        title={`${tx.prefixo(numero)} · ${tx.par(parecidas.par[0].namePt, parecidas.par[1].namePt)}`}
         repetirErros
         onDone={r => terminar('parecidas', parecidas.itens, r.correct, r.total)}
       />
@@ -115,11 +118,11 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <div className="focus-col grid gap-5">
         <Milestone
           tone="bom"
-          kicker={fim.parte === 'correcao' ? 'Correção concluída' : 'Letras parecidas concluídas'}
-          title="Cada questão errada voltou até você acertar."
-          body="Quando quiser, faça de novo: as perguntas mudam. Ou siga para outra parte da prática."
+          kicker={fim.parte === 'correcao' ? tx.correcaoConcluida : tx.parecidasConcluidas}
+          title={tx.voltou}
+          body={tx.quandoQuiser}
         >
-          <Button onClick={() => { setFim(null); setParte('menu'); }}>Voltar à prática</Button>
+          <Button onClick={() => { setFim(null); setParte('menu'); }}>{tx.voltarPratica}</Button>
         </Milestone>
       </div>
     );
@@ -130,12 +133,12 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <div className="grid gap-5 reading">
         <button type="button" onClick={() => setParte('menu')}
                 className="justify-self-start inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Voltar à prática
+          {tx.voltarPraticaSeta}
         </button>
         <div className="grid gap-1">
-          <h2 className="text-[21px] font-bold">Ler em voz alta</h2>
+          <h2 className="text-[21px] font-bold">{tx.lerEmVozAlta}</h2>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            As palavras do módulo. Leia cada uma em voz alta antes de ouvir, da direita para a esquerda.
+            {tx.palavrasDoModulo}
           </p>
         </div>
         <Card className="p-5 grid gap-2">
@@ -150,15 +153,15 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
           ))}
         </Card>
         {palavras.some(w => hasAudio(w.audioId)) && (
-          <CompararPronuncia itens={palavras} titulo="Compare a sua leitura com a do curso" />
+          <CompararPronuncia itens={palavras} titulo={tx.compare} />
         )}
         <GravarLeitura
-          titulo="Leia a lista inteira e se ouça"
-          instrucao="Leia as palavras acima em voz alta, grave e ouça: o que saiu diferente do que você queria?"
+          titulo={tx.leiaALista}
+          instrucao={tx.leiaInstrucao}
           maxSegundos={90}
         />
         <Button size="lg" full onClick={() => { setFeitas(s => new Set(s).add('ler')); setParte('menu'); }}>
-          Terminei de ler
+          {tx.termineiDeLer}
         </Button>
       </div>
     );
@@ -183,48 +186,47 @@ export function PraticaClient({ module: mod }: { module: CourseModule }) {
       <header className="grid gap-3">
         <Link href={`/modulo/${mod.n}`}
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Módulo {mod.n}
+          {tx.modulo(mod.n)}
         </Link>
-        <Badge tone="accent">Módulo {mod.n} · {numero ? `lição ${numero} · prática` : 'prática focada'}{concluida ? ' · feita ✓' : ''}</Badge>
-        <h1 className="text-[27px] sm:text-[32px] font-bold leading-tight">Prática do módulo {mod.n}</h1>
+        <Badge tone="accent">{tx.badge(mod.n, numero)}{concluida ? tx.feita : ''}</Badge>
+        <h1 className="text-[27px] sm:text-[32px] font-bold leading-tight">{tx.titulo(mod.n)}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Nenhuma letra nova: o módulo inteiro de novo, começando pelo que você errou. Faça as partes na ordem que
-          quiser. Uma questão errada volta depois de outras até você acertar.
+          {tx.intro}
         </p>
       </header>
 
       <div className="grid gap-3">
-        <Item qual="correcao" titulo="1. Correção"
+        <Item qual="correcao" titulo={tx.item1}
               texto={correcao.dosErros
-                ? 'Tirada dos seus erros nas letras deste módulo.'
+                ? tx.dosErros
                 : mod.letterIds.length
-                  ? 'Nenhum erro seu registrado neste módulo: as letras dele, misturadas.'
-                  : 'As perguntas do módulo, misturadas.'}
-              rotulo={feitas.has('correcao') ? 'Fazer de novo' : 'Começar'}
+                  ? tx.semErros
+                  : tx.perguntasMisturadas}
+              rotulo={correcaoFeita ? tx.fazerDeNovo : tx.comecar}
               onClick={() => setParte('correcao')} />
         {parecidas && (
-          <Item qual="parecidas" titulo={`2. Letras parecidas: ${parecidas.par[0].namePt} e ${parecidas.par[1].namePt}`}
-                texto="As duas lado a lado, até o olho separar sem pensar."
-                rotulo={feitas.has('parecidas') ? 'Fazer de novo' : 'Começar'}
+          <Item qual="parecidas" titulo={tx.item2(parecidas.par[0].namePt, parecidas.par[1].namePt)}
+                texto={tx.ladoALado}
+                rotulo={parecidasFeita ? tx.fazerDeNovo : tx.comecar}
                 onClick={() => setParte('parecidas')} />
         )}
-        <Item qual="ler" titulo={`${parecidas ? 3 : 2}. Ler em voz alta`}
-              texto={`${palavras.length} palavras do módulo, para ler, ouvir e gravar a sua leitura.`}
-              rotulo="Abrir" onClick={() => setParte('ler')} />
+        <Item qual="ler" titulo={tx.itemLer(parecidas ? 3 : 2)}
+              texto={tx.palavrasParaLer(palavras.length)}
+              rotulo={tx.abrir} onClick={() => setParte('ler')} />
       </div>
 
       <Card tone="wash" className="p-5 grid gap-3">
-        <p className="font-display text-[17px] font-semibold text-ink m-0">E para fechar o módulo</p>
+        <p className="font-display text-[17px] font-semibold text-ink m-0">{tx.fechar}</p>
         <div className="flex flex-wrap gap-2">
-          {revisao && <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary">Leitura de revisão</LinkButton>}
-          {texto && <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary">Ler o texto do módulo</LinkButton>}
+          {revisao && <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary">{tx.leituraDeRevisao}</LinkButton>}
+          {texto && <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary">{tx.lerTexto}</LinkButton>}
           {missao && (
             <LinkButton href={`/modulo/${mod.n}/missao`} variant="secondary">
-              {p.state.firsts[missaoId(mod.n)] ? 'Missão ✓' : 'Fazer a missão'}
+              {p.state.firsts[missaoId(mod.n)] ? tx.missaoFeita : tx.fazerMissao}
             </LinkButton>
           )}
-          {mod.checkpoint && <LinkButton href={`/checkpoint/${mod.n}`}>Checkpoint {mod.n}</LinkButton>}
-          <LinkButton href="/academia" variant="ghost">Mais jogos na Academia</LinkButton>
+          {mod.checkpoint && <LinkButton href={`/checkpoint/${mod.n}`}>{tx.checkpoint(mod.n)}</LinkButton>}
+          <LinkButton href="/academia" variant="ghost">{tx.maisJogos}</LinkButton>
         </div>
       </Card>
     </div>

@@ -18,6 +18,7 @@
  * HTML, e a de trás fica `inert` enquanto não aparece.
  */
 
+import { tx } from '@/i18n/telas/licao-flashcards';
 import { useMemo, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Button } from '@/components/ui/Button';
@@ -70,10 +71,10 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
       <div className="grid gap-3 rounded-[var(--r-lg)] border border-line bg-[var(--card)] p-6">
         <p className="m-0 font-ui text-[15px] text-ink-body">
           {baralho === 'letras'
-            ? 'As cartas de letras aparecem depois da primeira lição.'
-            : 'As cartas de palavras aparecem quando você já lê a primeira palavra do curso.'}
+            ? tx.semLetras
+            : tx.semPalavras}
         </p>
-        <Button variant="secondary" onClick={onBack}>Voltar</Button>
+        <Button variant="secondary" onClick={onBack}>{tx.voltar}</Button>
       </div>
     );
   }
@@ -84,19 +85,19 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
                       text-white px-6 py-9 shadow-[var(--sh)]">
         <span aria-hidden className="animate-pop grid place-items-center w-16 h-16 rounded-full bg-white
                                      text-[var(--navy)] text-[30px] font-bold">✓</span>
-        <h2 className="m-0 text-white text-[24px] font-bold">Rodada completa</h2>
+        <h2 className="m-0 text-white text-[24px] font-bold">{tx.completa}</h2>
         <p className="m-0 font-ui text-[15.5px] text-white max-w-[36ch]">
-          {inicial.length} cartas, todas sabidas no fim.
-          {vistas > inicial.length ? ` ${vistas - inicial.length} voltaram uma vez antes de ficar.` : ' Nenhuma precisou voltar.'}
+          {tx.todasSabidas(inicial.length)}
+          {vistas > inicial.length ? tx.voltaram(vistas - inicial.length) : tx.nenhumaVoltou}
         </p>
         <div className="flex flex-wrap gap-2 justify-center">
           <button type="button" onClick={() => { setRodada(r => r + 1); setFila(null); setVirada(false); setSabia(0); setVistas(0); }}
                   className="min-h-[48px] px-5 rounded-[var(--r-md)] bg-white font-ui text-[15px] font-semibold text-[var(--navy)] active:scale-[.97]">
-            Outra rodada
+            {tx.outraRodada}
           </button>
           <button type="button" onClick={onBack}
                   className="min-h-[48px] px-5 rounded-[var(--r-md)] border border-white/40 font-ui text-[15px] text-white">
-            Voltar
+            {tx.voltar}
           </button>
         </div>
       </div>
@@ -125,13 +126,13 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
 
       {/* A carta: tocar vira. As duas faces ficam no HTML. */}
       <button type="button" onClick={() => setVirada(v => !v)}
-              aria-label={virada ? 'Mostrar a frente da carta' : 'Virar a carta e ver a resposta'}
+              aria-label={virada ? tx.mostrarFrente : tx.virarEVer}
               className="relative h-[300px] [perspective:1200px] rounded-[20px] focus-visible:outline-offset-4">
         <span className={`hf-carta absolute inset-0 grid [transform-style:preserve-3d] ${virada ? 'hf-carta-virada' : ''}`}>
           <span className="absolute inset-0 grid place-items-center content-center gap-3 rounded-[20px] border border-line
                            bg-[var(--card)] shadow-[var(--sh)] [backface-visibility:hidden]">
             <He size={baralho === 'letras' ? 'display' : 'xl'}>{atual.frente}</He>
-            <span className="font-ui text-[13px] text-ink-muted">Toque para virar</span>
+            <span className="font-ui text-[13px] text-ink-muted">{tx.toqueParaVirar}</span>
           </span>
           <span inert={!virada}
                 className="absolute inset-0 grid place-items-center content-center gap-2 rounded-[20px] border border-[var(--teal)]
@@ -148,19 +149,19 @@ export function Flashcards({ baralho, letras, todas, semente, onBack }: {
 
       {/* O áudio fica fora da carta: um botão dentro de outro não é válido. */}
       <div className="flex justify-center min-h-[48px]">
-        {virada && <AudioButton audioId={atual.audioId} label="Ouvir" />}
+        {virada && <AudioButton audioId={atual.audioId} label={tx.ouvir} />}
       </div>
 
       {virada ? (
         <div className="grid grid-cols-2 gap-2">
-          <Button variant="secondary" size="lg" onClick={() => responder(false)}>Ainda não</Button>
-          <Button size="lg" onClick={() => responder(true)}>Sabia</Button>
+          <Button variant="secondary" size="lg" onClick={() => responder(false)}>{tx.aindaNao}</Button>
+          <Button size="lg" onClick={() => responder(true)}>{tx.sabia}</Button>
         </div>
       ) : (
-        <Button size="lg" full onClick={() => setVirada(true)}>Virar a carta</Button>
+        <Button size="lg" full onClick={() => setVirada(true)}>{tx.virar}</Button>
       )}
       <p className="m-0 text-center font-ui text-[13px] text-ink-muted tabular-nums">
-        {restantes} {restantes === 1 ? 'carta' : 'cartas'} nesta rodada. "Ainda não" volta no fim.
+        {tx.restantes(restantes)}
       </p>
     </div>
   );

@@ -249,7 +249,9 @@ describe('VIS-004: o painel e a revisão contam a mesma fila, e dizem "itens"', 
 describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
   it('a lição troca o botão principal, e o painel aponta "Terminar"', () => {
     const l = fonte('app/licao/[letterId]/LessonClient.tsx');
-    expect(l).toContain('Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)');
+    /* O texto mora no dicionário da tela (i18n); a tela passa o número. */
+    expect(l).toContain('tx.refazerPrecisa(Math.round(LIBERA_MARK * 100))');
+    expect(fonte('i18n/telas/licao-lesson-client.tsx')).toContain('Refazer os exercícios (precisa de ${libera}%)');
     expect(l).toContain('const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);');
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
     expect(d).toContain('cta={fmt(tx.terminarCta, { nome: terminar.nome })}');
@@ -271,12 +273,16 @@ describe('CONV-020: no primeiro acesso, a Aula 0 é o botão principal', () => {
 describe('VIS-005, VIS-008, VIS-013: teclado e leitor de tela', () => {
   it('o ligar da lição tem aria-pressed, mantém o foco e anuncia cada par', () => {
     const a = fonte('components/learn/Answers.tsx');
+    /* Os anúncios moram no dicionário da tela (i18n). */
+    const anuncios = fonte('i18n/telas/licao-answers.tsx');
     expect(a).toContain('aria-pressed={isPicked}');
     expect(a).toContain('aria-disabled={settled || isMatched}');
     expect(a).not.toMatch(/\sdisabled=\{settled \|\| isMatched\}/);
     expect(a).toContain('<p role="status" aria-live="polite" className="sr-only">{anuncio}</p>');
-    expect(a).toContain('Par certo: ');
-    expect(a).toContain('Não combinam: ');
+    expect(a).toContain('setAnuncio(tx.parCerto(');
+    expect(a).toContain('setAnuncio(tx.naoCombinam(');
+    expect(anuncios).toContain('Par certo: ');
+    expect(anuncios).toContain('Não combinam: ');
   });
 
   it('perguntas da etapa 1, jogos e dicas não jogam o foco no <body>', () => {

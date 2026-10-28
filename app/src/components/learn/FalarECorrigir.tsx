@@ -12,6 +12,7 @@
  * e o aluno precisa saber qual das duas está usando.
  */
 
+import { tx } from '@/i18n/telas/licao-falar-e-corrigir';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { conferirFala, falaDisponivel, ouvirHebraico, type Veredito } from '@/lib/fala';
@@ -61,7 +62,7 @@ export function FalarECorrigir({ alvo, translit, nota }: {
         {estado.t === 'ouvindo' ? (
           <button type="button" onClick={() => parar.current?.()}
                   className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[#D93025] text-white font-ui text-[14px] font-semibold">
-            ■ Pronto
+            {tx.pronto}
           </button>
         ) : (
           <button type="button" onClick={falar} disabled={estado.t === 'sem-hebraico'}
@@ -75,52 +76,52 @@ export function FalarECorrigir({ alvo, translit, nota }: {
                 <rect x="7.2" y="2.8" width="5.6" height="9.4" rx="2.8" stroke="currentColor" />
                 <path d="M4.6 9.6a5.4 5.4 0 0 0 10.8 0M10 15v2.4" stroke="currentColor" />
               </svg>
-              Fale e seja corrigido
+              {tx.fale}
             </span>
           </button>
         )}
         {acertos > 0 && (
-          <span className="font-ui text-[13px] text-[var(--teal-ink)]">✓ {acertos} {acertos === 1 ? 'acerto' : 'acertos'}</span>
+          <span className="font-ui text-[13px] text-[var(--teal-ink)]">{tx.acertos(acertos)}</span>
         )}
       </div>
 
       {estado.t === 'ouvindo' && (
         <p role="status" className="font-ui text-[14px] text-ink-body m-0">
-          Ouvindo… diga <He size="inline">{alvo}</He>{translit ? <> ({translit})</> : null}.
+          {tx.ouvindo(<He size="inline">{alvo}</He>, translit)}
         </p>
       )}
       {estado.t === 'veredito' && estado.v.certo && (
         <p className="font-ui text-[15px] font-semibold text-[var(--teal-ink)] m-0">
-          ✓ Certo! Ouvi <He size="inline">{estado.v.ouvi}</He>.
+          {tx.certo(<He size="inline">{estado.v.ouvi}</He>)}
         </p>
       )}
       {estado.t === 'veredito' && !estado.v.certo && (
         <p className="font-ui text-[14.5px] text-ink-body m-0">
-          <span className="font-semibold text-[var(--gold-ink,#8A6520)]">Quase.</span>{' '}
-          {estado.v.ouvi ? <>Ouvi <He size="inline">{estado.v.ouvi}</He>. </> : null}
-          Ouça o modelo e tente de novo, devagar.
+          <span className="font-semibold text-[var(--gold-ink,#8A6520)]">{tx.quase}</span>{' '}
+          {estado.v.ouvi ? tx.ouvi(<He size="inline">{estado.v.ouvi}</He>) : null}
+          {tx.tenteDeNovo}
         </p>
       )}
       {estado.t === 'nada' && (
-        <p className="font-ui text-[14px] text-ink-body m-0">Não ouvi nada. Toque de novo e fale logo em seguida, perto do microfone.</p>
+        <p className="font-ui text-[14px] text-ink-body m-0">{tx.nada}</p>
       )}
       {estado.t === 'negado' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          O navegador não deixou usar o microfone. Permita o microfone para este site e tente de novo.
+          {tx.negado}
         </p>
       )}
       {estado.t === 'sem-hebraico' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          O reconhecimento de fala deste navegador não entende hebraico. Use a gravação e a comparação acima.
+          {tx.semHebraico}
         </p>
       )}
       {estado.t === 'erro' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          O reconhecimento de fala não respondeu. Confira a internet e tente de novo.
+          {tx.erro}
         </p>
       )}
       <p className="font-ui text-[12px] text-ink-muted m-0">
-        {nota ?? 'Para corrigir, a sua voz vai para o serviço de fala do navegador (Google ou Apple). A gravação acima não sai do aparelho.'}
+        {nota ?? tx.nota}
       </p>
     </div>
   );

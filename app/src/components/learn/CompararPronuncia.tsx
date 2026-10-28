@@ -21,6 +21,7 @@
  * A gravação fica no aparelho, como no GravarLeitura: nada é enviado.
  */
 
+import { tx } from '@/i18n/telas/licao-comparar-pronuncia';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { hasAudio, useRegistroDeAudio } from './AudioButton';
@@ -68,7 +69,7 @@ function Barras({ onda, largura, cor, rotulo }: { onda: Onda | null; largura: nu
  * do curso pediu um só: TOCAR na sílaba toca o som dela e mostra a dica, e o
  * gravar-e-comparar fica logo abaixo, para a sílaba escolhida.
  */
-export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia com a do curso', grade = false }: {
+export function CompararPronuncia({ itens, titulo = tx.titulo, grade = false }: {
   itens: readonly ItemDeComparacao[]; titulo?: string; grade?: boolean;
 }) {
   useRegistroDeAudio();
@@ -204,56 +205,56 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
       <div className="flex flex-wrap items-center gap-2.5">
         <button type="button" onClick={() => modelo && tocar([modelo])} disabled={!modelo}
                 className="min-h-[44px] px-4 rounded-[var(--r-md)] border border-line bg-surface font-ui text-[14px] disabled:opacity-50">
-          ▶ Modelo {item.translit ? `(${item.translit})` : ''}
+          {tx.modelo} {item.translit ? `(${item.translit})` : ''}
         </button>
         {estado === 'gravando' ? (
           <button type="button" onClick={parar}
                   className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[#D93025] text-white font-ui text-[14px] font-semibold">
-            ■ Parar
+            {tx.parar}
           </button>
         ) : (
           <button type="button" onClick={gravar}
                   className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--navy)] text-white font-ui text-[14px] font-semibold">
-            ● {minha ? 'Gravar de novo' : 'Gravar a minha'}
+            ● {minha ? tx.gravarDeNovo : tx.gravarMinha}
           </button>
         )}
         {modelo && minha && (
           <>
             <button type="button" onClick={() => tocar([modelo, minha])}
                     className="min-h-[44px] px-4 rounded-[var(--r-md)] bg-[var(--teal-solid)] text-white font-ui text-[14px] font-semibold">
-              ▶ Ouvir os dois
+              {tx.ouvirOsDois}
             </button>
             <button type="button" onClick={() => tocar([minha])}
                     className="min-h-[44px] px-3 font-ui text-[14px] text-ink-body underline">
-              Só a minha
+              {tx.soAMinha}
             </button>
           </>
         )}
       </div>
 
       {estado === 'gravando' && (
-        <p role="status" className="font-ui text-[14px] text-[#B3261E] m-0">Gravando… diga o item uma vez e toque em Parar.</p>
+        <p role="status" className="font-ui text-[14px] text-[#B3261E] m-0">{tx.gravando}</p>
       )}
       {estado === 'negado' && (
         <p role="alert" className="font-ui text-[14px] text-ink-body m-0">
-          O navegador não deixou usar o microfone. Toque no cadeado ao lado do endereço, permita o microfone e tente de novo.
+          {tx.negado}
         </p>
       )}
       {estado === 'sem-suporte' && (
-        <p role="alert" className="font-ui text-[14px] text-ink-body m-0">Este navegador não grava áudio. Tente pelo Chrome, Edge, Firefox ou Safari atualizados.</p>
+        <p role="alert" className="font-ui text-[14px] text-ink-body m-0">{tx.semSuporte}</p>
       )}
       {estado === 'erro' && (
-        <p role="alert" className="font-ui text-[14px] text-ink-body m-0">Não consegui gravar ou ler a gravação. Tente de novo.</p>
+        <p role="alert" className="font-ui text-[14px] text-ink-body m-0">{tx.erro}</p>
       )}
-      <p className="font-ui text-[12.5px] text-ink-muted m-0">A sua gravação fica só neste aparelho. Nada é enviado.</p>
+      <p className="font-ui text-[12.5px] text-ink-muted m-0">{tx.soNoAparelho}</p>
     </>
   );
 
   const painel = (
     <>
       <div className="grid gap-1.5 rounded-[var(--r-md)] bg-surface-2 p-3">
-        <Barras onda={modelo} largura={largura} cor="var(--navy)" rotulo="Curso" />
-        <Barras onda={minha} largura={largura} cor="var(--teal)" rotulo="Você" />
+        <Barras onda={modelo} largura={largura} cor="var(--navy)" rotulo={tx.curso} />
+        <Barras onda={minha} largura={largura} cor="var(--teal)" rotulo={tx.voce} />
       </div>
       {controles()}
     </>
@@ -263,11 +264,11 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
     return (
       <div className="grid gap-4">
         {/* Da direita para a esquerda, como a grade de sílabas da lição. */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3" role="group" aria-label="Sílabas" dir="rtl">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3" role="group" aria-label={tx.silabas} dir="rtl">
           {comAudio.map((it, k) => (
             <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
                     onClick={() => escolher(k)}
-                    aria-label={`${it.translit ?? it.he}: ouvir e praticar`}
+                    aria-label={tx.ouvirEPraticar(it.translit ?? it.he)}
                     className={`rounded-[var(--r-lg)] border p-4 text-center min-h-[108px]
                       flex flex-col items-center justify-center gap-1.5 transition-[border-color,background-color] duration-[var(--dur)]
                       ${k === qual ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]'
@@ -282,11 +283,10 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
             </button>
           ))}
         </div>
-        <section aria-label={`Praticar ${item.translit ?? item.he}`}
+        <section aria-label={tx.praticar(item.translit ?? item.he)}
                  className="grid gap-3 rounded-[var(--r-lg)] border border-line bg-surface p-4">
           <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-            Agora você: grave <He size="inline">{item.he}</He>
-            {item.translit ? <> ({item.translit})</> : null} e compare com o curso.
+            {tx.agoraVoce(<He size="inline">{item.he}</He>, item.translit)}
           </p>
           {painel}
         </section>
@@ -299,12 +299,12 @@ export function CompararPronuncia({ itens, titulo = 'Compare a sua pronúncia co
       <div className="grid gap-1">
         <h3 className="font-display text-[17px] font-semibold m-0">{titulo}</h3>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          Escolha um item, ouça o modelo, grave o seu e compare: as duas ondas ficam na mesma escala de tempo.
+          {tx.escolhaUmItem}
         </p>
       </div>
 
       {comAudio.length > 1 && (
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Item para comparar" dir="rtl">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={tx.itemParaComparar} dir="rtl">
           {comAudio.map((it, k) => (
             <button key={it.he} type="button" aria-pressed={k === qual} disabled={estado === 'gravando'}
                     onClick={() => { setQual(k); setEstado('parado'); }}

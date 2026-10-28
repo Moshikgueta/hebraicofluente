@@ -17,6 +17,7 @@
  * forma à mão.
  */
 
+import { tx } from '@/i18n/telas/licao-escrever-palavras';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -30,9 +31,9 @@ import { stripNikud } from '@/lib/hebrew';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const ETAPAS = [
-  { guia: 0.22, rotulo: 'Por cima do modelo', dica: 'Passe o dedo por cima da palavra, começando pela direita.' },
-  { guia: 0.08, rotulo: 'Modelo fraco', dica: 'O modelo quase sumiu. Siga assim mesmo.' },
-  { guia: 0, rotulo: 'Sem modelo', dica: 'Agora sozinho. Escreva a palavra de memória.' }
+  { guia: 0.22, rotulo: tx.porCima, dica: tx.porCimaDica },
+  { guia: 0.08, rotulo: tx.fraco, dica: tx.fracoDica },
+  { guia: 0, rotulo: tx.semModelo, dica: tx.semModeloDica }
 ] as const;
 
 export function EscreverPalavras({ letras, semente, extras = [] }: {
@@ -68,8 +69,7 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
     return (
       <Card tone="amber" className="p-6">
         <p className="text-[15px] leading-relaxed text-ink-body m-0">
-          Ainda não há palavra inteira para escrever: elas chegam quando todas as letras
-          de uma palavra já foram ensinadas. Continue as lições e volte aqui.
+          {tx.semPalavra}
         </p>
       </Card>
     );
@@ -80,13 +80,12 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
     return (
       <Card tone="mint" className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--mint-ink)] m-0">
-          Rodada completa
+          {tx.completa}
         </p>
         <p className="text-[18px] font-semibold text-ink m-0">
-          Você escreveu {palavras.length} palavras à mão
-          {boas ? `, ${boas} delas sem modelo e bem parecidas com o original` : ''}.
+          {tx.escreveu(palavras.length, boas)}
         </p>
-        <ul className="flex flex-wrap gap-3 list-none p-0 m-0" aria-label="As palavras desta rodada">
+        <ul className="flex flex-wrap gap-3 list-none p-0 m-0" aria-label={tx.palavrasDaRodada}>
           {palavras.map(w => (
             <li key={w.he} className="rounded-[var(--r-md)] border border-line bg-surface px-3 py-2">
               <He size="lg" cursive>{stripNikud(w.he)}</He>
@@ -96,7 +95,7 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
         <Button className="justify-self-start" onClick={() => {
           setRodada(r => r + 1); setQual(0); setEtapa(0); setNotas([]); setVeredito(null); setTinta(false);
         }}>
-          Mais cinco palavras
+          {tx.maisCinco}
         </Button>
       </Card>
     );
@@ -117,7 +116,7 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
   return (
     <div className="grid gap-4">
       <p className="font-ui text-[13px] text-ink-muted m-0" aria-live="polite">
-        Palavra {qual + 1} de {palavras.length} · {atual.rotulo}
+        {tx.palavraDe(qual + 1, palavras.length, atual.rotulo)}
       </p>
 
       {/* Compacto de propósito: no telefone o quadro tem de aparecer sem
@@ -130,7 +129,7 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
             <span className="font-semibold">{w.translit}</span>
             <span className="text-ink-muted"> · {w.pt}</span>
           </p>
-          <p className="font-ui text-[13px] text-ink-muted m-0">À mão, sem os pontinhos das vogais.</p>
+          <p className="font-ui text-[13px] text-ink-muted m-0">{tx.aMao}</p>
         </div>
         {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" />}
       </Card>
@@ -163,15 +162,15 @@ export function EscreverPalavras({ letras, semente, extras = [] }: {
       <div className="flex flex-wrap items-center gap-2.5">
         {veredito ? (
           <Button size="md" onClick={avancar}>
-            {!ultimaEtapa ? 'Próxima etapa' : qual + 1 < palavras.length ? 'Próxima palavra' : 'Terminar'}
+            {!ultimaEtapa ? tx.proximaEtapa : qual + 1 < palavras.length ? tx.proximaPalavra : tx.terminar}
           </Button>
         ) : (
           <Button size="md" disabled={!tinta} onClick={() => setVeredito(quadro.current?.conferir() ?? null)}>
-            Conferir
+            {tx.conferir}
           </Button>
         )}
         <Button variant="secondary" size="sm" disabled={!tinta} onClick={limpar}>
-          {veredito ? 'Tentar de novo' : 'Limpar'}
+          {veredito ? tx.tentarDeNovo : tx.limpar}
         </Button>
       </div>
     </div>

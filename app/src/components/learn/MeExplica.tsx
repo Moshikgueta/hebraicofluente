@@ -14,6 +14,7 @@
  * no lugar. Fechar não muda nada no progresso.
  */
 
+import { tx } from '@/i18n/telas/licao-me-explica';
 import { useRef } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
@@ -34,7 +35,7 @@ export function MeExplica({ letter }: { letter: Letter }) {
                          bg-[var(--accent-wash)] px-3 font-ui text-[13px] font-semibold text-[var(--teal-ink)]
                          transition-[transform,background-color] duration-[var(--dur-toque)] active:scale-[.97]">
         <span aria-hidden className="grid place-items-center w-5 h-5 rounded-full bg-[var(--teal)] text-white text-[12px] font-bold">?</span>
-        Me explica, Moshik
+        {tx.meExplica}
       </button>
 
       <dialog ref={ref} aria-labelledby={`me-explica-${letter.id}`}
@@ -45,45 +46,45 @@ export function MeExplica({ letter }: { letter: Letter }) {
         <div className="grid gap-4 p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div className="grid gap-1">
-              <p className="m-0 font-ui text-[12px] font-bold uppercase tracking-[.1em] text-[var(--accent)]">Me explica, Moshik</p>
+              <p className="m-0 font-ui text-[12px] font-bold uppercase tracking-[.1em] text-[var(--accent)]">{tx.meExplica}</p>
               <h2 id={`me-explica-${letter.id}`} className="m-0 flex items-baseline gap-3 text-[24px] font-bold">
                 <He size="xl">{letter.letraComPonto ?? letter.letter}</He>
                 <span>{letter.namePt}</span>
               </h2>
               <p className="m-0 font-ui text-[15px] text-[var(--teal-ink)] font-semibold">{somPt(letter.sound)}</p>
             </div>
-            <button type="button" onClick={() => ref.current?.close()} aria-label="Fechar a explicação"
+            <button type="button" onClick={() => ref.current?.close()} aria-label={tx.fechar}
                     className="shrink-0 grid place-items-center w-11 h-11 rounded-full text-[20px] text-ink-muted hover:bg-surface-2">
               ✕
             </button>
           </div>
 
-          <AudioButton audioId={letter.audioId} label="Ouvir a letra" />
+          <AudioButton audioId={letter.audioId} label={tx.ouvirLetra} />
 
           {e?.lembrePt && (
             <section className="rounded-[var(--r-md)] bg-[var(--teal-soft)] px-4 py-3 grid gap-1">
-              <h3 className="m-0 font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">O que você precisa lembrar</h3>
+              <h3 className="m-0 font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">{tx.lembrar}</h3>
               <p className="m-0 text-[15.5px] leading-relaxed text-ink"><Prose text={e.lembrePt} /></p>
             </section>
           )}
           {e?.funcaoPt && (
             <section className="grid gap-1">
-              <h3 className="m-0 font-display text-[16px] font-semibold">O que esta letra faz</h3>
+              <h3 className="m-0 font-display text-[16px] font-semibold">{tx.faz}</h3>
               <p className="m-0 text-[15px] leading-relaxed text-ink-body"><Prose text={e.funcaoPt} /></p>
             </section>
           )}
           <section className="grid gap-1">
-            <h3 className="m-0 font-display text-[16px] font-semibold">Como pronunciar</h3>
+            <h3 className="m-0 font-display text-[16px] font-semibold">{tx.pronunciar}</h3>
             <p className="m-0 text-[15px] leading-relaxed text-ink-body"><Prose text={letter.soundNotePt} /></p>
           </section>
           <section className="grid gap-1.5 rounded-[var(--r-md)] border border-line px-4 py-3">
-            <h3 className="m-0 font-display text-[16px] font-semibold">O erro mais comum de quem fala português</h3>
-            <p className="m-0 text-[14.5px] leading-relaxed text-ink-body"><strong className="font-semibold">Sai:</strong> <Prose text={letter.brazilianMistake.wrong} /></p>
-            <p className="m-0 text-[14.5px] leading-relaxed text-ink"><strong className="font-semibold text-[var(--teal-ink)]">Certo:</strong> <Prose text={letter.brazilianMistake.right} /></p>
+            <h3 className="m-0 font-display text-[16px] font-semibold">{tx.erroComum}</h3>
+            <p className="m-0 text-[14.5px] leading-relaxed text-ink-body"><strong className="font-semibold">{tx.sai}</strong> <Prose text={letter.brazilianMistake.wrong} /></p>
+            <p className="m-0 text-[14.5px] leading-relaxed text-ink"><strong className="font-semibold text-[var(--teal-ink)]">{tx.certo}</strong> <Prose text={letter.brazilianMistake.right} /></p>
           </section>
           {parecidas.length > 0 && (
             <section className="grid gap-2">
-              <h3 className="m-0 font-display text-[16px] font-semibold">Não confunda com</h3>
+              <h3 className="m-0 font-display text-[16px] font-semibold">{tx.naoConfunda}</h3>
               <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
                 {parecidas.map(l => (
                   <li key={l.id} className="flex items-center gap-2 rounded-[12px] bg-surface-2 px-3 py-1.5">
@@ -94,12 +95,12 @@ export function MeExplica({ letter }: { letter: Letter }) {
               </ul>
             </section>
           )}
-          <GravacaoDoProfessor id={`letter-${letter.id}-intro`} textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
+          <GravacaoDoProfessor id={`letter-${letter.id}-intro`} textoPt={tx.gravacao(letter.namePt)} />
           <GravacaoDoProfessor id={`letter-${letter.id}-common-mistake`} />
 
           <button type="button" onClick={() => ref.current?.close()}
                   className="min-h-[52px] rounded-[var(--r-md)] bg-[var(--navy)] font-ui text-[15.5px] font-semibold text-white active:scale-[.98]">
-            Entendi, voltar à lição
+            {tx.entendi}
           </button>
         </div>
       </dialog>

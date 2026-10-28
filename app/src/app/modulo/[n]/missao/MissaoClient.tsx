@@ -10,6 +10,7 @@
  * quem passa ganha o registro em `firsts` (`missao-N`), que o painel do
  * módulo lê para marcar a missão como feita. */
 
+import { tx } from '@/i18n/telas/licao-missao-client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -45,8 +46,8 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
   if (!missao) {
     return (
       <div className="focus-col grid gap-5">
-        <p className="text-[16px] text-ink-body">Este módulo ainda não tem missão.</p>
-        <LinkButton href={`/modulo/${mod.n}`} variant="secondary">Voltar ao módulo</LinkButton>
+        <p className="text-[16px] text-ink-body">{tx.semMissao}</p>
+        <LinkButton href={`/modulo/${mod.n}`} variant="secondary">{tx.voltarAoModulo}</LinkButton>
       </div>
     );
   }
@@ -56,7 +57,7 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
       <ExercisePlayer
         key={run}
         exercises={exercises}
-        title={`Missão · ${missao.tituloPt}`}
+        title={tx.titulo(missao.tituloPt)}
         onDone={r => {
           registrarRodada(`missao-${mod.n}`, exercises);
           setResult(r);
@@ -74,24 +75,24 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`Missão ${mod.n} · ${result.correct} de ${result.total}`}
+          kicker={tx.kicker(mod.n, result.correct, result.total)}
           tone={passou ? 'bom' : 'parcial'}
-          title={passou ? 'Missão cumprida.' : 'Quase - vale tentar de novo.'}
+          title={passou ? tx.cumprida : tx.quase}
           body={passou
             ? missao.fechoPt
-            : 'Nada se perde: refaça com calma, lendo letra por letra. As alternativas mudam de lugar.'}
+            : tx.nadaSePerde}
         >
           <Button variant={passou ? 'secondary' : 'primary'}
                   onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
-            Refazer
+            {tx.refazer}
           </Button>
           {passou && nextModule && (
             <Button onClick={() => router.push(`/modulo/${nextModule.n}`)}>
-              Módulo {nextModule.n} - {nextModule.titlePt}
+              {tx.proximoModulo(nextModule.n, nextModule.titlePt)}
             </Button>
           )}
           {passou && !nextModule && (
-            <Button onClick={() => router.push('/desafio-final')}>Ir para o desafio final</Button>
+            <Button onClick={() => router.push('/desafio-final')}>{tx.desafioFinal}</Button>
           )}
         </Milestone>
       </div>
@@ -103,9 +104,9 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
       <header className="grid gap-3">
         <Link href={`/modulo/${mod.n}`}
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Módulo {mod.n}
+          {tx.voltar(mod.n)}
         </Link>
-        <Badge tone="mint">Missão do módulo {mod.n}</Badge>
+        <Badge tone="mint">{tx.missaoDoModulo(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight">{missao.tituloPt}</h1>
       </header>
 
@@ -114,20 +115,19 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">Como funciona?</p>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">{tx.comoFunciona}</p>
         <p className="text-[15px] leading-relaxed text-ink-body">
-          {missao.passos.length} passos, na ordem da história, só com palavras que você já
-          aprendeu. Leia com calma: passa com 70%, e dá para refazer quantas vezes quiser.
+          {tx.passos(missao.passos.length)}
         </p>
       </Card>
 
       {feita && (
-        <p className="font-ui text-[14px] text-[var(--green)]">✓ Você já cumpriu esta missão.</p>
+        <p className="font-ui text-[14px] text-[var(--green)]">{tx.jaCumpriu}</p>
       )}
 
       <Button size="lg" full
               onClick={() => { track('mission_started', { id: missaoId(mod.n) }); setPhase('running'); }}>
-        {feita ? 'Fazer a missão de novo' : 'Começar a missão'}
+        {feita ? tx.deNovo : tx.comecar}
       </Button>
     </div>
   );

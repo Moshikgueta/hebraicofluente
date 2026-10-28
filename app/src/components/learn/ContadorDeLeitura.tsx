@@ -17,6 +17,7 @@ import Link from 'next/link';
 import type { Letter } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { fraseDeLeitura, novasCom, useLeitura } from '@/lib/vocabulario';
+import { tx } from '@/i18n/telas/licao-contador-de-leitura';
 
 export function ContadorDeLeitura({ letra, className = '' }: { letra?: Letter; className?: string }) {
   const p = useProgress();
@@ -26,7 +27,7 @@ export function ContadorDeLeitura({ letra, className = '' }: { letra?: Letter; c
 
   return (
     <section
-      aria-label="Palavras que você consegue ler"
+      aria-label={tx.rotulo}
       className={`rounded-[var(--r-lg)] bg-[var(--teal-soft)] px-5 py-4 grid gap-1.5 ${className}`}
     >
       <p className="font-ui text-[17px] font-semibold text-[var(--teal-ink)] m-0">
@@ -34,13 +35,12 @@ export function ContadorDeLeitura({ letra, className = '' }: { letra?: Letter; c
       </p>
       {letra && novas > 0 && (
         <p className="font-ui text-[14px] text-ink-body m-0">
-          Com o {letra.namePt}, {novas === 1 ? 'uma palavra nova passou' : `${novas} palavras novas passaram`} a
-          ser legíveis para você.
+          {tx.novasCom(letra.namePt, novas)}
         </p>
       )}
       {n > 0 && (
         <Link href="/vocabulario" className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium text-[var(--teal-ink)] underline w-fit">
-          Ver o meu vocabulário
+          {tx.verVocabulario}
         </Link>
       )}
     </section>

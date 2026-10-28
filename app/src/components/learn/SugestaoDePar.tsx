@@ -12,6 +12,7 @@ import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { useProgress } from '@/lib/state/store';
+import { tx } from '@/i18n/telas/licao-sugestao-de-par';
 
 export const linkDoPar = (a: string, b: string): string =>
   `/academia?jogo=batalha&par=${encodeURIComponent(a + b)}`;
@@ -24,13 +25,13 @@ export function SugestaoDePar() {
     <Card tone="wash" className="p-5 grid gap-3 sm:flex sm:items-center sm:justify-between sm:gap-5">
       <div className="grid gap-1 min-w-0">
         <p className="font-display text-[17px] font-semibold text-ink m-0">
-          Vamos praticar a diferença entre <He size="inline">{c.correct}</He> e <He size="inline">{c.chosen}</He>?
+          {tx.vamosPraticar(<He size="inline">{c.correct}</He>, <He size="inline">{c.chosen}</He>)}
         </p>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          {`Você trocou estas duas letras ${c.n} vezes. Uma rodada curta só com elas ajuda a separar uma da outra.`}
+          {tx.trocou(c.n)}
         </p>
       </div>
-      <LinkButton href={linkDoPar(c.correct, c.chosen)} className="shrink-0">Praticar agora</LinkButton>
+      <LinkButton href={linkDoPar(c.correct, c.chosen)} className="shrink-0">{tx.praticarAgora}</LinkButton>
     </Card>
   );
 }
