@@ -36,6 +36,7 @@ import { FLAGSHIP, flagship, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/conta-public-shell';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -46,9 +47,9 @@ const LINKS = [
      "Experiências". 27/10/2026 (decisão do dono): o site fica só com o curso
      de alfabetização, e o painel saiu do cabeçalho e do rodapé (o código
      dele está no histórico do git, no commit que o tirou). */
-  { href: '/metodo', label: 'O método' },
-  { href: '/sobre', label: 'Sobre' },
-  { href: '/faq', label: 'Dúvidas' }
+  { href: '/metodo', label: tx.linkMetodo },
+  { href: '/sobre', label: tx.linkSobre },
+  { href: '/faq', label: tx.linkDuvidas }
 ] as const;
 
 const norm = (s: string | null) => (s ?? '/').replace(/\/+$/, '') || '/';
@@ -113,7 +114,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link href="/" className="flex items-center min-h-[44px] -ml-1 pl-1 pr-2 rounded-md shrink-0">
             <span className="sm:hidden"><Logo words={false} /></span>
             <span className="hidden sm:inline-flex"><Logo /></span>
-            <span className="sr-only">Hebraico Fluente, página inicial</span>
+            <span className="sr-only">{tx.paginaInicial}</span>
           </Link>
 
           {/* Os links só a partir de lg, e não de md.
@@ -123,7 +124,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               botão de comprar meio de fora. Entre 768 e 1024 o menu sanduíche
               dá conta dos links; o que não pode sair da barra é o par
               "Entrar" e "Começar", que é o que cada visitante veio fazer. */}
-          <nav aria-label="Navegação do site" className="hidden lg:flex items-center gap-1 ml-4">
+          <nav aria-label={tx.navegacao} className="hidden lg:flex items-center gap-1 ml-4">
             {LINKS.map(l => {
               const active = norm(pathname) === norm(l.href);
               return (
@@ -153,7 +154,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 aguardando confirmação - o painel do aluno só devolveria a
                 página de vendas; o que ela tem é a conta. */}
             {account.ready && account.signedIn && account.can(FLAGSHIP) ? (
-              <LinkButton href="/meu-hebraico" size="sm">Meu Hebraico</LinkButton>
+              <LinkButton href="/meu-hebraico" size="sm">{tx.meuHebraico}</LinkButton>
             ) : account.ready && account.signedIn ? (
               /* Conta sem o curso (27/10/2026, pedido do dono). Era só o
                  botão "Minha Biblioteca", e uma aluna que tinha acabado de
@@ -163,12 +164,12 @@ export function PublicShell({ children }: { children: ReactNode }) {
               <>
                 <LinkButton href="/minha-biblioteca" variant="ghost" size="sm"
                             className="whitespace-nowrap px-2.5 sm:px-4">
-                  Minha conta
+                  {tx.minhaConta}
                 </LinkButton>
                 <LinkButton href={`/checkout/${FLAGSHIP}`} size="sm"
                             className="whitespace-nowrap px-3 sm:px-4">
-                  <span className="sm:hidden">Começar</span>
-                  <span className="hidden sm:inline">Começar o curso</span>
+                  <span className="sm:hidden">{tx.comecar}</span>
+                  <span className="hidden sm:inline">{tx.comecarOCurso}</span>
                 </LinkButton>
               </>
             ) : (
@@ -188,7 +189,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                     outro lugar. */}
                 <LinkButton href="/entrar" variant="ghost" size="sm"
                             className="whitespace-nowrap px-2.5 sm:px-4">
-                  Entrar
+                  {tx.entrar}
                 </LinkButton>
                 {/* "Começar agora" cabe a partir de sm; num aparelho de 390 o
                     rótulo inteiro quebra em duas linhas e empurra o menu
@@ -198,8 +199,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
                   {/* Um rótulo inteiro por largura, e não "Começar" + um
                       span com "&nbsp;agora": o `gap` do botão somava ao
                       espaço e abria um vão (auditoria de 01/10, VIS-014). */}
-                  <span className="sm:hidden">Começar</span>
-                  <span className="hidden sm:inline">Começar agora</span>
+                  <span className="sm:hidden">{tx.comecar}</span>
+                  <span className="hidden sm:inline">{tx.comecarAgora}</span>
                 </LinkButton>
               </>
             )}
@@ -214,7 +215,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                          text-ink-body hover:bg-surface-2"
             >
               <span aria-hidden className="text-[18px] leading-none">{open ? '✕' : '☰'}</span>
-              <span className="sr-only">{open ? 'Fechar menu' : 'Abrir menu'}</span>
+              <span className="sr-only">{open ? tx.fecharMenu : tx.abrirMenu}</span>
             </button>
           </div>
         </div>
@@ -222,7 +223,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
         {open && (
           <nav
             id="menu-site"
-            aria-label="Navegação do site"
+            aria-label={tx.navegacao}
             className="lg:hidden border-t border-[color:var(--line-soft)] bg-[var(--paper)]"
           >
             {/* Só os links de navegação. "Entrar" saiu daqui porque agora
@@ -264,19 +265,18 @@ function Footer() {
         <div className="col-span-2 lg:col-span-1 grid gap-2 content-start">
           <Logo size={28} />
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted max-w-[32ch]">
-            Hebraico para brasileiros, começando pelo alfabeto. Feito para adulto
-            que estuda sozinho, no celular, sem professor do lado.
+            {tx.rodapeTexto}
           </p>
           {/* O crédito ao método de origem, em toda página pública. Fica aqui,
               e não escondido numa página interna, porque é assim que um
               crédito cumpre o que se espera dele. Ver lib/credito.ts. */}
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted max-w-[32ch]">
-            Método inspirado em{' '}
+            {tx.inspiradoEm}{' '}
             <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
-            ({METODO_ORIGINAL.obraTranslit}), de {METODO_ORIGINAL.autor}.
+            {tx.creditoDepois(METODO_ORIGINAL.obraTranslit, METODO_ORIGINAL.autor)}
           </p>
           <div className="grid gap-2 content-start mt-3">
-            <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">Contato</p>
+            <p className="font-ui text-[11px] uppercase tracking-[.08em] text-ink-muted">{tx.contato}</p>
             <a href={`mailto:${empresa.contato.emailSuporte}`}
                className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
                           text-ink-body hover:text-[var(--accent)] break-all">
@@ -287,15 +287,15 @@ function Footer() {
                 ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
                      className="inline-flex items-center min-h-[36px] font-ui text-[13.5px]
                                 text-ink-body hover:text-[var(--accent)]">
-                    WhatsApp {empresa.contato.whatsapp}
+                    {tx.whatsapp(empresa.contato.whatsapp)}
                   </a>
                 : <span className="font-ui text-[13.5px] text-ink-body">
-                    WhatsApp {empresa.contato.whatsapp}
+                    {tx.whatsapp(empresa.contato.whatsapp)}
                   </span>
             )}
             <RedesSociais />
             <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2">
-              {empresa.atendimento.horarioPt}. Resposta {prazoResposta()}.
+              {tx.horario(empresa.atendimento.horarioPt, prazoResposta())}
             </p>
             {/* Esta linha aparece em TODA página pública, o que faz dela a
                 promessa de pagamento mais repetida do site - e a mais cara de
@@ -310,12 +310,12 @@ function Footer() {
                   junto, em vez de continuar prometendo o número velho no pé de
                   todas as páginas. */}
               {soPix()
-                ? 'Pagamento por PIX. Acesso liberado depois de conferido o pagamento.'
+                ? tx.pagamentoSoPix
                 : temPix() && temCartao()
-                  ? `Pagamento por PIX ou cartão, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
+                  ? tx.pagamentoPixECartao(parcelasTexto(parcelasMax(flagship().price)))
                   : temCartao()
-                    ? `Pagamento por cartão de crédito, ${parcelasTexto(parcelasMax(flagship().price))}. Acesso liberado na hora.`
-                    : 'Pagamento por PIX. Acesso liberado na hora.'}
+                    ? tx.pagamentoCartao(parcelasTexto(parcelasMax(flagship().price)))
+                    : tx.pagamentoPixNaHora}
             </p>
           </div>
         </div>
@@ -328,33 +328,33 @@ function Footer() {
             (as três jornadas) saiu em 27/10/2026, com o site só no curso de
             alfabetização. */}
         <div className="grid gap-1 content-start">
-          <FooterCol title="Aprender" links={[
-            { href: '/curso-de-hebraico', label: 'Alfabetização em Hebraico' },
-            { href: '/metodo', label: 'O método' },
-            { href: '/cursos', label: 'Os cursos' },
-            { href: '/alfabeto-hebraico', label: 'Alfabeto hebraico' },
-            { href: '/biblia', label: 'Ler a Bíblia?' }
+          <FooterCol title={tx.aprender} links={[
+            { href: '/curso-de-hebraico', label: tx.alfabetizacao },
+            { href: '/metodo', label: tx.linkMetodo },
+            { href: '/cursos', label: tx.osCursos },
+            { href: '/alfabeto-hebraico', label: tx.alfabetoHebraico },
+            { href: '/biblia', label: tx.lerABiblia }
           ]} />
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
-            Próximos cursos, à parte e ainda em produção:{' '}
+            {tx.proximosCursos}{' '}
             <Link href="/cursos/hebraico-a1" className="underline underline-offset-2 hover:text-[var(--accent)]">A1</Link>,{' '}
-            <Link href="/cursos/hebraico-a2" className="underline underline-offset-2 hover:text-[var(--accent)]">A2</Link> e{' '}
+            <Link href="/cursos/hebraico-a2" className="underline underline-offset-2 hover:text-[var(--accent)]">A2</Link>{tx.e}{' '}
             <Link href="/cursos/hebraico-b1" className="underline underline-offset-2 hover:text-[var(--accent)]">B1</Link>.
           </p>
         </div>
 
-        <FooterCol title="Ajuda" links={[
-          { href: '/faq', label: 'Dúvidas' },
-          { href: '/suporte', label: 'Suporte' },
-          { href: '/entrar', label: 'Entrar' },
-          { href: '/sobre', label: 'Sobre o Moshik' },
-          { href: '/acessibilidade', label: 'Acessibilidade' }
+        <FooterCol title={tx.ajuda} links={[
+          { href: '/faq', label: tx.linkDuvidas },
+          { href: '/suporte', label: tx.suporte },
+          { href: '/entrar', label: tx.entrar },
+          { href: '/sobre', label: tx.sobreOMoshik },
+          { href: '/acessibilidade', label: tx.acessibilidade }
         ]} />
 
-        <FooterCol title="Legal" links={[
-          { href: '/termos', label: 'Termos de Uso' },
-          { href: '/privacidade', label: 'Política de Privacidade' },
-          { href: '/reembolso', label: 'Reembolso e Cancelamento' }
+        <FooterCol title={tx.legal} links={[
+          { href: '/termos', label: tx.termosDeUso },
+          { href: '/privacidade', label: tx.politicaDePrivacidade },
+          { href: '/reembolso', label: tx.reembolso }
         ]} />
 
       </div>
@@ -368,12 +368,12 @@ function Footer() {
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-5 grid gap-1.5">
           <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
             {[nomeLegalCompleto(),
-              empresa.cnpj && `CNPJ ${empresa.cnpj}`,
+              empresa.cnpj && tx.cnpj(empresa.cnpj),
               enderecoLinha()
             ].filter(Boolean).join(' · ')}
           </p>
           <p className="font-ui text-[12px] text-ink-muted">
-            © {new Date().getFullYear()} {empresa.nomeFantasia}. Todos os direitos reservados.
+            {tx.direitos(new Date().getFullYear(), empresa.nomeFantasia)}
           </p>
         </div>
       </div>

@@ -96,6 +96,7 @@ import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
 import { LANG_HTML } from '@/i18n';
 import { tx } from '@/i18n/telas/geral';
+import { tx as txLayout } from '@/i18n/telas/conta-layout';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -144,7 +145,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3
                      focus:bg-surface focus:text-ink focus:px-4 focus:py-2 focus:rounded-md"
         >
-          Pular para o conteúdo
+          {txLayout.pularParaConteudo}
         </a>
         {/* A conta por fora do progresso, e não o contrário: quem decide se
             esta rota pode ser vista é a sessão, e o progresso é o que se

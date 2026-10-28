@@ -12,6 +12,7 @@
  */
 
 import { useAccount } from '@/lib/account/store';
+import { tx } from '@/i18n/telas/conta-shell-pecas';
 
 export function DemoNotice() {
   const { demo } = useAccount();
@@ -21,9 +22,8 @@ export function DemoNotice() {
          className="border-b border-[color:var(--amber-line,var(--line-soft))] bg-[var(--amber-wash)]">
       <p className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-2.5
                     font-ui text-[12.5px] leading-relaxed text-ink-body">
-        <strong className="font-semibold">Ambiente de demonstração.</strong>{' '}
-        Esta versão não tem servidor: contas e pagamentos ficam só neste navegador,
-        nada é cobrado e o acesso não vale em outro aparelho.
+        <strong className="font-semibold">{tx.demoTitulo}</strong>{' '}
+        {tx.demoTexto}
       </p>
     </div>
   );

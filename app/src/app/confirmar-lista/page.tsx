@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { ConfirmarLista } from './ConfirmarLista';
+import { tx } from '@/i18n/telas/conta-confirmar-lista';
 
 export const metadata: Metadata = {
-  title: 'Confirmar inscrição - Hebraico Fluente',
-  description: 'Confirme que quer receber os e-mails que pediu.',
+  title: tx.metaTitulo,
+  description: tx.metaDescricao,
   /* Só funciona vinda do link do e-mail, como /sair-da-lista. */
   robots: { index: false, follow: false }
 };

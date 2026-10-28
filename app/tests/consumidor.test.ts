@@ -265,7 +265,8 @@ describe('os textos legais', () => {
      (art. 3), e o checkout remete a eles em vez de repeti-la. */
   it('a declaração de idade está nos Termos, e o checkout remete a eles', () => {
     expect(fonte('termos/page.tsx')).toContain('você declara ter 18 anos ou mais');
-    const c = fonte('checkout/[slug]/CheckoutClient.tsx');
+    const c = fonte('checkout/[slug]/CheckoutClient.tsx')
+      + readFileSync(new URL('../src/i18n/telas/conta-checkout-client.ts', import.meta.url), 'utf8');
     expect(c).toContain('Ao continuar você concorda com os');
     expect(c).not.toContain('18 anos');
   });
@@ -319,7 +320,8 @@ describe('o PIX direto não promete acesso em minutos', () => {
   it('checkout, FAQ, capa e rodapé não prometem liberação "em alguns minutos"', () => {
     for (const f of [
       'src/app/checkout/[slug]/CheckoutClient.tsx', 'src/app/faq/page.tsx',
-      'src/components/landing/Fecho.tsx', 'src/components/shell/PublicShell.tsx'
+      'src/components/landing/Fecho.tsx', 'src/components/shell/PublicShell.tsx',
+      'src/i18n/telas/conta-checkout-client.ts', 'src/i18n/telas/conta-public-shell.ts'
     ]) {
       /* "Recarregue em alguns minutos" (modo automático) continua valendo. */
       expect(readFileSync(f, 'utf8'), f).not.toMatch(/(liberad[oa]|normalmente|Acesso liberado) em alguns minutos/);

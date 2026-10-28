@@ -32,6 +32,7 @@
  */
 
 import { useState, type ReactNode } from 'react';
+import { tx } from '@/i18n/telas/conta-plataforma-pecas';
 
 export type CampoProps = {
   id: string;
@@ -91,8 +92,8 @@ export function Campo({
             onClick={() => setVendo(v => !v)}
             aria-pressed={vendo}
             aria-controls={id}
-            aria-label={vendo ? 'Ocultar senha' : 'Mostrar senha'}
-            title={vendo ? 'Ocultar senha' : 'Mostrar senha'}
+            aria-label={vendo ? tx.ocultarSenha : tx.mostrarSenha}
+            title={vendo ? tx.ocultarSenha : tx.mostrarSenha}
             /* `tabIndex={-1}` seria mais cômodo para quem usa teclado e passa
                direto ao botão de entrar, e foi recusado: um controle que só o
                mouse alcança não serve a quem mais precisa dele. Ele fica na

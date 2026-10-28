@@ -1,4 +1,5 @@
 import { He } from '@/components/hebrew/He';
+import { tx } from '@/i18n/telas/conta-shell-pecas';
 
 /* A marca.
  * ─────────────────────────────────────────────────────────────────────────
@@ -43,7 +44,7 @@ export function Logo({ size = 34, words = true }: { size?: number; words?: boole
            (auditoria de 01/10, VIS-003). */
         <span className="font-display font-semibold text-[15px] sm:text-[18px]
                          tracking-[-0.02em] text-ink whitespace-nowrap truncate min-w-0">
-          Hebraico Fluente
+          {tx.marca}
         </span>
       )}
     </span>
