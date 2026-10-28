@@ -106,20 +106,26 @@ type Screen =
 
 /* Os três jogos, descritos no mesmo formato dos modos da academia - é a
    mesma prateleira, e eles não são um anexo. */
-export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; minimo: number }> = {
+/* `treinaPt` (28/10/2026, rodada 3 da experiência): a habilidade, numa linha.
+   Os seis cartões eram iguais, e o aluno escolhia pelo nome do jogo sem saber
+   o que cada um exercita. */
+export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; treinaPt: string; minimo: number }> = {
   match: {
     titlePt: 'Match',
     descPt: 'Junte cada letra ao seu nome, ao seu som ou a uma palavra.',
+    treinaPt: 'Ligar letra, nome e som',
     minimo: 3
   },
   blast: {
     titlePt: 'Blast',
     descPt: 'Rápido: aparece uma letra, você escolhe. Sequência de acertos na tela.',
+    treinaPt: 'Reconhecer a letra depressa',
     minimo: 4
   },
   teste: {
     titlePt: 'Teste',
     descPt: 'Sem correção durante. No fim, a nota e a lista do que escapou.',
+    treinaPt: 'Ver o que já está firme',
     minimo: 4
   },
   /* Os três que entraram em 22/09/2026. Entram NESTA prateleira, e não numa
@@ -128,16 +134,19 @@ export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; minimo: numb
   caca: {
     titlePt: 'Caça à letra',
     descPt: 'Encontre a letra certa no meio da confusão.',
+    treinaPt: 'Achar a letra no meio de outras',
     minimo: 3
   },
   batalha: {
     titlePt: 'Batalha das parecidas',
     descPt: 'Duas letras que se parecem, cara a cara, até a diferença ficar óbvia.',
+    treinaPt: 'Separar as letras parecidas',
     minimo: 2
   },
   cursiva: {
     titlePt: 'Impressa × cursiva',
     descPt: 'A mesma letra nos dois alfabetos: o do livro e o da mão.',
+    treinaPt: 'Ler a letra escrita à mão',
     minimo: 3
   }
 };
@@ -718,6 +727,9 @@ export function AcademiaClient() {
                     <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
                       {JOGOS[jogo].titlePt}
                     </span>
+                    <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
+                      Treina: {JOGOS[jogo].treinaPt.toLowerCase()}
+                    </span>
                     <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
                       {JOGOS[jogo].descPt}
                     </span>
@@ -903,8 +915,13 @@ function GymBest({ modeId }: { modeId: string }) {
   const p = useProgress();
   const rec = p.state.gym?.[modeId];
   if (!rec?.runs) return null;
+  /* Quando foi a última vez: é o que diz qual jogo está esquecido. */
+  const dias = rec.lastOn ? Math.round((Date.parse(p.day) - Date.parse(rec.lastOn)) / 864e5) : NaN;
+  const quando = !Number.isFinite(dias) || dias < 0 ? null
+    : dias === 0 ? 'hoje' : dias === 1 ? 'ontem' : `há ${dias} dias`;
   return (
     <span className="font-ui text-[12px] text-ink-muted tabular-nums">
+      {quando && `Jogado ${quando} · `}
       {rec.runs} {rec.runs === 1 ? 'sessão' : 'sessões'}
       {rec.bestSeconds != null && ` · melhor tempo ${rec.bestSeconds} s`}
       {rec.bestSeconds == null && rec.best != null && ` · melhor ${Math.round(rec.best * 100)}%`}

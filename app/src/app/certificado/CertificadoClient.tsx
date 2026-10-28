@@ -350,7 +350,14 @@ export function CertificadoClient() {
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
           <strong>O que o exame verificou:</strong>{' '}
-          {EXAM_PARTS.map(x => x.titlePt.toLowerCase()).join(', ')}.
+          {/* Só as partes que o exame cobrou (27/10/2026): "Sem os pontos" e
+              "Os sons de fora" só entram para quem fez os módulos 6 e 7, e a
+              lista fixa prometia as duas a todo mundo. `parts` é a última
+              prova; sem ela (registro antigo), as partes de sempre. */}
+          {(p.state.finalChallenge.parts
+            ? EXAM_PARTS.filter(x => x.id in p.state.finalChallenge.parts!)
+            : EXAM_PARTS.filter(x => x.id !== 'sempontos' && x.id !== 'gerech')
+          ).map(x => x.titlePt.toLowerCase()).join(', ')}.
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
           <strong>O que ele não é:</strong> um certificado oficial, um diploma ou uma

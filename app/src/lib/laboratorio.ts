@@ -30,12 +30,15 @@ import { letrasDaGrafia, consegueLer, type PalavraDoCurso } from '@/lib/engine/p
 
 export type NivelDeApoio = 'guiada' | 'menos-ajuda' | 'independente';
 
-export const NIVEIS: readonly { id: NivelDeApoio; tituloPt: string; resumoPt: string }[] = [
-  { id: 'guiada', tituloPt: 'Leitura guiada',
+/* `curtoPt`: o rótulo do seletor de uma linha (27/10/2026, rodada 2 da
+   experiência): os três cartões empurravam a palavra para baixo da dobra no
+   celular. */
+export const NIVEIS: readonly { id: NivelDeApoio; tituloPt: string; curtoPt: string; resumoPt: string }[] = [
+  { id: 'guiada', tituloPt: 'Leitura guiada', curtoPt: 'Guiada',
     resumoPt: 'Com nikud, explicação letra por letra e áudio disponível quando você precisar.' },
-  { id: 'menos-ajuda', tituloPt: 'Leitura com menos ajuda',
+  { id: 'menos-ajuda', tituloPt: 'Leitura com menos ajuda', curtoPt: 'Menos ajuda',
     resumoPt: 'Tente ler por conta própria. Você pode acessar dicas quando precisar.' },
-  { id: 'independente', tituloPt: 'Leitura independente',
+  { id: 'independente', tituloPt: 'Leitura independente', curtoPt: 'Independente',
     resumoPt: 'Leia a palavra por conta própria e depois confira a pronúncia.' }
 ];
 
