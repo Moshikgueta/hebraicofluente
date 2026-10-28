@@ -1,0 +1,20 @@
+{
+  "_nota": "O que a Action 'Fotos das missões' procura no Wikimedia Commons. Uma linha por busca; a missão é o módulo. Só entram licenças livres (domínio público, CC0, CC BY, CC BY-SA). O dono escolhe depois, em FOTOS-DAS-MISSOES-PARA-REVISAR.md.",
+  "buscas": [
+    { "missao": 1, "q": "Mahane Yehuda market vegetables" },
+    { "missao": 1, "q": "Carmel Market Tel Aviv stall" },
+    { "missao": 2, "q": "school building Israel" },
+    { "missao": 2, "q": "elementary school Tel Aviv" },
+    { "missao": 3, "q": "bakery Jerusalem bread" },
+    { "missao": 3, "q": "challah bakery Israel" },
+    { "missao": 4, "q": "street sign Hebrew Jerusalem" },
+    { "missao": 4, "q": "kiosk Rothschild Boulevard Tel Aviv" },
+    { "missao": 5, "q": "Tel Aviv empty street Shabbat" },
+    { "missao": 5, "q": "Jerusalem street Saturday quiet" },
+    { "missao": 6, "q": "Hebrew shop signs Tel Aviv" },
+    { "missao": 6, "q": "storefront Hebrew sign Jerusalem" },
+    { "missao": 7, "q": "Ben Gurion Airport signs" },
+    { "missao": 7, "q": "Ben Gurion Airport Terminal 3 hall" }
+  ],
+  "porBusca": 4
+}
