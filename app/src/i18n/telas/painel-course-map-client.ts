@@ -35,7 +35,9 @@ const pt = {
   finalFeito: 'Você passou no exame final. O seu certificado do curso está pronto.',
   finalFalta: 'Um exame com as letras, os sons, as sílabas, palavras, frases e palavras sem nikud. No fim, o certificado do curso.',
 
-  naoEncontrado: 'Mapa não encontrado.'
+  naoEncontrado: 'Mapa não encontrado.',
+  lugarNovo: 'Lugar novo',
+  lugarNovoAberto: (lugar: string) => `Lugar novo aberto: ${lugar}.`,
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -69,7 +71,9 @@ const en: Traducao<typeof pt> = {
   finalFeito: 'You passed the final exam. Your course certificate is ready.',
   finalFalta: 'An exam with the letters, the sounds, syllables, words, sentences and words without nikud. At the end, the course certificate.',
 
-  naoEncontrado: 'Map not found.'
+  naoEncontrado: 'Map not found.',
+  lugarNovo: 'New place',
+  lugarNovoAberto: (lugar: string) => `New place unlocked: ${lugar}.`
 };
 
 export const DICIONARIO = { pt, en };

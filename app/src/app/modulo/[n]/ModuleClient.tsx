@@ -13,11 +13,13 @@ import { He, HeSeq } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Prose } from '@/components/learn/Blocks';
+import { useMemo } from 'react';
 import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { EXTRA_STAGE_COUNT, isLessonComplete } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
-import { missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
+import { allLetters, extras, missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
+import { CenaExploravel } from '@/components/aventura/CenaExploravel';
 import { textoLidoId } from '@/lib/engine/textos';
 import { missaoId } from '@/lib/engine/missao';
 import { praticaId } from '@/lib/engine/pratica';
@@ -45,6 +47,15 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const passou = !!cp?.passedAt;
   const praticaFeita = !!p.state.firsts[praticaId(mod.n)];
   const proximo = course.modules.find(m => m.n === mod.n + 1);
+  const todas = allLetters();
+  const comecadas = useMemo(
+    () => todas.filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
+    [todas, p.state.lessons]
+  );
+  const modulosComecados = useMemo(
+    () => course.modules.filter(m => !m.letterIds.length && (p.state.lessons[m.id]?.stagesDone.length ?? 0) > 0).map(m => m.n),
+    [p.state.lessons]
+  );
 
   /* O checkpoint e a prática focada num cartão só (05/10/2026). Antes o
      checkpoint só aparecia no fim da última lição: quem voltava ao módulo
@@ -101,6 +112,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
         <p className="text-[16px] leading-relaxed text-ink-body"><Prose text={mod.introPt} /></p>
         <GravacaoDoProfessor id={`module-${mod.n}-welcome`} />
       </Card>
+
+      <CenaExploravel modulo={mod.n} todas={todas} comecadas={comecadas} extras={extras()} modulosComecados={modulosComecados} />
 
       <Card className="p-6 grid gap-4">
         <h2 className="font-display text-[18px] font-semibold">{tx.asLicoes}</h2>

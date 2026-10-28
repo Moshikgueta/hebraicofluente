@@ -13,6 +13,8 @@ const pt = {
   silabasDesc: 'Consoante mais vogal - a operação da leitura.',
   palavrasTitulo: 'Palavras',
   palavrasDesc: 'Ler palavras inteiras, montar, escrever.',
+  fotosTitulo: 'Foto e palavra',
+  fotosDesc: 'A foto na tela: escolha a palavra em hebraico que é dela.',
   ouvirTitulo: 'Ouvir e escolher',
   ouvirDesc: 'Só o som, sem ver antes.',
   parecidasTitulo: 'Letras parecidas',
@@ -36,7 +38,9 @@ const pt = {
   maisRecentes: 'As letras mais recentes',
   par: '{a} e {b}',
   acumuladas: 'Das {n} palavras que você já acumulou',
-  maisFraco: 'Começando pelo que está mais fraco'
+  maisFraco: 'Começando pelo que está mais fraco',
+  semFotos: 'Chega quando houver três palavras com foto, na lição do Yod.',
+  fotosRotulo: (n: number) => `Das ${n} palavras com foto que você já lê`,
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -50,6 +54,8 @@ const en: Traducao<typeof pt> = {
   silabasDesc: 'Consonant plus vowel - the basic move of reading.',
   palavrasTitulo: 'Words',
   palavrasDesc: 'Read whole words, build them, type them.',
+  fotosTitulo: 'Photo and word',
+  fotosDesc: 'A photo on the screen: choose the Hebrew word that goes with it.',
   ouvirTitulo: 'Listen and choose',
   ouvirDesc: 'Only the sound, without seeing it first.',
   parecidasTitulo: 'Look-alike letters',
@@ -73,7 +79,9 @@ const en: Traducao<typeof pt> = {
   maisRecentes: 'The most recent letters',
   par: '{a} and {b}',
   acumuladas: 'From the {n} words you have collected so far',
-  maisFraco: 'Starting with your weakest'
+  maisFraco: 'Starting with your weakest',
+  semFotos: 'Unlocks when there are three words with a photo, in the Yod lesson.',
+  fotosRotulo: (n: number) => `From the ${n} words with a photo that you can already read`
 };
 
 export const DICIONARIO = { pt, en };

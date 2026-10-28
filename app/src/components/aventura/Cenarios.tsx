@@ -9,8 +9,9 @@
  * contrário: a cidade só aparece no módulo 4, quando o Áyin de עִיר já
  * foi ensinado.
  *
- *   1 O mar         · יָם, מַיִם, תֵה: a praia, o barco, a cidade no morro
- *   2 O jardim      · גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ: a montanha, o rio, o lago
+ *   1 O mar         · יָם, מַיִם, תֵה: a praia, o barco, o copo d'água e o chá
+ *   2 O jardim      · גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ, דָג, גְלִידָה: a montanha, o rio,
+ *                     o lago com o peixe, o carrinho de sorvete
  *   3 A janela      · חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה: janelas, rosas, a padaria
  *   4 A cidade      · עִיר, עֵץ, צֵל, סַל: o portão de pedra, a árvore, a sombra
  *   5 O mercado     · פִּתָה, תַפּוּחַ, קָפֶה, כֶּסֶף: toldos e caixas de fruta
@@ -186,6 +187,21 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       <ellipse cx="62" cy="108" rx="26" ry="4" fill="var(--il-sombra)" />
       <Oliveira x={58} y={104} s={1.1} />
       <Oliveira x={268} y={106} />
+      {/* A cesta (סַל) no caminho. */}
+      <g>
+        <path d="M238 100 Q244 92 250 100" stroke="var(--il-tronco)" strokeWidth="1.4" fill="none" />
+        <path d="M236 100 L252 100 L249 108 L239 108 Z" fill="var(--il-caixa)" />
+        <path d="M238 103 L250 103 M239 105.6 L249 105.6" stroke="var(--il-tronco)" strokeWidth=".8" />
+        <circle cx="241" cy="99" r="2" fill="var(--il-fruta-1)" /><circle cx="246" cy="98.6" r="2" fill="var(--il-fruta-3)" />
+      </g>
+      {/* A mesinha com o copo de suco (מִיץ) e o canudo. */}
+      <g>
+        <ellipse cx="294" cy="98" rx="9" ry="2" fill="var(--il-ferro)" />
+        <path d="M294 98 L294 110 M289 110 L299 110" stroke="var(--il-ferro)" strokeWidth="1.4" />
+        <path d="M290.6 88 L297.4 88 L296.4 97.4 L291.6 97.4 Z" fill="var(--il-espuma)" opacity=".9" />
+        <path d="M291 91 L297 91 L296.4 97.4 L291.6 97.4 Z" fill="var(--il-fruta-2)" />
+        <path d="M295 92 L297.6 84 L299.6 84" stroke="var(--il-toldo)" strokeWidth=".9" fill="none" />
+      </g>
     </>
   ),
 
@@ -241,7 +257,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       {/* O jardim: árvores redondas e a cerca baixa. */}
       <Oliveira x={44} y={106} s={1.05} />
       <Oliveira x={92} y={108} s={.85} />
-      <Cipreste x={276} y={106} h={34} /><Cipreste x={292} y={108} h={26} />
+      <Cipreste x={258} y={106} h={34} /><Cipreste x={270} y={108} h={26} />
       <path d="M8 110 L120 110" stroke="var(--il-tronco)" strokeWidth="1.6" />
       {Array.from({ length: 12 }, (_, k) => (
         <path key={k} d={`M${12 + k * 9.5} 110 L${12 + k * 9.5} 103`} stroke="var(--il-tronco)" strokeWidth="1.6" />
@@ -249,6 +265,23 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       <g className="il-passaros">
         <path d="M120 26 q4 -4 8 0 q4 -4 8 0" stroke="var(--il-ferro)" strokeWidth="1.3" fill="none" />
         <path d="M142 18 q3 -3 6 0 q3 -3 6 0" stroke="var(--il-ferro)" strokeWidth="1.2" fill="none" />
+      </g>
+      {/* O peixe (דָג) pulando no lago. */}
+      <g className="il-peixe">
+        <path d="M132 104 Q138 99 145 103 Q138 107 132 104 Z" fill="var(--il-toldo-3)" />
+        <path d="M145 103 L150 99 L149 106 Z" fill="var(--il-toldo-3)" />
+        <circle cx="135" cy="103" r=".8" fill="var(--il-ferro)" />
+      </g>
+      {/* O carrinho de sorvete (גְלִידָה), com o guarda-sol listrado. */}
+      <g transform="translate(46 0)">
+        <path d="M250 84 L250 98" stroke="var(--il-ferro)" strokeWidth="1.2" />
+        <path d="M238 86 Q250 76 262 86 Z" fill="var(--il-toldo)" />
+        <path d="M244 86 Q250 79 256 86 Z" fill="var(--il-toldo-2)" />
+        <rect x="240" y="96" width="20" height="10" rx="2" fill="var(--il-toldo-2)" />
+        <rect x="240" y="96" width="20" height="3" fill="var(--il-flor)" />
+        <circle cx="244" cy="108" r="2.4" fill="var(--il-ferro)" /><circle cx="256" cy="108" r="2.4" fill="var(--il-ferro)" />
+        <circle cx="246" cy="93" r="2.2" fill="var(--il-flor)" /><circle cx="250" cy="92" r="2.2" fill="var(--il-fruta-3)" />
+        <circle cx="254" cy="93" r="2.2" fill="var(--il-espuma)" />
       </g>
     </>
   ),
@@ -277,13 +310,38 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       {[0, 1, 2, 3, 4].map(k => (
         <g key={k}>
           <rect x={14 + k * 62} y="88" width="44" height="16" fill="var(--il-caixa)" />
-          {[0, 1, 2, 3, 4, 5].map(j => (
+          {/* Na banca 1, as pitas (פִּתָה); na 3, os copos (כּוֹס); na 4, as
+              moedas do troco (כֶּסֶף); nas outras, a comida (אֹכֶל) das caixas. */}
+          {k === 1 ? [0, 1, 2].map(j => (
+            <ellipse key={j} cx={24 + k * 62 + j * 12} cy={86 - (j % 2) * 2} rx="7" ry="3.4" fill="var(--il-pao)" />
+          )) : k === 3 ? [0, 1, 2, 3].map(j => (
+            <g key={j}>
+              <path d={`M${18 + k * 62 + j * 10} 78 L${25 + k * 62 + j * 10} 78 L${24 + k * 62 + j * 10} 88 L${19 + k * 62 + j * 10} 88 Z`}
+                    fill="var(--il-espuma)" opacity=".9" />
+              <rect x={19.4 + k * 62 + j * 10} y="82" width="4.2" height="6" fill={j % 2 ? 'var(--il-fruta-2)' : 'var(--il-fruta-1)'} />
+            </g>
+          )) : k === 4 ? (
+            <g>
+              <rect x={20 + k * 62} y="84" width="32" height="4" rx="1" fill="var(--il-tronco)" />
+              {[0, 1, 2, 3, 4].map(j => (
+                <ellipse key={j} cx={25 + k * 62 + j * 5.5} cy={83 - (j % 2) * 1.6} rx="2.8" ry="1.4" fill="var(--il-sol)" />
+              ))}
+            </g>
+          ) : [0, 1, 2, 3, 4, 5].map(j => (
             <circle key={j} cx={19 + k * 62 + j * 7} cy={86 - (j % 2) * 3} r="4"
                     fill={['var(--il-fruta-1)', 'var(--il-fruta-2)', 'var(--il-fruta-3)', 'var(--il-oliva)', 'var(--il-fruta-1)'][k]} />
           ))}
         </g>
       ))}
       <rect x="0" y="104" width={W} height="16" fill="var(--il-caminho)" />
+      {/* O cachorro (כֶּלֶב) do mercado, deitado no caminho. */}
+      <g>
+        <path d="M150 114 Q150 107 158 107 L166 107 Q170 107 170 112 L170 114 Z" fill="var(--il-tronco)" />
+        <path d="M166 108 Q168 102 173 103 Q176 104 175 108 Q173 110 168 110 Z" fill="var(--il-tronco)" />
+        <path d="M170 103 Q169 100 171.5 101 Z" fill="var(--il-ferro)" />
+        <path d="M150 111 Q145 109 146 105" stroke="var(--il-tronco)" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <circle cx="172.4" cy="105.6" r=".7" fill="var(--il-ferro)" />
+      </g>
       {/* As placas: retângulos, nunca letras. */}
       <rect x="88" y="40" width="24" height="9" rx="2" fill="var(--il-placa)" />
       <rect x="212" y="40" width="28" height="9" rx="2" fill="var(--il-placa)" />
@@ -307,12 +365,25 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       <circle cx="296.5" cy="39" r="2" fill="var(--il-sol)" className="il-luz" />
       <Mar y={78} />
       {/* O barco, que balança de leve. */}
-      <g className="il-barco">
+      <g transform="translate(48 0)"><g className="il-barco">
         <path d="M84 94 L132 94 L124 104 L92 104 Z" fill="var(--il-barco)" />
         <path d="M106 94 L106 66 L126 90 Z" fill="var(--il-vela)" />
         <path d="M104 94 L104 72 L90 90 Z" fill="var(--il-vela)" opacity=".85" />
+      </g></g>
+      {/* A areia, com o copo d'água (מַיִם) e o chá (תֵה). */}
+      <path d="M0 98 Q44 92 98 100 L112 120 L0 120 Z" fill="var(--il-caminho)" />
+      <Palmeira x={16} y={102} h={40} />
+      <g>
+        <path d="M39 99 L49 99 L47.6 112 L40.4 112 Z" fill="var(--il-espuma)" opacity=".9" />
+        <path d="M39.6 103 L48.4 103 L47.6 112 L40.4 112 Z" fill="var(--il-mar)" />
       </g>
-      <Palmeira x={22} y={80} h={34} />
+      <g>
+        <ellipse cx="88" cy="112" rx="10" ry="2.2" fill="var(--il-pedra-sombra)" />
+        <path d="M81 103 L95 103 Q95 111 88 111 Q81 111 81 103 Z" fill="var(--il-espuma)" />
+        <path d="M95 105 Q99 105 98.4 107.6 Q97.6 109.4 94.2 109" stroke="var(--il-espuma)" strokeWidth="1.4" fill="none" />
+        <ellipse cx="88" cy="103.4" rx="6.6" ry="1.2" fill="var(--il-porta)" />
+        <path className="il-vapor" d="M86 100 Q84 97 86 94 Q88 91 86 88 M90.5 100 Q88.5 97 90.5 94" stroke="var(--il-espuma)" strokeWidth="1.1" fill="none" opacity=".8" />
+      </g>
     </>
   ),
 
@@ -320,6 +391,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
   6: id => (
     <>
       <Ceu id={id} />
+      <Sol x={290} y={22} r={10} />
       <Nuvem x={30} y={16} /><Nuvem x={220} y={10} s={.8} />
       {([[10, 34, 70], [46, 30, 52], [78, 40, 82], [120, 28, 60], [150, 36, 74], [188, 32, 56], [222, 42, 88], [266, 34, 64], [300, 26, 48]] as [number, number, number][]).map(([x, w, h], k) => (
         <g key={k}>
@@ -363,6 +435,14 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
                 fill="var(--il-painel)" />
         </g>
       ))}
+      {/* O varal no telhado, com o pijama (פיג׳מה) pendurado. */}
+      <g>
+        <path d="M290 76 L290 54 M316 76 L316 54" stroke="var(--il-ferro)" strokeWidth="1.2" />
+        <path d="M290 56 Q303 60 316 56" stroke="var(--il-ferro)" strokeWidth=".8" fill="none" />
+        <path d="M293 57.6 L301 58.4 L302 61 L300 61.4 L300 67 L294 67 L294 61.4 L292 61 Z" fill="var(--il-toldo-3)" />
+        <path d="M304 58.4 L312 57.6 L311.6 70 L309 70 L308 62 L307 70 L304.4 70 Z" fill="var(--il-toldo-3)" />
+        <path d="M294 63 L300 63 M305 62 L311 62" stroke="var(--il-espuma)" strokeWidth=".7" opacity=".8" />
+      </g>
       {/* As luzes de festa, num fio. */}
       <path d="M10 20 Q90 44 170 26 T316 30" stroke="var(--il-ferro)" strokeWidth="1" fill="none" />
       {Array.from({ length: 13 }, (_, k) => {

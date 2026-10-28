@@ -19,7 +19,10 @@
  * não "não pode entrar". Um adulto que quer espiar o módulo 6 pode.
  */
 
+import { useEffect, useRef, useState } from 'react';
 import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { Yael } from '@/components/aventura/Yael';
+import { anotarVisto, lerVisto, moduloParaAnunciar } from '@/lib/desbloqueio';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
@@ -74,6 +77,17 @@ export function CourseMapClient() {
      nenhum: o passo atual é ela (12/10/2026). */
   const a0 = aula0Feita(p.state);
   const indiceAtual = a0 ? modulos.findIndex(m => !moduloCompleto(p.state, m)) : -2;
+  /* O lugar que abriu desde a última visita (lib/desbloqueio.ts). Só depois
+     de o progresso carregar: antes dele o mapa inteiro parece trancado, e
+     anotar isso apagaria a lembrança certa. */
+  const atualN = indiceAtual >= 0 ? modulos[indiceAtual]!.n : indiceAtual === -2 ? 0 : null;
+  const [novo, setNovo] = useState<number | null>(null);
+  useEffect(() => {
+    if (!p.ready || atualN == null) return;
+    const n = moduloParaAnunciar(atualN, lerVisto());
+    if (n != null) setNovo(n);
+    anotarVisto(atualN);
+  }, [p.ready, atualN]);
 
   return (
     <div className="lg:rounded-[24px] lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
@@ -108,7 +122,7 @@ export function CourseMapClient() {
             : i === indiceAtual || indiceAtual === -1 ? 'agora'
             : 'adiante';
           return (
-            <Trecho key={m.id} module={m} estado={estado} ultimo={false} />
+            <Trecho key={m.id} module={m} estado={estado} ultimo={false} novo={novo === m.n} />
           );
         })}
         <TrechoFinal />
@@ -181,10 +195,18 @@ function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: Course
   return letras && cp;
 }
 
-function Trecho({ module: m, estado, ultimo }: {
+function Trecho({ module: m, estado, ultimo, novo = false }: {
   module: CourseModule; estado: Estado; ultimo: boolean;
+  /** O lugar acabou de abrir: o cartão se anuncia (ver lib/desbloqueio.ts). */
+  novo?: boolean;
 }) {
   const p = useProgress();
+  const cartao = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!novo) return;
+    const calmo = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    cartao.current?.scrollIntoView({ block: 'center', behavior: calmo ? 'auto' : 'smooth' });
+  }, [novo]);
   const itens = itensDoModulo(m);
   /* A ordem de ensino, a mesma que a trava da lição usa. Calculada aqui e
      não no carregamento do arquivo: na plataforma o conteúdo das letras
@@ -256,6 +278,7 @@ function Trecho({ module: m, estado, ultimo }: {
             Antes o cartão era um link só, e tocar num {{ש}} concluído abria
             sempre a primeira letra do grupo. */}
         <div
+          ref={cartao}
           className={`relative rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
             hover:shadow-[var(--sh)]
             ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
@@ -278,9 +301,30 @@ function Trecho({ module: m, estado, ultimo }: {
               desbotado, e o concluído ganha o selo. O desenho é decorativo:
               o que ele diz está no texto do cartão. */}
           {m.n >= 1 && m.n <= 7 && (
-            <div className="relative -mx-5 -mt-5 sm:-mx-6 sm:-mt-[22px] mb-4 h-[104px] sm:h-[132px]
-                            overflow-hidden rounded-t-[17px] border-b border-line">
+            <div className={`relative -mx-5 -mt-5 sm:-mx-6 sm:-mt-[22px] mb-4 h-[104px] sm:h-[132px]
+                            overflow-hidden rounded-t-[17px] border-b border-line ${novo ? 'hf-desbloqueio' : ''}`}>
               <Cenario n={m.n as IdDoCenario} vivo={estado === 'agora'} trancado={estado === 'adiante'} />
+              {/* O lugar que acabou de abrir: o cadeado balança e some, a cor
+                  volta ao desenho, a Yael chega pulando e o selo aparece. Só
+                  transform, opacidade e filtro, uma vez; com "reduzir
+                  movimento" tudo já nasce no estado final. */}
+              {novo && (
+                <>
+                  <span aria-hidden className="hf-cadeado-abre absolute inset-0 grid place-items-center">
+                    <span className="grid place-items-center w-14 h-14 rounded-full bg-[var(--card)] shadow-[var(--sh)]">
+                      <IconeCadeado size={26} />
+                    </span>
+                  </span>
+                  <span aria-hidden className="hf-yael-chega absolute right-2 bottom-0 w-[64px] sm:w-[76px]">
+                    <Yael pulando />
+                  </span>
+                  <span className="hf-selo-novo absolute right-3 top-3 rounded-full bg-[var(--gold-solid)] px-3 py-1
+                                   font-ui text-[12.5px] font-bold text-white shadow-[var(--sh)]">
+                    {tx.lugarNovo}
+                  </span>
+                  <span className="sr-only" role="status">{tx.lugarNovoAberto(LUGAR[m.n as IdDoCenario].pt)}</span>
+                </>
+              )}
               {/* O nome do lugar é uma palavra que o aluno já lê neste módulo. */}
               <span className="absolute left-3 bottom-2.5 inline-flex items-baseline gap-2 rounded-full
                                bg-[var(--card)]/92 pl-3 pr-3 py-0.5 shadow-[var(--sh)]">

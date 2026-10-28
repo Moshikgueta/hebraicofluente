@@ -204,6 +204,32 @@
 .il-vivo .il-barco { transform-box: fill-box; transform-origin: 50% 100%; animation: il-balanca 4s ease-in-out infinite; }
 .il-vivo .il-luz { animation: il-pisca 2.4s ease-in-out infinite; }
 .il-vivo .il-onibus { animation: il-anda 7s ease-in-out infinite alternate; }
+@keyframes il-pula-peixe { 0%, 70%, 100% { transform: translateY(0) rotate(0); } 82% { transform: translateY(-5px) rotate(-14deg); } }
+/* O lugar que acabou de abrir no mapa (CourseMapClient, lib/desbloqueio.ts):
+   a cor volta ao desenho, o cadeado balança e some, a Yael chega e o selo
+   aparece. Roda uma vez; "reduzir movimento" leva tudo ao estado final. */
+@keyframes hf-cor-volta { from { filter: grayscale(.75) brightness(.97); opacity: .72; } to { filter: none; opacity: 1; } }
+@keyframes hf-cadeado-abre {
+  0% { transform: scale(1) rotate(0); opacity: 1; }
+  25% { transform: rotate(-12deg); }
+  45% { transform: rotate(10deg); }
+  62% { transform: scale(1.12) rotate(0); opacity: 1; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@keyframes hf-yael-chega { from { transform: translateX(-180px); opacity: 0; } 20% { opacity: 1; } to { transform: none; opacity: 1; } }
+@keyframes hf-selo-novo { from { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.08); } to { transform: none; opacity: 1; } }
+.hf-desbloqueio > svg { animation: hf-cor-volta 1.1s ease-out .9s both; }
+.hf-cadeado-abre { animation: hf-cadeado-abre 1.1s ease-in-out .3s both; }
+.hf-yael-chega { animation: hf-yael-chega 1.2s cubic-bezier(.2, .8, .3, 1) 1.4s both; }
+.hf-selo-novo { animation: hf-selo-novo .45s ease-out 2.4s both; }
+
+/* O ponto da cena explorável ainda não tocado (CenaExploravel). */
+@keyframes hf-cena-pulso { from { transform: scale(1); opacity: .85; } to { transform: scale(2.1); opacity: 0; } }
+.hf-cena-pulso { animation: hf-cena-pulso 1.8s ease-out infinite; }
+/* Na cena explorável o ônibus fica parado: o ponto dele não anda junto. */
+.hf-cena .il-onibus { animation: none; }
+.il-vivo .il-vapor { animation: il-pisca 3s ease-in-out infinite; }
+.il-vivo .il-peixe { transform-box: fill-box; transform-origin: center; animation: il-pula-peixe 4s ease-in-out infinite; }
 .il-trancado { filter: grayscale(.75) brightness(.97); opacity: .72; }
 /* A entrada do lugar na lição: o desenho sobe 8 px e aparece, 600 ms, uma
    vez. Com movimento reduzido ele já está no lugar. */
