@@ -30,17 +30,18 @@
  * As cores são as variáveis do tema, então vale no claro e no escuro.
  */
 
+import { tx } from '@/i18n/telas/licao-onde-nasce-o-som';
 import { Prose } from './Blocks';
 import type { Articulacao, PontoDoSom } from '@/lib/content-publico';
 
 export const LUGAR: Record<PontoDoSom, { x: number; y: number; nome: string; frase: string }> = {
-  labios: { x: 45, y: 120, nome: 'lábios', frase: 'dos dois lábios' },
-  'labio-dentes': { x: 53, y: 112, nome: 'lábio e dentes', frase: 'dos dentes de cima no lábio de baixo' },
-  dentes: { x: 62, y: 109, nome: 'atrás dos dentes', frase: 'da ponta da língua atrás dos dentes' },
-  palato: { x: 88, y: 102, nome: 'céu da boca', frase: 'do meio da língua perto do céu da boca' },
-  veu: { x: 124, y: 106, nome: 'fundo do céu da boca', frase: 'do fundo da língua no fundo do céu da boca' },
-  uvula: { x: 150, y: 126, nome: 'úvula', frase: 'da úvula, no fundo da boca' },
-  glote: { x: 149, y: 186, nome: 'cordas vocais', frase: 'das cordas vocais, na garganta' }
+  labios: { x: 45, y: 120, nome: tx.labios, frase: tx.labiosFrase },
+  'labio-dentes': { x: 53, y: 112, nome: tx.labioDentes, frase: tx.labioDentesFrase },
+  dentes: { x: 62, y: 109, nome: tx.dentes, frase: tx.dentesFrase },
+  palato: { x: 88, y: 102, nome: tx.palato, frase: tx.palatoFrase },
+  veu: { x: 124, y: 106, nome: tx.veu, frase: tx.veuFrase },
+  uvula: { x: 150, y: 126, nome: tx.uvula, frase: tx.uvulaFrase },
+  glote: { x: 149, y: 186, nome: tx.glote, frase: tx.gloteFrase }
 };
 
 /* Os rótulos ficam numa coluna à direita, FORA da cabeça - dentro, cruzavam
@@ -66,10 +67,8 @@ export function OndeNasceOSom({ articulacao, letra }: {
 
   const onde = lugares.length
     ? lugares.map(l => `${l.rotulo ? `${l.rotulo}: ` : ''}${l.frase}`).join('; ')
-    : 'de lugar nenhum: a letra não tem som próprio';
-  const descricao = `Corte da cabeça de perfil. O som de ${letra} sai ${onde}${
-    muda ? '' : voz ? ', com a voz ligada' : ', sem voz, só com o ar'
-  }${nariz ? ', e o ar sai pelo nariz' : ''}.`;
+    : tx.semLugar;
+  const descricao = tx.descricao(letra, onde, voz, nariz);
 
   return (
     <figure className="m-0 grid gap-3 sm:grid-cols-[310px_minmax(0,1fr)] sm:items-center
@@ -125,25 +124,25 @@ export function OndeNasceOSom({ articulacao, letra }: {
         {muda && (
           <text x={COLUNA} y="126" fontSize="12" fill="var(--ink-muted)" fontWeight="600"
                 style={{ fontFamily: 'var(--font-ui, sans-serif)' }}>
-            sem som próprio
+            {tx.semSom}
           </text>
         )}
       </svg>
 
       <figcaption className="grid gap-2">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">
-          De onde sai o som?
+          {tx.deOnde}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body m-0"><Prose text={comoPt} /></p>
         <p className="font-ui text-[13px] m-0 flex flex-wrap gap-2">
           <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1
             ${voz ? 'bg-[var(--accent-wash)] text-[var(--teal-ink)]' : 'bg-surface text-ink-body border border-line'}`}>
             <span aria-hidden>{voz ? '〰' : '·'}</span>
-            {muda ? 'Muda: quem soa é a vogal' : voz ? 'Com voz: a garganta vibra' : 'Sem voz: só o ar passando'}
+            {muda ? tx.muda : voz ? tx.comVoz : tx.semVoz}
           </span>
           {nariz && (
             <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-surface text-ink-body border border-line">
-              O ar sai pelo nariz
+              {tx.nariz}
             </span>
           )}
         </p>

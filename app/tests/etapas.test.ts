@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ETAPAS_DA_LICAO, quantasEtapasPt } from '@/lib/etapas-da-licao';
+import { DICIONARIO } from '@/i18n/telas/licao-lesson-client';
 
 describe('as etapas da lição', () => {
   it('são as abas da lição, na mesma ordem', () => {
@@ -13,7 +14,10 @@ describe('as etapas da lição', () => {
       new URL('../src/app/licao/[letterId]/LessonClient.tsx', import.meta.url), 'utf8');
     const bloco = fonte.match(/const STAGES = \[([\s\S]*?)\] as const;/);
     expect(bloco).not.toBeNull();
-    const abas = [...bloco![1]!.matchAll(/label: '([^']+)'/g)].map(m => m[1]);
+    /* Os rótulos moram no dicionário da tela (i18n): `label: tx.chave`. */
+    const pt = DICIONARIO.pt as unknown as Record<string, string>;
+    const abas = [...bloco![1]!.matchAll(/label: tx\.(\w+)/g)].map(m => pt[m[1]!]);
+    expect(abas).toHaveLength(5);
     expect(ETAPAS_DA_LICAO.map(e => e.aba)).toEqual(abas);
   });
 

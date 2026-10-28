@@ -18,6 +18,7 @@
  * e os destinos dele seguem existindo para `varrer-curso.mjs`.
  */
 
+import { tx } from '@/i18n/telas/licao-partes';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 
@@ -74,7 +75,7 @@ export function AbrirTodas() {
               onClick={() => ctx.todas(!todasAbertas)}
               className="min-h-[44px] px-3 font-ui text-[14px] font-semibold text-[var(--accent)]
                          underline underline-offset-4">
-        {todasAbertas ? 'Fechar todas as partes' : 'Abrir todas as partes'}
+        {todasAbertas ? tx.fecharTodas : tx.abrirTodas}
       </button>
     </div>
   );

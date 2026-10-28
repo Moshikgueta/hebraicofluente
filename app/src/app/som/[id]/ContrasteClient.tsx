@@ -18,6 +18,7 @@
  *   5 fixação    - com nota; a mesma regra de domínio de toda lição
  */
 
+import { tx } from '@/i18n/telas/licao-contraste-client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -41,11 +42,11 @@ import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
 import { alvoDoSom } from '@/lib/fixacao';
 
 const STAGES = [
-  { n: 1, label: 'Os pares' },
-  { n: 2, label: 'Sílabas' },
-  { n: 3, label: 'Palavras' },
-  { n: 4, label: 'Fixação' },
-  { n: 5, label: 'Exercícios' }
+  { n: 1, label: tx.osPares },
+  { n: 2, label: tx.silabas },
+  { n: 3, label: tx.palavras },
+  { n: 4, label: tx.fixacao },
+  { n: 5, label: tx.exercicios }
 ] as const;
 
 export function ContrasteClient({ sons, dagesh, modulo, licao }: {
@@ -88,7 +89,7 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
 
   const destino = useDestino(modulo, id, ordem);
 
-  if (trancada) return <Trancada titulo="A lição dos três pares ainda não abriu" trancada={trancada} />;
+  if (trancada) return <Trancada titulo={tx.naoAbriu} trancada={trancada} />;
 
   const stagesDone = p.state.lessons[id]?.stagesDone ?? [];
 
@@ -98,11 +99,11 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
         <div className="flex items-center justify-between gap-3">
           <Link href="/mapa"
                 className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-            ← Mapa
+            {tx.mapa}
           </Link>
-          <Badge tone="accent">Módulo {modulo} · lição {licao} · com e sem o ponto</Badge>
+          <Badge tone="accent">{tx.badge(modulo, licao)}</Badge>
         </div>
-        <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
+        <ol className="flex items-center gap-1.5" aria-label={tx.etapas}>
           {STAGES.map(s => {
             const isDone = stagesDone.includes(s.n);
             const isNow = stage === s.n;
@@ -110,7 +111,7 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
               <li key={s.n} className="flex-1">
                 <button type="button" onClick={() => setStage(s.n)}
                         aria-current={isNow ? 'step' : undefined}
-                        aria-label={`Etapa ${s.n} de 5 - ${s.label}`}
+                        aria-label={tx.etapaDe(s.n, s.label)}
                         className="w-full min-h-[44px] grid content-center gap-1.5">
                   <span className={`block h-1.5 rounded-full transition-colors
                     ${isNow ? 'bg-[var(--accent)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`} />
@@ -132,8 +133,8 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
           key={`f-contraste-${par}`}
           alvo={alvos[Math.min(par, alvos.length - 1)]!}
           so={['ouvir', 'som', 'revisao']}
-          rotuloDoGrupo={`par ${Math.min(par, alvos.length - 1) + 1} de ${alvos.length}`}
-          rotuloFim={par < alvos.length - 1 ? 'Próximo par' : 'Ir para os exercícios'}
+          rotuloDoGrupo={tx.parDe(Math.min(par, alvos.length - 1) + 1, alvos.length)}
+          rotuloFim={par < alvos.length - 1 ? tx.proximoPar : tx.irExercicios}
           onDone={() => (par < alvos.length - 1 ? setPar(n => n + 1) : (setPar(0), feito(4)))}
         />
       )}
@@ -147,7 +148,7 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
           <ExercisePlayer
             key={`fix-contraste-${tentativa}`}
             exercises={teste}
-            title="Exercícios - com e sem o ponto"
+            title={tx.tituloExercicios}
             onDone={r => {
               track('quiz_completed', { letterId: id, score: r.score });
               registrarRodada('contraste-fixacao', teste);
@@ -169,10 +170,9 @@ function OsPares({ sons, dagesh, onDone }: {
   return (
     <div className="grid gap-5">
       <Card className="p-6 sm:p-8 grid gap-5">
-        <h1 className="text-[23px] sm:text-[27px] font-bold leading-tight text-center">Com e sem o ponto</h1>
+        <h1 className="text-[23px] sm:text-[27px] font-bold leading-tight text-center">{tx.comESem}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Você já conhece os seis sons, cada um na sua lição. Agora eles ficam lado a lado: a mesma letra, com o
-          ponto dentro e sem ele.
+          {tx.seisSons}
         </p>
         <ul className="grid gap-3 list-none p-0 m-0">
           {sons.map(S => (
@@ -185,7 +185,7 @@ function OsPares({ sons, dagesh, onDone }: {
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-3">
-        <h2 className="text-[18px] font-semibold">Quando vem o ponto?</h2>
+        <h2 className="text-[18px] font-semibold">{tx.quandoVem}</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={dagesh.rulePt} /></p>
         {sons.map(S => {
           const D = dagesh.letters.find(d => d.id === S.parId);
@@ -203,7 +203,7 @@ function OsPares({ sons, dagesh, onDone }: {
         why: dagesh.warningPt
       }} />
 
-      <Button size="lg" onClick={onDone} full>Continuar para as sílabas</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarSilabas}</Button>
     </div>
   );
 }
@@ -228,10 +228,9 @@ function Silabas({ sons, onDone }: { sons: SomLicao[]; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">As sílabas, lado a lado</h2>
+        <h2 className="text-[21px] font-bold">{tx.silabasLado}</h2>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          Leia cada linha em voz alta, primeiro a coluna da direita (com o ponto) e depois a da esquerda (sem o ponto),
-          e sinta a boca mudar.
+          {tx.leiaCadaLinha}
         </p>
       </div>
       {sons.map(S => (
@@ -251,7 +250,7 @@ function Silabas({ sons, onDone }: { sons: SomLicao[]; onDone: () => void }) {
           })}
         </Card>
       ))}
-      <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarPalavras}</Button>
     </div>
   );
 }
@@ -261,9 +260,9 @@ function Palavras({ sons, onDone }: { sons: SomLicao[]; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">As palavras, dos dois lados</h2>
+        <h2 className="text-[21px] font-bold">{tx.palavrasLados}</h2>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          Antes de ler cada palavra, olhe o miolo da letra destacada: com o ponto ou sem ele.
+          {tx.olheOMiolo}
         </p>
       </div>
       {sons.map(S => (
@@ -283,11 +282,11 @@ function Palavras({ sons, onDone }: { sons: SomLicao[]; onDone: () => void }) {
         </div>
       ))}
       <GravarLeitura
-        titulo="Leia os dois lados em voz alta"
-        instrucao="Leia as palavras de cada par, grave e confira se a diferença aparece: B e V, K e o raspado, P e F."
+        titulo={tx.leiaDoisLados}
+        instrucao={tx.leiaDoisLadosInstrucao}
         maxSegundos={90}
       />
-      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
     </div>
   );
 }
@@ -301,14 +300,14 @@ function Resultado({ r, onRetry, onNext, dica }: {
   return (
     <Milestone
       tone={bom ? 'bom' : 'parcial'}
-      kicker={`${r.correct} de ${r.total} · ${pct}%`}
-      title={bom ? 'Os três pares estão firmes.' : 'Vamos firmar os três pares.'}
+      kicker={tx.placar(r.correct, r.total, pct)}
+      title={bom ? tx.firmes : tx.vamosFirmar}
       body={bom
-        ? 'Você olha o miolo da letra e decide o som. Pode seguir.'
-        : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir com o ponto ou sem ele sem hesitar. O checkpoint abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
+        ? tx.bom
+        : tx.refaca(Math.round(LIBERA_MARK * 100))}
     >
-      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer os exercícios</Button>
-      <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>Concluir e continuar</Button>
+      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>{tx.refazer}</Button>
+      <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>{tx.concluir}</Button>
       <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{dica}</p>
     </Milestone>
   );

@@ -4,6 +4,7 @@
    generic drill - which is the whole reason the SRS pool stores misses rather
    than a log of everything seen. */
 
+import { tx } from '@/i18n/telas/licao-review-client';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -99,12 +100,11 @@ export function ReviewClient() {
   if (!learned.length) {
     return (
       <Card className="p-7 grid gap-3">
-        <h1 className="text-[23px] font-bold">Ainda não há o que revisar</h1>
+        <h1 className="text-[23px] font-bold">{tx.nadaARevisar}</h1>
         <p className="text-[15px] leading-relaxed text-ink-body max-w-[48ch]">
-          A revisão rápida se alimenta do que você erra. Faça a primeira lição e
-          ela começa a aparecer aqui, no dia certo.
+          {tx.seAlimenta}
         </p>
-        <LinkButton href="/meu-hebraico" className="justify-self-start">Ir para a primeira lição</LinkButton>
+        <LinkButton href="/meu-hebraico" className="justify-self-start">{tx.irPrimeira}</LinkButton>
       </Card>
     );
   }
@@ -113,16 +113,16 @@ export function ReviewClient() {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`${result.correct} de ${result.total}`}
-          title="Revisão feita."
+          kicker={tx.placar(result.correct, result.total)}
+          title={tx.feita}
           body={p.dueCount > 0
-            ? `O que você errou volta amanhã, e o que acertou volta mais tarde. Ainda ${p.dueCount === 1 ? 'falta 1 item' : `faltam ${p.dueCount} itens`} para hoje: mais cinco questões resolvem.`
-            : 'Tudo o que estava para hoje foi revisado. O que você errou volta amanhã; o que acertou volta mais tarde, e some quando estiver firme.'}
+            ? tx.aindaFaltam(p.dueCount)
+            : tx.tudoRevisado}
         >
           <Button variant="secondary" onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
-            Mais cinco
+            {tx.maisCinco}
           </Button>
-          <LinkButton href="/meu-hebraico" variant="primary">Voltar ao início</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="primary">{tx.voltarInicio}</LinkButton>
         </Milestone>
         <EscreverDeNovo ids={paraEscrever} />
       </div>
@@ -134,7 +134,7 @@ export function ReviewClient() {
       <ExercisePlayer
         key={run}
         exercises={exercises}
-        title="Revisão rápida"
+        title={tx.revisaoRapida}
         onDone={r => {
           registrarRodada('revisao', exercises);
           setResult(r);
@@ -157,10 +157,10 @@ export function ReviewClient() {
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-2">
-        <Badge tone="neutral">3 minutos</Badge>
-        <h1 className="text-[27px] sm:text-[33px] font-bold">Revisão rápida</h1>
+        <Badge tone="neutral">{tx.tresMinutos}</Badge>
+        <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.revisaoRapida}</h1>
         <p className="font-ui text-[15px] text-ink-muted max-w-[50ch]">
-          Cinco questões tiradas do que deu mais trabalho até aqui.
+          {tx.cincoQuestoes}
         </p>
       </header>
 
@@ -172,7 +172,7 @@ export function ReviewClient() {
 
       <Card className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-          {due.length ? 'Hoje vale revisar' : 'Nada pendente - vamos reforçar as últimas'}
+          {due.length ? tx.hojeVale : tx.nadaPendente}
         </p>
         <ul className="grid gap-2">
           {weak.map(id => {
@@ -185,7 +185,7 @@ export function ReviewClient() {
                 <span className="font-ui text-[15px] text-ink">{l.namePt}</span>
                 {misses > 0 && (
                   <span className="ml-auto font-ui text-[13px] text-ink-muted">
-                    {misses} {misses === 1 ? 'escorregada' : 'escorregadas'}
+                    {tx.escorregadas(misses)}
                   </span>
                 )}
               </li>
@@ -199,21 +199,19 @@ export function ReviewClient() {
       {!exercises.length ? (
         <Card tone="amber" className="p-5">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Ainda não dá para montar uma revisão: com as letras de agora não há
-            alternativas suficientes para uma questão honesta. Siga mais uma lição
-            e volte.
+            {tx.naoDa}
           </p>
         </Card>
       ) : (
         <Button size="lg" full onClick={() => { track('review_started'); setPhase('running'); }}>
-          Começar
+          {tx.comecar}
         </Button>
       )}
 
       <Link href="/mapa"
             className="inline-flex items-center min-h-[44px] font-ui text-[13.5px]
                        text-ink-muted hover:text-ink-body justify-self-center">
-        Ver o mapa do curso
+        {tx.verMapa}
       </Link>
     </div>
   );
@@ -232,10 +230,9 @@ function EscreverDeNovo({ ids }: { ids: string[] }) {
   return (
     <Card className="p-6 grid gap-4">
       <div className="grid gap-1">
-        <h2 className="text-[19px] font-bold m-0">Escrever de novo</h2>
+        <h2 className="text-[19px] font-bold m-0">{tx.escreverDeNovo}</h2>
         <p className="font-ui text-[14px] text-ink-muted m-0">
-          {ids.length === 1 ? 'Esta letra pede' : 'Estas letras pedem'} o traçado de novo. Um traçado
-          bom tira a marca de revisar.
+          {tx.pedemTracado(ids.length)}
         </p>
       </div>
       {ids.map(id => {

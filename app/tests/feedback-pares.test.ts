@@ -34,7 +34,8 @@ describe('a troca entre duas letras', () => {
   it('o retorno de um par aparece no tocador de exercícios', () => {
     const s = fonte('components/learn/ExercisePlayer.tsx');
     expect(s).toContain('trocaDeLetras(opts.expected, opts.chosenGlyph, allLetters())');
-    expect(s).toContain('Observe as duas letras.');
+    expect(s).toContain('{settled.troca.textoPt} {tx.observeAsDuas}');
+    expect(fonte('i18n/telas/licao-exercise-player.ts')).toContain("observeAsDuas: 'Observe as duas letras.'");
   });
 });
 

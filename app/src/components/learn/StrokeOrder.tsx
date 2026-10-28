@@ -23,6 +23,7 @@
  * A native reviewer should still confirm the order before print.
  */
 
+import { tx } from '@/i18n/telas/licao-stroke-order';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { strokesFor, type StrokeSet } from '@/lib/content';
@@ -74,7 +75,7 @@ export function StrokeOrderPlayer({
         viewBox={`0 0 ${set.box} ${set.box}`}
         className="w-full max-w-[220px] aspect-square"
         role="img"
-        aria-label={`Ordem dos traços da letra ${label}: ${n} ${n === 1 ? 'movimento' : 'movimentos'}`}
+        aria-label={tx.rotulo(label, n)}
       >
         {/* The whole letter, very faint, so the learner always sees where the
             stroke they are watching sits inside the finished shape. */}
@@ -121,10 +122,10 @@ export function StrokeOrderPlayer({
 
       <div className="flex items-center gap-3">
         <Button variant="secondary" size="sm" onClick={play} disabled={playing}>
-          {playing ? 'Mostrando…' : 'Ver de novo'}
+          {playing ? tx.mostrando : tx.verDeNovo}
         </Button>
         <span className="font-ui text-[12.5px] text-ink-muted">
-          {n === 1 ? 'um movimento só' : `${n} movimentos, nesta ordem`}
+          {tx.movimentos(n)}
         </span>
       </div>
     </div>
