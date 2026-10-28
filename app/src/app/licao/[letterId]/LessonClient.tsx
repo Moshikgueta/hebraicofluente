@@ -37,6 +37,7 @@ import {
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { MeExplica } from '@/components/learn/MeExplica';
 import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
 import { CelebracaoDaLetra } from '@/components/aventura/CartaDaLetra';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
@@ -282,6 +283,8 @@ function LessonHeader({
           Módulo {letter.module} · lição {letter.lesson} · letra {letter.order}/22
         </Badge>
       </div>
+      {/* A ajuda curta, em toda etapa, sem sair da lição (28/10/2026). */}
+      <div className="-mt-2"><MeExplica letter={letter} /></div>
       <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
         {STAGES.map(s => {
           const isDone = stagesDone.includes(s.n);

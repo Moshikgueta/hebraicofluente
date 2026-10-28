@@ -210,6 +210,10 @@
 @keyframes il-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .il-entra > svg { animation: il-entra 600ms var(--ease-out) both; }
 
+/* A folha do "Me explica, Moshik": sobe 12 px ao abrir, 220 ms. */
+@keyframes hf-folha-sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.hf-folha[open] { animation: hf-folha-sobe 220ms var(--ease-out) both; }
+
 /* A carta dos flashcards vira em Y (components/learn/Flashcards.tsx).
    Com movimento reduzido a troca é na hora. */
 .hf-carta { transition: transform 360ms var(--ease-in-out); }
