@@ -25,6 +25,8 @@ import { Card } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { Cenario, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { EscadaDeLeitura, MarcoDeLeitura, lidasNoNivel, marcoAlcancado } from '@/components/aventura/EscadaDeLeitura';
 import { allLetters, course, extras, getModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { aula0Feita, isLessonComplete, letraAtual } from '@/lib/state/rules';
@@ -79,7 +81,14 @@ function Laboratorio() {
   const [rodada, setRodada] = useState(0);
   const [i, setI] = useState(0);
   const [certas, setCertas] = useState(0);
+  const [marco, setMarco] = useState<string | null>(null);
   useEffect(() => { setNivel(nivelGuardado()); }, []);
+
+  /* O lugar do aluno: o módulo da última letra começada. */
+  const lugar = useMemo(() => {
+    const comecadas = allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0);
+    return Math.min(7, Math.max(1, ...comecadas.map(l => l.module), 1)) as IdDoCenario;
+  }, [p.state.lessons]);
 
   /* Sem nikud só depois da etapa "Sem o ponto" (etapa 3 do módulo 6). */
   const semPontosLiberado = (p.state.lessons.mod6?.stagesDone ?? []).includes(3);
@@ -112,6 +121,11 @@ function Laboratorio() {
   return (
     <div className="grid gap-6 py-2 max-w-[44rem]">
       <header className="grid gap-2">
+        {/* O lugar onde o aluno está na aventura (28/10/2026, Laboratório
+            2.0): a leitura acontece ali. Decorativo. */}
+        <div aria-hidden className="h-[64px] sm:h-[120px] overflow-hidden rounded-[var(--r-lg)] border border-line mb-1 il-entra">
+          <Cenario n={lugar} vivo />
+        </div>
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Laboratório de Leitura</p>
         <h1 className="text-[28px] font-bold m-0 text-balance">Aprenda a ler hebraico, uma palavra de cada vez.</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
@@ -176,6 +190,14 @@ function Laboratorio() {
               </div>
             </Card>
           ) : palavra ? (
+            <>
+            {/* Onde a rodada está: um ponto por palavra. */}
+            <div aria-hidden className="flex gap-1.5">
+              {palavras.map((w, k) => (
+                <span key={w.id} className={`h-1.5 flex-1 rounded-full transition-colors duration-[var(--dur)]
+                  ${k < i ? 'bg-[var(--teal)]' : k === i ? 'bg-[var(--teal-lite)]' : 'bg-[var(--line)]'}`} />
+              ))}
+            </div>
             <LerPalavra
               key={`${rodada}-${i}-${palavra.id}`}
               palavra={palavra}
@@ -183,12 +205,19 @@ function Laboratorio() {
               semPontos={nivel === 'independente' && semPontosLiberado && !!palavra.semNikud}
               posicao={`${i + 1} de ${palavras.length}`}
               onFim={leuCerto => {
+                if (leuCerto) setMarco(marcoAlcancado(lidasNoNivel(p.state, nivel), nivel));
                 p.registrarLeitura(`laboratorio-${nivel}`, leuCerto);
                 if (leuCerto) setCertas(c => c + 1);
                 setI(n => n + 1);
               }}
             />
+            </>
           ) : null}
+
+          {/* Embaixo da palavra: no celular a palavra fica na primeira tela, e o
+              marco aparece logo abaixo dela, onde o olho já está. */}
+          {marco && <MarcoDeLeitura texto={marco} onFechar={() => setMarco(null)} />}
+          <EscadaDeLeitura state={p.state} nivel={nivel} />
         </>
       )}
     </div>
