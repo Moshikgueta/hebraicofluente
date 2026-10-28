@@ -24,6 +24,7 @@ import { lexicoDoCurso, missaoId, montarMissao, MISSAO_PASSA } from '@/lib/engin
 import { rng } from '@/lib/engine/rng';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { track } from '@/lib/analytics';
+import { FotoDaMissao } from '@/components/learn/FotoDaMissao';
 
 export function MissaoClient({ module: mod }: { module: CourseModule }) {
   const p = useProgress();
@@ -112,6 +113,7 @@ export function MissaoClient({ module: mod }: { module: CourseModule }) {
 
       <Card className="p-6">
         <p className="text-[16px] leading-relaxed text-ink-body">{missao.situacaoPt}</p>
+        {missao.foto && <FotoDaMissao foto={missao.foto} />}
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">

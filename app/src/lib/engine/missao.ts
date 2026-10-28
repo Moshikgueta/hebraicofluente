@@ -34,12 +34,21 @@ export type PassoMissao =
   | { tipo: 'achar'; he: string; promptPt: string; erradas: string[] }
   | { tipo: 'transliterar'; he: string; promptPt: string; semPontos?: boolean };
 
+/** Uma foto de verdade da missão (data/fotos-missoes.json): só as aprovadas
+ *  pelo dono chegam aqui, e sempre com o crédito. */
+export type FotoDaMissao = {
+  id: string; missao: number; arquivo: string; pagina: string;
+  autor: string; licenca: string; licencaUrl?: string; data?: string;
+  mostra: string; largura: number; altura: number;
+};
+
 export type Missao = {
   modulo: number;
   tituloPt: string;
   situacaoPt: string;
   passos: PassoMissao[];
   fechoPt: string;
+  foto?: FotoDaMissao;
 };
 
 export type Verbete = { he: string; pt: string; translit?: string; audioId?: string | null };

@@ -618,6 +618,28 @@ function main() {
       }
     }
   }
+  /* ── as fotos de verdade das missões (28/10/2026) ───────────────────
+     Do Wikimedia Commons, com autor, licença e página de origem, e só as
+     que o dono aprovou (data/fotos-missoes.json). Uma foto aprovada sem
+     arquivo ou sem crédito para a build: o crédito sai SEMPRE junto da
+     imagem, é o que as licenças pedem. tests/fotos-missoes.test.ts. */
+  const LICENCAS_DAS_FOTOS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+  const fotoDaMissao = new Map();
+  for (const f of readJson('data/fotos-missoes.json').fotos) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'pagina', 'autor', 'licenca', 'mostra', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`fotos-missoes.json: a foto ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`fotos-missoes.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`fotos-missoes.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/missoes', f.arquivo))) throw new Error(`fotos-missoes.json: falta o arquivo app/public/media/missoes/${f.arquivo}`);
+    if (!fotoDaMissao.has(f.missao)) {
+      const { aprovada, ...publica } = f;
+      void aprovada;
+      fotoDaMissao.set(f.missao, publica);
+    }
+  }
+
   /* ── os mini-textos de leitura corrida ─────────────────────────────
      Um texto curto por módulo, do 3 ao 7. São as únicas frases do curso
      escritas para ele, e por isso cada um nasce com `revisado: false`: o
@@ -711,6 +733,7 @@ function main() {
   writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
     missoes: missoes.map(m => ({
       ...m,
+      ...(fotoDaMissao.has(m.modulo) ? { foto: fotoDaMissao.get(m.modulo) } : {}),
       passos: m.passos.map(p => ({
         ...p,
         he: NFC(p.he),
