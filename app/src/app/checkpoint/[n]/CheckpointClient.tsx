@@ -19,6 +19,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { Milestone, ProgressBar } from '@/components/game/Game';
+import { Yael } from '@/components/aventura/Yael';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { Prose } from '@/components/learn/Blocks';
@@ -68,6 +69,9 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
     return (
       <div className="focus-col grid gap-5">
+        {/* A Yael comemora o fim do módulo (28/10/2026). Só com o checkpoint
+            aprovado, e decorativa. */}
+        {passed && <Yael pulando className="justify-self-center w-[96px] -mb-3" />}
         <Milestone
           kicker={`Checkpoint ${mod.n} · ${result.correct} de ${result.total}`}
           title={passed ? `${pct}% - checkpoint concluído.` : `${pct}% - quase lá.`}
