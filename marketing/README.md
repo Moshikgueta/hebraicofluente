@@ -51,3 +51,4 @@ aqui, com data, e o que muda depois ganha uma linha no registro abaixo.
 - 26/10/2026: Search Console verificado pelo dono; começa a medição do experimento S1 (páginas do alfabeto).
 - 27/10/2026: teste A1 de anúncio pago no Instagram, antecipado a pedido do dono (`anuncios/a1-teste-meta.md`): espera o teto de gasto.
 - 27/10/2026: anúncio pago em discussão; recomendação: orgânico até ~09/11 e teste entre 09 e 19/11.
+- 28/10/2026: série refeita (versão 3, 8 slides por post, cores na identidade) e legendas novas; nome decorado como presente a quem comenta o nome (gerado com `lib/nome-decorado.ts`).

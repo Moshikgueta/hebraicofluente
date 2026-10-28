@@ -92,7 +92,42 @@ hebraicofluente.com.br/alfabeto-hebraico (link na bio)." + "Salve este post e si
 - Certo: Ler שֶׁל como "shel", com o L bem apoiado na ponta da língua.
 - A palavra: לַיְלָה, láyla: noite.
 
-## As legendas, prontas para colar
+## As legendas da versão 3 (28/10/2026), prontas para colar
+
+Combinam com as artes novas (gancho, desafio no slide 7, fecho de salvar e seguir). Substituem as
+legendas antigas abaixo, que ficam só como registro.
+
+1. **Álef:** "Prometi, e aqui está: o Álef. A primeira letra do hebraico… e ela não tem som 🤫 / O א é
+   um suporte: ele segura a vogal, e quem soa é a vogal. Por isso o nome engana. Começa com A, mas o
+   Álef pode soar “a”, “e”, “i”, “o” ou “u”, dependendo do sinal que vem com ele. / No slide 7 tem um
+   desafio: uma palavra para você ler sozinho. Leu antes de ver a resposta? Conta aqui nos comentários
+   👇 / Salve para treinar a leitura e siga @hebraicofluente: a próxima letra é o Shin. / A pronúncia
+   gravada está em hebraicofluente.com.br/alfabeto-hebraico / #hebraico #aprenderhebraico
+   #alfabetohebraico #alef"
+2. **Shin:** "Se você lê שָׁלוֹם como “salóm”, não é só você 👀 / O ש tem som de X, como em “xícara”:
+   shalóm. E tem um detalhe que quase ninguém percebe: o pontinho em cima decide o som. À direita,
+   “sh”. À esquerda, “s”. / Desafio no slide 7: consegue ler a palavra antes de ver a resposta? Conta
+   aqui 👇 / Salve para treinar e siga @hebraicofluente: a próxima é o Tav. / #hebraico
+   #aprenderhebraico #alfabetohebraico #shalom"
+3. **Tav:** "Seu T vira “tch”? No hebraico, nunca. / O ת é sempre um T seco, mesmo antes de I e de E:
+   “ti”, nunca “tchi”. A maioria de nós faz isso sem perceber. E ele é a última letra do alfabeto, que
+   adora fechar palavras. / Desafio no slide 7: uma palavra que você vai usar muito em Israel. Leu?
+   Conta aqui 👇 / Salve para treinar e siga @hebraicofluente: a próxima é o Mem. / #hebraico
+   #aprenderhebraico #alfabetohebraico"
+4. **Mem:** "אֵם não se lê “em” 👀 / Em português, o M do fim some e deixa a vogal nasal: “bom”, “sim”.
+   Em hebraico, não: a vogal fica limpa, e você fecha os lábios de verdade no M. E repare que no fim
+   da palavra o Mem muda de forma. / Desafio no slide 7: uma palavra que termina justamente com o Mem
+   final. Leu? Conta aqui 👇 / Salve para treinar e siga @hebraicofluente: a próxima é o Lámed. /
+   #hebraico #aprenderhebraico #alfabetohebraico"
+5. **Lámed:** "É “shel”. Não “sheu”. / No Brasil, o L do fim da sílaba virou U. A gente fala “Brasiu”
+   e nem percebe. Em hebraico o ל é sempre um L de verdade, com a ponta da língua apoiada. E é fácil
+   de achar: é a letra mais alta do alfabeto. / Desafio no slide 7: uma palavra com o Lámed logo no
+   começo. Leu? Conta aqui 👇 / Esse foi o último da série. Salve os 5 posts para revisar as letras,
+   e siga @hebraicofluente para as próximas. / #hebraico #aprenderhebraico #alfabetohebraico"
+
+(As barras "/" marcam a quebra de parágrafo.)
+
+## As legendas antigas (versão 1, só registro)
 
 O link do site vai escrito, sem "link na bio": o da bio leva ao /comece-aqui, não à página da letra.
 
