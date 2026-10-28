@@ -630,6 +630,10 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   texto, com 2 s de pausa entre os itens. O `cortar-audio` entra sozinho no
   modo frase quando todos os itens são `frase` (pausa mínima 0,9 s, sem abrir
   peça longa) - o `--ensaiar` prova que a régua de palavra partiria a frase.
+- **Frases com trava de revisão** (28/10/2026): frase em `data/sentences.json` com
+  `"revisado": false` não sai do exportador nem entra no roteiro de gravação
+  (`tests/frases-revisao.test.ts`); sem o campo, é das que já estavam no curso. As propostas
+  para o dono aprovar ficam em `FRASES-PARA-REVISAR.md`.
 - **Exercícios**: `exListenSentence` (ouça e ache a frase escrita,
   `audio-recognition`) e `exListenMeaning` (ouça, sem texto, e diga o sentido
   em português, tipo `listen-meaning`). Só com a frase gravada (`gravado`),

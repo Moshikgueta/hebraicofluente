@@ -1,9 +1,10 @@
 # Frases para revisar (28/10/2026, aguardando o dono)
 
-Rascunho de frases curtas para os exercícios de leitura e de escuta. **Nenhuma está no curso:** as frases de
-`data/sentences.json` não têm a trava `revisado` que os mini-textos têm, então uma frase escrita ali iria direto
-para o aluno. Elas moram só neste documento até o dono aprovar; aprovadas, entram em `data/sentences.json`, e
-as de escuta só aparecem depois de gravadas (`exListenSentence` e `exListenMeaning` exigem a gravação).
+Rascunho de frases curtas para os exercícios de leitura e de escuta. **Nenhuma está no curso:** moram só neste
+documento até o dono aprovar. Desde 28/10/2026 as frases de `data/sentences.json` também têm a trava `revisado`
+dos mini-textos (uma frase com `"revisado": false` não sai do exportador nem entra no roteiro de gravação,
+`tests/frases-revisao.test.ts`); aprovadas, estas entram lá, e as de escuta só aparecem depois de gravadas
+(`exListenSentence` e `exListenMeaning` exigem a gravação).
 
 **Por que estas:** hoje nenhuma das 23 frases do curso fica legível antes da letra 11 (a primeira é
 אֲנִי מִיִשְׂרָאֵל). Quem está nas dez primeiras letras só lê palavras soltas. Estas frases usam só palavras que

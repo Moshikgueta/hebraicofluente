@@ -71,7 +71,9 @@ function main() {
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');
   const realWorld = readJson('data/real-world.json');
-  const sentences = readJson('data/sentences.json').sentences;
+  /* Só as frases aprovadas: a que tem `"revisado": false` não está no curso
+     e não pede gravação (a mesma trava de export-content.mjs). */
+  const sentences = readJson('data/sentences.json').sentences.filter(f => f.revisado !== false);
   const textos = readJson('data/textos.json').textos;
   const { leituras: bonus, guia } = readJson('data/bonus.json');
 
