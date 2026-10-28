@@ -13,6 +13,7 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
+import { Flashcards, cartasDoBaralho, type Baralho } from '@/components/learn/Flashcards';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useMemo, useState, type FocusEvent } from 'react';
 
@@ -84,6 +85,7 @@ type Screen =
   | { kind: 'menu' }
   /* Palavras inteiras em cursiva, à mão. */
   | { kind: 'palavras-a-mao' }
+  | { kind: 'flashcards'; baralho: Baralho }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   /* O guia do teclado, entre o toque no modo de digitação e o modo. */
   | { kind: 'teclado'; mode: GymMode }
@@ -167,6 +169,8 @@ export function AcademiaClient() {
     [p.state.lessons]
   );
 
+  const nPalavras = useMemo(() => cartasDoBaralho('palavras', unlocked, allLetters()).length, [unlocked]);
+
   const audio = audioAvailable();
   const modes = useMemo(
     () => availableModes(p.state, unlocked, audio, p.day),
@@ -217,6 +221,8 @@ export function AcademiaClient() {
   const treino = busca?.get('treino');
   useEffect(() => {
     if (treino === 'palavras-a-mao') setScreen({ kind: 'palavras-a-mao' });
+    if (treino === 'flashcards-letras') setScreen({ kind: 'flashcards', baralho: 'letras' });
+    if (treino === 'flashcards-palavras') setScreen({ kind: 'flashcards', baralho: 'palavras' });
   }, [treino]);
 
   /* As letras que mais custam entram primeiro no baralho. É o mesmo sinal que
@@ -633,6 +639,20 @@ export function AcademiaClient() {
     );
   }
 
+  if (screen.kind === 'flashcards') {
+    return (
+      <div className="grid gap-5">
+        <GymHeader
+          mode={{ titlePt: screen.baralho === 'letras' ? 'Flashcards de letras' : 'Flashcards de palavras' } as GymMode}
+          label={screen.baralho === 'letras' ? 'A letra na frente; o nome e o som atrás' : 'A palavra na frente; a leitura e o sentido atrás'}
+          onBack={() => setScreen({ kind: 'menu' })}
+        />
+        <Flashcards baralho={screen.baralho} letras={unlocked} todas={allLetters()}
+                    semente={`flash-${p.day}`} onBack={() => setScreen({ kind: 'menu' })} />
+      </div>
+    );
+  }
+
   if (screen.kind === 'palavras-a-mao') {
     return (
       <div className="grid gap-5">
@@ -704,6 +724,41 @@ export function AcademiaClient() {
               existe "jogo de baralho" e "jogo de reconhecimento" - existe o
               que ele quer jogar agora. A divisão é do código, e o código não
               é assunto dele. */}
+          {/* Os flashcards (28/10/2026, pedido do dono): o jeito mais rápido de
+              rever, em dois baralhos. */}
+          <section aria-labelledby="flashcards" className="grid gap-3">
+            <h2 id="flashcards" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              Flashcards
+            </h2>
+            <ul className="grid gap-3 grid-cols-2 list-none p-0 m-0">
+              {([
+                ['letras', 'Letras', `${unlocked.length} ${unlocked.length === 1 ? 'carta' : 'cartas'}: a letra, depois o nome e o som`],
+                ['palavras', 'Palavras', `${nPalavras} ${nPalavras === 1 ? 'carta' : 'cartas'}: a palavra, depois a leitura e o sentido`]
+              ] as const).map(([baralho, titulo, desc]) => (
+                <li key={baralho}>
+                  <button type="button" disabled={baralho === 'palavras' && nPalavras === 0}
+                          onClick={() => setScreen({ kind: 'flashcards', baralho })}
+                          className="relative w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)] p-4 grid gap-1
+                                     transition-[box-shadow,border-color] duration-[250ms] enabled:hover:shadow-[var(--sh)]
+                                     enabled:hover:border-[var(--teal)] enabled:active:scale-[.98] disabled:opacity-60">
+                    {/* Duas cartas empilhadas, a de cima levemente girada. */}
+                    <span aria-hidden className="relative h-11 w-10 mb-1">
+                      <span className="absolute inset-0 rounded-[8px] bg-[var(--teal-soft)] border border-[var(--teal)] rotate-[-8deg]" />
+                      <span className="absolute inset-0 rounded-[8px] bg-[var(--card)] border border-line rotate-[4deg]
+                                       grid place-items-center font-display text-[15px] font-bold text-[var(--teal-ink)]">
+                        {baralho === 'letras'
+                          ? <He size="inline">א</He>
+                          : <span className="grid gap-1 w-5"><span className="h-[3px] rounded bg-[var(--teal)]" /><span className="h-[3px] w-3 rounded bg-[var(--teal)]" /></span>}
+                      </span>
+                    </span>
+                    <span className="font-display text-[17px] font-semibold text-ink">{titulo}</span>
+                    <span className="font-ui text-[12.5px] leading-snug text-ink-muted">{desc}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section aria-labelledby="jogos" className="grid gap-3">
             <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
               Jogos de prática
