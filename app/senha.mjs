@@ -168,7 +168,7 @@ await preencher('senha-nova2', 'terceira-senha-1');
 await p.getByRole('button', { name: /^Trocar a senha$/ }).click();
 await p.waitForSelector('p[role=alert]', { timeout: 10000 });
 ok('recusa sem a senha atual certa',
-  /não conferem/.test(await p.locator('p[role=alert]').innerText()));
+  /não confere/.test(await p.locator('p[role=alert]').innerText()));
 
 await preencher('senha-atual', SENHA_NOVA);
 ok('sem transbordo horizontal', await transbordo() === 0, `${await transbordo()}px`);
