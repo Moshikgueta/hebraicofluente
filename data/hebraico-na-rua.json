@@ -16,7 +16,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Trilingual_road_sign_to_the_Burma_road,_Israel_2006.jpg",
       "largura": 1200,
       "altura": 900,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-bait",
@@ -34,7 +34,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Signs_in_Edith_Wolfson_Medical_Center,_February_2024_03.jpg",
       "largura": 1200,
       "altura": 755,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-shalom",
@@ -52,7 +52,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Chabad_Sukkat_Shalom_Synagogue_in_Ramat_Gan,_May_2024_03.jpg",
       "largura": 787,
       "altura": 1400,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-lechem",
@@ -70,7 +70,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Bakery_1943_-_Moledet_1.jpg",
       "largura": 787,
       "altura": 1400,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-maim",
@@ -88,7 +88,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:%D7%AA%D7%A2%D7%9C%D7%AA_%D7%9E%D7%99%D7%9D_%D7%9E%D7%99%D7%9E%D7%99_%D7%91%D7%99%D7%AA_%D7%A9%D7%A0%D7%99_-_%D7%A9%D7%9C%D7%98_-_%D7%A9%D7%97%D7%95%D7%A8_%D7%9C%D7%91%D7%9F_(10081612773).jpg",
       "largura": 1200,
       "altura": 606,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-israel",
@@ -107,7 +107,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:%D7%A9%D7%9C%D7%98_%D7%9E%D7%A6%D7%A4%D7%94_%D7%A0%D7%97_%D7%9B%D7%A0%D7%A8%D7%AA%D7%99.jpg",
       "largura": 1200,
       "altura": 900,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-ani",
@@ -124,7 +124,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:%D7%A9%D7%9C%D7%98_%D7%91%D7%99%D7%AA_%D7%A1%D7%A4%D7%A8_%D7%A2%22%D7%A9_%D7%A4%D7%90%D7%95%D7%9C_%D7%A7%D7%95%D7%A8_%D7%91%D7%A4%D7%AA%D7%97_%D7%AA%D7%A7%D7%95%D7%95%D7%94.jpg",
       "largura": 1200,
       "altura": 389,
-      "aprovada": false
+      "aprovada": true
     }
   ]
 }

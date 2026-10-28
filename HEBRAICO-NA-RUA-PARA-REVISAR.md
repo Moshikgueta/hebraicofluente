@@ -1,5 +1,7 @@
 # Hebraico na rua: fotos para o dono aprovar
 
+**Aprovadas pelo dono em 28/10/2026: as sete.**
+
 Placas de verdade de Israel, do Wikimedia Commons, todas com licença livre e o
 crédito sempre junto da foto. Em cada uma o aluno procura uma palavra do curso
 que já lê. Nada de hebraico novo: a palavra e as opções são palavras do curso,
