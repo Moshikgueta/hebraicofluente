@@ -22,6 +22,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
 import { Yael } from '@/components/aventura/Yael';
+import { tx as falaDaYael } from '@/i18n/telas/aventura-yael';
 import { anotarVisto, lerVisto, moduloParaAnunciar } from '@/lib/desbloqueio';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
@@ -317,6 +318,13 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                   </span>
                   <span aria-hidden className="hf-yael-chega absolute right-2 bottom-0 w-[64px] sm:w-[76px]">
                     <Yael pulando />
+                  </span>
+                  {/* Quando ela chega, fala, no céu do desenho (o chão tem o nome
+                      do lugar). Para o leitor de tela vale o aviso logo abaixo. */}
+                  <span aria-hidden className="hf-yael-fala absolute left-3 top-2 max-w-[165px] sm:max-w-[220px]
+                                   rounded-[14px] border-2 border-line bg-[var(--card)] px-2.5 py-1
+                                   font-ui text-[12.5px] font-semibold leading-tight text-ink">
+                    {falaDaYael.lugarNovo(LUGAR[m.n as IdDoCenario].pt.split(',')[0]!)}
                   </span>
                   <span className="hf-selo-novo absolute right-3 top-3 rounded-full bg-[var(--gold-solid)] px-3 py-1
                                    font-ui text-[12.5px] font-bold text-white shadow-[var(--sh)]">
