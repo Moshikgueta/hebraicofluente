@@ -128,8 +128,13 @@ As palavras da última coluna são do curso: nenhuma foi escrita para cá.
    o cenário entra em camadas, o mar se mexe e a letra se revela logo abaixo.
    O nome do lugar em hebraico só aparece quando o aluno já conhece todas as
    letras dele (no Mem, הַיָם ainda não). Texto e exercícios não mudaram.
-2. **Fim de lição com comemoração** e a **coleção de letras**: cada letra
-   dominada vira uma carta com a forma impressa e a cursiva, o som e o domínio.
+2. **Fim de lição com comemoração e a coleção de letras: feito.** Quando a
+   nota passa, a carta da letra entra na coleção com faíscas
+   (`CelebracaoDaLetra`), acima do resultado de sempre, que não muda. A
+   coleção mora em Seu progresso (`/conquistas#colecao`): 22 cartas na ordem
+   do curso, cada uma com o lugar do módulo, a forma impressa e a cursiva, o
+   nome, o som e o estado (dominada, concluída, ainda não). Ela lê o progresso
+   que já existe: nenhum campo novo no estado, sem moeda e sem sorteio.
 3. **Laboratório de leitura:** o mesmo conteúdo e os mesmos níveis, com o
    visual da aventura.
 4. **Flashcards de letras e palavras** em Praticar (pedido do dono).

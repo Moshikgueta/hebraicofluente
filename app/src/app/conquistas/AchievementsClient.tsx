@@ -3,8 +3,10 @@
 import { Card } from '@/components/ui/Card';
 import { AchievementBadge, ProgressBar } from '@/components/game/Game';
 import { useProgress } from '@/lib/state/store';
-import { ACHIEVEMENTS } from '@/lib/state/rules';
-import { course, cultureCards, cultureUnlocked } from '@/lib/content';
+import { ACHIEVEMENTS, isLessonComplete, isLessonMastered } from '@/lib/state/rules';
+import { CartaDaLetra, type EstadoDaCarta } from '@/components/aventura/CartaDaLetra';
+import { useMemo } from 'react';
+import { allLetters, course, cultureCards, cultureUnlocked } from '@/lib/content';
 import Link from 'next/link';
 import { cartasCompradas, saldo } from '@/lib/loja';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
@@ -13,6 +15,14 @@ import { podeCompartilhar } from '@/lib/compartilhar';
 export function AchievementsClient() {
   const p = useProgress();
   const have = new Set(p.state.achievements.map(a => a.id));
+  const colecao = useMemo(() => {
+    const cartas = [...allLetters()].sort((a, b) => a.order - b.order).map(letter => ({
+      letter,
+      estado: (isLessonMastered(p.state, letter.id) ? 'dominada'
+        : isLessonComplete(p.state, letter.id) ? 'concluida' : 'adiante') as EstadoDaCarta
+    }));
+    return { cartas, ganhas: cartas.filter(c => c.estado !== 'adiante').length };
+  }, [p.state]);
 
   return (
     <div className="grid gap-6">
@@ -38,6 +48,27 @@ export function AchievementsClient() {
           ))}
         </dl>
       </Card>
+
+      {/* A coleção de letras (28/10/2026, a aventura ilustrada): o alfabeto
+          que o aluno montou, na ordem do curso. A carta ganha leva à lição
+          da letra, para rever. */}
+      <section id="colecao" aria-labelledby="t-colecao" className="grid gap-3 scroll-mt-20">
+        <div className="grid gap-2">
+          <h2 id="t-colecao" className="font-display text-[17px] font-semibold">Sua coleção de letras</h2>
+          <ProgressBar value={colecao.ganhas / Math.max(1, colecao.cartas.length)}
+                       label={`${colecao.ganhas} de ${colecao.cartas.length}`} />
+          <p className="m-0 font-ui text-[13.5px] text-ink-muted">
+            Cada letra concluída vira uma carta, e o selo dourado marca as dominadas. Toque numa carta para rever a lição.
+          </p>
+        </div>
+        <ul className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2.5 list-none p-0 m-0">
+          {colecao.cartas.map(c => (
+            <li key={c.letter.id}>
+              <CartaDaLetra letter={c.letter} estado={c.estado} href={`/licao/${c.letter.id}`} />
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section aria-labelledby="t-conquistas" className="grid gap-3">
         <div className="grid gap-2">

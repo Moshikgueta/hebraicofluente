@@ -38,6 +38,7 @@ import {
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
 import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
+import { CelebracaoDaLetra } from '@/components/aventura/CartaDaLetra';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
 import { CompararSons } from '@/components/learn/CompararSons';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
@@ -972,6 +973,10 @@ function StageFixacao({
     const fezReforco = fase === 'fechado';
     return (
       <div className="grid gap-5">
+        {/* A carta da letra entra na coleção (28/10/2026, a aventura
+            ilustrada). Só com a nota que passa; o resultado de sempre vem
+            logo abaixo, igual. */}
+        {strong && <CelebracaoDaLetra letter={letter} />}
         <Milestone
           tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={`${result.correct} de ${result.total} · ${pct}%`}
