@@ -22,6 +22,7 @@ import { He } from '@/components/hebrew/He';
 import { somPt } from '@/lib/som-pt';
 import type { Letter } from '@/lib/content';
 import { Cenario, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { Yael } from '@/components/aventura/Yael';
 
 export type EstadoDaCarta = 'dominada' | 'concluida' | 'adiante';
 
@@ -101,6 +102,18 @@ export function CelebracaoDaLetra({ letter }: { letter: Letter }) {
       <h2 id="carta-nova" className="m-0 text-white text-[22px] sm:text-[26px] font-bold leading-tight">
         {letter.namePt} entrou na sua coleção.
       </h2>
+      {/* No Áyin, o aluno passa a ler o nome da Yael, a companheira da
+          aventura: יָעֵל tem י, ע e ל, e o ע é o que faltava (28/10/2026). */}
+      {letter.id === 'ayin' && (
+        <div className="flex items-center gap-3 rounded-[var(--r-md)] bg-white/10 px-4 py-3 text-left">
+          <Yael className="w-[64px] shrink-0" />
+          <p className="m-0 font-ui text-[15px] leading-snug text-white">
+            Agora você lê o nome da Yael:{' '}
+            <span className="text-[22px]"><He size="inline" tone="lite">יָעֵל</He></span>
+            <span className="block text-[13px] text-white/85">ya'él · o íbex</span>
+          </p>
+        </div>
+      )}
       <Link href="/conquistas#colecao"
             className="min-h-[44px] inline-flex items-center px-3 font-ui text-[14.5px] font-semibold
                        text-white underline underline-offset-4">

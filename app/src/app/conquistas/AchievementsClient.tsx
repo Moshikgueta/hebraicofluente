@@ -6,6 +6,7 @@ import { useProgress } from '@/lib/state/store';
 import { ACHIEVEMENTS, isLessonComplete, isLessonMastered } from '@/lib/state/rules';
 import { CartaDaLetra, type EstadoDaCarta } from '@/components/aventura/CartaDaLetra';
 import { Diario } from '@/components/aventura/Diario';
+import { Yael } from '@/components/aventura/Yael';
 import { useMemo } from 'react';
 import { allLetters, course, cultureCards, cultureUnlocked } from '@/lib/content';
 import Link from 'next/link';
@@ -60,7 +61,11 @@ export function AchievementsClient() {
           da letra, para rever. */}
       <section id="colecao" aria-labelledby="t-colecao" className="grid gap-3 scroll-mt-20">
         <div className="grid gap-2">
-          <h2 id="t-colecao" className="font-display text-[17px] font-semibold">Sua coleção de letras</h2>
+          <div className="flex items-end justify-between gap-3">
+            <h2 id="t-colecao" className="font-display text-[17px] font-semibold">Sua coleção de letras</h2>
+            {/* A Yael, a companheira da aventura, guarda a coleção. */}
+            <Yael className="w-[64px] -mb-1 shrink-0" />
+          </div>
           <ProgressBar value={colecao.ganhas / Math.max(1, colecao.cartas.length)}
                        label={`${colecao.ganhas} de ${colecao.cartas.length}`} />
           <p className="m-0 font-ui text-[13.5px] text-ink-muted">
