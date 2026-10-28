@@ -84,7 +84,7 @@ export default function MetodoPage() {
         <Itens inicio={2} itens={[
             {
               t: 'A ordem é por utilidade, não pelo alfabeto',
-              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a terceira lição já lê uma palavra inteira em vez de ainda estar na segunda letra. São ${letterModules} módulos de letras, em ${totalLicoes()} lições.`
+              b: `As letras não vêm de א a ת. Vêm na ordem que abre mais palavras mais cedo - por isso a primeira lição já lê uma palavra inteira, logo na segunda letra. São ${letterModules} módulos de letras, em ${totalLicoes()} lições.`
             },
             {
               t: 'As letras parecidas são tratadas de frente',
