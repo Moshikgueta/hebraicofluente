@@ -1389,7 +1389,7 @@
       "n": 2,
       "tituloPt": "A rosa",
       "tipoPt": "Conversa",
-      "revisado": false,
+      "revisado": true,
       "introPt": "O Dani e a mãe estão no jardim.",
       "linhas": [
         {
@@ -1477,7 +1477,7 @@
       "n": 2,
       "tituloPt": "Um suco gelado",
       "tipoPt": "Conversa no WhatsApp",
-      "revisado": false,
+      "revisado": true,
       "introPt": "É meio-dia, faz calor, e a Noa manda uma mensagem para o Dan.",
       "linhas": [
         {
@@ -1591,7 +1591,7 @@
       "n": 2,
       "tituloPt": "No mercado",
       "tipoPt": "Conversa",
-      "revisado": false,
+      "revisado": true,
       "introPt": "A Maya passa no mercado de manhã.",
       "linhas": [
         {
@@ -1689,7 +1689,7 @@
       "n": 2,
       "tituloPt": "O bilhete da mãe",
       "tipoPt": "Bilhete",
-      "revisado": false,
+      "revisado": true,
       "semPontos": true,
       "introPt": "O Dani chega em casa e encontra um bilhete da mãe.",
       "linhas": [
@@ -1699,7 +1699,7 @@
           "pt": "Para o Dani,"
         },
         {
-          "he": "יֵשׁ לֶחֶם וּגְבִינָה עַל הַשֻׁלְחָן.",
+          "he": "יֵשׁ לֶחֶם וּגְבִינָה עַל הַשׁוּלְחָן.",
           "translit": "yesh léchem ugviná al hashulchán.",
           "pt": "Tem pão e queijo na mesa."
         },
@@ -1741,7 +1741,7 @@
           "pt": "o, a (grudado na palavra)"
         },
         {
-          "he": "שֻׁלְחָן",
+          "he": "שׁוּלְחָן",
           "translit": "shulchán",
           "pt": "mesa"
         },
@@ -1807,7 +1807,7 @@
       "n": 2,
       "tituloPt": "A girafa",
       "tipoPt": "Conversa",
-      "revisado": false,
+      "revisado": true,
       "introPt": "O Dani e o pai passeiam no zoológico.",
       "linhas": [
         {

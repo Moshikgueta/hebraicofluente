@@ -42,6 +42,8 @@ type Stored = {
     verified?: boolean;
     /** Pediu o aviso do próximo curso. */
     novidades?: boolean;
+    /** Pediu o lembrete para estudar. */
+    lembrete?: boolean;
     entitlements: Entitlement[];
     orders: Order[];
   }>;
@@ -123,7 +125,8 @@ export class LocalApi implements PlatformApi {
       account: {
         id: a.id, name: a.name, email: a.email, createdAt: a.createdAt,
         emailVerified: !!a.verified,
-        novidades: !!a.novidades
+        novidades: !!a.novidades,
+        lembrete: !!a.lembrete
       },
       entitlements: a.entitlements
     };
@@ -295,6 +298,15 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     a.novidades = quero;
+    write(s);
+  }
+
+  async setLembrete(quero: boolean): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    a.lembrete = quero;
     write(s);
   }
 

@@ -15,7 +15,7 @@
 
 import Link from 'next/link';
 import { useProgress } from '@/lib/state/store';
-import { course, placasDaRua, revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
+import { course, placasDaRua, revisaoDoModulo, segundoTextoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { textoLidoId } from '@/lib/engine/textos';
@@ -43,6 +43,13 @@ function leiturasDoModulo(m: CourseModule, state: ReturnType<typeof useProgress>
     out.push({
       id: `tx-${m.n}`, titulo: texto.tituloPt, desc: tx.texto(texto.tipoPt), href: `/modulo/${m.n}/texto`,
       feita: !!f[textoLidoId(m.n)], aberta: comecou, porque: tx.depoisDoModulo(m.n)
+    });
+  }
+  const segundo = segundoTextoDoModulo(m.n);
+  if (segundo) {
+    out.push({
+      id: `tx2-${m.n}`, titulo: segundo.tituloPt, desc: tx.texto(segundo.tipoPt), href: `/modulo/${m.n}/texto-2`,
+      feita: !!f[textoLidoId(m.n, false, 2)], aberta: comecou, porque: tx.depoisDoModulo(m.n)
     });
   }
   const revisao = revisaoDoModulo(m.n);

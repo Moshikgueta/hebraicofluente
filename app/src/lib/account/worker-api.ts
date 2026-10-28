@@ -149,6 +149,10 @@ export class WorkerApi implements PlatformApi {
     await call<{ ok: true }>('/novidades', { method: 'PUT', body: JSON.stringify({ quero }) });
   }
 
+  async setLembrete(quero: boolean): Promise<void> {
+    await call<{ ok: true }>('/lembrete', { method: 'PUT', body: JSON.stringify({ quero }) });
+  }
+
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }) {
     return call<CreatedOrder>('/pay/create', {
       method: 'POST', body: JSON.stringify(input)

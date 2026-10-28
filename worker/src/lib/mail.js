@@ -997,6 +997,36 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
 }
 
 /**
+ * O lembrete para estudar (worker/src/lembrete.js): só para quem pediu em Sua
+ * conta, no máximo um por dia, e nunca mais de três seguidos sem estudo. O
+ * texto não cobra, não fala em sequência perdida nem em prazo: diz que hoje
+ * ainda não teve hebraico, oferece o caminho curto e explica como parar.
+ */
+export function mensagemDeLembrete({ nome: cru, painel, praticar, sair, marca }) {
+  const nome = nomeSeguro(cru);
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const subject = 'Dez minutos de hebraico hoje?';
+  const corpo = [
+    'Hoje ainda não teve hebraico por aqui. Uma letra leva cerca de dez minutos, e o curso guarda onde você parou.',
+    `Se o dia está curto, uma rodada em Praticar também conta: ${praticar}`
+  ];
+  const rotulo = 'Continuar de onde parei';
+  const fecho = 'Você recebe este e-mail porque pediu o lembrete em Sua conta. Depois de três lembretes sem estudo, eles param sozinhos até você voltar.';
+  const saida = `Para não receber mais: ${sair}`;
+  const text = [ola, '', ...corpo.flatMap(l => [l, '']), `${rotulo}: ${painel}`, '', fecho, saida, '', assinatura].join('\n');
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p>${escapar(corpo[0])}</p>`,
+    `<p>Se o dia está curto, <a href="${escapar(praticar)}">uma rodada em Praticar</a> também conta.</p>`,
+    `<p><a href="${escapar(painel)}">${escapar(rotulo)}</a></p>`,
+    `<p><small>${escapar(fecho)} <a href="${escapar(sair)}">Não quero mais o lembrete</a>.</small></p>`,
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject, text, html };
+}
+
+/**
  * Um alerta operacional para o dono (worker/src/alertas.js e o estorno que
  * travou). Texto puro, curto, sem dado de aluno além do que o dono precisa
  * para agir. `linhas` é uma lista; string vazia vira parágrafo.

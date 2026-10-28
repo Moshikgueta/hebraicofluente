@@ -240,7 +240,13 @@ A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber c
 
 Status: aprovado em 25/09/2026 (versão anterior); versão atual de 27/09/2026 aguardando re-aprovação do dono.
 
-## Textos novos para revisar (rascunhos de 28/10/2026)
+## Textos novos (APROVADOS pelo dono em 28/10/2026, os cinco)
+
+No ar em /modulo/N/texto-2, no cartão "Segunda leitura" da página do módulo e em Leituras.
+As linhas entram no roteiro de gravação (onda 4).
+
+Ajuste depois da aprovação, no texto do módulo 6: שֻׁלְחָן passou a שׁוּלְחָן. Sem os pontos, a
+primeira forma aparecia como השלחן; a de verdade, na rua e nas mensagens, é השולחן.
 
 Pedido do dono ("mais mini-textos"): um segundo texto para cada módulo, do 3 ao 7. Todos com
 `"revisado": false` e `"n": 2` em `data/textos.json`: **nenhum aparece para o aluno** até ser aprovado.
@@ -342,7 +348,7 @@ O Dani chega em casa e encontra um bilhete da mãe.
 | Quem | Hebraico | Transliteração | Tradução |
 |---|---|---|---|
 |  | לְדָנִי, | ledáni, | Para o Dani, |
-|  | יֵשׁ לֶחֶם וּגְבִינָה עַל הַשֻׁלְחָן. | yesh léchem ugviná al hashulchán. | Tem pão e queijo na mesa. |
+|  | יֵשׁ לֶחֶם וּגְבִינָה עַל הַשׁוּלְחָן. | yesh léchem ugviná al hashulchán. | Tem pão e queijo na mesa. |
 |  | הַמִיץ בַּמְקָרֵר. | hamíts bamekarér. | O suco está na geladeira. |
 |  | אֲנִי בַּעֲבוֹדָה עַד אַרְבַּע. | aní baavodá ad árba. | Estou no trabalho até as quatro. |
 |  | אוֹהֶבֶת, אִמָא | ohévet, íma | Com amor, mãe |
@@ -353,7 +359,7 @@ O Dani chega em casa e encontra um bilhete da mãe.
 - וּ־ · u- · e (grudado na palavra)
 - גְבִינָה · gviná · queijo
 - הַ־ · ha- · o, a (grudado na palavra)
-- שֻׁלְחָן · shulchán · mesa
+- שׁוּלְחָן · shulchán · mesa
 - בַּ־ · ba- · no, na (grudado na palavra)
 - מְקָרֵר · mekarér · geladeira
 - עֲבוֹדָה · avodá · trabalho

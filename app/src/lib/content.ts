@@ -135,7 +135,11 @@ export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dado
 
 /** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
-  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao);
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && !t.n);
+
+/** O segundo texto do módulo `n` (28/10/2026), se houver e estiver revisado. */
+export const segundoTextoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && t.n === 2);
 
 /** A leitura de revisão do módulo `n`: só palavras já acumuladas. */
 export const revisaoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>

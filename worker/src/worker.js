@@ -38,6 +38,7 @@ import { licenca as licencaDoLivro, pdfMarcado, CAMINHO_DO_PDF } from './api/liv
 import * as exameA1 from './api/exame-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
+import * as lembrete from './api/lembrete.js';
 import * as meusDados from './api/meus-dados.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
@@ -78,6 +79,9 @@ const ROUTES = {
   /* A lista do aviso do próximo curso: entrar e sair (api/novidades.js). */
   'PUT /api/novidades': novidades.marcar,
   'POST /api/novidades/sair': novidades.sair,
+  /* O lembrete para estudar (api/lembrete.js): 404 enquanto desligado. */
+  'PUT /api/lembrete': lembrete.marcar,
+  'POST /api/lembrete/sair': lembrete.sair,
   'GET /api/me': auth.me,
   'GET /api/health': auth.health,
 

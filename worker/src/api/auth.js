@@ -37,9 +37,10 @@ import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelho
 import empresa from '../../../data/empresa.json';
 import { mailReady, mensagemDeConvitePendente, sendMail } from '../lib/mail.js';
 import { mensagens } from '../lib/mensagens.js';
+import { lembreteLigado } from './lembrete.js';
 import { idiomaDoWorker } from '../lib/idioma.js';
 import {
-  activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
+  activeEntitlements, bumpSessionVersion, lembreteQuer, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
   normalizeEmail, registrarAcesso, reservarVaga, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
@@ -170,6 +171,8 @@ async function sessionBody(env, account) {
       emailVerified: await emailVerified(env, account.id, account.email),
       /* Pediu o e-mail do próximo curso? Ver api/novidades.js. */
       novidades: await novidadesQuer(env, account.id),
+      /* Pediu o lembrete para estudar? Só existe com ele ligado (api/lembrete.js). */
+      ...(lembreteLigado() ? { lembrete: await lembreteQuer(env, account.id) } : {}),
       /* Conta de ADMIN_EMAILS: o app abre todos os módulos de Raízes para
          revisar (moduloAberto em lib/raizes.ts). Não dá acesso a nada: o
          portão continua exigindo o direito do produto no banco. */

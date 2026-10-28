@@ -56,6 +56,8 @@ type AccountValue = {
   confirmEmail(token: string): Promise<void>;
   /** A caixa do perfil do aviso do próximo curso. */
   setNovidades(quero: boolean): Promise<void>;
+  /** A caixa do perfil do lembrete para estudar. */
+  setLembrete(quero: boolean): Promise<void>;
 
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
     Promise<CreatedOrder>;
@@ -149,6 +151,10 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     async setNovidades(quero) {
       await (await api()).setNovidades(quero);
       setSession(s => s && { ...s, account: { ...s.account, novidades: quero } });
+    },
+    async setLembrete(quero) {
+      await (await api()).setLembrete(quero);
+      setSession(s => s && { ...s, account: { ...s.account, lembrete: quero } });
     },
 
     startOrder: async i => (await api()).startOrder(i),

@@ -21,6 +21,7 @@ const PT = {
   segundaLetra: pt.mensagemDaSegundaLetra,
   confirmacaoDaLista: pt.mensagemDeConfirmacaoDaLista,
   sequencia: pt.mensagemDaSequencia,
+  lembrete: pt.mensagemDeLembrete,
   data: pt.dataBR
 };
 
@@ -35,6 +36,7 @@ const EN = {
   segundaLetra: en.mensagemDaSegundaLetra,
   confirmacaoDaLista: en.mensagemDeConfirmacaoDaLista,
   sequencia: en.mensagemDaSequencia,
+  lembrete: en.mensagemDeLembrete,
   data: en.dataEN
 };
 

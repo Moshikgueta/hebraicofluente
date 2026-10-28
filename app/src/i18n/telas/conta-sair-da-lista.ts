@@ -8,6 +8,11 @@ const pt = {
   saiuInteressado: 'Pronto: você saiu da lista e não vai receber mais nenhum e-mail dela.',
   saiuAviso:
     'Pronto: você não vai mais receber o aviso do próximo curso. Sua conta e seu acesso continuam iguais.',
+  saiuLembrete:
+    'Pronto: o lembrete para estudar está desligado. Sua conta, seu progresso e seu acesso continuam iguais.',
+  confirmarLembrete:
+    'Você não vai mais receber o lembrete para estudar. Isso não muda nada na sua conta, no seu progresso ' +
+    'nem no seu acesso.',
   invalidoAntes: 'Este link não está completo. Abra de novo pelo e-mail, ou desmarque o aviso em ',
   suaConta: 'Sua conta',
   confirmarInteressado:
@@ -27,6 +32,11 @@ const en: Traducao<typeof pt> = {
   saiuInteressado: 'Done: you left the list and will not receive any more emails from it.',
   saiuAviso:
     'Done: you will no longer receive the next course notice. Your account and your access stay the same.',
+  saiuLembrete:
+    'Done: the study reminder is off. Your account, your progress and your access stay the same.',
+  confirmarLembrete:
+    'You will no longer receive the study reminder. This does not change anything in your account, ' +
+    'your progress or your access.',
   invalidoAntes: 'This link is incomplete. Open it again from the email, or uncheck the notice in ',
   suaConta: 'Your account',
   confirmarInteressado:

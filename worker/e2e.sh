@@ -519,6 +519,7 @@ Para apagá-la do banco de produção:
   npx wrangler d1 execute fluent-hebrew --remote --command \\
     "DELETE FROM arrependimentos     WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM novidades           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM lembretes_estudo    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM marcas              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM aparelhos           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM depoimentos         WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');

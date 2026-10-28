@@ -30,6 +30,9 @@ export type Account = {
   /** Pediu, no perfil, um e-mail quando o próximo curso abrir. Ausente =
    *  não pediu. Ver worker/src/api/novidades.js. */
   novidades?: boolean;
+  /** Pediu, no perfil, o lembrete para estudar. Ausente = não pediu, ou o
+   *  lembrete está desligado. Ver worker/src/api/lembrete.js. */
+  lembrete?: boolean;
   /** Conta de administrador (ADMIN_EMAILS): vê todos os módulos de Raízes
    *  abertos, para revisar. Não abre nenhum produto sem o direito no banco. */
   revisor?: boolean;
