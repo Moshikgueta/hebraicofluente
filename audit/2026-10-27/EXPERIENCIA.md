@@ -36,7 +36,7 @@ o que foi visto, o que mudou e o que vem depois.
 | 8 | Laboratório | Os três cartões de modo empurram a primeira palavra para baixo da dobra no celular. | Feito: seletor de uma linha; a palavra aparece na primeira tela |
 | 9 | Navegação | Barra de baixo com 7 itens e rótulos de 11 a 12 px; "Aula 0" fica nela depois de concluída. | Parte feita (ok do dono): a Aula 0 sai das duas navegações depois de concluída e continua no topo do mapa. Os rótulos ficam para a rodada 2 |
 | 10 | Painel | O aviso de conquista ocupa um quarto da primeira tela, antes do próximo passo; o botão de acessibilidade cobre parte do "Ler agora". | Feito o aviso: uma linha (de ~125 para ~64 px). No relatório do exame ele cobria o título do resultado. O botão de acessibilidade só cobre em certas posições da rolagem: fica |
-| 11 | Academia | Os jogos são cartões iguais, sem dizer o que cada um treina nem quando foi jogado. | Rodada 3 |
+| 11 | Academia | Os jogos são cartões iguais, sem dizer o que cada um treina nem quando foi jogado. | Feito: "Treina: ..." em cada jogo e "Jogado hoje / ontem / há N dias" (do `lastOn` que já existia, sem campo novo no estado). Placares e cronômetro já usavam números tabulares, e o fim de jogo já tinha "Mais uma" |
 | 12 | Exame e certificado | Não auditados por dentro. | Feito: exame respondido até o relatório (40 questões, sem erro de console); o certificado dizia que o exame verificou "sem os pontos" e "os sons de fora" a quem não fez essas partes, e agora lista só as que a prova cobrou |
 
 ## Rodada 1: o que mudou
@@ -94,12 +94,18 @@ depoimento, onboarding) e nas públicas (capa, entrar, criar conta, esqueci a se
 - **Certificado:** "O que o exame verificou" lista só as partes da prova feita.
 - Conferido: 1653 testes, varredura do curso nas duas larguras, o exame de ponta a ponta.
 
+## Rodada 3: a Academia (28/10/2026)
+
+- Cada jogo diz o que treina ("Treina: separar as letras parecidas") e quando foi jogado pela
+  última vez; os treinos por assunto também ganham o "Jogado há N dias".
+- Conferido nos jogos, sem mudar: placar e contadores em números tabulares, cronômetro que conta
+  pelo relógio do sistema, e "Mais uma" no fim de cada partida.
+
 ## O que vem depois
 
 - **Precisa do dono:** a etapa 1 da lição em passos (descobrir, ouvir, observar, entender,
   interagir), uma tela por vez em vez de uma página. Muda o jeito de toda lição.
-- **Rodada 3:** os jogos da Academia (placar que anima sem pular de largura, cronômetro mais claro,
-  tela de fim com "tentar de novo"), e as ilustrações com propósito.
+- **Ilustrações com propósito:** ficam para quando houver o que ilustrar com palavra já aprovada.
 - **Precisa do dono:** qualquer ilustração com hebraico, que só usa palavras já aprovadas do curso.
 
 As notas de 0 a 100 do pedido são metas. Este documento não dá nota sem evidência; cada rodada
