@@ -36,7 +36,7 @@ const en: Traducao<typeof pt> = {
   responda: 'Answer based on what you read. It is not scored: the reason appears after each answer.',
   fechoBom: 'You read a whole text in Hebrew and understood it. This is what the alphabet is for.',
   fechoParcial: 'Go back to the text and tap the lines that tripped you up. It gets easier the second time.',
-  entraram: '✓ The new words from this text are now in your vocabulary and in the handwriting practice.'
+  entraram: '✓ The new words from this text are now in your vocabulary and in the Words by hand practice.'
 };
 
 export const DICIONARIO = { pt, en };

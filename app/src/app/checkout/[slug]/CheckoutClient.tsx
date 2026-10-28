@@ -46,6 +46,7 @@ import { track } from '@/lib/analytics';
 import { api } from '@/lib/account/api';
 import { deveRetomarPix } from './retomada';
 import { tx } from '@/i18n/telas/conta-checkout-client';
+import { LOCALE_INTL } from '@/i18n';
 
 /** De quanto em quanto tempo perguntar, e por quanto tempo insistir.
  *
@@ -575,9 +576,9 @@ function PixPanel({
   order: Order; copied: boolean; gaveUp: boolean; automatico: boolean; retomado: boolean;
   onCopy: () => void; onRetry: () => void;
 }) {
-  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString(LOCALE_INTL, {
     hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
-  }); // etapa 1: data em pt-BR
+  });
   return (
     <div className="grid gap-4">
       {retomado && (

@@ -56,7 +56,7 @@ const en: Traducao<typeof pt> = {
   parecidasDesc: 'The ones you are mixing up, side by side.',
   construirTitulo: 'Build words',
   construirDesc: 'The sound on the screen, the letters on the table: build the word, from right to left.',
-  cursivaTitulo: 'Handwritten words',
+  cursivaTitulo: 'Words by hand',
   cursivaDesc: 'Whole words in cursive: recognize, understand and build.',
   digitarTitulo: 'Type in Hebrew',
   digitarDesc: 'Type words on your device\'s Hebrew keyboard.',

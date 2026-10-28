@@ -24,12 +24,13 @@ import { allLetters, sentencesUpTo } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { antesEDepois, ordemCorrida } from '@/lib/antes-depois';
 import { tx } from '@/i18n/telas/conta-plataforma-pecas';
+import { LOCALE_INTL } from '@/i18n';
 
 /** "14 de março" - sem o ano, que só envelhece o cartão. */
 const emPortugues = (dia: string) => {
   const d = new Date(`${dia}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return dia;
-  return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', timeZone: 'UTC' }); // etapa 1: data em pt-BR
+  return d.toLocaleDateString(LOCALE_INTL, { day: 'numeric', month: 'long', timeZone: 'UTC' });
 };
 
 export function AntesEDepois() {

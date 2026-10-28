@@ -50,10 +50,10 @@ const en: Traducao<typeof pt> = {
   memoria: 'Visual memory',
   revisao: 'Quick review',
   irParaExercicios: 'Go to the exercises',
-  cabecalho: 'Practice: learn and remember, no score',
+  cabecalho: 'Reinforce: learn and remember, no score',
   intro: (n, nome) =>
     `${NUMERO_EN[n] ?? n} short steps with ${nome}. No mistake counts here: if you pick the wrong one, a hint appears and you try again. The scored exercises come later.`,
-  passos: 'Practice steps',
+  passos: 'Reinforce steps',
   passoDe: (k, total, nome) => `Step ${k} of ${total}: ${nome}`,
   voltar: 'Back',
   continuar: 'Continue',

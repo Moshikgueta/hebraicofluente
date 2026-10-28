@@ -64,7 +64,7 @@ texto do site nem do autor.
 - `worker/` é a API (`/api/*`) e o portão do conteúdo pago. `IMPLEMENTATION` da
   camada de comércio: `DEPLOY-CLOUDFLARE.md` + `worker/schema.sql`.
 
-## O site em inglês (desde 28/10/2026, em construção)
+## O site em inglês (desde 28/10/2026, etapa 1 concluída)
 Plano e decisões do dono em `PLANO-INGLES.md` (domínio próprio, US$ 47, Paddle).
 Um repositório, um banco, dois sites: `NEXT_PUBLIC_LOCALE=en` gera `app/out-en`,
 servido pelo segundo Worker (`wrangler.en.toml`, mesmo D1, ainda sem domínio e
@@ -76,6 +76,12 @@ sem publicação). Sem a variável, o site brasileiro sai igual.
   navegador leva os dois idiomas. `Traducao<typeof pt>` recusa chave faltando.
 - `node tools/textos-soltos.mjs` (de app/) lista o português ainda escrito
   direto no código das telas do escopo do site em inglês.
+  Tem de sair 0: tela nova nasce com dicionário. O que fica fora do escopo
+  (Raízes, A1, painéis, políticas, portal guardado) está em `FORA_DO_ESCOPO`.
+- **E-mail novo ao aluno** precisa da versão em `worker/src/lib/mail-en.js`
+  e de entrar em `lib/mensagens.js`; o idioma vem de `lib/idioma.js` (o do
+  site para o que a pessoa pede agora, o da conta para o agendamento).
+- Datas e números: `LOCALE_INTL` de `@/i18n`, nunca `'pt-BR'` escrito à mão.
 - **Mudou um `data/*.json` do curso?** Rode `node tools/i18n.mjs extrair`: o
   `data/en/` é a lista de trabalho da tradução e `tests/i18n.test.ts` falha se
   ele não acompanhar a fonte. Texto já traduzido cujo português mudou fica

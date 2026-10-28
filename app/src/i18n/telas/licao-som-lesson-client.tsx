@@ -90,7 +90,7 @@ const en: Traducao<typeof pt> = {
   palavras: 'Words',
   ler: 'Read',
   contraste: 'Contrast',
-  fixacao: 'Practice',
+  fixacao: 'Reinforce',
   exercicios: 'Exercises',
   naoAbriu: nome => `The sound ${nome} is not open yet`,
   mapa: '← Map',
@@ -143,7 +143,7 @@ const en: Traducao<typeof pt> = {
   leiaPalavras: 'Read the words aloud',
   leiaPalavrasInstrucao: (som, somMaiusculo) =>
     `Read the words with ${som}, record yourself and check that the sound came out as ${somMaiusculo} in all of them.`,
-  continuarFixacao: 'Continue to practice',
+  continuarFixacao: 'Continue to Reinforce',
   ouPar: (par, nome) => `${par} or ${nome}?`,
   ladoALado: (parRotulo, rotulo, parSom, som) =>
     <>Side by side: {parRotulo} and {rotulo}. Read each row aloud, first the right column and then the left, and feel your mouth change: {parSom} and {som}.</>,

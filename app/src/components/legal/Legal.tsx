@@ -19,6 +19,7 @@ import { Rubrica } from '@/components/landing/base';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, prazoResposta, whatsappUrl } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/conta-legal';
+import { LOCALE_INTL } from '@/i18n';
 
 /** A data de atualização, por extenso, como se lê em português. */
 export function dataPt(iso: string): string {
@@ -26,9 +27,9 @@ export function dataPt(iso: string): string {
   if (!a || !m || !d) return iso;
   /* `Date.UTC` e não `new Date(iso)`: uma string de data pura é interpretada
      como UTC, e formatar em fuso local move o dia para trás no Brasil. */
-  return new Date(Date.UTC(a, m - 1, d)).toLocaleDateString('pt-BR', {
+  return new Date(Date.UTC(a, m - 1, d)).toLocaleDateString(LOCALE_INTL, {
     day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC'
-  }); // etapa 1: data em pt-BR
+  });
 }
 
 export function LegalPage({

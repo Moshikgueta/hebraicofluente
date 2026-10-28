@@ -24,6 +24,7 @@ import { proximoPasso } from '@/lib/cta';
 import { Container, Rubrica } from '@/components/landing/base';
 import { nomeNaVitrine } from '@/components/portal/OpcoesDeCompra';
 import { tx } from '@/i18n/telas/conta-biblioteca';
+import { LOCALE_INTL } from '@/i18n';
 
 /** Os produtos que viram direito na conta, na ordem da estante, e onde abrem.
  *  `html`: página estática atrás do portão, aberta com link comum. */
@@ -34,7 +35,7 @@ const ESTANTE: { slug: string; abre: string; html?: boolean; nome?: string; resu
   { slug: 'raizes-sefarditas', abre: '/raizes/', nome: tx.nomeRaizes, resumo: tx.resumoRaizes }
 ];
 
-const data = (iso: string) => new Date(iso).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }); // etapa 1: data em pt-BR
+const data = (iso: string) => new Date(iso).toLocaleDateString(LOCALE_INTL, { timeZone: 'America/Sao_Paulo' });
 
 export function BibliotecaClient() {
   const account = useAccount();

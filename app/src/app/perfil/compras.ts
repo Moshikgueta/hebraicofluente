@@ -4,12 +4,13 @@
 
 import type { AcessoVencido, Order } from '@/lib/account/types';
 import { tx } from '@/i18n/telas/conta-perfil';
+import { LOCALE_INTL } from '@/i18n';
 
 /** dd/mm/aaaa no horário de Brasília - o fuso em que a pessoa conta os dias. */
 export const dataCurta = (iso: string): string =>
-  new Date(iso).toLocaleDateString('pt-BR', {
+  new Date(iso).toLocaleDateString(LOCALE_INTL, {
     day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo'
-  }); // etapa 1: data em pt-BR
+  });
 
 /** O vencimento de um curso que a conta teve e não tem mais, ou null. */
 export function vencidoDe(vencidos: AcessoVencido[] | null | undefined, slug: string): string | null {

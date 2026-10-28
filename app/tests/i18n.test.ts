@@ -74,6 +74,20 @@ describe('o dicionário da interface', () => {
   });
 });
 
+describe('os nomes do curso são os mesmos em toda tela', () => {
+  it('as abas da lição: o motor (etapas-da-licao) e as telas das lições dizem o mesmo', async () => {
+    const etapas = (await import('@/i18n/telas/motor-etapas-da-licao')).DICIONARIO;
+    for (const tela of ['licao-lesson-client', 'licao-som-lesson-client', 'licao-contraste-client']) {
+      const d = (await import(`../src/i18n/telas/${tela}`)).DICIONARIO as { pt: Dic; en: Dic };
+      for (const lado of ['pt', 'en'] as const) {
+        for (const k of ['conhecer', 'palavras', 'escrever', 'fixacao', 'exercicios']) {
+          if (k in d[lado]) expect(d[lado][k], `${tela} ${lado} ${k}`).toBe((etapas[lado] as Dic)[k]);
+        }
+      }
+    }
+  });
+});
+
 describe('o inglês do conteúdo (tools/i18n.mjs)', () => {
   it('o hebraico e as marcas {{...}} têm de ser os mesmos', () => {
     expect(mesmoHebraico('{{א}} é um apoio', '{{א}} is a support')).toBe(true);

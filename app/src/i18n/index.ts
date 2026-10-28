@@ -11,7 +11,7 @@
    A linha do `tx` precisa ser escrita assim, em cada arquivo: a build troca
    a variável pelo valor e o minificador apaga o idioma que não vai ao ar. Uma
    função que escolhesse por fora manteria os dois no pacote do navegador. */
-export { LOCALE, LANG_HTML, OG_LOCALE } from './locale';
+export { LOCALE, LANG_HTML, OG_LOCALE, LOCALE_INTL } from './locale';
 
 /** O inglês de um dicionário: as mesmas chaves (nenhuma a mais, nenhuma a
     menos), texto onde o português tem texto e função com a mesma assinatura

@@ -39,9 +39,10 @@ import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desis
 import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
 import { IdentificacaoCurta } from '@/components/legal/Legal';
 import { tx } from '@/i18n/telas/conta-perfil';
+import { LOCALE_INTL } from '@/i18n';
 
 const date = (iso: string) =>
-  new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }); // etapa 1: data em pt-BR
+  new Date(iso).toLocaleDateString(LOCALE_INTL, { day: '2-digit', month: 'long', year: 'numeric' });
 
 export function PerfilClient() {
   const account = useAccount();
@@ -773,9 +774,9 @@ function DesistirDaCompra({ order, email, onPedido }: {
 function VerCodigoPix({ order }: { order: Order }) {
   const [aberto, setAberto] = useState(false);
   const [copiado, setCopiado] = useState(false);
-  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString('pt-BR', {
+  const ate = new Date(order.pix!.expiresAt).toLocaleTimeString(LOCALE_INTL, {
     hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo'
-  }); // etapa 1: data em pt-BR
+  });
   if (!aberto) {
     return (
       <p className="basis-full font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
@@ -810,10 +811,10 @@ function VerCodigoPix({ order }: { order: Order }) {
 }
 
 const dataHora = (iso: string) =>
-  new Date(iso).toLocaleString('pt-BR', {
+  new Date(iso).toLocaleString(LOCALE_INTL, {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
     timeZone: 'America/Sao_Paulo'
-  }); // etapa 1: data em pt-BR
+  });
 
 function Row({ k, v }: { k: string; v: string }) {
   return (

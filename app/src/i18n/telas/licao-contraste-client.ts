@@ -45,7 +45,7 @@ const en: Traducao<typeof pt> = {
   osPares: 'The pairs',
   silabas: 'Syllables',
   palavras: 'Words',
-  fixacao: 'Practice',
+  fixacao: 'Reinforce',
   exercicios: 'Exercises',
   naoAbriu: 'The three-pairs lesson is not open yet',
   mapa: '← Map',
@@ -71,7 +71,7 @@ const en: Traducao<typeof pt> = {
   // etapa 3: pronúncia, rever
   leiaDoisLadosInstrucao:
     'Read the words in each pair, record yourself and check that the difference comes through: B and V, K and the scraped sound, P and F.',
-  continuarFixacao: 'Continue to practice',
+  continuarFixacao: 'Continue to Reinforce',
   placar: (certas, total, pct) => `${certas} of ${total} · ${pct}%`,
   firmes: 'The three pairs are solid.',
   vamosFirmar: 'Let\'s make the three pairs solid.',

@@ -11,3 +11,6 @@ export const LANG_HTML = LOCALE === 'en' ? 'en' : 'pt-BR';
 
 /** O `og:locale` dos cartões de link. */
 export const OG_LOCALE = LOCALE === 'en' ? 'en_US' : 'pt_BR';
+
+/** O formato de data, hora e número (Intl, toLocaleString). */
+export const LOCALE_INTL = LOCALE === 'en' ? 'en-US' : 'pt-BR';

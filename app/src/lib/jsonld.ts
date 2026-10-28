@@ -25,6 +25,7 @@ import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from '@/components/landing/faq-capa';
 import { tx } from '@/i18n/telas/motor-jsonld';
+import { LANG_HTML } from '@/i18n';
 
 type Json = Record<string, unknown>;
 
@@ -63,7 +64,7 @@ export function curso(): Json {
     '@type': 'Course',
     name: c.titlePt,
     description: c.taglinePt,
-    inLanguage: 'pt-BR',
+    inLanguage: LANG_HTML,
     url: url(paginaDeVenda(c.slug)),
     provider: { '@id': ID_ORG },
     offers: {
@@ -122,7 +123,7 @@ export function grafoDaCapa(retrato: string | null): Json {
     '@graph': [
       organizacao(),
       { '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
-        inLanguage: 'pt-BR', publisher: { '@id': ID_ORG } },
+        inLanguage: LANG_HTML, publisher: { '@id': ID_ORG } },
       professor(retrato)
     ]
   };

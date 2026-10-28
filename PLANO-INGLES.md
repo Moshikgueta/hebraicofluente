@@ -39,19 +39,49 @@ Um repositório só, um banco só, dois sites.
 
 ## Onde estamos
 
-**Etapa 1, primeira parte (28/10/2026):**
-- `tools/i18n.mjs` separou os 1.925 textos do curso em `data/en/` (português
-  ao lado, inglês em branco) e o exportador já monta o curso em inglês com
-  eles; `node tools/i18n.mjs planilha` gera o CSV para os revisores.
-- Dicionário da interface em `app/src/i18n/` (`t('chave')`), em uso no
-  `<html lang>`, no título e na descrição do site e na página de erro.
-- `NEXT_PUBLIC_LOCALE=en npm run build` gera `app/out-en`; `wrangler.en.toml`
-  é o segundo Worker, no mesmo banco.
+**Etapa 1 concluída (28/10/2026).**
+- **Telas:** todo texto fixo das telas do site em inglês saiu do código para
+  `app/src/i18n/telas/` (cerca de 4.000 textos, 190 dicionários), com a
+  primeira versão do inglês. `node tools/textos-soltos.mjs` (de app/) mostra
+  0. O português das 218 páginas saiu idêntico ao de antes (comparado página
+  por página), e cada build leva só o próprio idioma.
+- **Conteúdo do curso:** os 1.925 textos de `data/*.json` estão em `data/en/`,
+  esperando o inglês (etapa 2). `node tools/i18n.mjs planilha` gera o CSV.
+- **Servidor:** a conta guarda o idioma (migração 0004). Recuperação de senha,
+  confirmação de e-mail, lembretes, vencimento e estorno já saem em inglês para
+  as contas do site em inglês, com os links do site certo. O Worker em inglês
+  responde 404 a Raízes, A1, livro, prévia e painéis do dono.
+- **Datas e números** seguem o idioma da build (`LOCALE_INTL`).
 
-**Falta na etapa 1:** tirar do código os textos fixos das telas (são ~400
-arquivos, tela por tela), o Worker escrever e-mails e páginas de erro em
-inglês quando `LOCALE=en`, e o passo de publicação do site em inglês (espera
-o domínio).
+**Fica para as próximas etapas, de propósito:**
+- o catálogo em inglês (só a alfabetização, US$ 47) e o recibo de compra:
+  etapa 5, com o Paddle;
+- Termos, Privacidade, Reembolso e as frases do checkout sobre PIX, CDC e
+  parcelamento (marcadas `etapa 5/6: Brasil, rever` nos dicionários);
+- as comparações de pronúncia com o português (marcadas `etapa 3: pronúncia,
+  rever`) e a transliteração;
+- a publicação do site em inglês: espera o domínio.
+
+## Para o dono decidir
+
+Pontos em que a tradução mexe com fatos ou com a voz do autor. Estão escritos
+de forma fiel e neutra até a decisão:
+
+1. **O nome da marca e do curso em inglês.** Hoje: "Hebraico Fluente" e
+   "Learn to Read Hebrew" (`data/courses.json`, `titleEn`).
+2. **A biografia** (/sobre, capa): "Gerente Pedagógico" virou "Academic
+   Manager"; "estudos em Letras" virou "studies in Languages and Literature".
+3. **O crédito ao método** (`telas/motor-credito.ts`): diz "A adaptação para o
+   aluno brasileiro é minha". No site em inglês, manter assim ou falar da
+   adaptação para quem fala inglês (que é a etapa 3)?
+4. **O depoimento da Natália**: a frase em português diz que nenhuma palavra
+   foi mudada. Em inglês ele precisa da autorização dela e de aparecer como
+   tradução.
+5. **Frases "para brasileiros"**: onde o texto dizia que o método foi feito
+   para brasileiros, o inglês ficou neutro, sem prometer adaptação para quem
+   fala inglês antes de ela existir.
+6. **O selo "Para quem fala português"** virou "For English speakers", mas
+   ainda mostra a bandeira do Brasil (`lib/selos.ts`).
 
 ## As etapas
 

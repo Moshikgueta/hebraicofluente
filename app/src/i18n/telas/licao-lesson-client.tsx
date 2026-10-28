@@ -136,7 +136,7 @@ const en: Traducao<typeof pt> = {
   conhecer: 'Meet',
   palavras: 'Words',
   escrever: 'Write',
-  fixacao: 'Practice',
+  fixacao: 'Reinforce',
   exercicios: 'Exercises',
 
   concluirEContinuar: 'Finish and continue',
@@ -201,7 +201,7 @@ const en: Traducao<typeof pt> = {
   impressa: 'Print',
   cursiva: 'Cursive',
   formaFinal: nome => `${nome} - final form`,
-  continuarFixacao: 'Continue to practice',
+  continuarFixacao: 'Continue to Reinforce',
 
   praticarMais: 'Let\'s practice a little more.',
   reforcoTexto: n =>
