@@ -842,6 +842,32 @@ export const exMeaningToWord: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/**
+ * Imagem e palavra (28/10/2026, pedido do dono: "תמונה ומילה"): a foto do
+ * vocabulário, e o aluno escolhe a palavra hebraica certa.
+ *
+ * Só com palavra que ele LÊ (`wordsToRead` desta letra) e que tem imagem; as
+ * alternativas saem das palavras que ele já leu, nunca com o mesmo sentido
+ * da certa (duas respostas certas para a mesma foto seria um defeito).
+ */
+export const exImageToWord: Gen = (L, ctx, rand, i) => {
+  const comImagem = L.wordsToRead.filter(w => !!w.image);
+  const target = at(comImagem, i);
+  if (!target?.image) return null;
+  const pool = ctx.history.flatMap(x => x.wordsToRead).filter(w => w.pt !== target.pt);
+  const wrong = wordDistractors(target, pool, rand, 3).map(w => w.he);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(target.he, wrong, rand);
+  return {
+    id: `${L.id}-img-${clean(target.he)}`, kind: 'image-to-word', letterId: L.id, skill: 'ler',
+    promptPt: 'Qual destas palavras é a da imagem?',
+    /* Sem áudio: ouvir a palavra antes de escolher entregaria a resposta, e
+       o que se treina aqui é ler. */
+    image: target.image, imageAlt: target.imageAlt ?? target.pt, pt: target.pt, options, answer,
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
+  };
+};
+
 export const exCompleteWord: Gen = (L, ctx, rand, i) => {
   const usable = L.wordsToRead.filter(w => containsLetter(w.he, L.letter));
   const target = at(usable, i);
@@ -1107,6 +1133,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exPrintVsCursive,
   exListenSyllable,
   exMeaningToWord,
+  exImageToWord,
   exTypeTranslit,
   exMatchWordMeaning,
   exCursiveToPrint,

@@ -23,6 +23,7 @@ export const TIPO_PT: Record<string, string> = {
   'listen-syllable': 'Ouvir a sílaba',
   'match': 'Ligar pares',
   'meaning-to-word': 'Do sentido à palavra',
+  'image-to-word': 'Imagem e palavra',
   'odd-one-out': 'Achar a intrusa',
   'print-vs-cursive': 'Impressa e cursiva',
   'scene-reading': 'Cena do mundo real',

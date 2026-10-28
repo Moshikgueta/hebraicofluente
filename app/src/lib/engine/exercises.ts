@@ -32,7 +32,7 @@ import {
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
   exLetterVariant, exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning,
   exVariantSyllable, exVowelPair, exMatchSyllable, exMatchWordMeaning,
-  exMatchLetterSound, exMeaningToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
+  exMatchLetterSound, exMeaningToWord, exImageToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
   exSentenceReading, exSyllableReading, exTypeSyllable, exTypeTranslit, exVowelSound, exWordMeaning,
   type Ctx, type Gen
 } from './generators';
@@ -86,6 +86,7 @@ export function readingUsedBy(ex: Exercise): string[] {
       out.push(...ex.options);
       break;
     case 'meaning-to-word':
+    case 'image-to-word':
     case 'audio-recognition':
     case 'sound-to-syllable':
     case 'listen-syllable':
@@ -678,7 +679,7 @@ export function buildLetterPractice(
   const [variante, ...resto] = curriculo;
   const producao: (() => void)[] = [
     () => tentar(girar([exBuildLetters, exBuildCursiveGated], L.order), 1),
-    () => tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord], L.order), frase ? 1 : 2)
+    () => tentar(girar([exSyllableReading, exWordMeaning, exMeaningToWord, exImageToWord], L.order), frase ? 1 : 2)
   ];
   variante!();
   for (const camada of shuffled(resto, rand)) camada();
@@ -970,7 +971,7 @@ export function buildMiniTest(
   /* A frase fica SEMPRE na frente quando existe: ler uma linha inteira é o
      que o curso promete, e é a pergunta que mais vale numa prova. */
   tentar([exSentenceReading, ...girar([exSyllableReading, exVowelSound], L.order + 1)]);
-  tentar(girar([exWordMeaning, exMeaningToWord, exCompleteWord, exOddOneOut], L.order + 1));
+  tentar(girar([exWordMeaning, exMeaningToWord, exImageToWord, exCompleteWord, exOddOneOut], L.order + 1));
   /* RECUPERAÇÃO ATIVA, um item por prova.
      ─────────────────────────────────────────────────────────────────────
      Tudo acima é escolher: a resposta certa está na tela, e o aluno só
@@ -1034,7 +1035,7 @@ export function buildMiniTest(
       [exPrintVsCursive, exCursiveToPrint, exCursivaQualPalavra],
       girar([exBuildWord, exBuildSyllable, exBuildLetters], L.order),
       girar([exSyllableReading, exVariantSyllable, exSentenceReading], L.order),
-      girar([exMeaningToWord, exMatchWordMeaning, exWordMeaning], L.order),
+      girar([exImageToWord, exMeaningToWord, exMatchWordMeaning, exWordMeaning], L.order),
       /* Ouvir, quando há gravação; sem ela, a camada cai para o som escrito. */
       [...girar([exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning], L.order), exSoundToSyllable, exTypeSyllable]
     ];
