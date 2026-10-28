@@ -23,7 +23,8 @@ const pt = {
   leitura: 'leitura ←',
   assimQueSoa: 'é assim que soa',
   ouvirDeNovo: 'Ouvir de novo',
-  posicao: (n: number) => `Posição ${n}`
+  posicao: (n: number) => `Posição ${n}`,
+  seguidas: (n: number) => `${n} acertos seguidos!`
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -48,7 +49,8 @@ const en: Traducao<typeof pt> = {
   leitura: 'reading ←',
   assimQueSoa: 'this is how it sounds',
   ouvirDeNovo: 'Listen again',
-  posicao: n => `Position ${n}`
+  posicao: n => `Position ${n}`,
+  seguidas: n => `${n} in a row!`
 };
 
 export const DICIONARIO = { pt, en };

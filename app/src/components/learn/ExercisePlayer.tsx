@@ -32,6 +32,7 @@ import {
 } from './Answers';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Yael } from '@/components/aventura/Yael';
 import type { Exercise } from '@/lib/engine/exercises';
 import { isChoice } from '@/lib/engine/exercises';
 import { reenfileirar } from '@/lib/engine/fila-de-revisao';
@@ -78,6 +79,9 @@ export function ExercisePlayer({
   const [settled, setSettled] = useState<Settled | null>(null);
   const [correctCount, setCorrectCount] = useState(inicio?.certas ?? 0);
   const [missed, setMissed] = useState<string[]>(inicio?.erradas ?? []);
+  /* Os acertos em sequência, só para a Yael comemorar (28/10/2026). Não vai
+     para o progresso nem para a nota. */
+  const [seguidas, setSeguidas] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
   const raizRef = useRef<HTMLDivElement>(null);
   const perguntaRef = useRef<HTMLHeadingElement>(null);
@@ -137,6 +141,7 @@ export function ExercisePlayer({
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null, troca });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
+    setSeguidas(n => (correct ? n + 1 : 0));
 
     /* The moment the course is actually selling.
        Reading a whole word right, correctly, at a point where the course has
@@ -346,13 +351,24 @@ export function ExercisePlayer({
           >
           <Card tone={isRight ? 'mint' : 'amber'}
                 className="p-5 animate-rise shadow-[var(--shadow-2)] lg:shadow-[var(--shadow-1)]">
-            <p
-              className={`flex items-center gap-2 font-ui text-[15px] font-semibold outline-none
-                ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
-            >
-              <span aria-hidden>{isRight ? '✓' : '↻'}</span>
-              {isRight ? tx.boa : settled.troca ? tx.quaseTroca : tx.quase}
-            </p>
+            <div className="flex items-center gap-3">
+              {/* A Yael reage: pula no acerto, comemora a sequência, e no erro
+                  inclina a cabeça - nunca fica triste, que errar aqui não custa. */}
+              <Yael key={`${i}:${isRight}`} className="w-[58px] shrink-0 -my-3 -ml-1"
+                    humor={!isRight ? 'quase' : MARCOS.includes(seguidas) ? 'comemora' : 'feliz'} />
+              <div className="grid gap-0.5 min-w-0">
+                <p
+                  className={`m-0 flex items-center gap-2 font-ui text-[15px] font-semibold outline-none
+                    ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
+                >
+                  <span aria-hidden>{isRight ? '✓' : '↻'}</span>
+                  {isRight ? tx.boa : settled.troca ? tx.quaseTroca : tx.quase}
+                </p>
+                {isRight && MARCOS.includes(seguidas) && (
+                  <p className="m-0 font-ui text-[13.5px] font-semibold text-[var(--gold-body)] il-entra">{tx.seguidas(seguidas)}</p>
+                )}
+              </div>
+            </div>
             {settled.troca && (
               <div className="mt-3 grid gap-2">
                 <div dir="rtl" className="flex gap-2.5">
@@ -401,6 +417,9 @@ export function ExercisePlayer({
     </div>
   );
 }
+
+/* Quantos acertos seguidos a Yael comemora, com a linha que diz a conta. */
+const MARCOS = [3, 5, 10, 15, 20];
 
 /* The kinds where the wrong OPTION is itself a letter, and so worth recording
    as a confusion. Choosing the wrong meaning of a word is a different kind of

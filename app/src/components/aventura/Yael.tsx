@@ -1,57 +1,140 @@
-/* A Yael, o íbex-núbio, companheira da aventura (28/10/2026): PROTÓTIPO,
- * só na Aula 0.
+/* A Yael, o íbex-núbio, companheira da aventura (28/10/2026).
  * ─────────────────────────────────────────────────────────────────────────
- * Escolha do dono, no mesmo dia (a poupa foi recusada). O íbex-núbio
- * (Capra nubiana), יָעֵל em hebraico, é o bode-montês das falésias do deserto
- * da Judeia, e Ein Gedi é a casa dele. Desenho próprio, em vetor, sem texto
- * dentro: o corpo cor de areia, a barriga e as patas com o branco das
- * marcas, os chifres longos e curvados para trás com os anéis, e a pedra
- * onde ela está.
+ * Escolha do dono (a poupa foi recusada). O íbex-núbio (Capra nubiana),
+ * יָעֵל em hebraico, é o bode-montês das falésias do deserto da Judeia, e
+ * Ein Gedi é a casa dele. Desenho próprio, em vetor, sem texto dentro.
  *
- * Protótipo: mora só na capa e no fim da Aula 0, sem falar. O nome em
- * hebraico (יָעֵל) só pode aparecer como LEITURA a partir do módulo 4, quando
- * o Áyin já foi ensinado; aqui ela é "Yael", em português.
+ * Desde 28/10/2026 (pedido do dono: "a Yael animada, estilo Duolingo") ela
+ * é de frente, com a cabeça grande, os olhos e a boca que mudam de humor:
+ *   · `parada`   · respira, pisca e mexe a orelha;
+ *   · `feliz`    · o acerto: olhos fechados de alegria e um pulo com mola;
+ *   · `quase`    · o erro, que no curso nunca é castigo: sobrancelhas para
+ *                  cima, cabeça inclinada, a cara de "vamos ver de novo";
+ *   · `comemora` · três pulos e as estrelinhas (checkpoint, lugar novo);
+ *   · `pensando` · olha para cima, com a boca de lado.
+ * O nome em hebraico (יָעֵל) só pode aparecer como LEITURA a partir do
+ * módulo 4, quando o Áyin já foi ensinado; aqui ela é "Yael".
  *
- * Decorativa (`aria-hidden`). O movimento é só transform e para com "reduzir
- * movimento".
+ * Decorativa (`aria-hidden`): quem fala é o texto ao lado. O movimento é só
+ * transform e opacidade, e para com "reduzir movimento". A `key` do humor
+ * reinicia a animação a cada resposta.
  */
 
-export function Yael({ pulando = false, className = '' }: { pulando?: boolean; className?: string }) {
+export type HumorDaYael = 'parada' | 'feliz' | 'quase' | 'comemora' | 'pensando';
+
+const AREIA = '#D4A66C', AREIA_ESCURA = '#9C7448', CHIFRE = '#7A5634', CLARO = '#F6EEE1', TINTA = '#1F2A2C';
+
+function Olhos({ humor }: { humor: HumorDaYael }) {
+  if (humor === 'feliz' || humor === 'comemora') {
+    return (
+      <g stroke={TINTA} strokeWidth="3" strokeLinecap="round" fill="none">
+        <path d="M42 49 Q48 41 55 49" /><path d="M65 49 Q72 41 78 49" />
+      </g>
+    );
+  }
+  /* Para onde as pupilas olham: no "quase", para baixo, para a resposta. */
+  const [dx, dy] = humor === 'pensando' ? [1.5, -3] : humor === 'quase' ? [1, 2.4] : [.6, .6];
   return (
-    <svg viewBox="0 0 120 120" aria-hidden focusable="false"
-         className={`yael ${pulando ? 'yael-pula' : ''} ${className}`}>
+    <g className="yael-olho">
+      <ellipse cx="48.5" cy="47" rx="7.5" ry="8.5" fill="#FFFFFF" />
+      <ellipse cx="71.5" cy="47" rx="7.5" ry="8.5" fill="#FFFFFF" />
+      <circle cx={48.5 + dx} cy={47 + dy} r="4.4" fill={TINTA} />
+      <circle cx={71.5 + dx} cy={47 + dy} r="4.4" fill={TINTA} />
+      <circle cx={49.8 + dx} cy={45.4 + dy} r="1.5" fill="#FFFFFF" />
+      <circle cx={72.8 + dx} cy={45.4 + dy} r="1.5" fill="#FFFFFF" />
+    </g>
+  );
+}
+
+function Sobrancelhas({ humor }: { humor: HumorDaYael }) {
+  const d = humor === 'quase' ? ['M41 36 Q47 31 54 35', 'M66 35 Q73 31 79 36']
+    : humor === 'pensando' ? ['M41 37 Q47 34 54 37', 'M66 34 Q73 31 79 35']
+      : ['M42 37 Q48 34 54 36', 'M66 36 Q72 34 78 37'];
+  return (
+    <g stroke={CHIFRE} strokeWidth="2.4" strokeLinecap="round" fill="none" className="yael-sobrancelhas">
+      <path d={d[0]} /><path d={d[1]} />
+    </g>
+  );
+}
+
+function Boca({ humor }: { humor: HumorDaYael }) {
+  if (humor === 'feliz' || humor === 'comemora') {
+    return (
+      <g>
+        <path d="M52 64 Q60 76 68 64 Z" fill={TINTA} />
+        <path d="M55.5 69.5 Q60 74 64.5 69.5 Q60 67.6 55.5 69.5 Z" fill="#E7808A" />
+      </g>
+    );
+  }
+  if (humor === 'quase') return <ellipse cx="60" cy="67" rx="3" ry="3.4" fill={TINTA} />;
+  if (humor === 'pensando') return <path d="M55 67.5 Q61 69 66 64.5" stroke={TINTA} strokeWidth="2.2" strokeLinecap="round" fill="none" />;
+  return <path d="M54 65 Q60 70 66 65" stroke={TINTA} strokeWidth="2.4" strokeLinecap="round" fill="none" />;
+}
+
+export function Yael({ humor, pulando = false, className = '' }: {
+  humor?: HumorDaYael;
+  /** O nome de antes: `pulando` é o mesmo que `humor="comemora"`. */
+  pulando?: boolean;
+  className?: string;
+}) {
+  const h: HumorDaYael = humor ?? (pulando ? 'comemora' : 'parada');
+  return (
+    <svg viewBox="0 0 120 120" aria-hidden focusable="false" overflow="visible"
+         className={`yael yael-${h} ${className}`}>
       {/* A pedra. */}
-      <path d="M14 112 Q20 94 44 92 L84 90 Q104 92 110 112 Z" fill="#C4A873" />
-      <path d="M30 100 Q40 96 52 98 M70 97 Q82 95 94 99" stroke="#A88C5A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-      <g className="yael-corpo">
-        {/* As patas de trás e de frente, com o branco na frente da perna. */}
-        <path d="M38 76 L36 94 M46 77 L46 94" stroke="#9C7448" strokeWidth="5" strokeLinecap="round" />
-        <path d="M72 76 L72 93 M80 75 L82 93" stroke="#9C7448" strokeWidth="5" strokeLinecap="round" />
-        <path d="M72 84 L72 92 M80 84 L81.4 92" stroke="#F3EBDD" strokeWidth="2" strokeLinecap="round" />
-        {/* O rabo curto. */}
-        <path d="M30 60 Q24 56 26 52" stroke="#7A5634" strokeWidth="4" strokeLinecap="round" fill="none" />
-        {/* O corpo, cor de areia, com a barriga clara. */}
-        <path d="M30 62 Q34 48 58 50 Q80 50 86 62 Q86 78 70 80 L42 80 Q30 78 30 62 Z" fill="#C99A63" />
-        <path d="M40 74 Q58 82 76 74 Q70 80 58 80 Q46 80 40 74 Z" fill="#F3EBDD" />
-        {/* A faixa escura do dorso. */}
-        <path d="M36 54 Q58 46 82 56" stroke="#9C7448" strokeWidth="3" fill="none" strokeLinecap="round" />
-        {/* O pescoço e a cabeça. */}
-        <path d="M76 58 Q84 44 92 38 L100 44 Q94 54 86 64 Z" fill="#C99A63" />
-        <path d="M90 36 Q100 32 106 40 Q108 48 100 50 Q94 50 90 44 Z" fill="#C99A63" />
-        {/* O focinho e a barbicha. */}
-        <path d="M104 44 Q108 46 106 49" stroke="#7A5634" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-        <path d="M100 50 Q101 56 98 58 Q96 54 97 50 Z" fill="#7A5634" />
-        {/* A orelha. */}
-        <path d="M92 38 Q86 34 84 38 Q88 40 92 40 Z" fill="#9C7448" />
-        {/* Os chifres, longos e curvados para trás, com os anéis. */}
-        <g className="yael-chifres">
-          <path d="M94 34 Q86 10 62 12 Q76 16 84 30 Q88 36 92 38 Z" fill="#7A5634" />
-          <path d="M86.6 30.9 L91.6 27.9 M83.7 26.3 L87.8 23.0 M80.5 22.4 L83.7 18.9 M76.9 19.2 L79.1 15.8 M73.1 16.9 L74.4 13.6 M69.5 15.4 L70.3 12.4" stroke="#C4A873" strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M16 116 Q22 102 44 101 L80 100 Q102 102 106 116 Z" fill="#C4A873" />
+      <path d="M30 109 Q40 105 52 107 M70 106 Q82 104 94 108" stroke="#A88C5A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      <ellipse className="yael-sombra" cx="60" cy="103" rx="24" ry="3.4" fill="#A88C5A" opacity=".55" />
+
+      {h === 'comemora' && (
+        <g className="yael-estrelas" fill="#F2B632">
+          <path d="M14 34 l2.4 5 5 2.4 -5 2.4 -2.4 5 -2.4 -5 -5 -2.4 5 -2.4 Z" />
+          <path d="M104 26 l2 4.2 4.2 2 -4.2 2 -2 4.2 -2 -4.2 -4.2 -2 4.2 -2 Z" />
+          <path d="M100 66 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z" />
+          <path d="M20 72 l1.4 3 3 1.4 -3 1.4 -1.4 3 -1.4 -3 -3 -1.4 3 -1.4 Z" />
         </g>
-        {/* O olho, que pisca. */}
-        <g className="yael-olho">
-          <circle cx="98" cy="41" r="2.2" fill="#1F2A2C" />
-          <circle cx="98.7" cy="40.3" r=".7" fill="#FFFFFF" />
+      )}
+
+      <g className="yael-corpo">
+        {/* As patas, curtas, com o branco na frente. */}
+        <g stroke={AREIA_ESCURA} strokeWidth="6" strokeLinecap="round">
+          <path d="M45 88 L45 101" /><path d="M54 90 L54 103" /><path d="M66 90 L66 103" /><path d="M75 88 L75 101" />
+        </g>
+        <g stroke={CLARO} strokeWidth="2.2" strokeLinecap="round">
+          <path d="M54 98 L54 102" /><path d="M66 98 L66 102" />
+        </g>
+        {/* O corpo, redondo, com a barriga clara. */}
+        <ellipse cx="60" cy="82" rx="25" ry="13.5" fill={AREIA} />
+        <ellipse cx="60" cy="87" rx="14" ry="7" fill={CLARO} />
+
+        <g className="yael-cabeca">
+          {/* Os chifres, longos e curvados para trás, com os anéis. */}
+          <g className="yael-chifres">
+            <path d="M50 28 Q40 4 18 10 Q32 12 42 31 Z" fill={CHIFRE} />
+            <path d="M70 28 Q80 4 102 10 Q88 12 78 31 Z" fill={CHIFRE} />
+            <path d="M43 23 L48 21 M38 17 L42 14 M32 13 L35 10 M77 23 L72 21 M82 17 L78 14 M88 13 L85 10"
+                  stroke="#C4A873" strokeWidth="1.4" strokeLinecap="round" />
+          </g>
+          {/* As orelhas, para os lados. */}
+          <g className="yael-orelha-e">
+            <path d="M37 44 Q22 38 18 46 Q26 52 37 50 Z" fill={AREIA_ESCURA} />
+            <path d="M33 45.5 Q25 43 23 47 Q28 49.6 33 48.6 Z" fill="#E9B79B" />
+          </g>
+          <g className="yael-orelha-d">
+            <path d="M83 44 Q98 38 102 46 Q94 52 83 50 Z" fill={AREIA_ESCURA} />
+            <path d="M87 45.5 Q95 43 97 47 Q92 49.6 87 48.6 Z" fill="#E9B79B" />
+          </g>
+          {/* A cabeça, grande, e o focinho claro. */}
+          <path d="M60 24 Q86 24 86 50 Q86 76 60 76 Q34 76 34 50 Q34 24 60 24 Z" fill={AREIA} />
+          <path d="M44 31 Q60 26 76 31" stroke={AREIA_ESCURA} strokeWidth="2" fill="none" strokeLinecap="round" opacity=".6" />
+          <ellipse cx="60" cy="64" rx="15" ry="11" fill={CLARO} />
+          <ellipse cx="60" cy="58.4" rx="4.6" ry="3" fill={CHIFRE} />
+          {/* As bochechas. */}
+          <ellipse cx="39.5" cy="60" rx="4.6" ry="3" fill="#E7808A" opacity=".45" />
+          <ellipse cx="80.5" cy="60" rx="4.6" ry="3" fill="#E7808A" opacity=".45" />
+          <Sobrancelhas humor={h} />
+          <Olhos humor={h} />
+          <Boca humor={h} />
         </g>
       </g>
     </svg>

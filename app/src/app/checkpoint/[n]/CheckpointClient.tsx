@@ -70,9 +70,9 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
     return (
       <div className="focus-col grid gap-5">
-        {/* A Yael comemora o fim do módulo (28/10/2026). Só com o checkpoint
-            aprovado, e decorativa. */}
-        {passed && <Yael pulando className="justify-self-center w-[96px] -mb-3" />}
+        {/* A Yael comemora o fim do módulo (28/10/2026); sem a aprovação,
+            inclina a cabeça, a cara de "vamos de novo". Decorativa. */}
+        <Yael humor={passed ? 'comemora' : 'quase'} className="justify-self-center w-[96px] -mb-3" />
         <Milestone
           kicker={tx.kicker(mod.n, result.correct, result.total)}
           title={passed ? tx.concluido(pct) : tx.quaseLa(pct)}
