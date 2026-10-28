@@ -27,12 +27,12 @@ const pt = {
 const en: Traducao<typeof pt> = {
   metaTitulo: 'Hebrew Courses - Hebraico Fluente',
   metaDescricao:
-    'Learn to read Hebrew from zero, for English speakers: available today. ' +
-    'A1, A2 and B1 in production, sold separately on the same account.',
+    'Learn to read Hebrew from zero, for English speakers: the 22 letters, the vowel signs and ' +
+    'real words, at your own pace. Available today.',
   trilha: 'The courses',
   eyebrow: 'Hebrew courses',
   titulo: 'Start with the alphabet.',
-  lead: 'The reading course is available today. A1, A2 and B1 are in production and will be sold separately, on the same account, each one starting where the previous one left off.',
+  lead: 'The reading course is available today, and for now it is the only course on this site.',
   ordemEyebrow: 'The order',
   ordemTitulo: 'What each level delivers.',
   seuCurso: 'Your course',

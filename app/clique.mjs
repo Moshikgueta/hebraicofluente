@@ -35,6 +35,30 @@
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, writeSync } from 'node:fs';
 import { chromium } from 'playwright';
+import { EM_INGLES, OUT } from './saida.mjs';
+/* Os textos que esta conferência procura, nos dois idiomas da build: o
+   inglês sai dos dicionários de app/src/i18n/telas (venda-demo-alef.tsx e
+   licao-trace-board.ts). Mudou um texto lá, muda aqui. */
+const R = EM_INGLES ? {
+  testar: /test me now/i, qualAlef: 'text=/Which of these is Alef/', quase: /Almost/, toqueDeNovo: /Tap again/,
+  forma: /Alef has this shape/, isso: /That's it!/, continuar: /^Continue/, qualDasDuas: /which of the two is Alef/,
+  ayin: /Ayin/, vogais: /Now the vowels/, ouvirAria: 'button[aria-label^="Hear «"]', proxima: /Next/,
+  ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, escreva: /Now you write it/, conferir: /^Check$/,
+  conferirDisse: /(Compare it with the model|stroke|shape|line|Almost|Good|That's it)/i, acheAlef: /Now find Alef/,
+  direita: /starts on the right/, leia: /Now read a word/, aquiDentro: /find Alef in here/, terminei: /I finished the first letter/,
+  umDe22: /1 of 22 letters/i, primeiraLetra: /just learned your first letter/i, oQueFez: /What you just did/i,
+  escreveu: /Wrote Alef with your finger/, seuEmail: 'Your email', asOutras: /I want to learn the other/
+} : {
+  testar: /testar agora/i, qualAlef: 'text=/Qual destas é o Álef/', quase: /Quase/, toqueDeNovo: /Toque de novo/,
+  forma: /O Álef tem esta forma/, isso: /Isso!/, continuar: /^Continuar/, qualDasDuas: /qual das duas é o Álef/,
+  ayin: /Áyin/, vogais: /Agora as vogais/, ouvirAria: 'button[aria-label^="Ouvir «"]', proxima: /Próxima/,
+  ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, escreva: /Agora escreva você/, conferir: /^Conferir$/,
+  conferirDisse: /(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i, acheAlef: /Agora ache o Álef/,
+  direita: /começa à direita/, leia: /Agora leia uma palavra/, aquiDentro: /achar o Álef aqui dentro/, terminei: /Terminei a primeira letra/,
+  umDe22: /1 de 22 letras/i, primeiraLetra: /acabou de aprender sua primeira letra/i, oQueFez: /O que você fez agora/i,
+  escreveu: /Escreveu o Álef com o dedo/, seuEmail: 'Seu e-mail', asOutras: /Quero aprender as outras/
+};
+
 
 const log = s => writeSync(1, s + '\n');
 
@@ -46,7 +70,7 @@ const T = {
 };
 const srv = createServer((q, r) => {
   const c = decodeURIComponent(q.url.split('?')[0]);
-  for (const f of [`out${c}`, `out${c}/index.html`, `out${c}.html`, 'out/404.html']) {
+  for (const f of [`${OUT}${c}`, `${OUT}${c}/index.html`, `${OUT}${c}.html`, `${OUT}/404.html`]) {
     if (!existsSync(f) || f.endsWith('/')) continue;
     try {
       const b = readFileSync(f);
@@ -205,12 +229,12 @@ for (const width of LARGURAS) {
   await secao.scrollIntoViewIfNeeded();
 
   /* 1 · conhecer → reconhecer. Oito etapas desde 03/10/2026. */
-  const comecar = secao.locator('button', { hasText: /testar agora/i }).first();
+  const comecar = secao.locator('button', { hasText: R.testar }).first();
   if (!(await comecar.count())) { erro(`${width}px: não achei o botão que abre a demo`); await ctx.close(); continue; }
   await comecar.click();
   await p.waitForTimeout(300);
 
-  const pergunta = await secao.locator('text=/Qual destas é o Álef/').count();
+  const pergunta = await secao.locator(R.qualAlef).count();
   if (!pergunta) erro(`${width}px: a etapa de reconhecimento não apareceu`);
 
   /* Todo alvo de toque com pelo menos 44px, que é a regra da casa. */
@@ -229,16 +253,16 @@ for (const width of LARGURAS) {
     await opcoes.nth(iErrada).click();
     await p.waitForTimeout(350);
     const txt = (await secao.innerText()).replace(/\s+/g, ' ');
-    if (!/Quase/.test(txt)) erro(`${width}px: o erro não recebeu retorno`);
-    else if (!/Toque de novo/.test(txt)) erro(`${width}px: o erro não devolve a tentativa`);
-    else if (!/O Álef tem esta forma/.test(txt)) erro(`${width}px: o erro não diz onde olhar`);
+    if (!R.quase.test(txt)) erro(`${width}px: o erro não recebeu retorno`);
+    else if (!R.toqueDeNovo.test(txt)) erro(`${width}px: o erro não devolve a tentativa`);
+    else if (!R.forma.test(txt)) erro(`${width}px: o erro não diz onde olhar`);
     else log(`  ✓ ${String(width).padStart(4)}px  o erro explica e devolve a tentativa`);
 
     /* 2b · a resposta CERTA */
     await opcoes.nth(iCerta).click();
     await p.waitForTimeout(350);
     const ok2 = (await secao.innerText()).replace(/\s+/g, ' ');
-    if (!/Isso!/.test(ok2)) erro(`${width}px: o acerto não recebeu retorno`);
+    if (!R.isso.test(ok2)) erro(`${width}px: o acerto não recebeu retorno`);
     else log(`  ✓ ${String(width).padStart(4)}px  o acerto confirma`);
 
     /* 3 · escrever - a etapa em que o dedo faz alguma coisa.
@@ -259,23 +283,23 @@ for (const width of LARGURAS) {
       if (!(await b.count())) { erro(`${width}px: não achei o botão ${rotulo}`); return; }
       await b.click(); await p.waitForTimeout(350);
     };
-    await segue(/^Continuar/);
-    if (!/qual das duas é o Álef/.test(await secao.innerText())) erro(`${width}px: a etapa de comparar não apareceu`);
+    await segue(R.continuar);
+    if (!R.qualDasDuas.test(await secao.innerText())) erro(`${width}px: a etapa de comparar não apareceu`);
     await toca('ע');
-    if (!/Áyin/.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
+    if (!R.ayin.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
     await toca('א');
-    await segue(/Agora as vogais/);
+    await segue(R.vogais);
     /* A tabela das sílabas toca a voz do professor (03/10/2026). */
-    const silabas = await secao.locator('button[aria-label^="Ouvir «"]').count();
+    const silabas = await secao.locator(R.ouvirAria).count();
     if (silabas !== 5) erro(`${width}px: a tabela das vogais tem ${silabas} botões de ouvir, e não 5`);
-    for (const [som, prox] of [['«i»', /Próxima/], ['«o»', /Próxima/], ['«a»', /Próxima/]]) {
+    for (const [som, prox] of [['«i»', R.proxima], ['«o»', R.proxima], ['«a»', R.proxima]]) {
       await toca(som); await segue(prox);
     }
     /* A rodada de ouvir: o botão existe, e o erro manda ouvir de novo. */
-    if (!(await secao.locator('button', { hasText: /^🔊Ouvir$/ }).count())) erro(`${width}px: a rodada de ouvir não tem botão`);
+    if (!(await secao.locator('button', { hasText: R.ouvirBotao }).count())) erro(`${width}px: a rodada de ouvir não tem botão`);
     await toca('אַ');
-    if (!/Ouça de novo/.test(await secao.innerText())) erro(`${width}px: o erro da rodada de ouvir não manda ouvir de novo`);
-    await toca('אוּ'); await segue(/Agora escreva você/);
+    if (!R.ouvirDeNovo.test(await secao.innerText())) erro(`${width}px: o erro da rodada de ouvir não manda ouvir de novo`);
+    await toca('אוּ'); await segue(R.escreva);
     log(`  ✓ ${String(width).padStart(4)}px  comparar e vogais respondem`);
 
     const canvas = secao.locator('canvas').first();
@@ -319,13 +343,13 @@ for (const width of LARGURAS) {
       }
 
       /* E o retorno de «Conferir». */
-      const conferir = secao.locator('button', { hasText: /^Conferir$/ }).first();
+      const conferir = secao.locator('button', { hasText: R.conferir }).first();
       if (!(await conferir.count())) erro(`${width}px: a escrita não tem botão de conferir`);
       else {
         await conferir.click();
         await p.waitForTimeout(300);
         const dito = (await secao.innerText()).replace(/\s+/g, ' ');
-        if (!/(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i.test(dito)) {
+        if (!R.conferirDisse.test(dito)) {
           erro(`${width}px: conferir a escrita não disse nada`);
         } else {
           log(`  ✓ ${String(width).padStart(4)}px  conferir a escrita responde`);
@@ -336,38 +360,38 @@ for (const width of LARGURAS) {
     /* 4 · ler. O botão de seguir NUNCA depende de ter desenhado: um canvas
        não é alcançável por teclado, e prender a demo ali seria fechá-la para
        quem navega sem ponteiro. */
-    await segue(/Agora ache o Álef/);
+    await segue(R.acheAlef);
     await toca('שָׁלוֹם');
-    if (!/começa à direita/.test(await secao.innerText())) erro(`${width}px: o erro do achar não ensina a direção`);
-    await toca('אֶתְמוֹל'); await segue(/Próxima/);
+    if (!R.direita.test(await secao.innerText())) erro(`${width}px: o erro do achar não ensina a direção`);
+    await toca('אֶתְמוֹל'); await segue(R.proxima);
     await toca('אֹכֶל');
     log(`  ✓ ${String(width).padStart(4)}px  achar o Álef nas palavras responde`);
-    await secao.locator('button', { hasText: /Agora leia uma palavra/ }).first().click();
+    await secao.locator('button', { hasText: R.leia }).first().click();
     await p.waitForTimeout(300);
     const leitura = (await secao.innerText()).replace(/\s+/g, ' ');
-    if (!/achar o Álef aqui dentro/.test(leitura)) erro(`${width}px: a etapa de leitura não apareceu`);
+    if (!R.aquiDentro.test(leitura)) erro(`${width}px: a etapa de leitura não apareceu`);
     else log(`  ✓ ${String(width).padStart(4)}px  a leitura mostra a palavra`);
 
     /* 4 · a conquista e o CTA */
-    await secao.locator('button', { hasText: /Terminei a primeira letra/ }).first().click();
+    await secao.locator('button', { hasText: R.terminei }).first().click();
     await p.waitForTimeout(400);
     const fim = (await secao.innerText()).replace(/\s+/g, ' ');
     /* `/i`: o rótulo é `uppercase` por CSS, e `innerText` devolve o texto
        RENDERIZADO - "1 DE 22 LETRAS". A primeira versão desta regra procurava
        a forma escrita no código e acusava uma seção que estava certa. */
-    if (!/1 de 22 letras/i.test(fim)) erro(`${width}px: o fim da demo não mostra 1 de 22`);
-    if (!/acabou de aprender sua primeira letra/i.test(fim)) erro(`${width}px: falta a frase da conquista`);
+    if (!R.umDe22.test(fim)) erro(`${width}px: o fim da demo não mostra 1 de 22`);
+    if (!R.primeiraLetra.test(fim)) erro(`${width}px: falta a frase da conquista`);
     /* O resultado: o que a pessoa fez. Ela riscou o quadro, então a escrita entra. */
-    if (!/O que você fez agora/i.test(fim)) erro(`${width}px: falta o resultado no fim do teste`);
-    else if (!/Escreveu o Álef com o dedo/.test(fim)) erro(`${width}px: o resultado não conta a escrita de quem escreveu`);
+    if (!R.oQueFez.test(fim)) erro(`${width}px: falta o resultado no fim do teste`);
+    else if (!R.escreveu.test(fim)) erro(`${width}px: o resultado não conta a escrita de quem escreveu`);
     else log(`  ✓ ${String(width).padStart(4)}px  o fim mostra o que a pessoa fez`);
     /* A segunda letra por e-mail: o campo existe e tem rótulo. */
-    if (!(await secao.getByLabel('Seu e-mail').count())) erro(`${width}px: falta o pedido da segunda letra no fim do teste`);
+    if (!(await secao.getByLabel(R.seuEmail).count())) erro(`${width}px: falta o pedido da segunda letra no fim do teste`);
     else log(`  ✓ ${String(width).padStart(4)}px  o fim oferece a segunda letra por e-mail`);
 
     /* O CTA tem de levar ao FLUXO DE COMPRA, e não a mais uma página de
        texto. É o ponto de maior intenção da visita inteira. */
-    const cta = secao.locator('a', { hasText: /Quero aprender as outras/ }).first();
+    const cta = secao.locator('a', { hasText: R.asOutras }).first();
     if (!(await cta.count())) erro(`${width}px: nenhum CTA no fim da demo`);
     else {
       const href = await cta.getAttribute('href');

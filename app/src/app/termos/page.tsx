@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
+import { TermsEn } from '@/components/legal/en/TermsEn';
 import Link from 'next/link';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { ancora, brl, estaAVenda, fimDoPreLancamento, flagship, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
@@ -10,9 +11,10 @@ import {
 
 export const metadata: Metadata = meta({
   rota: '/termos',
-  title: 'Termos de Uso - Hebraico Fluente',
-  description:
-    'O que você contrata, por quanto tempo, como o acesso é liberado, o que pode ' +
+  title: process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'Terms of Use - Hebraico Fluente' : 'Termos de Uso - Hebraico Fluente',
+  description: process.env.NEXT_PUBLIC_LOCALE === 'en'
+    ? 'What you buy, for how long, how access is granted, what you may and may not do with the content, and how to cancel.'
+    : 'O que você contrata, por quanto tempo, como o acesso é liberado, o que pode ' +
     'e o que não pode ser feito com o conteúdo, e como cancelar.'
 });
 
@@ -24,6 +26,8 @@ export const metadata: Metadata = meta({
  * documento é a prova contra quem o escreveu.
  */
 export default function Page() {
+  /* O site em inglês tem o próprio documento (PLANO-INGLES.md, etapa 6). */
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return <TermsEn />;
   const c = flagship();
   /* 21/10/2026: o e-book e o pacote, vendidos à parte (data/courses.json). */
   /* Só entram nos Termos quando estão à venda (`aVenda` em data/courses.json). */

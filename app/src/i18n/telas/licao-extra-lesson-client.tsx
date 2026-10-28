@@ -122,7 +122,7 @@ const en: Traducao<typeof pt> = {
   dobra:
     'In some words the dot appears after a vowel. There it does not just change the sound: it doubles the consonant, and the sound is the hard one. These words are learned by ear and by reading, one by one.',
   shva: (a, b) =>
-    <>And after a letter with shva at the start of a word (or after a prefix) the rule also fails: there the letter has no dot, and the sound is the soft one, as in {a} (bevakashá) and {b} (kvar).</>,
+    <>And after a letter with shva at the start of a word (or after a prefix) the rule also fails: there the letter has no dot, and the sound is the soft one, as in {a} (bevakasha) and {b} (kvar).</>,
   naoEDetalhe: 'This is not a finishing detail',
   praticarSemPonto: 'Practice: reading without the printed dot',
   cincoFinais: 'The five final forms',

@@ -28,6 +28,7 @@ import {
   clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import { ehSandbox, paddlePronto, tokenDoCliente } from '../lib/paddle.js';
 import { nomeSeguro } from '../lib/nome.js';
 import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { avisarRetirada } from './depoimentos.js';
@@ -252,7 +253,7 @@ async function registrarAceite(env, accountId) {
   try {
     /* O código da versão do texto (LEGAL-104), com a cópia fixa em
        /termos/v/<versao>/; sem ele, a data, como antes. */
-    const versao = versaoAtual('termos') || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
+    const versao = versaoAtual('termos', env) || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
     const inserir = documento => env.DB.prepare(
       'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
     ).bind(accountId, documento, versao, agora);
@@ -888,6 +889,11 @@ export async function health({ request, env }) {
     return fail('rate-limited', 429);
   }
   const detalhes = await podeVerDetalhes(request, env);
+  /* O site em inglês cobra pelo Paddle (lib/paddle.js): os campos da
+     cobrança respondem por ele, e os que só existem na Mercado Pago (que
+     credencial foi colada, de quem é a conta) ficam `null`. */
+  const emIngles = env.LOCALE === 'en';
+  const paddleLigado = emIngles && paddlePronto(env) && !!tokenDoCliente(env);
 
   const out = {
     /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
@@ -925,19 +931,21 @@ export async function health({ request, env }) {
        caminho", e ninguém recebe nada. Ver ultimoEnvioDeSenha em lib/db.js. */
     emailEntregue: null,
     /* Cobrança ligada? `false` é um estado legítimo - ver o checkout. */
-    payments: !!env.MP_ACCESS_TOKEN,
+    payments: emIngles ? paddleLigado : !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
-    webhook: !!env.MP_WEBHOOK_SECRET,
+    webhook: emIngles ? !!env.PADDLE_WEBHOOK_SECRET : !!env.MP_WEBHOOK_SECRET,
     /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
        token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */
-    modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado',
+    modo: emIngles
+      ? (paddleLigado ? (ehSandbox(env) ? 'teste' : 'producao') : 'desligado')
+      : (env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado'),
     /* Como ESTA publicação cobra: `mercadopago` ou `pix-direto`. É o valor
        que o deploy escreveu em data/empresa.json depois de testar o token -
        `pix-direto` aqui, com o arquivo do repositório dizendo mercadopago,
        quer dizer que a Mercado Pago recusou a credencial e o cartão está
        desligado (auditoria de 28/09, PAY-009). */
-    cobranca: (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago',
+    cobranca: emIngles ? 'paddle' : ((empresa.pagamento && empresa.pagamento.modo) || 'mercadopago'),
     /* QUE credencial foi colada - `access-token`, `chave-publica`,
        `formato-desconhecido` ou `ausente`. Nunca um pedaço do valor.
 
@@ -947,7 +955,7 @@ export async function health({ request, env }) {
        401 dizendo "authorization value not present" - uma frase que manda
        conferir chave PIX, webhook e conta bancária antes de desconfiar do
        campo que foi copiado. Ver tokenFormato em lib/mercadopago.js. */
-    tokenFormato: tokenFormato(env),
+    tokenFormato: emIngles ? null : tokenFormato(env),
     /* DE QUEM é a credencial - `real`, `usuario-de-teste`, `outro-pais`,
        `recusado`, `indisponivel` ou `desligado`. Só o veredicto: nunca o
        apelido, o e-mail ou o id da conta.
@@ -959,7 +967,7 @@ export async function health({ request, env }) {
        "producao", o comprador é mandado ao checkout real, e lá encontra "uma
        das partes é de teste" sem que nada deste lado pareça errado.
        Ver vendedorFormato em lib/mercadopago.js. */
-    vendedor: detalhes ? await vendedorFormato(env) : null,
+    vendedor: detalhes && !emIngles ? await vendedorFormato(env) : null,
     /* Há quantos minutos a varredura de 5 em 5 min rodou (null = nunca).
        Ela confere pagamentos cujo aviso não chegou, refaz estornos e manda
        os alertas ao dono - parada, tudo isso para em silêncio. */

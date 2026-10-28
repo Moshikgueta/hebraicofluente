@@ -24,7 +24,7 @@ import {
   type ReactNode
 } from 'react';
 import { api, apiMode, isDemo, type ApiMode } from './api';
-import { hasAccess, type Order, type PaymentMethod, type Session } from './types';
+import { hasAccess, type CreatedOrder, type Order, type PaymentMethod, type Session } from './types';
 import type { Origem } from '@/lib/origem';
 
 type AccountValue = {
@@ -58,7 +58,7 @@ type AccountValue = {
   setNovidades(quero: boolean): Promise<void>;
 
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
-    Promise<Order & { redirectUrl?: string }>;
+    Promise<CreatedOrder>;
   orderStatus(id: string): Promise<Order>;
   requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;
 

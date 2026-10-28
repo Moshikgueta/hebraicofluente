@@ -1,5 +1,23 @@
 # Hebraico Fluente - notas do projeto
 
+## Os dois sites iguais (28/10/2026, decisão do dono)
+"Quero que os dois sites sejam iguais, mas com versões adaptadas para cada um." O site brasileiro
+(`Moshikgueta/hebraicofluente`) e o de inglês (`Moshikgueta/fluent-hebrew`) têm o MESMO código; o que
+muda entre eles é só configuração. Toda melhoria entra nos dois, na mesma rodada.
+- **O que é de cada um** (nunca copiar de um para o outro): `wrangler.toml` (Worker, banco, domínio,
+  `LOCALE`), `wrangler.en.toml` (só no brasileiro), `.github/workflows/` (no inglês, todos com a trava
+  `FLUENT_PUBLICAR`), `package.json` e o lockfile, `.env.example`, os scripts com o nome do banco
+  (`scripts/cloudflare-setup.sh`, `backup-d1.sh`, `backup-nuvem.sh`, `conferir-gravacoes.mjs`,
+  `tools/exportar-gravacoes.mjs`, `app/sincronia.mjs`), `CLAUDE.md`, `PLANO-INGLES.md` e
+  `app/tests/isolamento.test.ts` (só no inglês).
+- **Todo o resto é igual.** O código do inglês fica atrás de `NEXT_PUBLIC_LOCALE=en` (build) e de
+  `LOCALE = "en"` (Worker): sem eles, o site sai em português, com Mercado Pago e PIX, como sempre.
+- **Como sincronizar:** no repositório do inglês, `git merge` do brasileiro (o histórico é comum);
+  para o brasileiro, copiar os arquivos que diferem, menos a lista acima, e rodar lá os testes, a
+  build de produção e as conferências (pacote, promessas, números, SEO, check-legal, clique, a11y).
+- Texto novo de tela nasce com o inglês ao lado (dicionário); dado novo do curso pede
+  `node tools/i18n.mjs extrair` e a tradução, senão a build estrita em inglês para.
+
 ## Como trabalhar neste repositório (regras do dono)
 Este projeto é SEPARADO do curso de espanhol (`Moshikgueta/espanolsindolordecabeza`).
 Sessões do Claude para o Hebraico Fluente abrem só este repositório; nada do

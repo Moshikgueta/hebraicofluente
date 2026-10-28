@@ -47,7 +47,7 @@ const en: Traducao<typeof pt> = {
   suavePalavra: '{he} - "{leitura}", {sentido}. The {letra} sounds {som}.',
   palavraSentido: '{he} - "{leitura}", {sentido}.',
   foi: 'It was {he}, "{leitura}".',
-  gerechLetra: '{he}, with the guéresh, is {som} - {como}. Without the sign, {parHe} is {parSom}.',
+  gerechLetra: '{he}, with the geresh, is {som} - {como}. Without the sign, {parHe} is {parSom}.',
   gerechDesenho: '{som} is {he}, with the mark. {parHe}, without it, is {parSom}.',
   gerechPalavra: '{he} - "{leitura}", {sentido}. The {letra} makes the sound {som}.',
   gerechQual: '{he} has {letra}, with the mark. The others have {parHe} without the sign, which sounds {parSom}.',

@@ -63,8 +63,8 @@ const en: Traducao<typeof pt> = {
   resumo: 'What we do so the platform can be used by everyone, what is still missing, and how to tell us about a barrier.',
 
   compromissoTitulo: 'Our commitment',
-  // etapa 5/6: Brasil, rever (Lei Brasileira de Inclusão)
-  compromisso: 'We want anyone to be able to learn to read Hebrew here, with or without a disability. The standard we follow is the Web Content Accessibility Guidelines (WCAG 2.1, level AA), and the legal obligation comes from the Brazilian Inclusion Law (Law 13.146/2015, art. 63). We do not meet everything yet; what is missing is listed in item 4.',
+  // etapa 6: escrito para o site de fora
+  compromisso: 'We want anyone to be able to learn to read Hebrew here, with or without a disability. The standard we follow is the Web Content Accessibility Guidelines (WCAG 2.1, level AA). We do not meet everything yet; what is missing is listed in item 4.',
 
   ofereceTitulo: 'What the platform offers',
   menu: (): ReactNode => (
@@ -95,7 +95,7 @@ const en: Traducao<typeof pt> = {
 
   faltaTitulo: 'What is not good enough yet',
   falta1: 'the listening exercises depend on hearing, and do not yet have an alternative for deaf people; the rest of the course does not depend on audio;',
-  falta2: '"Speak and get corrected" depends on the browser\'s speech recognition, which not every browser has (Firefox, for example, does not); it is an optional feature, and "Record mine" works everywhere;',
+  falta2: '"Speak and get feedback" depends on the browser\'s speech recognition, which not every browser has (Firefox, for example, does not); it is an optional feature, and "Record mine" works everywhere;',
   falta3: 'the "Letter hunt" game trains visual recognition of letter shapes; with a screen reader, it announces the name of each letter, which makes the game possible but changes what it trains;',
   falta4: 'focus after answering has been fixed in the exercises and games we know of (on 10/01/2026); if you find a screen where it jumps back to the top of the page, let us know through the channel below;',
   falta5: 'with a real screen reader, we tested VoiceOver on iPhone, in Safari (on 10/01/2026): signing in, opening a lesson, listening to audio, answering and moving on all worked; in Chrome on iPhone VoiceOver did not work well, and we recommend Safari; we have not yet tested with NVDA (computer) or TalkBack (Android).',

@@ -13,6 +13,7 @@ import { SKILLS } from './types';
 import { folgasLivres, usarFolgas } from '@/lib/loja';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/motor-rules';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 
 export const today = (d: Date = new Date()): string => {
   /* Local date, not UTC: a learner practising at 22h in São Paulo must get
@@ -820,8 +821,9 @@ export const ACHIEVEMENTS: AchievementDef[] = [
     test: s => !!s.firsts['le-50'] },
   { id: 'le-100', titlePt: tx.lePalavrasTitulo(100), descPt: tx.lePalavrasDesc(100),
     test: s => !!s.firsts['le-100'] },
-  { id: 'meu-nome', titlePt: tx.meuNomeTitulo, descPt: tx.meuNomeDesc,
-    test: s => !!s.firsts['meu-nome'] }
+  /* Só onde a "Meu nome em hebraico" existe (lib/recursos.ts). */
+  ...(MEU_NOME_EM_HEBRAICO ? [{ id: 'meu-nome', titlePt: tx.meuNomeTitulo, descPt: tx.meuNomeDesc,
+    test: (s: LearnerState) => !!s.firsts['meu-nome'] }] : [])
 ];
 
 /** Returns the state plus the achievements unlocked by this change. */

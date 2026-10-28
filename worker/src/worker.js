@@ -88,6 +88,8 @@ const ROUTES = {
      de assinatura recusa o que não for legítimo, seja qual for o verbo. */
   'POST /api/pay/webhook': pay.webhook,
   'GET /api/pay/webhook': pay.webhook,
+  /* O aviso do Paddle (site em inglês). Assinatura própria, ver lib/paddle.js. */
+  'POST /api/pay/paddle': pay.webhookPaddle,
 
   'GET /api/orders': pay.orders,
   /* O PIX ainda pagável do próprio pedido, para o checkout e o /perfil
@@ -323,13 +325,13 @@ async function responder(request, env, ctx) {
          se declara de outro lugar é recusada. Quem não declara nada - o
          curl do e2e, um script de operação - passa: a defesa é contra o
          navegador da vítima, não contra ferramentas.
-         O webhook fica de fora porque a Mercado Pago é, legitimamente,
-         outra origem; a assinatura HMAC é a trava dele. O relato de CSP
+         Os webhooks ficam de fora porque a Mercado Pago e o Paddle são,
+         legitimamente, outra origem; a assinatura HMAC é a trava dele. O relato de CSP
          também: quem o manda é o próprio navegador, que nem sempre declara a
          origem do mesmo jeito, e ele não escreve nada além de uma linha de
          trilha com freio. */
       if (request.method !== 'GET' && request.method !== 'HEAD'
-          && path !== '/api/pay/webhook' && path !== '/api/csp-report') {
+          && path !== '/api/pay/webhook' && path !== '/api/pay/paddle' && path !== '/api/csp-report') {
         const site = request.headers.get('Sec-Fetch-Site');
         const origin = request.headers.get('Origin');
         const cruzada = site === 'cross-site' || site === 'same-site'
@@ -519,6 +521,20 @@ function cspEstrita(hashes, nonce = novoNonce()) {
     + '; report-uri /api/csp-report';
 }
 
+/* O checkout do Paddle (PLANO-INGLES.md, etapa 5): o Paddle.js vem de
+   cdn.paddle.com e abre o pagamento num iframe de buy.paddle.com (ou
+   sandbox-buy, no ambiente de teste). Liberado SÓ nas páginas de /checkout:
+   o resto do site continua sem nenhum script de terceiro. Apple Pay e Google
+   Pay, dentro do iframe, pedem a permissão `payment` para a origem dele. */
+const naCompra = path => /^\/checkout\//i.test(path);
+const PADDLE_FRAMES = 'https://buy.paddle.com https://sandbox-buy.paddle.com';
+const comPaddle = csp => csp
+  .replace(/script-src ([^;]*)/, "script-src $1 https://cdn.paddle.com")
+  .replace(/style-src ([^;]*)/, "style-src $1 https://cdn.paddle.com")
+  .replace(/img-src ([^;]*)/, "img-src $1 https://*.paddle.com")
+  .replace(/connect-src ([^;]*)/, "connect-src $1 https://*.paddle.com")
+  .replace("frame-ancestors 'none'", `frame-src ${PADDLE_FRAMES}; frame-ancestors 'none'`);
+
 /* O painel do dono do curso. Também libera o microfone: é onde as
    pronúncias do curso são gravadas (app/src/app/admin/gravar). */
 const isAdminPath = path => /^\/admin(\/|$)/i.test(path);
@@ -550,7 +566,8 @@ function blindar(res, path, hashes = null) {
   const naVenda = path === '/' || path === '/index.html'
     || path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
   const mic = isGatedPath(path) || isAdminPath(path) || naVenda ? 'microphone=(self)' : 'microphone=()';
-  h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
+  const pagar = naCompra(path) ? `payment=(self "https://buy.paddle.com" "https://sandbox-buy.paddle.com")` : 'payment=()';
+  h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), ${pagar}`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
     /* A estrita VALE desde 01/10/2026 (decisão do dono, depois de dias de
@@ -558,7 +575,8 @@ function blindar(res, path, hashes = null) {
        extensões e o script que o navegador do Instagram injeta, a política
        de sempre já bloqueava). Página sem lista de hashes (HTML gerado pelo
        próprio Worker, build antiga) sai com a de sempre. */
-    h.set('Content-Security-Policy', hashes ? cspEstrita(hashes) : CSP);
+    const politica = hashes ? cspEstrita(hashes) : CSP;
+    h.set('Content-Security-Policy', naCompra(path) ? comPaddle(politica) : politica);
     h.set('X-Frame-Options', 'DENY');
   }
   /* O painel do dono do curso: fora de busca e fora de cache. A página em

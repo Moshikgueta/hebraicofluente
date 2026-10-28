@@ -7,8 +7,8 @@ const pt = {
 } as const;
 
 const en: Traducao<typeof pt> = {
-  // etapa 5/6: Brasil, rever (parcelamento no cartão)
-  parcelas: (parcelas: string) => `or ${parcelas} on a card`,
+  // etapa 5: o site em inglês cobra pelo Paddle
+  parcelas: () => 'one-time payment',
   // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
   desistir: (dias: number) => `${dias} days to cancel`
 };

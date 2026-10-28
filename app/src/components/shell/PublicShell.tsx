@@ -32,7 +32,7 @@ import { useAccount } from '@/lib/account/store';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { He } from '@/components/hebrew/He';
 import { METODO_ORIGINAL } from '@/lib/credito';
-import { FLAGSHIP, flagship, parcelasMax } from '@/lib/catalog';
+import { FLAGSHIP, flagship, getCourse, parcelasMax } from '@/lib/catalog';
 import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
@@ -335,12 +335,13 @@ function Footer() {
             { href: '/alfabeto-hebraico', label: tx.alfabetoHebraico },
             { href: '/biblia', label: tx.lerABiblia }
           ]} />
-          <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
+          {/* Só onde os próximos cursos estão no catálogo: o site em inglês não os tem. */}
+          {getCourse('hebraico-a1') && <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">
             {tx.proximosCursos}{' '}
             <Link href="/cursos/hebraico-a1" className="underline underline-offset-2 hover:text-[var(--accent)]">A1</Link>,{' '}
             <Link href="/cursos/hebraico-a2" className="underline underline-offset-2 hover:text-[var(--accent)]">A2</Link>{tx.e}{' '}
             <Link href="/cursos/hebraico-b1" className="underline underline-offset-2 hover:text-[var(--accent)]">B1</Link>.
-          </p>
+          </p>}
         </div>
 
         <FooterCol title={tx.ajuda} links={[

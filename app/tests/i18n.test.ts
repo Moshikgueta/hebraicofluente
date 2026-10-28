@@ -9,7 +9,6 @@ import { tx as naoEncontrada } from '@/i18n/telas/nao-encontrada';
 // @ts-expect-error - script de build, sem tipos
 import { ARQUIVOS, carregar, extrair, mesmoHebraico, traduzir } from '../../tools/i18n.mjs';
 
-const raiz = (p: string) => new URL(`../../${p}`, import.meta.url);
 /* Montado pelo código do caractere: escrito no arquivo, o travessão faria a
    própria verificação do CLAUDE.md acusar este teste. */
 const TRAVESSAO = new RegExp(`[${String.fromCodePoint(0x2014, 0x2013)}]`);
@@ -126,6 +125,24 @@ describe('o inglês do conteúdo (tools/i18n.mjs)', () => {
     ]);
   });
 
+  it('as listas de texto entram item por item; as notas internas, não', () => {
+    const json = [{
+      id: 'alef',
+      ensino: { checagem: [{ q: 'Pergunta?', opcoes: ['Só o som "o"', 'אוֹ', 'Nada'], certa: 0 }] },
+      note: ['nota interna do autor, nunca na tela']
+    }];
+    const reg = {
+      'alef/ensino/checagem/#0/opcoes/#0': { pt: 'Só o som "o"', en: 'Just the "o" sound' },
+      'alef/ensino/checagem/#0/opcoes/#2': { pt: 'Nada', en: 'Nothing' },
+      'alef/ensino/checagem/#0/q': { pt: 'Pergunta?', en: 'Question?' }
+    };
+    const faltas: { caminho: string }[] = [];
+    traduzir('letters', json, faltas, reg);
+    expect(json[0]!.ensino.checagem[0]!.opcoes).toEqual(['Just the "o" sound', 'אוֹ', 'Nothing']);
+    expect(json[0]!.note).toEqual(['nota interna do autor, nunca na tela']);
+    expect(faltas).toEqual([]);
+  });
+
   it('data/en/ está em dia com data/*.json (rode: node tools/i18n.mjs extrair)', () => {
     for (const nome of ARQUIVOS as string[]) {
       expect(carregar(nome), nome).toEqual(extrair(nome));
@@ -150,24 +167,5 @@ describe('o inglês do conteúdo (tools/i18n.mjs)', () => {
   });
 });
 
-describe('o segundo Worker (wrangler.en.toml)', () => {
-  const pt = readFileSync(raiz('wrangler.toml'), 'utf8');
-  const en = readFileSync(raiz('wrangler.en.toml'), 'utf8');
-  const lista = (toml: string) => toml.match(/run_worker_first\s*=\s*\[([\s\S]*?)\]/)?.[1]?.replace(/\s+/g, '');
-  const banco = (toml: string) => toml.match(/database_id\s*=\s*"([^"]+)"/)?.[1];
-
-  it('usa o mesmo banco: a conta e o curso valem nos dois sites', () => {
-    expect(banco(en)).toBe(banco(pt));
-  });
-
-  it('serve o export em inglês, com a mesma lista de exceções do portão', () => {
-    expect(en).toMatch(/directory\s*=\s*"\.\/app\/out-en"/);
-    expect(lista(en)).toBe(lista(pt));
-  });
-
-  it('não agenda nada (a varredura roda só no Worker brasileiro) e declara o idioma', () => {
-    expect(en).not.toMatch(/^\s*\[triggers\]/m);
-    expect(en).toMatch(/^LOCALE\s*=\s*"en"/m);
-    expect(en).not.toMatch(/hebraicofluente\.com\.br",\s*custom_domain/);
-  });
-});
+/* O "segundo Worker" do tempo em que os dois sites eram um repositório virou
+   o wrangler.toml deste, com banco próprio: tests/isolamento.test.ts. */

@@ -1,106 +1,161 @@
 {
   "intro/title": {
     "pt": "Os sinais de vogal",
-    "en": null
+    "en": "The vowel signs"
   },
   "intro/lead": {
     "pt": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais - pontos e traços - que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
-    "en": null
+    "en": "Hebrew writes consonants with letters and vowels with small signs - dots and dashes - that appear below, inside or above the letter. You'll learn the signs by the SOUND they make, not by their names. The names are in the appendix, to look up later."
   },
   "intro/correction": {
     "pt": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas - {{א}}, {{ה}}, {{ו}} e {{י}} - também funcionam como apoio de vogal: {{ו}} e {{י}} no meio da palavra, {{ה}} e {{א}} geralmente no fim. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira.",
-    "en": null
+    "en": "The Hebrew alphabet has 22 letters, and all of them are consonants. Four of them - {{א}}, {{ה}}, {{ו}} and {{י}} - also work as vowel helpers: {{ו}} and {{י}} in the middle of a word, {{ה}} and {{א}} usually at the end. So the sentence \"all consonants\" is true about the letters, but it doesn't tell the whole story."
   },
   "sounds/#0/ptApprox": {
     "pt": "como o A de \"casa\"",
-    "en": null
+    "en": "like the a in \"father\"",
+    "comentario": "etapa 3: pronúncia, rever"
   },
   "sounds/#0/signs/#0/namePt": {
     "pt": "patach",
-    "en": null
+    "en": "patach"
+  },
+  "sounds/#0/signs/#0/position": {
+    "pt": "embaixo",
+    "en": "below"
   },
   "sounds/#0/signs/#1/namePt": {
     "pt": "kamats",
-    "en": null
+    "en": "kamats"
+  },
+  "sounds/#0/signs/#1/position": {
+    "pt": "embaixo",
+    "en": "below"
   },
   "sounds/#0/note": {
     "pt": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora. Só em umas poucas palavras o kamats soa \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohoráyim), e a transliteração sempre avisa. O mesmo som \"a\" tem ainda o chataf patach, o patach com dois pontos ao lado ({{אֲנִי}} aní). E no fim da palavra, {{חַ}} e {{עַ}} se leem com o A antes da consoante: {{תַפּוּחַ}} tapúach.",
-    "en": null
+    "en": "Two signs, a single sound in modern Hebrew. Don't worry about telling them apart for now. Only in a handful of words does kamats sound \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohorayim), and the transliteration always tells you. The same \"a\" sound also has chataf patach, the patach with two dots beside it ({{אֲנִי}} ani). And at the end of a word, {{חַ}} and {{עַ}} are read with the A before the consonant: {{תַפּוּחַ}} tapuach."
   },
   "sounds/#1/ptApprox": {
     "pt": "como o E de \"mesa\"",
-    "en": null
+    "en": "like the e in \"bed\"",
+    "comentario": "etapa 3: pronúncia, rever"
   },
   "sounds/#1/signs/#0/namePt": {
     "pt": "segol",
-    "en": null
+    "en": "segol"
+  },
+  "sounds/#1/signs/#0/position": {
+    "pt": "embaixo",
+    "en": "below"
   },
   "sounds/#1/signs/#1/namePt": {
     "pt": "tsere",
-    "en": null
+    "en": "tsere"
+  },
+  "sounds/#1/signs/#1/position": {
+    "pt": "embaixo",
+    "en": "below"
   },
   "sounds/#1/note": {
     "pt": "Também dois sinais para um som só. O chataf segol, o segol com dois pontos ao lado, soa igual: {{אֱלֹהִים}} Elohím. Com {{י}} depois, o tsere muitas vezes soa \"ei\": {{אֵין}} ein, {{אֵיפֹה}} éifo.",
-    "en": null
+    "en": "Also two signs for one sound. Chataf segol, the segol with two dots beside it, sounds the same: {{אֱלֹהִים}} Elohim. With {{י}} after it, tsere often sounds \"ei\": {{אֵין}} ein, {{אֵיפֹה}} eifo.",
+    "comentario": "etapa 3: pronúncia, rever (\"ei\" como em \"eight\"; talvez valha dizer isso)"
   },
   "sounds/#2/ptApprox": {
     "pt": "como o I de \"milho\"",
-    "en": null
+    "en": "like the ee in \"see\"",
+    "comentario": "etapa 3: pronúncia, rever"
   },
   "sounds/#2/signs/#0/namePt": {
     "pt": "chirik",
-    "en": null
+    "en": "chirik"
+  },
+  "sounds/#2/signs/#0/position": {
+    "pt": "embaixo",
+    "en": "below"
   },
   "sounds/#2/note": {
     "pt": "Muitas vezes vem acompanhado da letra {{י}} depois: {{מִי}}.",
-    "en": null
+    "en": "It often comes with the letter {{י}} after it: {{מִי}}."
   },
   "sounds/#3/ptApprox": {
     "pt": "como o O de \"motor\"",
-    "en": null
+    "en": "like the o in \"more\", a pure O that doesn't slide into a W",
+    "comentario": "etapa 3: pronúncia, rever (o O do inglês costuma virar ditongo \"ou\"; o hebraico não)"
   },
   "sounds/#3/signs/#0/namePt": {
     "pt": "cholam",
-    "en": null
+    "en": "cholam"
+  },
+  "sounds/#3/signs/#0/position": {
+    "pt": "acima, à esquerda",
+    "en": "above, on the left"
   },
   "sounds/#3/signs/#1/namePt": {
     "pt": "cholam malê",
-    "en": null
+    "en": "cholam male"
+  },
+  "sounds/#3/signs/#1/position": {
+    "pt": "ponto sobre a letra {{ו}}",
+    "en": "a dot above the letter {{ו}}"
   },
   "sounds/#3/note": {
     "pt": "A forma com {{ו}} é a mais comum no hebraico moderno. O chataf kamats, o kamats com dois pontos ao lado, também soa \"o\": {{צָהֳרַיִם}} tsohoráyim.",
-    "en": null
+    "en": "The form with {{ו}} is the most common in modern Hebrew. Chataf kamats, the kamats with two dots beside it, also sounds \"o\": {{צָהֳרַיִם}} tsohorayim."
   },
   "sounds/#4/ptApprox": {
     "pt": "como o U de \"muro\"",
-    "en": null
+    "en": "like the oo in \"food\"",
+    "comentario": "etapa 3: pronúncia, rever"
   },
   "sounds/#4/signs/#0/namePt": {
     "pt": "kubuts",
-    "en": null
+    "en": "kubuts"
+  },
+  "sounds/#4/signs/#0/position": {
+    "pt": "embaixo, três pontos na diagonal",
+    "en": "below, three dots on a diagonal"
   },
   "sounds/#4/signs/#1/namePt": {
     "pt": "shuruk",
-    "en": null
+    "en": "shuruk"
+  },
+  "sounds/#4/signs/#1/position": {
+    "pt": "ponto dentro da letra {{ו}}",
+    "en": "a dot inside the letter {{ו}}"
   },
   "sounds/#4/note": {
     "pt": "A forma com {{ו}} é a mais comum no hebraico moderno.",
-    "en": null
+    "en": "The form with {{ו}} is the most common in modern Hebrew."
+  },
+  "sounds/#5/sound": {
+    "pt": "sheva",
+    "en": "sheva"
   },
   "sounds/#5/ptApprox": {
     "pt": "sem vogal nenhuma, ou um E normal",
-    "en": null
+    "en": "no vowel at all, or a quick e like the e in \"bed\"",
+    "comentario": "etapa 3: pronúncia, rever"
   },
   "sounds/#5/signs/#0/namePt": {
     "pt": "shva",
-    "en": null
+    "en": "shva"
+  },
+  "sounds/#5/signs/#0/position": {
+    "pt": "embaixo, dois pontos verticais",
+    "en": "below, two vertical dots"
   },
   "sounds/#5/note": {
     "pt": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso.",
-    "en": null
+    "en": "It isn't a real vowel. Sometimes it has no sound at all ({{זְמַן}} zman, {{סְלִיחָה}} slicha) and sometimes it sounds like a regular E, especially in the prefixes {{בְּ}}, {{וְ}} and {{לְ}} and under {{מ}}, {{נ}}, {{ל}}, {{ר}} or {{י}} at the start of a word ({{מְדַבֵּר}} medaber, {{בְּבַקָשָׁה}} bevakasha, {{רְחוֹב}} rechov). The transliteration shows which case it is."
   },
   "dagesh/title": {
     "pt": "O ponto dentro da letra",
-    "en": null
+    "en": "The dot inside the letter"
+  },
+  "dagesh/text": {
+    "pt": "Um ponto no meio da letra - o daguesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora, e por isso, neste curso, ele só é escrito nessas três.",
+    "en": "A dot in the middle of the letter - the dagesh - changes the sound of three of them: {{ב}} becomes b ({{בּ}}), {{כ}} becomes k ({{כּ}}) and {{פ}} becomes p ({{פּ}}). In the other letters the dot doesn't change anything you need to hear right now, so in this course it is only written in those three."
   }
 }

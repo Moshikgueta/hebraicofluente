@@ -33,6 +33,7 @@ import {
 } from '@/lib/certificate';
 import { track } from '@/lib/analytics';
 import { EditorDeNome } from '@/components/learn/MeuNome';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import { sugerirNome } from '@/lib/nome-hebraico';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-certificado-client';
@@ -228,6 +229,7 @@ export function CertificadoClient() {
           )}
         </div>
 
+        {MEU_NOME_EM_HEBRAICO && (
         <div className="grid gap-3 rounded-[var(--r-lg)] border border-line p-4">
           <label className="flex items-center gap-3 min-h-[44px] font-ui text-[15px] text-ink cursor-pointer">
             <input
@@ -282,6 +284,7 @@ export function CertificadoClient() {
             </>
           )}
         </div>
+        )}
 
         <fieldset className="grid gap-2">
           <legend className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted mb-1">

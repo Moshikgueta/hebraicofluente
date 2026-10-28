@@ -85,7 +85,14 @@ export type AcessoVencido = { courseSlug: string; expiredAt: string };
 /** O que o /perfil lê da conta: os pedidos e os acessos vencidos. */
 export type Compras = { orders: Order[]; vencidos: AcessoVencido[] };
 
-export type PaymentMethod = 'pix' | 'card';
+export type PaymentMethod = 'pix' | 'card' | 'paddle';
+
+/** O que o checkout precisa para abrir o Paddle (site em inglês). */
+export type PaddleCheckout = { transactionId: string; clientToken: string; sandbox: boolean };
+
+/** O pedido recém-criado: com a URL do cartão da Mercado Pago, ou com a
+ *  transação do Paddle, quando o pagamento é fora daqui. */
+export type CreatedOrder = Order & { redirectUrl?: string; paddle?: PaddleCheckout };
 export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired';
 
 /* ── erros ──────────────────────────────────────────────────────────────

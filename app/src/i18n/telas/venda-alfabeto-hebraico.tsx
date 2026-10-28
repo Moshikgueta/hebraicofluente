@@ -61,7 +61,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   metaTitulo: 'The Hebrew alphabet: the 22 letters, their sounds and how to read - Hebraico Fluente',
   metaDescricao:
-    'The 22 letters of the Hebrew alphabet with their names and sounds in English, the five final forms and ' +
+    'The 22 letters of the Hebrew alphabet with their names and sounds, the five final forms and ' +
     'how the vowels work. A free test of the first letter.',
   alfabeto: 'Hebrew alphabet',
   titulo: 'The 22 Hebrew letters, one by one.',
@@ -85,7 +85,7 @@ const en: Traducao<typeof pt> = {
   vogaisTitulo: 'The vowels are signs',
   vogaisTexto: 'The dots and lines under or above the letters are the vowels, the nikud. With them, you can read any word aloud, even without knowing what it means.',
   ctaTitulo: 'Learn the 22 letters, one at a time.',
-  ctaLinha: 'Start with the free Álef test on the course page: 6 short exercises, no sign-up.',
+  ctaLinha: 'Start with the free Alef test on the course page: 6 short exercises, no sign-up.',
 
   letraMetaTitulo: (nome: string, letra: string) =>
     `${nome} (${letra}): the Hebrew alphabet letter and how to read it - Hebraico Fluente`,

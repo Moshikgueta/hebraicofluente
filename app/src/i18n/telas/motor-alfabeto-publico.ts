@@ -36,9 +36,9 @@ const en: Traducao<typeof pt> = {
   // etapa 3: pronúncia, rever
   tavCerto: 'Read {{תִי}} as "ti" and {{תֵ}} as "te", with a crisp T.',
   shinSentido: 'peace / hello / goodbye',
-  shinErrado: 'Reading {{ש}} as S: "salóm", "sem".',
+  shinErrado: 'Reading {{ש}} as S: "salom", "sem".',
   // etapa 3: pronúncia, rever
-  shinCerto: 'Read {{ש}} like the SH in "shoe" (transliterated "sh"): "shalóm", "shem".',
+  shinCerto: 'Read {{ש}} like the SH in "shoe" (transliterated "sh"): "shalom", "shem".',
   lamedSentido: 'night',
   // etapa 3: pronúncia, rever
   lamedErrado: 'Reading {{שֶׁל}} with a swallowed, dark L at the end, so it sounds like "sheo".',

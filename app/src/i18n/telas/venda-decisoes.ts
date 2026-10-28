@@ -44,7 +44,7 @@ const en: Traducao<typeof pt> = {
   inicio: 'Start',
   meio: 'Middle',
   depois: 'Later',
-  shalomTr: 'shalóm',
+  shalomTr: 'shalom',
   shalomPt: 'hello, peace',
   notaInicio: 'Everything on display: the word, how to say it and what it means.',
   notaMeio: 'The support shrinks. You read and check only what you were unsure of.',

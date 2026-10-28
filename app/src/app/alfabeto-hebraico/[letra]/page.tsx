@@ -30,7 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<{ letra: st
   return meta({
     rota: `/alfabeto-hebraico/${l.id}`,
     title: tx.letraMetaTitulo(l.namePt, l.letter),
-    description: tx.letraMetaDescricao(l.namePt, l.order, somPt(l.sound))
+    /* O som do Álef é "(mudo)": sem os parênteses, para não sair "((mudo))". */
+    description: tx.letraMetaDescricao(l.namePt, l.order, somPt(l.sound).replace(/^\((.*)\)$/, '$1'))
   });
 }
 

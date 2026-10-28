@@ -27,6 +27,7 @@ import { join } from 'node:path';
 import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
 import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
+import { translitEn } from './translit-en.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
@@ -41,8 +42,25 @@ const readJson = p => {
   const faltas = [];
   traduzir(nome, json, faltas);
   for (const f of faltas) FALTAS.set(`${f.arquivo}:${f.caminho}`, f);
+  emIngles(json);
   return json;
 };
+
+/* A transliteração do site em inglês (tools/translit-en.mjs): todo campo
+   `translit...` sai convertido, na mesma regra para o curso inteiro. */
+function emIngles(no, chave = '') {
+  if (Array.isArray(no)) {
+    no.forEach((x, i) => {
+      if (typeof x === 'string') { if (/^translit/i.test(chave)) no[i] = translitEn(x); }
+      else emIngles(x, chave);
+    });
+  } else if (no && typeof no === 'object') {
+    for (const [k, v] of Object.entries(no)) {
+      if (typeof v === 'string') { if (/^translit/i.test(k)) no[k] = translitEn(v); }
+      else emIngles(v, k);
+    }
+  }
+}
 const NFC = s => String(s ?? '').normalize('NFC');
 
 /* Same id as tools/gen-audio.mjs (tools/audio-id.mjs), so a clip recorded for
@@ -104,7 +122,8 @@ const word = w => {
 function carregarImagens(letters, sons = []) {
   const caminho = join(ROOT, 'data/imagens-vocabulario.json');
   if (!existsSync(caminho)) return;
-  const d = JSON.parse(readFileSync(caminho, 'utf8'));
+  /* Por readJson: na build em inglês o texto alternativo vem de data/en/. */
+  const d = readJson('data/imagens-vocabulario.json');
   ESTILO_IMAGEM = d.estilo ?? '';
   /* As lições de som também ensinam palavras (לֵב, סֵפֶר, מֶלֶךְ saíram das
      lições de Bet, Kaf e Pe para as de Vet, Fe e Chaf em 26/09/2026). */
@@ -335,6 +354,17 @@ function main() {
     const empresa = Object.fromEntries(
       Object.entries(readJson('data/empresa.json')).filter(([k]) => !k.startsWith('_nota'))
     );
+    /* O site em inglês cobra pelo Paddle, em dólar, e dá 14 dias para
+       desistir (PLANO-INGLES.md, etapa 5; o Worker usa os mesmos 14, DIAS_PADDLE
+       em api/pay.js). Sem PIX e sem a chave PIX no pacote do navegador. */
+    if (LOCALE === 'en') {
+      empresa.pagamento = { modo: 'paddle', formas: { pix: false, cartao: true } };
+      /* E as políticas em inglês têm data própria (etapa 6). */
+      const { atualizadoEmEn, ...politicas } = empresa.politicas;
+      empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: atualizadoEmEn || politicas.atualizadoEm };
+      const { horarioEn, ...atendimento } = empresa.atendimento || {};
+      if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
+    }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
 
@@ -342,9 +372,32 @@ function main() {
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length
   }));
+  /* Na build em inglês o preço é o `usd` (Paddle, em dólar) e ocupa o lugar
+     do `brl`: as telas leem `price.brl` e formatam com `brl()`, que no inglês
+     escreve "$47" (app/src/lib/catalog.ts). Sem parcelas, sem desconto do
+     PIX, sem preço "depois". Produto sem `usd` não está à venda lá. */
+  const emDolar = c => {
+    if (LOCALE !== 'en') return c;
+    const usd = Number(c.price && c.price.usd);
+    return {
+      ...c,
+      /* Os textos do curso em inglês, quando o catálogo tem (`titleEn`,
+         `taglineEn`...): ocupam o lugar do campo `...Pt` que as telas leem. */
+      ...Object.fromEntries(Object.entries(c).filter(([k]) => k.endsWith('En'))
+        .map(([k, v]) => [k.slice(0, -2) + 'Pt', v])),
+      ...(usd > 0 ? {} : { aVenda: false }),
+      price: { brl: usd > 0 ? usd : 0, listBrl: null, installments: 1, pixDiscountPct: 0 }
+    };
+  };
   writeFileSync(join(OUT, 'courses.json'), JSON.stringify({
-    currency: catalogue.currency,
-    courses: catalogue.courses.map(c => {
+    currency: LOCALE === 'en' ? 'USD' : catalogue.currency,
+    /* O site em inglês só vende o curso de alfabetização: os cursos A1, A2 e
+       B1 existem só em português e não são anunciados lá (etapa 7). Livro e
+       combo ficam, desligados (`aVenda: false`), porque o código os procura
+       pelo slug. */
+    courses: catalogue.courses
+      .filter(c => LOCALE !== 'en' || (c.tipo && c.tipo !== 'curso') || Number(c.price && c.price.usd) > 0)
+      .map(emDolar).map(c => {
       const { modulesFrom, ...rest } = c;
       if (modulesFrom && modulesFrom !== 'alfabetizacao') {
         throw new Error(`courses.json: modulesFrom "${modulesFrom}" não corresponde a nenhum curso construído`);
@@ -677,11 +730,21 @@ function main() {
       throw new Error(`textos.json: o texto do módulo ${t.modulo} precisa de linhas e perguntas`);
     }
   }
+  /* Na build em inglês, o rascunho ainda não revisado fica de fora, e a
+     tradução dele não é cobrada: o aluno não o veria, e o português dele
+     ainda pode mudar na revisão. Aprovado, ele volta e passa a ser cobrado. */
+  if (LOCALE === 'en') {
+    textos.forEach((t, i) => {
+      if (t.revisado) return;
+      for (const chave of [...FALTAS.keys()]) if (chave.startsWith(`textos:textos/#${i}/`)) FALTAS.delete(chave);
+    });
+  }
+  const textosNaBuild = LOCALE === 'en' ? textos.filter(t => t.revisado) : textos;
   const pontua = x => ({ ...x, he: NFC(x.he) });
   writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
     /* Cada linha com o id de áudio: a gravação dela (onda 4, gen-audio.mjs)
        é o que o botão da linha e o "ouvir o texto" tocam. */
-    textos: textos.map(t => ({
+    textos: textosNaBuild.map(t => ({
       ...t,
       linhas: t.linhas.map(l => ({ ...pontua(l), audioId: audioIdFor(l.he) })),
       /* As palavras novas também: a gravação de cada uma (gen-audio.mjs,
@@ -745,7 +808,10 @@ function main() {
   {
     /* As escritas e as geradas (abertura de módulo, apresentação e erro
        comum de cada letra); a validação dos ids está lá. */
-    const gravacoes = gravacoesDoProfessor(ROOT);
+    /* No site em inglês, nenhuma: são explicações FALADAS em português (a
+       tela some sozinha sem a gravação, GravacaoDoProfessor.tsx). Voltam
+       quando o professor gravar as versões em inglês (PLANO-INGLES.md). */
+    const gravacoes = LOCALE === 'en' ? [] : gravacoesDoProfessor(ROOT);
     writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
       gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
         tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)

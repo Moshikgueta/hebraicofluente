@@ -19,7 +19,7 @@
 import type { PlatformApi } from './api';
 import {
   AuthError, emailLooksValid, normalizeEmail, passwordOk,
-  type Compras, type Entitlement, type Order, type PaymentMethod, type Session
+  type Compras, type CreatedOrder, type Entitlement, type Order, type PaymentMethod, type Session
 } from './types';
 import { getCourse } from '@/lib/catalog';
 import { cents } from '@/lib/catalog';
@@ -318,7 +318,7 @@ export class LocalApi implements PlatformApi {
 
   async startOrder(
     { courseSlug, method }: { courseSlug: string; method: PaymentMethod; installments?: number }
-  ): Promise<Order & { redirectUrl?: string }> {
+  ): Promise<CreatedOrder> {
     await tick();
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;

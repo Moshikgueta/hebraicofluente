@@ -554,3 +554,9 @@ html[data-a11y-movimento='reduzido'] *::after {
 @media print {
   .hf-a11y { display: none !important; }
 }
+
+/* O marco do lugar em que o aluno está, no mapa (CourseMapClient): um halo
+   que respira devagar, três vezes, e para. "Reduzir movimento" desliga. */
+@keyframes hf-marco-halo { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 35%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+.hf-marco-agora { animation: hf-marco-halo 1.8s var(--ease-out) .6s 3; }
+@media (prefers-reduced-motion: reduce) { .hf-marco-agora { animation: none; } }

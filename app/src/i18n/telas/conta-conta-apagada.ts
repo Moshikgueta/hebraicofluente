@@ -34,11 +34,11 @@ const en: Traducao<typeof pt> = {
     'Your email, your name, your password, all your progress and your access to the course. You ' +
     'have already been signed out of every device where you were signed in.',
   oQueFicou: 'What was kept, and why',
-  // etapa 5/6: Brasil, rever (LGPD e a nota de venda brasileira)
+  // etapa 6: escrito para o site de fora
   ficouTexto:
     'The record of your purchases, without your name and without your email. Keeping sales ' +
-    'invoices is a legal obligation for sellers, and Brazil\'s data protection law (LGPD) itself ' +
-    'allows for keeping them. What remains is the amount, date and status of the payment - ' +
+    'records is a legal obligation for sellers, and data protection law allows for keeping ' +
+    'them. What remains is the amount, date and status of the payment - ' +
     'nothing that points to you.',
   voltar: 'If you ever want to come back',
   voltarTexto:

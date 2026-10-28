@@ -1,154 +1,156 @@
 {
   "scenes/garrafa-mayim/labelPt": {
     "pt": "Na garrafa d'água do supermercado",
-    "en": null
+    "en": "On a supermarket water bottle"
   },
   "scenes/garrafa-mayim/contextPt": {
     "pt": "Toda garrafa de água em Israel traz esta palavra. É provavelmente a primeira coisa que você vai ler sozinho numa prateleira.",
-    "en": null
+    "en": "Every water bottle in Israel carries this word. It's probably the first thing you'll read on your own on a store shelf."
   },
   "scenes/quem-e/labelPt": {
     "pt": "Quando alguém bate na porta ou liga",
-    "en": null
+    "en": "When someone knocks on the door or calls"
   },
   "scenes/quem-e/contextPt": {
     "pt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém. Quando alguém bate na porta ou liga, a pergunta é {{מִי זֶה?}}, \"quem é?\".",
-    "en": null
+    "en": "A two-letter word you can already read in full - and it's used to ask who someone is. When someone knocks on the door or calls, the question is {{מִי זֶה?}}, \"who is it?\"."
   },
   "scenes/porta-loja/labelPt": {
     "pt": "Na porta de uma loja, na chegada e na saída",
-    "en": null
+    "en": "At a shop door, coming in and going out"
   },
   "scenes/porta-loja/contextPt": {
     "pt": "A mesma palavra abre e fecha uma conversa. Em Israel, você vai ouvir essa palavra o tempo todo.",
-    "en": null
+    "en": "The same word opens and closes a conversation. In Israel, you'll hear this word all the time."
   },
   "scenes/recibo-toda/labelPt": {
     "pt": "No rodapé de um recibo de padaria",
-    "en": null
+    "en": "At the bottom of a bakery receipt"
   },
   "scenes/recibo-toda/contextPt": {
     "pt": "Impresso no fim de quase todo cupom fiscal do país.",
-    "en": null
+    "en": "Printed at the end of almost every receipt in the country."
   },
   "scenes/aula-more/labelPt": {
     "pt": "Como se chama o professor na escola",
-    "en": null
+    "en": "What children call the teacher at school"
   },
   "scenes/aula-more/contextPt": {
     "pt": "Professor. Se for professora, {{מוֹרָה}}. Na escola as crianças chamam assim quem está na frente da sala; no ulpan, é muito comum chamar o professor pelo primeiro nome.",
-    "en": null
+    "en": "Teacher. For a woman teacher, {{מוֹרָה}}. At school, children call the person at the front of the class this; in ulpan, it's very common to call the teacher by their first name."
   },
   "scenes/padaria-lechem/labelPt": {
     "pt": "Na etiqueta da prateleira de pães",
-    "en": null
+    "en": "On the label of the bread shelf"
   },
   "scenes/padaria-lechem/contextPt": {
     "pt": "O {{ח}} raspado bem no meio da palavra. Vale ler em voz alta antes de conferir.",
-    "en": null
+    "en": "The raspy {{ח}} right in the middle of the word. Try reading it out loud before you check."
   },
   "scenes/casa-nova/labelPt": {
     "pt": "Num anúncio de imóvel",
-    "en": null
+    "en": "In a real estate ad"
   },
   "scenes/casa-nova/contextPt": {
     "pt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִירָה}} (apartamento), vira {{חֲדָשָׁה}}.",
-    "en": null
+    "en": "It shows up in ads for everything: buildings, phones, menus. It means \"new\"; with a feminine word, like {{דִירָה}} (apartment), it becomes {{חֲדָשָׁה}}."
   },
   "scenes/horario-shaa/labelPt": {
     "pt": "Em horários de funcionamento, compromissos e reservas",
-    "en": null
+    "en": "In opening hours, appointments and reservations"
   },
   "scenes/horario-shaa/contextPt": {
     "pt": "O {{ע}} é mudo: você lê só a vogal que vem com ele.",
-    "en": null
+    "en": "The {{ע}} is silent: you read only the vowel that comes with it."
   },
   "scenes/jornal-haaretz/labelPt": {
     "pt": "Na primeira página do jornal mais antigo do país",
-    "en": null
+    "en": "On the front page of the country's oldest newspaper"
   },
   "scenes/jornal-haaretz/contextPt": {
     "pt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha.",
-    "en": null
+    "en": "The newspaper Haaretz is literally \"The Land\". The word ends with the final {{ץ}}, which drops below the line."
   },
   "scenes/jornal-haaretz/pt": {
     "pt": "a terra",
-    "en": null
+    "en": "the land"
   },
   "scenes/caixa-mits/labelPt": {
     "pt": "Na caixa de suco, na geladeira do mercado",
-    "en": null
+    "en": "On a juice carton, in the grocery store fridge"
   },
   "scenes/caixa-mits/contextPt": {
     "pt": "Três letras, e a última é uma forma final. Suco.",
-    "en": null
+    "en": "Three letters, and the last one is a final form. Juice."
   },
   "scenes/biblioteca-sheket/labelPt": {
     "pt": "Numa placa de biblioteca",
-    "en": null
+    "en": "On a library sign"
   },
   "scenes/biblioteca-sheket/contextPt": {
     "pt": "Silêncio. Uma placa que você vai entender de relance.",
-    "en": null
+    "en": "Quiet. A sign you'll understand at a glance."
   },
   "scenes/whatsapp-boker/labelPt": {
     "pt": "Mensagem de WhatsApp, oito da manhã",
-    "en": null
+    "en": "WhatsApp message, eight in the morning"
   },
   "scenes/whatsapp-boker/contextPt": {
     "pt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia.",
-    "en": null
+    "en": "Two words, six letters, and the most common greeting in Israel before noon."
   },
   "scenes/whatsapp-boker/pt": {
     "pt": "bom dia",
-    "en": null
+    "en": "good morning"
   },
   "scenes/whatsapp-boker/note": {
     "pt": "Gloss explícito: a junção palavra a palavra dava 'manhã bom', que não é português.",
-    "en": null
+    "en": "Explicit gloss: joining the words one by one gave \"morning good\", which isn't English.",
+    "comentario": "adaptado: a nota original dizia 'não é português'"
   },
   "scenes/loja-shabat/labelPt": {
     "pt": "No horário de funcionamento, na porta",
-    "en": null
+    "en": "At the shop door, in the opening hours"
   },
   "scenes/loja-shabat/contextPt": {
     "pt": "Uma grande parte das lojas fecha da tarde de sexta-feira até o fim do sábado, embora isso varie muito de cidade para cidade. Saber ler a palavra evita uma viagem perdida.",
-    "en": null
+    "en": "A large share of stores close from Friday afternoon until the end of Saturday, although this varies a lot from city to city. Being able to read the word saves you a wasted trip."
   },
   "scenes/praca-ochel/labelPt": {
     "pt": "Na placa da praça de alimentação de um shopping",
-    "en": null
+    "en": "On the food court sign at a mall"
   },
   "scenes/praca-ochel/contextPt": {
     "pt": "O {{כ}} aqui está sem ponto, no meio da palavra - então é o som raspado, não K.",
-    "en": null
+    "en": "The {{כ}} here has no dot, in the middle of the word - so it's the raspy sound, not K."
   },
   "scenes/rua-hamelech/labelPt": {
     "pt": "Em nomes de ruas, como a rua King George (Rei George)",
-    "en": null
+    "en": "In street names, like King George Street"
   },
   "scenes/rua-hamelech/contextPt": {
     "pt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
-    "en": null
+    "en": "\"The king\". It ends with the final {{ך}} - and it's the very word that's been waiting for you since the first lesson.",
+    "comentario": "'a mesma palavra que esperava desde a primeira lição' é ambíguo no original; conferir o sentido"
   },
   "scenes/rua-hamelech/pt": {
     "pt": "o rei",
-    "en": null
+    "en": "the king"
   },
   "scenes/cambio-kesef/labelPt": {
     "pt": "Na vitrine de uma casa de câmbio",
-    "en": null
+    "en": "In the window of a currency exchange"
   },
   "scenes/cambio-kesef/contextPt": {
     "pt": "Dinheiro - e também prata: o dinheiro de antigamente era prata, e a palavra ficou.",
-    "en": null
+    "en": "Money - and also silver: money used to be silver, and the word stuck."
   },
   "scenes/livraria-sefer/labelPt": {
     "pt": "Na lombada de um livro, numa livraria de Tel Aviv",
-    "en": null
+    "en": "On the spine of a book, in a Tel Aviv bookstore"
   },
   "scenes/livraria-sefer/contextPt": {
     "pt": "Você fechou o alfabeto. Esta palavra usa a última letra que aprendeu.",
-    "en": null
+    "en": "You've finished the alphabet. This word uses the last letter you learned."
   }
 }

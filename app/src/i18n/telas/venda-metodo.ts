@@ -44,7 +44,7 @@ const en: Traducao<typeof pt> = {
   metaTitulo: 'The method - Hebraico Fluente',
   metaDescricao:
     'One letter at a time, in the order that pays off most; no word with a letter you ' +
-    'have not seen yet; review on the right day; and transliteration fades on purpose.',
+    'have not seen yet; review on the right day; transliteration that fades.',
   trilha: 'The method',
   eyebrow: 'The method',
   titulo: (quantas: string) => `${quantas} steps in every lesson, and one rule that holds them all up.`,
@@ -55,7 +55,7 @@ const en: Traducao<typeof pt> = {
   regraP1: 'It sounds obvious. Almost no course does it. It is common for lesson 2 to use שָׁלוֹם as an example - four letters and a sign you do not have yet. The effect is always the same: instead of reading, you memorize the whole shape as if it were a drawing, and reading never starts.',
   regraP2: 'Here this is not editorial care, it is a lock in the software. Each letter carries the exact list of signs already taught, and the exercise generator can only use that list - including in the wrong answers. An exercise that breaks the rule never goes live, because the automatic check does not let the release through.',
   licao3: 'Lesson 3',
-  mayim: 'máyim · water',
+  mayim: 'mayim · water',
   legenda: 'Three letters, two signs - and all of them already taught. That is why it can show up so early: it is readable, not something to memorize.',
 
   outrasEyebrow: 'The other decisions',
@@ -68,7 +68,7 @@ const en: Traducao<typeof pt> = {
   revisaoT: 'Review is by skill, not by lesson',
   revisaoB: 'Recognizing the shape, knowing the sound, reading the syllable, listening and writing are five different things. The course tracks all five separately for each letter, and review brings back exactly the one that is weak - not the whole lesson again.',
   translitT: 'Transliteration goes away',
-  translitB: 'As long as there is "shalóm" under the word, you are reading English. The course uses transliteration at the start and removes it on purpose, in announced stages, until you are reading with no support at all - which is the only definition of reading.',
+  translitB: 'As long as there is "shalom" under the word, you are reading English. The course uses transliteration at the start and removes it on purpose, in announced stages, until you are reading with no support at all - which is the only definition of reading.',
 
   aulaEyebrow: 'Inside a lesson',
   aulaTitulo: (quantas: string) => `Ten minutes, ${quantas} steps.`,

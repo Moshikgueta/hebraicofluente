@@ -39,7 +39,7 @@ export const LOCALE = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'en' : 'pt';
     a empresa (o site em inglês terá os seus), o A1 e o Raízes. */
 export const ARQUIVOS = [
   'letters', 'modules', 'nikud', 'extras', 'real-world', 'sentences',
-  'eras', 'culture', 'missoes', 'textos', 'bonus', 'biblia', 'fotos-missoes', 'hebraico-na-rua'
+  'eras', 'culture', 'missoes', 'textos', 'bonus', 'biblia', 'imagens-vocabulario', 'fotos-missoes', 'hebraico-na-rua'
 ];
 
 /* Chaves de texto que não terminam em Pt. Toda chave terminada em Pt é texto
@@ -47,8 +47,17 @@ export const ARQUIVOS = [
    contraste (`contrastes: { "ו": "..." }`). */
 const CHAVES = new Set([
   'pt', 'q', 'porque', 'why', 'wrong', 'right', 'use', 'ptApprox', 'lead',
-  'title', 'correction', 'sources', 'didYouKnow', 'didYouKnowTitle', 'note'
+  'title', 'correction', 'sources', 'didYouKnow', 'didYouKnowTitle', 'note',
+  'quem', 'position', 'text', 'sound', 'imageAlt'
 ]);
+
+/* Listas de texto: cada item é um texto (os parágrafos de uma carta, as
+   alternativas de uma pergunta). A resposta certa é guardada pela posição
+   (`certa: 0`), então traduzir a alternativa não muda a correção. As listas
+   `note` são notas internas e ficam de fora. */
+const LISTAS = new Set(['opcoes', 'passos']);
+const listaTraduzivel = chave => !!chave && chave !== 'note' && !chave.startsWith('_')
+  && (chave.endsWith('Pt') || LISTAS.has(chave));
 
 /* Notas internas, que nunca chegam à tela. */
 const INTERNOS = new Set(['culture:note', 'real-world:note']);
@@ -61,6 +70,9 @@ export function traduzivel(nome, caminho, chave, valor) {
   if (chave.toLowerCase().startsWith('translit')) return false;
   if (INTERNOS.has(`${nome}:${caminho}`)) return false;
   if (!(chave.endsWith('Pt') || CHAVES.has(chave) || LETRA_HEBRAICA.test(chave))) return false;
+  /* Um campo de texto (terminado em Pt) pode ter uma palavra de uma letra só:
+     o nome da lição do som "J", ou o "é" de "א é 1". No inglês os dois mudam. */
+  if (chave.endsWith('Pt')) return /[A-Za-zÀ-ú]/.test(valor);
   return TEM_PALAVRA.test(valor);
 }
 
@@ -77,10 +89,17 @@ function segmentos(lista) {
 
 /** Chama `fn(caminho, chave, valor, trocar)` em cada texto traduzível. */
 export function percorrer(nome, json, fn) {
-  const ir = (no, caminho) => {
+  const ir = (no, caminho, chavePai) => {
     if (Array.isArray(no)) {
       const seg = segmentos(no);
-      no.forEach((x, i) => ir(x, caminho ? `${caminho}/${seg[i]}` : seg[i]));
+      no.forEach((x, i) => {
+        const c = caminho ? `${caminho}/${seg[i]}` : seg[i];
+        if (typeof x === 'string') {
+          if (listaTraduzivel(chavePai) && TEM_PALAVRA.test(x) && !INTERNOS.has(`${nome}:${c}`)) {
+            fn(c, chavePai, x, novo => { no[i] = novo; });
+          }
+        } else ir(x, c, chavePai);
+      });
       return;
     }
     if (!no || typeof no !== 'object') return;
@@ -88,7 +107,7 @@ export function percorrer(nome, json, fn) {
       const c = caminho ? `${caminho}/${k}` : k;
       if (typeof v === 'string') {
         if (traduzivel(nome, c, k, v)) fn(c, k, v, novo => { no[k] = novo; });
-      } else ir(v, c);
+      } else ir(v, c, k);
     }
   };
   ir(json, '');

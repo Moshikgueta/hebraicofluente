@@ -30,7 +30,7 @@ const en: Traducao<typeof pt> = {
   ultimaAtualizacao: (data: string) => `Last updated: ${data}`,
   ctaTitulo: 'All of that answered? Then get started.',
   ctaLinha:
-    'The first letter takes ten minutes, and you have seven days to cancel without having to explain why.',
+    'The first letter takes ten minutes, and you have 14 days to cancel without having to explain why.',
   termosDeUso: 'Terms of Use',
   politicaDePrivacidade: 'Privacy Policy',
   reembolso: 'Refunds and Cancellation',
@@ -38,7 +38,7 @@ const en: Traducao<typeof pt> = {
   duvidasFrequentes: 'FAQ',
   quemOferece: 'Who provides this service',
   fornecedor: 'Provider',
-  cnpj: 'CNPJ',
+  cnpj: 'Company number (CNPJ, Brazil)',
   endereco: 'Address',
   atendimento: 'Support',
   telefone: 'Phone',

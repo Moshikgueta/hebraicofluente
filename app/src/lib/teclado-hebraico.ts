@@ -6,20 +6,23 @@
  */
 
 import { tx } from '@/i18n/telas/motor-teclado-hebraico';
+import { translit } from '@/i18n/translit';
+import { LOCALE } from '@/i18n';
 
 export type Tecla = { ch: string; nome: string };
 
 export const LETRAS: Tecla[] = [
-  /* Os nomes das letras são transliteração: ficam até a etapa 3. */
+  /* Os nomes das letras são transliteração: no inglês saem convertidos
+     (i18n/translit.ts), e o ח, que lá se escreve com ch, é Chet. */
   ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'], // i18n-ok: transliteração
   ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yud'], ['כ', 'Kaf'], ['ל', 'Lámed'], // i18n-ok: transliteração
   ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'], // i18n-ok: transliteração
   ['ק', 'Kuf'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
-].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
+].map(([ch, nome]) => ({ ch: ch!, nome: ch === 'ח' && LOCALE === 'en' ? 'Chet' : translit(nome!) }));
 
 export const FINAIS: Tecla[] = [
   ['ך', 'Kaf'], ['ם', 'Mem'], ['ן', 'Nun'], ['ף', 'Pe'], ['ץ', 'Tsádi'] // i18n-ok: transliteração
-].map(([ch, nome]) => ({ ch: ch!, nome: tx.final(nome!) }));
+].map(([ch, nome]) => ({ ch: ch!, nome: tx.final(translit(nome!)) }));
 
 /* Os sinais que o curso ensina (data/nikud.json e as letras), na ordem em
    que aparecem nas lições. Cada um entra DEPOIS da letra que o leva. */

@@ -36,9 +36,9 @@ const en: Traducao<typeof pt> = {
   aFrente: 'This text is still ahead of you',
   aFrenteTexto: (after, mastered) =>
     `To read this text on your own, you need to master ${after} letters, and today you master ${mastered}. For now, listen to each line and follow along with the transliteration and the translation. When you master the letters, come back and read it straight from the Hebrew. It stays saved in Bonus readings.`,
-  porQueHashem: 'Why does the recording say «Hashém»?',
+  porQueHashem: 'Why does the recording say «Hashem»?',
   hashemTexto: (nome, link) =>
-    <>Where the text has {nome}, the name of God, the recording says «Hashém», «the Name». It is a Jewish custom: the Name is not pronounced, and outside of prayer many people avoid even «Adonái», which is how it is read in prayer and in the synagogue. The transliteration shows what you hear.{' '}{link}.</>,
+    <>Where the text has {nome}, the name of God, the recording says «Hashem», «the Name». It is a Jewish custom: the Name is not pronounced, and outside of prayer many people avoid even «Adonai», which is how it is read in prayer and in the synagogue. The transliteration shows what you hear.{' '}{link}.</>,
   maisNoGuia: 'More in the guide',
   leiaEmVozAlta: 'Read aloud',
   leiaInstrucao: 'Read slowly, one line at a time, record yourself and listen. Then compare with the recording of each line.',

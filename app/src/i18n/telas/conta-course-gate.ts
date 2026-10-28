@@ -24,7 +24,7 @@ const en: Traducao<typeof pt> = {
   semCurso: 'This course is not in your account yet.',
   entreParaContinuar: 'Sign in to continue.',
   raizesNaoAVenda:
-    'Raízes Sefarditas is not on sale yet. It shows up here once access is unlocked on your account.',
+    'Raizes Sefarditas is not on sale yet. It shows up here once access is unlocked on your account.',
   liberadoAoPagar: (curso: string) => `${curso} is unlocked as soon as the payment is confirmed.`,
   ficamNaConta: 'Your lessons, your progress and your certificate are kept in your account.',
   verOCurso: 'See the course',
