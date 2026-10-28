@@ -11,10 +11,13 @@ describe('o que o painel promete bate com o curso', () => {
     expect(d).not.toContain('course.modules.filter(m => m.letterIds.length).length} módulos');
   });
 
-  it('as perguntas do começo são três, e a Aula 0 é de dez minutos nos dois lugares', () => {
+  it('as perguntas do começo são as quatro do /onboarding, e a Aula 0 é de dez minutos nos dois lugares', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toContain('três perguntas rápidas');
-    expect(d).not.toContain('duas perguntas');
+    /* O painel dizia "três" depois de o /onboarding ganhar a pergunta do nome
+       (28/10/2026): o número do painel é o do contador "N de 4". */
+    expect(fonte('app/onboarding/page.tsx')).toContain('{step + 1} de 4');
+    expect(d).toContain('quatro perguntas rápidas');
+    expect(d).not.toMatch(/(duas|três) perguntas/);
     expect(d).toContain('Dez minutos de leitura');
     expect(fonte('app/inicio/StartHereClient.tsx')).toContain('Dez minutos de leitura');
   });

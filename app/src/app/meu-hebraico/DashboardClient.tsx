@@ -530,8 +530,8 @@ function Welcome() {
               números diferentes na vitrine: letra e lição são grandezas
               parecidas, e a cópia manual erra em silêncio. */}
           São {course.totalLetters} letras, em {course.modules.length} módulos.
-          Antes da primeira, três perguntas rápidas: por que você quer aprender, quanto
-          tempo por dia dá para estudar e o que você já sabe.
+          Antes da primeira, quatro perguntas rápidas: por que você quer aprender, quanto
+          tempo por dia dá para estudar, o que você já sabe e como podemos te chamar.
         </p>
         <div className="pt-2">
           <LinkButton href="/onboarding" size="lg">Começar</LinkButton>

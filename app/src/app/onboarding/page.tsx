@@ -87,15 +87,19 @@ export default function OnboardingPage() {
       <header className="grid gap-2">
         <Badge tone="accent">{step + 1} de 4</Badge>
         <div className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
-          <div className="h-full bg-[var(--accent)] transition-[width] duration-300"
-               style={{ width: `${((step + 1) / 4) * 100}%` }} />
+          {/* Por transform, e não width (a régua de movimento de 27/10). */}
+          <div className="h-full w-full origin-left bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]"
+               style={{ transform: `scaleX(${(step + 1) / 4})` }} />
         </div>
       </header>
 
       {step === 0 && (
         <Question
           title="Por que você quer aprender hebraico?"
-          hint="Isso muda o tom das mensagens ao longo do curso, não o conteúdo."
+          /* Dizia "Isso muda o tom das mensagens ao longo do curso", e nada no
+             curso lê esta resposta (28/10/2026): a frase prometia o que não
+             existe. */
+          hint="Fica na sua conta, para a gente conhecer você. Não muda o conteúdo: todo mundo faz o mesmo curso."
         >
           {REASONS.map(r => (
             <Choice key={r.id} selected={reason === r.id}
@@ -157,7 +161,7 @@ export default function OnboardingPage() {
         <button
           type="button"
           onClick={() => setStep(s => s - 1)}
-          className="font-ui text-[13px] text-ink-muted hover:text-ink-body justify-self-start"
+          className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[14px] text-ink-muted hover:text-ink-body justify-self-start"
         >
           ← Voltar
         </button>
