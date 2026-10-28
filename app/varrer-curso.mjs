@@ -266,6 +266,10 @@ const mapaLinkaAula0 = await (async () => {
   /* As partes da Aula 0 chegam fechadas (pedido do dono, 29/09/2026,
      components/learn/Partes.tsx): o texto fica no HTML com `hidden`, e o
      innerText só lê o que está à vista. Abre todas antes de procurar. */
+  /* Desde 28/10/2026 a Aula 0 abre numa capa, com os passos curtos; a
+     página inteira fica a um botão ("Ver tudo numa página"). */
+  const paginaInteira = p.getByRole('button', { name: 'Ver tudo numa página' });
+  if (await paginaInteira.count()) { await paginaInteira.first().click(); await p.waitForTimeout(200); }
   const abrirTodas = p.getByRole('button', { name: 'Abrir todas as partes' });
   if (await abrirTodas.count()) { await abrirTodas.first().click(); await p.waitForTimeout(200); }
   const txt = (await p.innerText('body')).replace(/\s+/g, ' ');

@@ -66,7 +66,10 @@ import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { AULA0_CONCLUIDA, AULA0_MINIMO, AULA0_PERGUNTAS, aula0Feita } from '@/lib/state/rules';
-import { AbrirTodas, Parte, Partes, useAbrirParte } from '@/components/learn/Partes';
+import { AbrirTodas, Parte, Partes, SoNaPagina, useAbrirParte } from '@/components/learn/Partes';
+import {
+  Aula0BarraDoPasso, Aula0Capa, Aula0Fim, Aula0NavDoPasso, PASSOS_DA_AULA0, useModoDaAula0
+} from './Aula0Passos';
 import {
   ANALOGIA_CURSIVA, CURSIVA_NO_CURSO, MESMA_LETRA,
   ONDE_CURSIVA, ONDE_IMPRESSA
@@ -175,6 +178,8 @@ const INDICE: { id: string; t: string }[] = [
    índice, mais "Como praticar", que fica fora dele. */
 const PARTES = [...INDICE.map(i => i.id), 'como-praticar'];
 
+const VAZIO: ReadonlySet<string> = new Set();
+
 const SOUND_LABEL: Record<string, string> = {
   a: 'o som A', e: 'o som E', i: 'o som I', o: 'o som O', u: 'o som U',
   sheva: 'sem vogal'
@@ -204,9 +209,27 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
   /* A lista das vogais sabe quais têm gravação só depois que o manifesto
      chega; isto a redesenha quando chega. */
   useRegistroDeAudio();
+
+  /* A capa, os passos, a página inteira e o fim (28/10/2026): ver
+     Aula0Passos.tsx. As partes continuam todas no HTML em qualquer modo. */
+  const { modo, setModo, passo, guardado, irAoPasso } = useModoDaAula0();
+  const aula0FeitaJa = progresso.ready && aula0Feita(progresso.state);
+  const passoVisivel = modo === 'pagina' ? null
+    : modo === 'passos' ? PASSOS_DA_AULA0[passo]!.partes
+    : VAZIO;
   return (
     <div className="grid gap-6 reading">
-      <header className="grid gap-3">
+      {modo === 'capa' && (
+        <Aula0Capa feita={aula0FeitaJa} guardado={guardado}
+                   comecar={irAoPasso} paginaInteira={() => setModo('pagina')} />
+      )}
+      {modo === 'fim' && (
+        <Aula0Fim primeiraLicao={curso.primeiraLicao} letra={alfabeto.exemplo}
+                  paginaInteira={() => setModo('pagina')} />
+      )}
+      {modo === 'passos' && <Aula0BarraDoPasso passo={passo} sair={() => setModo('capa')} />}
+
+      <header hidden={modo !== 'pagina'} className="grid gap-3">
         <Link href="/mapa"
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
           ← Mapa
@@ -226,7 +249,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         <Aula0Situacao />
       </header>
 
-      <Partes ids={PARTES} abertaDeInicio="o-sistema">
+      <Partes ids={PARTES} abertaDeInicio="o-sistema" passo={passoVisivel}>
       {/* ── o índice ────────────────────────────────────────
           Esta página passou de oito quadros para onze, e num telefone isso é
           um rolo de dúzias de telas. Uma página de "leia antes de começar"
@@ -237,6 +260,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           Os destinos são conferidos por varrer-curso.mjs: um item de índice
           que aponta para um id que não existe leva a lugar nenhum e não
           quebra nada, que é a definição do defeito que ninguém encontra. */}
+      <SoNaPagina>
       <nav aria-labelledby="indice"
            className="rounded-[var(--r-lg)] border border-line bg-surface p-5 grid gap-3">
         <h2 id="indice" className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-ink-muted">
@@ -262,6 +286,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         Cada parte abre com um clique no título.
       </p>
       <AbrirTodas />
+      </SoNaPagina>
 
       {/* ── 1 · o sistema é outro ─────────────────────────────────────── */}
       <Parte id="o-sistema" titulo={<>Não é o mesmo sistema do português</>}>
@@ -299,6 +324,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           <em>coisa</em> ou <em>cisão</em>. Quem lê português reconheceria a palavra
           pelo resto da frase.
         </p>
+        <CasaSemVogais />
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
           Isto é só uma <strong className="font-semibold text-ink">analogia</strong>, e
           não uma descrição do hebraico: o hebraico não é português sem vogais, e tem
@@ -752,6 +778,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           para dentro dele. A primeira versão deste quadro copiava a frase
           de abertura da carta e derrubou o deploy 93, que é exatamente o
           trabalho daquele verificador. */}
+      <SoNaPagina noPasso="que-hebraico">
       <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
                             hover:bg-surface-2 flex items-center justify-between gap-3">
@@ -792,6 +819,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           </Link>
         </div>
       </details>
+      </SoNaPagina>
       {/* ── 11 · o mapa ───────────────────────────────────────────────── */}
       <Parte id="o-caminho" tone="wash" titulo={<>O caminho, do início ao fim</>}>
         {/* Uma CORRENTE, e não dez cartões empilhados.
@@ -871,7 +899,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
       <Parte id="atividade" titulo={<>Checagem final: dezessete perguntas</>}>
-      <ChecagemFinal />
+      <ChecagemFinal aoPassar={() => { if (modo === 'passos') setModo('fim'); }} />
       </Parte>
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
@@ -922,6 +950,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           nunca viu hebraico: doze sinais de uma vez, antes da primeira letra,
           é a definição de sobrecarga. Fica aqui, a um clique, e o curso
           ensina cada sinal na hora certa. */}
+      <SoNaPagina noPasso="o-niqqud">
       <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
                             hover:bg-surface-2 flex items-center justify-between gap-3">
@@ -977,16 +1006,35 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </div>
       </details>
+      </SoNaPagina>
       </Partes>
+
+      {modo === 'passos' && <Aula0NavDoPasso passo={passo} irPara={irAoPasso} />}
 
       {/* O destino sai do CURSO, e não escrito à mão.
           Escrito à mão ele estava - e apontava para a SEGUNDA letra. A tela
           que existe para não assustar ninguém mandava o iniciante pular a
           primeira lição, e nada nunca reclamou: o endereço existe, a página
           abre, e só quem conhece a ordem do alfabeto perceberia. */}
+      <div hidden={modo !== 'pagina'} className="contents">
       <LinkButton href={`/licao/${curso.primeiraLicao}`} size="lg" full>
         Ir para a primeira letra
       </LinkButton>
+      </div>
+    </div>
+  );
+}
+
+/* A analogia, vista (28/10/2026): as vogais de CASA se apagam e voltam, e
+   sobra C S. Com movimento reduzido, a palavra fica inteira e a legenda diz. */
+function CasaSemVogais() {
+  return (
+    <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
+      <p aria-label="CASA, que sem as vogais vira C S"
+         className="m-0 font-display text-[34px] font-bold tracking-[.18em] text-ink">
+        C<span aria-hidden className="vogal-some">A</span>S<span aria-hidden className="vogal-some">A</span>
+      </p>
+      <p className="m-0 font-ui text-[13.5px] text-ink-muted">sem as vogais, sobra C S</p>
     </div>
   );
 }
@@ -1072,7 +1120,7 @@ function Aula0Situacao() {
   );
 }
 
-function ChecagemFinal() {
+function ChecagemFinal({ aoPassar }: { aoPassar: () => void }) {
   const p = useProgress();
   const [tentativa, setTentativa] = useState(0);
   const [certas, setCertas] = useState<number | null>(null);
@@ -1092,7 +1140,12 @@ function ChecagemFinal() {
         }}
         aoCompletar={n => {
           setCertas(n);
-          if (n >= AULA0_MINIMO) p.markFirst(AULA0_CONCLUIDA);
+          if (n >= AULA0_MINIMO) {
+            p.markFirst(AULA0_CONCLUIDA);
+            /* Nos passos, o resultado fica à vista um instante e a
+               comemoração entra no lugar. */
+            setTimeout(aoPassar, 1400);
+          }
         }}
       />
       {certas !== null && (
