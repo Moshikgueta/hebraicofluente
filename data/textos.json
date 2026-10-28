@@ -1,6 +1,109 @@
 {
   "textos": [
     {
+      "modulo": 2,
+      "tituloPt": "O peixe grande",
+      "tipoPt": "Conversa",
+      "revisado": false,
+      "introPt": "Na praia, a Maya e o Dani acham alguma coisa na água, e a tia tem a última palavra. Só as letras dos módulos 1 e 2, e quase só palavras que você já leu nas lições.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "מַיָה, הִנֵה הַיָם!",
+          "translit": "Máya, hiné hayám!",
+          "pt": "Maya, olha o mar!"
+        },
+        {
+          "quem": "Maya",
+          "he": "יֵשׁ שָׁם דָג?",
+          "translit": "yesh sham dag?",
+          "pt": "Tem peixe ali?"
+        },
+        {
+          "quem": "Dani",
+          "he": "יֵשׁ! דָג גָדוֹל!",
+          "translit": "yesh! dag gadól!",
+          "pt": "Tem! Um peixe grande!"
+        },
+        {
+          "quem": "Tia",
+          "he": "מָה יֵשׁ שָׁם, דָנִי?",
+          "translit": "ma yesh sham, Dáni?",
+          "pt": "O que tem ali, Dani?"
+        },
+        {
+          "quem": "Dani",
+          "he": "דָג, דוֹדָה! הִנֵה הוּא, שָׁם.",
+          "translit": "dag, dodá! hiné hu, sham.",
+          "pt": "Um peixe, tia! Olha ele ali."
+        },
+        {
+          "quem": "Maya",
+          "he": "הוּא שֶׁלִי!",
+          "translit": "hu shelí!",
+          "pt": "Ele é meu!"
+        },
+        {
+          "quem": "Tia",
+          "he": "לֹא, מַיָה. הַדָג שֶׁל הַיָם.",
+          "translit": "lo, Máya. hadág shel hayám.",
+          "pt": "Não, Maya. O peixe é do mar."
+        }
+      ],
+      "novas": [
+        {
+          "he": "שֶׁלִי",
+          "translit": "shelí",
+          "pt": "meu, minha"
+        },
+        {
+          "he": "מַיָה",
+          "translit": "Máya",
+          "pt": "Maya (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que as crianças veem no mar?",
+          "opcoes": [
+            "Um peixe",
+            "Um sorvete",
+            "A mãe"
+          ],
+          "certa": 0,
+          "porque": "{{דָג גָדוֹל}}: um peixe grande."
+        },
+        {
+          "t": "escolha",
+          "q": "Quem diz que o peixe é seu?",
+          "opcoes": [
+            "A Maya",
+            "O Dani",
+            "A tia"
+          ],
+          "certa": 0,
+          "porque": "A Maya diz {{הוּא שֶׁלִי}}: ele é meu."
+        },
+        {
+          "t": "vf",
+          "q": "Para a tia, o peixe é do mar.",
+          "certa": true,
+          "porque": "{{הַדָג שֶׁל הַיָם}}: o peixe é do mar."
+        }
+      ]
+    },
+    {
       "modulo": 3,
       "tituloPt": "Tem pão?",
       "tipoPt": "Conversa no WhatsApp",
