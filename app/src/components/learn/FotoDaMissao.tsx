@@ -13,10 +13,15 @@ import type { FotoDaMissao as Foto } from '@/lib/engine/missao';
 import { tx } from '@/i18n/telas/licao-foto-da-missao';
 import { He } from '@/components/hebrew/He';
 
-export function FotoDaMissao({ foto }: { foto: Foto }) {
+/** `pasta`: de onde a imagem vem em /media (as missões, ou as placas do
+ *  Hebraico na rua, que usam esta mesma moldura com o crédito). `inteira`:
+ *  sem recorte, porque na placa o aluno precisa ver a palavra. */
+export function FotoDaMissao({ foto, pasta = 'missoes', inteira = false }: {
+  foto: Omit<Foto, 'missao'>; pasta?: 'missoes' | 'rua'; inteira?: boolean;
+}) {
   const dialogo = useRef<HTMLDialogElement>(null);
   const [grande, setGrande] = useState(false);
-  const src = `/media/missoes/${foto.arquivo}`;
+  const src = `/media/${pasta}/${foto.arquivo}`;
   const licenca = foto.licenca === 'Public domain' ? tx.dominioPublico : foto.licenca;
   const credito = (
     <>
@@ -37,7 +42,7 @@ export function FotoDaMissao({ foto }: { foto: Foto }) {
               className="block overflow-hidden rounded-[var(--r-lg)] border border-line bg-surface-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={src} alt={foto.mostraPt} width={foto.largura} height={foto.altura} loading="lazy" decoding="async"
-             className="block w-full h-auto max-h-[300px] object-cover" />
+             className={`block w-full h-auto ${inteira ? 'max-h-[460px] object-contain' : 'max-h-[300px] object-cover'}`} />
       </button>
       <figcaption className="grid gap-0.5">
         <span className="font-ui text-[13px] leading-snug text-ink-body">{foto.mostraPt}</span>

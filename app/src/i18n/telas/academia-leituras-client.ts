@@ -7,6 +7,8 @@ const pt = {
 
   titulo: 'Leituras',
   intro: 'Todos os exercícios de leitura do curso num lugar só, módulo por módulo. Cada um usa só as letras que você já aprendeu naquele ponto.',
+  rua: 'Hebraico na rua',
+  ruaDesc: 'Placas de verdade de Israel, com palavras que você já lê.',
   laboratorio: 'Laboratório de leitura',
   laboratorioDesc: 'Uma palavra por vez, com a ajuda que você escolher.',
   abrir: 'Abrir',
@@ -31,6 +33,8 @@ const en: Traducao<typeof pt> = {
 
   titulo: 'Readings',
   intro: 'Every reading exercise of the course in one place, module by module. Each one uses only the letters you have already learned at that point.',
+  rua: 'Hebrew on the street',
+  ruaDesc: 'Real signs from Israel, with words you can already read.',
   laboratorio: 'Reading lab',
   laboratorioDesc: 'One word at a time, with the help you choose.',
   abrir: 'Open',

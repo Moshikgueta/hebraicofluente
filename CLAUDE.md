@@ -581,6 +581,17 @@ com 70%; cumprida, grava `firsts['missao-N']`. Não tranca nada.
 - É conteúdo pago: vai por `/api/content` (os três lados do contrato e
   `OS_PAGOS` em `tests/conteudo.test.ts`), nunca no pacote público.
 
+## Hebraico na rua (28/10/2026)
+
+`/hebraico-na-rua` (no GATED e no PAGAS), linkado de Leituras: fotos reais de placas
+(Wikimedia Commons, `data/hebraico-na-rua.json`) e a pergunta "esta placa tem uma palavra que
+você já lê; qual?". Nada de hebraico novo: `palavra` e `naPlaca` citam palavras do curso, com a
+grafia do curso, e nenhuma opção errada está na placa (`lib/engine/rua.ts`). A placa só aparece
+com a palavra legível. Só sai do exportador com `aprovada: true`, e vai no `missoes.json` (pago),
+chave `rua`. Imagens em `app/public/media/rua/`. Candidatas: Action "Fotos das missões"
+(`tools/fotos-rua-pedido.json`); revisão em `HEBRAICO-NA-RUA-PARA-REVISAR.md`.
+`tests/hebraico-na-rua.test.ts`.
+
 ## Mini-textos de leitura corrida
 
 Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),
