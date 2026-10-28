@@ -42,6 +42,10 @@ export type Texto = {
    *  aluno já acumulou nas lições, sem palavra nova. Uma por módulo, do 1 ao 7,
    *  ao lado do texto do módulo. `novas` traz só os nomes e os prefixos. */
   revisao?: boolean;
+  /** O segundo texto do módulo (28/10/2026): rascunho escrito para o curso,
+   *  com `revisado: false` até o dono aprovar. A tela ainda não o mostra; com
+   *  a aprovação, ganha a rota dele. */
+  n?: number;
   /** Mostrar sem nikud, como chega de verdade (módulo 6). */
   semPontos?: boolean;
   linhas: LinhaDeTexto[];

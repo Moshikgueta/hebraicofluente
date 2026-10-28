@@ -26,7 +26,7 @@ describe('os mini-textos', () => {
   /* O do módulo 2 entrou em 28/10/2026 (aprovado pelo dono no mesmo dia). Ele
      segue a mesma régua das letras: sem o Vav, nem como sinal de vogal. */
   it('há um texto em cada módulo do 2 ao 7', () => {
-    expect(textos.map(t => t.modulo).sort()).toEqual([2, 3, 4, 5, 6, 7]);
+    expect(textos.filter(t => !t.n).map(t => t.modulo).sort()).toEqual([2, 3, 4, 5, 6, 7]);
   });
 
   it('não usam letra que o aluno ainda não viu naquele módulo', () => {
@@ -73,6 +73,12 @@ describe('os mini-textos', () => {
         }
       }
     }
+  });
+
+  it('os segundos textos (rascunhos de 28/10/2026) esperam a revisão do dono', () => {
+    const segundos = textos.filter(t => t.n === 2);
+    expect(segundos.map(t => t.modulo).sort()).toEqual([3, 4, 5, 6, 7]);
+    expect(segundos.every(t => t.revisado === false)).toBe(true);
   });
 
   it('o aluno só vê o texto depois de revisado', () => {
