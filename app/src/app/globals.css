@@ -210,6 +210,16 @@
 @keyframes il-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .il-entra > svg { animation: il-entra 600ms var(--ease-out) both; }
 
+/* A Yael (components/aventura/Yael.tsx, protótipo): o olho pisca, a cabeça
+   e os chifres balançam de leve, e no fim da Aula 0 ela dá três pulinhos na
+   pedra. Só transform. */
+@keyframes yael-pisca { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes yael-balanca { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-3deg); } }
+@keyframes yael-pulo { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } }
+.yael .yael-olho { transform-box: fill-box; transform-origin: center; animation: yael-pisca 4.8s linear infinite; }
+.yael .yael-chifres { transform-box: view-box; transform-origin: 92px 38px; animation: yael-balanca 3.6s ease-in-out infinite; }
+.yael-pula .yael-corpo { animation: yael-pulo 520ms var(--ease-out) 3; }
+
 /* A folha do "Me explica, Moshik": sobe 12 px ao abrir, 220 ms. */
 @keyframes hf-folha-sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .hf-folha[open] { animation: hf-folha-sobe 220ms var(--ease-out) both; }
