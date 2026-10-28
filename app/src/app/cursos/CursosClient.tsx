@@ -15,6 +15,7 @@ import { CourseShelf } from '@/components/platform/CourseShelf';
 import { allCourses, brl, isPlayable, paginaDeVenda } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
 import { TrilhaNoTopo } from '@/components/portal/Migalhas';
+import { tx } from '@/i18n/telas/venda-cursos';
 
 export function CursosClient() {
   const account = useAccount();
@@ -22,14 +23,14 @@ export function CursosClient() {
 
   return (
     <>
-      <TrilhaNoTopo trilha={[{ nome: 'Os cursos' }]} />
+      <TrilhaNoTopo trilha={[{ nome: tx.trilha }]} />
       <Section labelledBy="cursos">
         <SectionHead
           id="cursos"
           nivel="h1"
-          eyebrowPt="Cursos de hebraico"
-          titlePt="Comece pelo alfabeto."
-          leadPt="A Alfabetização está disponível hoje. O A1, o A2 e o B1 estão em produção e serão vendidos à parte, na mesma conta, cada um começando onde o anterior parou."
+          eyebrowPt={tx.eyebrow}
+          titlePt={tx.titulo}
+          leadPt={tx.lead}
         />
         <CourseShelf />
       </Section>
@@ -41,8 +42,8 @@ export function CursosClient() {
       <Section tone="surface" labelledBy="trilha-detalhe">
         <SectionHead
           id="trilha-detalhe"
-          eyebrowPt="A ordem"
-          titlePt="O que cada nível entrega."
+          eyebrowPt={tx.ordemEyebrow}
+          titlePt={tx.ordemTitulo}
         />
 
         {/* Um índice sob fios, e não quatro cartões: os níveis são capítulos
@@ -63,13 +64,13 @@ export function CursosClient() {
                   <div className="grid gap-2 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="font-display text-[23px] sm:text-[26px] font-semibold tracking-[-0.022em] text-ink m-0">{c.titlePt}</h3>
-                      {owned ? <Badge tone="mint">Seu curso</Badge>
-                        : open ? <Badge tone="accent">Disponível</Badge>
-                        : <Badge>Em breve</Badge>}
+                      {owned ? <Badge tone="mint">{tx.seuCurso}</Badge>
+                        : open ? <Badge tone="accent">{tx.disponivel}</Badge>
+                        : <Badge>{tx.emBreve}</Badge>}
                     </div>
                     <p className="font-ui text-[13.5px] text-ink-muted tabular-nums">
-                      {c.levelPt}{c.cefr ? ` · ${c.cefr}` : ''} · {c.stats.modules} módulos
-                      {c.stats.lessons ? ` · ${c.stats.lessons} lições` : ''}
+                      {c.levelPt}{c.cefr ? ` · ${c.cefr}` : ''} · {tx.nModulos(c.stats.modules)}
+                      {c.stats.lessons ? ` · ${tx.nLicoes(c.stats.lessons)}` : ''}
                     </p>
                     <p className="font-ui text-[16px] leading-[1.6] text-ink-body max-w-[62ch]">
                       {c.summaryPt}
@@ -93,7 +94,7 @@ export function CursosClient() {
                       variant={open && !owned ? 'primary' : 'secondary'}
                       size="sm"
                     >
-                      {owned ? 'Continuar' : open ? 'Ver o curso' : 'O que vem nele'}
+                      {owned ? tx.continuar : open ? tx.verCurso : tx.oQueVem}
                     </LinkButton>
                   </div>
                 </article>
@@ -112,13 +113,10 @@ export function CursosClient() {
         <div className="grid gap-4 max-w-[760px] pl-6 border-l-2 border-[var(--teal)]">
           <h2 id="ordem" className="font-display font-semibold text-[clamp(26px,3vw,36px)] leading-[1.1]
                                     tracking-[-0.03em] text-ink max-w-[26ch] m-0">
-            Não dá para pular a alfabetização.
+            {tx.pularTitulo}
           </h2>
           <p className="font-ui text-[17px] leading-[1.65] text-ink-body max-w-[60ch] m-0">
-            E não é regra de venda: do A1 em diante nada é escrito em
-            transliteração. Quem chega sem ler o alfabeto passa o curso inteiro
-            decorando sons em vez de aprender a língua. Se você já lê hebraico
-            com nikud, comece direto no A1 quando ele sair.
+            {tx.pularTexto}
           </p>
         </div>
       </Section>

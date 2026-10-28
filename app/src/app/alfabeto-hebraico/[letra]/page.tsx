@@ -10,6 +10,7 @@ import { course } from '@/lib/content-publico';
 import { somPt } from '@/lib/som-pt';
 import { FORMAS_FINAIS, LETRAS_PUBLICAS, letraPublica, partes } from '@/lib/alfabeto-publico';
 import { jsonLdTexto, migalhas } from '@/lib/jsonld';
+import { tx } from '@/i18n/telas/venda-alfabeto-hebraico';
 
 /* Uma página por letra (23/10/2026, opção B de marketing/seo/paginas-do-alfabeto.md):
  * a forma, o nome e o som (públicos), uma palavra com a gravação do professor,
@@ -28,10 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ letra: st
   if (!l || !letraPublica(letra)) return {};
   return meta({
     rota: `/alfabeto-hebraico/${l.id}`,
-    title: `${l.namePt} (${l.letter}): a letra do alfabeto hebraico e como se lê - Hebraico Fluente`,
-    description:
-      `${l.namePt}, a letra ${l.order} na ordem do curso: o som (${somPt(l.sound)}), uma palavra com a gravação ` +
-      'do professor e o erro mais comum de quem fala português.'
+    title: tx.letraMetaTitulo(l.namePt, l.letter),
+    description: tx.letraMetaDescricao(l.namePt, l.order, somPt(l.sound))
   });
 }
 
@@ -50,53 +49,52 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdTexto(migalhas([
-        { nome: 'Alfabeto hebraico', rota: '/alfabeto-hebraico' },
+        { nome: tx.alfabeto, rota: '/alfabeto-hebraico' },
         { nome: l.namePt, rota: `/alfabeto-hebraico/${l.id}` }
       ])) }} />
       <PageHead
-        trilha={[{ nome: 'Alfabeto hebraico', href: '/alfabeto-hebraico' }, { nome: l.namePt }]}
-        eyebrowPt={`Alfabeto hebraico · letra ${l.order} na ordem do curso`}
+        trilha={[{ nome: tx.alfabeto, href: '/alfabeto-hebraico' }, { nome: l.namePt }]}
+        eyebrowPt={tx.letraEyebrow(l.order)}
         titlePt={<>{l.namePt} <He size="xl">{l.letter}</He></>}
-        leadPt={<>O som: {somPt(l.sound)}.{final && <> No fim da palavra, a letra muda de forma: <He>{final}</He>.</>}</>}
+        leadPt={tx.letraLead(somPt(l.sound), final ? <He>{final}</He> : null)}
       >
-        <div><OuvirAmostra nome={p.audioNome} rotulo={`Ouvir o nome: ${l.namePt}`} /></div>
+        <div><OuvirAmostra nome={p.audioNome} rotulo={tx.ouvirNome(l.namePt)} /></div>
       </PageHead>
 
       <Section labelledBy="palavra">
-        <SectionHead id="palavra" eyebrowPt="Uma palavra" titlePt={`Uma palavra com ${l.namePt}.`} />
+        <SectionHead id="palavra" eyebrowPt={tx.palavraEyebrow} titlePt={tx.palavraTitulo(l.namePt)} />
         <div className="grid gap-4 justify-items-start">
           <He size="display">{p.exemplo.he}</He>
           <p className="font-ui text-[17px] text-ink-body m-0">
             <strong>{p.exemplo.translit}</strong>: {p.exemplo.pt}
           </p>
-          <OuvirAmostra nome={p.exemplo.audio} rotulo="Ouvir o professor" />
+          <OuvirAmostra nome={p.exemplo.audio} rotulo={tx.ouvirProfessor} />
         </div>
       </Section>
 
       <Section tone="surface" labelledBy="erro">
-        <SectionHead id="erro" eyebrowPt="Cuidado, brasileiro" titlePt="O erro mais comum com esta letra." />
+        <SectionHead id="erro" eyebrowPt={tx.erroEyebrow} titlePt={tx.erroTitulo} />
         <div className="grid gap-8 sm:grid-cols-2">
           <div className="border-t-2 border-[var(--gold)] pt-5 grid gap-2 content-start">
-            <p className="font-display text-[20px] font-semibold text-[var(--gold-ink)] m-0">O que costuma sair</p>
+            <p className="font-display text-[20px] font-semibold text-[var(--gold-ink)] m-0">{tx.costumaSair}</p>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0"><Texto t={p.erro.errado} /></p>
           </div>
           <div className="border-t-2 border-[var(--teal)] pt-5 grid gap-2 content-start">
-            <p className="font-display text-[20px] font-semibold text-[var(--teal-ink)] m-0">O jeito certo</p>
+            <p className="font-display text-[20px] font-semibold text-[var(--teal-ink)] m-0">{tx.jeitoCerto}</p>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0"><Texto t={p.erro.certo} /></p>
           </div>
         </div>
         <p className="font-ui text-[15px] leading-relaxed text-ink-muted mt-6 mb-0 max-w-[58ch]">
-          No curso, a lição desta letra explica por que isso acontece e treina o som com a gravação do
-          professor.
+          {tx.noCurso}
         </p>
       </Section>
 
       {p.parecidas.length > 0 && (
         <Section labelledBy="parecidas">
           <SectionHead
-            id="parecidas" eyebrowPt="Atenção ao desenho"
-            titlePt="Letras que se parecem com esta."
-            leadPt="No começo, é fácil confundir. O curso treina a diferença lado a lado."
+            id="parecidas" eyebrowPt={tx.parecidasEyebrow}
+            titlePt={tx.parecidasTitulo}
+            leadPt={tx.parecidasLead}
           />
           <div className="flex flex-wrap gap-6 items-end">
             <He size="xl">{l.letter}</He>
@@ -106,7 +104,7 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
       )}
 
       <Section tone="surface" labelledBy="outras">
-        <SectionHead id="outras" eyebrowPt="Outras letras" titlePt="Continue pelo alfabeto." />
+        <SectionHead id="outras" eyebrowPt={tx.outrasEyebrow} titlePt={tx.outrasTitulo} />
         <ul className="flex flex-wrap gap-3 list-none p-0 m-0">
           {outras.map(o => {
             const x = daLetra(o.id)!;
@@ -122,7 +120,7 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
           <li>
             <Link href="/alfabeto-hebraico"
                   className="inline-flex items-center min-h-[44px] px-4 rounded-[12px] border border-line bg-[var(--card)] font-ui text-[15px] text-ink hover:border-[var(--accent)]">
-              As 22 letras
+              {tx.as22}
             </Link>
           </li>
         </ul>
@@ -130,8 +128,8 @@ export default async function LetraPage({ params }: { params: Promise<{ letra: s
 
       <Section labelledBy="cta">
         <FaixaCta
-          titulo="Aprenda as 22 letras, uma por vez."
-          linha={<>Comece pelo teste grátis do Álef, na página do curso: 6 exercícios curtos, sem cadastro.</>}
+          titulo={tx.ctaTitulo}
+          linha={<>{tx.ctaLinha}</>}
           onde={`alfabeto-${l.id}`}
         />
       </Section>

@@ -5,6 +5,7 @@ import { allProducts, getCourse, tipoDe } from '@/lib/catalog';
 import { CourseClient } from './CourseClient';
 import { LivroClient } from './LivroClient';
 import { ProdutoClient } from './ProdutoClient';
+import { tx } from '@/i18n/telas/venda-course-client';
 
 /* Uma rota por curso do catálogo, geradas do próprio catálogo. Acrescentar um
    curso em data/courses.json cria a página dele - nenhum arquivo a escrever. */
@@ -16,7 +17,7 @@ export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const c = getCourse((await params).slug);
-  if (!c) return { title: 'Curso não encontrado - Hebraico Fluente' };
+  if (!c) return { title: tx.naoEncontrado };
   return meta({
     rota: `/cursos/${c.slug}`,
     title: `${c.titlePt} - Hebraico Fluente`,

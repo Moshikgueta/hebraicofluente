@@ -2,13 +2,12 @@ import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { empresa, prazoResposta } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/venda-acessibilidade';
 
 export const metadata: Metadata = meta({
   rota: '/acessibilidade',
-  title: 'Declaração de Acessibilidade - Hebraico Fluente',
-  description:
-    'O que a plataforma faz para ser usada por todas as pessoas, o que ainda não faz, ' +
-    'como foi testada e como avisar de uma barreira.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 /* A Declaração de Acessibilidade (28/09/2026).
@@ -33,95 +32,77 @@ export default function Page() {
     <LegalPage
       documento="acessibilidade"
       cta={false}
-      titulo="Declaração de Acessibilidade"
-      resumo="O que fazemos para que a plataforma possa ser usada por todas as pessoas, o que ainda falta, e como nos avisar de uma barreira."
+      titulo={tx.titulo}
+      resumo={tx.resumo}
     >
-      <Artigo n={1} titulo="Nosso compromisso">
+      <Artigo n={1} titulo={tx.compromissoTitulo}>
         <p>
-          Queremos que qualquer pessoa consiga aprender a ler hebraico aqui, com ou
-          sem deficiência. A referência que seguimos é a das Diretrizes de
-          Acessibilidade para Conteúdo Web (WCAG 2.1, nível AA), e a obrigação é a da
-          Lei Brasileira de Inclusão (Lei 13.146/2015, art. 63). Ainda não cumprimos
-          tudo; o que falta está listado no item 4.
+          {tx.compromisso}
         </p>
       </Artigo>
 
-      <Artigo n={2} titulo="O que a plataforma oferece">
+      <Artigo n={2} titulo={tx.ofereceTitulo}>
         <p>
-          <strong>Menu de acessibilidade</strong>, no botão redondo do canto da tela ou
-          pelo atalho <strong>Alt + Shift + A</strong>, em qualquer página. Os ajustes
-          ficam guardados no seu aparelho e valem em todas as páginas:
+          {tx.menu()}
         </p>
         <Lista itens={[
-          'tamanho do texto em 100%, 115%, 130% ou 150%;',
-          'tema claro, escuro ou o do seu aparelho;',
-          'alto contraste;',
-          'menos animação (também respeitamos o ajuste de "reduzir movimento" do seu sistema);',
-          'links sublinhados;',
-          'mais espaço entre letras e linhas nos textos em português.'
+          tx.menu1,
+          tx.menu2,
+          tx.menu3,
+          tx.menu4,
+          tx.menu5,
+          tx.menu6
         ]} />
-        <p><strong>Teclado e leitor de tela:</strong></p>
+        <p><strong>{tx.teclado}</strong></p>
         <Lista itens={[
-          'um atalho "Pular para o conteúdo" no início de cada página, e o foco visível nos botões e links;',
-          'nas lições, as teclas 1 a 4 escolhem a resposta e Enter avança;',
-          'os textos em hebraico são marcados como hebraico, para o leitor de tela trocar de idioma;',
-          'os botões de áudio dizem o que tocam, e, nos exercícios das lições, o resultado de cada resposta é anunciado (menos no de ligar pares: ver o item 4);',
-          'nenhuma imagem importante fica sem descrição.'
+          tx.teclado1,
+          tx.teclado2,
+          tx.teclado3,
+          tx.teclado4,
+          tx.teclado5
         ]} />
-        <p><strong>Áudio, tempo e tela:</strong></p>
+        <p><strong>{tx.audio}</strong></p>
         <Lista itens={[
-          'as letras, as sílabas, as palavras, as frases e os textos têm áudio gravado, com opção de ouvir mais devagar; nada toca sozinho;',
-          'nenhum exercício tem tempo limite; nos jogos, o cronômetro é opcional;',
-          'a plataforma funciona no celular e no computador, e continua utilizável com o zoom do navegador em até 400%.'
+          tx.audio1,
+          tx.audio2,
+          tx.audio3
         ]} />
         <p>
-          <strong>Escrever à mão é opcional.</strong> A etapa em que você traça a letra
-          com o dedo pode ser pulada sem bloquear o resto da lição.
+          {tx.escrever()}
         </p>
       </Artigo>
 
-      <Artigo n={3} titulo="Como verificamos">
+      <Artigo n={3} titulo={tx.verificamosTitulo}>
         {/* 01/10/2026 (auditoria, VIS-006): a frase dizia que a verificação
             automática conferia "o tamanho de texto em 150% e a navegação em
             telas de celular". Ela roda contra as páginas públicas e as
             telas do curso sem o conteúdo pago, então não via o que quebrava
             lá dentro. Agora diz o que ela faz. */}
         <p>
-          A cada publicação do site, uma verificação automática abre as páginas num
-          navegador de verdade e confere o menu de acessibilidade e o contraste. Outra,
-          que entra com uma conta de aluno, confere em celulares de 360 e 390 pixels que
-          as telas do curso cabem na tela também com o texto em 150% (rodada antes de
-          cada mudança grande, ainda não a cada publicação). Nenhuma das duas substitui o
-          teste feito à mão. Em 28/09/2026
-          fizemos uma revisão manual completa: navegação por teclado, foco, nomes dos
-          botões, contraste medido, textos em hebraico e telas de 320 pixels de
-          largura. As correções dessa revisão já estão no ar. Em 29/09/2026 testamos
-          também em celulares de verdade, um iPhone e um Android.
+          {tx.verificamos}
         </p>
       </Artigo>
 
-      <Artigo n={4} titulo="O que ainda não está bom">
+      <Artigo n={4} titulo={tx.faltaTitulo}>
         <Lista itens={[
-          'os exercícios de escuta dependem de ouvir, e ainda não têm uma alternativa para pessoas surdas; o restante do curso não depende de áudio;',
-          '"Fale e seja corrigido" depende do reconhecimento de voz do navegador, que não existe em todos (o Firefox, por exemplo, não tem); é um recurso opcional, e "Gravar a minha" funciona em todos;',
-          'o jogo "Caça à letra" treina o reconhecimento visual da forma das letras; com leitor de tela, ele anuncia o nome de cada letra, o que torna o jogo possível, mas muda o que ele treina;',
-          'o foco depois de responder foi corrigido nos exercícios e nos jogos que conhecemos (em 01/10/2026); se você encontrar uma tela em que ele volta para o início da página, avise pelo canal abaixo;',
-          'com leitor de tela real, testamos o VoiceOver no iPhone, pelo Safari (em 01/10/2026): entrar, abrir uma lição, ouvir o áudio, responder e seguir funcionaram; no Chrome do iPhone o VoiceOver não funcionou bem, e recomendamos o Safari; ainda não testamos com NVDA (computador) nem TalkBack (Android).'
+          tx.falta1,
+          tx.falta2,
+          tx.falta3,
+          tx.falta4,
+          tx.falta5
         ]} />
       </Artigo>
 
-      <Artigo n={5} titulo="Encontrou uma barreira? Avise">
+      <Artigo n={5} titulo={tx.aviseTitulo}>
         <p>
-          Escreva para{' '}
-          <a href={`mailto:${contato.emailSuporte}?subject=${encodeURIComponent('Acessibilidade')}`}
-             className="font-semibold text-[var(--accent)] hover:underline break-all">
-            {contato.emailSuporte}
-          </a>{' '}
-          com o assunto <em>Acessibilidade</em>. Conte em que página você estava, o
-          que tentou fazer e, se puder, qual aparelho, navegador e tecnologia assistiva
-          usa. Respondemos {prazoResposta()}, e, se a
-          barreira impedir você de estudar, buscamos uma forma de você continuar
-          enquanto a correção não sai.
+          {tx.avise(
+            <a href={`mailto:${contato.emailSuporte}?subject=${encodeURIComponent(tx.assunto)}`}
+               className="font-semibold text-[var(--accent)] hover:underline break-all">
+              {contato.emailSuporte}
+            </a>,
+            tx.assunto,
+            prazoResposta()
+          )}
         </p>
       </Artigo>
     </LegalPage>

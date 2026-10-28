@@ -9,13 +9,12 @@ import {
   confirmaSozinho, confirmacaoDaDesistencia, DUVIDAS_DE_CONTEUDO, empresa, prazoResposta,
   temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/venda-suporte';
 
 export const metadata: Metadata = meta({
   rota: '/suporte',
-  title: 'Suporte - Hebraico Fluente',
-  description:
-    'Como falar com quem faz o curso: e-mail de atendimento, horário, prazo de ' +
-    'resposta, e os atalhos para os problemas mais comuns.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 /* O canal de atendimento.
@@ -38,47 +37,45 @@ export default function Page() {
 
   const ATALHOS: { titulo: string; corpo: React.ReactNode; acao: React.ReactNode }[] = [
     {
-      titulo: 'Paguei e o acesso não liberou',
+      titulo: tx.pagueiTitulo,
       /* No PIX direto a liberação é À MÃO, no prazo do atendimento: "em
          alguns minutos" aqui desmentia o checkout (auditoria de 01/10/2026,
          LEGAL-103). Com a Mercado Pago, o texto segue as formas ativas. */
       corpo: !confirmaSozinho()
-        ? <>Depois do PIX, conferimos o pagamento e liberamos o acesso à mão,{' '}
-           {prazoResposta()}. Passou disso, escreva do e-mail que você usou na
-           compra: resolvemos sem custo.</>
-        : <>{[
-             temPix() ? 'No PIX o acesso costuma sair em minutos.' : '',
-             temCartao() ? 'No cartão, assim que a operadora aprova.' : ''
-           ].filter(Boolean).join(' ')} Passou disso, é falha nossa e resolvemos sem
-           custo - escreva do e-mail que você usou na compra.</>,
-      acao: <a href={mail('Paguei e o acesso não liberou')}
+        ? <>{tx.pagueiAMao(prazoResposta())}</>
+        : <>{tx.pagueiAutomatico([
+             temPix() ? tx.pagueiPix : '',
+             temCartao() ? tx.pagueiCartao : ''
+           ].filter(Boolean).join(' '))}</>,
+      acao: <a href={mail(tx.pagueiAssunto)}
                className="font-ui font-semibold text-[var(--accent)] hover:underline">
-               Avisar sobre acesso não liberado →</a>
+               {tx.pagueiAcao}</a>
     },
     {
-      titulo: 'Quero meu dinheiro de volta',
-      corpo: <>Você tem {politicas.arrependimentoDias} dias para desistir, sem precisar
-             explicar por quê e sem taxa. O caminho mais rápido é em{' '}
-             <Link href="/perfil" className="text-[var(--accent)] hover:underline">Sua conta</Link>,
-             na compra: <strong>Desistir da compra</strong>. {confirmacaoDaDesistencia()} A{' '}
+      titulo: tx.reembolsoTitulo,
+      corpo: tx.reembolsoCorpo(
+             politicas.arrependimentoDias,
+             <Link href="/perfil" className="text-[var(--accent)] hover:underline">{tx.suaConta}</Link>,
+             confirmacaoDaDesistencia(),
              <Link href="/reembolso" className="text-[var(--accent)] hover:underline">
-               política completa
-             </Link>{' '}
-             diz em quanto tempo o valor retorna.</>,
-      acao: <a href={mail('Pedido de reembolso')}
+               {tx.politicaCompleta}
+             </Link>
+           ),
+      acao: <a href={mail(tx.reembolsoAssunto)}
                className="font-ui font-semibold text-[var(--accent)] hover:underline">
-               Pedir reembolso →</a>
+               {tx.reembolsoAcao}</a>
     },
     {
-      titulo: 'Quero acessar, corrigir ou apagar meus dados',
-      corpo: <>É um direito seu, e respondemos em até {privacidade.prazoLgpdDias} dias.
-             O que cada pedido significa está na{' '}
+      titulo: tx.dadosTitulo,
+      corpo: tx.dadosCorpo(
+             privacidade.prazoLgpdDias,
              <Link href="/privacidade" className="text-[var(--accent)] hover:underline">
-               Política de Privacidade
-             </Link>.</>,
-      acao: <a href={`mailto:${contato.emailPrivacidade}?subject=${encodeURIComponent('Pedido LGPD - titular de dados')}`}
+               {tx.politicaPrivacidade}
+             </Link>
+           ),
+      acao: <a href={`mailto:${contato.emailPrivacidade}?subject=${encodeURIComponent(tx.dadosAssunto)}`}
                className="font-ui font-semibold text-[var(--accent)] hover:underline break-all">
-               Fazer um pedido sobre meus dados →</a>
+               {tx.dadosAcao}</a>
     }
   ];
 
@@ -86,21 +83,20 @@ export default function Page() {
     <Section>
       <div className="mx-auto w-full max-w-[760px] grid gap-6">
         <header className="grid gap-4">
-          <Rubrica>Atendimento</Rubrica>
+          <Rubrica>{tx.rubrica}</Rubrica>
           <h1 className="font-display font-semibold text-[clamp(32px,4vw,46px)] leading-[1.05]
                          tracking-[-0.034em] text-ink m-0">
-            Fale com a gente
+            {tx.titulo}
           </h1>
           <p className="font-ui text-[17px] leading-[1.6] text-ink-muted max-w-[54ch] m-0">
-            Um e-mail, respondido por quem faz o curso. {atendimento.horarioPt}.
-            Respondemos {prazoResposta()}.
+            {tx.lead(atendimento.horarioPt, prazoResposta())}
           </p>
         </header>
 
         {/* O canal, como uma ficha: fio em cima e embaixo, o e-mail grande. */}
         <div className="grid gap-2 justify-items-start py-6 border-y border-line">
           <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0">
-            E-mail de atendimento
+            {tx.emailAtendimento}
           </p>
           <a href={`mailto:${contato.emailSuporte}`}
              className="font-display text-[22px] sm:text-[28px] font-semibold tracking-[-0.02em] text-ink
@@ -108,11 +104,11 @@ export default function Page() {
             {contato.emailSuporte}
           </a>
           {contato.telefone && (
-            <p className="font-ui text-[15px] text-ink-body">Telefone: {contato.telefone}</p>
+            <p className="font-ui text-[15px] text-ink-body">{tx.telefone(contato.telefone)}</p>
           )}
           {contato.whatsapp && (
             <p className="font-ui text-[15px] text-ink-body">
-              WhatsApp:{' '}
+              {tx.whatsapp}{' '}
               {whatsappUrl()
                 ? <a href={whatsappUrl()!} target="_blank" rel="noopener noreferrer"
                      className="font-semibold text-[var(--accent)] hover:underline">
@@ -125,7 +121,7 @@ export default function Page() {
 
         <section className="grid gap-4">
           <h2 className="font-display text-[23px] font-semibold tracking-[-0.02em] text-ink m-0">
-            Antes de escrever, veja se é um destes
+            {tx.antesTitulo}
           </h2>
           <div className="border-t border-line">
             {ATALHOS.map(a => (
@@ -140,15 +136,15 @@ export default function Page() {
 
         <div className="grid gap-2 pl-6 border-l-2 border-[var(--teal)]">
           <h2 className="font-display text-[21px] font-semibold tracking-[-0.02em] text-ink m-0">
-            Dúvida sobre o curso em si
+            {tx.cursoTitulo}
           </h2>
           <p className="font-ui text-[16px] leading-[1.6] text-ink-body m-0">
-            As perguntas que aparecem antes da compra - preço, prazo, celular, áudio,
-            certificado - estão respondidas nas{' '}
-            <Link href="/faq" className="text-[var(--accent)] hover:underline">
-              dúvidas frequentes
-            </Link>. O que não estiver lá, escreva: a lista cresce com o que vocês
-            perguntam. {DUVIDAS_DE_CONTEUDO}
+            {tx.cursoTexto(
+              <Link href="/faq" className="text-[var(--accent)] hover:underline">
+                {tx.duvidasFrequentes}
+              </Link>,
+              DUVIDAS_DE_CONTEUDO
+            )}
           </p>
         </div>
 
@@ -156,8 +152,8 @@ export default function Page() {
 
         <FaixaCta
           onde="suporte"
-          titulo="Ainda não é aluno?"
-          linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
+          titulo={tx.ctaTitulo}
+          linha={tx.ctaLinha}
         />
       </div>
     </Section>
