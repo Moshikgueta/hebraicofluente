@@ -32,7 +32,7 @@ o que foi visto, o que mudou e o que vem depois.
 | 4 | Exercícios | Resposta certa ou errada só mudava a cor; nenhum sinal de movimento. A barra de progresso animava `width`. | Feito |
 | 5 | Botões | Sem resposta ao toque no celular (só o "levantar" do mouse). | Feito: afunda ao toque |
 | 6 | Lição | A letra nova aparece de uma vez, sem marcar o momento. | Feito: revelação da direita para a esquerda |
-| 7 | Lição | A etapa 1 é longa no celular. Medida de novo na rodada 2, com os quadros extras já recolhidos: 4.816 px no Guímel (os 9.400 da primeira medida contavam a página inteira). | Rodada 2: a tabela de comparação (cerca de 550 px) fica a um toque; Guímel 4.263 px. A sequência em passos fica para depois, com o ok do dono |
+| 7 | Lição | A etapa 1 é longa no celular. Medida de novo na rodada 2, com os quadros extras já recolhidos: 4.816 px no Guímel (os 9.400 da primeira medida contavam a página inteira). | Rodada 2: a tabela de comparação fica a um toque (Guímel 4.263 px). Feito com o ok do dono (28/10): a etapa vira cinco passos, cada tela entre 1.400 e 1.900 px contando cabeçalho e rodapé |
 | 8 | Laboratório | Os três cartões de modo empurram a primeira palavra para baixo da dobra no celular. | Feito: seletor de uma linha; a palavra aparece na primeira tela |
 | 9 | Navegação | Barra de baixo com 7 itens e rótulos de 11 a 12 px; "Aula 0" fica nela depois de concluída. | Parte feita (ok do dono): a Aula 0 sai das duas navegações depois de concluída e continua no topo do mapa. Os rótulos ficam para a rodada 2 |
 | 10 | Painel | O aviso de conquista ocupa um quarto da primeira tela, antes do próximo passo; o botão de acessibilidade cobre parte do "Ler agora". | Feito o aviso: uma linha (de ~125 para ~64 px). No relatório do exame ele cobria o título do resultado. O botão de acessibilidade só cobre em certas posições da rolagem: fica |
@@ -101,10 +101,19 @@ depoimento, onboarding) e nas públicas (capa, entrar, criar conta, esqueci a se
 - Conferido nos jogos, sem mudar: placar e contadores em números tabulares, cronômetro que conta
   pelo relógio do sistema, e "Mais uma" no fim de cada partida.
 
+## A etapa 1 em passos (28/10/2026, decisão do dono)
+
+A etapa "Conhecer" da lição deixa de ser uma página só e vira cinco passos, um por tela:
+Descobrir (a letra), Ouvir (pronúncia e leituras), Entender (o que a letra faz), Praticar (as
+sílabas) e Conferir (as perguntas rápidas; letra sem perguntas tem quatro passos). "Voltar" e
+"Próximo" sempre andam; nenhum passo cobra nada. O passo novo começa do alto, com o foco no
+nome dele, e entra com 6 px e opacidade em 220 ms (zerado pelo movimento reduzido). Pontos ao
+lado de "Passo N de 5", e não uma barra, para não parecer uma segunda fileira de abas.
+Conferido: as três lições percorridas até "Continuar para as palavras" sem erro de console;
+`varrer-curso`, `toque` e `portao` limpos.
+
 ## O que vem depois
 
-- **Precisa do dono:** a etapa 1 da lição em passos (descobrir, ouvir, observar, entender,
-  interagir), uma tela por vez em vez de uma página. Muda o jeito de toda lição.
 - **Ilustrações com propósito:** ficam para quando houver o que ilustrar com palavra já aprovada.
 - **Precisa do dono:** qualquer ilustração com hebraico, que só usa palavras já aprovadas do curso.
 
