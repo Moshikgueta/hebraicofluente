@@ -12,7 +12,7 @@ import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { nomeSeguro } from '../../worker/src/lib/nome.js';
 // @ts-expect-error - idem
-import { mensagemDeCompra, mensagemDeConvitePendente } from '../../worker/src/lib/mail.js';
+import { mensagemDeCompra, mensagemDeConvitePendente, mensagemDeEstorno, mensagemDeVencimento } from '../../worker/src/lib/mail.js';
 
 const SITE = 'https://hebraicofluente.com.br';
 const GOLPE = 'Sua conta foi bloqueada. Regularize em https://pagamento-hebraico.example/pix agora';
@@ -146,5 +146,21 @@ describe('os e-mails', () => {
     const aviso = mensagemDeConvitePendente({ email: 'x@exemplo.org', nome: GOLPE, cursos: ['alfabetizacao'], marca: 'Hebraico Fluente' });
     expect(aviso.text).not.toContain('pagamento-hebraico');
     expect(aviso.text).not.toContain('Nome no cadastro');
+  });
+
+  it('o estorno e o aviso de vencimento também (28/10/2026: montavam a saudação com o nome cru)', () => {
+    const estorno = (nome: string) => mensagemDeEstorno({
+      nome, curso: 'Alfabetização', valor: 'R$ 1,00', pedido: 'p1', cartao: false, marca: 'Hebraico Fluente', suporte: ''
+    });
+    const vencimento = (nome: string) => mensagemDeVencimento({
+      nome, curso: 'Alfabetização', quando: '01/01/2027', dias: 7, marco: 'd7', meses: 12,
+      renovar: `${SITE}/checkout/alfabetizacao/`, marca: 'Hebraico Fluente', suporte: ''
+    });
+    for (const m of [estorno(GOLPE), vencimento(GOLPE)]) {
+      expect(m.text.startsWith('Oi.\n')).toBe(true);
+      expect(m.text + m.html).not.toContain('pagamento-hebraico');
+    }
+    expect(estorno('Ana').text.startsWith('Oi, Ana.\n')).toBe(true);
+    expect(vencimento('Ana').text.startsWith('Oi, Ana.\n')).toBe(true);
   });
 });
