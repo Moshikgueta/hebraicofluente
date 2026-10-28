@@ -1,0 +1,118 @@
+{
+  "cards/de-onde-vem/titlePt": {
+    "pt": "De onde vem este alfabeto?",
+    "en": null
+  },
+  "cards/de-onde-vem/leadPt": {
+    "pt": "As 22 letras que você está aprendendo têm cerca de três mil anos - e não nasceram em Israel.",
+    "en": null
+  },
+  "cards/de-onde-vem/sources": {
+    "pt": "Consenso acadêmico sobre a origem fenícia dos alfabetos grego e aramaico/hebraico.",
+    "en": null
+  },
+  "cards/duas-escritas/titlePt": {
+    "pt": "O hebraico já teve outro desenho",
+    "en": null
+  },
+  "cards/duas-escritas/leadPt": {
+    "pt": "As letras do Primeiro Templo não são as que você está aprendendo.",
+    "en": null
+  },
+  "cards/duas-escritas/sources": {
+    "pt": "Consenso acadêmico: adoção da escrita aramaica quadrada no período do Segundo Templo.",
+    "en": null
+  },
+  "cards/de-onde-vem-o-nikud/titlePt": {
+    "pt": "De onde vieram os pontinhos?",
+    "en": null
+  },
+  "cards/de-onde-vem-o-nikud/leadPt": {
+    "pt": "O nikud é mais de mil anos mais novo do que as letras.",
+    "en": null
+  },
+  "cards/de-onde-vem-o-nikud/sources": {
+    "pt": "Consenso acadêmico sobre a vocalização massorética tiberiense (c. séc. VII-X).",
+    "en": null
+  },
+  "cards/por-que-finais/titlePt": {
+    "pt": "Por que cinco letras mudam no fim?",
+    "en": null
+  },
+  "cards/por-que-finais/leadPt": {
+    "pt": "As formas finais não foram inventadas: em várias delas, a forma do fim da palavra preserva características de formas mais antigas.",
+    "en": null
+  },
+  "cards/por-que-finais/sources": {
+    "pt": "Explicação paleográfica corrente para as formas finais.",
+    "en": null
+  },
+  "cards/ben-yehuda/titlePt": {
+    "pt": "A língua que voltou a ser falada",
+    "en": null
+  },
+  "cards/ben-yehuda/leadPt": {
+    "pt": "Poucas línguas no mundo passaram por uma transformação comparável à do hebraico, nessa escala.",
+    "en": null
+  },
+  "cards/ben-yehuda/sources": {
+    "pt": "Datas de Ben-Yehuda e da mudança para Jerusalém: consenso biográfico. A ênfase no caráter coletivo do renascimento é deliberada.",
+    "en": null
+  },
+  "cards/sem-maiusculas/titlePt": {
+    "pt": "Coisas que o hebraico não tem",
+    "en": null
+  },
+  "cards/sem-maiusculas/leadPt": {
+    "pt": "Algumas ausências facilitam a sua vida.",
+    "en": null
+  },
+  "cards/sem-maiusculas/sources": {
+    "pt": "Fatos elementares da ortografia hebraica.",
+    "en": null
+  },
+  "cards/numeros-com-letras/titlePt": {
+    "pt": "As letras também são números",
+    "en": null
+  },
+  "cards/numeros-com-letras/sources": {
+    "pt": "Valor numérico das letras hebraicas (a soma desses valores é a base da gematria). י״ד = 10 + 4.",
+    "en": null
+  },
+  "cards/shekel/titlePt": {
+    "pt": "O símbolo do dinheiro israelense",
+    "en": null
+  },
+  "cards/shekel/leadPt": {
+    "pt": "₪ não é um desenho aleatório: são duas letras que você já sabe ler.",
+    "en": null
+  },
+  "cards/shekel/sources": {
+    "pt": "₪ como ligadura de ש+ח (שקל חדש); novo shekel em circulação a partir de 1985.",
+    "en": null
+  },
+  "cards/na-rua/titlePt": {
+    "pt": "O que você vai ver numa rua em Israel?",
+    "en": null
+  },
+  "cards/na-rua/leadPt": {
+    "pt": "Placas de rua costumam vir em três alfabetos.",
+    "en": null
+  },
+  "cards/na-rua/sources": {
+    "pt": "Prática de sinalização trilíngue em Israel; ausência de nikud em texto corrente.",
+    "en": null
+  },
+  "cards/mao-diferente/titlePt": {
+    "pt": "Ninguém escreve como está impresso",
+    "en": null
+  },
+  "cards/mao-diferente/leadPt": {
+    "pt": "A letra de mão hebraica é outro desenho - e é a que você aprende a escrever aqui.",
+    "en": null
+  },
+  "cards/mao-diferente/sources": {
+    "pt": "Prática corrente: cursiva hebraica manuscrita versus tipografia quadrada.",
+    "en": null
+  }
+}

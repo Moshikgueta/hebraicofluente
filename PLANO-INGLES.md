@@ -1,7 +1,7 @@
 # Plano: a versão em inglês do curso de alfabetização
 
-Decisões do dono (28/10/2026): domínio próprio em inglês, preço em dólar, revisão
-por nativos que o dono conhece.
+Decisões do dono (28/10/2026): domínio próprio em inglês, preço de **US$ 47**,
+revisão por nativos que o dono conhece, pagamento pelo **Paddle**.
 
 ## A arquitetura
 
@@ -33,9 +33,25 @@ Um repositório só, um banco só, dois sites.
 3. **Leitura das instruções por voz:** voz en-US do aparelho.
 4. **Legal:** Termos, Privacidade e Reembolso escritos para o público de fora
    (GDPR, leis dos EUA), com o advogado. Não são tradução dos brasileiros.
-5. **Pagamento em dólar** por um "merchant of record" (Paddle ou Lemon
-   Squeezy), que recolhe o imposto de cada país. O acesso continua sendo
+5. **Pagamento em dólar pelo Paddle**, que vende como "merchant of record"
+   e recolhe o imposto de cada país. O acesso continua sendo
    liberado pelo mesmo caminho (`applyPayment`), com um webhook novo.
+
+## Onde estamos
+
+**Etapa 1, primeira parte (28/10/2026):**
+- `tools/i18n.mjs` separou os 1.925 textos do curso em `data/en/` (português
+  ao lado, inglês em branco) e o exportador já monta o curso em inglês com
+  eles; `node tools/i18n.mjs planilha` gera o CSV para os revisores.
+- Dicionário da interface em `app/src/i18n/` (`t('chave')`), em uso no
+  `<html lang>`, no título e na descrição do site e na página de erro.
+- `NEXT_PUBLIC_LOCALE=en npm run build` gera `app/out-en`; `wrangler.en.toml`
+  é o segundo Worker, no mesmo banco.
+
+**Falta na etapa 1:** tirar do código os textos fixos das telas (são ~400
+arquivos, tela por tela), o Worker escrever e-mails e páginas de erro em
+inglês quando `LOCALE=en`, e o passo de publicação do site em inglês (espera
+o domínio).
 
 ## As etapas
 

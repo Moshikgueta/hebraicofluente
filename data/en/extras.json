@@ -1,0 +1,902 @@
+{
+  "dagesh/titlePt": {
+    "pt": "Sem o ponto",
+    "en": null
+  },
+  "dagesh/rulePt": {
+    "pt": "O ponto no meio, o daguesh, escolhe qual dos dois sons a letra tem. Em geral ele aparece no começo da palavra e depois de uma consoante que fecha a sílaba, como em {{מִשְׁפָּחָה}}; some depois de vogal e quase sempre no fim. Depois de uma letra com shva no começo da palavra, ele também some: {{בְּבַקָשָׁה}} é \"bevakashá\". Há exceções: palavras como {{אַבָּא}} e muitas palavras de fora ({{אוֹטוֹבּוּס}}) têm o ponto mesmo entre vogais, e nelas o som é sempre o duro. E, fora dos livros didáticos e dos textos sagrados, ele simplesmente não é impresso: a palavra vem sem pontos e sem nikud, e é você quem decide.",
+    "en": null
+  },
+  "dagesh/warningPt": {
+    "pt": "Ler {{סֵפֶר}} como \"séper\" em vez de \"séfer\" não é sotaque: é outra palavra, ou palavra nenhuma. As três letras deste módulo aparecem em quase toda frase do hebraico, e na rua elas vêm sem o ponto.",
+    "en": null
+  },
+  "dagesh/letters/bet/namePt": {
+    "pt": "Bet / Vet",
+    "en": null
+  },
+  "dagesh/letters/bet/hardWords/#0/pt": {
+    "pt": "casa",
+    "en": null
+  },
+  "dagesh/letters/bet/hardWords/#1/pt": {
+    "pt": "pai",
+    "en": null
+  },
+  "dagesh/letters/bet/hardWords/#2/pt": {
+    "pt": "manhã",
+    "en": null
+  },
+  "dagesh/letters/bet/softWords/#0/pt": {
+    "pt": "bom",
+    "en": null
+  },
+  "dagesh/letters/bet/softWords/#1/pt": {
+    "pt": "coração",
+    "en": null
+  },
+  "dagesh/letters/bet/notePt": {
+    "pt": "O som suave é o V do português, idêntico ao de {{ו}}. Duas letras, um som só - e é por isso que o hebraico se escreve com dicionário na cabeça.",
+    "en": null
+  },
+  "dagesh/letters/kaf/namePt": {
+    "pt": "Kaf / Chaf",
+    "en": null
+  },
+  "dagesh/letters/kaf/softPt": {
+    "pt": "ch",
+    "en": null
+  },
+  "dagesh/letters/kaf/hardWords/#0/pt": {
+    "pt": "copo",
+    "en": null
+  },
+  "dagesh/letters/kaf/hardWords/#1/pt": {
+    "pt": "cachorro",
+    "en": null
+  },
+  "dagesh/letters/kaf/hardWords/#2/pt": {
+    "pt": "bola",
+    "en": null
+  },
+  "dagesh/letters/kaf/softWords/#0/pt": {
+    "pt": "comida",
+    "en": null
+  },
+  "dagesh/letters/kaf/softWords/#1/pt": {
+    "pt": "rei",
+    "en": null
+  },
+  "dagesh/letters/kaf/softWords/#2/pt": {
+    "pt": "caminho",
+    "en": null
+  },
+  "dagesh/letters/kaf/notePt": {
+    "pt": "O som suave é o mesmo raspado de {{ח}}, feito no fundo da garganta. Na forma final {{ך}}, no hebraico de hoje, ele é sempre suave (só em alguns textos bíblicos aparece {{ךָּ}}, com ponto, e aí soa K).",
+    "en": null
+  },
+  "dagesh/letters/pe/namePt": {
+    "pt": "Pe / Fe",
+    "en": null
+  },
+  "dagesh/letters/pe/hardWords/#0/pt": {
+    "pt": "família",
+    "en": null
+  },
+  "dagesh/letters/pe/softWords/#0/pt": {
+    "pt": "livro",
+    "en": null
+  },
+  "dagesh/letters/pe/softWords/#1/pt": {
+    "pt": "bonito",
+    "en": null
+  },
+  "dagesh/letters/pe/softWords/#2/pt": {
+    "pt": "fim",
+    "en": null
+  },
+  "dagesh/letters/pe/softWords/#3/pt": {
+    "pt": "dinheiro",
+    "en": null
+  },
+  "dagesh/letters/pe/notePt": {
+    "pt": "O par mais fácil de ouvir dos três: P e F são tão distintos em hebraico quanto em português.",
+    "en": null
+  },
+  "finals/#0/namePt": {
+    "pt": "Mem sofit",
+    "en": null
+  },
+  "finals/#0/pt": {
+    "pt": "dia",
+    "en": null
+  },
+  "finals/#1/namePt": {
+    "pt": "Nun sofit",
+    "en": null
+  },
+  "finals/#1/pt": {
+    "pt": "de",
+    "en": null
+  },
+  "finals/#2/namePt": {
+    "pt": "Kaf sofit",
+    "en": null
+  },
+  "finals/#2/pt": {
+    "pt": "rei",
+    "en": null
+  },
+  "finals/#3/namePt": {
+    "pt": "Pe sofit",
+    "en": null
+  },
+  "finals/#3/pt": {
+    "pt": "fim",
+    "en": null
+  },
+  "finals/#4/namePt": {
+    "pt": "Tsádi sofit",
+    "en": null
+  },
+  "finals/#4/pt": {
+    "pt": "terra / país",
+    "en": null
+  },
+  "unpointed/introPt": {
+    "pt": "O teste real deste módulo. As palavras abaixo estão como aparecem num jornal israelense, numa placa e num rolo de Torá: sem nikud, sem daguesh, sem nenhuma ajuda. Você já conhece todas elas - cada uma foi ensinada em alguma lição deste curso, com os pontos. Leia primeiro; confira depois.",
+    "en": null
+  },
+  "unpointed/groups/curtas/titlePt": {
+    "pt": "Curtas, e todas conhecidas",
+    "en": null
+  },
+  "unpointed/groups/curtas/notePt": {
+    "pt": "Comece por estas. São palavras que você já leu apontadas e que aparecem o tempo todo - o olho reconhece a forma antes de a cabeça reconstruir a vogal.",
+    "en": null
+  },
+  "unpointed/groups/sem-vogal/titlePt": {
+    "pt": "Estas não trazem nenhuma vogal escrita",
+    "en": null
+  },
+  "unpointed/groups/sem-vogal/notePt": {
+    "pt": "Três consoantes e mais nada. Quem lê hebraico não adivinha a vogal: reconhece a palavra inteira, e a vogal vem junto. É exatamente isso que você está treinando aqui.",
+    "en": null
+  },
+  "unpointed/groups/rua/titlePt": {
+    "pt": "As que resolvem uma rua em Israel",
+    "en": null
+  },
+  "unpointed/groups/rua/notePt": {
+    "pt": "Mais longas, e nenhuma delas vai aparecer com pontinhos onde você vai encontrá-las: numa placa, num ônibus, numa conversa escrita.",
+    "en": null
+  },
+  "unpointed/ambiguous/notePt": {
+    "pt": "Sem os pontos, estas duas palavras têm o mesmo desenho. Não é defeito da escrita: é o motivo pelo qual ninguém lê hebraico palavra solta. Quem decide qual das duas é a frase em volta - e é assim desde sempre, inclusive nos rolos.",
+    "en": null
+  },
+  "gerech/titlePt": {
+    "pt": "Os sons modernos",
+    "en": null
+  },
+  "gerech/signNamePt": {
+    "pt": "guéresh",
+    "en": null
+  },
+  "gerech/introPt": {
+    "pt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶרֶשׁ}}, ao lado de três letras que já existiam.",
+    "en": null
+  },
+  "gerech/signNotePt": {
+    "pt": "O {{גֶרֶשׁ}} é o traço que se põe à esquerda da letra, no alto. Nestas três letras, ele não é acento nem pontuação: é parte da escrita da palavra, e sem ele a palavra tem outro som.",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/basePt": {
+    "pt": "ts",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/pt": {
+    "pt": "tch",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/likePt": {
+    "pt": "como o TCH de \"tchau\"",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/words/#0/pt": {
+    "pt": "Chile",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/words/#1/pt": {
+    "pt": "Tchéquia",
+    "en": null
+  },
+  "gerech/letters/tsadi-gerech/words/#2/pt": {
+    "pt": "voucher",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/pt": {
+    "pt": "dj",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/likePt": {
+    "pt": "como o DJ de \"Djavan\" ou do inglês \"jeans\"",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/words/#0/pt": {
+    "pt": "girafa",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/words/#1/pt": {
+    "pt": "pijama",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/words/#2/pt": {
+    "pt": "gel",
+    "en": null
+  },
+  "gerech/letters/gimel-gerech/words/#3/pt": {
+    "pt": "júnior",
+    "en": null
+  },
+  "gerech/letters/zayin-gerech/likePt": {
+    "pt": "como o J do francês \"jour\" - o nosso J de \"jarro\"",
+    "en": null
+  },
+  "gerech/letters/zayin-gerech/words/#0/pt": {
+    "pt": "jargão",
+    "en": null
+  },
+  "gerech/letters/zayin-gerech/words/#1/pt": {
+    "pt": "massagem",
+    "en": null
+  },
+  "sons/licoes/sin/namePt": {
+    "pt": "Sin",
+    "en": null
+  },
+  "sons/licoes/sin/comoPt": {
+    "pt": "o S de \"sapo\"",
+    "en": null
+  },
+  "sons/licoes/sin/parNomePt": {
+    "pt": "Shin",
+    "en": null
+  },
+  "sons/licoes/sin/rotuloPt": {
+    "pt": "com o ponto à esquerda",
+    "en": null
+  },
+  "sons/licoes/sin/parRotuloPt": {
+    "pt": "com o ponto à direita",
+    "en": null
+  },
+  "sons/licoes/sin/introPt": {
+    "pt": "Na lição do {{שׁ}} você viu que a mesma letra tem dois sons, e que quem decide é o lado do ponto. Esta lição é só do outro lado: {{שׂ}}, com o ponto no alto à esquerda, o Sin, que soa S. É ele que aparece em {{יִשְׂרָאֵל}} e em {{שָׂרָה}}.",
+    "en": null
+  },
+  "sons/licoes/sin/articulacao/comoPt": {
+    "pt": "A ponta da língua fica atrás dos dentes de cima, sem encostar, e o ar sibila, sem voz: o S de \"sapo\". No {{שׁ}} a língua recua para o céu da boca e o ar chia; no {{שׂ}} ela fica na frente.",
+    "en": null
+  },
+  "sons/licoes/sin/regraPt": {
+    "pt": "Ponto no alto à direita, {{שׁ}}: SH. Ponto no alto à esquerda, {{שׂ}}: S. Aqui não é a posição na palavra que decide, como no daguesh: é só o lado do ponto. E num texto sem nikud não há ponto nenhum, e é a palavra conhecida que diz qual é.",
+    "en": null
+  },
+  "sons/licoes/sin/irmaoPt": {
+    "pt": "O Sin soa exatamente como o {{ס}}, o Sámech, que você vai conhecer no módulo 4. Duas letras, um som só: quem decide qual se escreve é a palavra.",
+    "en": null
+  },
+  "sons/licoes/sin/curiosidade/tituloPt": {
+    "pt": "Shin e Sin, duas letras em uma",
+    "en": null
+  },
+  "sons/licoes/sin/curiosidade/textoPt": {
+    "pt": "Em hebraico, um pontinho pode mudar todo o som de uma letra. A letra {{ש}} tem duas pronúncias: {{שׁ}}, o Shin, com o ponto à direita, soa CH, como em \"chá\"; {{שׂ}}, o Sin, com o ponto à esquerda, soa S, como em \"sapo\".\n\nE o mais curioso: sem os sinais de pronúncia, as duas se escrevem exatamente igual, {{ש}}.\n\nDica para memorizar: o ponto muda de lado e o som muda junto. Ponto à esquerda, S de Sin.",
+    "en": null
+  },
+  "sons/licoes/sin/erro/wrong": {
+    "pt": "Ler toda {{ש}} como SH, sem olhar o lado do ponto: {{יִשְׂרָאֵל}} vira \"Yishraél\".",
+    "en": null
+  },
+  "sons/licoes/sin/erro/right": {
+    "pt": "Olhar o ponto antes de dizer: à esquerda é S. \"Yisraél\", \"Sará\", \"smol\".",
+    "en": null
+  },
+  "sons/licoes/sin/erro/why": {
+    "pt": "O {{שׁ}} aparece muito mais, e o olho se acostuma a ele. O ponto à esquerda é o único aviso de que o som é outro.",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#0/pt": {
+    "pt": "Israel",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#1/pt": {
+    "pt": "Sara",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#2/pt": {
+    "pt": "esquerda",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#3/pt": {
+    "pt": "campo",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#4/pt": {
+    "pt": "presidente",
+    "en": null
+  },
+  "sons/licoes/sin/palavras/#5/pt": {
+    "pt": "ministro",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#0/q": {
+    "pt": "Qual destas soa S?",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#0/porque": {
+    "pt": "O ponto no alto à esquerda faz o Sin, S. À direita, é o Shin, SH.",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#1/q": {
+    "pt": "Como se lê {{שָׂרָה}}?",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#1/porque": {
+    "pt": "O ponto está à esquerda: S. \"Sará\".",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#2/q": {
+    "pt": "O lado do ponto muda conforme a posição da letra na palavra.",
+    "en": null
+  },
+  "sons/licoes/sin/checagem/#2/porque": {
+    "pt": "Não muda: cada palavra tem o seu. No começo, no meio ou no fim, o ponto à esquerda é sempre S.",
+    "en": null
+  },
+  "sons/licoes/vet/namePt": {
+    "pt": "Vet",
+    "en": null
+  },
+  "sons/licoes/vet/comoPt": {
+    "pt": "o V de \"vaca\"",
+    "en": null
+  },
+  "sons/licoes/vet/parNomePt": {
+    "pt": "Bet",
+    "en": null
+  },
+  "sons/licoes/vet/introPt": {
+    "pt": "Na lição passada você conheceu {{בּ}}, o B. Esta lição é só da outra metade da letra: {{ב}} sem o ponto, o Vet, que soa V. É o mesmo desenho, sem o daguesh, e é ele que aparece em {{טוֹב}}, {{לֵב}} e {{חָבֵר}}.",
+    "en": null
+  },
+  "sons/licoes/vet/articulacao/comoPt": {
+    "pt": "Os dentes de cima tocam o lábio de baixo e o ar passa entre eles, com a voz ligada: o V de \"vaca\", igual ao do {{ו}}. No {{בּ}} os dois lábios se fecham; no {{ב}} eles nunca se fecham.",
+    "en": null
+  },
+  "sons/licoes/vet/regraPt": {
+    "pt": "Sem o ponto, a letra soa V. Isso acontece quase sempre no meio da palavra, depois de vogal, e no fim da palavra: {{טוֹב}}, {{לֵב}}. No começo da palavra ela quase sempre vem com o ponto e soa B.",
+    "en": null
+  },
+  "sons/licoes/vet/irmaoPt": {
+    "pt": "O Vet soa exatamente como o {{ו}}. Duas letras, um som só: quem decide qual se escreve é a palavra, e isso se aprende lendo.",
+    "en": null
+  },
+  "sons/licoes/vet/erro/wrong": {
+    "pt": "Ler toda {{ב}} como B, porque foi o primeiro som que você aprendeu: {{טוֹב}} vira \"tob\".",
+    "en": null
+  },
+  "sons/licoes/vet/erro/right": {
+    "pt": "Olhar o miolo da letra antes de dizer: com ponto é B, sem ponto é V. \"Tov\", \"lev\", \"chavér\".",
+    "en": null
+  },
+  "sons/licoes/vet/erro/why": {
+    "pt": "O ponto é pequeno e o olho do iniciante passa por cima dele. O remédio é o hábito de conferir o miolo de toda {{ב}} antes de pronunciar.",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#0/pt": {
+    "pt": "bom",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#1/pt": {
+    "pt": "coração",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#2/pt": {
+    "pt": "amigo",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#3/pt": {
+    "pt": "noite, fim de tarde",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#4/pt": {
+    "pt": "primavera",
+    "en": null
+  },
+  "sons/licoes/vet/palavras/#5/pt": {
+    "pt": "ouro",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#0/q": {
+    "pt": "Qual destas soa V?",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#0/porque": {
+    "pt": "Sem o ponto dentro, a letra é o Vet e soa V. Com o ponto, é o Bet, B.",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#1/q": {
+    "pt": "Como se lê {{טוֹב}}?",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#1/porque": {
+    "pt": "A {{ב}} do fim não tem ponto: soa V. \"Tov\", bom.",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#2/q": {
+    "pt": "O Vet {{ב}} e o {{ו}} têm o mesmo som.",
+    "en": null
+  },
+  "sons/licoes/vet/checagem/#2/porque": {
+    "pt": "Os dois soam V. É a palavra que decide qual das duas letras se escreve.",
+    "en": null
+  },
+  "sons/licoes/vet/rotuloPt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "sons/licoes/vet/parRotuloPt": {
+    "pt": "com o ponto",
+    "en": null
+  },
+  "sons/licoes/chaf/namePt": {
+    "pt": "Chaf",
+    "en": null
+  },
+  "sons/licoes/chaf/comoPt": {
+    "pt": "o raspado do {{ח}}",
+    "en": null
+  },
+  "sons/licoes/chaf/parNomePt": {
+    "pt": "Kaf",
+    "en": null
+  },
+  "sons/licoes/chaf/introPt": {
+    "pt": "Na lição passada você conheceu {{כּ}}, o K. Esta lição é da outra metade: {{כ}} sem o ponto, o Chaf, que soa raspado, como o {{ח}}. E ele tem forma final, {{ך}}, que no hebraico de hoje é sempre raspada: {{מֶלֶךְ}}, {{דֶרֶךְ}}.",
+    "en": null
+  },
+  "sons/licoes/chaf/articulacao/comoPt": {
+    "pt": "O fundo da língua chega perto da úvula e o ar passa raspando, sem voz: o mesmo som do {{ח}}. No {{כּ}} a língua fecha a passagem e solta; no {{כ}} ela nunca fecha, e o ar raspa.",
+    "en": null
+  },
+  "sons/licoes/chaf/regraPt": {
+    "pt": "Sem o ponto, a letra soa raspada. Isso acontece no meio da palavra depois de vogal, como em {{אֹכֶל}}, e, no hebraico de hoje, sempre na forma final {{ך}}. No começo da palavra ela quase sempre vem com o ponto e soa K.",
+    "en": null
+  },
+  "sons/licoes/chaf/irmaoPt": {
+    "pt": "O Chaf soa como o {{ח}}. Não é o CH de \"chave\": é o raspado da garganta, o J espanhol de \"Juan\".",
+    "en": null
+  },
+  "sons/licoes/chaf/erro/wrong": {
+    "pt": "Ler o {{כ}} sem ponto como o CH de \"chave\", ou como K: {{אֹכֶל}} vira \"óxel\" ou \"ókel\".",
+    "en": null
+  },
+  "sons/licoes/chaf/erro/right": {
+    "pt": "Raspar no fundo da boca, como no {{ח}}: \"óchel\", \"mélech\".",
+    "en": null
+  },
+  "sons/licoes/chaf/erro/why": {
+    "pt": "A transliteração \"ch\" engana o brasileiro, que lê CH como em \"chuva\". Em hebraico o \"ch\" é sempre o som raspado.",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#0/pt": {
+    "pt": "comida",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#1/pt": {
+    "pt": "rei",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#2/pt": {
+    "pt": "caminho",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#3/pt": {
+    "pt": "ir, andar",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#4/pt": {
+    "pt": "abençoado",
+    "en": null
+  },
+  "sons/licoes/chaf/palavras/#5/pt": {
+    "pt": "agora",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#0/q": {
+    "pt": "Qual destas soa raspado, como o {{ח}}?",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#0/porque": {
+    "pt": "Sem o ponto, a letra é o Chaf, raspada. Com o ponto, é o Kaf, K.",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#1/q": {
+    "pt": "A forma final {{ך}} soa como?",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#1/porque": {
+    "pt": "No hebraico de hoje, a forma final {{ך}} é sempre raspada: {{מֶלֶךְ}}, \"mélech\".",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#2/q": {
+    "pt": "O \"ch\" de \"óchel\" é o CH de \"chave\".",
+    "en": null
+  },
+  "sons/licoes/chaf/checagem/#2/porque": {
+    "pt": "Na transliteração do hebraico, \"ch\" é sempre o som raspado da garganta, o do {{ח}}.",
+    "en": null
+  },
+  "sons/licoes/chaf/rotuloPt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "sons/licoes/chaf/parRotuloPt": {
+    "pt": "com o ponto",
+    "en": null
+  },
+  "sons/licoes/fe/namePt": {
+    "pt": "Fe",
+    "en": null
+  },
+  "sons/licoes/fe/comoPt": {
+    "pt": "o F de \"faca\"",
+    "en": null
+  },
+  "sons/licoes/fe/parNomePt": {
+    "pt": "Pe",
+    "en": null
+  },
+  "sons/licoes/fe/introPt": {
+    "pt": "Na lição passada você conheceu {{פּ}}, o P. Esta lição é da outra metade: {{פ}} sem o ponto, o Fe, que soa F. E a forma final {{ף}} é sempre F: {{סוֹף}}, {{כֶּסֶף}}.",
+    "en": null
+  },
+  "sons/licoes/fe/articulacao/comoPt": {
+    "pt": "Os dentes de cima tocam o lábio de baixo e o ar passa, sem voz: o F de \"faca\". É o par sem voz do Vet {{ב}}. No {{פּ}} os dois lábios se fecham; no {{פ}} não.",
+    "en": null
+  },
+  "sons/licoes/fe/regraPt": {
+    "pt": "Sem o ponto, a letra soa F. Isso acontece no meio da palavra depois de vogal, como em {{סֵפֶר}}, e sempre na forma final {{ף}}. No começo da palavra ela quase sempre vem com o ponto e soa P.",
+    "en": null
+  },
+  "sons/licoes/fe/irmaoPt": {
+    "pt": "O Fe e o Vet são o mesmo movimento da boca: o Fe sem voz, o Vet com voz. Ponha a mão no pescoço e diga \"fff\" e \"vvv\": só o segundo vibra.",
+    "en": null
+  },
+  "sons/licoes/fe/erro/wrong": {
+    "pt": "Ler toda {{פ}} como P: {{סֵפֶר}} vira \"séper\", {{יָפֶה}} vira \"yapé\".",
+    "en": null
+  },
+  "sons/licoes/fe/erro/right": {
+    "pt": "Conferir o miolo: sem ponto é F. \"Séfer\", \"yafé\", \"sof\".",
+    "en": null
+  },
+  "sons/licoes/fe/erro/why": {
+    "pt": "Ler P no lugar de F não é sotaque: é outra palavra, ou palavra nenhuma. Na rua, sem nikud, é a posição na palavra que avisa.",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#0/pt": {
+    "pt": "livro",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#1/pt": {
+    "pt": "bonito",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#2/pt": {
+    "pt": "dinheiro",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#3/pt": {
+    "pt": "fim",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#4/pt": {
+    "pt": "telefone",
+    "en": null
+  },
+  "sons/licoes/fe/palavras/#5/pt": {
+    "pt": "língua, idioma",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#0/q": {
+    "pt": "Qual destas soa F?",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#0/porque": {
+    "pt": "Sem o ponto dentro, a letra é o Fe e soa F. Com o ponto, é o Pe, P.",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#1/q": {
+    "pt": "Como se lê {{סֵפֶר}}?",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#1/porque": {
+    "pt": "A {{פ}} do meio não tem ponto e vem depois de vogal: soa F. \"Séfer\", livro.",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#2/q": {
+    "pt": "A forma final {{ף}} às vezes soa P.",
+    "en": null
+  },
+  "sons/licoes/fe/checagem/#2/porque": {
+    "pt": "A forma final {{ף}} é sempre F: {{סוֹף}}, \"sof\".",
+    "en": null
+  },
+  "sons/licoes/fe/rotuloPt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "sons/licoes/fe/parRotuloPt": {
+    "pt": "com o ponto",
+    "en": null
+  },
+  "sons/licoes/tch/namePt": {
+    "pt": "Tch",
+    "en": null
+  },
+  "sons/licoes/tch/comoPt": {
+    "pt": "o TCH de \"tchau\"",
+    "en": null
+  },
+  "sons/licoes/tch/parNomePt": {
+    "pt": "Tsádi",
+    "en": null
+  },
+  "sons/licoes/tch/introPt": {
+    "pt": "O hebraico antigo não tinha o som de \"tchau\". O moderno precisou dele para palavras de fora, e resolveu sem letra nova: pôs um apóstrofo, o {{גֶרֶשׁ}}, ao lado do {{צ}}. Sem o sinal, {{צ}} é TS; com ele, {{צ׳}} é TCH.",
+    "en": null
+  },
+  "sons/licoes/tch/articulacao/comoPt": {
+    "pt": "A língua encosta atrás dos dentes, um pouco mais para trás que no {{צ}}, e solta num CH de \"chuva\", sem voz: T e CH colados, o TCH de \"tchau\".",
+    "en": null
+  },
+  "sons/licoes/tch/regraPt": {
+    "pt": "O traço fica à esquerda da letra, no alto: {{צ׳}}. Sem ele, a letra volta a ser {{צ}}, TS. O sinal é parte da palavra: um texto sem nikud ainda escreve o guéresh.",
+    "en": null
+  },
+  "sons/licoes/tch/irmaoPt": {
+    "pt": "Estes sons quase só aparecem em palavras que vieram de fora e em nomes próprios. É onde o brasileiro mais acerta: você já sabe como a palavra soa, e a escrita só confirma.",
+    "en": null
+  },
+  "sons/licoes/tch/erro/wrong": {
+    "pt": "Ignorar o traço e ler {{צ׳}} como {{צ}}: \"Chile\" vira \"Tsíle\".",
+    "en": null
+  },
+  "sons/licoes/tch/erro/right": {
+    "pt": "Antes de ler um {{צ}}, olhar se há um traço à esquerda. Com traço: \"tchíle\", \"tchips\".",
+    "en": null
+  },
+  "sons/licoes/tch/erro/why": {
+    "pt": "O {{גֶרֶשׁ}} é pequeno, parece pontuação, e o olho passa por cima. Mas ele muda o som da letra inteira.",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#0/pt": {
+    "pt": "batata frita",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#1/pt": {
+    "pt": "Chile",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#2/pt": {
+    "pt": "cheque",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#3/pt": {
+    "pt": "sanduíche",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#4/pt": {
+    "pt": "Tchéquia",
+    "en": null
+  },
+  "sons/licoes/tch/palavras/#5/pt": {
+    "pt": "voucher",
+    "en": null
+  },
+  "sons/licoes/tch/checagem/#0/q": {
+    "pt": "Qual destas soa TCH, como em \"tchau\"?",
+    "en": null
+  },
+  "sons/licoes/tch/checagem/#0/porque": {
+    "pt": "Com o traço, o {{גֶרֶשׁ}}, a letra soa TCH. Sem ele, {{צ}} é TS.",
+    "en": null
+  },
+  "sons/licoes/tch/checagem/#1/q": {
+    "pt": "O {{גֶרֶשׁ}} é só pontuação e pode ser ignorado.",
+    "en": null
+  },
+  "sons/licoes/tch/checagem/#1/porque": {
+    "pt": "Ele é parte da escrita da palavra e muda o som da letra.",
+    "en": null
+  },
+  "sons/licoes/tch/rotuloPt": {
+    "pt": "com o traço",
+    "en": null
+  },
+  "sons/licoes/tch/parRotuloPt": {
+    "pt": "sem o traço",
+    "en": null
+  },
+  "sons/licoes/dj/namePt": {
+    "pt": "Dj",
+    "en": null
+  },
+  "sons/licoes/dj/comoPt": {
+    "pt": "o DJ de \"Djavan\", o G de \"gelo\" dito com D na frente",
+    "en": null
+  },
+  "sons/licoes/dj/parNomePt": {
+    "pt": "Guímel",
+    "en": null
+  },
+  "sons/licoes/dj/introPt": {
+    "pt": "Mesmo truque, outra letra: o {{גֶרֶשׁ}} ao lado do {{ג}}. Sem o sinal, {{ג}} é o G duro de \"gato\"; com ele, {{ג׳}} é DJ, como em \"Djavan\" ou no inglês \"jeans\".",
+    "en": null
+  },
+  "sons/licoes/dj/articulacao/comoPt": {
+    "pt": "A língua encosta atrás dos dentes e solta num J, com a voz ligada: D e J colados, o DJ de \"Djavan\". É o {{צ׳}} com voz.",
+    "en": null
+  },
+  "sons/licoes/dj/regraPt": {
+    "pt": "O traço fica à esquerda da letra, no alto: {{ג׳}}. Sem ele, a letra volta a ser {{ג}}, G duro, mesmo antes de E e I.",
+    "en": null
+  },
+  "sons/licoes/dj/irmaoPt": {
+    "pt": "O DJ e o TCH são o mesmo movimento: o {{צ׳}} sem voz, o {{ג׳}} com voz. Diga \"tchau\" e \"Djavan\" com a mão no pescoço.",
+    "en": null
+  },
+  "sons/licoes/dj/erro/wrong": {
+    "pt": "Ler {{ג׳}} como J simples, sem o D: \"jins\" em vez de \"djins\".",
+    "en": null
+  },
+  "sons/licoes/dj/erro/right": {
+    "pt": "Começar com a língua encostada, como num D, e soltar no J: \"djins\", \"djiráfa\".",
+    "en": null
+  },
+  "sons/licoes/dj/erro/why": {
+    "pt": "Em português o G antes de E e I é J, sem D. O {{ג׳}} tem o D grudado na frente, como no inglês.",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#0/pt": {
+    "pt": "calça jeans",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#1/pt": {
+    "pt": "girafa",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#2/pt": {
+    "pt": "pijama",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#3/pt": {
+    "pt": "gel",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#4/pt": {
+    "pt": "selva",
+    "en": null
+  },
+  "sons/licoes/dj/palavras/#5/pt": {
+    "pt": "júnior",
+    "en": null
+  },
+  "sons/licoes/dj/checagem/#0/q": {
+    "pt": "Qual destas soa DJ?",
+    "en": null
+  },
+  "sons/licoes/dj/checagem/#0/porque": {
+    "pt": "Com o {{גֶרֶשׁ}}, {{ג׳}} soa DJ. Sem ele, {{ג}} é o G de \"gato\".",
+    "en": null
+  },
+  "sons/licoes/dj/checagem/#1/q": {
+    "pt": "Qual é a diferença entre {{ג׳}} e {{צ׳}}?",
+    "en": null
+  },
+  "sons/licoes/dj/checagem/#1/porque": {
+    "pt": "O movimento é o mesmo. No {{ג׳}} a garganta vibra, no {{צ׳}} não.",
+    "en": null
+  },
+  "sons/licoes/dj/rotuloPt": {
+    "pt": "com o traço",
+    "en": null
+  },
+  "sons/licoes/dj/parRotuloPt": {
+    "pt": "sem o traço",
+    "en": null
+  },
+  "sons/licoes/j/comoPt": {
+    "pt": "o J de \"jarro\"",
+    "en": null
+  },
+  "sons/licoes/j/parNomePt": {
+    "pt": "Záyin",
+    "en": null
+  },
+  "sons/licoes/j/introPt": {
+    "pt": "O terceiro som moderno é o mais brasileiro de todos: o J de \"jarro\". O hebraico o escreve com o {{גֶרֶשׁ}} ao lado do {{ז}}: sem o sinal, {{ז}} é Z; com ele, {{ז׳}} é J.",
+    "en": null
+  },
+  "sons/licoes/j/articulacao/comoPt": {
+    "pt": "A língua chega perto do céu da boca, atrás dos dentes, sem encostar, e o ar zumbe com a voz ligada: o J de \"jarro\". Sem o D na frente: é isso que o separa do {{ג׳}}.",
+    "en": null
+  },
+  "sons/licoes/j/regraPt": {
+    "pt": "O traço fica à esquerda da letra, no alto: {{ז׳}}. Sem ele, a letra volta a ser {{ז}}, Z.",
+    "en": null
+  },
+  "sons/licoes/j/irmaoPt": {
+    "pt": "{{ג׳}} e {{ז׳}} são vizinhos: DJ começa com a língua encostada, J não encosta. \"Djins\" e \"jakét\".",
+    "en": null
+  },
+  "sons/licoes/j/erro/wrong": {
+    "pt": "Trocar {{ז׳}} por {{ג׳}} e pôr um D na frente: \"djakét\".",
+    "en": null
+  },
+  "sons/licoes/j/erro/right": {
+    "pt": "J liso, sem D: \"jakét\", \"jargón\", \"massáj\".",
+    "en": null
+  },
+  "sons/licoes/j/erro/why": {
+    "pt": "Os dois sinais são parecidos e os dois sons são vizinhos. O que decide é a letra de baixo: {{ז}} com traço é J, {{ג}} com traço é DJ.",
+    "en": null
+  },
+  "sons/licoes/j/palavras/#0/pt": {
+    "pt": "jaqueta",
+    "en": null
+  },
+  "sons/licoes/j/palavras/#1/pt": {
+    "pt": "jargão",
+    "en": null
+  },
+  "sons/licoes/j/palavras/#2/pt": {
+    "pt": "massagem",
+    "en": null
+  },
+  "sons/licoes/j/palavras/#3/pt": {
+    "pt": "bege",
+    "en": null
+  },
+  "sons/licoes/j/palavras/#4/pt": {
+    "pt": "gênero (de filme, de música)",
+    "en": null
+  },
+  "sons/licoes/j/checagem/#0/q": {
+    "pt": "Qual destas soa J, como em \"jarro\"?",
+    "en": null
+  },
+  "sons/licoes/j/checagem/#0/porque": {
+    "pt": "{{ז׳}} é J liso. {{ג׳}} é DJ, com o D na frente.",
+    "en": null
+  },
+  "sons/licoes/j/checagem/#1/q": {
+    "pt": "Sem o traço, {{ז}} continua soando J.",
+    "en": null
+  },
+  "sons/licoes/j/checagem/#1/porque": {
+    "pt": "Sem o {{גֶרֶשׁ}}, {{ז}} é Z, o Z de \"zebra\".",
+    "en": null
+  },
+  "sons/licoes/j/rotuloPt": {
+    "pt": "com o traço",
+    "en": null
+  },
+  "sons/licoes/j/parRotuloPt": {
+    "pt": "sem o traço",
+    "en": null
+  }
+}

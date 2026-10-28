@@ -1,0 +1,106 @@
+{
+  "intro/title": {
+    "pt": "Os sinais de vogal",
+    "en": null
+  },
+  "intro/lead": {
+    "pt": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais - pontos e traços - que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
+    "en": null
+  },
+  "intro/correction": {
+    "pt": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas - {{א}}, {{ה}}, {{ו}} e {{י}} - também funcionam como apoio de vogal: {{ו}} e {{י}} no meio da palavra, {{ה}} e {{א}} geralmente no fim. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira.",
+    "en": null
+  },
+  "sounds/#0/ptApprox": {
+    "pt": "como o A de \"casa\"",
+    "en": null
+  },
+  "sounds/#0/signs/#0/namePt": {
+    "pt": "patach",
+    "en": null
+  },
+  "sounds/#0/signs/#1/namePt": {
+    "pt": "kamats",
+    "en": null
+  },
+  "sounds/#0/note": {
+    "pt": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora. Só em umas poucas palavras o kamats soa \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohoráyim), e a transliteração sempre avisa. O mesmo som \"a\" tem ainda o chataf patach, o patach com dois pontos ao lado ({{אֲנִי}} aní). E no fim da palavra, {{חַ}} e {{עַ}} se leem com o A antes da consoante: {{תַפּוּחַ}} tapúach.",
+    "en": null
+  },
+  "sounds/#1/ptApprox": {
+    "pt": "como o E de \"mesa\"",
+    "en": null
+  },
+  "sounds/#1/signs/#0/namePt": {
+    "pt": "segol",
+    "en": null
+  },
+  "sounds/#1/signs/#1/namePt": {
+    "pt": "tsere",
+    "en": null
+  },
+  "sounds/#1/note": {
+    "pt": "Também dois sinais para um som só. O chataf segol, o segol com dois pontos ao lado, soa igual: {{אֱלֹהִים}} Elohím. Com {{י}} depois, o tsere muitas vezes soa \"ei\": {{אֵין}} ein, {{אֵיפֹה}} éifo.",
+    "en": null
+  },
+  "sounds/#2/ptApprox": {
+    "pt": "como o I de \"milho\"",
+    "en": null
+  },
+  "sounds/#2/signs/#0/namePt": {
+    "pt": "chirik",
+    "en": null
+  },
+  "sounds/#2/note": {
+    "pt": "Muitas vezes vem acompanhado da letra {{י}} depois: {{מִי}}.",
+    "en": null
+  },
+  "sounds/#3/ptApprox": {
+    "pt": "como o O de \"motor\"",
+    "en": null
+  },
+  "sounds/#3/signs/#0/namePt": {
+    "pt": "cholam",
+    "en": null
+  },
+  "sounds/#3/signs/#1/namePt": {
+    "pt": "cholam malê",
+    "en": null
+  },
+  "sounds/#3/note": {
+    "pt": "A forma com {{ו}} é a mais comum no hebraico moderno. O chataf kamats, o kamats com dois pontos ao lado, também soa \"o\": {{צָהֳרַיִם}} tsohoráyim.",
+    "en": null
+  },
+  "sounds/#4/ptApprox": {
+    "pt": "como o U de \"muro\"",
+    "en": null
+  },
+  "sounds/#4/signs/#0/namePt": {
+    "pt": "kubuts",
+    "en": null
+  },
+  "sounds/#4/signs/#1/namePt": {
+    "pt": "shuruk",
+    "en": null
+  },
+  "sounds/#4/note": {
+    "pt": "A forma com {{ו}} é a mais comum no hebraico moderno.",
+    "en": null
+  },
+  "sounds/#5/ptApprox": {
+    "pt": "sem vogal nenhuma, ou um E normal",
+    "en": null
+  },
+  "sounds/#5/signs/#0/namePt": {
+    "pt": "shva",
+    "en": null
+  },
+  "sounds/#5/note": {
+    "pt": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso.",
+    "en": null
+  },
+  "dagesh/title": {
+    "pt": "O ponto dentro da letra",
+    "en": null
+  }
+}

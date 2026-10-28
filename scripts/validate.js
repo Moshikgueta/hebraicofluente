@@ -11,7 +11,7 @@ import {
   consonantsOf, hasNikud, hasHebrew, clean, stripNikud, FINAL_TO_BASE
 } from './lib/hebrew.js';
 import { unmarkedHebrew } from './lib/render.js';
-import { dagueshFora, FORA as FORA_DO_DAGUESH } from '../tools/daguesh.mjs';
+import { dagueshFora, foraDoDaguesh } from '../tools/daguesh.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const read = p => readFileSync(join(ROOT, p), 'utf8');
@@ -980,7 +980,7 @@ export function validate({ checkDist = true } = {}) {
     const andar = d => readdirSync(join(ROOT, d), { withFileTypes: true }).flatMap(e =>
       e.isDirectory() ? andar(join(d, e.name)) : e.name.endsWith('.json') ? [join(d, e.name)] : []);
     for (const f of andar('data')) {
-      if (FORA_DO_DAGUESH.includes(f)) continue;
+      if (foraDoDaguesh(f)) continue;
       const w = dagueshFora(readFileSync(join(ROOT, f), 'utf8'));
       if (w.length) fail('V24', f, `daguesh que não muda o som: ${[...new Set(w)].slice(0, 4).join(', ')} (rode tools/daguesh.mjs --aplicar)`);
     }

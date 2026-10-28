@@ -8,8 +8,14 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 /** Os módulos do layout raiz que o webpack copiava (ver `webpack` abaixo). */
 export const BASE = /[\\/](content[\\/](course|courses|empresa)\.json|src[\\/]lib[\\/](catalog|content-publico|empresa|hebrew|raizes|state[\\/]raizes-estado|account[\\/](types|store|api))\.tsx?)$/;
 
+/* O site em inglês é outra build do mesmo código (PLANO-INGLES.md), com o
+   export em out-en: as duas convivem na máquina e na publicação, cada uma
+   servida pelo seu Worker (wrangler.toml e wrangler.en.toml). */
+const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+
 const nextConfig: NextConfig = {
   output: 'export',
+  distDir: EM_INGLES ? 'out-en' : undefined,
   basePath: basePath || undefined,
   reactStrictMode: true,
   /* Static export has no image optimiser. The only images here are the 27

@@ -94,6 +94,7 @@ import { RegistroDeOrigem } from '@/components/shell/RegistroDeOrigem';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
+import { t, LANG_HTML } from '@/i18n';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -102,16 +103,14 @@ export const metadata: Metadata = {
      chegando sem imagem no WhatsApp, que é o problema que esta camada existe
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
-  title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
+  title: t('site.titulo'),
   /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
      alfabetização, e os outros são cursos à parte, ainda em produção
      (auditoria de 01/10, CONV-011). */
-  description:
-    'Hebraico para brasileiros, começando pelo alfabeto: aulas interativas, correção na ' +
-    'hora e progresso que continua de onde você parou.',
+  description: t('site.descricao'),
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
-  applicationName: 'Hebraico Fluente'
+  applicationName: t('marca')
 };
 
 export const viewport: Viewport = {
@@ -126,7 +125,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
-      lang="pt-BR"
+      lang={LANG_HTML}
       dir="ltr"
       className={`${display.variable} ${ui.variable} ${hebrew.variable} ${cursive.variable}`}
     >

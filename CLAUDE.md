@@ -64,6 +64,24 @@ texto do site nem do autor.
 - `worker/` é a API (`/api/*`) e o portão do conteúdo pago. `IMPLEMENTATION` da
   camada de comércio: `DEPLOY-CLOUDFLARE.md` + `worker/schema.sql`.
 
+## O site em inglês (desde 28/10/2026, em construção)
+Plano e decisões do dono em `PLANO-INGLES.md` (domínio próprio, US$ 47, Paddle).
+Um repositório, um banco, dois sites: `NEXT_PUBLIC_LOCALE=en` gera `app/out-en`,
+servido pelo segundo Worker (`wrangler.en.toml`, mesmo D1, ainda sem domínio e
+sem publicação). Sem a variável, o site brasileiro sai igual.
+- **Texto fixo de tela** vai para `app/src/i18n/pt.ts` E `en.ts` no mesmo
+  commit, lido com `t('chave')`. O tipo de `en.ts` recusa chave faltando.
+- **Mudou um `data/*.json` do curso?** Rode `node tools/i18n.mjs extrair`: o
+  `data/en/` é a lista de trabalho da tradução e `tests/i18n.test.ts` falha se
+  ele não acompanhar a fonte. Texto já traduzido cujo português mudou fica
+  marcado `revisar`.
+- O inglês nunca mexe no hebraico: os trechos em hebraico e as marcas `{{...}}`
+  têm de ser os mesmos do português (`mesmoHebraico`). A transliteração fica
+  fora do `data/en/` (o inglês terá sistema próprio, etapa 3).
+- `HF_I18N_ESTRITO=1` faz a build em inglês parar com qualquer texto sem
+  tradução; o relatório sai em `app/content/_traducao.json` e em
+  `node tools/i18n.mjs relatorio`.
+
 ## Invariantes que quebram o produto se forem ignorados
 - **Noto Sans Hebrew é obrigatória** para todo hebraico: são 55 sinais de nikud e
   uma tabela `ccmp`. Fonte que posiciona vogal errado torna todo exercício de

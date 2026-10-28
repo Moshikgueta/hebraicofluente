@@ -28,6 +28,7 @@ audio/conferir/
 .dev.vars
 .wrangler/
 app/out/
+app/out-en/
 app/.shots/
 
 # Cópias do banco (scripts/backup-d1.sh). Cada arquivo tem e-mail de todo
