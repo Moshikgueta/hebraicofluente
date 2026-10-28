@@ -37,6 +37,7 @@ import {
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
 import { CompararSons } from '@/components/learn/CompararSons';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
@@ -333,6 +334,7 @@ function StageConhecer({
   const [passo, setPasso] = useState(0);
   const topo = useRef<HTMLDivElement>(null);
   const temChecagem = (letter.ensino?.checagem?.length ?? 0) > 0;
+  const ensinadas = useMemo(() => new Set([...history, letter].map(l => l.letter)), [history, letter]);
 
   /* Os passos da etapa (28/10/2026, decisão do dono: "em telas curtas").
      ─────────────────────────────────────────────────────────────────────
@@ -346,7 +348,9 @@ function StageConhecer({
       nome: 'Descobrir',
       corpo: (
         <>
-          <Card className="p-6 sm:p-8 grid gap-6">
+          <Card className="p-6 sm:p-8 grid gap-6 overflow-hidden">
+            {/* A letra chega no lugar do módulo dela (a aventura ilustrada). */}
+            <AberturaDoLugar modulo={letter.module} ensinadas={ensinadas} />
             <HebrewLetterCard letter={letter} />
             {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
               <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">

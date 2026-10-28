@@ -205,6 +205,10 @@
 .il-vivo .il-luz { animation: il-pisca 2.4s ease-in-out infinite; }
 .il-vivo .il-onibus { animation: il-anda 7s ease-in-out infinite alternate; }
 .il-trancado { filter: grayscale(.75) brightness(.97); opacity: .72; }
+/* A entrada do lugar na lição: o desenho sobe 8 px e aparece, 600 ms, uma
+   vez. Com movimento reduzido ele já está no lugar. */
+@keyframes il-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.il-entra > svg { animation: il-entra 600ms var(--ease-out) both; }
 
 /* As vogais de CASA que se apagam na Aula 0 (28/10/2026). Só opacidade. */
 @keyframes hf-vogal-some { 0%, 25% { opacity: 1; } 50%, 85% { opacity: .12; } 100% { opacity: 1; } }
