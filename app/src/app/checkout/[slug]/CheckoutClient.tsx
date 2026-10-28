@@ -756,11 +756,18 @@ function Shell({ course, children }: {
             </p>
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[12.5px] font-medium text-[var(--accent)]">
-                {brl(pixPrice(c.price))} no PIX
+                {brl(pixPrice(c.price))} no PIX · {c.price.pixDiscountPct}% de desconto
               </p>
             )}
           </div>
         )}
+        {/* A desistência no resumo, e não só no passo 2 (28/10/2026, revisão
+            das páginas de venda): o passo 1 pede nome, e-mail e senha antes de
+            mostrar as condições, e o direito do CDC é o que mais pesa para quem
+            ainda não conhece o curso. Mesmo prazo de data/empresa.json. */}
+        <p className="border-t border-[color:var(--line-soft)] pt-3 font-ui text-[12.5px] leading-[1.5] text-ink-body">
+          {empresa.politicas.arrependimentoDias} dias para desistir e receber 100% de volta, sem justificar.
+        </p>
       </Card>
     </div>
   );
