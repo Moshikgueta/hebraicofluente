@@ -123,8 +123,11 @@ As palavras da última coluna são do curso: nenhuma foi escrita para cá.
 
 ## 6. As próximas etapas, uma por PR
 
-1. **Lição de referência (o Mem):** o lugar do módulo na etapa Descobrir, com o
-   מַיִם do curso (palavra do Mem desde sempre), sem mudar texto nem exercício.
+1. **Lição de referência (o Mem): feita.** Em toda lição de letra, o passo
+   Descobrir abre no lugar do módulo dela (`components/aventura/AberturaDoLugar.tsx`):
+   o cenário entra em camadas, o mar se mexe e a letra se revela logo abaixo.
+   O nome do lugar em hebraico só aparece quando o aluno já conhece todas as
+   letras dele (no Mem, הַיָם ainda não). Texto e exercícios não mudaram.
 2. **Fim de lição com comemoração** e a **coleção de letras**: cada letra
    dominada vira uma carta com a forma impressa e a cursiva, o som e o domínio.
 3. **Laboratório de leitura:** o mesmo conteúdo e os mesmos níveis, com o
