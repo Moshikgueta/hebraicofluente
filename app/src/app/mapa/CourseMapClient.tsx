@@ -279,9 +279,13 @@ function Trecho({ module: m, estado, ultimo }: {
             <div className="relative -mx-5 -mt-5 sm:-mx-6 sm:-mt-[22px] mb-4 h-[104px] sm:h-[132px]
                             overflow-hidden rounded-t-[17px] border-b border-line">
               <Cenario n={m.n as IdDoCenario} vivo={estado === 'agora'} trancado={estado === 'adiante'} />
-              <span className="absolute left-3 bottom-2.5 rounded-full bg-[var(--card)]/90 px-2.5 py-1
-                               font-ui text-[12px] font-semibold text-ink shadow-[var(--sh)]">
-                {LUGAR[m.n as IdDoCenario]}
+              {/* O nome do lugar é uma palavra que o aluno já lê neste módulo. */}
+              <span className="absolute left-3 bottom-2.5 inline-flex items-baseline gap-2 rounded-full
+                               bg-[var(--card)]/92 pl-3 pr-3 py-0.5 shadow-[var(--sh)]">
+                <span className="text-[17px] text-ink"><He size="inline">{LUGAR[m.n as IdDoCenario].he}</He></span>
+                <span className="font-ui text-[12px] text-ink-muted">
+                  {LUGAR[m.n as IdDoCenario].translit} · {LUGAR[m.n as IdDoCenario].pt}
+                </span>
               </span>
               {estado === 'feito' && (
                 <span aria-hidden

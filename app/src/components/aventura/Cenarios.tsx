@@ -11,11 +11,11 @@
  *
  *   1 O mar         · יָם, מַיִם, תֵה: a praia, o barco, a cidade no morro
  *   2 O jardim      · גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ: a montanha, o rio, o lago
- *   3 A rua de casa · חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה: janelas, rosas, a padaria
+ *   3 A janela      · חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה: janelas, rosas, a padaria
  *   4 A cidade      · עִיר, עֵץ, צֵל, סַל: o portão de pedra, a árvore, a sombra
  *   5 O mercado     · פִּתָה, תַפּוּחַ, קָפֶה, כֶּסֶף: toldos e caixas de fruta
- *   6 A cidade nova · o módulo sem os pontos: prédios, ônibus e placas
- *   7 O terraço     · o pôr do sol, as caixas d'água com aquecedor solar
+ *   6 A rua         · o módulo sem os pontos: prédios, ônibus e placas
+ *   7 O telhado     · o pôr do sol, as caixas d'água com aquecedor solar
  *                     dos telhados de Israel e as luzes de festa
  *
  * Três regras, as mesmas das gravuras de Raízes e dos emblemas do portal:
@@ -37,10 +37,21 @@ import type { ReactNode } from 'react';
 
 export type IdDoCenario = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-/* O nome do lugar, para o rótulo do cartão (o desenho em si é decorativo). */
-export const LUGAR: Record<IdDoCenario, string> = {
-  1: 'O mar', 2: 'O jardim', 3: 'A rua de casa', 4: 'A cidade',
-  5: 'O mercado', 6: 'A cidade nova', 7: 'O terraço'
+/* O nome do lugar (28/10/2026, aprovado pelo dono): em hebraico, e sempre
+   uma palavra que o aluno JÁ LÊ naquele módulo - o nome do lugar é uma
+   leitura. Sem o ponto que dobra a letra até o módulo 5 (como tudo o que se
+   lê nos módulos 1 a 4); o do módulo 6 vem sem pontos nenhuns, que é o que
+   o módulo ensina. Só הַשּׁוּק não é palavra do curso: as letras dela já foram
+   todas ensinadas no módulo 5, e o dono a aprovou. O hebraico vai no <He>,
+   fora do desenho. */
+export const LUGAR: Record<IdDoCenario, { he: string; translit: string; pt: string }> = {
+  1: { he: 'הַיָם', translit: 'hayám', pt: 'o mar' },
+  2: { he: 'הַגַן', translit: 'hagán', pt: 'o jardim' },
+  3: { he: 'הַחַלוֹן', translit: 'hachalón', pt: 'a janela' },
+  4: { he: 'הָעִיר', translit: "ha'ír", pt: 'a cidade' },
+  5: { he: 'הַשּׁוּק', translit: 'hashúk', pt: 'o mercado' },
+  6: { he: 'רחוב', translit: 'rechóv', pt: 'a rua, sem os pontos' },
+  7: { he: 'הַגַּג', translit: 'hagág', pt: 'o telhado' }
 };
 
 const W = 320, H = 120;
@@ -176,7 +187,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
     </>
   ),
 
-  /* 3 · A rua de casa: janelas (חַלוֹן), rosas (וֶרֶד) e a padaria (לֶחֶם). */
+  /* 3 · A janela: janelas (חַלוֹן), rosas (וֶרֶד) e a padaria (לֶחֶם). */
   3: id => (
     <>
       <Ceu id={id} />
@@ -303,7 +314,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
     </>
   ),
 
-  /* 6 · A cidade nova: prédios, árvores, o ônibus, as placas. */
+  /* 6 · A rua: prédios, árvores, o ônibus, as placas. */
   6: id => (
     <>
       <Ceu id={id} />
@@ -330,7 +341,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
     </>
   ),
 
-  /* 7 · O terraço: o pôr do sol sobre os telhados, as caixas d'água com o
+  /* 7 · O telhado: o pôr do sol sobre os telhados, as caixas d'água com o
      aquecedor solar e as luzes de festa. */
   7: id => (
     <>

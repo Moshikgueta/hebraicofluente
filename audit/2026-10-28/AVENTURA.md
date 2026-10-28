@@ -76,17 +76,23 @@ palavras reais e progresso visível. Mas tem três erros de conteúdo:
 
 ### Os lugares, alinhados ao vocabulário de cada módulo
 
-| Módulo | Lugar | Palavras que o aluno já lê ali |
+| Módulo | Lugar e nome | Palavras que o aluno já lê ali |
 |---|---|---|
-| 1 · As seis primeiras letras | O mar | יָם, מַיִם, תֵה, אִמָא |
-| 2 · Cinco consoantes familiares | O jardim | גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ, דָג, גְלִידָה |
-| 3 · O vav, o zayin e os sons da garganta | A rua de casa | חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה, שָׁלוֹם |
-| 4 · Sámech, áyin, tsádi e kuf | A cidade | עִיר, עֵץ, צֵל, סַל, מִיץ |
-| 5 · As três letras com ponto | O mercado | פִּתָה, תַפּוּחַ, קָפֶה, כֶּסֶף, בַּיִת |
-| 6 · Sem o ponto | A cidade nova | a leitura sem nikud, como nas placas da rua |
-| 7 · Os sons modernos | O terraço | o hebraico de hoje, num fim de tarde |
+| 1 · As seis primeiras letras | O mar · הַיָם | יָם, מַיִם, תֵה, אִמָא |
+| 2 · Cinco consoantes familiares | O jardim · הַגַן | גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ, דָג, גְלִידָה |
+| 3 · O vav, o zayin e os sons da garganta | A janela · הַחַלוֹן | חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה, שָׁלוֹם |
+| 4 · Sámech, áyin, tsádi e kuf | A cidade · הָעִיר | עִיר, עֵץ, צֵל, סַל, מִיץ |
+| 5 · As três letras com ponto | O mercado · הַשּׁוּק | פִּתָה, תַפּוּחַ, קָפֶה, כֶּסֶף, בַּיִת |
+| 6 · Sem o ponto | A rua · רחוב (sem pontos) | a leitura sem nikud, como nas placas da rua |
+| 7 · Os sons modernos | O telhado · הַגַּג | o hebraico de hoje, num fim de tarde |
 
-As palavras desta tabela são do curso: nenhuma foi escrita para cá.
+Os nomes em hebraico foram aprovados pelo dono em 28/10/2026. Cada um é uma
+palavra que o aluno já lê naquele módulo, com o artigo ה. Até o módulo 4 eles
+vêm sem o ponto que dobra a letra, como tudo o que se lê ali; o do módulo 6
+vem sem pontos nenhuns, que é o que o módulo ensina. Só הַשּׁוּק não é palavra
+do curso: todas as letras dela já foram ensinadas no módulo 5.
+
+As palavras da última coluna são do curso: nenhuma foi escrita para cá.
 
 ### Regras do desenho (`components/aventura/Cenarios.tsx`)
 
