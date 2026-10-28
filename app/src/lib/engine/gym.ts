@@ -22,7 +22,7 @@ import { letterMastery, topConfusions, weakLetters } from '@/lib/state/rules';
 import {
   exAudioWord, exBuildSyllable, exBuildWord, exCompleteWord, exFinalForm,
   exLetterRecognition, exListenSyllable, exMatchLetterSound, exMatchSyllable,
-  exMatchWordMeaning, exMeaningToWord, exOddOneOut, exPrintVsCursive,
+  exImageToWord, exMatchWordMeaning, exMeaningToWord, exOddOneOut, exPrintVsCursive,
   exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit, exVowelSound,
   type Gen
 } from './generators';
@@ -36,7 +36,7 @@ import { rng, shuffled, type Rand } from './rng';
 export type GymModeId =
   | 'letras' | 'vogais' | 'silabas' | 'palavras' | 'ouvir'
   | 'parecidas' | 'relogio' | 'revisao'
-  | 'construir' | 'palavras-cursiva' | 'digitar';
+  | 'construir' | 'palavras-cursiva' | 'digitar' | 'fotos';
 
 export type GymMode = {
   id: GymModeId;
@@ -70,7 +70,8 @@ const GENS: Record<GymModeId, readonly Gen[]> = {
      de cada item sai do vocabulário ACUMULADO (ver `rodadaDePalavras`). */
   construir: [],
   'palavras-cursiva': [],
-  digitar: []
+  digitar: [],
+  fotos: []           // ver `rodadaDeFotos`
 };
 
 /* Kept out of the list above only because the import would shadow the name. */
@@ -106,6 +107,11 @@ export const GYM_MODES: GymMode[] = [
     id: 'palavras', titlePt: 'Palavras', icon: '◉',
     descPt: 'Ler palavras inteiras, montar, escrever.',
     skills: ['ler'], count: 10
+  },
+  {
+    id: 'fotos', titlePt: 'Foto e palavra', icon: '▣',
+    descPt: 'A foto na tela: escolha a palavra em hebraico que é dela.',
+    skills: ['ler'], count: 8
   },
   {
     id: 'ouvir', titlePt: 'Ouvir e escolher', icon: '♪',
@@ -158,6 +164,9 @@ export function availableModes(
     }
     if (mode.id === 'parecidas' && !confusionPair(state, unlocked)) {
       return { mode, ready: false, whyNot: 'Nenhuma troca registrada ainda.' };
+    }
+    if (mode.id === 'fotos' && fotosDisponiveis(unlocked).length < 3) {
+      return { mode, ready: false, whyNot: 'Chega quando houver três palavras com foto, na lição do Yod.' };
     }
     if (mode.id === 'palavras' && !unlocked.some(l => l.wordsToRead.length)) {
       return { mode, ready: false, whyNot: 'Ainda não há palavras para ler.' };
@@ -235,6 +244,12 @@ export function buildGym(
       }),
       label: `${pair[0].namePt} e ${pair[1].namePt}`
     };
+  }
+
+  if (mode.id === 'fotos') {
+    const exercises = rodadaDeFotos(mode, state, letters, rng(seed));
+    const n = fotosDisponiveis(letters).length;
+    return { exercises, label: `Das ${n} palavras com foto que você já lê` };
   }
 
   if (MODOS_DE_PALAVRA.has(mode.id)) {
@@ -393,4 +408,44 @@ function escolherPalavras(
     if (!escolha.includes(w)) escolha.push(w);
   }
   return shuffled(escolha.slice(0, quantas), rand);
+}
+
+/* ── foto e palavra ───────────────────────────────────────────────────── */
+
+/** As palavras com foto que o aluno já lê: as `wordsToRead` das letras que ele
+ *  tem, uma vez cada. São as mesmas do exercício da lição (`exImageToWord`). */
+export function fotosDisponiveis(letters: readonly Letter[]): { L: Letter; i: number }[] {
+  const visto = new Set<string>();
+  const out: { L: Letter; i: number }[] = [];
+  for (const L of [...letters].sort((a, b) => a.order - b.order)) {
+    L.wordsToRead.filter(w => !!w.image).forEach((w, i) => {
+      if (visto.has(w.he)) return;
+      visto.add(w.he);
+      out.push({ L, i });
+    });
+  }
+  return out;
+}
+
+/**
+ * Uma rodada de "Foto e palavra" (28/10/2026, pedido do dono): a foto do
+ * vocabulário e quatro palavras para escolher. Cada item é o próprio
+ * `exImageToWord` da lição, mas as alternativas saem de TODAS as palavras que
+ * o aluno já lê (o contexto da letra mais recente), e as fotos giram em
+ * rodízio pelas rodadas, como nos modos de palavra.
+ */
+function rodadaDeFotos(mode: GymMode, state: LearnerState, letters: Letter[], rand: Rand): Exercise[] {
+  const ordenadas = [...letters].sort((a, b) => a.order - b.order);
+  const atual = ordenadas[ordenadas.length - 1];
+  if (!atual) return [];
+  const ctx = contextFor(atual, ordenadas);
+  const fixa = shuffled(fotosDisponiveis(ordenadas), rng(`fotos-${atual.order}`));
+  if (!fixa.length) return [];
+  const volta = state.gym[mode.id]?.runs ?? 0;
+  const inicio = (volta * mode.count) % fixa.length;
+  const janela = [...fixa.slice(inicio), ...fixa.slice(0, inicio)].slice(0, mode.count);
+  return shuffled(janela, rand).flatMap(({ L, i }) => {
+    const ex = exImageToWord(L, ctx, rand, i);
+    return ex ? [ex] : [];
+  });
 }
