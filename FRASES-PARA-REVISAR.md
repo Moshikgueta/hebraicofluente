@@ -1,7 +1,9 @@
-# Frases para revisar (28/10/2026, aguardando o dono)
+# Frases para revisar (28/10/2026, APROVADAS pelo dono no mesmo dia)
 
-Rascunho de frases curtas para os exercícios de leitura e de escuta. **Nenhuma está no curso:** moram só neste
-documento até o dono aprovar. Desde 28/10/2026 as frases de `data/sentences.json` também têm a trava `revisado`
+Frases curtas para os exercícios de leitura e de escuta. **O dono aprovou as nove sem mudanças (28/10/2026)** e
+elas estão em `data/sentences.json`. Entrou junto uma décima, para a letra 8 (Dálet): הִנֵה דָג! (hiné dag!, Olha um
+peixe!), um pedaço de uma fala do texto "O peixe", aprovado no mesmo dia. Sem ela, a letra 8 seria a única, da
+primeira frase em diante, sem frase nova (`tests/frases.test.ts`). Desde 28/10/2026 as frases de `data/sentences.json` também têm a trava `revisado`
 dos mini-textos (uma frase com `"revisado": false` não sai do exportador nem entra no roteiro de gravação,
 `tests/frases-revisao.test.ts`); aprovadas, estas entram lá, e as de escuta só aparecem depois de gravadas
 (`exListenSentence` e `exListenMeaning` exigem a gravação).
