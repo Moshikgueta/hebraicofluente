@@ -495,22 +495,24 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
       className={`fixed left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))] animate-rise
                   ${embaixo ? 'bottom-[136px] lg:bottom-6' : 'top-[68px]'}`}
     >
-      <Card tone="mint" className="p-4 shadow-[var(--shadow-2)] flex items-center gap-4">
-        <span aria-hidden className="text-[var(--mint-ink)] text-[22px] leading-none">◆</span>
+      {/* Uma linha só (27/10/2026, rodada 2 da experiência): com o botão de
+          compartilhar embaixo do título, o aviso ocupava cerca de 125 px no
+          alto do celular e cobria o título do relatório do exame. */}
+      <Card tone="mint" className="py-2.5 pl-4 pr-2 shadow-[var(--shadow-2)] flex items-center gap-3">
+        <span aria-hidden className="text-[var(--mint-ink)] text-[18px] leading-none">◆</span>
         <div className="min-w-0 flex-1">
-          <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)]">
-            Conquista desbloqueada
+          <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)] truncate">
+            {compartilhavel ? 'Conquista' : 'Conquista desbloqueada'}{ids.length > 1 ? ` +${ids.length - 1}` : ''}
           </p>
-          <p className="font-display text-[16px] font-semibold text-ink truncate">{first.titlePt}</p>
-          {ids.length > 1 && (
-            <p className="font-ui text-[12px] text-ink-muted">e mais {ids.length - 1}</p>
-          )}
-          {podeCompartilhar(first.id) && (
-            <div className="mt-2" onFocus={() => setSegura(true)} onPointerDown={() => setSegura(true)}>
-              <CompartilharConquista id={first.id} />
-            </div>
-          )}
+          {/* O título quebra em até duas linhas: cortado em "Primeira pala…"
+              ele deixava de dizer o que foi conquistado. */}
+          <p className="font-display text-[15.5px] font-semibold leading-tight text-ink line-clamp-2">{first.titlePt}</p>
         </div>
+        {compartilhavel && (
+          <div className="shrink-0" onFocus={() => setSegura(true)} onPointerDown={() => setSegura(true)}>
+            <CompartilharConquista id={first.id} curto />
+          </div>
+        )}
         <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar">✕</Button>
       </Card>
     </div>

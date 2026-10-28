@@ -32,12 +32,12 @@ o que foi visto, o que mudou e o que vem depois.
 | 4 | Exercícios | Resposta certa ou errada só mudava a cor; nenhum sinal de movimento. A barra de progresso animava `width`. | Feito |
 | 5 | Botões | Sem resposta ao toque no celular (só o "levantar" do mouse). | Feito: afunda ao toque |
 | 6 | Lição | A letra nova aparece de uma vez, sem marcar o momento. | Feito: revelação da direita para a esquerda |
-| 7 | Lição | A etapa 1 é muito longa no celular (cerca de 9.400 px no Guímel): letra, pronúncia, articulação, erro comum, sílabas, comparação e perguntas numa página só. | Rodada 2 |
-| 8 | Laboratório | Os três cartões de modo empurram a primeira palavra para baixo da dobra no celular. | Rodada 2: seletor compacto |
+| 7 | Lição | A etapa 1 é longa no celular. Medida de novo na rodada 2, com os quadros extras já recolhidos: 4.816 px no Guímel (os 9.400 da primeira medida contavam a página inteira). | Rodada 2: a tabela de comparação (cerca de 550 px) fica a um toque; Guímel 4.263 px. A sequência em passos fica para depois, com o ok do dono |
+| 8 | Laboratório | Os três cartões de modo empurram a primeira palavra para baixo da dobra no celular. | Feito: seletor de uma linha; a palavra aparece na primeira tela |
 | 9 | Navegação | Barra de baixo com 7 itens e rótulos de 11 a 12 px; "Aula 0" fica nela depois de concluída. | Parte feita (ok do dono): a Aula 0 sai das duas navegações depois de concluída e continua no topo do mapa. Os rótulos ficam para a rodada 2 |
-| 10 | Painel | O aviso de conquista ocupa um quarto da primeira tela, antes do próximo passo; o botão de acessibilidade cobre parte do "Ler agora". | Rodada 2 |
+| 10 | Painel | O aviso de conquista ocupa um quarto da primeira tela, antes do próximo passo; o botão de acessibilidade cobre parte do "Ler agora". | Feito o aviso: uma linha (de ~125 para ~64 px). No relatório do exame ele cobria o título do resultado. O botão de acessibilidade só cobre em certas posições da rolagem: fica |
 | 11 | Academia | Os jogos são cartões iguais, sem dizer o que cada um treina nem quando foi jogado. | Rodada 3 |
-| 12 | Exame e certificado | Não auditados por dentro. | Rodada 2 |
+| 12 | Exame e certificado | Não auditados por dentro. | Feito: exame respondido até o relatório (40 questões, sem erro de console); o certificado dizia que o exame verificou "sem os pontos" e "os sons de fora" a quem não fez essas partes, e agora lista só as que a prova cobrou |
 
 ## Rodada 1: o que mudou
 
@@ -82,11 +82,22 @@ depoimento, onboarding) e nas públicas (capa, entrar, criar conta, esqueci a se
 | Foco visível no teclado | `*:focus-visible` global, inclusive no alto contraste |
 | Movimento reduzido | regra global (sistema e menu de acessibilidade); as três animações em loop que sobram têm motivo (gravando, ponto de articulação, seta da leitura) |
 
+## Rodada 2: o que mudou (28/10/2026)
+
+- **Laboratório de Leitura:** os três cartões de nível viram um seletor de uma linha (Guiada,
+  Menos ajuda, Independente), com a descrição só do escolhido. A primeira palavra sobe para a
+  primeira tela do celular.
+- **Aviso de conquista:** uma linha, com "Compartilhar" curto ao lado e o título em até duas
+  linhas. Medido: deixava de cobrir o título do relatório do exame.
+- **Lição, etapa 1:** "Compare com as letras que você já sabe" fica a um toque. Guímel
+  4.816 → 4.263 px; He 5.329 → 4.841 px.
+- **Certificado:** "O que o exame verificou" lista só as partes da prova feita.
+- Conferido: 1653 testes, varredura do curso nas duas larguras, o exame de ponta a ponta.
+
 ## O que vem depois
 
-- **Rodada 2:** a etapa 1 da lição em sequência curta (descobrir, ouvir, observar, entender,
-  interagir), o seletor compacto do Laboratório, o painel com o próximo passo primeiro, e a
-  auditoria por dentro do exame e do certificado (com a revelação do certificado).
+- **Precisa do dono:** a etapa 1 da lição em passos (descobrir, ouvir, observar, entender,
+  interagir), uma tela por vez em vez de uma página. Muda o jeito de toda lição.
 - **Rodada 3:** os jogos da Academia (placar que anima sem pular de largura, cronômetro mais claro,
   tela de fim com "tentar de novo"), e as ilustrações com propósito.
 - **Precisa do dono:** qualquer ilustração com hebraico, que só usa palavras já aprovadas do curso.

@@ -324,6 +324,7 @@ function StageConhecer({
 }: { letter: Letter; history: Letter[]; onDone: () => void }) {
   const enxuta = letter.order >= ENXUTA_DESDE;
   const [completa, setCompleta] = useState(false);
+  const [comparar, setComparar] = useState(false);
   const mostraTudo = !enxuta || completa;
   return (
     <div className="grid gap-5">
@@ -419,13 +420,22 @@ function StageConhecer({
       {/* The same five vowels on the letters already learned. Seeing the column
           is what turns "מַ se lê ma" into "o patach faz a" - the generalisation
           the course depends on and used to leave the learner to make alone. */}
-      {mostraTudo && history.length > 1 && (
+      {/* A tabela fica a um toque (27/10/2026, rodada 2 da experiência): com
+          ela aberta, a etapa 1 do Guímel tinha 4.816 px no celular, e era o
+          maior bloco que não é pergunta nem som da letra nova. */}
+      {mostraTudo && history.length > 1 && (comparar ? (
         <SoundLab
           letters={history}
           compact
           title="Compare com as letras que você já sabe"
         />
-      )}
+      ) : (
+        <button type="button" onClick={() => setComparar(true)} aria-expanded={false}
+                className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                           text-[var(--accent)] underline underline-offset-2">
+          Comparar com as letras que você já sabe
+        </button>
+      ))}
 
       {/* Explicação → exemplo → PERGUNTAS → prática. A checagem fecha a
           etapa: duas a quatro perguntas sobre o que foi EXPLICADO, e não

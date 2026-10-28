@@ -23,8 +23,10 @@ import { FRASES, desenharConquista } from '@/lib/compartilhar';
 
 type Pronta = { arquivo: File; url: string };
 
-export function CompartilharConquista({ id, quando, size = 'sm', variant = 'secondary' }: {
+export function CompartilharConquista({ id, quando, size = 'sm', variant = 'secondary', curto = false }: {
   id: string;
+  /** "Compartilhar", sem "no Instagram": o aviso de conquista é uma linha só. */
+  curto?: boolean;
   /** Quando a conquista aconteceu (ISO). Sem ela, hoje. */
   quando?: string | null;
   size?: 'sm' | 'md' | 'lg';
@@ -90,7 +92,7 @@ export function CompartilharConquista({ id, quando, size = 'sm', variant = 'seco
   return (
     <span ref={raiz} className="inline-grid gap-1">
       <Button size={size} variant={variant} onClick={compartilhar} disabled={!pronta}>
-        {pronta || falhou ? 'Compartilhar no Instagram' : 'Preparando a imagem…'}
+        {pronta || falhou ? (curto ? 'Compartilhar' : 'Compartilhar no Instagram') : (curto ? 'Preparando…' : 'Preparando a imagem…')}
       </Button>
       {baixou && (
         <span role="status" className="font-ui text-[12.5px] text-ink-muted">

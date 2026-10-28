@@ -133,20 +133,26 @@ function Laboratorio() {
         <>
           <fieldset className="grid gap-2 border-0 p-0 m-0">
             <legend className="font-ui text-[14px] font-semibold text-ink mb-2">De quanta ajuda você precisa?</legend>
-            <div className="grid sm:grid-cols-3 gap-2">
+            {/* Um seletor de uma linha, e só a descrição do nível escolhido: os
+                três cartões empurravam a palavra para baixo da dobra no celular. */}
+            <div className="grid grid-cols-3 gap-1 rounded-[var(--r-md)] border border-line bg-surface-2 p-1">
               {NIVEIS.map(n => (
                 <label key={n.id}
-                       className={`grid gap-1 rounded-[var(--r-md)] border-2 p-3 cursor-pointer min-h-[44px]
-                         ${nivel === n.id ? 'border-[var(--accent)] bg-[var(--accent-wash)]' : 'border-line bg-surface hover:bg-surface-2'}`}>
-                  <span className="flex items-center gap-2 font-ui text-[15px] font-semibold text-ink">
-                    <input type="radio" name="nivel" value={n.id} checked={nivel === n.id}
-                           onChange={() => escolher(n.id)} className="accent-[var(--accent)]" />
-                    {n.tituloPt}
-                  </span>
-                  <span className="font-ui text-[13.5px] leading-snug text-ink-muted">{n.resumoPt}</span>
+                       className={`grid place-items-center rounded-[calc(var(--r-md)-4px)] min-h-[44px] px-1.5 cursor-pointer
+                         font-ui text-[14px] font-semibold text-center leading-tight
+                         transition-[background-color,color,box-shadow] duration-[var(--dur-toque)]
+                         has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[var(--accent)]
+                         ${nivel === n.id ? 'bg-surface text-ink shadow-[0_1px_2px_rgba(0,0,0,.08)]' : 'text-ink-muted hover:text-ink'}`}>
+                  <input type="radio" name="nivel" value={n.id} checked={nivel === n.id}
+                         onChange={() => escolher(n.id)} className="sr-only" />
+                  {n.curtoPt}
                 </label>
               ))}
             </div>
+            <p className="font-ui text-[13.5px] leading-snug text-ink-muted m-0" aria-live="polite">
+              <span className="font-semibold text-ink-body">{NIVEIS.find(n => n.id === nivel)?.tituloPt}.</span>{' '}
+              {NIVEIS.find(n => n.id === nivel)?.resumoPt}
+            </p>
             {nivel === 'independente' && !semPontosLiberado && (
               <p className="font-ui text-[13.5px] leading-snug text-ink-muted m-0">
                 Por enquanto, as palavras aparecem com nikud (sinais vocálicos). A leitura sem nikud será
