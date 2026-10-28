@@ -724,6 +724,34 @@ export function AcademiaClient() {
               existe "jogo de baralho" e "jogo de reconhecimento" - existe o
               que ele quer jogar agora. A divisão é do código, e o código não
               é assunto dele. */}
+          {/* As três portas que vieram da barra (28/10/2026, navegação em quatro
+              portas): a revisão, a leitura e as palavras moram aqui agora. A
+              revisão vem primeiro e diz quantos itens esperam. */}
+          <section aria-labelledby="rever" className="grid gap-3">
+            <h2 id="rever" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              Rever e ler
+            </h2>
+            <ul className="grid gap-2.5 sm:grid-cols-3 list-none p-0 m-0">
+              {([
+                ['/revisao', 'Revisão', p.dueCount > 0
+                  ? `${p.dueCount} ${p.dueCount === 1 ? 'item espera' : 'itens esperam'} por você`
+                  : 'Em dia. Uma rodada rápida do que deu mais trabalho', p.dueCount > 0],
+                ['/leitura', 'Laboratório de leitura', 'Uma palavra por vez, com a ajuda que você escolher', false],
+                ['/vocabulario', 'Suas palavras', `${nPalavras} ${nPalavras === 1 ? 'palavra' : 'palavras'} que você já lê`, false]
+              ] as const).map(([href, titulo, desc, destaque]) => (
+                <li key={href}>
+                  <Link href={href}
+                        className={`h-full flex flex-col gap-1 rounded-[16px] border p-4 min-h-[88px]
+                                    transition-[box-shadow,border-color] duration-[250ms] hover:shadow-[var(--sh)] active:scale-[.98]
+                                    ${destaque ? 'border-[var(--gold)] bg-[var(--gold-soft)]' : 'border-line bg-[var(--card)] hover:border-[var(--teal)]'}`}>
+                    <span className="font-display text-[16.5px] font-semibold text-ink">{titulo}</span>
+                    <span className={`font-ui text-[13px] leading-snug ${destaque ? 'text-[var(--gold-ink)] font-semibold' : 'text-ink-muted'}`}>{desc}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           {/* Os flashcards (28/10/2026, pedido do dono): o jeito mais rápido de
               rever, em dois baralhos. */}
           <section aria-labelledby="flashcards" className="grid gap-3">
