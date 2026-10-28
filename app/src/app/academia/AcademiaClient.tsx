@@ -13,6 +13,7 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
+import { DESAFIO_ID, desafioDoDia, desafioFeitoHoje } from '@/lib/engine/desafio';
 import { Flashcards, cartasDoBaralho, type Baralho } from '@/components/learn/Flashcards';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useMemo, useState, type FocusEvent } from 'react';
@@ -86,6 +87,8 @@ type Screen =
   /* Palavras inteiras em cursiva, à mão. */
   | { kind: 'palavras-a-mao' }
   | { kind: 'flashcards'; baralho: Baralho }
+  | { kind: 'desafio'; startedAt: number }
+  | { kind: 'desafioFim'; acertos: number; total: number }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   /* O guia do teclado, entre o toque no modo de digitação e o modo. */
   | { kind: 'teclado'; mode: GymMode }
@@ -169,6 +172,10 @@ export function AcademiaClient() {
     [p.state.lessons]
   );
 
+  /* O desafio do dia, montado uma vez por dia (lib/engine/desafio.ts). */
+  const desafio = useMemo(() => desafioDoDia(unlocked, p.weak, p.day, audioAvailable()),
+    [unlocked.length, p.day]);
+  const desafioFeito = desafioFeitoHoje(p.state, p.day);
   const nPalavras = useMemo(() => cartasDoBaralho('palavras', unlocked, allLetters()).length, [unlocked]);
 
   const audio = audioAvailable();
@@ -221,6 +228,7 @@ export function AcademiaClient() {
   const treino = busca?.get('treino');
   useEffect(() => {
     if (treino === 'palavras-a-mao') setScreen({ kind: 'palavras-a-mao' });
+    if (treino === 'desafio') setScreen({ kind: 'desafio', startedAt: Date.now() });
     if (treino === 'flashcards-letras') setScreen({ kind: 'flashcards', baralho: 'letras' });
     if (treino === 'flashcards-palavras') setScreen({ kind: 'flashcards', baralho: 'palavras' });
   }, [treino]);
@@ -639,6 +647,43 @@ export function AcademiaClient() {
     );
   }
 
+  if (screen.kind === 'desafio') {
+    return (
+      <div className="grid gap-5">
+        <GymHeader mode={{ titlePt: 'Desafio do dia' } as GymMode}
+                   label="Cinco perguntas rápidas das letras que você já começou"
+                   onBack={() => setScreen({ kind: 'menu' })} />
+        <ExercisePlayer
+          key={`desafio-${screen.startedAt}`}
+          exercises={desafio}
+          title="Desafio do dia"
+          onDone={r => {
+            p.finishGym(DESAFIO_ID, r.score, Math.round((Date.now() - screen.startedAt) / 1000));
+            setScreen({ kind: 'desafioFim', acertos: r.correct, total: r.total });
+            requestAnimationFrame(() => window.scrollTo({ top: 0 }));
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (screen.kind === 'desafioFim') {
+    return (
+      <div className="grid gap-4 justify-items-center text-center rounded-[var(--r-lg)] bg-[var(--accent-bg)]
+                      text-white px-6 py-9 shadow-[var(--sh)]">
+        <span aria-hidden className="animate-pop grid place-items-center w-16 h-16 rounded-full bg-white text-[var(--navy)] text-[30px] font-bold">✓</span>
+        <h2 className="m-0 text-white text-[24px] font-bold">Desafio do dia feito</h2>
+        <p className="m-0 font-ui text-[15.5px] text-white max-w-[36ch]">
+          {screen.acertos} de {screen.total} de primeira. Amanhã tem outro, montado com o que você estiver estudando.
+        </p>
+        <button type="button" onClick={() => setScreen({ kind: 'menu' })}
+                className="min-h-[48px] px-5 rounded-[var(--r-md)] bg-white font-ui text-[15px] font-semibold text-[var(--navy)] active:scale-[.97]">
+          Voltar a Praticar
+        </button>
+      </div>
+    );
+  }
+
   if (screen.kind === 'flashcards') {
     return (
       <div className="grid gap-5">
@@ -732,6 +777,23 @@ export function AcademiaClient() {
               Rever e ler
             </h2>
             <ul className="grid gap-2.5 sm:grid-cols-3 list-none p-0 m-0">
+              <li className="sm:col-span-3">
+                <button type="button" disabled={!desafio.length}
+                        onClick={() => setScreen({ kind: 'desafio', startedAt: Date.now() })}
+                        className="w-full text-left flex items-center gap-3 rounded-[16px] border border-[var(--teal)]
+                                   bg-[var(--teal-soft)] p-4 min-h-[72px] transition-transform active:scale-[.98] disabled:opacity-60">
+                  <span aria-hidden className={`shrink-0 grid place-items-center w-10 h-10 rounded-full font-bold text-[16px]
+                    ${desafioFeito ? 'bg-[var(--teal)] text-white' : 'bg-[var(--card)] text-[var(--teal-ink)] border border-[var(--teal)]'}`}>
+                    {desafioFeito ? '✓' : '5'}
+                  </span>
+                  <span className="grid gap-0.5 min-w-0">
+                    <span className="font-display text-[16.5px] font-semibold text-ink">Desafio do dia</span>
+                    <span className="font-ui text-[13px] leading-snug text-[var(--teal-ink)]">
+                      {desafioFeito ? 'Feito hoje. Dá para fazer de novo; amanhã tem outro.' : 'Cinco perguntas rápidas, uns três minutos. Opcional.'}
+                    </span>
+                  </span>
+                </button>
+              </li>
               {([
                 ['/revisao', 'Revisão', p.dueCount > 0
                   ? `${p.dueCount} ${p.dueCount === 1 ? 'item espera' : 'itens esperam'} por você`

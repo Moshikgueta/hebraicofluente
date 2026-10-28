@@ -19,6 +19,7 @@ import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { useProgress } from '@/lib/state/store';
 import { getLetter } from '@/lib/content';
+import { desafioFeitoHoje } from '@/lib/desafio-feito';
 
 /* ── o cartão do curso ──────────────────────────────────────────────────── */
 export function CartaoCurso({
@@ -299,6 +300,18 @@ export function PlanoDeHoje({ licao }: { licao: { nome: string; href: string } |
           </li>
         ))}
       </ul>
+      {/* O desafio do dia fica FORA da conta "N de 3": é opcional, e não
+          fazê-lo não deixa nada por fazer (28/10/2026). */}
+      {p.state.lessons && Object.keys(p.state.lessons).length > 0 && (
+        desafioFeitoHoje(p.state, p.day)
+          ? <p className="m-0 font-ui text-[13.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">✓ Desafio do dia feito.</p>
+          : <Link href="/academia?treino=desafio"
+                  className="flex items-center justify-between gap-3 border-t border-[color:var(--line-soft)] pt-3 min-h-[44px]
+                             font-ui text-[14px] text-[var(--teal-ink)] font-semibold hover:underline">
+              <span>Opcional: o desafio do dia, cinco perguntas rápidas</span>
+              <span aria-hidden>→</span>
+            </Link>
+      )}
     </Card>
   );
 }
