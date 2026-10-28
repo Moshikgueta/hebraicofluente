@@ -422,6 +422,12 @@ export function Key({ children, dark = false }: { children: ReactNode; dark?: bo
 /* ── the thumb ──────────────────────────────────────────────────────────── */
 function BottomBar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
+  const itens = NAV.filter(item => item.movel === 'barra' && naNavegacao(item.href, p.ready && aula0Feita(p.state)));
+  /* O rótulo cresce quando a Aula 0 sai da barra (28/10/2026): com seis
+     itens, cada um tem 58,7 px num celular de 360px, e "Progresso" a 11,5 px
+     mede 57. Abaixo de 360px (o iPhone SE antigo, 320) cai para 10 px. Com
+     sete, 10,5 px é o que cabe a partir de 360. */
+  const rotulo = itens.length <= 6 ? 'text-[11.5px] max-[359px]:text-[10px]' : 'text-[10.5px]';
   return (
     <nav
       aria-label="Navegação principal"
@@ -430,11 +436,11 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                  pb-[env(safe-area-inset-bottom)]"
     >
       {/* Sete alvos num aparelho de 390px dão 54px cada, e o rótulo mais
-          largo ("Progresso") mede 52. O `min-w-0` é o que impede um deles de
+          largo ("Progresso") mede 52 a 10,5 px. O `min-w-0` é o que impede um deles de
           esticar a linha: sem ele, `flex-1` respeita a largura do conteúdo e
           a barra fica mais larga que a tela. */}
       <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
-        {NAV.filter(item => item.movel === 'barra' && naNavegacao(item.href, p.ready && aula0Feita(p.state))).map(item => {
+        {itens.map(item => {
           const active = isActive(pathname, item.href);
           const Icone = item.icon;
           return (
@@ -444,7 +450,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                 aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
-                  font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
+                  font-ui ${rotulo} leading-none text-center px-0.5 transition-colors
                   whitespace-nowrap
                   ${active ? 'text-[var(--navy)] font-semibold' : 'text-ink-muted'}`}
               >
