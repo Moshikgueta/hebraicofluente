@@ -13,6 +13,14 @@
   de exemplo com a gravação, o jeito errado e o certo. O "porquê" do erro continua só no curso.
 - **Puxa a busca junto:** cada legenda aponta a página da letra no site, que tem a gravação.
 
+## Ordem trocada em 28/10/2026: o Álef primeiro
+
+Os posts do dono de 26/10 ("os 3 erros", Xanucá) e de 27/10 (eleições em Israel) prometeram ao
+público que "o próximo post é sobre o Álef, a letra que não tem som". Para cumprir a promessa, a
+série começa pelo Álef (arte `4-alef` do zip). Ordem proposta: Álef (28 ou 29/10), Shin, Tav, Mem
+e Lámed, um por dia útil às 10h. O "4/5" e o "1/5" do topo das capas viram só numeração interna;
+se o dono quiser a numeração certa nas capas, gero as artes de novo.
+
 ## Quando publicar
 
 Pelo Metricool (melhor horário para a conta, semana de 27/10): **às 10h**, com o pico de quarta a
