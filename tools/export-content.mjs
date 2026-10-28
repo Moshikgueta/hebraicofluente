@@ -28,6 +28,7 @@ import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
 import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
 import { translitEn } from './translit-en.mjs';
+import { prepararVideos } from './videos.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
@@ -1063,6 +1064,21 @@ function main() {
     ` * button, the listening exercises, the quiz composition - reads this array and\n` +
     ` * degrades visibly rather than inventing a pronunciation. */\n` +
     `export const AUDIO_MANIFEST: readonly string[] = ${JSON.stringify(clips)};\n`);
+
+  /* Os vídeos do "Me explica, Moshik" (28/10/2026): um por letra, em video/
+     na raiz, com o nome da letra (`alef.mp4`) e, se houver, a legenda
+     (`alef.vtt`). Copiados para public/video/, que fica atrás do portão
+     (gate.js), e listados no manifesto: a folha só mostra o vídeo que existe.
+     Nome que não é letra do curso, formato que não é mp4 ou arquivo acima de
+     25 MiB (o teto de um arquivo no servidor de ativos da Cloudflare) param
+     a build, com o nome do arquivo. */
+  const videos = prepararVideos(join(ROOT, 'video'), join(pub, 'video'), new Set(letters.map(l => l.id)));
+  writeFileSync(join(ROOT, 'app/src/lib/video-manifest.ts'),
+    `/* GERADO por tools/export-content.mjs a partir de video/ na raiz (ver video/README.md).\n` +
+    ` * Uma entrada por letra com vídeo do professor; vazio = nenhum vídeo ainda. */\n` +
+    `export type VideoDaLetra = { letra: string; legenda: boolean };\n` +
+    `export const VIDEO_MANIFEST: readonly VideoDaLetra[] = ${JSON.stringify(videos)};\n`);
+  if (videos.length) console.log(`  vídeo: ${videos.length} letra(s) com vídeo em app/public/video`);
 
   const words = letters.reduce((a, l) => a + l.wordsToRead.length + l.wordsToRecognize.length, 0);
   console.log(`  ${letters.length} letras · ${modules.length} módulos · ${words} palavras → app/content/`);

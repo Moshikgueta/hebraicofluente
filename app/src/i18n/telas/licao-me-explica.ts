@@ -13,7 +13,9 @@ const pt = {
   certo: 'Certo:',
   naoConfunda: 'Não confunda com',
   gravacao: (nome: string) => `O nome, o som e uma palavra com ${nome}.`,
-  entendi: 'Entendi, voltar à lição'
+  entendi: 'Entendi, voltar à lição',
+  video: (nome: string) => `O Moshik explica o ${nome}`,
+  legenda: 'Português'
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -29,7 +31,9 @@ const en: Traducao<typeof pt> = {
   certo: 'Correct:',
   naoConfunda: 'Do not confuse it with',
   gravacao: nome => `The name, the sound and a word with ${nome}.`,
-  entendi: 'Got it, back to the lesson'
+  entendi: 'Got it, back to the lesson',
+  video: nome => `Moshik explains ${nome}`,
+  legenda: 'Portuguese'
 };
 
 export const DICIONARIO = { pt, en };
