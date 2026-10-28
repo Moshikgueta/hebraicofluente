@@ -162,7 +162,7 @@ export function Blast({
         {emHebraico
           ? <div><He size="plate" tone="navy" className="animate-pop">{q.alvo}</He></div>
           : <p className="font-display text-[34px] sm:text-[40px] font-semibold tracking-[-0.02em]
-                          text-[var(--navy)] animate-pop">{q.alvo}</p>}
+                          text-[var(--accent)] animate-pop">{q.alvo}</p>}
         {elogio && (
           <p role="status"
              className="absolute inset-x-0 bottom-2 font-ui text-[14px] font-bold text-[var(--teal-ink)] animate-rise">

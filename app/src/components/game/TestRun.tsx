@@ -182,7 +182,7 @@ export function TestRun({
           {emHebraico
             ? <He size="plate" tone="navy">{q.alvo}</He>
             : <span className="font-display text-[32px] sm:text-[38px] font-semibold
-                               tracking-[-0.02em] text-[var(--navy)]">{q.alvo}</span>}
+                               tracking-[-0.02em] text-[var(--accent)]">{q.alvo}</span>}
         </div>
 
         <ul className="grid gap-2.5 sm:grid-cols-2 list-none p-0 m-0">

@@ -198,7 +198,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
             {tx.revisaoTipo(revisao.tipoPt)}{revisaoLida ? tx.lida : ''}
           </p>
           <h2 className="font-display text-[18px] font-semibold">{revisao.tituloPt}</h2>
-          <p className="text-[15px] leading-relaxed text-ink-body">{revisao.introPt}</p>
+          <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={revisao.introPt} /></p>
           <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary" className="justify-self-start">
             {revisaoLida ? tx.lerDeNovo : tx.lerRevisao}
           </LinkButton>
@@ -211,7 +211,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
             {tx.leituraTipo(texto.tipoPt)}
           </p>
           <h2 className="font-display text-[18px] font-semibold">{texto.tituloPt}</h2>
-          <p className="text-[15px] leading-relaxed text-ink-body">{texto.introPt}</p>
+          <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={texto.introPt} /></p>
           <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary" className="justify-self-start">
             {tx.lerTexto}
           </LinkButton>

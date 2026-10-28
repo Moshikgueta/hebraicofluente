@@ -152,14 +152,23 @@ async function jogarAteOFim(p, { voltas = 140, espera = 260 } = {}) {
     const alvos = await p.locator(alvo).evaluateAll(bs =>
       bs.map((b, i) => [i, (b.innerText || '').trim().toLowerCase(), b])
         .filter(([, t, b]) => t && !b.closest('.hf-a11y, header, aside, nav'))
-        .filter(([, t]) => !/voltar|academia|continuar|escolher|mapa|cronômetro/.test(t))
+        /* "Ouvir" e "0,7×" tocam o som da rodada de escuta e não respondem
+           nada: o robô que tocava neles primeiro ficava ouvindo para sempre. */
+        .filter(([, t]) => !/voltar|academia|continuar|escolher|mapa|cronômetro|^ouvir|0,7×/.test(t))
         .map(([i]) => i));
     /* Nenhum alvo AGORA não quer dizer fim de partida: entre uma resposta e
        a seguinte o jogo desabilita tudo enquanto mostra o retorno - e o do
        erro fica quase dois segundos na tela de propósito, porque ele traz a
        frase que ensina. Desistir aqui foi o que fez esta varredura acusar a
        Batalha de não terminar quando ela terminava. */
-    if (!alvos.length) { await p.waitForTimeout(400); continue; }
+    if (!alvos.length) {
+      /* Na rodada de escuta as respostas só acendem depois de ouvir a
+         sílaba: sem outro alvo, o robô toca "Ouvir" e responde em seguida. */
+      const ouvir = p.locator('main button:not([disabled])', { hasText: /^Ouvir$/ });
+      if (await ouvir.count()) await ouvir.first().click({ timeout: 2000 }).catch(() => {});
+      await p.waitForTimeout(400);
+      continue;
+    }
     await p.locator(alvo).nth(alvos[0]).click({ timeout: 2000 }).catch(() => {});
     await p.waitForTimeout(espera);
   }

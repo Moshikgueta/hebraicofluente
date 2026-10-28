@@ -203,7 +203,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Link href="/loja" prefetch={preCarregar} aria-label={tx.navRecompensas}
                     aria-current={isActive(pathname, '/loja') ? 'page' : undefined}
                     className={`relative inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2
-                      ${isActive(pathname, '/loja') ? 'text-[var(--navy)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
+                      ${isActive(pathname, '/loja') ? 'text-[var(--accent)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
                 <IconeRecompensas size={21} />
                 {saldo(p.state) >= Math.min(...Object.values(ITENS).map(i => i.custo)) && (
                   <span aria-hidden className="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
@@ -456,7 +456,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
                   font-ui ${rotulo} leading-none text-center px-0.5 transition-colors
                   whitespace-nowrap
-                  ${active ? 'text-[var(--navy)] font-semibold' : 'text-ink-muted'}`}
+                  ${active ? 'text-[var(--accent)] font-semibold' : 'text-ink-muted'}`}
               >
                 <span aria-hidden className="hf-barra-icone inline-grid"><Icone size={19} /></span>
                 <span className="hf-barra-rotulo">{item.label}</span>
