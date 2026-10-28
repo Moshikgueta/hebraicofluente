@@ -18,16 +18,17 @@ import { Compreensao } from '@/components/learn/Compreensao';
 import { GravarLeitura } from '@/components/learn/GravarLeitura';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { LinhasDeLeitura } from '@/components/learn/LinhasDeLeitura';
-import { revisaoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
+import { revisaoDoModulo, segundoTextoDoModulo, textoDoModulo, type CourseModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { palavrasDoTexto, textoLidoId } from '@/lib/engine/textos';
 import { Prose } from '@/components/learn/Blocks';
 
 /* `revisao` (05/10/2026): a mesma página serve à leitura de revisão do
    módulo, que só usa palavras que o aluno já acumulou (/modulo/N/revisao). */
-export function TextoClient({ module: mod, revisao = false }: { module: CourseModule; revisao?: boolean }) {
-  const texto = revisao ? revisaoDoModulo(mod.n) : textoDoModulo(mod.n);
-  const lidoId = textoLidoId(mod.n, revisao);
+/* `segundo` (28/10/2026): o segundo texto do módulo, em /modulo/N/texto-2. */
+export function TextoClient({ module: mod, revisao = false, segundo = false }: { module: CourseModule; revisao?: boolean; segundo?: boolean }) {
+  const texto = revisao ? revisaoDoModulo(mod.n) : segundo ? segundoTextoDoModulo(mod.n) : textoDoModulo(mod.n);
+  const lidoId = textoLidoId(mod.n, revisao, segundo ? 2 : 1);
   const p = useProgress();
   /* A lista de palavras novas pergunta `hasAudio`: sem assinar, ela não
      redesenha quando o registro das gravações chega. */
@@ -52,7 +53,7 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
           {tx.modulo(mod.n)}
         </Link>
-        <Badge tone="accent">{revisao ? tx.leituraDeRevisao(mod.n) : tx.leituraDoModulo(mod.n)}</Badge>
+        <Badge tone="accent">{revisao ? tx.leituraDeRevisao(mod.n) : segundo ? tx.segundaLeitura(mod.n) : tx.leituraDoModulo(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight m-0">{texto.tituloPt}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body m-0"><Prose text={texto.introPt} /></p>
       </header>
@@ -87,7 +88,7 @@ export function TextoClient({ module: mod, revisao = false }: { module: CourseMo
       )}
 
       <Compreensao
-        id={revisao ? `revisao-texto-${mod.n}` : `texto-${mod.n}`}
+        id={revisao ? `revisao-texto-${mod.n}` : segundo ? `texto-${mod.n}-2` : `texto-${mod.n}`}
         titulo={tx.entendeu}
         intro={tx.responda}
         perguntas={texto.perguntas}

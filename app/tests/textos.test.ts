@@ -10,7 +10,8 @@
 import { describe, expect, it } from 'vitest';
 import { course } from '@/lib/content-publico';
 import { conteudoPago } from '@/lib/content-servidor';
-import { textosPublicados, type Texto } from '@/lib/engine/textos';
+import { textoLidoId, textosPublicados, type Texto } from '@/lib/engine/textos';
+import { existsSync } from 'node:fs';
 import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 
 const todos: Texto[] = conteudoPago.textos;
@@ -75,10 +76,13 @@ describe('os mini-textos', () => {
     }
   });
 
-  it('os segundos textos (rascunhos de 28/10/2026) esperam a revisão do dono', () => {
+  it('os segundos textos (aprovados em 28/10/2026) têm o "lido" e a página próprios', () => {
     const segundos = textos.filter(t => t.n === 2);
     expect(segundos.map(t => t.modulo).sort()).toEqual([3, 4, 5, 6, 7]);
-    expect(segundos.every(t => t.revisado === false)).toBe(true);
+    expect(segundos.every(t => t.revisado === true)).toBe(true);
+    expect(textoLidoId(3, false, 2)).toBe('texto-3-2');
+    expect(textoLidoId(3)).toBe('texto-3');
+    expect(existsSync('src/app/modulo/[n]/texto-2/page.tsx')).toBe(true);
   });
 
   it('o aluno só vê o texto depois de revisado', () => {
