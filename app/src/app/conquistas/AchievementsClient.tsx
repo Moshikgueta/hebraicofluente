@@ -16,26 +16,50 @@ export function AchievementsClient() {
 
   return (
     <div className="grid gap-6">
-      <header className="grid gap-3">
-        <h1 className="text-[27px] sm:text-[33px] font-bold">Conquistas</h1>
-        <ProgressBar
-          value={ACHIEVEMENTS.length ? have.size / ACHIEVEMENTS.length : 0}
-          label={`${have.size} de ${ACHIEVEMENTS.length}`}
-        />
-      </header>
+      {/* "Seu progresso", e não "Conquistas" (28/10/2026): o botão que traz
+          aqui se chama Progresso, e a página abria com 17 cartões trancados,
+          deixando os números do aluno lá embaixo. Agora vêm os números, e nas
+          conquistas as ganhas antes das que faltam. */}
+      <h1 className="text-[27px] sm:text-[33px] font-bold">Seu progresso</h1>
 
-      <div className="grid sm:grid-cols-2 gap-3">
-        {ACHIEVEMENTS.map(a => (
-          <div key={a.id} className="grid gap-2 content-start">
-            <AchievementBadge id={a.id} unlocked={have.has(a.id)} />
-            {/* Só a conquista feita, e só a que tem frase (lib/compartilhar.ts). */}
-            {have.has(a.id) && podeCompartilhar(a.id) && (
-              <CompartilharConquista id={a.id} variant="quiet"
-                quando={p.state.achievements.find(x => x.id === a.id)?.unlockedAt} />
-            )}
-          </div>
-        ))}
-      </div>
+      <Card className="p-5 grid gap-3">
+        <h2 className="font-display text-[17px] font-semibold">Seus números</h2>
+        <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            ['XP', p.state.xp],
+            ['Letras', `${p.mastered}/${course.totalLetters}`],
+            ['Sequência', p.streak],
+            ['Recorde', p.state.streak.longest]
+          ].map(([k, v]) => (
+            <div key={String(k)} className="grid gap-0.5">
+              <dt className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{k}</dt>
+              <dd className="font-display text-[22px] font-bold text-ink tabular-nums">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </Card>
+
+      <section aria-labelledby="t-conquistas" className="grid gap-3">
+        <div className="grid gap-2">
+          <h2 id="t-conquistas" className="font-display text-[17px] font-semibold">Conquistas</h2>
+          <ProgressBar
+            value={ACHIEVEMENTS.length ? have.size / ACHIEVEMENTS.length : 0}
+            label={`${have.size} de ${ACHIEVEMENTS.length}`}
+          />
+        </div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[...ACHIEVEMENTS].sort((a, b) => Number(have.has(b.id)) - Number(have.has(a.id))).map(a => (
+            <div key={a.id} className="grid gap-2 content-start">
+              <AchievementBadge id={a.id} unlocked={have.has(a.id)} />
+              {/* Só a conquista feita, e só a que tem frase (lib/compartilhar.ts). */}
+              {have.has(a.id) && podeCompartilhar(a.id) && (
+                <CompartilharConquista id={a.id} variant="quiet"
+                  quando={p.state.achievements.find(x => x.id === a.id)?.unlockedAt} />
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* The other kind of unlock: not a badge for doing something, a card
           worth reading. Kept next to the badges because both are the part of
@@ -69,23 +93,6 @@ export function AchievementsClient() {
         </span>
         <span aria-hidden className="text-ink-muted">→</span>
       </Link>
-
-      <Card className="p-5 grid gap-3">
-        <h2 className="font-display text-[17px] font-semibold">Seus números</h2>
-        <dl className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {[
-            ['XP', p.state.xp],
-            ['Letras', `${p.mastered}/${course.totalLetters}`],
-            ['Sequência', p.streak],
-            ['Recorde', p.state.streak.longest]
-          ].map(([k, v]) => (
-            <div key={String(k)} className="grid gap-0.5">
-              <dt className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{k}</dt>
-              <dd className="font-display text-[22px] font-bold text-ink tabular-nums">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      </Card>
 
       <Card className="p-5 grid gap-3">
         <h2 className="font-display text-[17px] font-semibold">Recomeçar do zero</h2>
