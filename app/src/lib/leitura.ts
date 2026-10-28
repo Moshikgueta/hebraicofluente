@@ -35,7 +35,7 @@ export type Leitura = {
  */
 export function palavrasDosTextosLidos(state: LearnerState): PalavraDoCurso[] {
   return textosDoCurso()
-    .filter(t => state.firsts[textoLidoId(t.modulo, t.revisao)])
+    .filter(t => state.firsts[textoLidoId(t.modulo, t.revisao, t.n ?? 1)])
     .flatMap(t => palavrasDoTexto(t).map(w => ({ ...w, desde: 100 + t.modulo })));
 }
 

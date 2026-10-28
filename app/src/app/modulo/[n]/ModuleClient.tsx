@@ -18,7 +18,7 @@ import { useProgress } from '@/lib/state/store';
 import type { CourseModule, Letter } from '@/lib/content';
 import { EXTRA_STAGE_COUNT, isLessonComplete } from '@/lib/state/rules';
 import { course } from '@/lib/content-publico';
-import { allLetters, extras, missaoDoModulo, revisaoDoModulo, textoDoModulo } from '@/lib/content';
+import { allLetters, extras, missaoDoModulo, revisaoDoModulo, segundoTextoDoModulo, textoDoModulo } from '@/lib/content';
 import { CenaExploravel } from '@/components/aventura/CenaExploravel';
 import { textoLidoId } from '@/lib/engine/textos';
 import { missaoId } from '@/lib/engine/missao';
@@ -39,6 +39,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   /* Só aparece depois de revisado: ver lib/engine/textos.ts. */
   const texto = textoDoModulo(mod.n);
   const revisao = revisaoDoModulo(mod.n);
+  const segundo = segundoTextoDoModulo(mod.n);
+  const segundoLido = !!p.state.firsts[textoLidoId(mod.n, false, 2)];
   const revisaoLida = !!p.state.firsts[textoLidoId(mod.n, true)];
   /* O módulo inteiro feito: letras e sons; no 6 e no 7, as três etapas de /extra. */
   const tudoFeito = !pendente && (letters.length > 0
@@ -214,6 +216,20 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
           <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={texto.introPt} /></p>
           <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary" className="justify-self-start">
             {tx.lerTexto}
+          </LinkButton>
+        </Card>
+      )}
+
+      {/* O segundo texto do módulo (28/10/2026). */}
+      {segundo && (
+        <Card tone={segundoLido ? 'mint' : 'surface'} className="p-6 grid gap-3">
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
+            {tx.segundaLeituraTipo(segundo.tipoPt)}{segundoLido ? tx.lida : ''}
+          </p>
+          <h2 className="font-display text-[18px] font-semibold">{segundo.tituloPt}</h2>
+          <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={segundo.introPt} /></p>
+          <LinkButton href={`/modulo/${mod.n}/texto-2`} variant="secondary" className="justify-self-start">
+            {segundoLido ? tx.lerDeNovo : tx.lerTexto}
           </LinkButton>
         </Card>
       )}
