@@ -54,6 +54,8 @@ LOCALE = "en"
 # Pendentes do domínio em inglês. Sem eles o Worker não manda e-mail nem
 # monta link absoluto, e é por isso que este arquivo ainda não se publica.
 # SITE_ORIGIN = "https://<dominio-em-ingles>"
+# A volta: os links para uma conta do site brasileiro (lib/idioma.js).
+SITE_ORIGIN_PT = "https://hebraicofluente.com.br"
 # EMAIL_FROM = "<Marca> <contact@<dominio-em-ingles>>"
 SUPPORT_EMAIL = "contato@hebraicofluente.com.br"
 ADMIN_EMAILS = "languageswithmoshik@gmail.com"

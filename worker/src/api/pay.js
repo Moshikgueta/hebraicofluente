@@ -31,8 +31,10 @@ import {
 } from '../lib/db.js';
 import {
   dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
-  mensagemDeAlerta, mensagemDeCompra, mensagemDeEstorno, reaisBR, sendMail
+  mensagemDeAlerta, mensagemDeCompra, reaisBR, sendMail
 } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { idiomaDaConta, tituloDoCurso } from '../lib/idioma.js';
 import {
   cancelPayment, createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
   paymentsOfMerchantOrder, refundPayment, verifyWebhookSignature
@@ -1044,13 +1046,17 @@ export async function avisarEstorno(env, order, { contestacao = false, restaAte 
     if (!mailReady(env)) return;
     const account = await findAccountById(env, order.account_id);
     if (!account?.email || /\.(invalid|local)$/i.test(account.email)) return;
-    const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
+    /* Na língua da conta: o aviso do provedor e o painel do dono rodam no
+       Worker brasileiro para as contas dos dois sites (lib/idioma.js). */
+    const idioma = idiomaDaConta(account);
+    const m = mensagens(idioma);
+    const curso = tituloDoCurso(getCourse(order.course_slug), idioma, order.course_slug);
     const r = await sendMail(env, {
       to: account.email,
-      ...mensagemDeEstorno({
+      ...m.estorno({
         nome: account.name || '', curso, valor: reaisBR(order.amount_cents, order.currency),
         pedido: order.id, cartao: order.method === 'card', contestacao,
-        restaAte: restaAte ? dataBR(restaAte) : '',
+        restaAte: restaAte ? m.data(restaAte) : '',
         marca: empresa.nomeFantasia || 'Hebraico Fluente',
         suporte: empresa.contato?.emailSuporte || ''
       })

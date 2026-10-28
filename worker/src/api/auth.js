@@ -34,9 +34,9 @@ import { avisarRetirada } from './depoimentos.js';
 import { versaoAtual } from '../lib/versoes.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
-import {
-  mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
-} from '../lib/mail.js';
+import { mailReady, mensagemDeConvitePendente, sendMail } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { idiomaDoWorker } from '../lib/idioma.js';
 import {
   activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
@@ -288,7 +288,7 @@ async function enviarConfirmacao(env, ctx, request, account) {
   }
 
   const site = siteOrigin(env, request);
-  const msg = mensagemDeConfirmacao({
+  const msg = mensagens(idiomaDoWorker(env)).confirmacao({
     /* Sem nome, sempre: este e-mail vai a um endereço que ainda não provou
        ser de quem criou a conta, e o nome é escrito por quem a criou
        (SEC-A-003, lib/nome.js). */
@@ -349,7 +349,7 @@ export async function signup({ request, env, ctx }) {
   }
 
   const { hash, salt, iterations } = await hashPassword(password, null, itersFor(env));
-  const account = await createAccount(env, { email, name, hash, salt, iterations });
+  const account = await createAccount(env, { email, name, hash, salt, iterations, idioma: idiomaDoWorker(env) });
   /* O id já identifica a conta. O e-mail não vai para a trilha: a trilha é
      lida por operadores num resumo do Actions, e é o que sobra depois de a
      conta ser apagada. */
@@ -613,7 +613,7 @@ export async function forgot({ request, env, ctx }) {
 
   const link = `${siteOrigin(env, request)}/nova-senha/?token=${encodeURIComponent(token)}`;
   const entregar = async () => {
-    const msg = mensagemDeRecuperacao({
+    const msg = mensagens(idiomaDoWorker(env)).recuperacao({
       /* O nome só com o e-mail já confirmado: antes disso, quem o escreveu
          pode não ser a dona do endereço que recebe (SEC-A-003). A consulta
          fica aqui dentro, fora do caminho da resposta, para o relógio não

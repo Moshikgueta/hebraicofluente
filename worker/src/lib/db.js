@@ -22,13 +22,14 @@ export const findAccountByEmail = (env, email) =>
 export const findAccountById = (env, id) =>
   env.DB.prepare('SELECT * FROM accounts WHERE id = ?').bind(id).first();
 
-export async function createAccount(env, { email, name, hash, salt, iterations }) {
+export async function createAccount(env, { email, name, hash, salt, iterations, idioma = 'pt' }) {
   const mail = normalizeEmail(email);
+  /* `idioma`: o do site em que a conta nasce (lib/idioma.js, migração 0004). */
   await env.DB.prepare(
-    `INSERT INTO accounts (email, name, pass_hash, pass_salt, pass_iter, created_at)
-     VALUES (?, ?, ?, ?, ?, ?)`
+    `INSERT INTO accounts (email, name, pass_hash, pass_salt, pass_iter, created_at, idioma)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
   ).bind(mail, String(name || '').trim().slice(0, 80), hash, salt,
-         iterations || PBKDF2_ITER, now()).run();
+         iterations || PBKDF2_ITER, now(), idioma === 'en' ? 'en' : 'pt').run();
   return findAccountByEmail(env, mail);
 }
 
@@ -903,7 +904,7 @@ export async function vencimentosParaAvisar(env, { limit = 20 } = {}, at = now()
   const D = 86_400_000;
   try {
     const { results } = await env.DB.prepare(
-      `SELECT e.account_id, e.course_slug, e.expires_at, a.email, a.name, m.marco
+      `SELECT e.account_id, e.course_slug, e.expires_at, a.email, a.name, a.idioma, m.marco
          FROM entitlements e
          JOIN accounts a ON a.id = e.account_id
          JOIN (SELECT 'd30' AS marco, ?1 AS de, ?2 AS ate
@@ -963,7 +964,7 @@ export async function ativacoesParaAvisar(env, { cursos, desde, limit = 20 }, at
   const lista = cursos.map((_, i) => `?${i + 9}`).join(', ');
   try {
     const { results } = await env.DB.prepare(
-      `SELECT o.id AS order_id, o.account_id, o.course_slug, o.paid_at, a.email, a.name,
+      `SELECT o.id AS order_id, o.account_id, o.course_slug, o.paid_at, a.email, a.name, a.idioma,
               p.updated_at AS progresso_em, m.marco,
               (SELECT COUNT(*) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.lessons') l
                 WHERE json_extract(l.value, '$.completedAt') IS NOT NULL) AS concluidas
