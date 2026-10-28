@@ -18,6 +18,8 @@ import { ACHIEVEMENTS, isLessonComplete, isLessonMastered, REGRA_DA_CONCLUSAO } 
 import { CertificateCallout } from '@/app/certificado/CertificadoClient';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { fmt } from '@/i18n';
+import { YaelDiz } from '@/components/aventura/Yael';
+import { tx as falaDaYael } from '@/i18n/telas/aventura-yael';
 import { tx } from '@/i18n/telas/painel-completion-client';
 
 export function CompletionClient() {
@@ -42,6 +44,9 @@ export function CompletionClient() {
       <CertificateCallout />
 
       <Card tone="mint" className="p-7 sm:p-10 grid gap-5 text-center">
+        {alfabetoDominado && (
+          <YaelDiz humor="comemora" tamanho={84} className="justify-self-center">{falaDaYael.alfabeto}</YaelDiz>
+        )}
         <Badge tone="mint">{finished ? tx.cursoConcluido : tx.ondeEsta}</Badge>
         <h1 className="text-[29px] sm:text-[38px] font-bold leading-[1.15]">
           {finished

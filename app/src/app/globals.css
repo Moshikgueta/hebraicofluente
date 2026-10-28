@@ -222,6 +222,9 @@
 .hf-cadeado-abre { animation: hf-cadeado-abre 1.1s ease-in-out .3s both; }
 .hf-yael-chega { animation: hf-yael-chega 1.2s cubic-bezier(.2, .8, .3, 1) 1.4s both; }
 .hf-selo-novo { animation: hf-selo-novo .45s ease-out 2.4s both; }
+/* O balão da Yael no lugar novo: aparece quando ela termina de chegar, no
+   céu do desenho. */
+.hf-yael-fala { transform-origin: left top; animation: yael-balao 340ms cubic-bezier(.3, .7, .4, 1) 2.6s both; }
 
 /* O ponto da cena explorável ainda não tocado (CenaExploravel). */
 @keyframes hf-cena-pulso { from { transform: scale(1); opacity: .85; } to { transform: scale(2.1); opacity: 0; } }
@@ -282,6 +285,13 @@
 .yael-quase .yael-cabeca { animation: yael-inclina 700ms cubic-bezier(.3, .7, .4, 1) 1 both; }
 .yael-quase .yael-orelha-d { animation: yael-orelha 900ms ease-in-out 1; }
 .yael-pensando .yael-cabeca { animation: yael-cabeca-pensa 2.6s ease-in-out infinite; }
+/* O balão da Yael (YaelDiz): entra com um salto pequeno, e o bico aponta
+   para ela. */
+@keyframes yael-balao { from { opacity: 0; transform: translateY(6px) scale(.92); } 70% { transform: scale(1.03); } to { opacity: 1; transform: none; } }
+.yael-balao { transform-origin: left bottom; animation: yael-balao 340ms cubic-bezier(.3, .7, .4, 1) both; }
+.yael-balao::before { content: ''; position: absolute; left: -8px; bottom: 9px; width: 13px; height: 13px;
+  background: var(--card); border-left: 2px solid var(--line); border-bottom: 2px solid var(--line);
+  border-bottom-left-radius: 3px; transform: rotate(45deg); }
 
 /* A folha do "Me explica, Moshik": sobe 12 px ao abrir, 220 ms. */
 @keyframes hf-folha-sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }

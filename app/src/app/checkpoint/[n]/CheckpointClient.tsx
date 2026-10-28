@@ -20,7 +20,8 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { Milestone, ProgressBar } from '@/components/game/Game';
-import { Yael } from '@/components/aventura/Yael';
+import { YaelDiz } from '@/components/aventura/Yael';
+import { tx as falaDaYael } from '@/i18n/telas/aventura-yael';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { Prose } from '@/components/learn/Blocks';
@@ -72,7 +73,9 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       <div className="focus-col grid gap-5">
         {/* A Yael comemora o fim do módulo (28/10/2026); sem a aprovação,
             inclina a cabeça, a cara de "vamos de novo". Decorativa. */}
-        <Yael humor={passed ? 'comemora' : 'quase'} className="justify-self-center w-[96px] -mb-3" />
+        <YaelDiz humor={passed ? 'comemora' : 'quase'} tamanho={84} className="justify-self-center -mb-2">
+          {passed ? falaDaYael.moduloFechado(mod.n) : falaDaYael.checkpointQuase}
+        </YaelDiz>
         <Milestone yael={false}
           kicker={tx.kicker(mod.n, result.correct, result.total)}
           title={passed ? tx.concluido(pct) : tx.quaseLa(pct)}

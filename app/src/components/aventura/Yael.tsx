@@ -20,6 +20,8 @@
  * reinicia a animação a cada resposta.
  */
 
+import type { CSSProperties, ReactNode } from 'react';
+
 export type HumorDaYael = 'parada' | 'feliz' | 'quase' | 'comemora' | 'pensando';
 
 const AREIA = '#D4A66C', AREIA_ESCURA = '#9C7448', CHIFRE = '#7A5634', CLARO = '#F6EEE1', TINTA = '#1F2A2C';
@@ -71,8 +73,9 @@ function Boca({ humor }: { humor: HumorDaYael }) {
   return <path d="M54 65 Q60 70 66 65" stroke={TINTA} strokeWidth="2.4" strokeLinecap="round" fill="none" />;
 }
 
-export function Yael({ humor, pulando = false, className = '' }: {
+export function Yael({ humor, pulando = false, className = '', style }: {
   humor?: HumorDaYael;
+  style?: CSSProperties;
   /** O nome de antes: `pulando` é o mesmo que `humor="comemora"`. */
   pulando?: boolean;
   className?: string;
@@ -80,7 +83,7 @@ export function Yael({ humor, pulando = false, className = '' }: {
   const h: HumorDaYael = humor ?? (pulando ? 'comemora' : 'parada');
   return (
     <svg viewBox="0 0 120 120" aria-hidden focusable="false" overflow="visible"
-         className={`yael yael-${h} ${className}`}>
+         className={`yael yael-${h} ${className}`} style={style}>
       {/* A pedra. */}
       <path d="M16 116 Q22 102 44 101 L80 100 Q102 102 106 116 Z" fill="#C4A873" />
       <path d="M30 109 Q40 105 52 107 M70 106 Q82 104 94 108" stroke="#A88C5A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
@@ -138,5 +141,25 @@ export function Yael({ humor, pulando = false, className = '' }: {
         </g>
       </g>
     </svg>
+  );
+}
+
+/** A Yael com um balão de fala (28/10/2026). O texto é texto de verdade (o
+ *  leitor de tela lê), e o desenho continua decorativo. O balão entra com
+ *  um pequeno salto; com "reduzir movimento" já está lá. */
+export function YaelDiz({ humor = 'parada', children, className = '', tamanho = 64 }: {
+  humor?: HumorDaYael;
+  children: ReactNode;
+  className?: string;
+  tamanho?: number;
+}) {
+  return (
+    <div className={`flex items-end gap-2.5 ${className}`}>
+      <Yael key={humor} humor={humor} className="shrink-0" style={{ width: tamanho }} />
+      <p className="yael-balao relative mb-5 min-w-0 rounded-[16px] border-2 border-line bg-[var(--card)] px-3.5 py-2
+                    text-left font-ui text-[14.5px] font-semibold leading-snug text-ink text-pretty">
+        {children}
+      </p>
+    </div>
   );
 }

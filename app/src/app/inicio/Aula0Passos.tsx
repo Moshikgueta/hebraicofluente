@@ -24,7 +24,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
-import { Yael } from '@/components/aventura/Yael';
+import { YaelDiz } from '@/components/aventura/Yael';
+import { tx as falaDaYael } from '@/i18n/telas/aventura-yael';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-aula0-passos';
 
@@ -102,8 +103,8 @@ export function Aula0Capa({ feita, guardado, comecar, paginaInteira }: {
     <section aria-labelledby="aula0-titulo"
              className="relative overflow-hidden rounded-[var(--r-lg)] bg-[var(--accent-bg)] text-white
                         px-6 py-8 sm:px-10 sm:py-12 grid gap-6 shadow-[var(--sh)]">
-      {/* A Yael, protótipo da companheira da aventura (Yael.tsx). */}
-      <Yael className="absolute right-2 top-2 w-[84px] sm:w-[110px]" />
+      {/* A Yael se apresenta: é o primeiro encontro com a companheira. */}
+      <YaelDiz humor="feliz" tamanho={72}>{falaDaYael.oi}</YaelDiz>
       <p className="m-0 justify-self-start rounded-full bg-white/12 px-3 py-1 font-ui text-[12.5px]
                     font-semibold uppercase tracking-[.1em] text-white">
         {fmt(tx.capaSelo, { n: PASSOS_DA_AULA0.length })}
@@ -232,12 +233,10 @@ export function Aula0Fim({ primeiraLicao, letra, paginaInteira }: {
               className="animate-spark absolute w-3 h-3 rounded-[2px] bg-[var(--gold)]"
               style={{ left: f.x, top: f.y, animationDelay: f.d }} />
       ))}
-      <div className="flex items-end gap-2">
-        <span aria-hidden
-              className="animate-pop grid place-items-center w-20 h-20 rounded-full bg-white
-                         text-[var(--navy)] text-[38px] font-bold">✓</span>
-        <Yael pulando className="w-[84px]" />
-      </div>
+      <span aria-hidden
+            className="animate-pop grid place-items-center w-20 h-20 rounded-full bg-white
+                       text-[var(--navy)] text-[38px] font-bold">✓</span>
+      <YaelDiz humor="comemora" tamanho={76}>{falaDaYael.fimAula0}</YaelDiz>
       <h1 id="aula0-fim" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-tight">
         {tx.fimTitulo}
       </h1>
