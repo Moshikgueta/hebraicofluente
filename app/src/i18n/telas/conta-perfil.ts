@@ -109,6 +109,12 @@ const pt = {
     'pelo link que vai no próprio e-mail.',
   avisoErro: 'Não consegui salvar agora. Tente de novo em instantes.',
 
+  lembreteTitulo: 'Lembrete para estudar',
+  lembreteQuero: 'Quero um e-mail às 19h nos dias em que eu ainda não tiver estudado.',
+  lembreteNota:
+    'No máximo um por dia. Depois de três lembretes sem estudo, eles param sozinhos até você voltar. ' +
+    'Você desliga quando quiser, aqui ou pelo link do próprio e-mail.',
+
   senhaTitulo: 'Senha',
   senhasDiferentes: 'As duas senhas não são iguais.',
   senhaIgualAtual: 'A senha nova é igual à atual.',
@@ -279,6 +285,12 @@ const en: Traducao<typeof pt> = {
     'A single notice, when the course opens, and nothing else. You can leave whenever you want, ' +
     'by unchecking here or through the link in the email itself.',
   avisoErro: 'I could not save that right now. Try again in a moment.',
+
+  lembreteTitulo: 'Study reminder',
+  lembreteQuero: 'I want an email at 7 pm (Brasília time) on days when I have not studied yet.',
+  lembreteNota:
+    'At most one a day. After three reminders without study, they stop on their own until you come back. ' +
+    'You can turn it off whenever you want, here or through the link in the email itself.',
 
   senhaTitulo: 'Password',
   senhasDiferentes: 'The two passwords do not match.',

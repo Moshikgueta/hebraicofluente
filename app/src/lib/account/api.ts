@@ -87,6 +87,10 @@ export interface PlatformApi {
    *  Só a pessoa põe o próprio nome nela; começa sempre fora. */
   setNovidades(quero: boolean): Promise<void>;
 
+  /** Liga ou desliga o lembrete para estudar (a caixa do perfil). Começa
+   *  sempre desligado. */
+  setLembrete(quero: boolean): Promise<void>;
+
   /** Começa um pedido. Para PIX volta com o copia-e-cola; para cartão, com a
    *  URL do checkout da Mercado Pago em `redirectUrl`. */
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):

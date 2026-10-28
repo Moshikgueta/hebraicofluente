@@ -833,6 +833,24 @@ export async function novidadesMarcar(env, accountId, quer, at = now()) {
   ).bind(...(quer ? [accountId, at] : [accountId])).run();
 }
 
+/* ── o lembrete para estudar (worker/src/lembrete.js) ────────────────────
+   Mesmo desenho da lista de novidades: sem a tabela, ninguém pediu. */
+
+/** A pessoa pediu o lembrete para estudar? */
+export async function lembreteQuer(env, accountId) {
+  try {
+    return !!await env.DB.prepare('SELECT 1 AS x FROM lembretes_estudo WHERE account_id = ?')
+      .bind(accountId).first();
+  } catch { return false; }
+}
+
+export async function lembreteMarcar(env, accountId, quer, at = now()) {
+  await env.DB.prepare(quer
+    ? 'INSERT INTO lembretes_estudo (account_id, criado_em) VALUES (?, ?) ON CONFLICT(account_id) DO NOTHING'
+    : 'DELETE FROM lembretes_estudo WHERE account_id = ?'
+  ).bind(...(quer ? [accountId, at] : [accountId])).run();
+}
+
 /** Outro pedido PAGO da mesma conta e do mesmo curso, pago dentro da janela
  *  (auditoria de 28/09, PAY-004). null quando não há. */
 export async function outroPedidoPagoRecente(env, order, janelaMs, at = now()) {
@@ -1416,6 +1434,10 @@ export async function deleteAccount(env, accountId) {
   /* A lista de novidades guarda a vontade de receber e-mail: some junto. */
   try {
     await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
+  /* O pedido do lembrete para estudar também é vontade de receber e-mail. */
+  try {
+    await env.DB.prepare('DELETE FROM lembretes_estudo WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
   /* O código pendente do segundo fator do administrador. */
   try {

@@ -16,6 +16,7 @@ const PT = {
   estorno: pt.mensagemDeEstorno,
   vencimento: pt.mensagemDeVencimento,
   ativacao: pt.mensagemDeAtivacao,
+  lembrete: pt.mensagemDeLembrete,
   data: pt.dataBR
 };
 
@@ -25,6 +26,7 @@ const EN = {
   estorno: en.mensagemDeEstorno,
   vencimento: en.mensagemDeVencimento,
   ativacao: en.mensagemDeAtivacao,
+  lembrete: en.mensagemDeLembrete,
   data: en.dataEN
 };
 

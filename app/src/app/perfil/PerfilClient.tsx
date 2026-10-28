@@ -34,7 +34,7 @@ import { allCourses, brl, FLAGSHIP, getCourse, paginaDeVenda } from '@/lib/catal
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { api } from '@/lib/account/api';
-import { empresa, whatsappUrl } from '@/lib/empresa';
+import { empresa, lembreteLigado, whatsappUrl } from '@/lib/empresa';
 import { MOTIVOS_DESISTENCIA, type MotivoDesistencia } from '@/lib/motivos-desistencia';
 import { fraseDeVencido, pixAindaPagavel, vencidoDe } from './compras';
 import { IdentificacaoCurta } from '@/components/legal/Legal';
@@ -101,6 +101,9 @@ export function PerfilClient() {
 
       {/* ── o aviso do próximo curso ──────────────────────────────── */}
       <AvisoDoProximoCurso />
+
+      {/* ── o lembrete para estudar (desligado até o dono aprovar) ──── */}
+      <LembreteDeEstudo />
 
 
       {/* ── cursos ────────────────────────────────────────────────── */}
@@ -480,6 +483,46 @@ function AvisoDoProximoCurso() {
       </label>
       <p id="novidades-nota" className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
         {tx.avisoNota}
+      </p>
+      <p role="status" className="font-ui text-[13px] text-[var(--ember)] m-0 empty:hidden">
+        {erro ? tx.avisoErro : ''}
+      </p>
+    </Card>
+  );
+}
+
+/**
+ * O lembrete para estudar (worker/src/api/lembrete.js). Só existe com a chave
+ * ligada em data/empresa.json e para quem tem o curso. Começa desmarcado e
+ * salva no toque, como o aviso do próximo curso.
+ */
+function LembreteDeEstudo() {
+  const account = useAccount();
+  const [busy, setBusy] = useState(false);
+  const [erro, setErro] = useState(false);
+  const [otimista, setOtimista] = useState<boolean | null>(null);
+  if (!lembreteLigado() || !account.session || !account.can(FLAGSHIP)) return null;
+  const marcado = otimista ?? !!account.session.account.lembrete;
+
+  async function trocar(quero: boolean) {
+    setOtimista(quero); setBusy(true); setErro(false);
+    try { await account.setLembrete(quero); }
+    catch { setErro(true); }
+    finally { setOtimista(null); setBusy(false); }
+  }
+
+  return (
+    <Card className="p-5 grid gap-3">
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.lembreteTitulo}</h2>
+      <label className="flex items-start gap-3 cursor-pointer min-h-[44px]">
+        <input type="checkbox" checked={marcado} aria-busy={busy}
+               onChange={e => { if (!busy) void trocar(e.target.checked); }}
+               aria-describedby="lembrete-nota"
+               className="mt-1 w-5 h-5 shrink-0 accent-[var(--navy)]" />
+        <span className="font-ui text-[15px] leading-relaxed text-ink">{tx.lembreteQuero}</span>
+      </label>
+      <p id="lembrete-nota" className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
+        {tx.lembreteNota}
       </p>
       <p role="status" className="font-ui text-[13px] text-[var(--ember)] m-0 empty:hidden">
         {erro ? tx.avisoErro : ''}

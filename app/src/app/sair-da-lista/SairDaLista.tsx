@@ -22,6 +22,8 @@ export function SairDaLista() {
      `i` é da lista de interessados (worker/src/api/interessados.js); os
      outros, do aviso do próximo curso para quem tem conta. */
   const interessado = t.startsWith('i');
+  /* E o que começa com `l`, do lembrete para estudar (api/lembrete.js). */
+  const lembrete = t.startsWith('l');
   const [estado, setEstado] = useState<'pronto' | 'enviando' | 'saiu' | 'invalido' | 'erro'>(
     t ? 'pronto' : 'invalido'
   );
@@ -29,7 +31,8 @@ export function SairDaLista() {
   async function sair() {
     setEstado('enviando');
     try {
-      const r = await fetch(interessado ? '/api/interessados/sair' : '/api/novidades/sair', {
+      const rota = interessado ? '/api/interessados/sair' : lembrete ? '/api/lembrete/sair' : '/api/novidades/sair';
+      const r = await fetch(rota, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ t })
@@ -47,6 +50,8 @@ export function SairDaLista() {
         {estado === 'saiu' ? (
           interessado ? (
             <Aviso>{tx.saiuInteressado}</Aviso>
+          ) : lembrete ? (
+            <Aviso>{tx.saiuLembrete}</Aviso>
           ) : (
             <Aviso>
               {tx.saiuAviso}
@@ -61,7 +66,7 @@ export function SairDaLista() {
             <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
               {interessado
                 ? tx.confirmarInteressado
-                : tx.confirmarAviso}
+                : lembrete ? tx.confirmarLembrete : tx.confirmarAviso}
             </p>
             {estado === 'erro' && <Erro>{tx.erro}</Erro>}
             <Button size="lg" onClick={() => void sair()} disabled={estado === 'enviando'}>

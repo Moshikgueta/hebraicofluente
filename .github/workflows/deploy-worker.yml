@@ -708,6 +708,7 @@ jobs:
              DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
              DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);
              DELETE FROM novidades           WHERE account_id IN ($ALVO);
+             DELETE FROM lembretes_estudo    WHERE account_id IN ($ALVO);
              DELETE FROM marcas              WHERE account_id IN ($ALVO);
              DELETE FROM aparelhos           WHERE account_id IN ($ALVO);
              DELETE FROM depoimentos         WHERE account_id IN ($ALVO);
