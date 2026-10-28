@@ -3,6 +3,7 @@
    (AppShell). Os endereços vêm de lib/professor.ts. Os símbolos são
    desenhados aqui, em traço simples, na cor do texto, sem logo colorido. */
 import { INSTAGRAM, PERFIL_LINKEDIN } from '@/lib/professor';
+import { tx } from '@/i18n/telas/conta-shell-pecas';
 
 const IconeInstagram = () => (
   <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -25,14 +26,14 @@ export function RedesSociais({ classe = '' }: { classe?: string }) {
     <ul className={`flex flex-wrap gap-x-5 list-none p-0 m-0 ${classe}`}>
       <li>
         <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className={link}>
-          <IconeInstagram />Instagram
-          <span className="sr-only"> do Hebraico Fluente (abre em outra aba)</span>
+          <IconeInstagram />{tx.instagram}
+          <span className="sr-only">{tx.instagramSr}</span>
         </a>
       </li>
       <li>
         <a href={PERFIL_LINKEDIN} target="_blank" rel="noopener noreferrer me" className={link}>
-          <IconeLinkedIn />LinkedIn
-          <span className="sr-only"> do professor (abre em outra aba)</span>
+          <IconeLinkedIn />{tx.linkedin}
+          <span className="sr-only">{tx.linkedinSr}</span>
         </a>
       </li>
     </ul>

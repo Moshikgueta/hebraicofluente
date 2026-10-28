@@ -1,0 +1,154 @@
+{
+  "scenes/garrafa-mayim/labelPt": {
+    "pt": "Na garrafa d'água do supermercado",
+    "en": null
+  },
+  "scenes/garrafa-mayim/contextPt": {
+    "pt": "Toda garrafa de água em Israel traz esta palavra. É provavelmente a primeira coisa que você vai ler sozinho numa prateleira.",
+    "en": null
+  },
+  "scenes/quem-e/labelPt": {
+    "pt": "Quando alguém bate na porta ou liga",
+    "en": null
+  },
+  "scenes/quem-e/contextPt": {
+    "pt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém. Quando alguém bate na porta ou liga, a pergunta é {{מִי זֶה?}}, \"quem é?\".",
+    "en": null
+  },
+  "scenes/porta-loja/labelPt": {
+    "pt": "Na porta de uma loja, na chegada e na saída",
+    "en": null
+  },
+  "scenes/porta-loja/contextPt": {
+    "pt": "A mesma palavra abre e fecha uma conversa. Em Israel, você vai ouvir essa palavra o tempo todo.",
+    "en": null
+  },
+  "scenes/recibo-toda/labelPt": {
+    "pt": "No rodapé de um recibo de padaria",
+    "en": null
+  },
+  "scenes/recibo-toda/contextPt": {
+    "pt": "Impresso no fim de quase todo cupom fiscal do país.",
+    "en": null
+  },
+  "scenes/aula-more/labelPt": {
+    "pt": "Como se chama o professor na escola",
+    "en": null
+  },
+  "scenes/aula-more/contextPt": {
+    "pt": "Professor. Se for professora, {{מוֹרָה}}. Na escola as crianças chamam assim quem está na frente da sala; no ulpan, é muito comum chamar o professor pelo primeiro nome.",
+    "en": null
+  },
+  "scenes/padaria-lechem/labelPt": {
+    "pt": "Na etiqueta da prateleira de pães",
+    "en": null
+  },
+  "scenes/padaria-lechem/contextPt": {
+    "pt": "O {{ח}} raspado bem no meio da palavra. Vale ler em voz alta antes de conferir.",
+    "en": null
+  },
+  "scenes/casa-nova/labelPt": {
+    "pt": "Num anúncio de imóvel",
+    "en": null
+  },
+  "scenes/casa-nova/contextPt": {
+    "pt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִירָה}} (apartamento), vira {{חֲדָשָׁה}}.",
+    "en": null
+  },
+  "scenes/horario-shaa/labelPt": {
+    "pt": "Em horários de funcionamento, compromissos e reservas",
+    "en": null
+  },
+  "scenes/horario-shaa/contextPt": {
+    "pt": "O {{ע}} é mudo: você lê só a vogal que vem com ele.",
+    "en": null
+  },
+  "scenes/jornal-haaretz/labelPt": {
+    "pt": "Na primeira página do jornal mais antigo do país",
+    "en": null
+  },
+  "scenes/jornal-haaretz/contextPt": {
+    "pt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha.",
+    "en": null
+  },
+  "scenes/jornal-haaretz/pt": {
+    "pt": "a terra",
+    "en": null
+  },
+  "scenes/caixa-mits/labelPt": {
+    "pt": "Na caixa de suco, na geladeira do mercado",
+    "en": null
+  },
+  "scenes/caixa-mits/contextPt": {
+    "pt": "Três letras, e a última é uma forma final. Suco.",
+    "en": null
+  },
+  "scenes/biblioteca-sheket/labelPt": {
+    "pt": "Numa placa de biblioteca",
+    "en": null
+  },
+  "scenes/biblioteca-sheket/contextPt": {
+    "pt": "Silêncio. Uma placa que você vai entender de relance.",
+    "en": null
+  },
+  "scenes/whatsapp-boker/labelPt": {
+    "pt": "Mensagem de WhatsApp, oito da manhã",
+    "en": null
+  },
+  "scenes/whatsapp-boker/contextPt": {
+    "pt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia.",
+    "en": null
+  },
+  "scenes/whatsapp-boker/pt": {
+    "pt": "bom dia",
+    "en": null
+  },
+  "scenes/whatsapp-boker/note": {
+    "pt": "Gloss explícito: a junção palavra a palavra dava 'manhã bom', que não é português.",
+    "en": null
+  },
+  "scenes/loja-shabat/labelPt": {
+    "pt": "No horário de funcionamento, na porta",
+    "en": null
+  },
+  "scenes/loja-shabat/contextPt": {
+    "pt": "Uma grande parte das lojas fecha da tarde de sexta-feira até o fim do sábado, embora isso varie muito de cidade para cidade. Saber ler a palavra evita uma viagem perdida.",
+    "en": null
+  },
+  "scenes/praca-ochel/labelPt": {
+    "pt": "Na placa da praça de alimentação de um shopping",
+    "en": null
+  },
+  "scenes/praca-ochel/contextPt": {
+    "pt": "O {{כ}} aqui está sem ponto, no meio da palavra - então é o som raspado, não K.",
+    "en": null
+  },
+  "scenes/rua-hamelech/labelPt": {
+    "pt": "Em nomes de ruas, como a rua King George (Rei George)",
+    "en": null
+  },
+  "scenes/rua-hamelech/contextPt": {
+    "pt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
+    "en": null
+  },
+  "scenes/rua-hamelech/pt": {
+    "pt": "o rei",
+    "en": null
+  },
+  "scenes/cambio-kesef/labelPt": {
+    "pt": "Na vitrine de uma casa de câmbio",
+    "en": null
+  },
+  "scenes/cambio-kesef/contextPt": {
+    "pt": "Dinheiro - e também prata: o dinheiro de antigamente era prata, e a palavra ficou.",
+    "en": null
+  },
+  "scenes/livraria-sefer/labelPt": {
+    "pt": "Na lombada de um livro, numa livraria de Tel Aviv",
+    "en": null
+  },
+  "scenes/livraria-sefer/contextPt": {
+    "pt": "Você fechou o alfabeto. Esta palavra usa a última letra que aprendeu.",
+    "en": null
+  }
+}

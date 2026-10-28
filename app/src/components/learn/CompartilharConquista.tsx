@@ -16,6 +16,7 @@
  * pessoa salvar com um toque longo; no computador, ela é baixada.
  */
 
+import { tx } from '@/i18n/telas/licao-compartilhar-conquista';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '@/components/ui/Button';
@@ -46,7 +47,7 @@ export function CompartilharConquista({ id, quando, size = 'sm', variant = 'seco
     let vivo = true, url = '';
     const fazer = async () => {
       try {
-        const data = new Date(quando || Date.now()).toLocaleDateString('pt-BR');
+        const data = new Date(quando || Date.now()).toLocaleDateString(tx.dataLocale);
         const blob = await desenharConquista(frase, data);
         if (!vivo) return;
         url = URL.createObjectURL(blob);
@@ -92,28 +93,28 @@ export function CompartilharConquista({ id, quando, size = 'sm', variant = 'seco
   return (
     <span ref={raiz} className="inline-grid gap-1">
       <Button size={size} variant={variant} onClick={compartilhar} disabled={!pronta}>
-        {pronta || falhou ? (curto ? 'Compartilhar' : 'Compartilhar no Instagram') : (curto ? 'Preparando…' : 'Preparando a imagem…')}
+        {pronta || falhou ? (curto ? tx.compartilhar : tx.compartilharInstagram) : (curto ? tx.preparando : tx.preparandoImagem)}
       </Button>
       {baixou && (
         <span role="status" className="font-ui text-[12.5px] text-ink-muted">
-          A imagem foi baixada. Publique no Instagram pelo celular.
+          {tx.baixada}
         </span>
       )}
       {falhou && (
-        <span role="alert" className="font-ui text-[12.5px] text-ink-muted">Não consegui gerar a imagem agora.</span>
+        <span role="alert" className="font-ui text-[12.5px] text-ink-muted">{tx.falhou}</span>
       )}
       {/* No <body>, e não aqui: o aviso de conquista nova anda com transform,
           e um fixed dentro dele ficaria preso ao aviso, embaixo da barra. */}
       {mostrar && pronta && createPortal(
-        <div role="dialog" aria-modal="true" aria-label="A imagem da conquista"
+        <div role="dialog" aria-modal="true" aria-label={tx.dialogo}
              className="fixed inset-0 z-[70] bg-black/85 grid place-items-center p-4">
           <span className="grid gap-3 justify-items-center max-w-[360px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={pronta.url} alt={frase} className="w-full max-h-[70vh] object-contain rounded-[12px]" />
             <span className="font-ui text-[14.5px] text-white text-center">
-              Toque e segure na imagem para salvar no celular. Depois, publique no story do Instagram.
+              {tx.tocarESegurar}
             </span>
-            <Button variant="secondary" onClick={() => setMostrar(false)}>Fechar</Button>
+            <Button variant="secondary" onClick={() => setMostrar(false)}>{tx.fechar}</Button>
           </span>
         </div>,
         document.body

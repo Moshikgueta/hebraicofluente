@@ -19,6 +19,7 @@ import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios
 import { descobertasDaCena } from '@/lib/cena-exploravel';
 import type { Letter } from '@/lib/content';
 import type { Extras } from '@/lib/engine/extras';
+import { tx } from '@/i18n/telas/academia-cena-exploravel';
 
 const W = 320, H = 120;
 
@@ -50,10 +51,10 @@ export function CenaExploravel({ modulo, todas, comecadas, extras, modulosComeca
              className="grid overflow-hidden rounded-[var(--r-lg)] border border-line bg-[var(--card)] shadow-[var(--sh)]">
       <div className="grid gap-1 px-5 pt-5 pb-3 sm:px-6">
         <h2 id="cena-titulo" className="m-0 font-display text-[18px] font-semibold text-balance">
-          Explore {lugar.pt.split(',')[0]}
+          {tx.explore(lugar.pt.split(',')[0]!)}
         </h2>
         <p className="m-0 font-ui text-[14px] leading-snug text-ink-muted text-pretty">
-          Toque nos pontos do desenho: cada um é uma palavra do curso.
+          {tx.instrucao}
         </p>
       </div>
 
@@ -68,7 +69,7 @@ export function CenaExploravel({ modulo, todas, comecadas, extras, modulosComeca
           return (
             <button key={p.he} type="button" onClick={() => tocar(p.he)}
                     aria-pressed={ativo}
-                    aria-label={`${p.palavra.pt}${visto ? ', visto' : ''}`}
+                    aria-label={`${p.palavra.pt}${visto ? tx.visto : ''}`}
                     style={{ left: `${(p.x / W) * 100}%`, top: `${(p.y / H) * 100}%` }}
                     className="group absolute -translate-x-1/2 -translate-y-1/2 grid place-items-center w-11 h-11 rounded-full
                                focus-visible:outline-offset-0">
@@ -96,28 +97,28 @@ export function CenaExploravel({ modulo, todas, comecadas, extras, modulosComeca
                 <span className="font-ui text-[14.5px] text-ink-muted">{atual.palavra.pt}</span>
                 {atual.palavra.comPontos && (
                   <span className="font-ui text-[13px] text-ink-muted">
-                    Com os pontos: <He size="inline">{atual.palavra.comPontos}</He>
+                    {tx.comPontos} <He size="inline">{atual.palavra.comPontos}</He>
                   </span>
                 )}
               </span>
-              <AudioButton audioId={atual.palavra.audioId ?? null} label="Ouvir"
-                           ariaLabel={`Ouvir ${atual.palavra.translit ?? atual.palavra.pt}`} size="sm" />
+              <AudioButton audioId={atual.palavra.audioId ?? null} label={tx.ouvir}
+                           ariaLabel={tx.ouvirAria(atual.palavra.translit ?? atual.palavra.pt)} size="sm" />
             </div>
           ) : (
             <p key={atual.he} className="m-0 font-ui text-[15px] leading-snug text-ink-body il-entra">
               <strong className="font-semibold text-ink">{atual.palavra.pt[0]!.toUpperCase() + atual.palavra.pt.slice(1)}.</strong>{' '}
               {atual.faltaModulo
-                ? `A palavra em hebraico aparece aqui quando você começar o módulo ${atual.faltaModulo}.`
-                : `A palavra em hebraico aparece aqui quando você começar a letra ${atual.falta?.namePt ?? 'que falta'}.`}
+                ? tx.faltaModulo(atual.faltaModulo)
+                : tx.faltaLetra(atual.falta?.namePt ?? tx.letraQueFalta)}
             </p>
           )
         ) : (
-          <p className="m-0 font-ui text-[14.5px] text-ink-muted">Nenhum ponto aberto ainda.</p>
+          <p className="m-0 font-ui text-[14.5px] text-ink-muted">{tx.nenhum}</p>
         )}
         <p className="m-0 font-ui text-[13px] text-ink-muted tabular-nums">
           {vistos.size === pontos.length
-            ? `Você encontrou as ${pontos.length} palavras do lugar.`
-            : `${vistos.size} de ${pontos.length} encontradas`}
+            ? tx.todas(pontos.length)
+            : tx.contagem(vistos.size, pontos.length)}
         </p>
       </div>
     </section>

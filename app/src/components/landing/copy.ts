@@ -36,6 +36,7 @@
 
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 import { ETAPAS_DA_LICAO } from '@/lib/etapas-da-licao';
+import { tx } from '@/i18n/telas/venda-copy';
 
 /** Existe gravação? É o mesmo que `audioAvailable()` responde ao curso. */
 export const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
@@ -51,42 +52,42 @@ export type Aba = {
 /** As cinco abas da demonstração: um momento da lição em cada. */
 export const ABAS: readonly Aba[] = [
   {
-    label: 'Aula', kicker: 'Aprender', title: 'A letra primeiro, sempre sozinha.',
+    label: tx.aulaLabel, kicker: tx.aulaKicker, title: tx.aulaTitle,
     body: TEM_AUDIO
-      ? 'Uma forma por tela. O nome, o som, o áudio e a explicação em português - nada mais disputando atenção.'
-      : 'Uma forma por tela. O nome, o som e a explicação em português - nada mais disputando atenção.',
+      ? tx.aulaBodyAudio
+      : tx.aulaBodySemAudio,
     points: [
-      TEM_AUDIO ? 'Áudio gravado por falante nativo' : 'O som comparado com um som do português',
-      'Explicação escrita em português',
-      'Uma palavra de exemplo, já com nikud'
+      TEM_AUDIO ? tx.aulaPontoAudio : tx.aulaPontoSemAudio,
+      tx.aulaPonto2,
+      tx.aulaPonto3
     ]
   },
   {
-    label: 'Escrita', kicker: 'Escrever', title: 'Você escreve a letra, com o dedo na tela.',
-    body: 'O curso mostra a ordem dos traços e depois devolve a caneta para você. Escrever é o que separa reconhecer de saber - a mão aprende o que o olho só reconhece.',
-    points: ['A ordem dos traços, movimento a movimento', 'Traçado com o dedo, direto no celular', 'A forma exata da cursiva israelense, e não um desenho aproximado']
+    label: tx.escritaLabel, kicker: tx.escritaKicker, title: tx.escritaTitle,
+    body: tx.escritaBody,
+    points: [tx.escritaPonto1, tx.escritaPonto2, tx.escritaPonto3]
   },
   {
     /* Cinco categorias com gravação, quatro sem - e o número é CONTADO, não
        escolhido: múltipla escolha, digitação, associação, escuta e leitura, e a
        escuta é a única que o motor desliga quando não há clipe. Anunciar cinco
        e entregar quatro é o mesmo erro, de tamanho menor. */
-    label: 'Prática', kicker: 'Fixar',
-    title: TEM_AUDIO ? 'Cinco tipos de exercício, alternados.' : 'Quatro tipos de exercício, alternados.',
+    label: tx.praticaLabel, kicker: tx.praticaKicker,
+    title: TEM_AUDIO ? tx.praticaTitleAudio : tx.praticaTitleSemAudio,
     body: TEM_AUDIO
-      ? 'Múltipla escolha, digitação, associação, escuta e leitura. A alternância é o que impede a decoreba.'
-      : 'Múltipla escolha, digitação, associação e leitura. A alternância é o que impede a decoreba.',
-    points: ['Correção imediata, com explicação', 'Erro não bloqueia: você tenta de novo', 'Nos jogos, a dificuldade sobe conforme você acerta']   // só os jogos têm níveis (COM-013)
+      ? tx.praticaBodyAudio
+      : tx.praticaBodySemAudio,
+    points: [tx.praticaPonto1, tx.praticaPonto2, tx.praticaPonto3]   // só os jogos têm níveis (COM-013)
   },
   {
-    label: 'Revisão', kicker: 'Consolidar', title: 'O que você errou volta na hora certa.',
-    body: 'As letras que ainda escapam reaparecem em intervalos crescentes, até ficarem automáticas.',
-    points: ['Revisões curtas, de 3 a 5 minutos', 'Só o que precisa - não repete o que já domina', 'Aviso quando há revisão pendente']
+    label: tx.revisaoLabel, kicker: tx.revisaoKicker, title: tx.revisaoTitle,
+    body: tx.revisaoBody,
+    points: [tx.revisaoPonto1, tx.revisaoPonto2, tx.revisaoPonto3]
   },
   {
-    label: 'Progresso', kicker: 'Acompanhar', title: 'Você vê exatamente onde está.',
-    body: 'Letras dominadas, letras em progresso, letras a revisar. Sem pontuação inflada: o número reflete leitura real.',
-    points: ['Percentual por módulo', 'Mapa de domínio das 22 letras', 'Tempo de estudo por semana']
+    label: tx.progressoLabel, kicker: tx.progressoKicker, title: tx.progressoTitle,
+    body: tx.progressoBody,
+    points: [tx.progressoPonto1, tx.progressoPonto2, tx.progressoPonto3]
   }
 ];
 
@@ -100,8 +101,8 @@ export const PASSOS: readonly (readonly [string, string])[] =
    vez de descrevê-lo - então elas também têm de mostrar um que exista hoje. */
 export const MAQUETE = {
   /** O rótulo da aba de prática: escuta só quando há o que escutar. */
-  praticaRotulo: TEM_AUDIO ? 'Escuta' : 'Reconhecer',
-  praticaPergunta: TEM_AUDIO ? 'Qual som você ouviu?' : 'Qual destas letras faz o som SH?',
+  praticaRotulo: TEM_AUDIO ? tx.maquetePraticaRotuloAudio : tx.maquetePraticaRotuloSemAudio,
+  praticaPergunta: TEM_AUDIO ? tx.maquetePraticaPerguntaAudio : tx.maquetePraticaPerguntaSemAudio,
   /** A pergunta do herói vale nos dois casos: ela é respondida pelas opções. */
-  heroiPergunta: 'Qual é o som desta letra?'
+  heroiPergunta: tx.maqueteHeroiPergunta
 } as const;

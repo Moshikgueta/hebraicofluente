@@ -32,6 +32,7 @@ import { safeNext } from '@/lib/safe-next';
 import {
   AuthError, emailLooksValid, MESSAGES, MIN_PASSWORD, passwordOk
 } from '@/lib/account/types';
+import { tx } from '@/i18n/telas/conta-auth-form';
 
 /* `safeNext` mora em lib/safe-next.ts, sem React, para ser testado contra a
    lista inteira de truques de redirecionamento. Reexportado daqui para quem
@@ -44,8 +45,7 @@ export { safeNext };
 export const MOTIVOS: Record<string, string> = {
   /* UXQA-006: a quarta entrada da conta derrubou este aparelho
      (worker/src/lib/aparelhos.js). Sem isto ele caía no login sem saber por quê. */
-  aparelhos: 'Você entrou em outro aparelho e esta sessão foi encerrada. ' +
-    'O limite é de 3 aparelhos ao mesmo tempo.'
+  aparelhos: tx.motivoAparelhos
 };
 
 export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
@@ -112,12 +112,12 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
       <header className="grid gap-3 justify-items-center text-center">
         <He size="lg" dim>ע</He>
         <Titulo className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
-          {signup ? 'Criar sua conta' : 'Entrar'}
+          {signup ? tx.criarSuaConta : tx.entrar}
         </Titulo>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[38ch]">
           {signup
-            ? 'Seus cursos, seu progresso e seu certificado ficam todos aqui.'
-            : 'Bem-vindo de volta. Vamos continuar seu hebraico?'}
+            ? tx.subtituloCadastro
+            : tx.subtituloEntrar}
         </p>
       </header>
 
@@ -133,24 +133,24 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
         <form onSubmit={submit} className="grid gap-4" noValidate>
           {signup && (
             <Campo
-              id="nome" label="Como você quer ser chamado" value={name} onChange={setName}
-              type="text" autoComplete="name" placeholder="ex.: Daniel"
+              id="nome" label={tx.comoQuerSerChamado} value={name} onChange={setName}
+              type="text" autoComplete="name" placeholder={tx.exemploNome}
             />
           )}
 
           <Campo
-            id="email" label="E-mail" value={email} onChange={setEmail} erroId={error ? 'auth-erro' : undefined}
-            type="email" autoComplete="email" placeholder="ex.: voce@exemplo.com.br" required
+            id="email" label={tx.email} value={email} onChange={setEmail} erroId={error ? 'auth-erro' : undefined}
+            type="email" autoComplete="email" placeholder={tx.exemploEmail} required
             /* No cadastro, um e-mail errado custa o recibo e o link de senha, e
                o site não deixa trocar sozinho (auditoria, OPS-001). */
-            hint={signup ? 'Confira com cuidado: é para ele que vão o recibo da compra e o link de senha.' : undefined}
+            hint={signup ? tx.confiraEmail : undefined}
           />
 
           <Campo
-            id="senha" label="Senha" value={password} onChange={setPassword} erroId={error ? 'auth-erro' : undefined}
+            id="senha" label={tx.senha} value={password} onChange={setPassword} erroId={error ? 'auth-erro' : undefined}
             type="password"
             autoComplete={signup ? 'new-password' : 'current-password'}
-            hint={signup ? `Pelo menos ${MIN_PASSWORD} caracteres.` : undefined}
+            hint={signup ? tx.peloMenos(MIN_PASSWORD) : undefined}
             required
           />
 
@@ -170,16 +170,16 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
                   {/* A declaração de idade mora SÓ nos Termos, art. 3 (pedido do
                       dono, 30/09/2026): aceitar os Termos é fazê-la. A caixa não a
                       repete; o servidor continua gravando os registros termos e idade. */}
-                  Li e aceito os{' '}
+                  {tx.liEAceito}{' '}
                   <Link href="/termos" target="_blank" rel="noopener" className="text-[var(--accent)] underline underline-offset-2">
-                    Termos de Uso
+                    {tx.termosDeUso}
                   </Link>.
                 </span>
               </label>
               <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-                Como tratamos os seus dados:{' '}
+                {tx.comoTratamos}{' '}
                 <Link href="/privacidade" target="_blank" rel="noopener" className="text-[var(--accent)] hover:underline">
-                  Política de Privacidade
+                  {tx.politicaDePrivacidade}
                 </Link>.
               </p>
             </div>
@@ -188,7 +188,7 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
           {error && <Erro id="auth-erro">{error}</Erro>}
 
           <Button type="submit" size="lg" full disabled={busy}>
-            {busy ? (signup ? 'Criando…' : 'Entrando…') : (signup ? 'Criar conta' : 'Entrar')}
+            {busy ? (signup ? tx.criando : tx.entrando) : (signup ? tx.criarConta : tx.entrar)}
           </Button>
 
 
@@ -201,7 +201,7 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
                 href={email ? `/esqueci-senha?email=${encodeURIComponent(email)}` : '/esqueci-senha'}
                 className="text-[var(--accent)] hover:underline"
               >
-                Esqueci minha senha
+                {tx.esqueciSenha}
               </Link>
             </p>
           )}
@@ -211,18 +211,18 @@ export function AuthForm({ mode, nivelDoTitulo = 'h1', voltarAqui = false }: {
       <p className="font-ui text-[14px] text-center text-ink-muted">
         {signup ? (
           <>
-            Já tem conta?{' '}
+            {tx.jaTemConta}{' '}
             <Link href={`/entrar?next=${encodeURIComponent(next)}`}
                   className="text-[var(--accent)] font-medium hover:underline">
-              Entrar
+              {tx.entrar}
             </Link>
           </>
         ) : (
           <>
-            Ainda não comprou?{' '}
+            {tx.aindaNaoComprou}{' '}
             <Link href="/curso-de-hebraico"
                   className="text-[var(--accent)] font-medium hover:underline">
-              Ver o curso
+              {tx.verOCurso}
             </Link>
           </>
         )}

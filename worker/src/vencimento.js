@@ -25,7 +25,9 @@
 
 import { getCourse } from './lib/catalog.js';
 import { pegarTrava, reservarVencimento, soltarVencimento, vencimentosParaAvisar } from './lib/db.js';
-import { dataBR, mailReady, mensagemDeVencimento, sendMail } from './lib/mail.js';
+import { mailReady, sendMail } from './lib/mail.js';
+import { mensagens } from './lib/mensagens.js';
+import { origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
 import empresa from '../../data/empresa.json';
 
 const DIA = 86_400_000;
@@ -33,7 +35,6 @@ const DIA = 86_400_000;
 export async function runVencimentos(env, at = Date.now()) {
   if (!mailReady(env)) return { enviados: 0 };
   if (!await pegarTrava(env, 'vencimentos', 23 * 3_600_000, at)) return { enviados: 0, pulada: true };
-  const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
   let enviados = 0;
   for (const v of await vencimentosParaAvisar(env, {}, at)) {
     try {
@@ -44,12 +45,16 @@ export async function runVencimentos(env, at = Date.now()) {
         expiresAt: Number(v.expires_at), marco: v.marco
       };
       if (!await reservarVencimento(env, chave, at)) continue;
+      /* A língua e os links são os da conta (lib/idioma.js). */
+      const idioma = v.idioma === 'en' ? 'en' : 'pt';
+      const site = origemDoIdioma(env, idioma);
+      const m = mensagens(idioma);
       const r = await sendMail(env, {
         to: v.email,
-        ...mensagemDeVencimento({
+        ...m.vencimento({
           nome: v.name || '',
-          curso: curso?.titlePt || v.course_slug,
-          quando: dataBR(Number(v.expires_at)),
+          curso: tituloDoCurso(curso, idioma, v.course_slug),
+          quando: m.data(Number(v.expires_at)),
           dias: Math.max(1, Math.ceil((Number(v.expires_at) - at) / DIA)),
           marco: v.marco,
           meses: curso?.accessMonths || 12,

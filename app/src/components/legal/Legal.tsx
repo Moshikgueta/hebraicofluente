@@ -18,6 +18,8 @@ import { Section } from '@/components/platform/Section';
 import { Rubrica } from '@/components/landing/base';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, prazoResposta, whatsappUrl } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/conta-legal';
+import { LOCALE_INTL } from '@/i18n';
 
 /** A data de atualização, por extenso, como se lê em português. */
 export function dataPt(iso: string): string {
@@ -25,7 +27,7 @@ export function dataPt(iso: string): string {
   if (!a || !m || !d) return iso;
   /* `Date.UTC` e não `new Date(iso)`: uma string de data pura é interpretada
      como UTC, e formatar em fuso local move o dia para trás no Brasil. */
-  return new Date(Date.UTC(a, m - 1, d)).toLocaleDateString('pt-BR', {
+  return new Date(Date.UTC(a, m - 1, d)).toLocaleDateString(LOCALE_INTL, {
     day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC'
   });
 }
@@ -56,7 +58,7 @@ export function LegalPage({
           </h1>
           <p className="font-ui text-[17px] leading-[1.6] text-ink-muted m-0">{resumo}</p>
           <p className="font-ui text-[13px] text-ink-muted tabular-nums m-0">
-            Última atualização: {dataPt(empresa.politicas.atualizadoEm)}
+            {tx.ultimaAtualizacao(dataPt(empresa.politicas.atualizadoEm))}
           </p>
         </header>
 
@@ -73,18 +75,18 @@ export function LegalPage({
         {cta && (
           <FaixaCta
             onde="legal"
-            titulo="Tudo isso respondido? Então comece."
-            linha="A primeira letra leva dez minutos, e você tem sete dias para desistir sem precisar explicar por quê."
+            titulo={tx.ctaTitulo}
+            linha={tx.ctaLinha}
           />
         )}
 
         <nav className="flex flex-wrap gap-x-5 gap-y-2 pt-2">
           {[
-            ['/termos', 'Termos de Uso'],
-            ['/privacidade', 'Política de Privacidade'],
-            ['/reembolso', 'Reembolso e Cancelamento'],
-            ['/acessibilidade', 'Acessibilidade'],
-            ['/faq', 'Dúvidas frequentes']
+            ['/termos', tx.termosDeUso],
+            ['/privacidade', tx.politicaDePrivacidade],
+            ['/reembolso', tx.reembolso],
+            ['/acessibilidade', tx.acessibilidade],
+            ['/faq', tx.duvidasFrequentes]
           ].map(([href, label]) => (
             <Link key={href} href={href!}
                   className="font-ui text-[13.5px] text-[var(--accent)] hover:underline">
@@ -139,24 +141,24 @@ export function Identificacao() {
 
   return (
     <Card tone="wash" className="p-5 sm:p-6 grid gap-2.5">
-      <h2 className="font-display text-[17px] font-bold text-ink">Quem oferece este serviço</h2>
+      <h2 className="font-display text-[17px] font-bold text-ink">{tx.quemOferece}</h2>
       <dl className="grid gap-1.5 font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
-        <Linha rotulo="Fornecedor" valor={nomeLegalCompleto()} />
-        <Linha rotulo="CNPJ" valor={empresa.cnpj} />
-        <Linha rotulo="Endereço" valor={endereco} />
-        <Linha rotulo="Atendimento" valor={
+        <Linha rotulo={tx.fornecedor} valor={nomeLegalCompleto()} />
+        <Linha rotulo={tx.cnpj} valor={empresa.cnpj} />
+        <Linha rotulo={tx.endereco} valor={endereco} />
+        <Linha rotulo={tx.atendimento} valor={
           <a href={`mailto:${contato.emailSuporte}`}
              className="text-[var(--accent)] hover:underline break-all">{contato.emailSuporte}</a>
         } />
-        {contato.telefone && <Linha rotulo="Telefone" valor={contato.telefone} />}
-        {contato.whatsapp && <Linha rotulo="WhatsApp" valor={
+        {contato.telefone && <Linha rotulo={tx.telefone} valor={contato.telefone} />}
+        {contato.whatsapp && <Linha rotulo={tx.whatsapp} valor={
           zap
             ? <a href={zap} target="_blank" rel="noopener noreferrer"
                  className="text-[var(--accent)] hover:underline">{contato.whatsapp}</a>
             : contato.whatsapp
         } />}
-        <Linha rotulo="Horário" valor={atendimento.horarioPt} />
-        <Linha rotulo="Prazo de resposta" valor={prazoResposta()} />
+        <Linha rotulo={tx.horario} valor={atendimento.horarioPt} />
+        <Linha rotulo={tx.prazoDeResposta} valor={prazoResposta()} />
       </dl>
     </Card>
   );
@@ -173,13 +175,13 @@ export function Identificacao() {
 export function IdentificacaoCurta() {
   const partes = [
     nomeLegalCompleto(),
-    empresa.cnpj && `CNPJ ${empresa.cnpj}`,
+    empresa.cnpj && tx.cnpjNumero(empresa.cnpj),
     enderecoLinha(),
     empresa.contato.emailSuporte
   ].filter(Boolean);
   return (
     <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted m-0">
-      Quem oferece este serviço: {partes.join(' · ')}.
+      {tx.quemOfereceCurto(partes.join(' · '))}
     </p>
   );
 }

@@ -35,6 +35,8 @@ import { aula0Feita, isLessonComplete, isLessonMastered, letraLiberada, STAGE_CO
 import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
 import { idDoSom, ordemDeEnsino } from '@/lib/sons';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-course-map-client';
 
 /* Uma lição do caminho dentro do módulo: uma letra ou um som (Vet, Tch...). */
 type Item = { id: string; he: string; nome: string; href: string };
@@ -93,14 +95,14 @@ export function CourseMapClient() {
       <header className="flex items-end gap-5 flex-wrap mb-8">
         <div className="flex-1 min-w-[240px]">
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)] mb-2">
-            Meu curso
+            {tx.meuCurso}
           </p>
           <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1]
                          tracking-[-0.028em] mb-1">
             {flagship().titlePt}
           </h1>
           <p className="font-ui text-[16px] text-ink-muted">
-            {modulos.length} módulos · {licoes} lições · {course.totalLetters} letras
+            {fmt(tx.resumo, { modulos: modulos.length, licoes, letras: course.totalLetters })}
           </p>
         </div>
         <p className="text-right">
@@ -108,7 +110,7 @@ export function CourseMapClient() {
                            tracking-[-0.03em] leading-none text-[var(--teal-ink)] tabular-nums">
             {Math.round(p.progress * 100)}%
           </span>
-          <span className="block font-ui text-[14px] text-ink-muted">concluído</span>
+          <span className="block font-ui text-[14px] text-ink-muted">{tx.concluido}</span>
         </p>
       </header>
 
@@ -162,22 +164,22 @@ function TrechoAula0({ feita }: { feita: boolean }) {
                          hover:shadow-[var(--sh)] bg-[var(--card)] ${feita ? 'border-line' : 'border-[var(--teal)]'}`}>
           <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
             <span className="font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)]">
-              {feita ? 'Concluído' : 'Comece por aqui'}
+              {feita ? tx.tagConcluido : tx.comeceAqui}
             </span>
-            <span className="font-ui text-[13.5px] text-ink-muted">Aula 0 · antes da primeira letra</span>
+            <span className="font-ui text-[13.5px] text-ink-muted">{tx.aula0Rotulo}</span>
           </div>
           <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0 mb-1">
             {ETAPA_AULA0}
           </p>
           <p className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-2 text-ink">
             <Link href="/inicio" className="after:absolute after:inset-0 after:rounded-[18px] after:content-['']">
-              Como o hebraico funciona
+              {tx.comoFunciona}
             </Link>
           </p>
           <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted m-0">
             {feita
-              ? 'A direção da leitura, o alfabeto e o nikud. Fica aqui para você reler quando quiser.'
-              : 'A direção da leitura, o alfabeto, o nikud e como o curso funciona. Termina com uma checagem curta, e aí o Álef abre.'}
+              ? tx.aula0Feita
+              : tx.aula0Falta}
           </p>
         </div>
       </div>
@@ -228,14 +230,14 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
   const proxima = estado === 'agora' ? pendente?.id ?? null : null;
 
   const TAG = {
-    feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
-    agora: { texto: faltaCheckpoint ? 'Falta o checkpoint' : 'Em andamento', cor: 'text-[var(--teal-ink)]' },
+    feito: { texto: tx.tagConcluido, cor: 'text-[var(--teal-ink)]' },
+    agora: { texto: faltaCheckpoint ? tx.faltaCheckpoint : tx.emAndamento, cor: 'text-[var(--teal-ink)]' },
     /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
        nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
        alto contraste. */
     /* "Em breve" sugeria conteúdo ainda não lançado, quando o módulo só
        espera o anterior (auditoria de 01/10/2026, VIS-010). */
-    adiante: { texto: m.n === 1 ? 'Abre depois da Aula 0' : `Abre depois do módulo ${m.n - 1}`, cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
+    adiante: { texto: m.n === 1 ? tx.abreDepoisAula0 : fmt(tx.abreDepoisModulo, { n: m.n - 1 }), cor: 'text-ink-muted' }  // texto, não controle: 4,5:1 (UX-009)
   }[estado];
 
   return (
@@ -318,9 +320,9 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                   </span>
                   <span className="hf-selo-novo absolute right-3 top-3 rounded-full bg-[var(--gold-solid)] px-3 py-1
                                    font-ui text-[12.5px] font-bold text-white shadow-[var(--sh)]">
-                    Lugar novo
+                    {tx.lugarNovo}
                   </span>
-                  <span className="sr-only" role="status">Lugar novo aberto: {LUGAR[m.n as IdDoCenario].pt}.</span>
+                  <span className="sr-only" role="status">{tx.lugarNovoAberto(LUGAR[m.n as IdDoCenario].pt)}</span>
                 </>
               )}
               {/* O nome do lugar é uma palavra que o aluno já lê neste módulo. */}
@@ -349,7 +351,7 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
               {TAG.texto}
             </span>
             <span className="font-ui text-[13.5px] text-ink-muted">
-              Módulo {m.n} · {m.lessons.length} {m.lessons.length === 1 ? 'lição' : 'lições'}
+              {tx.moduloLicoes(m.n, m.lessons.length)}
             </span>
             <span className="flex-1" />
             {estado !== 'adiante' && (
@@ -402,8 +404,9 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                    progresso carregar, nada que não foi aberto vira link. */
                 const liberada = aberta || (p.ready && !bloqueada);
                 const ehAProxima = p.ready && L.id === proxima && liberada;
-                const estadoDaLetra = feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas`
-                  : bloqueada ? ' - bloqueada' : ehAProxima ? ' - a próxima' : '';
+                const estadoDaLetra = feita ? tx.letraConcluida
+                  : comecada ? fmt(tx.letraEtapas, { n: etapasFeitas, total: STAGE_COUNT })
+                  : bloqueada ? tx.letraBloqueada : ehAProxima ? tx.letraProxima : '';
                 const classe = `relative z-[1] min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
                   ${liberada ? 'hover:shadow-[var(--sh)] hover:border-[var(--teal)] transition-[box-shadow,border-color]' : ''}
                   ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
@@ -440,7 +443,7 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
                 return liberada ? (
                   <Link key={L.id} href={L.href} className={classe}
                         title={`${L.nome}${estadoDaLetra}`}
-                        aria-label={`Abrir a lição de ${L.nome}${estadoDaLetra}`}>
+                        aria-label={`${fmt(tx.abrirLicao, { nome: L.nome })}${estadoDaLetra}`}>
                     {miolo}
                   </Link>
                 ) : (
@@ -455,7 +458,7 @@ function Trecho({ module: m, estado, ultimo, novo = false }: {
           {m.milestonePt && (
             <p className={`relative mt-3 font-ui text-[14px] leading-relaxed m-0
                            ${estado === 'feito' ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
-              <strong className="font-semibold">{estado === 'feito' ? '✓ Meta alcançada: ' : 'Meta: '}</strong>
+              <strong className="font-semibold">{estado === 'feito' ? tx.metaAlcancada : tx.meta}</strong>
               <Prose text={m.milestonePt} />
             </p>
           )}
@@ -493,7 +496,7 @@ function TrechoFinal() {
           ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
             : estado === 'adiante' ? 'bg-[var(--paper)] border-line border-dashed' : 'bg-[var(--card)] border-line'}`}>
           <p className="font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)] m-0 mb-2">
-            {estado === 'feito' ? 'Aprovado' : estado === 'agora' ? 'Disponível' : 'Abre quando você concluir as lições das 22 letras'}
+            {estado === 'feito' ? tx.aprovado : estado === 'agora' ? tx.disponivel : tx.abreQuando}
           </p>
           <p className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-2 text-ink">
             <Link href={estado === 'feito' ? '/certificado' : '/desafio-final'}
@@ -503,8 +506,8 @@ function TrechoFinal() {
           </p>
           <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted m-0">
             {estado === 'feito'
-              ? 'Você passou no exame final. O seu certificado do curso está pronto.'
-              : 'Um exame com as letras, os sons, as sílabas, palavras, frases e palavras sem nikud. No fim, o certificado do curso.'}
+              ? tx.finalFeito
+              : tx.finalFalta}
           </p>
         </div>
       </div>
@@ -513,5 +516,5 @@ function TrechoFinal() {
 }
 
 export function CourseMapNotFound() {
-  return <p className="font-ui text-[15px] text-ink-muted">Mapa não encontrado.</p>;
+  return <p className="font-ui text-[15px] text-ink-muted">{tx.naoEncontrado}</p>;
 }

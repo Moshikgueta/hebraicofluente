@@ -20,6 +20,8 @@ import {
   BASE_TO_FINAL, FINAL_TO_BASE, clean, consonantsOf, isReadableWith, stripNikud
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-palavras';
 import type { Ctx, Gen } from './generators';
 import type { Exercise } from './types';
 
@@ -191,8 +193,8 @@ export function itemConstruir(
     id: `${L.id}-${cursiva ? 'bcur' : 'blet'}-${i}`,
     kind: 'build-letters', letterId: L.id, skill: 'ler',
     promptPt: cursiva
-      ? `Monte em cursiva a palavra “${alvo.translit}”.`
-      : `Monte a palavra “${alvo.translit}”, letra por letra.`,
+      ? fmt(tx.monteCursiva, { leitura: alvo.translit })
+      : fmt(tx.monteLetras, { leitura: alvo.translit }),
     target: stripNikud(alvo.he), letras, tiles: pecas,
     translit: alvo.translit,
     /* No avançado o significado sai de cena: sobra só o som. */
@@ -200,12 +202,12 @@ export function itemConstruir(
     cursiva, nivel,
     audioId: alvo.audioId,
     hintsPt: [
-      'A primeira letra fica à DIREITA.',
-      `Começa com ${letras[0]}.`
+      tx.primeiraADireita,
+      fmt(tx.comecaCom, { letra: String(letras[0]) })
     ],
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. `
-      + (cursiva ? 'À mão, sem os sinais de vogal: é assim que se escreve de verdade.'
-                 : 'Sem os sinais de vogal, é assim que a palavra aparece numa placa.')
+      + (cursiva ? tx.monteExplicaCursiva
+                 : tx.monteExplicaPlaca)
   };
 }
 
@@ -266,8 +268,7 @@ export function itemCursiva(
     id: `${L.id}-curw-${modo}-${i}`,
     kind: 'cursive-word' as const, letterId: L.id,
     modo, he: alvo.he, escrita, audioId: alvo.audioId,
-    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. À mão ela se escreve sem os `
-      + 'sinais de vogal, e é assim que você vai encontrá-la num bilhete.'
+    explainPt: fmt(tx.cursivaExplica, { he: alvo.he, leitura: alvo.translit, sentido: alvo.pt })
   };
 
   if (modo === 'letra') {
@@ -285,10 +286,10 @@ export function itemCursiva(
     const options = shuffled([marca, ...erradas], rand);
     return {
       ...base, skill: 'rec',
-      promptPt: 'Na palavra escrita à mão, que letra é esta, a destacada?',
+      promptPt: tx.cursivaLetra,
       marca, options, answer: options.indexOf(marca),
       whyPt: options.map(o => o === marca ? null
-        : dono?.contrastes?.[o] ?? 'Essa é outra letra. Compare o traço destacado com ela.')
+        : dono?.contrastes?.[o] ?? tx.cursivaLetraOutra)
     };
   }
 
@@ -298,7 +299,7 @@ export function itemCursiva(
     const options = shuffled([alvo.pt, ...erradas], rand);
     return {
       ...base, skill: 'ler',
-      promptPt: 'Esta palavra está escrita à mão. O que ela quer dizer?',
+      promptPt: tx.cursivaSentido,
       options, answer: options.indexOf(alvo.pt)
     };
   }
@@ -317,8 +318,8 @@ export function itemCursiva(
   return {
     ...base, skill: 'ler',
     promptPt: modo === 'para-cursiva'
-      ? 'Qual destas é a mesma palavra, escrita à mão?'
-      : 'Qual destas palavras está escrita à mão aqui?',
+      ? tx.paraCursiva
+      : tx.qualPalavra,
     options, answer: options.indexOf(certa)
   };
 }
@@ -360,11 +361,11 @@ export function itemDigitar(alvo: Word, L: Letter, i: number): Exercise {
   return {
     id: `${L.id}-typhe-${i}`,
     kind: 'type-hebrew', letterId: L.id, skill: 'escrever',
-    promptPt: `Digite em hebraico: “${alvo.translit}” (${alvo.pt}).`,
+    promptPt: fmt(tx.digite, { leitura: alvo.translit, sentido: alvo.pt }),
     accept: [stripNikud(alvo.he)],
     translit: alvo.translit,
     audioId: alvo.audioId,
-    hintsPt: ['A primeira letra que você digita aparece à direita.', `Começa com ${letrasDaGrafia(alvo.he)[0]}.`],
+    hintsPt: [tx.digiteDica, fmt(tx.comecaCom, { letra: String(letrasDaGrafia(alvo.he)[0]) })],
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}.`
   };
 }
@@ -441,11 +442,11 @@ export function buildSemPontos(letras: readonly Letter[], rand: Rand, n = 3): Ex
       kind: 'word-meaning' as const,
       letterId: 'final',
       skill: 'ler' as const,
-      promptPt: 'Sem os pontinhos, como aparece na rua. O que quer dizer?',
+      promptPt: tx.semPontos,
       he: stripNikud(w.he),
       options,
       answer: options.indexOf(w.pt),
-      hintsPt: [`Com os pontos: ${w.he}`, `Lê-se "${w.translit}".`],
+      hintsPt: [fmt(tx.comOsPontos, { he: w.he }), fmt(tx.leSe, { leitura: w.translit })],
       audioId: w.audioId,
       explainPt: `${w.he} - ${w.translit} - ${w.pt}.`
     };

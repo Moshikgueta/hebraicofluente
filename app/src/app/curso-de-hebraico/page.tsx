@@ -4,17 +4,16 @@ import { CursoDeHebraicoClient } from './CursoDeHebraicoClient';
 import { CANDIDATOS } from '@/components/landing/media';
 import { primeiroQueExiste } from '@/lib/midia-publica';
 import { grafoDoCurso, jsonLdTexto } from '@/lib/jsonld';
+import { tx } from '@/i18n/telas/venda-curso-de-hebraico';
 
 /* A página de venda do curso. Até 23/10/2026 era a capa: o título continua
    começando pelo que a pessoa digita na busca - "aprender a ler hebraico". */
 export const metadata: Metadata = meta({
   rota: '/curso-de-hebraico',
-  title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
+  title: tx.metaTitulo,
   /* Até 155 caracteres: o resultado da busca corta o resto (auditoria de
      01/10, SEO-003). `checa-seo.mjs` confere o limite. */
-  description:
-    'Curso interativo para brasileiros aprenderem a ler hebraico do zero: as 22 letras, os ' +
-    'sinais de vogal e palavras reais, com correção na hora.'
+  description: tx.metaDescricao
 });
 
 /* Página de SERVIDOR que renderiza um cliente, como a capa era: só aqui dá

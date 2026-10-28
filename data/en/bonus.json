@@ -1,0 +1,734 @@
+{
+  "leituras/genesis-1/tituloPt": {
+    "pt": "No princípio",
+    "en": null
+  },
+  "leituras/genesis-1/fontePt": {
+    "pt": "Gênesis 1:1-5",
+    "en": null
+  },
+  "leituras/genesis-1/introPt": {
+    "pt": "O começo da Bíblia: a criação da luz e o primeiro dia. É hebraico bíblico, que conta no passado (וַיֹּאמֶר é «e disse»), então leia pelo som e use a tradução para acompanhar.",
+    "en": null
+  },
+  "leituras/genesis-1/linhas/#0/pt": {
+    "pt": "No princípio, Deus criou os céus e a terra.",
+    "en": null
+  },
+  "leituras/genesis-1/linhas/#1/pt": {
+    "pt": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas.",
+    "en": null
+  },
+  "leituras/genesis-1/linhas/#2/pt": {
+    "pt": "Deus disse: haja luz! E houve luz.",
+    "en": null
+  },
+  "leituras/genesis-1/linhas/#3/pt": {
+    "pt": "Deus viu que a luz era boa, e Deus separou a luz da escuridão.",
+    "en": null
+  },
+  "leituras/genesis-1/linhas/#4/pt": {
+    "pt": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»).",
+    "en": null
+  },
+  "leituras/shema/tituloPt": {
+    "pt": "Shemá Israel",
+    "en": null
+  },
+  "leituras/shema/fontePt": {
+    "pt": "Deuteronômio 6:4-9",
+    "en": null
+  },
+  "leituras/shema/introPt": {
+    "pt": "O Shemá, a declaração de fé que se diz de manhã e à noite. O último versículo é a origem da mezuzá, no batente da porta: o pergaminho dela traz este trecho inteiro (e mais Deuteronômio 11:13-21).",
+    "en": null
+  },
+  "leituras/shema/linhas/#0/pt": {
+    "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um.",
+    "en": null
+  },
+  "leituras/shema/linhas/#1/pt": {
+    "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força.",
+    "en": null
+  },
+  "leituras/shema/linhas/#2/pt": {
+    "pt": "Estas palavras que hoje eu te ordeno estarão no teu coração.",
+    "en": null
+  },
+  "leituras/shema/linhas/#3/pt": {
+    "pt": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar.",
+    "en": null
+  },
+  "leituras/shema/linhas/#4/pt": {
+    "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos.",
+    "en": null
+  },
+  "leituras/shema/linhas/#5/pt": {
+    "pt": "E as escreverás nos batentes da tua casa e nos teus portões.",
+    "en": null
+  },
+  "leituras/salmo-23/tituloPt": {
+    "pt": "O Senhor é o meu pastor",
+    "en": null
+  },
+  "leituras/salmo-23/fontePt": {
+    "pt": "Salmo 23",
+    "en": null
+  },
+  "leituras/salmo-23/introPt": {
+    "pt": "O salmo mais conhecido, inteiro, nos seis versículos. Muita gente já o sabe de cor em português: ler em hebraico é reconhecer o que já conhece.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#0/pt": {
+    "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#1/pt": {
+    "pt": "Em pastos verdes me faz deitar, a águas tranquilas me conduz.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#2/pt": {
+    "pt": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#3/pt": {
+    "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#4/pt": {
+    "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda.",
+    "en": null
+  },
+  "leituras/salmo-23/linhas/#5/pt": {
+    "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias.",
+    "en": null
+  },
+  "leituras/salmo-121/tituloPt": {
+    "pt": "Levanto os meus olhos para os montes",
+    "en": null
+  },
+  "leituras/salmo-121/fontePt": {
+    "pt": "Salmo 121",
+    "en": null
+  },
+  "leituras/salmo-121/introPt": {
+    "pt": "Um salmo de viagem, dos «cânticos das subidas» que, segundo uma tradição, se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#0/pt": {
+    "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#1/pt": {
+    "pt": "O meu socorro vem do Senhor, que fez os céus e a terra.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#2/pt": {
+    "pt": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#3/pt": {
+    "pt": "Não cochila nem dorme o guarda de Israel.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#4/pt": {
+    "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#5/pt": {
+    "pt": "De dia o sol não te ferirá, nem a lua de noite.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#6/pt": {
+    "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida.",
+    "en": null
+  },
+  "leituras/salmo-121/linhas/#7/pt": {
+    "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.",
+    "en": null
+  },
+  "leituras/rute-1/tituloPt": {
+    "pt": "O teu povo é o meu povo",
+    "en": null
+  },
+  "leituras/rute-1/fontePt": {
+    "pt": "Rute 1:16-17",
+    "en": null
+  },
+  "leituras/rute-1/introPt": {
+    "pt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
+    "en": null
+  },
+  "leituras/rute-1/linhas/#0/pt": {
+    "pt": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir.",
+    "en": null
+  },
+  "leituras/rute-1/linhas/#1/pt": {
+    "pt": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei.",
+    "en": null
+  },
+  "leituras/rute-1/linhas/#2/pt": {
+    "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus.",
+    "en": null
+  },
+  "leituras/rute-1/linhas/#3/pt": {
+    "pt": "Onde tu morreres, eu morrerei, e ali serei sepultada.",
+    "en": null
+  },
+  "leituras/rute-1/linhas/#4/pt": {
+    "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti.",
+    "en": null
+  },
+  "leituras/eclesiastes-3/tituloPt": {
+    "pt": "Tudo tem o seu tempo",
+    "en": null
+  },
+  "leituras/eclesiastes-3/fontePt": {
+    "pt": "Eclesiastes 3:1-8",
+    "en": null
+  },
+  "leituras/eclesiastes-3/introPt": {
+    "pt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes nos pares dos versos 2 a 8, e cada linha é um par de opostos. Um bom primeiro texto longo.",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#0/pt": {
+    "pt": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#1/pt": {
+    "pt": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#2/pt": {
+    "pt": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#3/pt": {
+    "pt": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#4/pt": {
+    "pt": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#5/pt": {
+    "pt": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#6/pt": {
+    "pt": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;",
+    "en": null
+  },
+  "leituras/eclesiastes-3/linhas/#7/pt": {
+    "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz.",
+    "en": null
+  },
+  "leituras/jeremias-29/tituloPt": {
+    "pt": "Planos de paz",
+    "en": null
+  },
+  "leituras/jeremias-29/fontePt": {
+    "pt": "Jeremias 29:11",
+    "en": null
+  },
+  "leituras/jeremias-29/introPt": {
+    "pt": "Um dos versículos mais amados e citados: a promessa de um futuro e de uma esperança, numa carta de Jeremias aos exilados na Babilônia.",
+    "en": null
+  },
+  "leituras/jeremias-29/linhas/#0/pt": {
+    "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:",
+    "en": null
+  },
+  "leituras/jeremias-29/linhas/#1/pt": {
+    "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança.",
+    "en": null
+  },
+  "leituras/josue-1/tituloPt": {
+    "pt": "Sê forte e corajoso",
+    "en": null
+  },
+  "leituras/josue-1/fontePt": {
+    "pt": "Josué 1:9",
+    "en": null
+  },
+  "leituras/josue-1/introPt": {
+    "pt": "O que Deus diz a Josué antes de ele entrar na terra prometida. חֲזַק וֶאֱמָץ, «chazák veemáts», se diz até hoje para dar coragem a alguém.",
+    "en": null
+  },
+  "leituras/josue-1/linhas/#0/pt": {
+    "pt": "Não fui eu que te ordenei? Sê forte e corajoso.",
+    "en": null
+  },
+  "leituras/josue-1/linhas/#1/pt": {
+    "pt": "Não tenhas medo nem desanimes,",
+    "en": null
+  },
+  "leituras/josue-1/linhas/#2/pt": {
+    "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores.",
+    "en": null
+  },
+  "leituras/proverbios-3/tituloPt": {
+    "pt": "Confia no Senhor",
+    "en": null
+  },
+  "leituras/proverbios-3/fontePt": {
+    "pt": "Provérbios 3:5-6",
+    "en": null
+  },
+  "leituras/proverbios-3/introPt": {
+    "pt": "O conselho de Salomão para as decisões da vida: confiar no Senhor, e não só no próprio entendimento.",
+    "en": null
+  },
+  "leituras/proverbios-3/linhas/#0/pt": {
+    "pt": "Confia no Senhor de todo o teu coração",
+    "en": null
+  },
+  "leituras/proverbios-3/linhas/#1/pt": {
+    "pt": "e não te apoies no teu próprio entendimento.",
+    "en": null
+  },
+  "leituras/proverbios-3/linhas/#2/pt": {
+    "pt": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.",
+    "en": null
+  },
+  "leituras/isaias-41/tituloPt": {
+    "pt": "Não temas",
+    "en": null
+  },
+  "leituras/isaias-41/fontePt": {
+    "pt": "Isaías 41:10",
+    "en": null
+  },
+  "leituras/isaias-41/introPt": {
+    "pt": "Uma das promessas mais repetidas da Bíblia, «não temas», com três verbos seguidos no fim: fortaleço, ajudo, sustento.",
+    "en": null
+  },
+  "leituras/isaias-41/linhas/#0/pt": {
+    "pt": "Não temas, porque eu estou contigo;",
+    "en": null
+  },
+  "leituras/isaias-41/linhas/#1/pt": {
+    "pt": "não te assustes, porque eu sou o teu Deus.",
+    "en": null
+  },
+  "leituras/isaias-41/linhas/#2/pt": {
+    "pt": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça.",
+    "en": null
+  },
+  "leituras/isaias-40/tituloPt": {
+    "pt": "Asas como águias",
+    "en": null
+  },
+  "leituras/isaias-40/fontePt": {
+    "pt": "Isaías 40:31",
+    "en": null
+  },
+  "leituras/isaias-40/introPt": {
+    "pt": "O versículo das águias: três imagens, subir como águias, correr e caminhar sem se cansar.",
+    "en": null
+  },
+  "leituras/isaias-40/linhas/#0/pt": {
+    "pt": "Mas os que esperam no Senhor renovam as suas forças;",
+    "en": null
+  },
+  "leituras/isaias-40/linhas/#1/pt": {
+    "pt": "sobem com asas, como águias;",
+    "en": null
+  },
+  "leituras/isaias-40/linhas/#2/pt": {
+    "pt": "correm e não se cansam, caminham e não se fatigam.",
+    "en": null
+  },
+  "leituras/jeremias-33/tituloPt": {
+    "pt": "Clama a mim",
+    "en": null
+  },
+  "leituras/jeremias-33/fontePt": {
+    "pt": "Jeremias 33:3",
+    "en": null
+  },
+  "leituras/jeremias-33/introPt": {
+    "pt": "Um convite à oração, dito a Jeremias quando ele estava preso: «clama a mim, e eu te responderei».",
+    "en": null
+  },
+  "leituras/jeremias-33/linhas/#0/pt": {
+    "pt": "Clama a mim, e eu te responderei;",
+    "en": null
+  },
+  "leituras/jeremias-33/linhas/#1/pt": {
+    "pt": "e te anunciarei coisas grandes e escondidas, que tu não conheces.",
+    "en": null
+  },
+  "leituras/josue-24/tituloPt": {
+    "pt": "Eu e a minha casa",
+    "en": null
+  },
+  "leituras/josue-24/fontePt": {
+    "pt": "Josué 24:15",
+    "en": null
+  },
+  "leituras/josue-24/introPt": {
+    "pt": "A decisão de Josué diante de todo o povo, que muita gente escreve na parede de casa. São só cinco palavras.",
+    "en": null
+  },
+  "leituras/josue-24/linhas/#0/pt": {
+    "pt": "Eu e a minha casa serviremos ao Senhor.",
+    "en": null
+  },
+  "leituras/salmo-91/tituloPt": {
+    "pt": "À sombra do Todo-Poderoso",
+    "en": null
+  },
+  "leituras/salmo-91/fontePt": {
+    "pt": "Salmo 91:1-2",
+    "en": null
+  },
+  "leituras/salmo-91/introPt": {
+    "pt": "O salmo da proteção, que muita gente lê nos tempos difíceis. Aqui, os dois primeiros versículos. שַׁדַּי, «Shadái», é o Todo-Poderoso.",
+    "en": null
+  },
+  "leituras/salmo-91/linhas/#0/pt": {
+    "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso.",
+    "en": null
+  },
+  "leituras/salmo-91/linhas/#1/pt": {
+    "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio.",
+    "en": null
+  },
+  "leituras/lamentacoes-3/tituloPt": {
+    "pt": "Novas a cada manhã",
+    "en": null
+  },
+  "leituras/lamentacoes-3/fontePt": {
+    "pt": "Lamentações 3:22-23",
+    "en": null
+  },
+  "leituras/lamentacoes-3/introPt": {
+    "pt": "No meio do livro mais triste da Bíblia, uma esperança: as misericórdias do Senhor se renovam a cada manhã.",
+    "en": null
+  },
+  "leituras/lamentacoes-3/linhas/#0/pt": {
+    "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;",
+    "en": null
+  },
+  "leituras/lamentacoes-3/linhas/#1/pt": {
+    "pt": "elas se renovam a cada manhã. Grande é a tua fidelidade!",
+    "en": null
+  },
+  "leituras/salmo-119/tituloPt": {
+    "pt": "Lâmpada para os meus pés",
+    "en": null
+  },
+  "leituras/salmo-119/fontePt": {
+    "pt": "Salmo 119:105",
+    "en": null
+  },
+  "leituras/salmo-119/introPt": {
+    "pt": "Do maior capítulo da Bíblia, o versículo sobre a própria Palavra.",
+    "en": null
+  },
+  "leituras/salmo-119/linhas/#0/pt": {
+    "pt": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/tituloPt": {
+    "pt": "A bênção sacerdotal",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/fontePt": {
+    "pt": "Números 6:24-26",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/introPt": {
+    "pt": "A bênção que Deus manda Aarão e os seus filhos darem ao povo de Israel. Três versículos, cada um maior que o anterior.",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/linhas/#0/pt": {
+    "pt": "O Senhor te abençoe e te guarde.",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/linhas/#1/pt": {
+    "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti.",
+    "en": null
+  },
+  "leituras/bencao-sacerdotal/linhas/#2/pt": {
+    "pt": "O Senhor volte o seu rosto para ti e te dê a paz.",
+    "en": null
+  },
+  "leituras/isaias-6/tituloPt": {
+    "pt": "Santo, santo, santo",
+    "en": null
+  },
+  "leituras/isaias-6/fontePt": {
+    "pt": "Isaías 6:3",
+    "en": null
+  },
+  "leituras/isaias-6/introPt": {
+    "pt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
+    "en": null
+  },
+  "leituras/isaias-6/linhas/#0/pt": {
+    "pt": "E um clamava ao outro, dizendo:",
+    "en": null
+  },
+  "leituras/isaias-6/linhas/#1/pt": {
+    "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
+    "en": null
+  },
+  "leituras/isaias-9/tituloPt": {
+    "pt": "Um menino nos nasceu",
+    "en": null
+  },
+  "leituras/isaias-9/fontePt": {
+    "pt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
+    "en": null
+  },
+  "leituras/isaias-9/introPt": {
+    "pt": "Um dos textos mais conhecidos da Bíblia. Na Bíblia hebraica a numeração é um versículo antes: 9:5. Há mais de uma leitura tradicional deste versículo; a tradução abaixo é a mais conhecida no Brasil.",
+    "en": null
+  },
+  "leituras/isaias-9/linhas/#0/pt": {
+    "pt": "Porque um menino nos nasceu, um filho nos foi dado;",
+    "en": null
+  },
+  "leituras/isaias-9/linhas/#1/pt": {
+    "pt": "o governo está sobre os seus ombros,",
+    "en": null
+  },
+  "leituras/isaias-9/linhas/#2/pt": {
+    "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz.",
+    "en": null
+  },
+  "leituras/isaias-53/tituloPt": {
+    "pt": "Pelas suas feridas",
+    "en": null
+  },
+  "leituras/isaias-53/fontePt": {
+    "pt": "Isaías 53:5",
+    "en": null
+  },
+  "leituras/isaias-53/introPt": {
+    "pt": "Do capítulo do servo sofredor, um dos textos do Antigo Testamento mais citados pelos cristãos.",
+    "en": null
+  },
+  "leituras/isaias-53/linhas/#0/pt": {
+    "pt": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;",
+    "en": null
+  },
+  "leituras/isaias-53/linhas/#1/pt": {
+    "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados.",
+    "en": null
+  },
+  "leituras/levitico-19/tituloPt": {
+    "pt": "Amarás o teu próximo",
+    "en": null
+  },
+  "leituras/levitico-19/fontePt": {
+    "pt": "Levítico 19:18",
+    "en": null
+  },
+  "leituras/levitico-19/introPt": {
+    "pt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
+    "en": null
+  },
+  "leituras/levitico-19/linhas/#0/pt": {
+    "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;",
+    "en": null
+  },
+  "leituras/levitico-19/linhas/#1/pt": {
+    "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor.",
+    "en": null
+  },
+  "leituras/salmo-133/tituloPt": {
+    "pt": "Como é bom",
+    "en": null
+  },
+  "leituras/salmo-133/fontePt": {
+    "pt": "Salmo 133:1",
+    "en": null
+  },
+  "leituras/salmo-133/introPt": {
+    "pt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+    "en": null
+  },
+  "leituras/salmo-133/linhas/#0/pt": {
+    "pt": "Cântico das subidas, de Davi.",
+    "en": null
+  },
+  "leituras/salmo-133/linhas/#1/pt": {
+    "pt": "Vejam como é bom e agradável os irmãos viverem juntos.",
+    "en": null
+  },
+  "guia/tituloPt": {
+    "pt": "O nikud da Bíblia",
+    "en": null
+  },
+  "guia/introPt": {
+    "pt": "Um guia opcional, para quem quer ler as leituras bônus ou abrir uma Bíblia em hebraico. Os pontos são os mesmos que você aprendeu no curso; a Bíblia só usa alguns a mais, e tem umas poucas regras de leitura. Os exemplos são todos das leituras bônus.",
+    "en": null
+  },
+  "guia/secoes/nome/tituloPt": {
+    "pt": "O Nome não se pronuncia",
+    "en": null
+  },
+  "guia/secoes/nome/textoPt": {
+    "pt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito. Na reza e na leitura da Torá na sinagoga, diz-se «Adonái», «meu Senhor». Fora da reza, muitos judeus evitam até essa palavra, por respeito ao Nome, e dizem «Hashém», que quer dizer «o Nome». As gravações deste curso seguem esse costume: por isso você ouve «Hashém», e a transliteração mostra o que se ouve. Ao ler sozinho, cada um segue o costume da sua casa: «Adonái», «Hashém» ou, nas traduções, «o Senhor». Por escrito, muita gente abrevia para {{ה׳}}.",
+    "en": null
+  },
+  "guia/secoes/nome/exemplos/#0/pt": {
+    "pt": "como está no texto bíblico; na gravação, «Hashém»",
+    "en": null
+  },
+  "guia/secoes/nome/exemplos/#1/pt": {
+    "pt": "o Senhor, nosso Deus (do Shemá)",
+    "en": null
+  },
+  "guia/secoes/sheva/tituloPt": {
+    "pt": "O shva no começo soa «e»",
+    "en": null
+  },
+  "guia/secoes/sheva/textoPt": {
+    "pt": "O shva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
+    "en": null
+  },
+  "guia/secoes/sheva/exemplos/#0/pt": {
+    "pt": "shva no começo: «be»",
+    "en": null
+  },
+  "guia/secoes/sheva/exemplos/#1/pt": {
+    "pt": "shva no começo: «she»",
+    "en": null
+  },
+  "guia/secoes/sheva/exemplos/#2/pt": {
+    "pt": "shva no meio, mudo: «Yis-ra-él»",
+    "en": null
+  },
+  "guia/secoes/chataf/tituloPt": {
+    "pt": "As vogais rápidas (chataf)",
+    "en": null
+  },
+  "guia/secoes/chataf/textoPt": {
+    "pt": "Um shva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o shva simples.",
+    "en": null
+  },
+  "guia/secoes/chataf/exemplos/#0/pt": {
+    "pt": "«e» rápido",
+    "en": null
+  },
+  "guia/secoes/chataf/exemplos/#1/pt": {
+    "pt": "«a» rápido",
+    "en": null
+  },
+  "guia/secoes/kamats-katan/tituloPt": {
+    "pt": "Quando o kamats soa «o»?",
+    "en": null
+  },
+  "guia/secoes/kamats-katan/textoPt": {
+    "pt": "Em algumas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
+    "en": null
+  },
+  "guia/secoes/kamats-katan/exemplos/#0/pt": {
+    "pt": "todos os dias de",
+    "en": null
+  },
+  "guia/secoes/kamats-katan/exemplos/#1/pt": {
+    "pt": "com todo o teu coração",
+    "en": null
+  },
+  "guia/secoes/patach-furtivo/tituloPt": {
+    "pt": "O «a» que vem antes da letra",
+    "en": null
+  },
+  "guia/secoes/patach-furtivo/textoPt": {
+    "pt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{הּ}} (com o ponto dentro) e há um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
+    "en": null
+  },
+  "guia/secoes/patach-furtivo/exemplos/#0/pt": {
+    "pt": "e o espírito",
+    "en": null
+  },
+  "guia/secoes/maqaf/tituloPt": {
+    "pt": "O tracinho que liga palavras",
+    "en": null
+  },
+  "guia/secoes/maqaf/textoPt": {
+    "pt": "O tracinho no alto da linha ({{־}}), o maqaf, junta duas palavras que se leem de um fôlego só, como se fossem uma.",
+    "en": null
+  },
+  "guia/secoes/maqaf/exemplos/#0/pt": {
+    "pt": "sobre a face de",
+    "en": null
+  },
+  "guia/secoes/maqaf/exemplos/#1/pt": {
+    "pt": "que era bom",
+    "en": null
+  },
+  "guia/secoes/dagesh/tituloPt": {
+    "pt": "O daguesh, de novo",
+    "en": null
+  },
+  "guia/secoes/dagesh/textoPt": {
+    "pt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o daguesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
+    "en": null
+  },
+  "guia/secoes/dagesh/exemplos/#0/pt": {
+    "pt": "com daguesh: «b»",
+    "en": null
+  },
+  "guia/secoes/dagesh/exemplos/#1/pt": {
+    "pt": "sem daguesh: «v»",
+    "en": null
+  },
+  "guia/secoes/dagesh/exemplos/#2/pt": {
+    "pt": "daguesh no ש: o som não muda",
+    "en": null
+  },
+  "guia/secoes/yod/tituloPt": {
+    "pt": "O י que não se lê como «y»",
+    "en": null
+  },
+  "guia/secoes/yod/textoPt": {
+    "pt": "Quando o {{י}} vem depois de um chirik ({{ִ}}) só para marcar a vogal, ele não acrescenta outro som: juntos, {{ִי}} representam o som «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
+    "en": null
+  },
+  "guia/secoes/yod/exemplos/#0/pt": {
+    "pt": "temerei",
+    "en": null
+  },
+  "guia/secoes/yod/exemplos/#1/pt": {
+    "pt": "a teus filhos",
+    "en": null
+  },
+  "guia/secoes/yod/exemplos/#2/pt": {
+    "pt": "nosso Deus",
+    "en": null
+  },
+  "guia/secoes/vav/tituloPt": {
+    "pt": "O ו do «e disse»",
+    "en": null
+  },
+  "guia/secoes/vav/textoPt": {
+    "pt": "A Bíblia conta o que aconteceu com um {{וַ}} na frente do verbo: {{וַיֹּאמֶר}} é «e disse», {{וַיְהִי}} é «e houve». É a forma bíblica de narrar no passado, e o hebraico de hoje não a usa. Para ler, basta dizer «va» e seguir.",
+    "en": null
+  },
+  "guia/secoes/vav/exemplos/#0/pt": {
+    "pt": "e disse",
+    "en": null
+  },
+  "guia/secoes/vav/exemplos/#1/pt": {
+    "pt": "e houve",
+    "en": null
+  },
+  "guia/secoes/teamim/tituloPt": {
+    "pt": "Os sinais a mais numa Bíblia impressa",
+    "en": null
+  },
+  "guia/secoes/teamim/textoPt": {
+    "pt": "Numa Bíblia hebraica você vai ver ainda outros sinais, em cima e embaixo das letras: são os te'amim, as notas do canto da leitura na sinagoga. Para ler, pode ignorá-los. O {{׃}} marca o fim do versículo, e um {{פ}} ou {{ס}} sozinho entre versículos marca um parágrafo: nenhum dos dois se lê.",
+    "en": null
+  },
+  "guia/secoes/teamim/exemplos/#0/pt": {
+    "pt": "Gênesis 1:1 como numa Bíblia impressa, com os te'amim e o ׃",
+    "en": null
+  }
+}

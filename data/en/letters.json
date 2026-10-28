@@ -1,0 +1,3646 @@
+{
+  "alef/namePt": {
+    "pt": "Álef",
+    "en": null
+  },
+  "alef/soundNotePt": {
+    "pt": "Não tem som próprio. {{א}} é um apoio: existe para segurar a vogal que vem com ele. Você pronuncia só a vogal.",
+    "en": null
+  },
+  "alef/articulacao/comoPt": {
+    "pt": "De lugar nenhum: {{א}} não tem som. Ele só segura a vogal, e é a vogal que você pronuncia, com a boca na posição dela.",
+    "en": null
+  },
+  "alef/ensino/funcaoPt": {
+    "pt": "{{א}} é um suporte. Ela não tem som próprio: existe para segurar o sinal de vogal que vem com ela. Quando você encontra {{א}} numa palavra, pronuncia a vogal que está nela e mais nada. Por isso ela aparece tanto no começo de palavras que, para nós, começam com som de vogal - o hebraico não escreve uma vogal solta, então alguém precisa segurá-la, e esse alguém costuma ser o {{א}}.",
+    "en": null
+  },
+  "alef/ensino/detalhePt": {
+    "pt": "Dizer que {{א}} é muda quer dizer que ela aparece escrita mas não tem som próprio perceptível na pronúncia. Ela não está sobrando: sem ela a vogal não teria onde se apoiar. No hebraico antigo o {{א}} marcava uma paradinha na garganta, como o corte que a gente faz entre as duas vogais de \"co-operar\"; no hebraico falado hoje, essa parada glotal muitas vezes não é pronunciada, e o que sobra é o apoio.",
+    "en": null
+  },
+  "alef/ensino/paraBrasileiroPt": {
+    "pt": "O nome da letra começa com A, e isso engana: {{א}} não é a vogal A. Ela segura QUALQUER vogal - {{אִ}} se lê \"i\", {{אוֹ}} se lê \"o\", {{אוּ}} se lê \"u\". Em português não existe nada parecido, porque as nossas vogais são letras e se viram sozinhas. Atenção: nas transliterações deste curso, ch não é o ch de \"chave\": é um R raspado na garganta, como o R carioca de \"carro\". Por isso \"óchel\" (comida) se lê com esse R raspado.",
+    "en": null
+  },
+  "alef/ensino/padraoPt": {
+    "pt": "Esta é a primeira letra que aparece escrita sem um som próprio, e não vai ser a última - há outra mais adiante que faz a mesma coisa. Quando encontrar uma delas, não procure um som: procure a vogal que a letra está segurando. Esse comportamento volta o curso inteiro.",
+    "en": null
+  },
+  "alef/ensino/lembrePt": {
+    "pt": "{{א}} não tem som. Você lê só a vogal que estiver junto dela.",
+    "en": null
+  },
+  "alef/ensino/checagem/#0/q": {
+    "pt": "Você encontra {{אוֹ}} no começo de uma palavra. O que você pronuncia?",
+    "en": null
+  },
+  "alef/ensino/checagem/#0/porque": {
+    "pt": "O som que sai é o da vogal que o {{א}} carrega. O nome da letra começa com A, mas a letra não é a vogal A - ela é o apoio de qualquer vogal.",
+    "en": null
+  },
+  "alef/ensino/checagem/#1/q": {
+    "pt": "Dizer que uma letra é muda quer dizer que ela foi escrita por engano e podia ser apagada.",
+    "en": null
+  },
+  "alef/ensino/checagem/#1/porque": {
+    "pt": "Muda quer dizer que ela não tem som próprio naquele caso. O {{א}} está ali segurando a vogal: sem ele, a vogal do começo da palavra não teria em que se apoiar.",
+    "en": null
+  },
+  "alef/ensino/checagem/#2/q": {
+    "pt": "Qual destes se lê \"i\"?",
+    "en": null
+  },
+  "alef/ensino/checagem/#2/porque": {
+    "pt": "A letra é a mesma nos dois. Quem decide o som é o sinal de vogal que vem com ela: {{אִ}} se lê \"i\" e {{אוֹ}} se lê \"o\". O {{א}} não muda - ele só segura.",
+    "en": null
+  },
+  "alef/contrastes/ע": {
+    "pt": "O א tem um traço diagonal no meio, ligando os dois cantos. O ע é aberto em cima, com dois braços que descem para um pé só.",
+    "en": null
+  },
+  "alef/syllables/#0/ptApprox": {
+    "pt": "só a vogal A",
+    "en": null
+  },
+  "alef/syllables/#1/ptApprox": {
+    "pt": "só a vogal E",
+    "en": null
+  },
+  "alef/syllables/#2/ptApprox": {
+    "pt": "só a vogal I",
+    "en": null
+  },
+  "alef/syllables/#3/ptApprox": {
+    "pt": "só a vogal O",
+    "en": null
+  },
+  "alef/syllables/#4/ptApprox": {
+    "pt": "só a vogal U",
+    "en": null
+  },
+  "alef/wordsToRecognize/#0/pt": {
+    "pt": "comida",
+    "en": null
+  },
+  "alef/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "alef/wordsToRecognize/#1/pt": {
+    "pt": "ontem",
+    "en": null
+  },
+  "alef/wordsToRecognize/#1/use": {
+    "pt": "Advérbio",
+    "en": null
+  },
+  "alef/wordsToRecognize/#2/pt": {
+    "pt": "depois de",
+    "en": null
+  },
+  "alef/wordsToRecognize/#2/use": {
+    "pt": "Preposição",
+    "en": null
+  },
+  "alef/didYouKnow": {
+    "pt": "{{אָלֶף}} tem o mesmo nome da letra fenícia que os gregos adotaram como alpha, uma prima do nosso {{א}}. E alpha mais beta deram \"alfabeto\": a palavra que você usa em português vem dessas duas letras gregas.",
+    "en": null
+  },
+  "alef/brazilianMistake/wrong": {
+    "pt": "Tentar produzir algum som para o {{א}}, ou tratá-lo como um A fixo.",
+    "en": null
+  },
+  "alef/brazilianMistake/right": {
+    "pt": "Ler apenas a vogal marcada: {{אוֹ}} é \"o\", {{אִ}} é \"i\".",
+    "en": null
+  },
+  "alef/brazilianMistake/why": {
+    "pt": "O nome da letra começa com A, e isso engana. {{א}} não é a vogal A - é o suporte de qualquer vogal.",
+    "en": null
+  },
+  "alef/bridgeWords/#0/pt": {
+    "pt": "sauna",
+    "en": null
+  },
+  "alef/bridgeWords/#1/pt": {
+    "pt": "caos",
+    "en": null
+  },
+  "alef/bridgeWords/#2/pt": {
+    "pt": "Pirineus",
+    "en": null
+  },
+  "alef/bridgeWords/#3/pt": {
+    "pt": "coala",
+    "en": null
+  },
+  "mem/namePt": {
+    "pt": "Mem",
+    "en": null
+  },
+  "mem/soundNotePt": {
+    "pt": "Igual ao M do português, em mãe, mesa, música. Não há nada novo a aprender no som - só na forma.",
+    "en": null
+  },
+  "mem/articulacao/comoPt": {
+    "pt": "Os dois lábios se fecham e o ar sai pelo nariz, com a voz ligada. Tape o nariz e tente dizer M: não sai.",
+    "en": null
+  },
+  "mem/ensino/funcaoPt": {
+    "pt": "{{מ}} é a sua primeira consoante de verdade: ela traz o som /m/ e se junta a uma vogal para formar sílaba - {{מַ}}, {{מִ}}, {{מוֹ}}. Repare na diferença para o {{א}}: lá você pronunciava só a vogal, aqui você pronuncia a consoante e a vogal juntas. É assim que funciona a maioria das letras hebraicas.",
+    "en": null
+  },
+  "mem/ensino/detalhePt": {
+    "pt": "{{מ}} muda de desenho quando fecha a palavra: vira {{ם}}, de cantos fechados. É a mesma letra e o mesmo som /m/ - só a forma muda. A diferença se desenvolveu ao longo de séculos de escrita. Em cinco letras, a forma usada no fim da palavra preservou características mais antigas, enquanto a forma do meio da palavra foi mudando. Você vê a forma final em {{אֵם}}, onde o mem termina a palavra.",
+    "en": null
+  },
+  "mem/ensino/paraBrasileiroPt": {
+    "pt": "O som é o M de \"mãe\", mas com uma armadilha: em português o M no fim da sílaba nasaliza a vogal anterior - \"bom\", \"sim\", \"tem\". Em hebraico isso não acontece. {{אִמָא}} é \"íma\", com as duas vogais limpas e o M pronunciado inteiro no meio da palavra.",
+    "en": null
+  },
+  "mem/ensino/lembrePt": {
+    "pt": "{{מ}} faz /m/ e vira {{ם}} quando termina a palavra. Mesma letra, mesmo som, outro desenho.",
+    "en": null
+  },
+  "mem/ensino/checagem/#0/q": {
+    "pt": "Qual destas é a forma que aparece no FIM da palavra?",
+    "en": null
+  },
+  "mem/ensino/checagem/#0/porque": {
+    "pt": "O {{ם}} é fechado dos quatro lados; o {{מ}} tem uma abertura embaixo, à esquerda. As duas são a mesma letra.",
+    "en": null
+  },
+  "mem/ensino/checagem/#1/q": {
+    "pt": "Quando {{מ}} vira {{ם}} no fim da palavra, o som também muda.",
+    "en": null
+  },
+  "mem/ensino/checagem/#1/porque": {
+    "pt": "O som continua sendo /m/. A forma final é uma questão de desenho, não de pronúncia - é a mesma letra nas duas posições.",
+    "en": null
+  },
+  "mem/ensino/checagem/#2/q": {
+    "pt": "Em {{אֵם}} (mãe, em registro formal), por que o mem está desenhado assim?",
+    "en": null
+  },
+  "mem/ensino/checagem/#2/porque": {
+    "pt": "É a posição que decide o desenho: fechando a palavra, o mem aparece como {{ם}}. Em {{אִמָא}} ele está no meio, e aparece como {{מ}}.",
+    "en": null
+  },
+  "mem/syllables/#0/ptApprox": {
+    "pt": "como o MA de \"má\"",
+    "en": null
+  },
+  "mem/syllables/#1/ptApprox": {
+    "pt": "como o ME de \"mesa\"",
+    "en": null
+  },
+  "mem/syllables/#2/ptApprox": {
+    "pt": "como o MI de \"milho\"",
+    "en": null
+  },
+  "mem/syllables/#3/ptApprox": {
+    "pt": "como o MO de \"motor\"",
+    "en": null
+  },
+  "mem/syllables/#4/ptApprox": {
+    "pt": "como o MU de \"muro\"",
+    "en": null
+  },
+  "mem/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "mem/wordsToRecognize/#0/pt": {
+    "pt": "água",
+    "en": null
+  },
+  "mem/wordsToRecognize/#0/use": {
+    "pt": "Substantivo muito comum",
+    "en": null
+  },
+  "mem/wordsToRecognize/#1/pt": {
+    "pt": "o quê / que",
+    "en": null
+  },
+  "mem/wordsToRecognize/#1/use": {
+    "pt": "Pergunta essencial",
+    "en": null
+  },
+  "mem/wordsToRecognize/#2/pt": {
+    "pt": "quem",
+    "en": null
+  },
+  "mem/wordsToRecognize/#2/use": {
+    "pt": "Pergunta essencial",
+    "en": null
+  },
+  "mem/wordsToRecognize/#3/pt": {
+    "pt": "família",
+    "en": null
+  },
+  "mem/wordsToRecognize/#3/use": {
+    "pt": "Substantivo muito comum",
+    "en": null
+  },
+  "mem/wordsToRecognize/#4/pt": {
+    "pt": "professor",
+    "en": null
+  },
+  "mem/wordsToRecognize/#4/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "mem/wordsToRecognize/#5/pt": {
+    "pt": "rei",
+    "en": null
+  },
+  "mem/wordsToRecognize/#5/use": {
+    "pt": "Substantivo cultural",
+    "en": null
+  },
+  "mem/wordsToRead/#0/pt": {
+    "pt": "mãe",
+    "en": null
+  },
+  "mem/wordsToRead/#1/pt": {
+    "pt": "mãe (registro formal, em compostos)",
+    "en": null
+  },
+  "mem/didYouKnowTitle": {
+    "pt": "Mem, a letra da água",
+    "en": null
+  },
+  "mem/didYouKnow": {
+    "pt": "O nome Mem vem de uma palavra semítica muito antiga que queria dizer \"água\". Ela é da mesma família de {{מַיִם}} (máyim), a palavra que ainda hoje quer dizer \"água\" em hebraico.\n\nNas primeiras formas do alfabeto, a letra provavelmente era desenhada como uma linha de ondas.\n\nDica para memorizar: sempre que encontrar o {{מ}}, pense em água em movimento. Assim você liga de uma vez a letra, o som M e a palavra {{מַיִם}}.",
+    "en": null
+  },
+  "mem/brazilianMistake/wrong": {
+    "pt": "Ler {{אֵם}} como o \"em\" do português, com a vogal anasalada e o M sumindo.",
+    "en": null
+  },
+  "mem/brazilianMistake/right": {
+    "pt": "Ler {{אֵם}} com a vogal oral, como o E de \"mesa\", e fechar os lábios de verdade no M do fim.",
+    "en": null
+  },
+  "mem/brazilianMistake/why": {
+    "pt": "Em português o M no fim da sílaba nasaliza a vogal antes dele - \"mim\", \"bom\", \"sim\". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral.",
+    "en": null
+  },
+  "mem/bridgeWords/#0/pt": {
+    "pt": "terminal",
+    "en": null
+  },
+  "mem/bridgeWords/#1/pt": {
+    "pt": "diagrama",
+    "en": null
+  },
+  "mem/bridgeWords/#2/pt": {
+    "pt": "democracia",
+    "en": null
+  },
+  "mem/bridgeWords/#3/pt": {
+    "pt": "creme",
+    "en": null
+  },
+  "mem/contrastes/ס": {
+    "pt": "O ם final é quadrado, de cantos retos. O ס é redondo.",
+    "en": null
+  },
+  "mem/contrastes/ם": {
+    "pt": "O מ tem uma abertura na base, à esquerda. O ם é fechado dos quatro lados.",
+    "en": null
+  },
+  "tav/namePt": {
+    "pt": "Tav",
+    "en": null
+  },
+  "tav/soundNotePt": {
+    "pt": "Como o T de \"tatu\" - sempre seco, nunca com som de TCH.",
+    "en": null
+  },
+  "tav/articulacao/comoPt": {
+    "pt": "A ponta da língua encosta atrás dos dentes de cima e solta o ar de uma vez, sem voz. Seco, como em \"tatu\": nunca o TCH de \"tia\" do jeito carioca.",
+    "en": null
+  },
+  "tav/ensino/funcaoPt": {
+    "pt": "{{ת}} é a consoante /t/ e a última letra do alfabeto. Ela se junta às vogais como qualquer consoante - {{תַ}}, {{תִ}}, {{תוֹ}} - e aparece com muita frequência fechando palavras: {{אֶמֶת}} (verdade) termina com ela. Encontrar o {{ת}} no fim de uma palavra é tão comum que vale reconhecê-lo de olhos fechados.",
+    "en": null
+  },
+  "tav/ensino/detalhePt": {
+    "pt": "Você vai encontrar {{ת}} com um pontinho dentro ({{תּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /t/ nos dois casos - o ponto não muda nada para você. Ele já mudou no passado, e a diferença sobrevive na pronúncia asquenazita tradicional, em que o tav sem ponto soa como \"s\": é por isso que a mesma palavra aparece como \"Shabát\" na pronúncia israelense e \"Shábbos\" na pronúncia asquenazita tradicional (\"Shábes\" em ídiche). Neste curso o ponto não é escrito no {{ת}}: ele só aparece nas três letras em que muda o som.",
+    "en": null
+  },
+  "tav/ensino/lembrePt": {
+    "pt": "{{ת}} é sempre um T seco, com ou sem o pontinho dentro. Nunca \"tch\".",
+    "en": null
+  },
+  "tav/ensino/checagem/#0/q": {
+    "pt": "Como se lê a sílaba {{תִ}}?",
+    "en": null
+  },
+  "tav/ensino/checagem/#0/porque": {
+    "pt": "Na maior parte do Brasil o T antes de I e E vira TCH, e o hábito é automático. Em hebraico o {{ת}} é sempre seco: {{תִ}} é \"ti\", nunca \"tchi\".",
+    "en": null
+  },
+  "tav/ensino/checagem/#1/q": {
+    "pt": "O pontinho dentro do {{תּ}} muda o som da letra no hebraico falado hoje.",
+    "en": null
+  },
+  "tav/ensino/checagem/#1/porque": {
+    "pt": "Em Israel o som é /t/ com ponto ou sem ponto. A diferença existiu no passado e ainda aparece na pronúncia asquenazita tradicional, mas não no hebraico que este curso ensina.",
+    "en": null
+  },
+  "tav/contrastes/ח": {
+    "pt": "O ת tem um pezinho no fim da perna esquerda, virado para fora (para a esquerda). No ח as duas pernas descem retas até o fim.",
+    "en": null
+  },
+  "tav/contrastes/ה": {
+    "pt": "O ת tem a perna esquerda presa ao teto, terminando num pezinho. O ה tem uma fresta no alto, à esquerda: a perna fica solta, sem se ligar ao teto.",
+    "en": null
+  },
+  "tav/syllables/#0/ptApprox": {
+    "pt": "como \"tá\"",
+    "en": null
+  },
+  "tav/syllables/#1/ptApprox": {
+    "pt": "como \"te\" de \"teto\"",
+    "en": null
+  },
+  "tav/syllables/#2/ptApprox": {
+    "pt": "como \"ti\" de \"tigre\" - nunca \"tchi\"",
+    "en": null
+  },
+  "tav/syllables/#3/ptApprox": {
+    "pt": "como \"to\" de \"topo\"",
+    "en": null
+  },
+  "tav/syllables/#4/ptApprox": {
+    "pt": "como \"tu\" de \"tudo\"",
+    "en": null
+  },
+  "tav/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "tav/wordsToRecognize/#0/pt": {
+    "pt": "obrigado(a)",
+    "en": null
+  },
+  "tav/wordsToRecognize/#0/use": {
+    "pt": "Fórmula de cortesia",
+    "en": null
+  },
+  "tav/wordsToRecognize/#1/pt": {
+    "pt": "chá",
+    "en": null
+  },
+  "tav/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "tav/wordsToRecognize/#2/pt": {
+    "pt": "maçã",
+    "en": null
+  },
+  "tav/wordsToRecognize/#2/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "tav/wordsToRead/#0/pt": {
+    "pt": "verdade",
+    "en": null
+  },
+  "tav/wordsToRead/#1/pt": {
+    "pt": "cabine · compartimento",
+    "en": null
+  },
+  "tav/wordsToRead/#2/pt": {
+    "pt": "você (para mulher)",
+    "en": null
+  },
+  "tav/didYouKnow": {
+    "pt": "{{ת}} é a última letra do alfabeto. Por isso a expressão que equivale ao nosso \"do A ao Z\" em hebraico é {{מֵאָלֶף עַד תָו}} - de Álef a Tav.",
+    "en": null
+  },
+  "tav/brazilianMistake/wrong": {
+    "pt": "Ler {{תִי}} como \"tchi\" e {{תֵ}} como \"tche\".",
+    "en": null
+  },
+  "tav/brazilianMistake/right": {
+    "pt": "Ler {{תִי}} como \"ti\" e {{תֵ}} como \"te\", com o T seco.",
+    "en": null
+  },
+  "tav/brazilianMistake/why": {
+    "pt": "Na maior parte do Brasil o T antes de I e E vira TCH - \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o {{ת}} é sempre seco: {{תֵה}} é \"te\", não \"tchê\".",
+    "en": null
+  },
+  "tav/bridgeWords/#0/pt": {
+    "pt": "Tel Aviv",
+    "en": null
+  },
+  "tav/bridgeWords/#1/pt": {
+    "pt": "maratona",
+    "en": null
+  },
+  "tav/bridgeWords/#2/pt": {
+    "pt": "mamute",
+    "en": null
+  },
+  "tav/bridgeWords/#3/pt": {
+    "pt": "ética",
+    "en": null
+  },
+  "nun/namePt": {
+    "pt": "Nun",
+    "en": null
+  },
+  "nun/soundNotePt": {
+    "pt": "Como o N de \"nada\". No fim da palavra vira {{ן}}, uma haste longa que desce abaixo da linha.",
+    "en": null
+  },
+  "nun/articulacao/comoPt": {
+    "pt": "A ponta da língua encosta atrás dos dentes de cima, como no {{ת}}, mas o ar sai pelo nariz, com a voz ligada.",
+    "en": null
+  },
+  "nun/ensino/funcaoPt": {
+    "pt": "{{נ}} é a consoante /n/. Como toda consoante, ela se junta a uma vogal para formar sílaba - {{נַ}}, {{נִ}}, {{נוֹ}} - e aparece muito no fim de palavras: {{אָמֵן}} (amém) e {{תֵן}} (dá!) terminam com ela.",
+    "en": null
+  },
+  "nun/ensino/detalhePt": {
+    "pt": "{{נ}} também tem forma final: vira {{ן}}, um traço reto que desce e passa da linha de baixo. Mesma letra, mesmo som /n/ - só o desenho muda quando ela fecha a palavra. Compare {{נָתַן}} (deu), que tem as duas: começa com {{נ}} e termina com {{ן}}.",
+    "en": null
+  },
+  "nun/ensino/paraBrasileiroPt": {
+    "pt": "Mesma armadilha do mem: em português o N no fim da sílaba nasaliza a vogal antes dele (\"bem\", \"sin-to\"). Em hebraico o {{ן}} é pronunciado como consoante inteira e a vogal continua limpa - {{מִן}} é \"min\", com o N audível no fim.",
+    "en": null
+  },
+  "nun/ensino/lembrePt": {
+    "pt": "{{נ}} faz /n/ e vira {{ן}} no fim da palavra. O traço final desce abaixo da linha.",
+    "en": null
+  },
+  "nun/ensino/checagem/#0/q": {
+    "pt": "Qual destas você escreve no FIM de uma palavra?",
+    "en": null
+  },
+  "nun/ensino/checagem/#0/porque": {
+    "pt": "O {{ן}} é o traço que desce reto e passa da linha. É a mesma letra do {{נ}}, com o desenho que ela assume fechando a palavra.",
+    "en": null
+  },
+  "nun/ensino/checagem/#1/q": {
+    "pt": "A palavra {{נֹתֵן}} (dá) traz a mesma letra duas vezes, desenhada de dois jeitos. Por quê?",
+    "en": null
+  },
+  "nun/ensino/checagem/#1/porque": {
+    "pt": "É a posição que decide o desenho. As duas são nun e as duas soam /n/ - a do fim aparece como {{ן}}.",
+    "en": null
+  },
+  "nun/ensino/checagem/#2/q": {
+    "pt": "Em {{מִן}}, o N do fim deixa a vogal anasalada, como em \"sim\".",
+    "en": null
+  },
+  "nun/ensino/checagem/#2/porque": {
+    "pt": "Esse é o reflexo do português. Em hebraico a vogal fica limpa e o N é pronunciado inteiro: \"min\", e não \"mĩ\".",
+    "en": null
+  },
+  "nun/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "nun/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "nun/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "nun/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "nun/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "nun/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "nun/wordsToRecognize/#0/pt": {
+    "pt": "correto",
+    "en": null
+  },
+  "nun/wordsToRecognize/#0/use": {
+    "pt": "Adjetivo muito comum",
+    "en": null
+  },
+  "nun/wordsToRecognize/#1/pt": {
+    "pt": "janela",
+    "en": null
+  },
+  "nun/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "nun/wordsToRecognize/#2/pt": {
+    "pt": "simpático",
+    "en": null
+  },
+  "nun/wordsToRecognize/#2/use": {
+    "pt": "Adjetivo comum",
+    "en": null
+  },
+  "nun/wordsToRead/#0/pt": {
+    "pt": "amém",
+    "en": null
+  },
+  "nun/wordsToRead/#1/pt": {
+    "pt": "dá, está dando",
+    "en": null
+  },
+  "nun/wordsToRead/#2/pt": {
+    "pt": "de / a partir de (registro formal)",
+    "en": null
+  },
+  "nun/didYouKnowTitle": {
+    "pt": "Nun: o peixe ou a serpente?",
+    "en": null
+  },
+  "nun/didYouKnow": {
+    "pt": "Em aramaico, {{נוּן}} (nun) quer dizer \"peixe\", e é daí que vem, tradicionalmente, o nome da letra.\n\nMas há uma surpresa: muitos estudiosos acham que o desenho mais antigo da letra mostrava uma serpente, e não um peixe. A origem exata ainda é discutida.\n\nE tem mais: Nun também é um nome de pessoa. Na Bíblia, o pai de Josué se chama Nun, a mesma palavra.\n\nDica para memorizar: pense num peixe e no som N de Nun.",
+    "en": null
+  },
+  "nun/brazilianMistake/wrong": {
+    "pt": "Nasalizar a vogal antes do N: ler {{אָמֵן}} como o nosso \"amém\", \"amẽ\".",
+    "en": null
+  },
+  "nun/brazilianMistake/right": {
+    "pt": "Ler {{אָמֵן}} como \"amén\", com o N pronunciado e a vogal limpa.",
+    "en": null
+  },
+  "nun/brazilianMistake/why": {
+    "pt": "É o mesmo hábito do {{מ}}: em português o N no fim da sílaba nasaliza a vogal e quase desaparece. Em hebraico ele é uma consoante inteira, encostando a língua atrás dos dentes.",
+    "en": null
+  },
+  "nun/bridgeWords/#0/pt": {
+    "pt": "menorá",
+    "en": null
+  },
+  "nun/bridgeWords/#1/pt": {
+    "pt": "limonada",
+    "en": null
+  },
+  "nun/bridgeWords/#2/pt": {
+    "pt": "Berlim",
+    "en": null
+  },
+  "nun/bridgeWords/#3/pt": {
+    "pt": "sandália",
+    "en": null
+  },
+  "nun/bridgeWords/#4/pt": {
+    "pt": "canibal",
+    "en": null
+  },
+  "nun/contrastes/ן": {
+    "pt": "O נ tem base, como um L virado ao contrário. O ן não tem base: desce reto abaixo da linha.",
+    "en": null
+  },
+  "nun/contrastes/ו": {
+    "pt": "O נ termina com uma curva ou base para a esquerda. O ו desce reto, sem essa base.",
+    "en": null
+  },
+  "nun/contrastes/ג": {
+    "pt": "O ג tem uma perna curta que sai da parte de baixo. O נ é mais fechado e continua para baixo formando uma base.",
+    "en": null
+  },
+  "he/namePt": {
+    "pt": "He",
+    "en": null
+  },
+  "he/soundNotePt": {
+    "pt": "Um H aspirado, soprado - o H do inglês \"hello\". No fim da palavra costuma ser mudo.",
+    "en": null
+  },
+  "he/articulacao/comoPt": {
+    "pt": "Lá embaixo, nas cordas vocais: só um sopro, sem raspar nada, como quem embaça um espelho. É o H do inglês \"hello\".",
+    "en": null
+  },
+  "he/ensino/funcaoPt": {
+    "pt": "{{ה}} tem duas vidas, e é a primeira letra do curso em que isso acontece. No começo e no meio da palavra ela é consoante: um sopro leve de ar, como o H do inglês em \"house\". No FIM da palavra ela quase sempre não é pronunciada - e não está ali à toa: é ela que indica que a palavra termina com som de vogal, geralmente \"a\" ou \"e\". Em {{מָה}} (o quê) você lê \"ma\", e o {{ה}} do fim não vira sopro nenhum.",
+    "en": null
+  },
+  "he/ensino/detalhePt": {
+    "pt": "Quando {{ה}} fecha a palavra e não é pronunciada, ela está muda: aparece escrita, mas você não ouve som próprio. Isto é diferente do {{א}}, que é apoio de vogal em qualquer posição - o {{ה}} sopra no começo e cala no fim. Guarde a ideia geral, porque ela volta: uma letra pode ter comportamento diferente dependendo de onde está na palavra, e algumas letras participam da representação de uma vogal em vez de soar como consoante.",
+    "en": null
+  },
+  "he/ensino/paraBrasileiroPt": {
+    "pt": "O H do português é sempre mudo - \"hora\", \"homem\". O {{ה}} no começo da palavra NÃO é mudo: é um sopro de ar de verdade, o som que o inglês faz em \"hat\". Já no fim da palavra ele se comporta como o nosso H: está escrito e não se ouve.",
+    "en": null
+  },
+  "he/ensino/dicaLeitura/tituloPt": {
+    "pt": "Viu {{ה}} no final da palavra?",
+    "en": null
+  },
+  "he/ensino/dicaLeitura/exemplos/#0/ptPt": {
+    "pt": "o quê",
+    "en": null
+  },
+  "he/ensino/dicaLeitura/exemplos/#1/ptPt": {
+    "pt": "você (para homem)",
+    "en": null
+  },
+  "he/ensino/dicaLeitura/notaPt": {
+    "pt": "Isto é uma pista, e não uma lei. Não existe \"{{ה}} no fim significa sempre A\": existem palavras em que ele soa, e existem outras vogais no fim. O que vale sempre é olhar o nikud e ler a palavra como uma unidade.",
+    "en": null
+  },
+  "he/ensino/lembrePt": {
+    "pt": "No começo da palavra, {{ה}} é um sopro. No fim, quase sempre é muda: a vogal é a que está embaixo da letra anterior (muitas vezes \"a\", como em {{מָה}}, mas também \"e\", como em {{הִנֵה}}).",
+    "en": null
+  },
+  "he/ensino/checagem/#0/q": {
+    "pt": "Em {{מָה}} (o quê), o que acontece com o {{ה}} do fim?",
+    "en": null
+  },
+  "he/ensino/checagem/#0/porque": {
+    "pt": "No fim da palavra o {{ה}} quase sempre cala. Ele não está sobrando: marca que a palavra termina em som de vogal, e o sinal embaixo do {{מ}} diz qual é - aqui, \"a\".",
+    "en": null
+  },
+  "he/ensino/checagem/#1/q": {
+    "pt": "Uma letra muda é sempre muda, em qualquer palavra.",
+    "en": null
+  },
+  "he/ensino/checagem/#1/porque": {
+    "pt": "O {{ה}} é o exemplo disso: no começo da palavra ele é um sopro audível, e no fim costuma calar. O comportamento depende da posição, e é por isso que cada caso é ensinado no seu lugar.",
+    "en": null
+  },
+  "he/ensino/checagem/#2/q": {
+    "pt": "E em {{הִנֵה}} (eis aqui), que tem {{ה}} no começo e no fim?",
+    "en": null
+  },
+  "he/ensino/checagem/#2/porque": {
+    "pt": "A mesma letra, em duas posições, com dois comportamentos: \"hiné\" começa com sopro e termina em vogal. É a demonstração mais curta de que a posição manda.",
+    "en": null
+  },
+  "he/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "he/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "he/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "he/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "he/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "he/wordsToRecognize/#0/pt": {
+    "pt": "hoje",
+    "en": null
+  },
+  "he/wordsToRecognize/#0/use": {
+    "pt": "Expressão diária",
+    "en": null
+  },
+  "he/wordsToRecognize/#1/pt": {
+    "pt": "tudo",
+    "en": null
+  },
+  "he/wordsToRecognize/#1/use": {
+    "pt": "Palavra muito comum",
+    "en": null
+  },
+  "he/wordsToRecognize/#2/pt": {
+    "pt": "eles",
+    "en": null
+  },
+  "he/wordsToRecognize/#2/use": {
+    "pt": "Pronome",
+    "en": null
+  },
+  "he/wordsToRead/#0/pt": {
+    "pt": "o quê / que",
+    "en": null
+  },
+  "he/wordsToRead/#1/pt": {
+    "pt": "você (para homem)",
+    "en": null
+  },
+  "he/wordsToRead/#2/pt": {
+    "pt": "você (para mulher)",
+    "en": null
+  },
+  "he/wordsToRead/#3/pt": {
+    "pt": "eles",
+    "en": null
+  },
+  "he/wordsToRead/#4/pt": {
+    "pt": "elas",
+    "en": null
+  },
+  "he/wordsToRead/#5/pt": {
+    "pt": "eis aqui / aqui está",
+    "en": null
+  },
+  "he/didYouKnow": {
+    "pt": "O artigo definido do hebraico é um {{ה}} grudado no começo da palavra: {{בַּיִת}} (báyit) é \"casa\" e {{הַבַּיִת}} (habáyit) é \"a casa\". Uma letra faz o trabalho de uma palavra inteira. Atenção: nem todo {{ה}} inicial é artigo - em {{הֵם}} e {{הִנֵה}} ele faz parte da palavra.",
+    "en": null
+  },
+  "he/brazilianMistake/wrong": {
+    "pt": "Não pronunciar o {{ה}} inicial, lendo {{הַיוֹם}} como \"ayóm\".",
+    "en": null
+  },
+  "he/brazilianMistake/right": {
+    "pt": "Soprar o H: \"hayóm\", com ar saindo antes da vogal.",
+    "en": null
+  },
+  "he/brazilianMistake/why": {
+    "pt": "Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o {{ה}} no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido.",
+    "en": null
+  },
+  "he/bridgeWords/#0/pt": {
+    "pt": "furacão (hurricane)",
+    "en": null
+  },
+  "he/bridgeWords/#1/pt": {
+    "pt": "álcool",
+    "en": null
+  },
+  "he/bridgeWords/#2/pt": {
+    "pt": "Taiti",
+    "en": null
+  },
+  "he/bridgeWords/#3/pt": {
+    "pt": "helicóptero",
+    "en": null
+  },
+  "he/contrastes/ח": {
+    "pt": "O ה tem uma fresta no alto, à esquerda. O ח é fechado em cima, de ponta a ponta.",
+    "en": null
+  },
+  "he/contrastes/ת": {
+    "pt": "O ת tem uma perna esquerda com pé virado. O ה tem a perna solta, sem pé.",
+    "en": null
+  },
+  "yod/namePt": {
+    "pt": "Yud",
+    "en": null
+  },
+  "yod/soundNotePt": {
+    "pt": "Como o I de \"ioiô\" ou o Y de \"Yara\". Nunca como o J do português.",
+    "en": null
+  },
+  "yod/articulacao/comoPt": {
+    "pt": "O meio da língua sobe até perto do céu da boca, sem encostar, com a voz ligada: o I de \"ioiô\", que desliza para a vogal seguinte.",
+    "en": null
+  },
+  "yod/ensino/funcaoPt": {
+    "pt": "{{י}} é a menor letra do alfabeto e faz dois trabalhos. Como consoante, ela é o som do I em \"ioga\" e \"iate\" - {{יָם}} é \"yam\" (mar), uma sílaba só: \"iá\" + M com os lábios fechados, e não o \"iam\" do verbo ir. E, muito frequentemente, ela não soa como consoante nenhuma: aparece depois de um sinal de vogal para indicar que ali o som é \"i\" ou \"ei\". Em {{מִי}} (quem) e {{אֲנִי}} (eu), o {{י}} do fim não é uma consoante - ele está marcando o \"i\".",
+    "en": null
+  },
+  "yod/ensino/detalhePt": {
+    "pt": "Esta é a segunda letra que você vê participando da representação de uma vogal, depois do {{ה}} no fim de palavra - e é uma das letras que mais fazem isso no hebraico. Não há regra para decorar agora: com o tempo você vai reconhecer os padrões, e o sinal de vogal ao lado sempre diz qual é o som. Quando não houver sinal nenhum, é o {{י}} que segura a pista do \"i\".",
+    "en": null
+  },
+  "yod/ensino/paraBrasileiroPt": {
+    "pt": "Cuidado para não confundir os dois papéis com a nossa letra I. Em \"ioga\" o I português funciona como o {{י}} consoante; em \"ilha\" ele é vogal pura, e nesse caso o hebraico usaria um sinal de vogal - às vezes acompanhado do próprio {{י}}.",
+    "en": null
+  },
+  "yod/ensino/lembrePt": {
+    "pt": "{{י}} é o som do I de \"ioga\" quando é consoante - e, muitas vezes, só a marca do som \"i\" dentro da palavra.",
+    "en": null
+  },
+  "yod/ensino/checagem/#0/q": {
+    "pt": "Em {{מִי}} (quem), qual é o papel do {{י}}?",
+    "en": null
+  },
+  "yod/ensino/checagem/#0/porque": {
+    "pt": "Aqui o {{י}} não é consoante: ele está indicando que a sílaba tem som de \"i\". Lê-se \"mi\", com duas letras e um som só de vogal.",
+    "en": null
+  },
+  "yod/ensino/checagem/#1/q": {
+    "pt": "E em {{יָם}} (mar)?",
+    "en": null
+  },
+  "yod/ensino/checagem/#1/porque": {
+    "pt": "No começo da palavra e com vogal própria, o {{י}} soa como consoante: \"yam\", uma sílaba só. É a mesma letra do exemplo anterior, com o outro papel.",
+    "en": null
+  },
+  "yod/ensino/checagem/#2/q": {
+    "pt": "O {{י}} faz sempre a mesma coisa em toda palavra.",
+    "en": null
+  },
+  "yod/ensino/checagem/#2/porque": {
+    "pt": "Ele tem dois papéis: consoante, como em {{יָם}}, ou marca do som \"i\", como em {{מִי}}. Quem decide é a posição e o sinal de vogal ao lado.",
+    "en": null
+  },
+  "yod/contrastes/ן": {
+    "pt": "O י é curto e fica lá em cima, sem tocar a linha de baixo. O ן é comprido e passa abaixo dela.",
+    "en": null
+  },
+  "yod/contrastes/ו": {
+    "pt": "O י é curto, só um traço no alto. O ו desce até a linha de baixo.",
+    "en": null
+  },
+  "yod/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "yod/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "yod/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "yod/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "yod/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "yod/wordsToRecognize/#0/pt": {
+    "pt": "Israel",
+    "en": null
+  },
+  "yod/wordsToRecognize/#0/use": {
+    "pt": "Nome próprio essencial",
+    "en": null
+  },
+  "yod/wordsToRecognize/#1/pt": {
+    "pt": "bonito",
+    "en": null
+  },
+  "yod/wordsToRecognize/#1/use": {
+    "pt": "Adjetivo muito comum",
+    "en": null
+  },
+  "yod/wordsToRecognize/#2/pt": {
+    "pt": "menina",
+    "en": null
+  },
+  "yod/wordsToRecognize/#2/use": {
+    "pt": "Substantivo comum",
+    "en": null
+  },
+  "yod/wordsToRead/#0/pt": {
+    "pt": "eu",
+    "en": null
+  },
+  "yod/wordsToRead/#1/pt": {
+    "pt": "quem",
+    "en": null
+  },
+  "yod/wordsToRead/#2/pt": {
+    "pt": "água",
+    "en": null
+  },
+  "yod/wordsToRead/#3/pt": {
+    "pt": "mar",
+    "en": null
+  },
+  "yod/didYouKnowTitle": {
+    "pt": "Yud: uma letra pequena com uma grande história",
+    "en": null
+  },
+  "yod/didYouKnow": {
+    "pt": "O {{י}} é a menor letra do alfabeto hebraico: um traço pequeno, suspenso no alto da linha.\n\nA letra grega iota tem a mesma origem: as duas vêm do Yodh, a letra do alfabeto fenício.\n\nÉ dessa história que vem a expressão \"nem um jota\", que quer dizer \"nem a menor parte\".\n\nDica para memorizar: o {{י}} é pequenininho, mas aparece o tempo todo. Pense nele como um traço pequeno que carrega uma grande história.",
+    "en": null
+  },
+  "yod/brazilianMistake/wrong": {
+    "pt": "Ler {{י}} como J: \"jom\", \"jam\".",
+    "en": null
+  },
+  "yod/brazilianMistake/right": {
+    "pt": "Ler {{י}} como I ou Y: \"yom\", \"yam\".",
+    "en": null
+  },
+  "yod/brazilianMistake/why": {
+    "pt": "Como muitos nomes bíblicos aparecem em português com J, como José, Jacó e Jerusalém, alguns brasileiros levam esse hábito para a leitura do hebraico e podem tentar ler {{י}} como J. O som é o do I de \"ioiô\".",
+    "en": null
+  },
+  "yod/bridgeWords/#0/pt": {
+    "pt": "Grã-Bretanha",
+    "en": null
+  },
+  "yod/bridgeWords/#1/pt": {
+    "pt": "carreira",
+    "en": null
+  },
+  "yod/bridgeWords/#2/pt": {
+    "pt": "rádio",
+    "en": null
+  },
+  "yod/bridgeWords/#3/pt": {
+    "pt": "alumínio",
+    "en": null
+  },
+  "gimel/namePt": {
+    "pt": "Guímel",
+    "en": null
+  },
+  "gimel/soundNotePt": {
+    "pt": "Sempre o G duro de \"gato\" - nunca o G suave de \"gente\".",
+    "en": null
+  },
+  "gimel/articulacao/comoPt": {
+    "pt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, com a voz ligada: o G de \"gato\". É o lugar do K, só que vibrando.",
+    "en": null
+  },
+  "gimel/ensino/funcaoPt": {
+    "pt": "{{ג}} é a consoante do G duro, o de \"gato\" e \"gota\". Ela se junta às vogais como qualquer consoante - {{גַ}}, {{גִ}}, {{גוֹ}} - e não tem nenhuma alternância de som: em hebraico, um G é sempre um G duro, venha a vogal que vier depois.",
+    "en": null
+  },
+  "gimel/ensino/detalhePt": {
+    "pt": "Você vai encontrar {{ג}} com um pontinho dentro ({{גּ}}) e sem ele. No hebraico falado em Israel hoje, o som é /g/ nos dois casos - o ponto não muda nada para você aqui. Ele já distinguiu dois sons no passado, e ainda distingue em três outras letras que você vai aprender no fim do curso. Guarde só isto por enquanto: nem todo ponto dentro de uma letra é vogal, e neste caso ele não muda a sua leitura. Por isso, neste curso, ele não é escrito no {{ג}}.",
+    "en": null
+  },
+  "gimel/ensino/lembrePt": {
+    "pt": "{{ג}} é sempre o G duro de \"gato\". Nunca o G de \"gente\".",
+    "en": null
+  },
+  "gimel/ensino/checagem/#0/q": {
+    "pt": "Como se lê {{גִ}}?",
+    "en": null
+  },
+  "gimel/ensino/checagem/#0/porque": {
+    "pt": "Em português o G antes de E e I vira J, e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: o {{ג}} é sempre duro, e não existe um \"u\" escondido.",
+    "en": null
+  },
+  "gimel/ensino/checagem/#1/q": {
+    "pt": "O pontinho dentro do {{גּ}} muda o som da letra no hebraico de hoje.",
+    "en": null
+  },
+  "gimel/ensino/checagem/#1/porque": {
+    "pt": "Aqui não muda: o som é /g/ com ou sem ponto. Ele muda o som em outras letras, que você vê no fim do curso - por isso vale saber que nem todo ponto é vogal e nem todo ponto muda a pronúncia.",
+    "en": null
+  },
+  "gimel/contrastes/ז": {
+    "pt": "O ג tem duas pernas, e a da esquerda chuta para fora. O ז tem um traço só, com o chapéu centrado em cima dele.",
+    "en": null
+  },
+  "gimel/contrastes/נ": {
+    "pt": "O ג tem uma perna curta que sai da parte de baixo. O נ é mais fechado e continua para baixo formando uma base.",
+    "en": null
+  },
+  "gimel/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "gimel/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "gimel/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "gimel/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "gimel/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "gimel/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#0/pt": {
+    "pt": "sorvete",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#1/pt": {
+    "pt": "jardim · jardim de infância",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#1/use": {
+    "pt": "Substantivo comum",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#2/pt": {
+    "pt": "um momento",
+    "en": null
+  },
+  "gimel/wordsToRecognize/#2/use": {
+    "pt": "Expressão diária",
+    "en": null
+  },
+  "gimel/wordsToRead/#0/pt": {
+    "pt": "também",
+    "en": null
+  },
+  "gimel/wordsToRead/#1/pt": {
+    "pt": "jardim · jardim de infância",
+    "en": null
+  },
+  "gimel/wordsToRead/#2/pt": {
+    "pt": "telhado",
+    "en": null
+  },
+  "gimel/wordsToRead/#3/pt": {
+    "pt": "lago",
+    "en": null
+  },
+  "gimel/didYouKnowTitle": {
+    "pt": "Gimel, o camelo e o pião de Chanucá",
+    "en": null
+  },
+  "gimel/didYouKnow": {
+    "pt": "Uma explicação tradicional liga o nome da letra Gimel à palavra {{גָמָל}} (gamál), \"camelo\". Alguns estudiosos também relacionam o desenho antigo da letra a um camelo, mas a origem exata ainda é discutida.\n\nE o {{ג}} guarda outra surpresa. Na festa de Chanucá, as crianças brincam com um pião, o {{סְבִיבוֹן}} (sevivón). Quando ele cai no {{ג}}, quem jogou leva tudo o que está na rodada: a letra vem da palavra iídiche \"gants\", que quer dizer \"tudo\".\n\nDica para memorizar: o G de Gimel, o G de gamál e a letra que leva tudo no jogo de Chanucá.",
+    "en": null
+  },
+  "gimel/brazilianMistake/wrong": {
+    "pt": "Suavizar o G antes de E e I: ler {{גֶשֶׁם}} como \"jéshem\".",
+    "en": null
+  },
+  "gimel/brazilianMistake/right": {
+    "pt": "Manter o G duro sempre: \"guéshem\", \"gadól\", como em \"guerra\" e \"guitarra\".",
+    "en": null
+  },
+  "gimel/brazilianMistake/why": {
+    "pt": "Em português o G antes de E e I vira J - \"gente\", \"gigante\" - e por isso escrevemos \"gu\" para manter o som duro. O hebraico não tem essa alternância: {{ג}} é sempre duro.",
+    "en": null
+  },
+  "gimel/bridgeWords/#0/pt": {
+    "pt": "holograma",
+    "en": null
+  },
+  "gimel/bridgeWords/#1/pt": {
+    "pt": "margarina",
+    "en": null
+  },
+  "gimel/bridgeWords/#2/pt": {
+    "pt": "espaguete",
+    "en": null
+  },
+  "gimel/bridgeWords/#3/pt": {
+    "pt": "Lego",
+    "en": null
+  },
+  "dalet/namePt": {
+    "pt": "Dálet",
+    "en": null
+  },
+  "dalet/soundNotePt": {
+    "pt": "Como o D de \"dado\" - sempre seco, nunca com som de DJ.",
+    "en": null
+  },
+  "dalet/articulacao/comoPt": {
+    "pt": "A ponta da língua atrás dos dentes de cima, como no {{ת}}, mas com a voz ligada. Ponha a mão no pescoço: no {{ד}} ele vibra, no {{ת}} não. Nunca o DJ de \"dia\" do jeito carioca.",
+    "en": null
+  },
+  "dalet/ensino/funcaoPt": {
+    "pt": "{{ד}} é a consoante /d/, sempre seca. Como as outras consoantes, ela forma sílaba com a vogal que vem junto - {{דָ}}, {{דִ}}, {{דוֹ}} - e aparece com frequência no fim de palavras, como em {{יָד}} (mão).",
+    "en": null
+  },
+  "dalet/ensino/detalhePt": {
+    "pt": "Também aqui você encontra {{ד}} com pontinho ({{דּ}}) e sem: o som é /d/ nos dois casos no hebraico de hoje. E guarde um aviso para daqui a algumas lições: o {{ד}} é parecido com outra letra que você ainda não viu, e a diferença está num detalhe do canto superior direito. Quando ela chegar, o curso vai mostrar as duas lado a lado.",
+    "en": null
+  },
+  "dalet/ensino/lembrePt": {
+    "pt": "{{ד}} é o D seco de \"dado\", em qualquer posição e com qualquer vogal.",
+    "en": null
+  },
+  "dalet/ensino/checagem/#0/q": {
+    "pt": "Como se lê {{דִי}}?",
+    "en": null
+  },
+  "dalet/ensino/checagem/#0/porque": {
+    "pt": "Na maior parte do Brasil o D antes de I e E vira DJ sem a gente perceber. Em hebraico o {{ד}} nunca muda: é sempre o D de \"dado\".",
+    "en": null
+  },
+  "dalet/ensino/checagem/#1/q": {
+    "pt": "O pontinho dentro do {{דּ}} indica uma vogal.",
+    "en": null
+  },
+  "dalet/ensino/checagem/#1/porque": {
+    "pt": "Nem todo ponto dentro de uma letra é vogal. Este é outro tipo de sinal, e no hebraico de hoje ele não muda o som do {{ד}} - a vogal continua sendo marcada pelos sinais embaixo ou ao lado da letra.",
+    "en": null
+  },
+  "dalet/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "dalet/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "dalet/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "dalet/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "dalet/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "dalet/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#0/pt": {
+    "pt": "tia",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#0/use": {
+    "pt": "Substantivo familiar",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#1/pt": {
+    "pt": "falo, fala",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#1/use": {
+    "pt": "Verbo muito comum",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#2/pt": {
+    "pt": "vinte",
+    "en": null
+  },
+  "dalet/wordsToRecognize/#2/use": {
+    "pt": "Número",
+    "en": null
+  },
+  "dalet/wordsToRead/#0/pt": {
+    "pt": "mão",
+    "en": null
+  },
+  "dalet/wordsToRead/#1/pt": {
+    "pt": "peixe",
+    "en": null
+  },
+  "dalet/wordsToRead/#2/pt": {
+    "pt": "terra / solo",
+    "en": null
+  },
+  "dalet/wordsToRead/#3/pt": {
+    "pt": "medida / tamanho",
+    "en": null
+  },
+  "dalet/didYouKnowTitle": {
+    "pt": "Dalet, a letra da porta",
+    "en": null
+  },
+  "dalet/didYouKnow": {
+    "pt": "O nome da letra Dalet está ligado à palavra hebraica {{דֶלֶת}} (délet), que quer dizer \"porta\". A ligação tem milhares de anos: uma das explicações para a origem da letra é que o desenho antigo mostrava uma porta ou uma entrada.\n\nE não é a única: o nome de várias letras hebraicas guarda objetos e coisas do dia a dia dos povos antigos, como a água do {{מ}}, que você já conhece.\n\nDica para memorizar: pense no {{ד}} como uma porta. Assim você liga de uma vez a letra, o som D e a palavra {{דֶלֶת}}.",
+    "en": null
+  },
+  "dalet/brazilianMistake/wrong": {
+    "pt": "Ler {{דִי}} como \"dji\", do jeito que falamos \"dia\".",
+    "en": null
+  },
+  "dalet/brazilianMistake/right": {
+    "pt": "Ler {{דִי}} como \"di\", com o D seco, como em \"dado\".",
+    "en": null
+  },
+  "dalet/brazilianMistake/why": {
+    "pt": "Na maior parte do Brasil o D antes de I e E vira DJ, e o falante nem percebe. Em hebraico o {{ד}} nunca muda: é sempre o D seco de \"dado\".",
+    "en": null
+  },
+  "dalet/bridgeWords/#0/pt": {
+    "pt": "absurdo",
+    "en": null
+  },
+  "dalet/bridgeWords/#1/pt": {
+    "pt": "lambda",
+    "en": null
+  },
+  "dalet/bridgeWords/#2/pt": {
+    "pt": "nudista",
+    "en": null
+  },
+  "dalet/bridgeWords/#3/pt": {
+    "pt": "medusa",
+    "en": null
+  },
+  "dalet/contrastes/ך": {
+    "pt": "O ד para na linha de baixo. O ך continua descendo abaixo dela.",
+    "en": null
+  },
+  "dalet/contrastes/ר": {
+    "pt": "O ד tem um canto vivo no alto, e o traço de cima passa um pouquinho da perna, para a direita. O ר é uma curva só.",
+    "en": null
+  },
+  "shin/namePt": {
+    "pt": "Shin",
+    "en": null
+  },
+  "shin/variantes/#0/nomePt": {
+    "pt": "Shin",
+    "en": null
+  },
+  "shin/variantes/#0/comoPt": {
+    "pt": "o X de \"xícara\", o CH de \"chave\" (transliterado \"sh\")",
+    "en": null
+  },
+  "shin/variantes/#0/ondePt": {
+    "pt": "ponto no alto, à DIREITA",
+    "en": null
+  },
+  "shin/variantes/#1/nomePt": {
+    "pt": "Sin",
+    "en": null
+  },
+  "shin/variantes/#1/comoPt": {
+    "pt": "o S de \"sapo\"",
+    "en": null
+  },
+  "shin/variantes/#1/ondePt": {
+    "pt": "ponto no alto, à ESQUERDA",
+    "en": null
+  },
+  "shin/soundNotePt": {
+    "pt": "Como o X de \"xícara\" ou o CH de \"chave\", \"chuva\", \"cachorro\". Nas transliterações do curso esse som se escreve \"sh\": o \"ch\" das transliterações é outro som, o R raspado. Com o ponto do lado esquerdo a letra vira Sin, com o S de \"sapo\", que tem lição própria logo depois.",
+    "en": null
+  },
+  "shin/articulacao/comoPt": {
+    "pt": "{{שׁ}}: a língua recua um pouco, rumo ao céu da boca, e o ar chia sem voz, o CH de \"chave\". {{שׂ}}: a ponta da língua volta para trás dos dentes e o ar sibila, o S de \"sapo\".",
+    "en": null
+  },
+  "shin/ensino/funcaoPt": {
+    "pt": "{{ש}} é a letra do som de X em \"xícara\" e de CH em \"chave\" (nas transliterações do curso, \"sh\") - e é a primeira letra do curso em que um ponto decide QUAL som a letra tem. Com o ponto no alto à direita ({{שׁ}}) o som é \"sh\"; com o ponto no alto à esquerda ({{שׂ}}) o som é o S de \"sapo\". O desenho é o mesmo; o lado do ponto é que manda.",
+    "en": null
+  },
+  "shin/ensino/detalhePt": {
+    "pt": "Repare no que está acontecendo: este ponto não é vogal nenhuma. Ele está dizendo qual dos dois sons aquele desenho representa - {{שׁ}} (Shin) ou {{שׂ}} (Sin). É por isso que \"nem todo ponto é vogal\" não é um detalhe chato: aqui, ler o ponto como vogal faria você pronunciar a palavra inteira errado. Na prática, {{שׁ}} é muito mais frequente, e a maioria das palavras que você vai encontrar tem o ponto à direita.",
+    "en": null
+  },
+  "shin/ensino/paraBrasileiroPt": {
+    "pt": "O som de {{שׁ}} existe no português e é fácil: é o CH de \"chuva\", o mesmo de \"cachorro\" (nas transliterações, escrito \"sh\"). A armadilha é visual, não sonora - como a forma da letra não lembra nada do nosso alfabeto, o cérebro tende a encaixá-la no S, que é justamente o som da OUTRA versão.",
+    "en": null
+  },
+  "shin/ensino/lembrePt": {
+    "pt": "Ponto à direita ({{שׁ}}) é \"sh\", o X de \"xícara\". Ponto à esquerda ({{שׂ}}) é \"s\". Mesmo desenho, dois sons: o ponto decide se é Shin ou Sin.",
+    "en": null
+  },
+  "shin/ensino/checagem/#0/q": {
+    "pt": "Qual destas se lê com o som CH de \"chave\"?",
+    "en": null
+  },
+  "shin/ensino/checagem/#0/porque": {
+    "pt": "O ponto no alto à DIREITA marca o Shin, que é o som \"sh\", o CH de \"chave\". Com o ponto à esquerda a letra é Sin, e soa como o S de \"sapo\".",
+    "en": null
+  },
+  "shin/ensino/checagem/#1/q": {
+    "pt": "O ponto no alto do {{ש}} é um sinal de vogal.",
+    "en": null
+  },
+  "shin/ensino/checagem/#1/porque": {
+    "pt": "Não é. Ele diz se aquele desenho é Shin ou Sin - {{שׁ}} ou {{שׂ}} -, e não que som de vogal a sílaba tem. As vogais continuam sendo marcadas embaixo ou ao lado.",
+    "en": null
+  },
+  "shin/ensino/checagem/#2/q": {
+    "pt": "Em {{שֶׁמֶשׁ}} (sol), a letra aparece duas vezes. Como se lê a palavra?",
+    "en": null
+  },
+  "shin/ensino/checagem/#2/porque": {
+    "pt": "As duas trazem o ponto à direita, então as duas são Shin: \"shémesh\". Se uma delas tivesse o ponto à esquerda, aquela soaria como S.",
+    "en": null
+  },
+  "shin/syllables/#0/ptApprox": {
+    "pt": "como \"chá\"",
+    "en": null
+  },
+  "shin/syllables/#1/ptApprox": {
+    "pt": "como \"che\" de \"chegar\"",
+    "en": null
+  },
+  "shin/syllables/#2/ptApprox": {
+    "pt": "como \"chi\" de \"chique\"",
+    "en": null
+  },
+  "shin/syllables/#3/ptApprox": {
+    "pt": "como \"cho\" de \"chocolate\"",
+    "en": null
+  },
+  "shin/syllables/#4/ptApprox": {
+    "pt": "como \"chu\" de \"chuva\"",
+    "en": null
+  },
+  "shin/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "shin/wordsToRecognize/#0/pt": {
+    "pt": "paz / olá / tchau",
+    "en": null
+  },
+  "shin/wordsToRecognize/#0/use": {
+    "pt": "A palavra mais usada do hebraico",
+    "en": null
+  },
+  "shin/wordsToRecognize/#1/pt": {
+    "pt": "nome",
+    "en": null
+  },
+  "shin/wordsToRecognize/#1/use": {
+    "pt": "Substantivo essencial",
+    "en": null
+  },
+  "shin/wordsToRecognize/#2/pt": {
+    "pt": "sol",
+    "en": null
+  },
+  "shin/wordsToRecognize/#2/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "shin/wordsToRecognize/#3/pt": {
+    "pt": "ano",
+    "en": null
+  },
+  "shin/wordsToRecognize/#3/use": {
+    "pt": "Substantivo essencial",
+    "en": null
+  },
+  "shin/wordsToRead/#0/pt": {
+    "pt": "nome",
+    "en": null
+  },
+  "shin/wordsToRead/#1/pt": {
+    "pt": "lá / ali",
+    "en": null
+  },
+  "shin/wordsToRead/#2/pt": {
+    "pt": "ano",
+    "en": null
+  },
+  "shin/wordsToRead/#3/pt": {
+    "pt": "mulher",
+    "en": null
+  },
+  "shin/wordsToRead/#4/pt": {
+    "pt": "sol",
+    "en": null
+  },
+  "shin/wordsToRead/#5/pt": {
+    "pt": "há, tem",
+    "en": null
+  },
+  "shin/didYouKnowTitle": {
+    "pt": "Uma palavra, três sentidos",
+    "en": null
+  },
+  "shin/didYouKnow": {
+    "pt": "Em hebraico, {{שָׁלוֹם}} (shalóm) quer dizer \"paz\". Mas é também o \"olá\" e o \"tchau\" do dia a dia: a mesma palavra abre e fecha uma conversa.\n\nEm Israel você também vai ouvir \"hi\" e \"bye\", mas shalóm continua sendo uma das palavras mais conhecidas do hebraico, e é quase certo que seja a primeira que você vai usar de verdade.\n\nDica para memorizar: pense em {{שָׁלוֹם}} como a palavra que leva paz na chegada e na despedida.",
+    "en": null
+  },
+  "shin/brazilianMistake/wrong": {
+    "pt": "Ler {{ש}} como S: \"salóm\", \"sem\".",
+    "en": null
+  },
+  "shin/brazilianMistake/right": {
+    "pt": "Ler {{ש}} como o X de \"xícara\" ou o CH de \"chave\" (transliterado \"sh\"): \"shalóm\", \"shem\".",
+    "en": null
+  },
+  "shin/brazilianMistake/why": {
+    "pt": "A forma da letra não lembra nada do alfabeto latino, então o cérebro brasileiro tende a encaixá-la no S. Mas o som padrão de {{ש}} é o de \"chave\". O som de S só aparece quando o ponto está do lado esquerdo ({{שׂ}}).",
+    "en": null
+  },
+  "shin/bridgeWords/#0/pt": {
+    "pt": "ketchup",
+    "en": null
+  },
+  "shin/bridgeWords/#1/pt": {
+    "pt": "caxemira",
+    "en": null
+  },
+  "shin/bridgeWords/#2/pt": {
+    "pt": "gueixa",
+    "en": null
+  },
+  "shin/contrastes/ע": {
+    "pt": "O ש tem três dentes saindo de uma base. O ע tem dois braços e uma perna.",
+    "en": null
+  },
+  "lamed/namePt": {
+    "pt": "Lámed",
+    "en": null
+  },
+  "lamed/soundNotePt": {
+    "pt": "Como o L de \"lua\" e \"bola\" - sempre claro, nunca com som de U.",
+    "en": null
+  },
+  "lamed/articulacao/comoPt": {
+    "pt": "A ponta da língua encosta atrás dos dentes de cima e fica lá, e o ar sai pelos lados dela, com a voz ligada. No fim da sílaba também: a língua sobe, e o L nunca vira U.",
+    "en": null
+  },
+  "lamed/ensino/funcaoPt": {
+    "pt": "{{ל}} é a consoante /l/. Ela é a letra mais alta do alfabeto - sobe acima da linha das outras -, o que a torna fácil de achar dentro de uma palavra. Forma sílaba normalmente ({{לַ}}, {{לִ}}, {{לוֹ}}) e aparece muito no fim de sílaba, que é exatamente onde o brasileiro escorrega.",
+    "en": null
+  },
+  "lamed/ensino/detalhePt": {
+    "pt": "Aquela altura toda tem uma consequência prática na hora de escrever à mão: o {{ל}} é a única letra que ocupa espaço ACIMA da linha, então numa frase escrita ele é o primeiro que o olho encontra. Use isso a seu favor enquanto ainda lê devagar - achar o {{ל}} ajuda a fatiar a palavra.",
+    "en": null
+  },
+  "lamed/ensino/paraBrasileiroPt": {
+    "pt": "Este é um dos ajustes mais importantes do curso. No português do Brasil o L no fim da sílaba virou U: dizemos \"Brasiu\", \"mau\" para \"mal\". Em hebraico o {{ל}} nunca faz isso - ele é sempre um L claro, com a ponta da língua atrás dos dentes. {{שֶׁל}} é \"shel\", nunca \"sheu\".",
+    "en": null
+  },
+  "lamed/ensino/lembrePt": {
+    "pt": "{{ל}} é sempre L claro, inclusive no fim da sílaba. Nunca vira U.",
+    "en": null
+  },
+  "lamed/ensino/checagem/#0/q": {
+    "pt": "Como se lê {{שֶׁל}} (de)?",
+    "en": null
+  },
+  "lamed/ensino/checagem/#0/porque": {
+    "pt": "O L brasileiro no fim da sílaba vira U sem a gente perceber. Em hebraico ele continua sendo L: a língua encosta atrás dos dentes e o som sai claro.",
+    "en": null
+  },
+  "lamed/ensino/checagem/#1/q": {
+    "pt": "Qual destas letras sobe acima da linha das outras?",
+    "en": null
+  },
+  "lamed/ensino/checagem/#1/porque": {
+    "pt": "O {{ל}} é a letra mais alta do alfabeto. Reconhecer essa silhueta ajuda a achar a letra dentro da palavra enquanto você ainda lê devagar.",
+    "en": null
+  },
+  "lamed/syllables/#0/ptApprox": {
+    "pt": "como \"lá\"",
+    "en": null
+  },
+  "lamed/syllables/#1/ptApprox": {
+    "pt": "como \"le\" de \"leve\"",
+    "en": null
+  },
+  "lamed/syllables/#2/ptApprox": {
+    "pt": "como \"li\" de \"livro\"",
+    "en": null
+  },
+  "lamed/syllables/#3/ptApprox": {
+    "pt": "como \"lo\" de \"loja\"",
+    "en": null
+  },
+  "lamed/syllables/#4/ptApprox": {
+    "pt": "como \"lu\" de \"luva\"",
+    "en": null
+  },
+  "lamed/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#0/pt": {
+    "pt": "pão",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#1/pt": {
+    "pt": "não",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#1/use": {
+    "pt": "Palavra essencial",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#2/pt": {
+    "pt": "menino",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#2/use": {
+    "pt": "Substantivo comum",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#3/pt": {
+    "pt": "noite",
+    "en": null
+  },
+  "lamed/wordsToRecognize/#3/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "lamed/wordsToRead/#0/pt": {
+    "pt": "não",
+    "en": null
+  },
+  "lamed/wordsToRead/#1/pt": {
+    "pt": "de (posse)",
+    "en": null
+  },
+  "lamed/wordsToRead/#2/pt": {
+    "pt": "menino",
+    "en": null
+  },
+  "lamed/wordsToRead/#3/pt": {
+    "pt": "menina",
+    "en": null
+  },
+  "lamed/wordsToRead/#4/pt": {
+    "pt": "noite",
+    "en": null
+  },
+  "lamed/didYouKnowTitle": {
+    "pt": "Lamed, a letra que se destaca",
+    "en": null
+  },
+  "lamed/didYouKnow": {
+    "pt": "O {{ל}} é a letra mais alta do alfabeto hebraico. Na letra impressa, é a única que passa claramente da altura das outras, e por isso é uma das mais fáceis de achar num texto.\n\nImagine uma linha cheia de letras: o {{ל}} parece levantar a cabeça acima de todas.\n\nDica para memorizar: quando olhar para uma palavra em hebraico, procure a letra que sobe acima da linha. Achou? É quase certo que seja o {{ל}}, com o som L.",
+    "en": null
+  },
+  "lamed/brazilianMistake/wrong": {
+    "pt": "Ler {{שֶׁל}} como \"sheu\", transformando o L final em U.",
+    "en": null
+  },
+  "lamed/brazilianMistake/right": {
+    "pt": "Ler {{שֶׁל}} como \"shel\", com o L bem apoiado na ponta da língua.",
+    "en": null
+  },
+  "lamed/brazilianMistake/why": {
+    "pt": "No português do Brasil o L no fim da sílaba virou U: falamos \"Brasiu\", \"mau\" por \"mal\". Em hebraico o {{ל}} nunca faz isso. Ele é sempre um L claro, mesmo no fim da palavra.",
+    "en": null
+  },
+  "lamed/bridgeWords/#0/pt": {
+    "pt": "Itália",
+    "en": null
+  },
+  "lamed/bridgeWords/#1/pt": {
+    "pt": "falafel",
+    "en": null
+  },
+  "lamed/bridgeWords/#2/pt": {
+    "pt": "globo",
+    "en": null
+  },
+  "lamed/bridgeWords/#3/pt": {
+    "pt": "faculdade",
+    "en": null
+  },
+  "lamed/contrastes/ן": {
+    "pt": "O ל é a única letra que SOBE acima da linha do topo. O ן desce abaixo da de baixo.",
+    "en": null
+  },
+  "lamed/contrastes/ו": {
+    "pt": "O ל sobe acima de todas as outras. O ו cabe entre as duas linhas.",
+    "en": null
+  },
+  "resh/namePt": {
+    "pt": "Resh",
+    "en": null
+  },
+  "resh/soundNotePt": {
+    "pt": "O R francês de \"Paris\": macio, feito no fundo da boca, perto da úvula, com a voz ligada. Não é o R carioca de \"carro\", que é soprado e áspero - esse som, em hebraico, é o de outra letra, que você conhece no próximo módulo.",
+    "en": null
+  },
+  "resh/articulacao/comoPt": {
+    "pt": "Na úvula, a \"campainha\" no fundo da boca, com a voz ligada: ponha a mão no pescoço e sinta vibrar. No próximo módulo vem outra letra que sai deste mesmo lugar, mas sem voz.",
+    "en": null
+  },
+  "resh/ensino/funcaoPt": {
+    "pt": "{{ר}} é a consoante do R francês, feito no fundo da boca, perto da úvula, com a voz ligada - como em \"Paris\". O hebraico moderno tem um R só: não existe a diferença entre \"caro\" e \"carro\" que o português faz. Toda vez que você vir {{ר}}, é esse mesmo som.",
+    "en": null
+  },
+  "resh/ensino/detalhePt": {
+    "pt": "Chegou a hora do aviso que ficou pendente na lição do {{ד}}: as duas se parecem muito. O {{ר}} tem o canto superior direito ARREDONDADO, numa curva contínua; o {{ד}} tem esse canto em ângulo reto, com um pedacinho do traço de cima ultrapassando a perna à direita. É a confusão visual mais comum do alfabeto inteiro, e ela some quando você sabe para onde olhar.",
+    "en": null
+  },
+  "resh/ensino/paraBrasileiroPt": {
+    "pt": "Cuidado com a armadilha: o R carioca de \"carro\" também sai do fundo da boca, mas é soprado, sem voz, e áspero - e esse som, em hebraico, é o de outra letra, que você conhece no próximo módulo. O {{ר}} é mais macio e tem voz, como o R francês. O R de ponta de língua (o R batido de \"caro\") é entendido, e alguns israelenses falam assim, mas o padrão de hoje é o R do fundo da boca. O que você precisa evitar de verdade é o R carioca soprado, porque ele é o som de outra letra. Para achar o som: diga \"Paris\" à francesa, ou faça um gargarejo leve com a voz ligada.",
+    "en": null
+  },
+  "resh/ensino/lembrePt": {
+    "pt": "{{ר}} é o R francês, macio e com voz, um só em todo o hebraico. E tem o canto de cima redondo - é isso que o separa do {{ד}}.",
+    "en": null
+  },
+  "resh/ensino/checagem/#0/q": {
+    "pt": "Qual destas é o {{ר}}?",
+    "en": null
+  },
+  "resh/ensino/checagem/#0/porque": {
+    "pt": "O {{ר}} tem o canto superior direito arredondado. No {{ד}} esse canto é reto e o traço de cima passa um pouco da perna, formando um degrauzinho.",
+    "en": null
+  },
+  "resh/ensino/checagem/#1/q": {
+    "pt": "Em hebraico existe a diferença entre o R de \"caro\" e o R de \"carro\".",
+    "en": null
+  },
+  "resh/ensino/checagem/#1/porque": {
+    "pt": "O hebraico moderno tem um R só, o R francês do fundo da boca. Essa distinção é do português - em hebraico o mesmo {{ר}} serve em qualquer posição da palavra.",
+    "en": null
+  },
+  "resh/ensino/checagem/#2/q": {
+    "pt": "Como se lê {{הַר}} (montanha)?",
+    "en": null
+  },
+  "resh/ensino/checagem/#2/porque": {
+    "pt": "O {{ר}} é pronunciado inteiro, com o R francês. Ele não emudece no fim da palavra, como acontece com o R do infinitivo em português falado (\"falá\"). E o R carioca soprado seria o som de outra letra.",
+    "en": null
+  },
+  "resh/contrastes/ך": {
+    "pt": "O ר para na linha de baixo. O ך desce abaixo dela. O desenho de cima é quase o mesmo; o que muda é onde termina.",
+    "en": null
+  },
+  "resh/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "resh/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "resh/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "resh/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "resh/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "resh/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "resh/wordsToRecognize/#0/pt": {
+    "pt": "rua",
+    "en": null
+  },
+  "resh/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "resh/wordsToRecognize/#1/pt": {
+    "pt": "amigo",
+    "en": null
+  },
+  "resh/wordsToRecognize/#1/use": {
+    "pt": "Substantivo muito comum",
+    "en": null
+  },
+  "resh/wordsToRecognize/#2/pt": {
+    "pt": "quatro",
+    "en": null
+  },
+  "resh/wordsToRecognize/#2/use": {
+    "pt": "Número",
+    "en": null
+  },
+  "resh/wordsToRead/#0/pt": {
+    "pt": "canção",
+    "en": null
+  },
+  "resh/wordsToRead/#1/pt": {
+    "pt": "diz, está dizendo",
+    "en": null
+  },
+  "resh/wordsToRead/#2/pt": {
+    "pt": "montanha",
+    "en": null
+  },
+  "resh/wordsToRead/#3/pt": {
+    "pt": "rio",
+    "en": null
+  },
+  "resh/didYouKnowTitle": {
+    "pt": "O R israelense não é o R brasileiro",
+    "en": null
+  },
+  "resh/didYouKnow": {
+    "pt": "O som do {{ר}} em Israel lembra bastante o R francês. Na pronúncia mais comum do hebraico de hoje, ele é feito no fundo da boca, perto da úvula.\n\nPara quem fala português, ele pode lembrar o R carioca de \"rua\", mas os dois não são iguais. Em hebraico, o som mais áspero, soprado, é de outra letra: a letra Chet, que você vai conhecer no próximo módulo.\n\nDica para memorizar: ao dizer o {{ר}}, faça um R suave no fundo da boca, com a voz, sem virar um H forte. Com a prática, o seu ouvido aprende a separar os dois sons.",
+    "en": null
+  },
+  "resh/compararSons/textoPt": {
+    "pt": "Esses dois sons podem soar parecidos para quem fala português, mas são letras diferentes em hebraico. Ouça a pronúncia de um falante nativo e perceba a diferença.",
+    "en": null
+  },
+  "resh/compararSons/itens/#0/nomePt": {
+    "pt": "Resh",
+    "en": null
+  },
+  "resh/compararSons/itens/#1/nomePt": {
+    "pt": "Chet",
+    "en": null
+  },
+  "resh/compararSons/itens/#1/previaPt": {
+    "pt": "Prévia: você aprende esta letra no próximo módulo.",
+    "en": null
+  },
+  "resh/brazilianMistake/wrong": {
+    "pt": "Usar o R carioca soprado de \"carro\", que em hebraico é o som de outra letra. (O R batido de \"caro\" e o R do interior paulista, de \"porta\", não trocam a palavra, mas soam com sotaque.)",
+    "en": null
+  },
+  "resh/brazilianMistake/right": {
+    "pt": "Usar o R francês, macio e com a voz ligada, como em \"Paris\": {{הַר}} é \"har\", com esse R no fim.",
+    "en": null
+  },
+  "resh/brazilianMistake/why": {
+    "pt": "O hebraico moderno tem um único R, o francês. O R carioca soprado é o som de outra letra; o R de ponta de língua é entendido (alguns israelenses falam assim), mas não é o padrão de hoje.",
+    "en": null
+  },
+  "resh/bridgeWords/#0/pt": {
+    "pt": "orégano",
+    "en": null
+  },
+  "resh/bridgeWords/#1/pt": {
+    "pt": "energia",
+    "en": null
+  },
+  "resh/bridgeWords/#2/pt": {
+    "pt": "cigarro",
+    "en": null
+  },
+  "resh/bridgeWords/#3/pt": {
+    "pt": "carrossel",
+    "en": null
+  },
+  "vav/namePt": {
+    "pt": "Vav",
+    "en": null
+  },
+  "vav/soundNotePt": {
+    "pt": "Como o V de \"vaca\" quando é consoante. Mas {{ו}} também carrega as vogais O e U - quem decide é o ponto que vem com ela.",
+    "en": null
+  },
+  "vav/articulacao/comoPt": {
+    "pt": "Os dentes de cima tocam o lábio de baixo e o ar passa entre eles, com a voz ligada: o V de \"vaca\". Quando {{ו}} é vogal (O ou U), quem manda é a boca da vogal.",
+    "en": null
+  },
+  "vav/ensino/funcaoPt": {
+    "pt": "{{ו}} é a letra que faz três coisas, e é a mais importante desta parte do curso. Como consoante, ela é o V de \"vaca\". Com um ponto EM CIMA ({{וֹ}}), ela não é consoante nenhuma: é a vogal \"o\". Com um ponto DENTRO ({{וּ}}), é a vogal \"u\". Você já vinha lendo essas duas vogais desde a primeira lição, em {{אוֹ}} e {{אוּ}} - agora sabe que letra estava ali.",
+    "en": null
+  },
+  "vav/ensino/detalhePt": {
+    "pt": "Lembra do módulo de introdução, quando o curso avisou que algumas letras participam da representação de vogais? Esta é a mais frequente delas. O que decide é o ponto, e o ponto é pequeno: procure-o ANTES de pronunciar. Sem ponto nenhum e com sinal de vogal próprio, o {{ו}} é consoante; com ponto em cima é \"o\"; com ponto dentro é \"u\". Em {{שָׁלוֹם}} ele é a vogal \"o\"; em {{הוּא}} (ele), a vogal \"u\".",
+    "en": null
+  },
+  "vav/ensino/paraBrasileiroPt": {
+    "pt": "Não existe nada parecido em português: as nossas vogais O e U são letras próprias e não dependem de ponto nenhum. Aqui a MESMA letra é consoante ou vogal conforme o sinal, e esse é o tipo de coisa que parece estranha por uma semana e depois vira automática.",
+    "en": null
+  },
+  "vav/ensino/padraoPt": {
+    "pt": "Esta letra faz três trabalhos, e distinguir os três é o padrão mais útil desta altura do curso: sozinha ela é consoante; com ponto em cima é a vogal \"ô\"; com ponto no meio é \"u\". O desenho é o mesmo nos três casos, e quem decide é o sinal.",
+    "en": null
+  },
+  "vav/ensino/dicaLeitura/tituloPt": {
+    "pt": "Duas pistas na mesma palavra",
+    "en": null
+  },
+  "vav/ensino/dicaLeitura/exemplos/#0/ptPt": {
+    "pt": "obrigado",
+    "en": null
+  },
+  "vav/ensino/dicaLeitura/exemplos/#1/ptPt": {
+    "pt": "professor",
+    "en": null
+  },
+  "vav/ensino/dicaLeitura/notaPt": {
+    "pt": "Estas duas palavras você vai ouvir no primeiro dia em Israel, e agora consegue ler as duas sem ajuda. Continua valendo o mesmo aviso: o {{ה}} do fim é pista, não regra, e quem decide é o nikud.",
+    "en": null
+  },
+  "vav/ensino/lembrePt": {
+    "pt": "{{ו}} sozinha com vogal própria é V. {{וֹ}} é \"o\". {{וּ}} é \"u\". O ponto decide.",
+    "en": null
+  },
+  "vav/ensino/checagem/#0/q": {
+    "pt": "Qual destas está valendo pela vogal \"u\"?",
+    "en": null
+  },
+  "vav/ensino/checagem/#0/porque": {
+    "pt": "O ponto DENTRO da letra faz \"u\"; o ponto EM CIMA faz \"o\". É o mesmo desenho de letra nos dois casos - só o lugar do ponto muda.",
+    "en": null
+  },
+  "vav/ensino/checagem/#1/q": {
+    "pt": "Em {{שָׁלוֹם}} (paz, olá), qual é o papel do {{ו}}?",
+    "en": null
+  },
+  "vav/ensino/checagem/#1/porque": {
+    "pt": "Com o ponto em cima, o {{ו}} não é consoante: ele É a vogal \"o\". Por isso a palavra se lê \"shalóm\", e não \"shalvóm\".",
+    "en": null
+  },
+  "vav/ensino/checagem/#2/q": {
+    "pt": "Sempre que aparece um {{ו}} numa palavra, você pronuncia um som de V.",
+    "en": null
+  },
+  "vav/ensino/checagem/#2/porque": {
+    "pt": "Depende do ponto. Com ponto em cima ou dentro, o {{ו}} está valendo por uma vogal - \"o\" ou \"u\". O som de V aparece quando ele é consoante, com sinal de vogal próprio.",
+    "en": null
+  },
+  "vav/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "vav/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "vav/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "vav/syllables/#3/ptApprox": {
+    "pt": "V + O, como em \"vovó\". Escreve-se com dois vav: o primeiro é a consoante V, o segundo é a vogal.",
+    "en": null
+  },
+  "vav/syllables/#4/ptApprox": {
+    "pt": "V + U, como em \"vulto\". Escreve-se com dois vav: o primeiro é a consoante V, o segundo é a vogal.",
+    "en": null
+  },
+  "vav/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "vav/wordsToRecognize/#0/pt": {
+    "pt": "e também",
+    "en": null
+  },
+  "vav/wordsToRecognize/#0/use": {
+    "pt": "Conector",
+    "en": null
+  },
+  "vav/wordsToRecognize/#1/pt": {
+    "pt": "rosa (flor)",
+    "en": null
+  },
+  "vav/wordsToRecognize/#1/use": {
+    "pt": "Substantivo",
+    "en": null
+  },
+  "vav/wordsToRecognize/#2/pt": {
+    "pt": "agora",
+    "en": null
+  },
+  "vav/wordsToRecognize/#2/use": {
+    "pt": "Advérbio essencial",
+    "en": null
+  },
+  "vav/wordsToRead/#0/pt": {
+    "pt": "paz / olá / tchau",
+    "en": null
+  },
+  "vav/wordsToRead/#1/pt": {
+    "pt": "obrigado",
+    "en": null
+  },
+  "vav/wordsToRead/#2/pt": {
+    "pt": "dia",
+    "en": null
+  },
+  "vav/wordsToRead/#3/pt": {
+    "pt": "professor",
+    "en": null
+  },
+  "vav/wordsToRead/#4/pt": {
+    "pt": "grande",
+    "en": null
+  },
+  "vav/wordsToRead/#5/pt": {
+    "pt": "ele",
+    "en": null
+  },
+  "vav/wordsToRead/#6/pt": {
+    "pt": "ela",
+    "en": null
+  },
+  "vav/wordsToRead/#7/pt": {
+    "pt": "rosa (flor)",
+    "en": null
+  },
+  "vav/wordsToRead/#8/pt": {
+    "pt": "e também",
+    "en": null
+  },
+  "vav/didYouKnowTitle": {
+    "pt": "Vav, a letra que virou várias",
+    "en": null
+  },
+  "vav/didYouKnow": {
+    "pt": "O {{ו}} tem parentes no nosso próprio alfabeto. O nome dele é a palavra hebraica {{וָו}} (vav), que quer dizer \"gancho\", e o desenho antigo da letra provavelmente lembrava um gancho.\n\nHá milhares de anos, a avó fenícia dessa letra foi adotada pelos gregos e, com o tempo, deu origem a várias letras do nosso alfabeto: F, U, V e W.\n\nOu seja: letras que você usa todo dia em português têm uma origem distante em comum com o {{ו}}.",
+    "en": null
+  },
+  "vav/brazilianMistake/wrong": {
+    "pt": "Ler todo {{ו}} como V, inclusive quando ele é vogal: dizer \"shalvóm\".",
+    "en": null
+  },
+  "vav/brazilianMistake/right": {
+    "pt": "Olhar o ponto: {{וֹ}} é O, {{וּ}} é U, {{ו}} sem ponto entre consoantes é V.",
+    "en": null
+  },
+  "vav/brazilianMistake/why": {
+    "pt": "É uma letra com três funções. O ponto é o que decide, e ele é pequeno - procure sempre antes de pronunciar.",
+    "en": null
+  },
+  "vav/bridgeWords/#0/pt": {
+    "pt": "kiwi",
+    "en": null
+  },
+  "vav/bridgeWords/#1/pt": {
+    "pt": "Equador",
+    "en": null
+  },
+  "vav/bridgeWords/#2/pt": {
+    "pt": "veterano",
+    "en": null
+  },
+  "vav/bridgeWords/#3/pt": {
+    "pt": "voluntário",
+    "en": null
+  },
+  "vav/contrastes/נ": {
+    "pt": "O ו é um traço reto de cima a baixo. O נ dobra no pé e a base corre para a esquerda.",
+    "en": null
+  },
+  "vav/contrastes/ז": {
+    "pt": "O ז tem um chapéu que passa dos dois lados do traço. O ו tem só um ganchinho virado para a esquerda.",
+    "en": null
+  },
+  "vav/contrastes/ן": {
+    "pt": "O ן desce abaixo da linha. O ו para em cima dela.",
+    "en": null
+  },
+  "vav/contrastes/י": {
+    "pt": "O י é curtinho e fica no alto. O ו desce até a linha de base.",
+    "en": null
+  },
+  "zayin/namePt": {
+    "pt": "Záyin",
+    "en": null
+  },
+  "zayin/soundNotePt": {
+    "pt": "Como o Z de \"zebra\" - e como o S sonoro de \"casa\". Sempre vibrado, em qualquer posição.",
+    "en": null
+  },
+  "zayin/articulacao/comoPt": {
+    "pt": "A ponta da língua perto dos dentes de cima, sem encostar, e o ar zumbe, com a voz ligada: o Z de \"zebra\". Ponha a mão no pescoço: vibra.",
+    "en": null
+  },
+  "zayin/ensino/funcaoPt": {
+    "pt": "{{ז}} é a consoante /z/, sempre vibrada: o Z de \"zebra\" e também o som que o S faz entre vogais em \"casa\". Ela forma sílaba normalmente e mantém o som em qualquer posição da palavra, inclusive no fim.",
+    "en": null
+  },
+  "zayin/ensino/detalhePt": {
+    "pt": "Cuidado com a companhia: {{ז}}, {{ו}} e {{ן}} são três traços verticais parecidos, e é fácil trocá-los no começo. O {{ז}} tem um chapéu que se abre para os DOIS lados sobre a perna; o {{ו}} tem um ganchinho que vira só para a esquerda; o {{ן}} é um traço reto que desce abaixo da linha.",
+    "en": null
+  },
+  "zayin/ensino/paraBrasileiroPt": {
+    "pt": "Em português o Z no fim da palavra perde a vibração e vira S ou CH - dizemos \"paz\" como \"pas\" (ou \"pash\"), \"luz\" como \"lus\". Em hebraico o {{ז}} continua sonoro onde estiver: a garganta vibra até o fim.",
+    "en": null
+  },
+  "zayin/ensino/lembrePt": {
+    "pt": "{{ז}} é sempre o Z vibrado de \"zebra\", inclusive terminando a palavra.",
+    "en": null
+  },
+  "zayin/ensino/checagem/#0/q": {
+    "pt": "Qual destas é o {{ז}}?",
+    "en": null
+  },
+  "zayin/ensino/checagem/#0/porque": {
+    "pt": "O {{ז}} tem o traço de cima abrindo para os dois lados, como um chapéu centrado na perna. O {{ו}} tem só o ganchinho virado para a esquerda.",
+    "en": null
+  },
+  "zayin/ensino/checagem/#1/q": {
+    "pt": "No fim da palavra, o {{ז}} perde a vibração e soa como S.",
+    "en": null
+  },
+  "zayin/ensino/checagem/#1/porque": {
+    "pt": "Esse é o hábito do português. Em hebraico o som de /z/ se mantém em qualquer posição da palavra - e o som de S se escreve com outras letras: o {{שׂ}}, que você já viu, e mais uma, que vem daqui a algumas lições.",
+    "en": null
+  },
+  "zayin/contrastes/ן": {
+    "pt": "O ז tem chapéu no alto e para na linha. O ן não tem chapéu e desce abaixo dela.",
+    "en": null
+  },
+  "zayin/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "zayin/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "zayin/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "zayin/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "zayin/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "zayin/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#0/pt": {
+    "pt": "tempo",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#0/use": {
+    "pt": "Substantivo essencial",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#1/pt": {
+    "pt": "sorte",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cultural",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#2/pt": {
+    "pt": "orelha",
+    "en": null
+  },
+  "zayin/wordsToRecognize/#2/use": {
+    "pt": "Parte do corpo",
+    "en": null
+  },
+  "zayin/wordsToRead/#0/pt": {
+    "pt": "este / isto",
+    "en": null
+  },
+  "zayin/wordsToRead/#1/pt": {
+    "pt": "esta",
+    "en": null
+  },
+  "zayin/wordsToRead/#2/pt": {
+    "pt": "tempo",
+    "en": null
+  },
+  "zayin/wordsToRead/#3/pt": {
+    "pt": "orelha",
+    "en": null
+  },
+  "zayin/wordsToRead/#4/pt": {
+    "pt": "alimento",
+    "en": null
+  },
+  "zayin/didYouKnowTitle": {
+    "pt": "Zayin, a avó da letra Z",
+    "en": null
+  },
+  "zayin/didYouKnow": {
+    "pt": "O {{ז}} tem uma ligação direta com o Z que usamos em português. Há quase três mil anos, os fenícios já usavam uma forma antiga dessa letra.\n\nQuando os gregos adaptaram o alfabeto fenício, ela virou o zeta, e do zeta veio o Z do nosso alfabeto.\n\nE tem mais: o nome Zayin é tradicionalmente ligado à ideia de uma arma. Alguns estudiosos acham que o desenho mais antigo mostrava uma arma, mas a origem exata ainda é discutida.\n\nDica para memorizar: o Z de Zayin e de zebra. O {{ז}} e o nosso Z têm uma história em comum de milhares de anos.",
+    "en": null
+  },
+  "zayin/brazilianMistake/wrong": {
+    "pt": "Ensurdecer o Z no fim da palavra: ler {{אָז}} (então) como \"as\".",
+    "en": null
+  },
+  "zayin/brazilianMistake/right": {
+    "pt": "Manter o Z vibrado: \"az\", com a garganta vibrando até o fim.",
+    "en": null
+  },
+  "zayin/brazilianMistake/why": {
+    "pt": "Em português o Z final vira S ou CH - \"paz\", \"luz\", \"rapaz\". Em hebraico o {{ז}} continua sonoro onde quer que esteja.",
+    "en": null
+  },
+  "zayin/bridgeWords/#0/pt": {
+    "pt": "exótico",
+    "en": null
+  },
+  "zayin/bridgeWords/#1/pt": {
+    "pt": "hipnose",
+    "en": null
+  },
+  "zayin/bridgeWords/#2/pt": {
+    "pt": "museu",
+    "en": null
+  },
+  "zayin/bridgeWords/#3/pt": {
+    "pt": "zigue-zague",
+    "en": null
+  },
+  "het/namePt": {
+    "pt": "Het",
+    "en": null
+  },
+  "het/soundNotePt": {
+    "pt": "O som do {{ח}} não existe exatamente no português brasileiro. Ele é produzido na parte de trás da boca, com uma fricção parecida com a de alguns tipos de R carioca. A comparação ajuda a imaginar o som, mas não é uma equivalência perfeita. Na transliteração escrevemos \"ch\", que não tem nada a ver com o CH de \"chave\".",
+    "en": null
+  },
+  "het/articulacao/comoPt": {
+    "pt": "No mesmo lugar do {{ר}}, a úvula, mas sem voz: só o ar raspando, com força. Ponha a mão no pescoço: no {{ר}} ele vibra, no {{ח}} não.",
+    "en": null
+  },
+  "het/ensino/funcaoPt": {
+    "pt": "{{ח}} é uma consoante raspada na garganta, e você já conhece um som parecido: em muitos sotaques brasileiros, ele lembra o R de \"rato\" ou \"carro\". Em hebraico, porém, esse som funciona como uma consoante própria: {{ח}}. Aparece em palavras muito comuns, como {{לֶחֶם}} (pão) e {{אָח}} (irmão), então vale praticar desde já.",
+    "en": null
+  },
+  "het/ensino/detalhePt": {
+    "pt": "Nas transliterações você vai ver esse som escrito como \"ch\" - {{לֶחֶם}} vira \"léchem\". Essa convenção vem do alemão (como em \"Bach\") e é usada nas transliterações em inglês, não vem do português (em espanhol, esse som se escreve com J), e é uma armadilha: nenhuma palavra brasileira usa CH com esse valor. Leia como raspado na garganta, nunca como o CH de \"chave\". Mais adiante você vai conhecer outra letra que, sem ponto, faz exatamente este som: no hebraico de hoje as duas soam igual.",
+    "en": null
+  },
+  "het/ensino/paraBrasileiroPt": {
+    "pt": "Você já tem esse som, ou quase: comece pelo R de \"rato\" e sustente o ar raspando mais fundo, como se fosse limpar a garganta de leve. Não force - {{ח}} é raspado, e não engasgado.",
+    "en": null
+  },
+  "het/ensino/lembrePt": {
+    "pt": "{{ח}} é raspado no fundo da boca, parecido com alguns R cariocas. O \"ch\" da transliteração nunca é o CH de \"chave\".",
+    "en": null
+  },
+  "het/ensino/checagem/#0/q": {
+    "pt": "A transliteração de {{לֶחֶם}} (pão) é \"léchem\". Como se pronuncia?",
+    "en": null
+  },
+  "het/ensino/checagem/#0/porque": {
+    "pt": "O \"ch\" da transliteração representa o som raspado do {{ח}}, parecido com o R carioca. Ele não tem nenhuma relação com o CH de \"chave\" - esse som, em hebraico, é o do {{שׁ}}.",
+    "en": null
+  },
+  "het/ensino/checagem/#1/q": {
+    "pt": "Qual destas é o {{ח}}?",
+    "en": null
+  },
+  "het/ensino/checagem/#1/porque": {
+    "pt": "No {{ח}} o teto é contínuo e fechado, ligando as duas pernas. No {{ה}} há uma fresta entre o teto e a perna esquerda, que fica solta.",
+    "en": null
+  },
+  "het/ensino/checagem/#2/q": {
+    "pt": "Em português, o som mais perto do {{ח}} é o CH de \"chave\".",
+    "en": null
+  },
+  "het/ensino/checagem/#2/porque": {
+    "pt": "Não. O mais perto é o R de \"rato\" de alguns sotaques cariocas, e mesmo assim é só uma aproximação: o {{ח}} é raspado no fundo da boca. Por isso vale ouvir e praticar em voz alta.",
+    "en": null
+  },
+  "het/contrastes/ת": {
+    "pt": "O ח é fechado em cima e tem as duas pernas retas. O ת tem um pezinho no fim da perna esquerda, virado para fora (para a esquerda).",
+    "en": null
+  },
+  "het/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "het/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "het/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "het/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "het/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "het/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal: o raspado sozinho",
+    "en": null
+  },
+  "het/wordsToRecognize/#0/pt": {
+    "pt": "amigo",
+    "en": null
+  },
+  "het/wordsToRecognize/#0/use": {
+    "pt": "Substantivo muito comum",
+    "en": null
+  },
+  "het/wordsToRecognize/#1/pt": {
+    "pt": "alegria",
+    "en": null
+  },
+  "het/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cultural",
+    "en": null
+  },
+  "het/wordsToRecognize/#2/pt": {
+    "pt": "cinco",
+    "en": null
+  },
+  "het/wordsToRecognize/#2/use": {
+    "pt": "Número",
+    "en": null
+  },
+  "het/wordsToRead/#0/pt": {
+    "pt": "irmão",
+    "en": null
+  },
+  "het/wordsToRead/#1/pt": {
+    "pt": "um",
+    "en": null
+  },
+  "het/wordsToRead/#2/pt": {
+    "pt": "pão",
+    "en": null
+  },
+  "het/wordsToRead/#3/pt": {
+    "pt": "janela",
+    "en": null
+  },
+  "het/wordsToRead/#4/pt": {
+    "pt": "novo",
+    "en": null
+  },
+  "het/didYouKnow": {
+    "pt": "Belém, a cidade, é {{בֵּית לֶחֶם}} - \"casa do pão\". Você já lê {{לֶחֶם}}; a outra palavra chega com o {{ב}}, no módulo 5. E o nome que atravessou dois mil anos e chegou ao português é literalmente isso.",
+    "en": null
+  },
+  "het/brazilianMistake/wrong": {
+    "pt": "Ler {{ח}} como o CH de \"chave\", ou como um H mudo.",
+    "en": null
+  },
+  "het/brazilianMistake/right": {
+    "pt": "Raspar no fundo da boca, parecido com o R de \"carro\" de alguns sotaques cariocas: {{לֶחֶם}} é \"léchem\".",
+    "en": null
+  },
+  "het/brazilianMistake/why": {
+    "pt": "A transliteração \"ch\" vem do alemão (como em \"Bach\") e das transliterações em inglês, não do português. Nenhuma palavra brasileira usa CH com esse valor, então o olho lê errado antes de a boca tentar.",
+    "en": null
+  },
+  "het/bridgeWords/#0/pt": {
+    "pt": "Haifa",
+    "en": null
+  },
+  "het/bridgeWords/#1/pt": {
+    "pt": "chupá",
+    "en": null
+  },
+  "tet/namePt": {
+    "pt": "Tet",
+    "en": null
+  },
+  "tet/soundNotePt": {
+    "pt": "Como o T de \"tatu\". No hebraico moderno soa exatamente igual a {{ת}} - mais um par de letras para um som só.",
+    "en": null
+  },
+  "tet/articulacao/comoPt": {
+    "pt": "Igual ao {{ת}}: a ponta da língua atrás dos dentes de cima, sem voz. Duas letras, um lugar só.",
+    "en": null
+  },
+  "tet/ensino/funcaoPt": {
+    "pt": "{{ט}} é a consoante /t/ - o mesmo som do {{ת}} que você já conhece. No hebraico moderno as duas letras soam exatamente igual, e a escolha entre uma e outra é uma questão de ortografia de cada palavra, como o X e o CH de \"enxada\" e \"encher\" em português.",
+    "en": null
+  },
+  "tet/ensino/detalhePt": {
+    "pt": "Duas letras para um som só não é defeito do hebraico: é história. {{ט}} e {{ת}} representavam sons diferentes há milhares de anos, e a fala mudou enquanto a escrita ficou. Para você isso significa uma coisa prática: ao LER, tanto faz - as duas são T. Ao ESCREVER, é preciso saber qual palavra leva qual, e isso se aprende palavra por palavra, com o tempo.",
+    "en": null
+  },
+  "tet/ensino/paraBrasileiroPt": {
+    "pt": "Vale a mesma correção do {{ת}}: no Brasil o T antes de I e E vira TCH quase sempre. Em {{טִיוּל}} (passeio) o começo é \"ti\" seco, nunca \"tchi\".",
+    "en": null
+  },
+  "tet/ensino/lembrePt": {
+    "pt": "{{ט}} soa igual a {{ת}}: T seco. Duas letras, um som - e nenhuma delas vira \"tch\".",
+    "en": null
+  },
+  "tet/ensino/checagem/#0/q": {
+    "pt": "{{ט}} e {{ת}} têm sons diferentes no hebraico falado hoje.",
+    "en": null
+  },
+  "tet/ensino/checagem/#0/porque": {
+    "pt": "As duas soam /t/. Elas já foram sons diferentes no passado, e a diferença sobrou só na escrita - por isso, ao ler, as duas são simplesmente T.",
+    "en": null
+  },
+  "tet/ensino/checagem/#1/q": {
+    "pt": "Se as duas soam igual, como saber qual usar ao escrever?",
+    "en": null
+  },
+  "tet/ensino/checagem/#1/porque": {
+    "pt": "É ortografia: cada palavra leva a sua letra por razões históricas. Acontece o mesmo em português com \"enxada\" e \"encher\" - o som é o mesmo e a grafia se aprende com o uso.",
+    "en": null
+  },
+  "tet/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "tet/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "tet/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "tet/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "tet/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "tet/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "tet/wordsToRecognize/#0/pt": {
+    "pt": "passeio",
+    "en": null
+  },
+  "tet/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "tet/wordsToRecognize/#1/pt": {
+    "pt": "estudante",
+    "en": null
+  },
+  "tet/wordsToRecognize/#1/use": {
+    "pt": "Substantivo comum",
+    "en": null
+  },
+  "tet/wordsToRecognize/#2/pt": {
+    "pt": "pouco",
+    "en": null
+  },
+  "tet/wordsToRecognize/#2/use": {
+    "pt": "Quantificador",
+    "en": null
+  },
+  "tet/wordsToRead/#0/pt": {
+    "pt": "cama",
+    "en": null
+  },
+  "tet/wordsToRead/#1/pt": {
+    "pt": "passeio",
+    "en": null
+  },
+  "tet/wordsToRead/#2/pt": {
+    "pt": "fresco",
+    "en": null
+  },
+  "tet/wordsToRead/#3/pt": {
+    "pt": "guarda-chuva",
+    "en": null
+  },
+  "tet/didYouKnowTitle": {
+    "pt": "Tet, uma letra internacional",
+    "en": null
+  },
+  "tet/didYouKnow": {
+    "pt": "O {{ט}} aparece em várias palavras que você já conhece do português. O hebraico moderno trouxe muitas palavras de outras línguas, principalmente de tecnologia, comunicação e cultura:\n\n{{טֶלֶפוֹן}} (télefon), telefone. {{טֶלֶוִיזְיָה}} (televízya), televisão. {{טֶכְנוֹלוֹגְיָה}} (technológya), tecnologia. {{טוֹסְט}} (tost), torrada ou misto-quente.\n\nPercebeu? Você já sabe o que essas palavras querem dizer, antes mesmo de conseguir lê-las em hebraico.\n\nE tem mais: no hebraico de hoje, o {{ט}} e o {{ת}} têm o mesmo som, T, embora sejam letras diferentes.\n\nDica para memorizar: pense no T de telefone e de tecnologia.",
+    "en": null
+  },
+  "tet/brazilianMistake/wrong": {
+    "pt": "Palatalizar antes de I e E: ler {{טִי}} como \"tchi\".",
+    "en": null
+  },
+  "tet/brazilianMistake/right": {
+    "pt": "Ler \"ti\", com o T seco, exatamente como no {{ת}}.",
+    "en": null
+  },
+  "tet/brazilianMistake/why": {
+    "pt": "É o mesmo hábito automático do {{ת}}, e vale a pena revisar aqui: em {{טִיוּל}} o começo é \"ti\", nunca \"tchi\".",
+    "en": null
+  },
+  "tet/bridgeWords/#0/pt": {
+    "pt": "helicóptero",
+    "en": null
+  },
+  "tet/bridgeWords/#1/pt": {
+    "pt": "vitamina",
+    "en": null
+  },
+  "tet/bridgeWords/#2/pt": {
+    "pt": "metrô",
+    "en": null
+  },
+  "tet/bridgeWords/#3/pt": {
+    "pt": "foto",
+    "en": null
+  },
+  "tet/contrastes/ע": {
+    "pt": "O ט é fechado embaixo, como uma panela, com a ponta enrolada para dentro. O ע é aberto em cima, com dois braços.",
+    "en": null
+  },
+  "tet/contrastes/מ": {
+    "pt": "O ט é uma panela aberta em cima, com a borda esquerda enrolada para dentro. O מ é fechado no alto.",
+    "en": null
+  },
+  "samekh/namePt": {
+    "pt": "Sámech",
+    "en": null
+  },
+  "samekh/soundNotePt": {
+    "pt": "Como o S de \"sapo\". Sempre surdo, em qualquer posição - nunca com som de Z.",
+    "en": null
+  },
+  "samekh/articulacao/comoPt": {
+    "pt": "A ponta da língua perto dos dentes de cima, sem encostar, e o ar sibila sem voz: o S de \"sapo\". É o {{ז}} com a voz desligada.",
+    "en": null
+  },
+  "samekh/ensino/funcaoPt": {
+    "pt": "{{ס}} é a consoante /s/, sempre surda - o S de \"sapo\". Ela forma sílaba normalmente e não muda de som em nenhuma posição, nem quando fica entre duas vogais.",
+    "en": null
+  },
+  "samekh/ensino/detalhePt": {
+    "pt": "Você agora tem duas letras para sons parecidos e precisa separá-las bem: {{ס}} é o S surdo de \"sapo\" e {{ז}} é o Z vibrado de \"zebra\". Em {{סוּס}} (cavalo) as duas pontas são {{ס}}, e a palavra se lê \"sus\" - com S nas duas, nunca \"suz\". E cuidado com a forma: o {{ס}} é redondo, enquanto o {{ם}} que você aprendeu na primeira lição é quadrado. E repare: o {{ס}} soa exatamente como o {{שׂ}} (Sin) que você já conhece - duas letras, um som, e a escolha é ortografia, como {{ט}} e {{ת}}.",
+    "en": null
+  },
+  "samekh/ensino/paraBrasileiroPt": {
+    "pt": "Esta é uma das correções mais teimosas para brasileiros: em português o S entre vogais vira Z automaticamente - \"casa\", \"mesa\", \"coisa\". Em hebraico isso não acontece nunca. Quando a palavra pede o som de Z, ela usa a letra {{ז}}.",
+    "en": null
+  },
+  "samekh/ensino/lembrePt": {
+    "pt": "{{ס}} é sempre S surdo, inclusive entre vogais. O som de Z tem letra própria: {{ז}}.",
+    "en": null
+  },
+  "samekh/ensino/checagem/#0/q": {
+    "pt": "Como se lê {{סוּס}} (cavalo)?",
+    "en": null
+  },
+  "samekh/ensino/checagem/#0/porque": {
+    "pt": "O {{ס}} é sempre surdo. O reflexo brasileiro de sonorizar o S entre vogais não se aplica aqui - e o som de Z, quando existe, é escrito com {{ז}}.",
+    "en": null
+  },
+  "samekh/ensino/checagem/#1/q": {
+    "pt": "Qual destas é o {{ס}}?",
+    "en": null
+  },
+  "samekh/ensino/checagem/#1/porque": {
+    "pt": "O {{ס}} é redondo, sem cantos. O {{ם}} - a forma final do mem - é quadrado. É uma confusão comum, e a forma resolve.",
+    "en": null
+  },
+  "samekh/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "samekh/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "samekh/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "samekh/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "samekh/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "samekh/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#0/pt": {
+    "pt": "desculpe / com licença",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#0/use": {
+    "pt": "Fórmula essencial",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#1/pt": {
+    "pt": "ônibus",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#2/pt": {
+    "pt": "cadeira",
+    "en": null
+  },
+  "samekh/wordsToRecognize/#2/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "samekh/wordsToRead/#0/pt": {
+    "pt": "cavalo",
+    "en": null
+  },
+  "samekh/wordsToRead/#1/pt": {
+    "pt": "segredo",
+    "en": null
+  },
+  "samekh/wordsToRead/#2/pt": {
+    "pt": "ordem / sequência",
+    "en": null
+  },
+  "samekh/wordsToRead/#3/pt": {
+    "pt": "filme",
+    "en": null
+  },
+  "samekh/wordsToRead/#4/pt": {
+    "pt": "cesta",
+    "en": null
+  },
+  "samekh/didYouKnow": {
+    "pt": "{{סֵדֶר}} quer dizer \"ordem\" - e é o nome do jantar ordenado da Páscoa judaica, o Seder. A mesma palavra aparece em {{בְּסֵדֶר}}, \"tudo bem\", literalmente \"em ordem\".",
+    "en": null
+  },
+  "samekh/brazilianMistake/wrong": {
+    "pt": "Sonorizar o S entre vogais: ler {{חָסָה}} (alface) como \"chazá\".",
+    "en": null
+  },
+  "samekh/brazilianMistake/right": {
+    "pt": "Manter o S surdo: {{חָסָה}} é \"chassá\", com o S de \"assa\", e não \"chazá\".",
+    "en": null
+  },
+  "samekh/brazilianMistake/why": {
+    "pt": "Em português o S entre vogais vira Z automaticamente - \"casa\", \"mesa\". Em hebraico isso nunca acontece: {{ס}} é sempre /s/, e existe uma letra separada, {{ז}}, para o som de Z.",
+    "en": null
+  },
+  "samekh/bridgeWords/#0/pt": {
+    "pt": "massa (pasta)",
+    "en": null
+  },
+  "samekh/bridgeWords/#1/pt": {
+    "pt": "recital",
+    "en": null
+  },
+  "samekh/bridgeWords/#2/pt": {
+    "pt": "Picasso",
+    "en": null
+  },
+  "samekh/bridgeWords/#3/pt": {
+    "pt": "absurdo",
+    "en": null
+  },
+  "samekh/contrastes/צ": {
+    "pt": "O ס é fechado por todos os lados, como um anel. O צ tem um braço solto no alto, que sai do corpo para cima.",
+    "en": null
+  },
+  "samekh/contrastes/ם": {
+    "pt": "O ס é redondo. O ם é quadrado, de cantos retos.",
+    "en": null
+  },
+  "ayin/namePt": {
+    "pt": "Áyin",
+    "en": null
+  },
+  "ayin/soundNotePt": {
+    "pt": "Para a maior parte dos israelenses hoje, {{ע}} é mudo, igual a {{א}}: você pronuncia só a vogal. Alguns falantes de origem mizrahi, sobretudo de gerações mais velhas, e alguns falantes de árabe ainda pronunciam {{ע}} com um som gutural.",
+    "en": null
+  },
+  "ayin/articulacao/comoPt": {
+    "pt": "Para a maioria dos israelenses, de lugar nenhum: {{ע}} é mudo como o {{א}}, e só a vogal soa. Quem fala com sotaque oriental ainda aperta a garganta aqui; você não precisa.",
+    "en": null
+  },
+  "ayin/ensino/funcaoPt": {
+    "pt": "{{ע}} é a segunda letra do alfabeto que, para a maior parte dos israelenses de hoje, não tem som próprio: você pronuncia só a vogal que vem com ela, exatamente como faz com o {{א}}. Ela aparece em palavras muito comuns - {{עִיר}} (cidade), {{עַל}} (sobre) - e o seu trabalho na leitura é o mesmo do {{א}}: segurar a vogal e marcar o lugar dela na palavra.",
+    "en": null
+  },
+  "ayin/ensino/detalhePt": {
+    "pt": "Duas letras mudas para o mesmo papel não é redundância: é história. O {{ע}} já foi um som forte, produzido bem no fundo da garganta, e ele não desapareceu - alguns falantes de origem mizrahi, sobretudo de gerações mais velhas, e alguns falantes de árabe produzem esse som até hoje, e você vai ouvi-lo em Israel. O hebraico padrão de Tel Aviv o perdeu, e é por isso que {{א}} e {{ע}} soam igual na maior parte das conversas. Mesmo mudo, ele separa as vogais: {{שָׁעָה}} é \"sha-á\", duas sílabas.",
+    "en": null
+  },
+  "ayin/ensino/paraBrasileiroPt": {
+    "pt": "Para OUVIR, você não precisa fazer nada: o {{ע}} não vai lhe custar som nenhum. Para ESCREVER, é onde mora a dificuldade - como as duas letras soam igual, só a memória visual diz qual palavra leva {{א}} e qual leva {{ע}}. É o mesmo problema de \"cassa\" e \"caça\" em português, e a solução é a mesma: ler muito.",
+    "en": null
+  },
+  "ayin/ensino/lembrePt": {
+    "pt": "{{ע}} é mudo no hebraico de hoje: leia só a vogal. Ele soa igual ao {{א}}, e a diferença está na escrita, não no ouvido.",
+    "en": null
+  },
+  "ayin/ensino/checagem/#0/q": {
+    "pt": "Em {{עַל}} (sobre), o que você pronuncia?",
+    "en": null
+  },
+  "ayin/ensino/checagem/#0/porque": {
+    "pt": "Para a maior parte dos israelenses o {{ע}} não tem som próprio: ele segura a vogal, como o {{א}}. Quem fala com a pronúncia mizrahi produz um som de garganta ali.",
+    "en": null
+  },
+  "ayin/ensino/checagem/#1/q": {
+    "pt": "{{א}} e {{ע}} são a mesma letra escrita de dois jeitos.",
+    "en": null
+  },
+  "ayin/ensino/checagem/#1/porque": {
+    "pt": "São letras diferentes, com nomes e histórias diferentes - elas só passaram a SOAR igual no hebraico padrão de hoje. Cada palavra leva a sua, e trocar uma pela outra é erro de escrita.",
+    "en": null
+  },
+  "ayin/syllables/#0/ptApprox": {
+    "pt": "só a vogal A",
+    "en": null
+  },
+  "ayin/syllables/#1/ptApprox": {
+    "pt": "só a vogal E",
+    "en": null
+  },
+  "ayin/syllables/#2/ptApprox": {
+    "pt": "só a vogal I",
+    "en": null
+  },
+  "ayin/syllables/#3/ptApprox": {
+    "pt": "só a vogal O",
+    "en": null
+  },
+  "ayin/syllables/#4/ptApprox": {
+    "pt": "só a vogal U",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#0/pt": {
+    "pt": "hebraico",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#0/use": {
+    "pt": "O nome do idioma",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#1/pt": {
+    "pt": "mais, ainda",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#1/use": {
+    "pt": "Advérbio muito comum",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#2/pt": {
+    "pt": "pouco",
+    "en": null
+  },
+  "ayin/wordsToRecognize/#2/use": {
+    "pt": "Quantificador",
+    "en": null
+  },
+  "ayin/wordsToRead/#0/pt": {
+    "pt": "cidade",
+    "en": null
+  },
+  "ayin/wordsToRead/#1/pt": {
+    "pt": "sobre / em cima de",
+    "en": null
+  },
+  "ayin/wordsToRead/#2/pt": {
+    "pt": "hora",
+    "en": null
+  },
+  "ayin/wordsToRead/#3/pt": {
+    "pt": "mundo",
+    "en": null
+  },
+  "ayin/wordsToRead/#4/pt": {
+    "pt": "agradável",
+    "en": null
+  },
+  "ayin/didYouKnowTitle": {
+    "pt": "Ayin, a letra que enxerga",
+    "en": null
+  },
+  "ayin/didYouKnow": {
+    "pt": "O nome da letra Ayin quer dizer \"olho\" em hebraico. Não é coincidência: nas formas mais antigas do alfabeto, a letra era desenhada como um olho, às vezes até com a pupila.\n\nE tem mais: a palavra {{עִבְרִית}} (ivrít), \"hebraico\", começa justamente com o {{ע}}.\n\nNo hebraico de Israel hoje, a maioria das pessoas não pronuncia o {{ע}} como uma consoante separada, mas ele continua na escrita e na história da língua.\n\nDica para memorizar: imagine um olho olhando para você de dentro do {{ע}}. Assim você lembra da forma, do nome e da primeira letra de {{עִבְרִית}}.",
+    "en": null
+  },
+  "ayin/brazilianMistake/wrong": {
+    "pt": "Confundir {{ע}} com {{א}} na escrita, já que soam igual.",
+    "en": null
+  },
+  "ayin/brazilianMistake/right": {
+    "pt": "Decorar quais palavras levam {{ע}}. O som não ajuda - só o hábito de ler.",
+    "en": null
+  },
+  "ayin/brazilianMistake/why": {
+    "pt": "Como as duas letras soam igual no hebraico moderno, o ouvido não distingue e a escrita fica por conta da memória visual. É o mesmo problema de \"cassa\" e \"caça\" em português.",
+    "en": null
+  },
+  "ayin/bridgeWords/#0/pt": {
+    "pt": "Iraque",
+    "en": null
+  },
+  "ayin/bridgeWords/#1/pt": {
+    "pt": "Omã",
+    "en": null
+  },
+  "ayin/contrastes/צ": {
+    "pt": "O צ tem o braço esquerdo colado no alto do corpo. O ע tem os dois braços soltos, formando um V.",
+    "en": null
+  },
+  "ayin/contrastes/א": {
+    "pt": "O א é um X com dois braços curtos. O ע é um V apoiado numa perna.",
+    "en": null
+  },
+  "tsadi/namePt": {
+    "pt": "Tsádi",
+    "en": null
+  },
+  "tsadi/soundNotePt": {
+    "pt": "O som TS, como no fim de \"pizza\" ou no começo de \"tsunami\" - os dois sons colados, num golpe só. No fim da palavra vira {{ץ}}.",
+    "en": null
+  },
+  "tsadi/articulacao/comoPt": {
+    "pt": "A ponta da língua encosta atrás dos dentes, como no {{ת}}, e solta direto num S, sem voz: T e S colados, o \"ts\" de \"tsunami\".",
+    "en": null
+  },
+  "tsadi/ensino/funcaoPt": {
+    "pt": "{{צ}} traz um som que o português não usa no começo de palavra: TS, os dois sons colados num golpe só, como no fim de \"pizza\" ou no começo de \"tsunami\". É uma consoante comum, que forma sílaba normalmente, e ela aparece em palavras do dia a dia como {{אֶרֶץ}} (terra) e {{מִיץ}} (suco).",
+    "en": null
+  },
+  "tsadi/ensino/detalhePt": {
+    "pt": "{{צ}} tem forma final: vira {{ץ}}, com a perna descendo abaixo da linha. Mesma letra, mesmo som TS - só o desenho muda no fim da palavra, e você vê isso em {{עֵץ}} (árvore) e {{מִיץ}} (suco).",
+    "en": null
+  },
+  "tsadi/ensino/paraBrasileiroPt": {
+    "pt": "A boca brasileira resolve o TS sozinha, e resolve errado: ela apaga o T (\"sunami\") ou transforma tudo em TCH. Treine assim - diga \"pizza\" devagar e isole o \"tsa\" do fim; depois ponha esse mesmo pedaço no começo de uma palavra. É um som só, não dois.",
+    "en": null
+  },
+  "tsadi/ensino/lembrePt": {
+    "pt": "{{צ}} é TS num golpe só, e vira {{ץ}} no fim da palavra - com o mesmo som.",
+    "en": null
+  },
+  "tsadi/ensino/checagem/#0/q": {
+    "pt": "Qual destas você escreve no FIM de uma palavra?",
+    "en": null
+  },
+  "tsadi/ensino/checagem/#0/porque": {
+    "pt": "O {{ץ}} é a forma final: a perna desce abaixo da linha. O som continua sendo TS - só o desenho muda.",
+    "en": null
+  },
+  "tsadi/ensino/checagem/#1/q": {
+    "pt": "Como se lê {{מִיץ}} (suco)?",
+    "en": null
+  },
+  "tsadi/ensino/checagem/#1/porque": {
+    "pt": "O {{ץ}} é TS, um golpe só. Apagar o T ou trocar por TCH é o reflexo do português, que não usa esse som no fim de palavra.",
+    "en": null
+  },
+  "tsadi/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "tsadi/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "tsadi/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "tsadi/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "tsadi/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "tsadi/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "tsadi/wordsToRecognize/#0/pt": {
+    "pt": "meio-dia",
+    "en": null
+  },
+  "tsadi/wordsToRecognize/#0/use": {
+    "pt": "Usado no cumprimento do dia",
+    "en": null
+  },
+  "tsadi/wordsToRecognize/#1/pt": {
+    "pt": "preceito, boa ação",
+    "en": null
+  },
+  "tsadi/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cultural",
+    "en": null
+  },
+  "tsadi/wordsToRead/#0/pt": {
+    "pt": "árvore",
+    "en": null
+  },
+  "tsadi/wordsToRead/#1/pt": {
+    "pt": "terra / país",
+    "en": null
+  },
+  "tsadi/wordsToRead/#2/pt": {
+    "pt": "suco",
+    "en": null
+  },
+  "tsadi/wordsToRead/#3/pt": {
+    "pt": "quer",
+    "en": null
+  },
+  "tsadi/wordsToRead/#4/pt": {
+    "pt": "sombra",
+    "en": null
+  },
+  "tsadi/didYouKnowTitle": {
+    "pt": "Tsadi, a letra da justiça",
+    "en": null
+  },
+  "tsadi/didYouKnow": {
+    "pt": "O {{צ}} está ligado a uma das ideias mais importantes da tradição judaica: a justiça. A palavra {{צֶדֶק}} (tsédek) quer dizer \"justiça\", e dela vem {{צַדִיק}} (tsadík), \"pessoa justa\".\n\nNa tradição judaica, um tsadík é alguém que procura agir com honestidade, bondade e responsabilidade.\n\nE o som da letra é TS, como em \"tsunami\".\n\nDica para memorizar: pense no TS de tsadík, a pessoa justa. Assim você liga o som da letra a uma palavra importante da cultura judaica.",
+    "en": null
+  },
+  "tsadi/brazilianMistake/wrong": {
+    "pt": "Desmontar o TS: ler {{צָרִיךְ}} como \"sarích\" ou \"tcharích\".",
+    "en": null
+  },
+  "tsadi/brazilianMistake/right": {
+    "pt": "Colar os dois sons num só golpe: \"tsarích\", como o fim de \"pizza\" transportado para o começo da palavra.",
+    "en": null
+  },
+  "tsadi/brazilianMistake/why": {
+    "pt": "O português não usa TS no início de palavra, então a boca resolve o problema sozinha apagando o T ou virando TCH. Treine dizendo \"pizza\" e isolando o \"tsa\" final.",
+    "en": null
+  },
+  "tsadi/bridgeWords/#0/pt": {
+    "pt": "celofane",
+    "en": null
+  },
+  "tsadi/bridgeWords/#1/pt": {
+    "pt": "Mitsubishi",
+    "en": null
+  },
+  "tsadi/bridgeWords/#2/pt": {
+    "pt": "penicilina",
+    "en": null
+  },
+  "tsadi/bridgeWords/#3/pt": {
+    "pt": "kibutz",
+    "en": null
+  },
+  "tsadi/contrastes/ץ": {
+    "pt": "O צ apoia na linha. O ץ manda a perna direita abaixo dela.",
+    "en": null
+  },
+  "qof/namePt": {
+    "pt": "Kuf",
+    "en": null
+  },
+  "qof/soundNotePt": {
+    "pt": "Como o C de \"casa\". No hebraico moderno soa exatamente igual ao Kaf com ponto, que vem mais adiante - são duas letras para um som só.",
+    "en": null
+  },
+  "qof/articulacao/comoPt": {
+    "pt": "O fundo da língua encosta no céu da boca, lá atrás, e solta sem voz: o C de \"casa\". É o lugar do {{ג}}, com a voz desligada.",
+    "en": null
+  },
+  "qof/ensino/funcaoPt": {
+    "pt": "{{ק}} é a consoante /k/, o C de \"casa\". Ela forma sílaba como qualquer consoante e aparece em palavras muito usadas - {{רַק}} (só), {{קָטָן}} (pequeno), {{מָקוֹם}} (lugar).",
+    "en": null
+  },
+  "qof/ensino/detalhePt": {
+    "pt": "No hebraico moderno, {{ק}} soa exatamente igual à letra que você aprende no módulo 5, com o ponto dentro: são duas letras para um som só, como aconteceu com {{ט}} e {{ת}}. Para LER, isso não custa nada - as duas são K. Para escrever, é ortografia: cada palavra tem a sua letra, e isso se aprende com o uso.",
+    "en": null
+  },
+  "qof/ensino/paraBrasileiroPt": {
+    "pt": "O nome da letra às vezes aparece escrito com Q (\"Quf\"), e em outras transliterações você vai ver Q no lugar de K. Em português o Q quase sempre vem com U - \"quando\", \"quilo\". Em hebraico não existe U nenhum embutido na letra: {{קוֹל}} é \"kol\" (voz), e nunca \"kuol\".",
+    "en": null
+  },
+  "qof/ensino/lembrePt": {
+    "pt": "{{ק}} é K puro, sem nenhum U junto. Soa igual ao K da outra letra que também faz esse som.",
+    "en": null
+  },
+  "qof/ensino/checagem/#0/q": {
+    "pt": "Como se lê {{קוֹל}} (voz)?",
+    "en": null
+  },
+  "qof/ensino/checagem/#0/porque": {
+    "pt": "O {{ק}} não carrega U nenhum: é só o som /k/. O \"o\" da palavra vem do ponto em cima do {{ו}}.",
+    "en": null
+  },
+  "qof/ensino/checagem/#1/q": {
+    "pt": "Duas letras diferentes podem ter exatamente o mesmo som em hebraico.",
+    "en": null
+  },
+  "qof/ensino/checagem/#1/porque": {
+    "pt": "Acontece mais de uma vez: {{ט}} e {{ת}} fazem T, e o {{ק}} faz o mesmo K de outra letra. São sons que se juntaram ao longo da história enquanto a escrita continuou separando-os.",
+    "en": null
+  },
+  "qof/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "qof/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "qof/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "qof/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "qof/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "qof/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "qof/wordsToRecognize/#0/pt": {
+    "pt": "café",
+    "en": null
+  },
+  "qof/wordsToRecognize/#0/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "qof/wordsToRecognize/#1/pt": {
+    "pt": "difícil",
+    "en": null
+  },
+  "qof/wordsToRecognize/#1/use": {
+    "pt": "Adjetivo comum",
+    "en": null
+  },
+  "qof/wordsToRecognize/#2/pt": {
+    "pt": "por favor",
+    "en": null
+  },
+  "qof/wordsToRecognize/#2/use": {
+    "pt": "Fórmula de cortesia",
+    "en": null
+  },
+  "qof/wordsToRead/#0/pt": {
+    "pt": "só / apenas",
+    "en": null
+  },
+  "qof/wordsToRead/#1/pt": {
+    "pt": "voz",
+    "en": null
+  },
+  "qof/wordsToRead/#2/pt": {
+    "pt": "pequeno",
+    "en": null
+  },
+  "qof/wordsToRead/#3/pt": {
+    "pt": "bolsa / mochila",
+    "en": null
+  },
+  "qof/wordsToRead/#4/pt": {
+    "pt": "silêncio",
+    "en": null
+  },
+  "qof/wordsToRead/#5/pt": {
+    "pt": "lugar",
+    "en": null
+  },
+  "qof/wordsToRead/#6/pt": {
+    "pt": "muito",
+    "en": null
+  },
+  "qof/didYouKnowTitle": {
+    "pt": "Kuf, a letra do bom dia",
+    "en": null
+  },
+  "qof/didYouKnow": {
+    "pt": "O {{ק}} aparece numa das expressões mais ouvidas nas manhãs de Israel: {{בֹּקֶר טוֹב}} (bóker tov), \"bom dia\". Palavra por palavra, é \"manhã boa\": {{בֹּקֶר}} (bóker) quer dizer \"manhã\".\n\nO som do {{ק}} é K, como em \"quilo\". Mas há uma surpresa: hoje o hebraico tem duas letras com esse mesmo som, o {{ק}} e o {{כּ}}, o Kaf com o ponto.\n\nNa Antiguidade, as duas soavam diferente: o Kuf era dito mais no fundo da boca, e o Kaf mais à frente.\n\nDica para memorizar: pense no K de bóker. Assim você lembra da letra, do som e de uma expressão que pode usar toda manhã em Israel.",
+    "en": null
+  },
+  "qof/brazilianMistake/wrong": {
+    "pt": "Ler {{ק}} como \"qu\" com um U embutido, dizendo \"kuol\" para {{קוֹל}}.",
+    "en": null
+  },
+  "qof/brazilianMistake/right": {
+    "pt": "Ler {{ק}} como o C de \"casa\", sem nenhum U: \"kol\".",
+    "en": null
+  },
+  "qof/brazilianMistake/why": {
+    "pt": "Em português, o som de K muitas vezes vem escrito com U, como em \"quando\" e \"quilo\". Em hebraico não há U nenhum na letra.",
+    "en": null
+  },
+  "qof/bridgeWords/#0/pt": {
+    "pt": "piquenique",
+    "en": null
+  },
+  "qof/bridgeWords/#1/pt": {
+    "pt": "quiosque",
+    "en": null
+  },
+  "qof/bridgeWords/#2/pt": {
+    "pt": "raquete",
+    "en": null
+  },
+  "qof/contrastes/ך": {
+    "pt": "Os dois descem abaixo da linha. No ק a perna que desce é solta, separada do teto; no ך o traço é um só, contínuo.",
+    "en": null
+  },
+  "qof/contrastes/ר": {
+    "pt": "O ק desce abaixo da linha com a perna esquerda. O ר para na linha.",
+    "en": null
+  },
+  "bet/namePt": {
+    "pt": "Bet",
+    "en": null
+  },
+  "bet/variantes/#0/nomePt": {
+    "pt": "Bet",
+    "en": null
+  },
+  "bet/variantes/#0/comoPt": {
+    "pt": "o B de \"bola\"",
+    "en": null
+  },
+  "bet/variantes/#0/ondePt": {
+    "pt": "com o ponto DENTRO da letra",
+    "en": null
+  },
+  "bet/variantes/#1/nomePt": {
+    "pt": "Vet",
+    "en": null
+  },
+  "bet/variantes/#1/comoPt": {
+    "pt": "o V de \"vaca\"",
+    "en": null
+  },
+  "bet/variantes/#1/ondePt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "bet/soundNotePt": {
+    "pt": "Com o ponto dentro ({{בּ}}), soa B, como em \"bola\". Esta lição é a do B. Sem o ponto a mesma letra tem outro som, e ele ganha uma lição só dele logo depois desta.",
+    "en": null
+  },
+  "bet/articulacao/comoPt": {
+    "pt": "Os dois lábios se fecham e soltam, com a voz ligada: o B de \"bola\". Ponha a mão no pescoço: vibra.",
+    "en": null
+  },
+  "bet/ensino/funcaoPt": {
+    "pt": "{{בּ}} é a primeira letra em que o daguesh, o ponto dentro da consoante, muda o som da própria consoante. (No {{וּ}} o ponto dentro era outra coisa: um sinal de vogal.) Com o ponto, ela é B, como em \"bola\": {{אַבָּא}}, {{בַּיִת}}, {{בֹּקֶר}}. Procure o ponto antes de pronunciar - ele é pequeno.",
+    "en": null
+  },
+  "bet/ensino/detalhePt": {
+    "pt": "Esse ponto tem nome, daguesh, e é o mesmo sinal que apareceu nas explicações do {{ג}}, do {{ד}} e do {{ת}}, onde ele não muda nada. Em livros com nikud completo ele aparece em várias letras; neste curso ele só é escrito onde muda o som. São três letras, e esta é a primeira. Aqui ele muda: sem ele, a letra deixa de ser B. Esse outro som tem lição própria, a próxima. Por enquanto, a regra desta lição é uma só: ponto dentro, B.",
+    "en": null
+  },
+  "bet/ensino/paraBrasileiroPt": {
+    "pt": "O B do hebraico é o mesmo do português, então o som não dá trabalho. O que dá trabalho é o olho: o português não tem letra que mude de som por causa de um ponto, então é fácil ler pelo desenho e não olhar o ponto. Olhe o ponto antes de pronunciar.",
+    "en": null
+  },
+  "bet/ensino/padraoPt": {
+    "pt": "Guarde a ideia do ponto dentro da letra: ele muda o SOM da consoante, e não a vogal. Esta é a primeira de três letras do alfabeto em que isso acontece, e as outras duas vêm logo adiante, com a mesma lógica. Reconhecendo o padrão aqui, elas vêm de graça.",
+    "en": null
+  },
+  "bet/ensino/lembrePt": {
+    "pt": "Com o ponto dentro, {{בּ}} é B. Sem o ponto é outro som, e ele é a próxima lição.",
+    "en": null
+  },
+  "bet/ensino/checagem/#0/q": {
+    "pt": "Qual destas se lê com som de B?",
+    "en": null
+  },
+  "bet/ensino/checagem/#0/porque": {
+    "pt": "O ponto dentro da letra, o daguesh, marca o som B. Sem ele a letra tem outro som, que é a próxima lição.",
+    "en": null
+  },
+  "bet/ensino/checagem/#1/q": {
+    "pt": "Como se lê {{אַבָּא}} (pai)?",
+    "en": null
+  },
+  "bet/ensino/checagem/#1/porque": {
+    "pt": "A letra do meio é o {{בּ}}: os lábios fecham e soltam, B. \"Ába\". Com M seria o {{מ}}, que tem outro desenho.",
+    "en": null
+  },
+  "bet/ensino/checagem/#2/q": {
+    "pt": "O ponto dentro do {{בּ}} é um sinal de vogal.",
+    "en": null
+  },
+  "bet/ensino/checagem/#2/porque": {
+    "pt": "É o daguesh, que aqui marca o som B. A vogal continua sendo marcada pelos sinais embaixo ou ao lado da letra.",
+    "en": null
+  },
+  "bet/syllables/#0/ptApprox": {
+    "pt": "como \"bá\"",
+    "en": null
+  },
+  "bet/syllables/#1/ptApprox": {
+    "pt": "como \"be\" de \"beber\"",
+    "en": null
+  },
+  "bet/syllables/#2/ptApprox": {
+    "pt": "como \"bi\" de \"bicho\"",
+    "en": null
+  },
+  "bet/syllables/#3/ptApprox": {
+    "pt": "como \"bo\" de \"bolo\"",
+    "en": null
+  },
+  "bet/syllables/#4/ptApprox": {
+    "pt": "como \"bu\" de \"buraco\"",
+    "en": null
+  },
+  "bet/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "bet/wordsToRecognize/#0/pt": {
+    "pt": "casa",
+    "en": null
+  },
+  "bet/wordsToRecognize/#0/use": {
+    "pt": "Substantivo essencial",
+    "en": null
+  },
+  "bet/wordsToRecognize/#1/pt": {
+    "pt": "manhã",
+    "en": null
+  },
+  "bet/wordsToRecognize/#1/use": {
+    "pt": "Usado no cumprimento do dia",
+    "en": null
+  },
+  "bet/wordsToRecognize/#2/pt": {
+    "pt": "por favor",
+    "en": null
+  },
+  "bet/wordsToRecognize/#2/use": {
+    "pt": "Fórmula de cortesia",
+    "en": null
+  },
+  "bet/wordsToRecognize/#3/pt": {
+    "pt": "pai",
+    "en": null
+  },
+  "bet/wordsToRecognize/#3/use": {
+    "pt": "Substantivo familiar",
+    "en": null
+  },
+  "bet/wordsToRead/#0/pt": {
+    "pt": "pai",
+    "en": null
+  },
+  "bet/wordsToRead/#1/pt": {
+    "pt": "casa",
+    "en": null
+  },
+  "bet/wordsToRead/#2/pt": {
+    "pt": "bom",
+    "en": null
+  },
+  "bet/wordsToRead/#3/pt": {
+    "pt": "coração",
+    "en": null
+  },
+  "bet/wordsToRead/#4/pt": {
+    "pt": "sábado / shabát",
+    "en": null
+  },
+  "bet/wordsToRead/#5/pt": {
+    "pt": "manhã",
+    "en": null
+  },
+  "bet/didYouKnowTitle": {
+    "pt": "Bet, a letra da casa",
+    "en": null
+  },
+  "bet/didYouKnow": {
+    "pt": "O nome da letra Bet vem da palavra hebraica {{בַּיִת}} (báyit), que quer dizer \"casa\". A ligação é muito antiga: nas primeiras formas do alfabeto, a letra provavelmente era desenhada como a planta de uma casa.\n\nVocê já conhece uma palavra que guarda essa história: Belém. O nome vem de {{בֵּית לֶחֶם}} (Beit Léchem), que quer dizer \"casa do pão\".\n\nRepare na diferença: {{בַּיִת}} (báyit) vira {{בֵּית}} (beit) quando vem ligada a outra palavra, como em \"casa do pão\".\n\nDica para memorizar: pense no {{בּ}} como uma casinha. Assim você liga de uma vez a letra, o som B e a palavra {{בַּיִת}}.",
+    "en": null
+  },
+  "bet/brazilianMistake/wrong": {
+    "pt": "Ignorar o ponto e ler todo {{ב}} do mesmo jeito, como se fosse sempre B.",
+    "en": null
+  },
+  "bet/brazilianMistake/right": {
+    "pt": "Olhar o ponto antes de ler: com ponto dentro é B, \"ába\", \"báyit\", \"bóker\". Sem ponto é o outro som, o da próxima lição.",
+    "en": null
+  },
+  "bet/brazilianMistake/why": {
+    "pt": "O português não tem letra que mude de som por causa de um ponto, então o olho tende a ler pelo desenho e pular o ponto. Em hebraico é o ponto que decide entre o B e o outro som desta letra.",
+    "en": null
+  },
+  "bet/bridgeWords/#0/pt": {
+    "pt": "ambulância",
+    "en": null
+  },
+  "bet/bridgeWords/#1/pt": {
+    "pt": "Tel Aviv",
+    "en": null
+  },
+  "bet/bridgeWords/#2/pt": {
+    "pt": "novela",
+    "en": null
+  },
+  "bet/bridgeWords/#3/pt": {
+    "pt": "sombrero",
+    "en": null
+  },
+  "bet/contrastes/כ": {
+    "pt": "O ב tem um pé que avança para a direita, na base. O כ é uma curva arredondada e não tem pé.",
+    "en": null
+  },
+  "kaf/namePt": {
+    "pt": "Kaf",
+    "en": null
+  },
+  "kaf/variantes/#0/nomePt": {
+    "pt": "Kaf",
+    "en": null
+  },
+  "kaf/variantes/#0/comoPt": {
+    "pt": "o C de \"casa\"",
+    "en": null
+  },
+  "kaf/variantes/#0/ondePt": {
+    "pt": "com o ponto DENTRO da letra",
+    "en": null
+  },
+  "kaf/variantes/#1/nomePt": {
+    "pt": "Chaf",
+    "en": null
+  },
+  "kaf/variantes/#1/comoPt": {
+    "pt": "raspado na garganta, como o {{ח}}",
+    "en": null
+  },
+  "kaf/variantes/#1/ondePt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "kaf/variantes/#2/nomePt": {
+    "pt": "Chaf final",
+    "en": null
+  },
+  "kaf/variantes/#2/comoPt": {
+    "pt": "raspado, sempre",
+    "en": null
+  },
+  "kaf/variantes/#2/ondePt": {
+    "pt": "no fim da palavra - e, no hebraico moderno, normalmente sem ponto",
+    "en": null
+  },
+  "kaf/soundNotePt": {
+    "pt": "Com o ponto ({{כּ}}), soa K, igual ao {{ק}}. Esta lição é a do K. Sem o ponto, a letra tem outro som, e ele ganha lição própria logo depois desta, junto com a forma que a letra tem no fim da palavra.",
+    "en": null
+  },
+  "kaf/articulacao/comoPt": {
+    "pt": "O fundo da língua encosta no céu da boca, lá atrás, e solta, sem voz: um K, no mesmo lugar do {{ק}}.",
+    "en": null
+  },
+  "kaf/ensino/funcaoPt": {
+    "pt": "{{כּ}} funciona como o {{בּ}}: o ponto dentro decide o som. Com o ponto, ela é K, igual ao {{ק}}: {{כֶּלֶב}}, {{כּוֹס}}, {{כַּדוּר}}. Duas letras com o mesmo som - quem decide qual se escreve é a palavra.",
+    "en": null
+  },
+  "kaf/ensino/detalhePt": {
+    "pt": "Ela tem uma forma final, para o fim da palavra, com outro desenho e outro som. Essa forma fica para a próxima lição, junto com o som dela. Por enquanto, a regra desta é uma só: ponto dentro, K.",
+    "en": null
+  },
+  "kaf/ensino/paraBrasileiroPt": {
+    "pt": "O K não dá trabalho: é o mesmo do português. O cuidado é com o desenho, que se parece com o {{ב}} - o {{כ}} é uma curva arredondada, sem o pé do {{ב}} na base.",
+    "en": null
+  },
+  "kaf/ensino/padraoPt": {
+    "pt": "É o mesmo ponto do {{ב}}: dentro da letra, ele troca o som da consoante. Você já viu isso uma vez e vai ver mais uma, na última letra do curso. Três letras, uma regra só.",
+    "en": null
+  },
+  "kaf/ensino/lembrePt": {
+    "pt": "Com o ponto dentro, {{כּ}} é K, igual ao {{ק}}. Sem o ponto, é outro som, e ele é a próxima lição.",
+    "en": null
+  },
+  "kaf/ensino/checagem/#0/q": {
+    "pt": "Qual destas se lê com som de K?",
+    "en": null
+  },
+  "kaf/ensino/checagem/#0/porque": {
+    "pt": "O ponto dentro marca o K. Sem ele a letra tem outro som, que é a próxima lição.",
+    "en": null
+  },
+  "kaf/ensino/checagem/#1/q": {
+    "pt": "Qual outra letra também faz o som K?",
+    "en": null
+  },
+  "kaf/ensino/checagem/#1/porque": {
+    "pt": "{{כּ}} com ponto e {{ק}} soam igual: K. Qual se escreve depende da palavra.",
+    "en": null
+  },
+  "kaf/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "kaf/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "kaf/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "kaf/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "kaf/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "kaf/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#0/pt": {
+    "pt": "sim",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#0/use": {
+    "pt": "Palavra essencial",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#1/pt": {
+    "pt": "sala de aula, turma",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#1/use": {
+    "pt": "Substantivo comum",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#2/pt": {
+    "pt": "ir, caminhar",
+    "en": null
+  },
+  "kaf/wordsToRecognize/#2/use": {
+    "pt": "Verbo muito comum",
+    "en": null
+  },
+  "kaf/wordsToRead/#0/pt": {
+    "pt": "cachorro",
+    "en": null
+  },
+  "kaf/wordsToRead/#1/pt": {
+    "pt": "copo",
+    "en": null
+  },
+  "kaf/wordsToRead/#2/pt": {
+    "pt": "comida",
+    "en": null
+  },
+  "kaf/wordsToRead/#3/pt": {
+    "pt": "rei",
+    "en": null
+  },
+  "kaf/wordsToRead/#4/pt": {
+    "pt": "caminho",
+    "en": null
+  },
+  "kaf/wordsToRead/#5/pt": {
+    "pt": "bola",
+    "en": null
+  },
+  "kaf/didYouKnow": {
+    "pt": "{{כַּף}} é a palma da mão, e o antepassado desta letra, há milhares de anos, provavelmente desenhava uma mão.",
+    "en": null
+  },
+  "kaf/brazilianMistake/wrong": {
+    "pt": "Confundir {{כ}} com {{ב}} e ler {{כּוֹס}} como \"bos\".",
+    "en": null
+  },
+  "kaf/brazilianMistake/right": {
+    "pt": "Olhar a base: o {{כ}} é uma curva arredondada, sem pé; o {{ב}} tem um pé que avança para a direita. \"Kos\".",
+    "en": null
+  },
+  "kaf/brazilianMistake/why": {
+    "pt": "As duas letras têm quase o mesmo contorno, e nas duas o ponto dentro muda o som. O pé na base é o que separa uma da outra.",
+    "en": null
+  },
+  "kaf/bridgeWords/#0/pt": {
+    "pt": "arquiteto",
+    "en": null
+  },
+  "kaf/bridgeWords/#1/pt": {
+    "pt": "mecânico",
+    "en": null
+  },
+  "kaf/bridgeWords/#2/pt": {
+    "pt": "mitocôndria",
+    "en": null
+  },
+  "kaf/bridgeWords/#3/pt": {
+    "pt": "açúcar",
+    "en": null
+  },
+  "kaf/contrastes/ך": {
+    "pt": "O כ tem base e para na linha. O ך desce abaixo dela, sem base.",
+    "en": null
+  },
+  "kaf/contrastes/ר": {
+    "pt": "O כ tem base: a curva fecha embaixo e volta. O ר não tem base: é só o teto curvo e uma perna que desce.",
+    "en": null
+  },
+  "pe/namePt": {
+    "pt": "Pe",
+    "en": null
+  },
+  "pe/variantes/#0/nomePt": {
+    "pt": "Pe",
+    "en": null
+  },
+  "pe/variantes/#0/comoPt": {
+    "pt": "o P de \"pato\"",
+    "en": null
+  },
+  "pe/variantes/#0/ondePt": {
+    "pt": "com o ponto DENTRO da letra",
+    "en": null
+  },
+  "pe/variantes/#1/nomePt": {
+    "pt": "Fe",
+    "en": null
+  },
+  "pe/variantes/#1/comoPt": {
+    "pt": "o F de \"faca\"",
+    "en": null
+  },
+  "pe/variantes/#1/ondePt": {
+    "pt": "sem o ponto",
+    "en": null
+  },
+  "pe/variantes/#2/nomePt": {
+    "pt": "Fe final",
+    "en": null
+  },
+  "pe/variantes/#2/comoPt": {
+    "pt": "o F, sempre",
+    "en": null
+  },
+  "pe/variantes/#2/ondePt": {
+    "pt": "no fim da palavra - e, no hebraico moderno, normalmente sem ponto",
+    "en": null
+  },
+  "pe/soundNotePt": {
+    "pt": "Com o ponto dentro ({{פּ}}), soa P, como em \"pato\". Esta lição é a do P. Sem o ponto, a letra tem outro som, e ele ganha lição própria logo depois desta, junto com a forma que a letra tem no fim da palavra.",
+    "en": null
+  },
+  "pe/articulacao/comoPt": {
+    "pt": "Os dois lábios se fecham e soltam o ar, sem voz: o P de \"pato\". É o par sem voz do {{בּ}}.",
+    "en": null
+  },
+  "pe/ensino/funcaoPt": {
+    "pt": "{{פּ}} é a terceira e última letra em que um ponto dentro decide o som. Com o ponto, ela é P, como em \"pato\": {{פֶּה}}, {{פָּרָה}}, {{מִשְׁפָּחָה}}. Você já conhece o mecanismo do {{בּ}} e do {{כּ}} - é o mesmo.",
+    "en": null
+  },
+  "pe/ensino/detalhePt": {
+    "pt": "Como o {{כ}}, ela tem uma forma final, para o fim da palavra, com outro desenho e outro som. Essa forma fica para a próxima lição, junto com o som dela. Por enquanto, a regra desta é uma só: ponto dentro, P.",
+    "en": null
+  },
+  "pe/ensino/paraBrasileiroPt": {
+    "pt": "O P é o mesmo do português. Repare no desenho: a boca do {{פ}} fica aberta à esquerda, com um dente virado para dentro.",
+    "en": null
+  },
+  "pe/ensino/padraoPt": {
+    "pt": "A terceira e última letra do grupo do ponto: {{ב}}, {{כ}} e esta. Se você reconheceu o padrão nas outras duas, aqui não há nada novo para decorar - só a letra. Dica: no começo de uma palavra, B, K e P são muito comuns; no fim, V, CH e F são muito comuns. É uma boa regra de bolso, mas há exceções.",
+    "en": null
+  },
+  "pe/ensino/lembrePt": {
+    "pt": "Com o ponto dentro, {{פּ}} é P. Sem o ponto, é outro som, e ele é a próxima lição.",
+    "en": null
+  },
+  "pe/ensino/checagem/#0/q": {
+    "pt": "Qual destas se lê com som de P?",
+    "en": null
+  },
+  "pe/ensino/checagem/#0/porque": {
+    "pt": "O ponto dentro marca o P. Sem ele a letra tem outro som, que é a próxima lição.",
+    "en": null
+  },
+  "pe/ensino/checagem/#1/q": {
+    "pt": "Como se lê {{פֶּה}} (boca)?",
+    "en": null
+  },
+  "pe/ensino/checagem/#1/porque": {
+    "pt": "A letra é o {{פּ}}, com o ponto dentro: P, sem voz. \"Pe\" - e é também o nome da letra. Com B, com voz, seria o {{בּ}}.",
+    "en": null
+  },
+  "pe/ensino/checagem/#2/q": {
+    "pt": "As três letras que mudam de som com o ponto são {{ב}}, {{כ}} e {{פ}}.",
+    "en": null
+  },
+  "pe/ensino/checagem/#2/porque": {
+    "pt": "No hebraico de hoje são essas três. Outras letras também levam o ponto - {{ג}}, {{ד}}, {{ת}} -, mas nelas ele não muda o som.",
+    "en": null
+  },
+  "pe/syllables/#0/ptApprox": {
+    "pt": "A aberto, como em \"casa\"",
+    "en": null
+  },
+  "pe/syllables/#1/ptApprox": {
+    "pt": "E como em \"mesa\"",
+    "en": null
+  },
+  "pe/syllables/#2/ptApprox": {
+    "pt": "I como em \"milho\"",
+    "en": null
+  },
+  "pe/syllables/#3/ptApprox": {
+    "pt": "O como em \"motor\"",
+    "en": null
+  },
+  "pe/syllables/#4/ptApprox": {
+    "pt": "U como em \"muro\"",
+    "en": null
+  },
+  "pe/syllables/#5/ptApprox": {
+    "pt": "só a consoante, sem vogal",
+    "en": null
+  },
+  "pe/wordsToRecognize/#0/pt": {
+    "pt": "aqui",
+    "en": null
+  },
+  "pe/wordsToRecognize/#0/use": {
+    "pt": "Advérbio essencial",
+    "en": null
+  },
+  "pe/wordsToRecognize/#1/pt": {
+    "pt": "telefone",
+    "en": null
+  },
+  "pe/wordsToRecognize/#1/use": {
+    "pt": "Substantivo cotidiano",
+    "en": null
+  },
+  "pe/wordsToRecognize/#2/pt": {
+    "pt": "dinheiro",
+    "en": null
+  },
+  "pe/wordsToRecognize/#2/use": {
+    "pt": "Substantivo essencial",
+    "en": null
+  },
+  "pe/wordsToRead/#0/pt": {
+    "pt": "livro",
+    "en": null
+  },
+  "pe/wordsToRead/#1/pt": {
+    "pt": "família",
+    "en": null
+  },
+  "pe/wordsToRead/#2/pt": {
+    "pt": "bonito",
+    "en": null
+  },
+  "pe/wordsToRead/#3/pt": {
+    "pt": "dinheiro",
+    "en": null
+  },
+  "pe/wordsToRead/#4/pt": {
+    "pt": "fim",
+    "en": null
+  },
+  "pe/wordsToRead/#5/pt": {
+    "pt": "boca",
+    "en": null
+  },
+  "pe/wordsToRead/#6/pt": {
+    "pt": "vaca",
+    "en": null
+  },
+  "pe/wordsToRead/#7/pt": {
+    "pt": "pão sírio",
+    "en": null
+  },
+  "pe/didYouKnow": {
+    "pt": "O nome da letra é {{פֵּא}}, e {{פֶּה}} quer dizer \"boca\" - e o antepassado desta letra, há milhares de anos, provavelmente desenhava uma boca. Você lê essa palavra nesta lição.",
+    "en": null
+  },
+  "pe/brazilianMistake/wrong": {
+    "pt": "Ignorar o ponto e ler todo {{פ}} do mesmo jeito, como se fosse sempre P.",
+    "en": null
+  },
+  "pe/brazilianMistake/right": {
+    "pt": "Olhar o ponto antes de ler: com ponto dentro é P, {{פֶּה}} é \"pe\", como em \"pato\". Sem ponto é o outro som, o da próxima lição.",
+    "en": null
+  },
+  "pe/brazilianMistake/why": {
+    "pt": "O português não tem letra que mude de som por causa de um ponto, então o olho tende a ler pelo desenho e pular o ponto. Em hebraico é o ponto que decide entre o P e o outro som desta letra.",
+    "en": null
+  },
+  "pe/bridgeWords/#0/pt": {
+    "pt": "supermercado",
+    "en": null
+  },
+  "pe/bridgeWords/#1/pt": {
+    "pt": "hipopótamo",
+    "en": null
+  },
+  "pe/bridgeWords/#2/pt": {
+    "pt": "África",
+    "en": null
+  },
+  "pe/bridgeWords/#3/pt": {
+    "pt": "golfinho",
+    "en": null
+  },
+  "pe/bridgeWords/#4/pt": {
+    "pt": "telégrafo",
+    "en": null
+  },
+  "pe/contrastes/ף": {
+    "pt": "O פ tem base e o rabinho preso dentro. O ף desce abaixo da linha e alonga o rabinho.",
+    "en": null
+  },
+  "pe/contrastes/ם": {
+    "pt": "O פ tem uma espiral dentro. O ם é vazio.",
+    "en": null
+  }
+}

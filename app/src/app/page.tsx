@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import CursoDeHebraicoPage from './curso-de-hebraico/page';
+import { tx } from '@/i18n/telas/venda-curso-de-hebraico';
 
 /* A capa é a página do curso de alfabetização (27/10/2026, decisão do dono:
    "por enquanto deixa o site só com o curso de alfabetização"). De 23 a
@@ -10,11 +11,9 @@ import CursoDeHebraicoPage from './curso-de-hebraico/page';
    links de campanha, os e-mails e o portão. */
 export const metadata: Metadata = meta({
   rota: '/',
-  title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
+  title: tx.metaTitulo,
   /* Até 155 caracteres (checa-seo.mjs). */
-  description:
-    'Curso interativo para brasileiros aprenderem a ler hebraico do zero: as 22 letras, os ' +
-    'sinais de vogal e palavras reais, com correção na hora.'
+  description: tx.metaDescricao
 });
 
 export default function HomePage() {

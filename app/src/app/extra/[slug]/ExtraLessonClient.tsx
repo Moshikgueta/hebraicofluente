@@ -19,6 +19,7 @@
  * quiz is recorded as a checkpoint (`cp6`, `cp7`). No new state shape.
  */
 
+import { tx } from '@/i18n/telas/licao-extra-lesson-client';
 import { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -42,16 +43,16 @@ export type ExtraSlug = 'sem-o-ponto' | 'sons-modernos';
 
 const STAGES: Record<ExtraSlug, { n: number; label: string; lesson: number }[]> = {
   'sem-o-ponto': [
-    { n: 1, label: 'Onde vem o ponto?', lesson: 21 },
-    { n: 2, label: 'As finais', lesson: 22 },
-    { n: 3, label: 'Sem nikud', lesson: 23 }
+    { n: 1, label: tx.ondeVemOPonto, lesson: 21 },
+    { n: 2, label: tx.asFinais, lesson: 22 },
+    { n: 3, label: tx.semNikud, lesson: 23 }
   ],
   'sons-modernos': [
     /* Tch, Dj e J são as lições 24 a 26, cada uma na sua página (/som/...).
        Esta é a 27: os três juntos, e o fecho do alfabeto. */
-    { n: 1, label: 'O guéresh', lesson: 27 },
-    { n: 2, label: 'Ler', lesson: 27 },
-    { n: 3, label: 'Fecho', lesson: 27 }
+    { n: 1, label: tx.oGueresh, lesson: 27 },
+    { n: 2, label: tx.ler, lesson: 27 },
+    { n: 3, label: tx.fecho, lesson: 27 }
   ]
 };
 
@@ -92,11 +93,11 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
           <Link href={`/modulo/${mod.n}`}
                 className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px]
                            text-ink-muted hover:text-ink-body">
-            ← Módulo {mod.n}
+            {tx.modulo(mod.n)}
           </Link>
-          <Badge tone="accent">Módulo {mod.n} · lição {steps[stage - 1]?.lesson}</Badge>
+          <Badge tone="accent">{tx.badge(mod.n, steps[stage - 1]?.lesson)}</Badge>
         </div>
-        <ol className="flex items-center gap-1.5" aria-label="Etapas do módulo">
+        <ol className="flex items-center gap-1.5" aria-label={tx.etapas}>
           {steps.map(s => {
             const isDone = stagesDone.includes(s.n);
             const isNow = stage === s.n;
@@ -106,7 +107,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
                   type="button"
                   onClick={() => setStage(s.n)}
                   aria-current={isNow ? 'step' : undefined}
-                  aria-label={`Etapa ${s.n} de 3 - ${s.label}`}
+                  aria-label={tx.etapaDe(s.n, s.label)}
                   className="w-full min-h-[44px] grid content-center gap-1.5"
                 >
                   <span className={`block h-1.5 rounded-full transition-colors
@@ -135,8 +136,8 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
               else router.push('/desafio-final');
             }}
             nextLabel={nextModule && nextModule.n <= 7
-              ? `Módulo ${nextModule.n} - ${nextModule.titlePt}`
-              : 'Ir para o desafio final'}
+              ? tx.proximoModulo(nextModule.n, nextModule.titlePt)
+              : tx.desafioFinal}
           />
         ) : slug === 'sem-o-ponto' ? (
           <UnpointedStage
@@ -152,7 +153,7 @@ export function ExtraLessonClient({ slug, module: mod }: { slug: ExtraSlug; modu
           <ExercisePlayer
             key={run}
             exercises={quiz}
-            title="Fecho do alfabeto"
+            title={tx.fechoDoAlfabeto}
             onDone={r => {
               setResult(r);
               registrarRodada(categoria, quiz);
@@ -190,7 +191,7 @@ function DageshStage({ onDone }: { onDone: () => void }) {
       <ExercisePlayer
         key={rodada}
         exercises={exercicios}
-        title="Sem o ponto impresso"
+        title={tx.semPontoImpresso}
         repetirErros
         onDone={() => { registrarRodada('modulo-6-ponto', exercicios); setRodada(n => n + 1); setFase('feito'); }}
       />
@@ -199,10 +200,10 @@ function DageshStage({ onDone }: { onDone: () => void }) {
   if (fase === 'feito') {
     return (
       <div className="grid gap-5">
-        <Milestone tone="bom" kicker="Lição 21 concluída" title="Você decide o som pelo lugar da letra."
-                   body="É o que vai fazer em toda palavra sem pontos. Agora as cinco formas finais, juntas." />
-        <Button size="lg" full onClick={onDone}>Continuar para as formas finais</Button>
-        <Button variant="ghost" onClick={() => setFase('praticar')}>Praticar de novo</Button>
+        <Milestone tone="bom" kicker={tx.licao21} title={tx.decideOSom}
+                   body={tx.emTodaPalavra} />
+        <Button size="lg" full onClick={onDone}>{tx.continuarFinais}</Button>
+        <Button variant="ghost" onClick={() => setFase('praticar')}>{tx.praticarDeNovo}</Button>
       </div>
     );
   }
@@ -210,23 +211,21 @@ function DageshStage({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Onde o ponto aparece?</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">{tx.ondeAparece}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Você já conhece os dois lados de <He size="inline">ב</He>, <He size="inline">כ</He> e{' '}
-          <He size="inline">פ</He>. Mas fora do livro o ponto quase nunca é impresso. Então a pergunta
-          muda: sem ver o ponto, como saber o som? Pelo lugar da letra na palavra.
+          {tx.doisLados(<He size="inline">ב</He>, <He size="inline">כ</He>, <He size="inline">פ</He>)}
         </p>
       </div>
 
       <Card tone="wash" className="p-5 grid gap-2">
-        <h2 className="text-[18px] font-semibold m-0">A regra</h2>
+        <h2 className="text-[18px] font-semibold m-0">{tx.aRegra}</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body m-0"><Prose text={D.rulePt} /></p>
       </Card>
 
       {exemplos.map(({ pos, palavras }) => (
         <Card key={pos} className="p-5 grid gap-3">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)] m-0">
-            {POSICAO_PT[pos]} · {pos === 'depois-de-vogal' ? 'sem o ponto: V, CH, F' : 'com o ponto: B, K, P'}
+            {POSICAO_PT[pos]} · {pos === 'depois-de-vogal' ? tx.semOPonto : tx.comOPonto}
           </p>
           {palavras.map(w => (
             <div key={w.he} className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
@@ -241,29 +240,25 @@ function DageshStage({ onDone }: { onDone: () => void }) {
       ))}
 
       <Card className="p-5 grid gap-2">
-        <h2 className="text-[17px] font-semibold m-0">E as formas finais</h2>
+        <h2 className="text-[17px] font-semibold m-0">{tx.eAsFinais}</h2>
         <p className="text-[15px] leading-relaxed text-ink-body m-0">
-          <He size="inline">ך</He> e <He size="inline">ף</He> nunca levam o ponto: no fim da palavra, são sempre
-          CH e F.
+          {tx.finaisSemPonto(<He size="inline">ך</He>, <He size="inline">ף</He>)}
         </p>
       </Card>
 
       {excecoes.length > 0 && (
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="font-ui text-[13px] font-semibold uppercase tracking-[.06em] text-[var(--amber)] m-0">
-            Quando a regra não basta
+            {tx.regraNaoBasta}
           </p>
           {excecoes.some(w => w.analise.posicao === 'depois-de-vogal') && (
             <p className="text-[15px] leading-relaxed text-ink-body m-0">
-              Em algumas palavras o ponto aparece depois de vogal. Ali ele não muda só o som: ele dobra a consoante,
-              e o som fica o forte. Essas palavras se aprendem de ouvido e de leitura, uma a uma.
+              {tx.dobra}
             </p>
           )}
           {excecoes.some(w => w.analise.posicao === 'depois-de-consoante') && (
             <p className="text-[15px] leading-relaxed text-ink-body m-0">
-              E depois de uma letra com shva no começo da palavra (ou de um prefixo) a regra também falha: ali a
-              letra fica sem o ponto, e o som é o suave, como em <He size="inline">בְּבַקָשָׁה</He> (bevakashá) e{' '}
-              <He size="inline">כְּבָר</He> (kvar).
+              {tx.shva(<He size="inline">בְּבַקָשָׁה</He>, <He size="inline">כְּבָר</He>)}
             </p>
           )}
           {excecoes.map(w => (
@@ -278,12 +273,12 @@ function DageshStage({ onDone }: { onDone: () => void }) {
 
       <Card tone="amber" className="p-5">
         <p className="font-ui text-[13px] font-semibold uppercase tracking-[.06em] text-[var(--amber)] mb-2">
-          Isto não é detalhe de acabamento
+          {tx.naoEDetalhe}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={D.warningPt} /></p>
       </Card>
 
-      <Button size="lg" full onClick={() => setFase('praticar')}>Praticar: ler sem o ponto impresso</Button>
+      <Button size="lg" full onClick={() => setFase('praticar')}>{tx.praticarSemPonto}</Button>
     </div>
   );
 }
@@ -296,10 +291,9 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">As cinco formas finais</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">{tx.cincoFinais}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Você conheceu cada uma junto com a sua letra. Aqui elas estão juntas pela
-          primeira vez - e é assim, em bloco, que elas se fixam.
+          {tx.conheceuCada}
         </p>
       </div>
 
@@ -322,31 +316,29 @@ function FinalsStage({ onDone }: { onDone: () => void }) {
 
       <Card tone="wash" className="p-5 grid gap-3">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">
-          O atalho visual
+          {tx.atalho}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
-          Quatro das cinco descem abaixo da linha -{' '}
-          <HeSeq items={descends.map(x => x.fin)} size="word" sep={null} /> - e só{' '}
-          <He size="word">{stays[0]?.fin ?? ''}</He> fecha em cima.
-          Se desceu, é fim de palavra.
+          {tx.descem(<HeSeq items={descends.map(x => x.fin)} size="word" sep={null} />,
+            <He size="word">{stays[0]?.fin ?? ''}</He>)}
         </p>
       </Card>
 
       {/* O que uma forma final É (11/10/2026): sem isto, há quem conte 27
           letras, ou pense que ם e ן são duas formas da mesma letra. */}
       <Card className="p-5 grid gap-2.5">
-        <h2 className="font-display text-[19px] font-semibold">Outro desenho, a mesma letra</h2>
+        <h2 className="font-display text-[19px] font-semibold">{tx.outroDesenho}</h2>
         <ul className="grid gap-2 text-[15px] leading-relaxed text-ink-body list-disc pl-5 m-0">
-          <li>Cinco letras mudam de forma quando aparecem no fim da palavra.</li>
-          <li>Muda só o desenho: o nome e o som da letra continuam os mesmos.</li>
-          <li>A forma final não é uma letra a mais. O alfabeto continua tendo 22 letras.</li>
-          <li>Na leitura, o que importa é reconhecer a forma final quando ela aparece.</li>
+          <li>{tx.final1}</li>
+          <li>{tx.final2}</li>
+          <li>{tx.final3}</li>
+          <li>{tx.final4}</li>
         </ul>
       </Card>
 
       <MemOuNun />
 
-      <Button size="lg" full onClick={onDone}>Continuar - ler sem nikud</Button>
+      <Button size="lg" full onClick={onDone}>{tx.continuarSemNikud}</Button>
     </div>
   );
 }
@@ -374,27 +366,23 @@ function MemOuNun() {
   useRegistroDeAudio();
   return (
     <Card tone="wash" className="p-5 sm:p-6 grid gap-4">
-      <h2 className="font-display text-[19px] font-semibold">ם ou ן? O M e o N do fim da palavra</h2>
+      <h2 className="font-display text-[19px] font-semibold">{tx.memOuNunTitulo}</h2>
       <p className="text-[15px] leading-relaxed text-ink-body">
-        Em português, o fim de &quot;bem&quot; não é um M de verdade: os lábios não se fecham, e o
-        som fica nasal. Em hebraico, o fim conta. <He size="inline">ם</He> é o M, com os lábios
-        fechados no fim, como em <He size="inline">אֵם</He> (em, mãe). <He size="inline">ן</He> é
-        o N, com a língua atrás dos dentes e a boca aberta, como em <He size="inline">מִן</He> (min,
-        de). São duas letras diferentes, mem e nun, e cada uma tem a sua forma final.
+        {tx.memOuNun(<He size="inline">ם</He>, <He size="inline">אֵם</He>,
+          <He size="inline">ן</He>, <He size="inline">מִן</He>)}
       </p>
       <div className="grid gap-2">
         <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)] m-0">
-          Escute a diferença: português × hebraico
+          {tx.escuteDiferenca}
         </p>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          Ouça como o professor diz &quot;bem&quot; em português e as palavras em hebraico: preste
-          atenção nos lábios no fim de cada uma.
+          {tx.oucaProfessor}
         </p>
         <GravacaoDoProfessor id="portuguese-em-vs-hebrew-mem" />
         <GravacaoDoProfessor id="final-mem-vs-nun" />
       </div>
       <p className="font-ui text-[15px] font-semibold text-ink m-0">
-        Agora você: ouça cada palavra e diga como ela termina.
+        {tx.agoraVoce}
       </p>
       <ul className="grid gap-2.5 list-none p-0 m-0">
         {palavras.map(w => {
@@ -403,9 +391,9 @@ function MemOuNun() {
           return (
             <li key={w.he} className="rounded-[var(--r-md)] border border-line bg-surface px-4 py-3 grid gap-2">
               <div className="flex items-center gap-3 flex-wrap">
-                {ouvir && <AudioButton audioId={w.audioId} size="sm" label="Ouvir" ariaLabel={`Ouvir a palavra ${w.translit}`} />}
+                {ouvir && <AudioButton audioId={w.audioId} size="sm" label={tx.ouvir} ariaLabel={tx.ouvirPalavra(w.translit)} />}
                 {(!ouvir || r) && <He size="word" mark={w.fim === 'm' ? 'ם' : 'ן'}>{w.he}</He>}
-                <span className="flex gap-2 ml-auto" role="group" aria-label="Como a palavra termina?">
+                <span className="flex gap-2 ml-auto" role="group" aria-label={tx.comoTermina}>
                   {(['m', 'n'] as const).map(op => (
                     <button key={op} type="button" disabled={!!r}
                             onClick={() => setResp(x => ({ ...x, [w.he]: op }))}
@@ -420,10 +408,8 @@ function MemOuNun() {
               </div>
               {r && (
                 <p role="status" className={`font-ui text-[14px] leading-relaxed m-0 ${r === w.fim ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
-                  {r === w.fim ? 'Isso. ' : 'Não: '}
-                  {w.translit} ({w.pt}) termina em {w.fim === 'm'
-                    ? 'ם, um M: os lábios se fecham no fim.'
-                    : 'ן, um N: a língua toca atrás dos dentes, e os lábios ficam abertos.'}
+                  {r === w.fim ? tx.isso : tx.nao}
+                  {tx.termina(w.translit, w.pt, w.fim === 'm')}
                 </p>
               )}
             </li>
@@ -442,7 +428,7 @@ function UnpointedStage({
   const U = extras().unpointed;
 
   if (phase === 'quiz') {
-    return <ExercisePlayer exercises={quiz} title="Módulo 6 - fecho" onDone={onDone} />;
+    return <ExercisePlayer exercises={quiz} title={tx.fechoModulo6} onDone={onDone} />;
   }
 
   /* Eram oito palavras numa lista corrida, lidas em menos de um minuto - e o
@@ -452,7 +438,7 @@ function UnpointedStage({
   return (
     <div className="grid gap-6">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Ler sem nikud</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">{tx.lerSemNikud}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">{U.introPt}</p>
       </div>
 
@@ -460,7 +446,7 @@ function UnpointedStage({
         <section key={g.id} aria-labelledby={`unp-${g.id}`} className="grid gap-2.5">
           <div className="grid gap-1">
             <p className="font-ui text-[11.5px] uppercase tracking-[.1em] text-ink-muted tabular-nums">
-              {i + 1} de {U.groups.length} · {g.words.length} palavras
+              {tx.grupo(i + 1, U.groups.length, g.words.length)}
             </p>
             <h2 id={`unp-${g.id}`} className="font-display text-[18px] font-bold text-ink">
               {g.titlePt}
@@ -476,7 +462,7 @@ function UnpointedStage({
       <AmbiguousCard a={U.ambiguous} />
 
       <Button size="lg" full onClick={() => { track('checkpoint_started', { checkpointId: 'cp6' }); setPhase('quiz'); }}>
-        Estou pronto - fazer o fecho do módulo
+        {tx.prontoFecho}
       </Button>
     </div>
   );
@@ -492,7 +478,7 @@ function AmbiguousCard({ a }: { a: Extras['unpointed']['ambiguous'] }) {
     <Card tone="wash" className="p-5 sm:p-6 grid gap-4">
       <div className="grid gap-1 justify-items-center text-center">
         <p className="font-ui text-[11.5px] uppercase tracking-[.1em] text-ink-muted">
-          E uma que é duas
+          {tx.umaQueEDuas}
         </p>
         <He size="lg">{a.bare}</He>
       </div>
@@ -528,7 +514,7 @@ function UnpointedRow({
             <span className="font-ui text-[12.5px] text-ink-muted">{word.translit} · {word.pt}</span>
           </span>
         ) : (
-          <Button variant="secondary" size="sm" onClick={() => setShown(true)}>Conferir</Button>
+          <Button variant="secondary" size="sm" onClick={() => setShown(true)}>{tx.conferir}</Button>
         )}
         <AudioButton audioId={word.audioId} label="" size="sm" />
       </div>
@@ -542,12 +528,12 @@ function GerechStage({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Os sons modernos</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">{tx.sonsModernos}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body"><Prose text={G.introPt} /></p>
       </div>
 
       <Card className="p-6 grid gap-3">
-        <h2 className="font-display text-[18px] font-semibold">O sinal</h2>
+        <h2 className="font-display text-[18px] font-semibold">{tx.oSinal}</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={G.signNotePt} /></p>
       </Card>
 
@@ -568,13 +554,11 @@ function GerechStage({ onDone }: { onDone: () => void }) {
 
       <Card tone="wash" className="p-5">
         <p className="text-[15px] leading-relaxed text-ink-body">
-          Estes três sons quase só aparecem em nomes próprios e em palavras
-          importadas - que é exatamente onde um brasileiro mais acerta, porque já
-          sabe como elas soam.
+          {tx.tresSons}
         </p>
       </Card>
 
-      <Button size="lg" full onClick={onDone}>Continuar - ler as palavras</Button>
+      <Button size="lg" full onClick={onDone}>{tx.continuarPalavras}</Button>
     </div>
   );
 }
@@ -584,10 +568,9 @@ function GerechWordsStage({ onDone }: { onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-2">
-        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">Leia e confira</h1>
+        <h1 className="text-[25px] sm:text-[30px] font-bold leading-tight">{tx.leiaEConfira}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          Todas as palavras desta página você já conhece em português. Leia cada
-          uma em voz alta antes de olhar o significado.
+          {tx.todasAsPalavras}
         </p>
       </div>
 
@@ -611,7 +594,7 @@ function GerechWordsStage({ onDone }: { onDone: () => void }) {
         </Card>
       ))}
 
-      <Button size="lg" full onClick={onDone}>Continuar para o fecho</Button>
+      <Button size="lg" full onClick={onDone}>{tx.continuarFecho}</Button>
     </div>
   );
 }
@@ -627,13 +610,13 @@ function ClosingResult({
   return (
     <div className="grid gap-5">
       <Milestone
-        kicker={`Módulo ${mod.n} · ${result.correct} de ${result.total} · ${pct}%`}
-        title={strong ? 'Módulo concluído.' : 'Vale repetir antes de seguir.'}
+        kicker={tx.kicker(mod.n, result.correct, result.total, pct)}
+        title={strong ? tx.concluido : tx.repetir}
         body={strong
-          ? 'Este é o módulo que separa quem decora de quem lê.'
-          : 'Sem pressa e sem penalidade - refaça e veja o que ainda escapa.'}
+          ? tx.separa
+          : tx.semPressa}
       >
-        <Button variant={strong ? 'secondary' : 'primary'} onClick={onRetry}>Refazer</Button>
+        <Button variant={strong ? 'secondary' : 'primary'} onClick={onRetry}>{tx.refazer}</Button>
         <Button variant={strong ? 'primary' : 'secondary'} onClick={onNext}>{nextLabel}</Button>
       </Milestone>
       {strong && (

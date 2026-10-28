@@ -16,6 +16,7 @@
 
 import { He } from '@/components/hebrew/He';
 import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { tx } from '@/i18n/telas/academia-aventura';
 
 const FINAIS: Record<string, string> = { 'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ' };
 
@@ -39,7 +40,7 @@ export function AberturaDoLugar({ modulo, ensinadas }: {
       <Cenario n={n} vivo />
       <p className="absolute left-3 bottom-2.5 m-0 inline-flex items-baseline gap-2 rounded-full
                     bg-[var(--card)]/92 px-3 py-0.5 shadow-[var(--sh)]">
-        <span className="font-ui text-[12px] font-semibold text-ink whitespace-nowrap">Módulo {modulo} · {lugar.pt}</span>
+        <span className="font-ui text-[12px] font-semibold text-ink whitespace-nowrap">{tx.moduloLugar(modulo, lugar.pt)}</span>
         {legivel && <span className="text-[16px] text-ink"><He size="inline">{lugar.he}</He></span>}
       </p>
     </div>

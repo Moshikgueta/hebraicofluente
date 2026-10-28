@@ -3,6 +3,7 @@
 import { PERFIL_LINKEDIN } from '@/lib/professor';
 import { He } from '@/components/hebrew/He';
 import { Container, Reveal, Rubrica } from './base';
+import { tx } from '@/i18n/telas/venda-trajetoria';
 
 /* A trajetória do professor, na versão LONGA (28/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
@@ -26,34 +27,34 @@ import { Container, Reveal, Rubrica } from './base';
    5. o fecho volta ao aluno: o que a plataforma faz com ele. */
 
 const PADROES = [
-  'um alfabeto inteiramente novo',
-  'a dependência da transliteração',
-  'letras parecidas que se confundem',
-  'o salto de reconhecer letras para ler palavras',
-  'materiais que presumem o que o aluno ainda não sabe'
+  tx.padrao1,
+  tx.padrao2,
+  tx.padrao3,
+  tx.padrao4,
+  tx.padrao5
 ];
 
 const CAMINHO: readonly { t: string; d: string }[] = [
-  { t: 'Israel', d: 'O hebraico como língua materna.' },
-  { t: 'Brasil', d: 'Desde 2021, vivendo e ensinando aqui.' },
-  { t: 'Sala de aula', d: 'Professor de hebraico na Escola Israelita de Curitiba (2021-2023) e shaliach na comunidade judaica.' },
-  { t: 'Idiomas', d: 'Hebraico, português, inglês, espanhol e italiano.' },
-  { t: 'Metodologia', d: 'Gerente Pedagógico da New School, em Tel Aviv, e professor na Universidad Isaac Abarbanel, em Buenos Aires.' },
-  { t: 'Hebraico Fluente', d: 'Tudo isso numa plataforma pensada para brasileiros.' }
+  { t: tx.caminhoIsraelT, d: tx.caminhoIsraelD },
+  { t: tx.caminhoBrasilT, d: tx.caminhoBrasilD },
+  { t: tx.caminhoSalaT, d: tx.caminhoSalaD },
+  { t: tx.caminhoIdiomasT, d: tx.caminhoIdiomasD },
+  { t: tx.caminhoMetodologiaT, d: tx.caminhoMetodologiaD },
+  { t: tx.caminhoHfT, d: tx.caminhoHfD }
 ];
 
 const REUNE = [
-  'O hebraico como língua materna',
-  'Sala de aula com alunos brasileiros',
-  'A experiência de aprender cinco línguas',
-  'Formação em ensino de idiomas: CELTA e estudos em Letras',
-  'O trabalho diário de criar cursos de idiomas'
+  tx.reune1,
+  tx.reune2,
+  tx.reune3,
+  tx.reune4,
+  tx.reune5
 ];
 
 const ATIVIDADES = [
-  'aprende as letras aos poucos', 'pratica o reconhecimento', 'diferencia letras parecidas',
-  'aprende o nikud', 'pratica a leitura', 'conhece a escrita cursiva', 'monta palavras',
-  'recebe correção na hora'
+  tx.atividade1, tx.atividade2, tx.atividade3,
+  tx.atividade4, tx.atividade5, tx.atividade6, tx.atividade7,
+  tx.atividade8
 ];
 
 export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; nivel?: 'h1' | 'h2' }) {
@@ -72,7 +73,7 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={retrato}
-                alt="Moshik Gueta, professor e criador do Hebraico Fluente"
+                alt={tx.retratoAlt}
                 width={680} height={850} loading="lazy" decoding="async"
                 className="aspect-[4/5] w-full max-w-[260px] sm:max-w-[420px] rounded-[16px]
                            shadow-[0_0_0_1px_rgba(27,33,31,.06)] object-cover object-top bg-[var(--sand)]"
@@ -87,29 +88,24 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
                 </span>
               </div>
             )}
-            <p className="mt-4 font-display text-[20px] font-semibold tracking-[-0.015em] text-ink m-0">Moshik Gueta</p>
-            <p className="font-ui text-[14.5px] text-ink-muted m-0">Israelense, professor de idiomas e educador</p>
+            <p className="mt-4 font-display text-[20px] font-semibold tracking-[-0.015em] text-ink m-0">{tx.nome}</p>
+            <p className="font-ui text-[14.5px] text-ink-muted m-0">{tx.descricao}</p>
           </Reveal>
 
           <Reveal delay={100}>
-            <Rubrica className="mb-5">Quem está por trás do Hebraico Fluente</Rubrica>
+            <Rubrica className="mb-5">{tx.rubrica}</Rubrica>
             <Titulo id="trajetoria-titulo"
                 className="font-display font-semibold text-[clamp(26px,3vw,38px)] leading-[1.12]
                            tracking-[-0.03em] text-balance m-0 mb-5 max-w-[26ch]">
-              De Israel ao Brasil: anos ensinando, aprendendo e pensando idiomas, transformados em uma
-              metodologia para brasileiros.
+              {tx.titulo}
             </Titulo>
             {/* Primeira pessoa: ninguém confia numa biografia em terceira
                 pessoa escrita pela própria pessoa. */}
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[58ch] mb-4">
-              Sou Moshik Gueta, israelense, professor de idiomas e educador. Quando vim morar no Brasil,
-              em 2021, comecei a ensinar hebraico para brasileiros e logo percebi que aprender a língua
-              começa muito antes da gramática.
+              {tx.p1}
             </p>
             <p className="font-ui text-[17px] sm:text-[18px] leading-[1.65] text-ink-muted max-w-[58ch] mb-5">
-              Para quem cresceu com o alfabeto latino, o primeiro contato com o hebraico é uma nova
-              direção de leitura, novos símbolos, novos sons e outra lógica. Em sala de aula, alguns
-              pontos voltavam sempre:
+              {tx.p2}
             </p>
             {/* Os cinco pontos eram selos com borda; viraram uma lista sob
                 fios, que se lê como lista e não como etiquetas. */}
@@ -123,14 +119,14 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               ))}
             </ul>
             <p className="font-display text-[19px] sm:text-[20px] leading-[1.45] font-medium tracking-[-0.015em] text-ink m-0">
-              Cada um desses pontos virou uma decisão do curso.
+              {tx.decisao}
             </p>
           </Reveal>
         </div>
 
         {/* 2 · o caminho, com as credenciais dentro dos passos */}
         <Reveal>
-          <Rubrica as="h3" className="mb-6">O caminho até aqui</Rubrica>
+          <Rubrica as="h3" className="mb-6">{tx.caminho}</Rubrica>
           {/* Colunas sob um fio, como as etapas do método na capa: o traço
               teal marca o começo de cada passo, e o último (o próprio
               Hebraico Fluente) leva o traço inteiro. */}
@@ -160,30 +156,21 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
             dois produtos. */}
         <div className="grid gap-10 lg:gap-14 lg:grid-cols-2">
           <Reveal className="min-w-0 border-t border-line pt-7 grid gap-4 content-start">
-            <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">Ensinando brasileiros</h3>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">{tx.ensinandoTitulo}</h3>
             <p className="font-ui text-[16.5px] leading-[1.65] text-ink-muted m-0">
-              Foi dando aulas em Curitiba, na Escola Israelita e junto à comunidade judaica como
-              shaliach, que entendi quais dificuldades se repetiam e quais estratégias realmente
-              ajudavam o aluno a começar a ler. O Hebraico Fluente não é um curso estrangeiro traduzido
-              para o português: a metodologia nasceu desse contato direto com brasileiros aprendendo
-              hebraico.
+              {tx.ensinandoTexto}
             </p>
             <Citacao>
-              Ensinar hebraico no Brasil me mostrou que aprender o alfabeto não é apenas memorizar 22
-              letras. É aprender uma nova lógica de leitura.
+              {tx.ensinandoCitacao}
             </Citacao>
           </Reveal>
           <Reveal className="min-w-0 border-t border-line pt-7 grid gap-4 content-start">
-            <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">Dos dois lados da sala de aula</h3>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.015em] m-0">{tx.ladosTitulo}</h3>
             <p className="font-ui text-[16.5px] leading-[1.65] text-ink-muted m-0">
-              Além de ensinar, continuo sendo aluno de idiomas. Falo hebraico, português, inglês,
-              espanhol e italiano, e cada língua me colocou de novo no começo: estruturas diferentes,
-              vocabulário do zero, uma leitura que demora a engrenar, a vontade de traduzir tudo. É
-              desse lado que eu penso cada exercício: o que ajuda a avançar, o que cria dependência e o
-              que transforma conhecimento passivo em habilidade real.
+              {tx.ladosTexto}
             </p>
             <Citacao>
-              Ensinar idiomas faz parte da minha profissão. Aprendê-los também faz parte da minha vida.
+              {tx.ladosCitacao}
             </Citacao>
           </Reveal>
         </div>
@@ -193,20 +180,13 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
                            grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-12">
           <div className="min-w-0 grid gap-4 content-start">
             <h3 className="font-display text-[clamp(22px,2.3vw,28px)] font-semibold tracking-[-0.02em] text-white m-0">
-              Como nasceu o Hebraico Fluente
+              {tx.nasceuTitulo}
             </h3>
             <p className="font-ui text-[16.5px] leading-[1.65] text-white/80 m-0">
-              Com o tempo, meu trabalho passou a envolver cada vez mais metodologia. Hoje sou Gerente
-              Pedagógico da New School, em Tel Aviv, onde trabalho na estruturação de cursos, materiais
-              e experiências de aprendizagem de idiomas, e ensino hebraico na Universidad Isaac
-              Abarbanel, em Buenos Aires. A formação em ensino de línguas, do CELTA aos estudos em
-              Letras - Inglês (UNINTER), também está em cada decisão deste curso.
+              {tx.nasceuP1}
             </p>
             <p className="font-ui text-[16.5px] leading-[1.65] text-white m-0">
-              O Hebraico Fluente nasceu dessa experiência: eu queria transformar o que funcionava nas
-              minhas aulas em algo que qualquer brasileiro pudesse seguir no próprio ritmo. Não é uma
-              sequência de vídeos nem um PDF digitalizado. É a metodologia virada em atividades, em
-              que você:
+              {tx.nasceuP2}
             </p>
             <ul className="flex flex-wrap gap-x-4 gap-y-1.5 list-none p-0 m-0">
               {ATIVIDADES.map(t => (
@@ -217,11 +197,11 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
               ))}
             </ul>
             <p className="font-display text-[19px] leading-[1.45] font-medium tracking-[-0.015em] text-white m-0">
-              e avança aos poucos, até ler as suas primeiras palavras sozinho.
+              {tx.nasceuFecho}
             </p>
           </div>
           <div className="min-w-0 lg:self-start content-start grid gap-5 lg:pl-10 lg:border-l lg:border-white/15">
-            <Rubrica tom="lite">O que se junta nesta plataforma</Rubrica>
+            <Rubrica tom="lite">{tx.junta}</Rubrica>
             <ul className="list-none p-0 m-0 border-t border-white/15">
               {REUNE.map(t => (
                 <li key={t} className="py-3 border-b border-white/15 font-ui text-[16px] font-semibold text-white">
@@ -232,9 +212,9 @@ export function Trajetoria({ retrato, nivel = 'h2' }: { retrato: string | null; 
             <a href={PERFIL_LINKEDIN} target="_blank" rel="noopener noreferrer me"
                className="inline-flex items-center gap-1.5 font-ui text-[15px] font-semibold text-white
                           underline underline-offset-[3px] decoration-[1.5px] decoration-white/60">
-              Ver meu perfil no LinkedIn
+              {tx.linkedin}
               <span aria-hidden>↗</span>
-              <span className="sr-only"> (abre em outra aba)</span>
+              <span className="sr-only">{tx.abreAba}</span>
             </a>
           </div>
         </Reveal>

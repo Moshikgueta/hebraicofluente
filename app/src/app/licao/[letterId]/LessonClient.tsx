@@ -13,6 +13,7 @@
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
+import { tx } from '@/i18n/telas/licao-lesson-client';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
@@ -58,11 +59,11 @@ import { glifoDaLicao, nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
-  { n: 1, label: 'Conhecer' },
-  { n: 2, label: 'Palavras' },
-  { n: 3, label: 'Escrever' },
-  { n: 4, label: 'Fixação' },
-  { n: 5, label: 'Exercícios' }
+  { n: 1, label: tx.conhecer },
+  { n: 2, label: tx.palavras },
+  { n: 3, label: tx.escrever },
+  { n: 4, label: tx.fixacao },
+  { n: 5, label: tx.exercicios }
 ] as const;
 
 export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
@@ -138,7 +139,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     const id = requestAnimationFrame(() => {
       const a = document.activeElement;
       if (a && a !== document.body && document.body.contains(a)) return;
-      document.querySelector<HTMLElement>('[aria-label="Etapas da lição"] [aria-current="step"]')?.focus();
+      document.querySelector<HTMLElement>(`[aria-label="${tx.etapas}"] [aria-current="step"]`)?.focus();
     });
     return () => cancelAnimationFrame(id);
   }, [stage]);
@@ -252,12 +253,12 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
              botão dizia só o destino ("Próxima letra - Bet"), e a lição
              terminava sem nunca dizer que tinha terminado: o fim de uma
              etapa precisa soar como fim, senão ele é só mais um clique. */
-          nextLabel="Concluir e continuar"
+          nextLabel={tx.concluirEContinuar}
           proximaTrancada={proximaTrancada}
           nextHint={
-            somSeguinte ? `Em seguida: o som ${nomeDaLicao(somSeguinte, allLetters(), course.modules)}`
-              : moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
-              : after ? `Em seguida: letra ${after.namePt}` : 'De volta ao mapa do curso'
+            somSeguinte ? tx.emSeguidaSom(nomeDaLicao(somSeguinte, allLetters(), course.modules))
+              : moduleFinished && mod?.checkpoint ? tx.emSeguidaCheckpoint(mod.n)
+              : after ? tx.emSeguidaLetra(after.namePt) : tx.deVolta
           }
         />
       )}
@@ -277,15 +278,15 @@ function LessonHeader({
         <Link href="/mapa"
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px]
                          text-ink-muted hover:text-ink-body">
-          ← Mapa
+          {tx.mapa}
         </Link>
         <Badge tone="accent">
-          Módulo {letter.module} · lição {letter.lesson} · letra {letter.order}/22
+          {tx.badge(letter.module, letter.lesson, letter.order)}
         </Badge>
       </div>
       {/* A ajuda curta, em toda etapa, sem sair da lição (28/10/2026). */}
       <div className="-mt-2"><MeExplica letter={letter} /></div>
-      <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
+      <ol className="flex items-center gap-1.5" aria-label={tx.etapas}>
         {STAGES.map(s => {
           const isDone = stagesDone.includes(s.n);
           const isNow = stage === s.n;
@@ -295,7 +296,7 @@ function LessonHeader({
                 type="button"
                 onClick={() => onStage(s.n)}
                 aria-current={isNow ? 'step' : undefined}
-                aria-label={`Etapa ${s.n} de 5 - ${s.label}`}
+                aria-label={tx.etapaDe(s.n, s.label)}
                 className="w-full min-h-[44px] grid content-center gap-1.5 group"
               >
                 <span
@@ -349,7 +350,7 @@ function StageConhecer({
      livre, e nenhum passo é cobrado: "Próximo" sempre anda. */
   const passos: { nome: string; corpo: ReactNode }[] = [
     {
-      nome: 'Descobrir',
+      nome: tx.descobrir,
       corpo: (
         <>
           <Card className="p-6 sm:p-8 grid gap-6 overflow-hidden">
@@ -358,26 +359,25 @@ function StageConhecer({
             <HebrewLetterCard letter={letter} />
             {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
               <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-                O que vamos aprender hoje?
+                {tx.oQueVamos}
               </p>
               <p className="text-[16px] leading-relaxed text-ink-body">
-                Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
-                <He size="inline">{glifoDaLicao(letter)}</He>
-                {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
+                {tx.voceVai(<He size="inline">{glifoDaLicao(letter)}</He>,
+                  letter.finalForm ? <He size="inline">{letter.finalForm}</He> : null)}
               </p>
             </div>}
           </Card>
           <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
-            textoPt={`O nome, o som e uma palavra com ${letter.namePt}.`} />
+            textoPt={tx.gravacaoIntro(letter.namePt)} />
         </>
       )
     },
     {
-      nome: 'Ouvir',
+      nome: tx.ouvir,
       corpo: (
         <>
           <Card className="p-6 grid gap-3">
-            <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
+            <h2 className="text-[19px] font-semibold">{tx.comoPronunciar}</h2>
             <p className="text-[15.5px] leading-relaxed text-ink-body">
               <Prose text={letter.soundNotePt} />
             </p>
@@ -385,7 +385,7 @@ function StageConhecer({
             <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
             {letter.id === 'het' && (
               <GravacaoDoProfessor id="letter-het-pronunciation"
-                textoPt="O ח sozinho e em palavras, comparado ao R de alguns sotaques brasileiros." />
+                textoPt={tx.gravacaoHet} />
             )}
           </Card>
           {/* As duas (ou três) leituras, com um botão de som para cada uma:
@@ -395,7 +395,7 @@ function StageConhecer({
       )
     },
     {
-      nome: 'Entender',
+      nome: tx.entender,
       /* O que a letra FAZ, e não só que som ela tem: "por que essa letra está
          aí se eu não a escuto?", "por que ela mudou de formato?". */
       corpo: mostraTudo ? (
@@ -410,22 +410,22 @@ function StageConhecer({
           <button type="button" onClick={() => setCompleta(true)} aria-expanded={false}
                   className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
                              text-[var(--accent)] underline underline-offset-2">
-            Ver a explicação completa
+            {tx.explicacaoCompleta}
           </button>
         </>
       )
     },
     {
-      nome: 'Praticar',
+      nome: tx.praticar,
       corpo: (
         <>
           <Card className="p-6 grid gap-4">
             <div className="grid gap-1">
-              <h2 className="text-[19px] font-semibold">A letra com cada vogal</h2>
+              <h2 className="text-[19px] font-semibold">{tx.comCadaVogal}</h2>
               <p className="font-ui text-[13.5px] text-ink-muted">
                 {letter.syllables.some(s => hasAudio(s.audioId))
-                  ? 'Toque numa sílaba para ouvir. Depois grave a sua e compare.'
-                  : 'Toque numa sílaba para ver a dica de pronúncia.'}
+                  ? tx.toqueParaOuvir
+                  : tx.toqueParaDica}
               </p>
             </div>
             {/* Tocar na sílaba toca o som dela, e o gravar-e-comparar fica logo
@@ -435,7 +435,7 @@ function StageConhecer({
               <>
                 <CompararPronuncia itens={letter.syllables} grade />
                 <div className="flex flex-wrap items-center gap-3">
-                  <AudioButton audioId={letter.audioId} label={`Ouvir o nome: ${letter.namePt}`} slow />
+                  <AudioButton audioId={letter.audioId} label={tx.ouvirNome(letter.namePt)} slow />
                 </div>
               </>
             ) : <SyllableTrainer letter={letter} />}
@@ -443,30 +443,30 @@ function StageConhecer({
           {/* As mesmas vogais nas letras já aprendidas, a um toque: ver a coluna
               é o que transforma "מַ se lê ma" em "o patach faz a". */}
           {mostraTudo && history.length > 1 && (comparar ? (
-            <SoundLab letters={history} compact title="Compare com as letras que você já sabe" />
+            <SoundLab letters={history} compact title={tx.compareComAsQueSabe} />
           ) : (
             <button type="button" onClick={() => setComparar(true)} aria-expanded={false}
                     className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
                                text-[var(--accent)] underline underline-offset-2">
-              Comparar com as letras que você já sabe
+              {tx.compararComAsQueSabe}
             </button>
           ))}
         </>
       )
     },
     ...(temChecagem ? [{
-      nome: 'Conferir',
+      nome: tx.conferir,
       /* Explicação → exemplo → PERGUNTAS → prática: duas a quatro perguntas
          sobre o que foi EXPLICADO. Ver components/learn/Compreensao.tsx. */
       corpo: (
         <Compreensao
           id={`checagem-${letter.id}`}
-          titulo="Entendeu? Perguntas rápidas"
-          intro="Não vale nota e não tranca nada. Se errar, a explicação aparece na hora."
+          titulo={tx.entendeu}
+          intro={tx.naoVaiNota}
           perguntas={letter.ensino.checagem}
           fecho={{
-            bom: 'Boa. Agora as palavras que esta letra abre.',
-            parcial: 'Vale reler os passos anteriores - são duas ou três ideias, e elas voltam nas próximas letras.'
+            bom: tx.fechoBom,
+            parcial: tx.fechoParcial
           }}
         />
       )
@@ -499,7 +499,7 @@ function StageConhecer({
                       ${k <= passo ? 'bg-[var(--accent)]' : 'bg-[var(--line)]'}`} />
             ))}
           </span>
-          <span className="tabular-nums">Passo {passo + 1} de {passos.length}</span>
+          <span className="tabular-nums">{tx.passoDe(passo + 1, passos.length)}</span>
         </p>
       </div>
 
@@ -509,12 +509,12 @@ function StageConhecer({
 
       <div className="grid grid-cols-[auto_1fr] gap-2">
         {passo > 0 ? (
-          <Button variant="secondary" size="lg" onClick={() => ir(passo - 1)}>Voltar</Button>
+          <Button variant="secondary" size="lg" onClick={() => ir(passo - 1)}>{tx.voltar}</Button>
         ) : <span />}
         {ultimo
-          ? <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+          ? <Button size="lg" onClick={onDone} full>{tx.continuarPalavras}</Button>
           : <Button size="lg" onClick={() => ir(passo + 1)} full>
-              Próximo: {passos[passo + 1]!.nome.toLowerCase()}
+              {tx.proximo(passos[passo + 1]!.nome.toLowerCase())}
             </Button>}
       </div>
     </div>
@@ -605,7 +605,7 @@ function Ensinamento({ letter }: { letter: Letter }) {
 
   const detalhe = e.detalhePt && (
         <Card className="p-6 grid gap-3">
-          <h2 className="text-[19px] font-semibold">Detalhe importante</h2>
+          <h2 className="text-[19px] font-semibold">{tx.detalhe}</h2>
           {/* A forma final MOSTRADA, e não só descrita: o par lado a lado
               diz em dois segundos o que um parágrafo não diz. */}
           {letter.finalForm && (
@@ -613,12 +613,12 @@ function Ensinamento({ letter }: { letter: Letter }) {
                             bg-surface-2 px-4 py-4">
               <span className="grid justify-items-center gap-1">
                 <He size="lg">{letter.letter}</He>
-                <span className="font-ui text-[12px] text-ink-muted">no meio</span>
+                <span className="font-ui text-[12px] text-ink-muted">{tx.noMeio}</span>
               </span>
               <span aria-hidden className="text-ink-muted text-[20px]">→</span>
               <span className="grid justify-items-center gap-1">
                 <He size="lg">{letter.finalForm}</He>
-                <span className="font-ui text-[12px] text-ink-muted">no fim</span>
+                <span className="font-ui text-[12px] text-ink-muted">{tx.noFim}</span>
               </span>
             </div>
           )}
@@ -631,7 +631,7 @@ function Ensinamento({ letter }: { letter: Letter }) {
   return (
     <div className="grid gap-4">
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">O que esta letra faz?</h2>
+        <h2 className="text-[19px] font-semibold">{tx.oQueFaz}</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
           <Prose text={e.funcaoPt} />
         </p>
@@ -645,7 +645,7 @@ function Ensinamento({ letter }: { letter: Letter }) {
         <button type="button" onClick={() => setAberto(true)} aria-expanded={false}
                 className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
                            text-[var(--accent)] underline underline-offset-2">
-          Ver mais sobre esta letra ({recolhidos} {recolhidos === 1 ? 'quadro' : 'quadros'})
+          {tx.verMais(recolhidos)}
         </button>
       )}
 
@@ -690,7 +690,7 @@ function Lembre({ texto }: { texto: string }) {
   return (
     <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
       <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-        O que você precisa lembrar?
+        {tx.lembrar}
       </h2>
       <p className="text-[16px] leading-relaxed text-ink">
         <Prose text={texto} />
@@ -709,25 +709,23 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       {canRead ? (
         <section className="grid gap-4">
           <div className="grid gap-1">
-            <h2 className="text-[21px] font-bold">Palavras que você já consegue ler</h2>
+            <h2 className="text-[21px] font-bold">{tx.jaConsegueLer}</h2>
             <p className="font-ui text-[14px] text-ink-muted">
-              Tente decifrar antes de revelar. Todas usam só letras que você já aprendeu.
+              {tx.tenteDecifrar}
             </p>
           </div>
           <WordList letter={letter} />
           {letter.id === 'tav' && (
             <GravacaoDoProfessor id="letter-alef-tav-example"
-              textoPt="Como se lê אַתְ, e por que as mesmas duas letras também formam outra palavra." />
+              textoPt={tx.gravacaoTav} />
           )}
-          <CompararPronuncia itens={letter.wordsToRead} titulo="Compare a sua leitura das palavras com a do curso" />
+          <CompararPronuncia itens={letter.wordsToRead} titulo={tx.compareLeitura} />
         </section>
       ) : (
         <Card tone="amber" className="p-6 grid gap-2">
-          <h2 className="text-[18px] font-semibold">Ainda não dá para formar uma palavra</h2>
+          <h2 className="text-[18px] font-semibold">{tx.semPalavra}</h2>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Com {letter.alphabetSoFar.filter(c => c.length === 1).length === 2 ? 'uma consoante só' : 'as poucas letras que você tem até aqui'},
-            nenhuma combinação fecha uma palavra de verdade. Isso muda já na próxima
-            letra - e não volta a acontecer. Por enquanto, leia as sílabas.
+            {tx.semPalavraTexto(letter.alphabetSoFar.filter(c => c.length === 1).length === 2)}
           </p>
           <div className="pt-2">
             <HeSeq items={letter.syllables.map(s => s.he)} size="word" />
@@ -778,7 +776,7 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           The first is the reward; the rest are there for whoever wants them. */}
       <Scenes letter={letter} />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a escrita</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarEscrita}</Button>
     </div>
   );
 }
@@ -796,7 +794,7 @@ function Scenes({ letter }: { letter: Letter }) {
       ))}
       {rest > 0 && (
         <Button variant="secondary" onClick={() => setShown(scenes.length)} full>
-          Mais {rest} {rest === 1 ? 'lugar' : 'lugares'} onde você já consegue ler
+          {tx.maisLugares(rest)}
         </Button>
       )}
     </div>
@@ -820,8 +818,8 @@ function WordList({ letter }: { letter: Letter }) {
       ))}
       {rest > 0 && (
         <Button variant="secondary" onClick={() => setShown(n => n + 3)} full>
-          Ver mais {Math.min(3, rest)} {rest === 1 ? 'palavra' : 'palavras'}
-          <span className="text-ink-muted"> · {rest} restantes</span>
+          {tx.verMaisPalavras(Math.min(3, rest), rest)}
+          <span className="text-ink-muted">{tx.restantes(rest)}</span>
         </Button>
       )}
     </div>
@@ -834,22 +832,22 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">Aprendendo a escrever</h2>
+        <h2 className="text-[21px] font-bold">{tx.aprendendoAEscrever}</h2>
         <p className="font-ui text-[14px] text-ink-muted">
-          A mesma letra, no desenho que se usa à mão.
+          {tx.mesmaLetra}
         </p>
       </div>
 
       <Card className="p-6 grid gap-5">
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="grid gap-2 justify-items-center">
-            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Impressa</p>
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.impressa}</p>
             {/* Com o daguesh no Bet, Kaf e Pe (27/10/2026): a impressa da lição
                 é a que tem o som dela. À mão, o ponto não se escreve. */}
             <He size="display">{glifoDaLicao(letter)}</He>
           </div>
           <div className="grid gap-2 justify-items-center">
-            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Cursiva</p>
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.cursiva}</p>
             <He size="display" cursive>{letter.letter}</He>
           </div>
         </div>
@@ -880,12 +878,12 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         <WritingCanvas
           glyph={letter.finalForm}
           letterId={`${letter.id}-final`}
-          label={`${letter.namePt} - forma final`}
+          label={tx.formaFinal(letter.namePt)}
           onScored={score => p.recordWriting(letter.id, score)}
         />
       )}
 
-      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
     </div>
   );
 }
@@ -951,18 +949,16 @@ function StageFixacao({
       <div className="grid gap-5">
         <Card tone="ember" className="p-5 grid gap-1.5">
           <p className="font-display text-[17px] font-semibold text-[var(--gold-ink)]">
-            Vamos praticar mais um pouco.
+            {tx.praticarMais}
           </p>
           <p className="font-ui text-[14.5px] leading-relaxed text-[var(--gold-body)]">
-            Estas {reforco.length} questões saem do que escapou agora há pouco.
-            Nada aqui vale nota. A que você errar volta depois de outras, até
-            você acertar.
+            {tx.reforcoTexto(reforco.length)}
           </p>
         </Card>
         <ExercisePlayer
           key={`ref-${letter.id}-${result.correct}`}
           exercises={reforco}
-          title="Reforço"
+          title={tx.reforco}
           repetirErros
           onDone={() => setFase('fechado')}
         />
@@ -982,30 +978,26 @@ function StageFixacao({
         {strong && <CelebracaoDaLetra letter={letter} />}
         <Milestone
           tone={strong || fezReforco ? 'bom' : 'parcial'}
-          kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong ? 'Mais uma lição concluída.'
-            : fezReforco ? 'Reforço feito.'
-            : result.score >= 0.6 ? 'Quase lá.'
-            : `Vamos firmar ${letter.namePt}.`}
+          kicker={tx.placar(result.correct, result.total, pct)}
+          title={strong ? tx.maisUma
+            : fezReforco ? tx.reforcoFeito
+            : result.score >= 0.6 ? tx.quaseLa
+            : tx.vamosFirmar(letter.namePt)}
           /* A mensagem acompanha a nota de verdade. "Faltou pouco" num
              resultado de zero é a plataforma fingindo que não viu. */
           body={strong && !proximaTrancada
-            ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
+            ? tx.reconhece(letter.namePt)
             : proximaTrancada && (strong || fezReforco)
-              ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + `A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}% nos exercícios. `
-                + 'Refaça o teste: as perguntas mudam a cada tentativa.'
+              ? tx.filaTrancada(letter.namePt, Math.round(LIBERA_MARK * 100))
             : fezReforco
-              ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + 'Ela ainda não conta como concluída - refaça o teste quando quiser, '
-                + 'com outras perguntas, e ela passa a contar. Pode seguir.'
+              ? tx.filaReforco(letter.namePt)
               : result.score >= 0.6
-                ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
-                : 'Esta letra ainda não está firme, e tudo bem - é para isso que existe a prática. Quatro questões montadas a partir do que escapou.'}
+                ? tx.faltouPouco
+                : tx.naoFirme}
         >
           {!strong && !fezReforco && reforco.length > 0 && (
             <Button variant={proximaTrancada ? 'secondary' : 'primary'} onClick={() => setFase('reforco')}>
-              Praticar mais um pouco
+              {tx.praticarMaisUmPouco}
             </Button>
           )}
           {proximaTrancada ? (
@@ -1015,16 +1007,16 @@ function StageFixacao({
             <>
               <Button variant={!strong && !fezReforco && reforco.length > 0 ? 'secondary' : 'primary'}
                       onClick={() => { setFase('teste'); onRetry(); }}>
-                {`Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)`}
+                {tx.refazerPrecisa(Math.round(LIBERA_MARK * 100))}
               </Button>
               <p className="basis-full font-ui text-[13px] text-ink-muted m-0">
-                {`A próxima lição abre com ${Math.round(LIBERA_MARK * 100)}% nos exercícios: ${acertosPara(LIBERA_MARK)} de ${FIXACAO_ITENS}.`}
+                {tx.proximaAbre(Math.round(LIBERA_MARK * 100), acertosPara(LIBERA_MARK), FIXACAO_ITENS)}
               </p>
             </>
           ) : (
             <>
               <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
-                Refazer o teste
+                {tx.refazerTeste}
               </Button>
               <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
                 {nextLabel}
@@ -1042,7 +1034,7 @@ function StageFixacao({
   return (
     <ExercisePlayer
       exercises={exercises}
-      title={`Exercícios - letra ${letter.namePt}`}
+      title={tx.exerciciosLetra(letter.namePt)}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
   );
@@ -1062,20 +1054,20 @@ function MinhaConquista({ letter }: { letter: Letter }) {
   const semSom = letter.sound.startsWith('(');
   return (
     <Card tone="mint" className="p-5 grid gap-2.5">
-      <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0">Minha conquista</p>
+      <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0">{tx.minhaConquista}</p>
       <ul className="grid gap-1.5 text-[15px] leading-relaxed text-ink list-disc pl-5 m-0">
         {/* A etapa Escrever da lição traça a cursiva, e a etapa Conhecer mostra
             a impressa: quem chega aqui com a nota viu e praticou as duas. */}
-        <li>{`Reconhecer a letra ${letter.namePt} nas formas impressa e cursiva.`}</li>
+        <li>{tx.conquista1(letter.namePt)}</li>
         <li>{semSom
-          ? `Entender que, nas palavras estudadas, a letra ${letter.namePt} pode aparecer sem um som próprio.`
+          ? tx.conquistaSemSom(letter.namePt)
           : doisSons
-            ? `Reconhecer os dois sons da letra ${letter.namePt}, com e sem daguesh: ${somPt(letter.sound)}.`
-            : `Associar a letra ${letter.namePt} ao som ${somPt(letter.sound)}.`}</li>
-        <li>{`Reconhecer a letra ${letter.namePt} dentro de palavras.`}</li>
+            ? tx.conquistaDoisSons(letter.namePt, somPt(letter.sound))
+            : tx.conquistaSom(letter.namePt, somPt(letter.sound))}</li>
+        <li>{tx.conquista3(letter.namePt)}</li>
       </ul>
       <Link href="/leitura" className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
-        Praticar a leitura de palavras no Laboratório de Leitura.
+        {tx.laboratorio}
       </Link>
     </Card>
   );
@@ -1107,16 +1099,14 @@ function PortaTrancada({ letter, porque }: {
       <div className="grid gap-5 focus-col">
         <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
           <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
-            Antes da primeira letra, a Aula 0
+            {tx.antesDaPrimeira}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-            A letra <He size="inline">{letter.letter}</He> abre quando você conclui a Aula 0: a
-            direção da leitura, o que é o nikud e como o curso funciona. Ela termina com uma
-            checagem curta, e dá para refazer quantas vezes quiser.
+            {tx.abreComAula0(<He size="inline">{letter.letter}</He>)}
           </p>
           <div className="grid gap-2 w-full max-w-[320px] pt-1">
-            <LinkButton href="/inicio" size="lg" full>Ir para a Aula 0</LinkButton>
-            <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+            <LinkButton href="/inicio" size="lg" full>{tx.irAula0}</LinkButton>
+            <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
           </div>
         </Card>
       </div>
@@ -1136,33 +1126,29 @@ function PortaTrancada({ letter, porque }: {
         </span>
         <div className="grid gap-2">
           <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
-            A letra <He size="inline">{letter.letter}</He> ainda não abriu
+            {tx.naoAbriu(<He size="inline">{letter.letter}</He>)}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
             {porque.falta === 'licao' ? (
-              <>Ela vem depois de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
-              e essa lição ainda não foi concluída. Cada letra usa as anteriores nas
-              palavras - é por isso que a ordem importa.</>
+              tx.vemDepois(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>)
             ) : (
-              <>Faltam os exercícios de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>.
-              Sua melhor nota lá foi {Math.round((porque.nota ?? 0) * 100)}%, e esta letra abre
-              a partir de {Math.round(LIBERA_MARK * 100)}%. Dá para refazer quantas vezes quiser -
-              as perguntas mudam a cada tentativa.</>
+              tx.faltamExercicios(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
+                Math.round((porque.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))
             )}
           </p>
         </div>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
           <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
             {porque.falta === 'licao'
-              ? `Ir para ${anterior?.namePt}`
-              : `Refazer os exercícios de ${anterior?.namePt}`}
+              ? tx.irPara(anterior?.namePt)
+              : tx.refazerDe(anterior?.namePt)}
           </LinkButton>
           {atual !== porque.anterior && atualL && (
             <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>
-              Continuar de onde parei ({atualL.namePt})
+              {tx.continuarDeOnde(atualL.namePt)}
             </LinkButton>
           )}
-          <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+          <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
         </div>
       </Card>
     </div>
@@ -1183,11 +1169,10 @@ function Leituras({ letter }: { letter: Letter }) {
     <Card className="p-6 grid gap-4">
       <div className="grid gap-1">
         <h2 className="text-[19px] font-semibold">
-          {letter.variantes.length === 2 ? 'As duas leituras' : 'As leituras desta letra'}
+          {letter.variantes.length === 2 ? tx.duasLeituras : tx.leiturasDestaLetra}
         </h2>
         <p className="font-ui text-[13.5px] text-ink-muted">
-          Mesmo desenho de letra. O que muda é o sinal - e é nele que você olha
-          antes de pronunciar.
+          {tx.mesmoDesenho}
         </p>
       </div>
       <ul className="grid gap-2.5 list-none p-0 m-0">
@@ -1208,7 +1193,7 @@ function Leituras({ letter }: { letter: Letter }) {
             {hasAudio(v.audioId) && (
               <span className="ml-auto shrink-0 grid justify-items-center gap-0.5">
                 <AudioButton audioId={v.audioId} label="" size="sm"
-                             ariaLabel={`Ouvir ${v.nomePt}, no exemplo ${v.exemploHe}`} />
+                             ariaLabel={tx.ouvirExemplo(v.nomePt, v.exemploHe)} />
                 {/* O que toca é um exemplo: uma consoante sozinha não se
                     pronuncia. Mostrado, para o som não parecer da letra solta. */}
                 <He size="inline">{v.exemploHe}</He>

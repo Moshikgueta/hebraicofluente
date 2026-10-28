@@ -23,6 +23,9 @@
  * learner who posts it deserves to know exactly what they are posting.
  */
 
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-certificate';
+
 export type CertificateFormat = 'square' | 'wide';
 
 export type CertificateInput = {
@@ -153,16 +156,16 @@ export async function drawCertificate(
   /* ── title ────────────────────────────────────────────────────────── */
   ctx.fillStyle = C.ink;
   ctx.font = `700 ${wide ? 40 : 52}px ${display}`;
-  ctx.fillText('Certificado de conclusão', cx, y);
+  ctx.fillText(tx.titulo, cx, y);
   y += wide ? 40 : 52;
 
   ctx.fillStyle = C.body;
   ctx.font = `400 ${wide ? 19 : 22}px ${ui}`;
-  ctx.fillText('Curso de alfabetização em hebraico moderno', cx, y);
+  ctx.fillText(tx.curso, cx, y);
   y += wide ? 52 : 70;
 
   /* ── the name ─────────────────────────────────────────────────────── */
-  const name = (input.name || '').trim() || 'Aluno';
+  const name = (input.name || '').trim() || tx.alunoPadrao;
   ctx.fillStyle = C.ink;
   const nameSize = fitText(ctx, name, w - pad * 2 - 120, wide ? 54 : 68, display, 700);
   ctx.font = `700 ${nameSize}px ${display}`;
@@ -199,9 +202,9 @@ export async function drawCertificate(
   ctx.fillStyle = C.body;
   ctx.font = `400 ${wide ? 19 : 22}px ${ui}`;
   const claim = [
-    'leu as 22 letras do alfabeto hebraico,',
-    'os sinais de vogal e palavras inteiras -',
-    'sem transliteração para se apoiar.'
+    tx.feito1,
+    tx.feito2,
+    tx.feito3
   ];
   for (const line of claim) {
     ctx.fillText(line, cx, y);
@@ -227,7 +230,7 @@ export async function drawCertificate(
   ctx.font = `400 ${wide ? 16 : 18}px ${ui}`;
   ctx.fillStyle = C.muted;
   const parts = [formatDate(input.date)];
-  if (input.score != null) parts.push(`Exame final: ${Math.round(input.score * 100)}%`);
+  if (input.score != null) parts.push(fmt(tx.exame, { nota: Math.round(input.score * 100) }));
   ctx.fillText(parts.join('   ·   '), cx, footY);
 
   /* The honest line. Small, and present. */
@@ -236,7 +239,7 @@ export async function drawCertificate(
   ctx.fillText(
     /* Sem "Registro de conclusão" aqui: com o título "Certificado de
        conclusão" em cima, as duas frases pareciam se desmentir (COM-014). */
-    'Emitido pela plataforma. Não é um certificado oficial de proficiência.',
+    tx.honesto,
     cx, footY + (wide ? 24 : 28)
   );
 }
@@ -291,28 +294,21 @@ function roundRect(
   ctx.closePath();
 }
 
-const MESES = [
-  'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-  'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-];
-
 /** "18 de setembro de 2026" - written out, the way a document does it. */
 export function formatDate(d: Date): string {
-  return `${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`;
+  return tx.data(d);
 }
 
 /** A file name with the learner's name in it, safe on every filesystem. */
 export function certificateFileName(name: string): string {
-  const slug = (name || 'aluno')
+  const slug = (name || tx.arquivoPadrao)
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
-  return `certificado-hebraico-fluente-${slug || 'aluno'}.png`;
+  return fmt(tx.arquivo, { nome: slug || tx.arquivoPadrao });
 }
 
 export const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob | null> =>
   new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
 
 /** What the learner posts with it. Theirs to edit; this is only a start. */
-export const SHARE_TEXT =
-  'Eu não sabia ler uma letra do alfabeto hebraico. Hoje leio as 22 - ' +
-  'e palavras inteiras, sem transliteração. 🎉';
+export const SHARE_TEXT = tx.compartilhar;

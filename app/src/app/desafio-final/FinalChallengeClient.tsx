@@ -33,6 +33,7 @@ import { buildExam, examReport, EXAM_PASS, type Exam, type PartResult }
 import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered, lettersLeft, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
 import { idDoSom } from '@/lib/sons';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-final-challenge-client';
 
 type Phase =
   | { kind: 'intro' }
@@ -166,18 +167,14 @@ export function FinalChallengeClient() {
             </svg>
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold leading-tight">
-            O teste final ainda está trancado.
+            {tx.trancadoTitulo}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-            Conclua as lições das {course.totalLetters} letras para desbloquear o teste final.{' '}
-            {faltam === 1 ? 'Falta concluir 1 lição.' : `Faltam ${faltam} lições para concluir.`}{' '}
-            {REGRA_DA_CONCLUSAO} O teste mede o
-            alfabeto inteiro - feito antes da hora, ele pergunta sobre letras que você
-            ainda não viu e o número não diz nada.
+            {tx.trancadoTexto(course.totalLetters, faltam, REGRA_DA_CONCLUSAO)}
           </p>
           <div className="flex flex-wrap gap-3 justify-center pt-1">
-            <LinkButton href="/meu-hebraico">Continuar de onde parei</LinkButton>
-            <LinkButton href="/mapa" variant="secondary">Ver o mapa</LinkButton>
+            <LinkButton href="/meu-hebraico">{tx.continuarDeOnde}</LinkButton>
+            <LinkButton href="/mapa" variant="secondary">{tx.verMapa}</LinkButton>
           </div>
         </Card>
       </div>
@@ -193,7 +190,7 @@ export function FinalChallengeClient() {
         <ExercisePlayer
           key={`${attempt}-${section.part.id}`}
           exercises={section.exercises}
-          title={`Parte ${phase.index + 1} · ${section.part.titlePt}`}
+          title={tx.parteTitulo(phase.index + 1, section.part.titlePt)}
           onDone={r => finishPart(r, phase.index)}
         />
       </div>
@@ -207,11 +204,10 @@ export function FinalChallengeClient() {
       <div className="focus-col grid gap-5">
         <ExamProgress exam={exam} index={phase.index} results={results} />
         <Card className="p-6 sm:p-8 grid gap-4">
-          <Badge tone="accent">Parte {phase.index + 1} de {exam.sections.length}</Badge>
+          <Badge tone="accent">{tx.parteDe(phase.index + 1, exam.sections.length)}</Badge>
           {retomado && results.length > 0 && (
             <p className="font-ui text-[13.5px] leading-relaxed text-ink-body m-0" role="status">
-              Você voltou ao exame. {results.length === 1 ? 'A parte 1 já está contada' : `As partes 1 a ${results.length} já estão contadas`};
-              esta parte recomeça do início.
+              {tx.retomado(results.length)}
             </p>
           )}
           <h1 className="text-[26px] sm:text-[32px] font-bold leading-tight">
@@ -221,10 +217,10 @@ export function FinalChallengeClient() {
             {section.part.descPt}
           </p>
           <p className="font-ui text-[13.5px] text-ink-muted">
-            {section.exercises.length} questões. Sem tempo, sem penalidade por errar.
+            {tx.questoesSemTempo(section.exercises.length)}
           </p>
           <Button size="lg" full onClick={() => setPhase({ kind: 'running', index: phase.index })}>
-            {results.length === 0 ? 'Começar' : 'Continuar'}
+            {results.length === 0 ? tx.comecar : tx.continuar}
           </Button>
         </Card>
       </div>
@@ -238,14 +234,14 @@ export function FinalChallengeClient() {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`${report.correct} de ${report.total} · ${pct}%`}
+          kicker={tx.kicker(report.correct, report.total, pct)}
           title={report.bandPt.titlePt}
           body={report.bandPt.bodyPt}
         />
 
         <Card className="overflow-hidden">
           <div className="px-5 py-3 border-b border-[color:var(--line-soft)]">
-            <h2 className="font-display text-[16px] font-bold text-ink">Parte por parte</h2>
+            <h2 className="font-display text-[16px] font-bold text-ink">{tx.partePorParte}</h2>
           </div>
           <ul className="divide-y divide-[color:var(--line-soft)]">
             {results.map(r => {
@@ -274,7 +270,7 @@ export function FinalChallengeClient() {
                       className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                                  text-[var(--accent)] hover:underline"
                     >
-                      Treinar {part.titlePt.toLowerCase()} na Academia →
+                      {tx.treinarNaAcademia(part.titlePt.toLowerCase())}
                     </Link>
                   )}
                 </li>
@@ -285,33 +281,31 @@ export function FinalChallengeClient() {
 
         {report.passed ? (
           <Card tone="mint" className="p-6 grid gap-3">
-            <Badge tone="mint">Aprovado</Badge>
+            <Badge tone="mint">{tx.aprovado}</Badge>
             <h2 className="font-display text-[20px] font-bold leading-snug">
-              Seu certificado está pronto.
+              {tx.certificadoPronto}
             </h2>
             <p className="text-[15px] leading-relaxed text-ink-body">
-              Com o seu nome, a data e as 22 letras - para baixar ou postar.
+              {tx.certificadoTexto}
             </p>
             <GravacaoDoProfessor id="final-exam-congrats" />
             <div className="flex flex-wrap gap-3 pt-1">
-              <LinkButton href="/certificado" size="lg">Ver o certificado</LinkButton>
-              <LinkButton href="/concluido" variant="secondary">O que você conquistou</LinkButton>
+              <LinkButton href="/certificado" size="lg">{tx.verCertificado}</LinkButton>
+              <LinkButton href="/concluido" variant="secondary">{tx.oQueConquistou}</LinkButton>
             </div>
           </Card>
         ) : (
           <Card className="p-6 grid gap-3">
             <p className="text-[15px] leading-relaxed text-ink-body">
-              O certificado sai a partir de {Math.round(EXAM_PASS * 100)}%. Faltaram{' '}
-              {Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct)} questões -
-              e a próxima tentativa é um exame novo, não o mesmo.
+              {tx.faltaram(Math.round(EXAM_PASS * 100), Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct))}
             </p>
-            <Button onClick={restart} className="justify-self-start">Refazer o exame</Button>
+            <Button onClick={restart} className="justify-self-start">{tx.refazer}</Button>
           </Card>
         )}
 
         {report.passed && (
           <Button variant="ghost" onClick={restart} className="justify-self-center">
-            Refazer mesmo assim
+            {tx.refazerMesmoAssim}
           </Button>
         )}
       </div>
@@ -327,20 +321,18 @@ export function FinalChallengeClient() {
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-3">
-        <Badge tone="accent">Exame final</Badge>
+        <Badge tone="accent">{tx.exameFinal}</Badge>
         <h1 className="text-[28px] sm:text-[36px] font-bold leading-tight">
-          Hebraico de verdade, sem apoio
+          {tx.portaTitulo}
         </h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[52ch]">
-          {parts.reduce((n, x) => n + x.count, 0)} questões em {parts.length} partes, com as
-          22 letras e sem transliteração. Cada parte tem a sua própria nota - no fim
-          você vê exatamente o que está firme e o que não está.
+          {tx.portaTexto(parts.reduce((n, x) => n + x.count, 0), parts.length)}
         </p>
       </header>
 
       <Card className="overflow-hidden">
         <div className="px-5 py-3 border-b border-[color:var(--line-soft)]">
-          <h2 className="font-display text-[16px] font-bold text-ink">O que cai?</h2>
+          <h2 className="font-display text-[16px] font-bold text-ink">{tx.oQueCai}</h2>
         </div>
         <ol className="divide-y divide-[color:var(--line-soft)]">
           {parts.map((part, i) => (
@@ -364,26 +356,25 @@ export function FinalChallengeClient() {
 
       {!audio && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          A parte de escuta entra quando as gravações chegarem. Até lá o exame não
-          cobra o que o curso ainda não pôde ensinar.
+          {tx.semEscuta}
         </p>
       )}
 
       {(!fezMod6 || !fezMod7) && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
           {!fezMod6 && !fezMod7
-            ? 'As partes "Sem os pontos" e "Os sons de fora" entram quando você fizer os módulos 6 e 7. '
+            ? tx.semMod6e7
             : !fezMod6
-              ? 'A parte "Sem os pontos" entra quando você fizer o módulo 6. '
-              : 'A parte "Os sons de fora" entra quando você fizer o módulo 7. '}
-          Até lá o exame não cobra o que você ainda não estudou.
+              ? tx.semMod6
+              : tx.semMod7}
+          {tx.ateLa}
         </p>
       )}
 
       <Card className="p-6 grid gap-4">
         <ProgressBar
           value={course.totalLetters ? ready.length / course.totalLetters : 0}
-          label="Lições concluídas"
+          label={tx.licoesConcluidas}
           sublabel={`${ready.length} / ${course.totalLetters}`}
         />
         <div className="flex flex-wrap gap-2">
@@ -395,10 +386,10 @@ export function FinalChallengeClient() {
         </div>
         {best != null && (
           <p className="font-ui text-[13px] text-ink-muted">
-            Melhor resultado até agora: {Math.round(best * 100)}%
-            {p.state.finalChallenge.passedAt ? ' · aprovado' : ''}
+            {tx.melhorResultado(Math.round(best * 100))}
+            {p.state.finalChallenge.passedAt ? tx.aprovadoCurto : ''}
             {p.state.finalChallenge.attempts
-              ? ` · ${p.state.finalChallenge.attempts} ${p.state.finalChallenge.attempts === 1 ? 'tentativa' : 'tentativas'}`
+              ? tx.tentativas(p.state.finalChallenge.attempts)
               : ''}
           </p>
         )}
@@ -407,26 +398,24 @@ export function FinalChallengeClient() {
       {enough ? (
         <>
           <Button size="lg" full onClick={() => setPhase({ kind: 'brief', index: 0 })}>
-            Começar o exame
+            {tx.comecarExame}
           </Button>
           <p className="font-ui text-[13px] text-ink-muted text-center">
-            Aprovação a partir de {Math.round(EXAM_PASS * 100)}%. Sem limite de tentativas,
-            e cada tentativa é um exame diferente.
+            {tx.aprovacao(Math.round(EXAM_PASS * 100))}
           </p>
           {p.state.finalChallenge.passedAt && (
             <LinkButton href="/certificado" variant="secondary" className="justify-self-center">
-              Ver o meu certificado
+              {tx.verMeuCertificado}
             </LinkButton>
           )}
         </>
       ) : (
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Faltam {course.totalLetters - ready.length} letras. O exame só faz sentido
-            com o alfabeto inteiro - e ele fica aqui esperando, sem prazo.
+            {tx.faltamLetras(course.totalLetters - ready.length)}
           </p>
           <LinkButton href="/mapa" variant="secondary" className="justify-self-start">
-            Voltar ao mapa
+            {tx.voltarMapa}
           </LinkButton>
         </Card>
       )}
@@ -440,7 +429,7 @@ function ExamProgress({
   exam, index, results
 }: { exam: Exam; index: number; results: PartResult[] }) {
   return (
-    <ol className="flex items-center gap-1.5" aria-label="Partes do exame">
+    <ol className="flex items-center gap-1.5" aria-label={tx.partesDoExame}>
       {exam.sections.map((s, i) => {
         const done = results.some(r => r.partId === s.part.id);
         const now = i === index;

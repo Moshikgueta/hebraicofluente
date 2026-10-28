@@ -23,7 +23,9 @@
 import { getCourse } from './lib/catalog.js';
 import { ativacoesParaAvisar, normalizeEmail, pegarTrava, reservarAtivacao, soltarAtivacao } from './lib/db.js';
 import { emailsDeAdmin } from './lib/admin.js';
-import { mailReady, mensagemDeAtivacao, sendMail } from './lib/mail.js';
+import { mailReady, sendMail } from './lib/mail.js';
+import { mensagens } from './lib/mensagens.js';
+import { origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
 import empresa from '../../data/empresa.json';
 
 /** Compras pagas a partir daqui recebem os lembretes (o dia seguinte à publicação). */
@@ -45,7 +47,6 @@ export function cabe(marco, { concluidas, progressoEm }, at = Date.now()) {
 export async function runAtivacao(env, at = Date.now()) {
   if (!mailReady(env)) return { enviados: 0 };
   if (!await pegarTrava(env, 'ativacao', 23 * 3_600_000, at)) return { enviados: 0, pulada: true };
-  const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
   const admins = emailsDeAdmin(env);
   let enviados = 0;
   const lista = await ativacoesParaAvisar(env, { cursos: CURSOS_COM_LEMBRETE, desde: ATIVACAO_DESDE }, at);
@@ -57,11 +58,17 @@ export async function runAtivacao(env, at = Date.now()) {
       const chave = { orderId: v.order_id, marco: v.marco };
       if (!await reservarAtivacao(env, chave, at)) continue;
       const curso = getCourse(v.course_slug);
+      /* A língua e os links são os da conta: este agendamento roda no Worker
+         brasileiro para as contas dos dois sites (lib/idioma.js). */
+      const idioma = v.idioma === 'en' ? 'en' : 'pt';
+      const site = origemDoIdioma(env, idioma);
       const r = await sendMail(env, {
         to: email,
-        ...mensagemDeAtivacao({
+        ...mensagens(idioma).ativacao({
           nome: v.name || '',
-          curso: v.course_slug === 'alfabetizacao-e-israel' ? (getCourse('alfabetizacao')?.titlePt || 'de hebraico') : (curso?.titlePt || v.course_slug),
+          curso: v.course_slug === 'alfabetizacao-e-israel'
+            ? tituloDoCurso(getCourse('alfabetizacao'), idioma, idioma === 'en' ? 'Hebrew' : 'de hebraico')
+            : tituloDoCurso(curso, idioma, v.course_slug),
           marco: v.marco,
           concluidas: v.concluidas,
           inicio: `${site}/inicio/`,

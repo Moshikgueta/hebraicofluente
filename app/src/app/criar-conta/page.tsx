@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { AuthForm } from '@/components/platform/AuthForm';
+import { tx } from '@/i18n/telas/conta-auth-form';
 
 export const metadata: Metadata = meta({
   rota: '/criar-conta',
-  title: 'Criar conta - Hebraico Fluente',
-  description:
-    'Crie sua conta no Hebraico Fluente.'
+  title: tx.metaCriarTitulo,
+  description: tx.metaCriarDescricao
 });
 
 export default function CriarContaPage() {

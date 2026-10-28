@@ -10,6 +10,7 @@ import { totalLicoes } from '@/lib/content-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { primeiroQueExiste } from '@/lib/midia-publica';
 import { Trajetoria } from '@/components/landing/Trajetoria';
+import { tx } from '@/i18n/telas/venda-sobre';
 
 /* O retrato é o MESMO arquivo da capa, achado do mesmo jeito: olhando o disco
    na hora da build. Uma página de servidor pode fazer isso - por isso esta
@@ -19,10 +20,8 @@ const RETRATO = ['media/moshik.avif', 'media/moshik.webp', 'media/moshik.jpg'];
 
 export const metadata: Metadata = meta({
   rota: '/sobre',
-  title: 'Sobre o Moshik - Hebraico Fluente',
-  description:
-    'Moshik Gueta, israelense, professor de hebraico e de idiomas: a trajetória no Brasil, em ' +
-    'Israel e em Buenos Aires por trás do Hebraico Fluente.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 /* A trajetória, e o que dela pode ser afirmado.
@@ -41,7 +40,7 @@ export default function SobrePage() {
       {/* A história inteira (28/09/2026): o mesmo componente que antes
           ocupava a capa, que agora mostra só um resumo com o link para cá.
           Aqui o título é o <h1> da página. */}
-      <TrilhaNoTopo trilha={[{ nome: 'Sobre' }]} />
+      <TrilhaNoTopo trilha={[{ nome: tx.trilha }]} />
       <div className="border-b border-[color:var(--line-soft)]">
         <Trajetoria retrato={retrato} nivel="h1" />
       </div>
@@ -61,22 +60,22 @@ export default function SobrePage() {
       <Section labelledBy="porque">
         <SectionHead
           id="porque"
-          eyebrowPt="Como o curso foi pensado"
-          titlePt="Três decisões que tornam o aprendizado mais leve."
-          leadPt="Cada parte do curso foi organizada para evitar sobrecarga e deixar você avançar com confiança."
+          eyebrowPt={tx.porqueEyebrow}
+          titlePt={tx.porqueTitulo}
+          leadPt={tx.porqueLead}
         />
         <Itens colunas={3} itens={[
             {
-              t: 'Uma letra de cada vez',
-              b: 'Você conhece a letra, pratica com ela e só então avança. O que começa como um alfabeto completamente estranho vai ficando familiar aos poucos - e o que parecia impossível vira uma sequência de passos curtos.'
+              t: tx.umaT,
+              b: tx.umaB
             },
             {
-              t: 'O apoio aparece e depois sai',
-              b: 'A transliteração ajuda no começo, e o objetivo nunca foi você depender dela. Ela diminui junto com o seu progresso, com exercícios feitos para cada etapa dessa retirada, até você ler direto do hebraico.'
+              t: tx.apoioT,
+              b: tx.apoioB
             },
             {
-              t: 'Retorno na hora, em cada passo',
-              b: 'Você não precisa esperar por um professor para saber se acertou. Cada exercício corrige na hora, cada erro explica onde olhar, e o exame final diz antes de começar a nota que aprova e, no fim, quais partes pedem revisão.'
+              t: tx.retornoT,
+              b: tx.retornoB
             }
                   ]} />
       </Section>
@@ -103,34 +102,31 @@ export default function SobrePage() {
       <Section tone="surface" labelledBy="metodo-origem">
         <SectionHead
           id="metodo-origem"
-          eyebrowPt="O método"
-          titlePt="Um método adaptado para brasileiros."
-          leadPt="Princípios consolidados de aprendizagem de idiomas, mais o que eu aprendi ensinando hebraico a quem fala português."
+          eyebrowPt={tx.origemEyebrow}
+          titlePt={tx.origemTitulo}
+          leadPt={tx.origemLead}
         />
         {/* Duas colunas abertas, sob o mesmo fio: o que é adaptação e de onde
             vem o método têm o mesmo peso, e nenhum dos dois é um produto. */}
         <div className="grid gap-10 sm:gap-12 sm:grid-cols-2">
           <div className="grid gap-3 content-start border-t border-line pt-6">
-            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">O que é adaptação minha</h3>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">{tx.adaptacaoTitulo}</h3>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              Os exercícios, as explicações e a escrita cursiva foram pensados para as
-              dificuldades de quem parte do português: as comparações com os nossos sons,
-              os erros que só um brasileiro comete e tudo o que acontece na tela.
+              {tx.adaptacaoTexto}
             </p>
           </div>
           <div className="grid gap-3 content-start border-t-2 border-[var(--teal)] pt-6">
-            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">De onde vem o método</h3>
+            <h3 className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">{tx.deOndeTitulo}</h3>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              O caminho que este curso segue parte do método do{' '}
-              {METODO_ORIGINAL.autor}, autor de{' '}
-              <He size="inline">{METODO_ORIGINAL.obraHe}</He>{' '}
-              ({METODO_ORIGINAL.obraTranslit}). O conteúdo do livro dele é a base do que a
-              plataforma ensina. {METODO_ORIGINAL.adaptacoesPt}
+              {tx.deOndeTexto(
+                METODO_ORIGINAL.autor,
+                <He size="inline">{METODO_ORIGINAL.obraHe}</He>,
+                METODO_ORIGINAL.obraTranslit,
+                METODO_ORIGINAL.adaptacoesPt
+              )}
             </p>
             <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
-              As {totalLicoes()} lições, as palavras de cada letra e os exercícios vieram
-              de material impresso e passaram para a plataforma pela mesma fonte: se uma
-              palavra muda, muda nos dois.
+              {tx.licoesImpressas(totalLicoes())}
             </p>
           </div>
         </div>
@@ -139,15 +135,15 @@ export default function SobrePage() {
       <Section>
         <FaixaCta
           onde="sobre"
-          titulo="Tem uma dúvida antes de começar?"
-          linha={`As mais comuns já estão respondidas. O que não estiver, escreva para ${empresa.contato.emailSuporte}.`}
+          titulo={tx.ctaTitulo}
+          linha={tx.ctaLinha(empresa.contato.emailSuporte)}
         >
           {/* Link e não um segundo botão branco: sobre o navy, dois botões
               iguais empatavam, e o passo principal é o de baixo. */}
           <Link href="/faq"
                 className="inline-flex items-center min-h-[44px] font-ui text-[16px] font-semibold text-white
                            underline underline-offset-[4px] decoration-white/45 hover:decoration-white">
-            Ver as dúvidas frequentes
+            {tx.verDuvidas}
           </Link>
         </FaixaCta>
       </Section>

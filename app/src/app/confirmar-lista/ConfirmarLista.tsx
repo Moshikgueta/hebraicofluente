@@ -13,12 +13,13 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Aviso, Erro } from '@/components/platform/Campo';
+import { tx } from '@/i18n/telas/conta-confirmar-lista';
 
 const O_QUE: Record<string, string> = {
-  curso: 'as próximas letras do alfabeto e as novidades do curso',
-  israel: 'o aviso de quando Israel Além do Óbvio abrir',
-  raizes: 'o aviso de quando Raízes Sefarditas abrir',
-  a1: 'o aviso de quando o curso Hebraico A1 abrir'
+  curso: tx.oQueCurso,
+  israel: tx.oQueIsrael,
+  raizes: tx.oQueRaizes,
+  a1: tx.oQueA1
 };
 
 export function ConfirmarLista() {
@@ -47,27 +48,25 @@ export function ConfirmarLista() {
 
   return (
     <div className="focus-col grid gap-6 py-6">
-      <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">Confirmar inscrição</h1>
+      <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">{tx.titulo}</h1>
       <Card className="p-6 grid gap-4">
         {estado === 'ok' ? (
           <Aviso>
-            Pronto, inscrição confirmada. Você vai receber {lista.length ? lista.join('; ') : 'o que pediu'}. Todo
-            e-mail traz o link para sair da lista.
+            {tx.confirmada(lista.length ? lista.join('; ') : tx.oQuePediu)}
           </Aviso>
         ) : estado === 'invalido' ? (
           <Erro>
-            Este link não está completo ou já não vale. Abra de novo pelo e-mail, ou peça outra vez no{' '}
-            <Link href="/" className="underline">site</Link>.
+            {tx.invalidoAntes}{' '}
+            <Link href="/" className="underline">{tx.site}</Link>.
           </Erro>
         ) : (
           <>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-              Toque no botão para confirmar que quer receber os e-mails que pediu no site do Hebraico Fluente. Você
-              pode sair da lista quando quiser, pelo link de qualquer um deles.
+              {tx.toqueNoBotao}
             </p>
-            {estado === 'erro' && <Erro>Não consegui agora. Tente de novo em instantes.</Erro>}
+            {estado === 'erro' && <Erro>{tx.erro}</Erro>}
             <Button size="lg" onClick={() => void confirmar()} disabled={estado === 'enviando'}>
-              {estado === 'enviando' ? 'Confirmando…' : 'Confirmar'}
+              {estado === 'enviando' ? tx.confirmando : tx.confirmar}
             </Button>
           </>
         )}

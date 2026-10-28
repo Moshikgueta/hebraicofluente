@@ -21,6 +21,7 @@
  * a recording made for the printed workbook plays here with no second naming
  * scheme and no renaming when a lesson is reordered. */
 
+import { tx } from '@/i18n/telas/licao-audio-button';
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { track } from '@/lib/analytics';
 
@@ -67,7 +68,7 @@ export function tocarClipe(audioId: string | null | undefined, rate = 1): void {
 }
 
 export function AudioButton({
-  audioId, label = 'Ouvir', ariaLabel, size = 'md', slow = false
+  audioId, label = tx.ouvir, ariaLabel, size = 'md', slow = false
 }: {
   audioId: string | null;
   label?: string;
@@ -168,15 +169,15 @@ export function AudioButton({
         <button
           type="button"
           onClick={() => play(0.7)}
-          aria-label="Ouvir devagar"
+          aria-label={tx.ouvirDevagar}
           className={`inline-flex items-center justify-center rounded-[var(--r-md)]
             border border-line text-ink-muted font-ui text-[13px] ${SIZE.sm}`}
         >
-          0,7×
+          {tx.devagar}
         </button>
       )}
       <span role="status" className="font-ui text-[13px] text-ink-muted empty:-ml-2">
-        {falhou ? 'Não consegui tocar o áudio. Confira a conexão e toque de novo.' : ''}
+        {falhou ? tx.falhou : ''}
       </span>
     </span>
   );

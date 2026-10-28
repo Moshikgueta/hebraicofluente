@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
+import { tx } from '@/i18n/telas/painel-paginas';
 import { VerificarClient } from './VerificarClient';
 
 export const metadata: Metadata = meta({
   rota: '/verificar-certificado',
-  title: 'Conferir um certificado - Hebraico Fluente',
-  description: 'Confira se um certificado do curso Hebraico A1 foi emitido pelo Hebraico Fluente.'
+  title: tx.verificarTitulo,
+  description: tx.verificarDescricao
 });
 
 /* A conferência pública de um certificado: o código, e o servidor responde

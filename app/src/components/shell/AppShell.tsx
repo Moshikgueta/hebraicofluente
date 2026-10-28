@@ -40,6 +40,7 @@ import { useAccount } from '@/lib/account/store';
 import { FLAGSHIP } from '@/lib/catalog';
 import { DemoNotice } from '@/components/shell/DemoNotice';
 import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
+import { tx } from '@/i18n/telas/conta-app-shell';
 
 /* A navegação, e ONDE cada item aparece no telefone.
  * ─────────────────────────────────────────────────────────────────────────
@@ -70,19 +71,19 @@ import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
    Aula 0 pelo topo do mapa e pelo botão principal de Hoje. `secao` diz quais
    endereços acendem cada porta. */
 const NAV = [
-  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra', secao: [] },
-  { href: '/mapa', label: 'Curso', icon: IconeMapa, movel: 'barra',
+  { href: '/meu-hebraico', label: tx.navHoje, icon: IconeHoje, movel: 'barra', secao: [] },
+  { href: '/mapa', label: tx.navCurso, icon: IconeMapa, movel: 'barra',
     secao: ['/inicio', '/licao', '/som', '/extra', '/modulo', '/checkpoint', '/desafio-final', '/concluido'] },
-  { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra',
+  { href: '/academia', label: tx.navPraticar, icon: IconePraticar, movel: 'barra',
     secao: ['/revisao', '/vocabulario', '/leitura', '/meu-nome', '/teclado-hebraico', '/bonus', '/nikud-biblico'] },
-  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra',
+  { href: '/conquistas', label: tx.navProgresso, icon: IconeConquistas, movel: 'barra',
     secao: ['/historia', '/certificado', '/meu-hebraico/dominio'] },
   /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta
      no cabeçalho, que diz de relance EM QUAL conta a pessoa está. */
   /* Recompensas (27/09/2026): um ícone próprio, a pedido do dono do curso.
      No telefone ele é o presente do cabeçalho, ao lado do XP que ele gasta. */
-  { href: '/loja', label: 'Recompensas', icon: IconeRecompensas, movel: 'cabecalho', secao: [] },
-  { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta', secao: [] }
+  { href: '/loja', label: tx.navRecompensas, icon: IconeRecompensas, movel: 'cabecalho', secao: [] },
+  { href: '/perfil', label: tx.navPerfil, icon: IconePerfil, movel: 'conta', secao: [] }
 ] as const;
 
 /** A porta acesa: a própria página, ou uma página da seção dela. */
@@ -135,9 +136,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {!p.persistent && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
-            O navegador está bloqueando o armazenamento local (janela anônima ou
-            cookies desativados). Você pode estudar normalmente, mas o progresso
-            não vai ser guardado ao fechar a aba.
+            {tx.armazenamentoBloqueado}
           </p>
         </Card>
       )}
@@ -153,10 +152,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {p.ready && !p.sincronizado && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
-            O que você acabou de fazer está salvo neste aparelho, mas ainda não
-            chegou à sua conta. Assim que a conexão voltar, ele sobe sozinho.
-            Se for trocar de aparelho agora, abra o curso uma vez com internet
-            antes.
+            {tx.naoSincronizado}
           </p>
         </Card>
       )}
@@ -191,12 +187,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Link href="/meu-hebraico" prefetch={preCarregar} className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
             <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
             <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
-            <span className="sr-only min-[380px]:hidden">Hebraico Fluente</span>
+            <span className="sr-only min-[380px]:hidden">{tx.marca}</span>
           </Link>
           <div className="flex items-center gap-4">
             {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
             {p.ready && (
-              <Link href="/loja" prefetch={preCarregar} aria-label={`${p.state.xp} XP. Abrir as recompensas`}
+              <Link href="/loja" prefetch={preCarregar} aria-label={tx.xpAbrirRecompensas(p.state.xp)}
                     className="inline-flex items-center min-h-[40px] px-1.5 rounded-[var(--r-md)] hover:bg-surface-2">
                 <XPIndicator xp={p.state.xp} />
               </Link>
@@ -204,7 +200,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             {/* E o ícone próprio delas. O ponto dourado: há saldo para trocar
                 pelo item mais barato - como o ponto da Revisão na barra. */}
             {p.ready && (
-              <Link href="/loja" prefetch={preCarregar} aria-label="Recompensas"
+              <Link href="/loja" prefetch={preCarregar} aria-label={tx.navRecompensas}
                     aria-current={isActive(pathname, '/loja') ? 'page' : undefined}
                     className={`relative inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2
                       ${isActive(pathname, '/loja') ? 'text-[var(--navy)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
@@ -284,15 +280,15 @@ export function AppShell({ children }: { children: ReactNode }) {
 function RodapeDeAjuda() {
   return (
     <footer className="print:hidden mt-10 pt-5 border-t border-[color:var(--line-soft)]">
-      <nav aria-label="Ajuda e informações">
+      <nav aria-label={tx.ajudaEInformacoes}>
         <ul className="flex flex-wrap gap-x-5 gap-y-2 list-none p-0 m-0">
           {[
-            ['/suporte', 'Precisa de ajuda?'],
-            ['/faq', 'Dúvidas frequentes'],
-            ['/reembolso', 'Reembolso e cancelamento'],
-            ['/termos', 'Termos'],
-            ['/privacidade', 'Privacidade'],
-            ['/acessibilidade', 'Acessibilidade']
+            ['/suporte', tx.precisaDeAjuda],
+            ['/faq', tx.duvidasFrequentes],
+            ['/reembolso', tx.reembolso],
+            ['/termos', tx.termos],
+            ['/privacidade', tx.privacidade],
+            ['/acessibilidade', tx.acessibilidade]
           ].map(([href, label]) => (
             <li key={href}>
               {/* Alvo de 44px de altura também aqui: um link de 13px em cima
@@ -331,11 +327,11 @@ function Sidebar({ pathname }: { pathname: string | null }) {
           </span>
         </span>
         <span className="font-display font-semibold text-[16px] tracking-[-0.02em] text-white">
-          Hebraico Fluente
+          {tx.marca}
         </span>
       </Link>
 
-      <nav aria-label="Navegação principal">
+      <nav aria-label={tx.navegacaoPrincipal}>
         <ul className="grid gap-[3px]">
           {NAV.map(item => {
             const active = portaAtiva(pathname, item);
@@ -377,7 +373,7 @@ function Sidebar({ pathname }: { pathname: string | null }) {
       {/* Branco a 85% (antes 45%, 3,8:1 - auditoria de 28/09, UX-007), e
           "nas lições": os jogos da Academia não têm os atalhos (UX-014). */}
       <p className="font-ui text-[12px] leading-relaxed text-white/[.85] px-1">
-        Nas lições, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
+        {tx.nasLicoes}<Key dark>1</Key>-<Key dark>4</Key>{tx.respondem}<Key dark>{tx.teclaEnter}</Key>{tx.avanca}
       </p>
     </aside>
   );
@@ -408,7 +404,7 @@ function ProfileLink() {
                        grid place-items-center">
         {initial}
       </span>
-      <span className="sr-only">Sua conta</span>
+      <span className="sr-only">{tx.suaConta}</span>
     </Link>
   );
 }
@@ -437,7 +433,7 @@ function BottomBar({ pathname }: { pathname: string | null }) {
   const rotulo = 'text-[12.5px]';
   return (
     <nav
-      aria-label="Navegação principal"
+      aria-label={tx.navegacaoPrincipal}
       className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-[color:var(--line-soft)]
                  bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
                  pb-[env(safe-area-inset-bottom)]"
@@ -516,7 +512,7 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
         <span aria-hidden className="text-[var(--mint-ink)] text-[18px] leading-none">◆</span>
         <div className="min-w-0 flex-1">
           <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)] truncate">
-            {compartilhavel ? 'Conquista' : 'Conquista desbloqueada'}{ids.length > 1 ? ` +${ids.length - 1}` : ''}
+            {compartilhavel ? tx.conquista : tx.conquistaDesbloqueada}{ids.length > 1 ? ` +${ids.length - 1}` : ''}
           </p>
           {/* O título quebra em até duas linhas: cortado em "Primeira pala…"
               ele deixava de dizer o que foi conquistado. */}
@@ -527,7 +523,7 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
             <CompartilharConquista id={first.id} curto />
           </div>
         )}
-        <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar">✕</Button>
+        <Button variant="ghost" size="sm" onClick={onClose} aria-label={tx.fechar}>✕</Button>
       </Card>
     </div>
   );

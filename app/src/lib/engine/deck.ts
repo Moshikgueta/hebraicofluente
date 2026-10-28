@@ -26,6 +26,7 @@
 import type { Letter } from '@/lib/content';
 import { rng, shuffled, take, type Rand } from './rng';
 import { fonemasDe, somPt } from '@/lib/som-pt';
+import { tx } from '@/i18n/telas/motor-deck';
 
 /** O que um par cobra do aluno. Fica no par para o placar poder dizer em que
  *  tipo de associação ele foi bem, e para o Teste variar de propósito. */
@@ -91,10 +92,10 @@ export function habilidadeDoJogo(id: string): 'rec' | 'som' | 'ler' {
 }
 
 export const ROTULO_TIPO: Record<TipoPar, string> = {
-  nome: 'Nome da letra',
-  som: 'Som',
-  silaba: 'Sílaba',
-  palavra: 'Palavra'
+  nome: tx.tipoNome,
+  som: tx.tipoSom,
+  silaba: tx.tipoSilaba,
+  palavra: tx.tipoPalavra
 };
 
 /* ── adaptador: as letras do curso de alfabetização ─────────────────────── */
@@ -258,15 +259,15 @@ export function perguntasDe(
 
 function enunciado(tipo: TipoPar, sentido: 'he' | 'pt'): string {
   if (sentido === 'he') {
-    return tipo === 'nome' ? 'Qual é o nome desta letra?'
-      : tipo === 'som' ? 'Que som esta letra faz?'
-      : tipo === 'silaba' ? 'Como se lê esta sílaba?'
-      : 'O que esta palavra quer dizer?';
+    return tipo === 'nome' ? tx.heNome
+      : tipo === 'som' ? tx.heSom
+      : tipo === 'silaba' ? tx.heSilaba
+      : tx.hePalavra;
   }
-  return tipo === 'nome' ? 'Qual é esta letra?'
-    : tipo === 'som' ? 'Qual letra faz este som?'
-    : tipo === 'silaba' ? 'Qual sílaba se lê assim?'
-    : 'Qual palavra quer dizer isto?';
+  return tipo === 'nome' ? tx.ptNome
+    : tipo === 'som' ? tx.ptSom
+    : tipo === 'silaba' ? tx.ptSilaba
+    : tx.ptPalavra;
 }
 
 /** Embaralhar os dois lados de um baralho, para o tabuleiro do Match. */

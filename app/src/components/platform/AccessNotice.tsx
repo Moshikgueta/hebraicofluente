@@ -15,6 +15,7 @@ import { LinkButton } from '@/components/ui/Button';
 import { useAccount } from '@/lib/account/store';
 import { daysLeft } from '@/lib/account/types';
 import { FLAGSHIP, flagship } from '@/lib/catalog';
+import { tx } from '@/i18n/telas/conta-plataforma-pecas';
 
 const WARN_FROM = 30;
 const URGENT_FROM = 7;
@@ -33,16 +34,15 @@ export function AccessNotice() {
       <div className="grid gap-1">
         <p className="font-display text-[17px] font-bold text-ink">
           {left === 0
-            ? 'Seu acesso termina hoje.'
-            : `Seu acesso termina em ${left} ${left === 1 ? 'dia' : 'dias'}.`}
+            ? tx.terminaHoje
+            : tx.terminaEm(left)}
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-          Depois disso as aulas do {flagship().titlePt} fecham. Seu progresso
-          continua guardado na sua conta e volta inteiro assim que você renovar.
+          {tx.depoisDisso(flagship().titlePt)}
         </p>
       </div>
       <LinkButton href={`/checkout/${FLAGSHIP}`} className="justify-self-start sm:justify-self-end">
-        Renovar acesso
+        {tx.renovarAcesso}
       </LinkButton>
     </Card>
   );

@@ -4,6 +4,7 @@
    lesson, and what the learner will be able to read at the end of it. It is
    the workbook's own module page, and it is where the bridge words live. */
 
+import { tx } from '@/i18n/telas/licao-module-client';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { somPt } from '@/lib/som-pt';
 import { resumoDasLicoes } from '@/lib/resumo-licoes';
@@ -28,8 +29,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const p = useProgress();
   /* A primeira lição por fazer, na ordem do plano: letra ou som. */
   const pendente = mod.lessons.flatMap(ls =>
-    ls.som ? [{ href: `/som/${ls.som}`, id: idDoSom(ls.som), rotulo: ehContraste(ls.som) ? 'os três pares' : `o som ${ls.nomePt ?? ls.som}` }]
-      : (ls.letters ?? []).map(id => ({ href: `/licao/${id}`, id, rotulo: `a letra ${letters.find(l => l.id === id)?.namePt ?? id}` }))
+    ls.som ? [{ href: `/som/${ls.som}`, id: idDoSom(ls.som), rotulo: ehContraste(ls.som) ? tx.osTresPares : tx.oSom(ls.nomePt ?? ls.som) }]
+      : (ls.letters ?? []).map(id => ({ href: `/licao/${id}`, id, rotulo: tx.aLetra(letters.find(l => l.id === id)?.namePt ?? id) }))
   ).find(i => !isLessonComplete(p.state, i.id));
   const first = letters.find(l => !isLessonComplete(p.state, l.id)) ?? letters[0];
   const sons = mod.lessons.filter(ls => ls.som);
@@ -62,33 +63,32 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   const fecho = (
     <Card tone={tudoFeito ? 'mint' : 'surface'} className="p-6 grid gap-3">
       <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-        Fechamento do módulo{passou ? ' · checkpoint aprovado ✓' : ''}
+        {tx.fechamento}{passou ? tx.aprovado : ''}
       </p>
       <h2 className="font-display text-[18px] font-semibold">
-        {passou ? 'Você passou no checkpoint deste módulo'
-          : tudoFeito ? 'Você terminou as lições. Agora, o checkpoint.'
-          : 'Checkpoint e prática focada'}
+        {passou ? tx.passou
+          : tudoFeito ? tx.terminou
+          : tx.checkpointEPratica}
       </h2>
       <p className="text-[15px] leading-relaxed text-ink-body">
-        {passou && cp?.best != null ? `Sua melhor nota: ${Math.round(cp.best * 100)}%. ` : ''}
-        O checkpoint mostra o que já está firme. A prática focada começa pelo que você errou neste módulo,
-        sem nenhuma letra nova.
-        {!tudoFeito && ' Os dois ficam abertos a qualquer momento, mas rendem mais depois das lições.'}
+        {passou && cp?.best != null ? tx.melhorNota(Math.round(cp.best * 100)) : ''}
+        {tx.oCheckpointMostra}
+        {!tudoFeito && tx.abertos}
       </p>
       <div className="flex flex-wrap gap-2">
         {/* No topo, depois de tudo feito, a leitura de revisão vem junto. */}
         {revisao && tudoFeito && (
           <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary">
-            {revisaoLida ? 'Leitura de revisão ✓' : 'Leitura de revisão'}
+            {revisaoLida ? tx.leituraDeRevisaoFeita : tx.leituraDeRevisao}
           </LinkButton>
         )}
         {mod.checkpoint && (
           <LinkButton href={`/checkpoint/${mod.n}`} variant={tudoFeito && !passou ? 'primary' : 'secondary'}>
-            {passou ? 'Refazer o checkpoint' : 'Fazer o checkpoint'}
+            {passou ? tx.refazerCheckpoint : tx.fazerCheckpoint}
           </LinkButton>
         )}
         <LinkButton href={`/modulo/${mod.n}/pratica`} variant="secondary">
-          {praticaFeita ? 'Prática focada ✓' : 'Prática focada'}
+          {praticaFeita ? tx.praticaFeita : tx.pratica}
         </LinkButton>
       </div>
     </Card>
@@ -97,8 +97,8 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
   return (
     <div className="grid gap-6 reading">
       <header className="grid gap-3">
-        <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
-        <Badge tone="accent">Módulo {mod.n} de 7</Badge>
+        <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">{tx.mapa}</Link>
+        <Badge tone="accent">{tx.moduloDe(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">{mod.titlePt}</h1>
         <p className="font-ui text-[15px] text-ink-muted"><Prose text={mod.subPt} /></p>
         {letters.length > 0 && (
@@ -116,22 +116,22 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       <CenaExploravel modulo={mod.n} todas={todas} comecadas={comecadas} extras={extras()} modulosComecados={modulosComecados} />
 
       <Card className="p-6 grid gap-4">
-        <h2 className="font-display text-[18px] font-semibold">As lições</h2>
+        <h2 className="font-display text-[18px] font-semibold">{tx.asLicoes}</h2>
         {/* Contado dos dados, não escrito à mão: "as três lições" estava no
             módulo 5, que tem sete (auditoria de 01/10/2026, CONT-008). */}
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          {resumoDasLicoes(mod.lessons)} Estudando sozinho, trate cada lição como uma sessão.
+          {resumoDasLicoes(mod.lessons)} {tx.sozinho}
         </p>
         <ol className="grid gap-2">
           {mod.lessons.map(ls => (
             <li key={ls.n} className="flex items-baseline gap-4 py-2 border-t border-[color:var(--line-soft)]">
               <span className="font-ui text-[13px] font-semibold text-ink-muted tabular-nums w-[52px] shrink-0">
-                Lição {ls.n}
+                {tx.licao(ls.n)}
               </span>
               <span className="text-[15px] text-ink-body">
                 {ls.kind === 'practice'
                   ? <Link href={`/modulo/${mod.n}/pratica`} className="underline underline-offset-2 hover:text-ink">
-                      Prática: sem letra nova - correção dos seus erros, letras parecidas e leitura em voz alta
+                      {tx.praticaSemLetra}
                       {praticaFeita ? ' ✓' : ''}
                     </Link>
                   : ls.som
@@ -150,7 +150,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-3">
-        <h2 className="font-display text-[18px] font-semibold">Ao terminar este módulo</h2>
+        <h2 className="font-display text-[18px] font-semibold">{tx.aoTerminar}</h2>
         <ul className="grid gap-2">
           {mod.goalsPt.map((g, i) => (
             <li key={i} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-body">
@@ -167,7 +167,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
 
       {letters.length > 0 && (
         <Card className="p-6 grid gap-3">
-          <h2 className="font-display text-[18px] font-semibold">As letras</h2>
+          <h2 className="font-display text-[18px] font-semibold">{tx.asLetras}</h2>
           <ul className="grid gap-1">
             {letters.map(l => (
               <li key={l.id}>
@@ -195,12 +195,12 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {revisao && (
         <Card tone={revisaoLida ? 'mint' : 'surface'} className="p-6 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-            Leitura de revisão · {revisao.tipoPt}{revisaoLida ? ' · lida ✓' : ''}
+            {tx.revisaoTipo(revisao.tipoPt)}{revisaoLida ? tx.lida : ''}
           </p>
           <h2 className="font-display text-[18px] font-semibold">{revisao.tituloPt}</h2>
           <p className="text-[15px] leading-relaxed text-ink-body">{revisao.introPt}</p>
           <LinkButton href={`/modulo/${mod.n}/revisao`} variant="secondary" className="justify-self-start">
-            {revisaoLida ? 'Ler de novo' : 'Ler a revisão'}
+            {revisaoLida ? tx.lerDeNovo : tx.lerRevisao}
           </LinkButton>
         </Card>
       )}
@@ -208,12 +208,12 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {texto && (
         <Card className="p-6 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-            Leitura do módulo · {texto.tipoPt}
+            {tx.leituraTipo(texto.tipoPt)}
           </p>
           <h2 className="font-display text-[18px] font-semibold">{texto.tituloPt}</h2>
           <p className="text-[15px] leading-relaxed text-ink-body">{texto.introPt}</p>
           <LinkButton href={`/modulo/${mod.n}/texto`} variant="secondary" className="justify-self-start">
-            Ler o texto
+            {tx.lerTexto}
           </LinkButton>
         </Card>
       )}
@@ -225,19 +225,19 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
       {missao && (
         <Card tone={missaoFeita ? 'mint' : 'surface'} className="p-6 grid gap-3">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-            Missão do módulo{missaoFeita ? ' · cumprida ✓' : ''}
+            {tx.missaoDoModulo}{missaoFeita ? tx.cumprida : ''}
           </p>
           <h2 className="font-display text-[18px] font-semibold">{missao.tituloPt}</h2>
           <p className="text-[15px] leading-relaxed text-ink-body">{missao.situacaoPt}</p>
           <LinkButton href={`/modulo/${mod.n}/missao`} variant="secondary" className="justify-self-start">
-            {missaoFeita ? 'Fazer de novo' : 'Fazer a missão'}
+            {missaoFeita ? tx.fazerDeNovo : tx.fazerMissao}
           </LinkButton>
         </Card>
       )}
 
       {sons.length > 0 && (
         <Card className="p-6 grid gap-3">
-          <h2 className="font-display text-[18px] font-semibold">Os sons</h2>
+          <h2 className="font-display text-[18px] font-semibold">{tx.osSons}</h2>
           <ul className="grid gap-1">
             {sons.map(ls => {
               const feito = isLessonComplete(p.state, idDoSom(ls.som!));
@@ -246,7 +246,7 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
                   <Link href={`/som/${ls.som}`}
                         className="flex items-center gap-4 rounded-[var(--r-md)] p-2.5 hover:bg-surface-2">
                     <He size="lg" dim={!feito}>{ls.he ?? ''}</He>
-                    <span className="font-ui text-[15px] text-ink">Lição {ls.n}. {ls.nomePt}</span>
+                    <span className="font-ui text-[15px] text-ink">{tx.licao(ls.n)}. {ls.nomePt}</span>
                     <span aria-hidden className="ml-auto text-ink-muted">{feito ? '✓' : '→'}</span>
                   </Link>
                 </li>
@@ -258,25 +258,25 @@ export function ModuleClient({ module: mod, letters }: { module: CourseModule; l
 
       {pendente ? (
         <LinkButton href={pendente.href} size="lg" full>
-          {first && pendente.id === first.id ? `Começar pela letra ${first.namePt}` : `Continuar com ${pendente.rotulo}`}
+          {first && pendente.id === first.id ? tx.comecarPelaLetra(first.namePt) : tx.continuarCom(pendente.rotulo)}
         </LinkButton>
       ) : tudoFeito && mod.checkpoint && !passou ? (
         <LinkButton href={`/checkpoint/${mod.n}`} size="lg" full>
-          Fazer o checkpoint do módulo {mod.n}
+          {tx.checkpointDoModulo(mod.n)}
         </LinkButton>
       ) : tudoFeito && proximo ? (
         <LinkButton href={`/modulo/${proximo.n}`} size="lg" full>
-          Seguir para o módulo {proximo.n}
+          {tx.seguir(proximo.n)}
         </LinkButton>
       ) : first ? (
         <LinkButton href={`/licao/${first.id}`} size="lg" full>
-          Começar pela letra {first.namePt}
+          {tx.comecarPelaLetra(first.namePt)}
         </LinkButton>
       ) : (
         /* Modules 6 and 7 have no letters - they have their own three-lesson
            route, and without this the opener was a dead end. */
         <LinkButton href={`/extra/${mod.n === 6 ? 'sem-o-ponto' : 'sons-modernos'}`} size="lg" full>
-          Começar o módulo {mod.n}
+          {tx.comecarModulo(mod.n)}
         </LinkButton>
       )}
     </div>

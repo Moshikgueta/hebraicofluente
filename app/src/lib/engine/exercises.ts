@@ -37,6 +37,7 @@ import {
   type Ctx, type Gen
 } from './generators';
 import type { Exercise } from './types';
+import { tx } from '@/i18n/telas/motor-generators';
 import {
   GENS_CURSIVA_PALAVRA, exBuildCursiveGated, exBuildLetters, exCursivaQualPalavra
 } from './palavras';
@@ -1300,7 +1301,7 @@ export function buildScenes(
       kind: 'scene-reading' as const,
       letterId: 'final',
       skill: 'ler' as const,
-      promptPt: 'Leia. O que está escrito?',
+      promptPt: tx.fraseUma,
       he: s.he,
       wherePt: s.labelPt,
       options,
@@ -1341,8 +1342,8 @@ export function buildSentences(
       letterId: 'final',
       skill: 'ler' as const,
       promptPt: s.words.length > 1
-        ? 'Leia a frase inteira. O que ela quer dizer?'
-        : 'Leia. O que está escrito?',
+        ? tx.fraseInteira
+        : tx.fraseUma,
       he: s.he,
       words: s.words.map(w => ({ he: w.he, translit: w.translit, pt: w.pt })),
       options,

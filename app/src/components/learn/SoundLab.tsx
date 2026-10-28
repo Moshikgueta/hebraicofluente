@@ -19,6 +19,7 @@
  * scored. The testing version of the same content is the generated exercise.
  */
 
+import { tx } from '@/i18n/telas/licao-sound-lab';
 import { IconeSom } from '@/components/shell/NavIcons';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -35,7 +36,7 @@ const VOWEL_LABEL: Record<Vowel, string> = {
 };
 
 export function SoundLab({
-  letters, title = 'Laboratório de sons', compact = false
+  letters, title = tx.titulo, compact = false
 }: {
   /** Already filtered to what the learner has met. */
   letters: Letter[];
@@ -56,7 +57,7 @@ export function SoundLab({
                       flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="font-display text-[16px] font-bold text-ink">{title}</h3>
         <p className="font-ui text-[12.5px] text-ink-muted">
-          toque numa sílaba para ouvir e ver como se lê
+          {tx.toque}
         </p>
       </div>
 
@@ -74,7 +75,7 @@ export function SoundLab({
             <tr>
               <th className="sticky right-0 z-10 bg-surface px-2 sm:px-3 py-2 text-right
                              font-ui text-[11px] uppercase tracking-[.07em] text-ink-muted">
-                Letra
+                {tx.letra}
               </th>
               {VOWELS.map(v => (
                 <th key={v} className="px-1 py-2 font-ui text-[13px] font-semibold text-[var(--accent)]">
@@ -108,7 +109,7 @@ export function SoundLab({
                           tocarClipe(syl.audioId);
                           setPicked({ letter: L, syl });
                         }}
-                        aria-label={`${L.namePt} com ${VOWEL_LABEL[v]}: ${syl.translit}`}
+                        aria-label={tx.silaba(L.namePt, VOWEL_LABEL[v], syl.translit)}
                         aria-pressed={on}
                         className={`w-full min-h-[56px] rounded-[var(--r-md)] border-2 px-1
                           grid place-items-center transition-colors
@@ -140,13 +141,12 @@ export function SoundLab({
               <p className="font-ui text-[13px] text-ink-muted">{picked.syl.ptApprox}</p>
             </div>
             <div className="ml-auto">
-              <AudioButton audioId={picked.syl.audioId} label="De novo" slow />
+              <AudioButton audioId={picked.syl.audioId} label={tx.deNovo} slow />
             </div>
           </>
         ) : (
           <p className="font-ui text-[13.5px] text-ink-muted">
-            A consoante muda de linha para linha. O sinal é o mesmo em toda a coluna -
-            é isso que faz a leitura ficar automática.
+            {tx.consoanteMuda}
           </p>
         )}
       </div>
@@ -178,7 +178,7 @@ export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
                 {/* O cartão inteiro toca o nome do sinal (27/09/2026). */}
                 <button type="button" onClick={() => tocarClipe(g.nameAudioId)}
                         disabled={!hasAudio(g.nameAudioId)}
-                        aria-label={`${g.namePt}${hasAudio(g.nameAudioId) ? ': ouvir o nome' : ''}`}
+                        aria-label={`${g.namePt}${hasAudio(g.nameAudioId) ? tx.ouvirNome : ''}`}
                         className="w-full text-left flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2
                                    min-h-[56px] enabled:hover:bg-[var(--accent-wash)] enabled:active:scale-[.99] transition">
                   <He size="lg">{demoLetter ? demoLetter + g.sign : g.demo}</He>

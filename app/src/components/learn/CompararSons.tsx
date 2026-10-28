@@ -16,6 +16,7 @@
  * com dois ou mais itens. Os acertos ficam só nesta tela, para o aluno se
  * situar; não contam nota e não travam nada.
  */
+import { tx } from '@/i18n/telas/licao-comparar-sons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -86,10 +87,10 @@ export function CompararSons({ comparacao }: { comparacao: Comparacao }) {
     <div data-comparar-sons>
     <Card tone="wash" className="p-5 sm:p-6 grid gap-4">
       <h3 className="font-ui text-[17px] font-semibold text-ink m-0">
-        <span aria-hidden>🎧 </span>Ouça a diferença:{' '}
+        <span aria-hidden>🎧 </span>{tx.oucaDiferenca}{' '}
         {itens.map((it, i) => (
           <span key={it.glifo}>
-            {i > 0 && ' ou '}
+            {i > 0 && tx.ou}
             <He size="inline">{it.glifo}</He>
           </span>
         ))}
@@ -101,6 +102,7 @@ export function CompararSons({ comparacao }: { comparacao: Comparacao }) {
         {itens.map(it => {
           const meu = atual.audioId != null && atual.audioId === it.audioId;
           const estado: Estado = meu ? atual.estado : 'parado';
+          const tocandoAgora = estado === 'tocando';
           return (
             <li key={it.glifo} dir="ltr"
                 className="rounded-[var(--r-md)] bg-surface border border-[color:var(--line-soft)] p-4 grid gap-3 content-start justify-items-center text-center">
@@ -108,18 +110,18 @@ export function CompararSons({ comparacao }: { comparacao: Comparacao }) {
               <span className="font-ui text-[14px] font-semibold text-ink">{it.nomePt}</span>
               {it.audioId ? (
                 <button type="button" onClick={() => alternar(it.audioId!)}
-                        aria-label={`${estado === 'tocando' ? 'Pausar' : 'Ouvir'} o som de ${it.nomePt}`}
-                        aria-pressed={estado === 'tocando'}
+                        aria-label={tx.somDe(tocandoAgora, it.nomePt)}
+                        aria-pressed={tocandoAgora}
                         className="min-h-[48px] w-full rounded-[var(--r-md)] bg-[var(--accent-wash)] text-[var(--accent)]
                                    font-ui font-medium text-[15px] px-3 hover:brightness-95 active:scale-[.97]
                                    transition-transform duration-[var(--dur)] ease-[var(--ease)]">
-                  {estado === 'carregando' ? 'Carregando...'
-                    : estado === 'tocando' ? '❚❚ Pausar'
-                    : estado === 'pausado' ? '▶ Continuar'
-                    : '▶ Ouvir'}
+                  {estado === 'carregando' ? tx.carregando
+                    : estado === 'tocando' ? tx.pausar
+                    : estado === 'pausado' ? tx.continuar
+                    : tx.ouvir}
                 </button>
               ) : (
-                <span className="font-ui text-[13px] text-ink-muted">Gravação em preparação.</span>
+                <span className="font-ui text-[13px] text-ink-muted">{tx.emPreparacao}</span>
               )}
               {it.previaPt && <span className="font-ui text-[12.5px] text-ink-muted leading-snug">{it.previaPt}</span>}
             </li>
@@ -127,7 +129,7 @@ export function CompararSons({ comparacao }: { comparacao: Comparacao }) {
         })}
       </ul>
       <p role="status" className="font-ui text-[13px] text-ink-muted m-0 empty:hidden">
-        {falhou ? 'Não consegui tocar o áudio. Confira a conexão e toque de novo.' : ''}
+        {falhou ? tx.falhou : ''}
       </p>
 
       {todas && <Identificar itens={itens as (typeof itens[number] & { audioId: string })[]} tocar={tocar} />}
@@ -161,20 +163,20 @@ function Identificar({ itens, tocar }: {
   return (
     <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-4">
       <h4 className="font-ui text-[16px] font-semibold text-ink m-0">
-        <span aria-hidden>👂 </span>Você consegue identificar o som?
+        <span aria-hidden>👂 </span>{tx.identificar}
       </h4>
       <div className="flex flex-wrap items-center gap-3">
         {alvo === null || resposta !== null ? (
-          <Button onClick={novo}>{alvo === null ? 'Tocar um som' : 'Próximo som'}</Button>
+          <Button onClick={novo}>{alvo === null ? tx.tocarUm : tx.proximo}</Button>
         ) : (
-          <Button variant="secondary" onClick={() => tocar(itens[alvo]!.audioId)}>Ouvir de novo</Button>
+          <Button variant="secondary" onClick={() => tocar(itens[alvo]!.audioId)}>{tx.ouvirDeNovo}</Button>
         )}
         {placar.total > 0 && (
-          <span className="font-ui text-[13.5px] text-ink-muted">Acertos: {placar.certos} de {placar.total}</span>
+          <span className="font-ui text-[13.5px] text-ink-muted">{tx.acertos(placar.certos, placar.total)}</span>
         )}
       </div>
       {alvo !== null && (
-        <div className="grid grid-cols-2 gap-3" dir="rtl" role="group" aria-label="Qual letra você ouviu?">
+        <div className="grid grid-cols-2 gap-3" dir="rtl" role="group" aria-label={tx.qualLetra}>
           {itens.map((it, i) => (
             <button key={it.glifo} type="button" dir="ltr" disabled={resposta !== null}
                     onClick={() => responder(i)} aria-label={it.nomePt}
@@ -189,8 +191,8 @@ function Identificar({ itens, tocar }: {
       )}
       <p role="status" className="text-[15px] leading-relaxed m-0 empty:hidden">
         {resposta === null || alvo === null ? ''
-          : certo ? `Isso! Era o ${itens[alvo]!.nomePt}.`
-          : `Era o ${itens[alvo]!.nomePt}. Ouça os dois de novo e compare.`}
+          : certo ? tx.isso(itens[alvo]!.nomePt)
+          : tx.era(itens[alvo]!.nomePt)}
       </p>
     </div>
   );

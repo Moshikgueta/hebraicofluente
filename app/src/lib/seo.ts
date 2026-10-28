@@ -28,6 +28,7 @@
  */
 
 import type { Metadata } from 'next';
+import { tx } from '@/i18n/telas/motor-seo';
 
 /** O domínio público. O mesmo `SITE_ORIGIN` que o Worker usa. */
 export const ORIGEM = (process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://hebraicofluente.com.br')
@@ -129,9 +130,9 @@ export function url(rota: string): string {
 export const OG = { src: '/media/og-curso.jpg', largura: 1200, altura: 630 } as const;
 const OG_POR_PORTA: readonly { prefixos: readonly string[]; src: string; alt: string }[] = [
   { prefixos: ['/curso-de-hebraico', '/aprender-hebraico', '/metodo', '/checkout', '/biblia', '/cursos/alfabetizacao'],
-    src: '/media/og-curso.jpg', alt: 'Hebraico Fluente: aprenda a ler hebraico do zero' },
+    src: '/media/og-curso.jpg', alt: tx.ogCurso },
   { prefixos: ['/israel-alem-do-obvio', '/descobrir-israel'],
-    src: '/media/og-livro.jpg', alt: 'Israel Além do Óbvio, de Moshik Gueta: em breve' }
+    src: '/media/og-livro.jpg', alt: tx.ogLivro }
 ];
 
 /** O cartão de compartilhamento de uma rota. */

@@ -47,7 +47,8 @@ describe('o conteúdo', () => {
 describe('as cinco vogais correm da direita para a esquerda', () => {
   it('nos componentes que mostram a sequência', () => {
     expect(fonte('components/learn/Blocks.tsx')).toMatch(/grid grid-cols-3 sm:grid-cols-5 gap-3" dir="rtl"/);
-    expect(fonte('components/learn/CompararPronuncia.tsx')).toMatch(/aria-label="Sílabas" dir="rtl"/);
+    expect(fonte('components/learn/CompararPronuncia.tsx')).toMatch(/aria-label=\{tx\.silabas\} dir="rtl"/);
+    expect(fonte('i18n/telas/licao-comparar-pronuncia.tsx')).toContain("silabas: 'Sílabas'");
     expect(fonte('components/learn/SoundLab.tsx')).toMatch(/<table[^>]*dir="rtl"/);
     expect(fonte('components/learn/ExercisePlayer.tsx')).toMatch(/dir=\{vogais \? 'rtl' : undefined\}/);
   });

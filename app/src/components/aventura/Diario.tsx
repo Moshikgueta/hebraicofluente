@@ -17,10 +17,11 @@ import type { LearnerState } from '@/lib/state/types';
 import { entradasDoDiario, lugaresVisitados, porDia, type TipoDeEntrada } from '@/lib/diario';
 import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { tx } from '@/i18n/telas/academia-diario';
 
 type Pagina = 'tempo' | 'lugares' | 'palavras';
 const PAGINAS: { id: Pagina; nome: string }[] = [
-  { id: 'tempo', nome: 'Registros' }, { id: 'lugares', nome: 'Lugares' }, { id: 'palavras', nome: 'Palavras' }
+  { id: 'tempo', nome: tx.abaRegistros }, { id: 'lugares', nome: tx.abaLugares }, { id: 'palavras', nome: tx.abaPalavras }
 ];
 
 const CARIMBO: Record<TipoDeEntrada, string> = {
@@ -28,7 +29,7 @@ const CARIMBO: Record<TipoDeEntrada, string> = {
 };
 
 const dataPorExtenso = (dia: string) => {
-  const t = new Date(`${dia}T12:00:00`).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+  const t = new Date(`${dia}T12:00:00`).toLocaleDateString(tx.localeData, { day: 'numeric', month: 'long', year: 'numeric' });
   return t;
 };
 
@@ -54,13 +55,13 @@ export function Diario({ state, letras, modulos, comecadas }: {
       <div aria-hidden className="absolute left-0 top-0 bottom-0 w-2 bg-[var(--accent-bg)]" />
       <div className="pl-6 pr-5 pt-5 pb-5 grid gap-4">
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-          <h2 id="t-diario" className="m-0 font-display text-[20px] font-semibold">Diário de descobertas</h2>
+          <h2 id="t-diario" className="m-0 font-display text-[20px] font-semibold">{tx.titulo}</h2>
           <span className="font-ui text-[13px] text-ink-muted tabular-nums">
-            {entradas.length} {entradas.length === 1 ? 'registro' : 'registros'}
+            {tx.nRegistros(entradas.length)}
           </span>
         </div>
 
-        <div role="tablist" aria-label="Páginas do diário" className="flex gap-1 rounded-[var(--r-md)] bg-surface-2 p-1">
+        <div role="tablist" aria-label={tx.paginas} className="flex gap-1 rounded-[var(--r-md)] bg-surface-2 p-1">
           {PAGINAS.map(pg => (
             <button key={pg.id} role="tab" type="button" aria-selected={pagina === pg.id}
                     aria-controls={`diario-${pg.id}`} id={`aba-${pg.id}`}
@@ -76,7 +77,7 @@ export function Diario({ state, letras, modulos, comecadas }: {
         <div key={pagina} id={`diario-${pagina}`} role="tabpanel" aria-labelledby={`aba-${pagina}`} className="hf-passo">
           {pagina === 'tempo' && (entradas.length === 0 ? (
             <p className="m-0 font-ui text-[15px] leading-relaxed text-ink-body">
-              O diário começa na Aula 0. Cada letra aprendida, cada leitura e cada missão ganha uma linha aqui, com a data.
+              {tx.vazio}
             </p>
           ) : (
             <div className="grid gap-4">
@@ -103,7 +104,7 @@ export function Diario({ state, letras, modulos, comecadas }: {
               {entradas.length > 10 && (
                 <button type="button" onClick={() => setTudo(t => !t)}
                         className="justify-self-start min-h-[44px] px-1 font-ui text-[14px] font-semibold text-[var(--accent)] underline underline-offset-4">
-                  {tudo ? 'Ver só os mais recentes' : `Ver todos os ${entradas.length} registros`}
+                  {tudo ? tx.verRecentes : tx.verTodos(entradas.length)}
                 </button>
               )}
             </div>
@@ -118,12 +119,12 @@ export function Diario({ state, letras, modulos, comecadas }: {
                     <span aria-hidden className="block h-[64px]"><Cenario n={n} trancado={!foi} /></span>
                     <span className="grid px-2.5 py-2 gap-0.5">
                       <span className="font-ui text-[13px] font-semibold text-ink first-letter:uppercase">{LUGAR[n].pt}</span>
-                      <span className="font-ui text-[12px] text-ink-muted">Módulo {n} · {foi ? 'visitado' : 'ainda não'}</span>
+                      <span className="font-ui text-[12px] text-ink-muted">{tx.modulo(n, foi)}</span>
                     </span>
                     {foi && (
                       <span aria-hidden className="absolute right-2 top-2 grid place-items-center w-11 h-11 rounded-full border-2 border-[var(--gold)]
                                                    bg-[var(--card)]/85 text-[var(--gold-ink)] font-ui text-[9px] font-bold uppercase tracking-[.06em] rotate-12">
-                        visto
+                        {tx.visto}
                       </span>
                     )}
                   </li>
@@ -136,8 +137,8 @@ export function Diario({ state, letras, modulos, comecadas }: {
             <div className="grid gap-3">
               <p className="m-0 font-ui text-[15px] text-ink-body">
                 {palavras.length === 0
-                  ? 'As palavras aparecem aqui quando você ler a primeira, lá pela segunda lição.'
-                  : `Você já lê ${palavras.length} ${palavras.length === 1 ? 'palavra' : 'palavras'} do curso. As mais recentes:`}
+                  ? tx.semPalavras
+                  : tx.jaLe(palavras.length)}
               </p>
               {palavras.length > 0 && (
                 <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
@@ -150,7 +151,7 @@ export function Diario({ state, letras, modulos, comecadas }: {
                 </ul>
               )}
               <Link href="/vocabulario" className="justify-self-start min-h-[44px] inline-flex items-center font-ui text-[14px] font-semibold text-[var(--accent)] underline underline-offset-4">
-                Ver o vocabulário inteiro
+                {tx.verVocabulario}
               </Link>
             </div>
           )}

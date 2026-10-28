@@ -19,6 +19,8 @@
  * (tools/cortar-audio.mjs, 25/09/2026).
  */
 
+import { tx } from '@/i18n/telas/motor-gravador';
+
 /** Em ordem de preferência. O primeiro que o navegador aceitar é o usado. */
 export const FORMATOS = [
   'audio/mp4;codecs=mp4a.40.2',
@@ -119,15 +121,15 @@ export type Diagnostico = { nivel: 'ok' | 'baixo' | 'estourado' | 'sem-voz'; tex
 export function diagnosticar(amostras: Float32Array, taxa: number): Diagnostico {
   const p = pico(amostras);
   if (!acharVoz(amostras, taxa)) {
-    return { nivel: 'sem-voz', texto: 'Não ouvi voz nesta gravação. Confira se o microfone certo está ligado.' };
+    return { nivel: 'sem-voz', texto: tx.semVoz };
   }
   if (p >= 0.995) {
-    return { nivel: 'estourado', texto: 'A voz estourou (passou do máximo). Afaste um pouco o celular e grave de novo.' };
+    return { nivel: 'estourado', texto: tx.estourado };
   }
   if (dB(p) < -30) {
-    return { nivel: 'baixo', texto: 'Ficou muito baixo. Chegue mais perto do microfone e grave de novo.' };
+    return { nivel: 'baixo', texto: tx.baixo };
   }
-  return { nivel: 'ok', texto: 'Volume bom.' };
+  return { nivel: 'ok', texto: tx.ok };
 }
 
 /**
