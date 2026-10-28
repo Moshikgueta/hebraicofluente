@@ -977,6 +977,7 @@ function StageFixacao({
             logo abaixo, igual. */}
         {strong && <CelebracaoDaLetra letter={letter} />}
         <Milestone
+          yael={!strong}
           tone={strong || fezReforco ? 'bom' : 'parcial'}
           kicker={tx.placar(result.correct, result.total, pct)}
           title={strong ? tx.maisUma

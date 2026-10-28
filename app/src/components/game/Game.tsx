@@ -11,6 +11,7 @@ import { IconeChama } from '@/components/shell/NavIcons';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
+import { Yael } from '@/components/aventura/Yael';
 import { tx } from '@/i18n/telas/academia-game';
 
 export function ProgressBar({
@@ -117,16 +118,21 @@ export function AchievementBadge({
 /* The one strong celebration. Reserved for a completed letter, a checkpoint
    and the end of the course - nothing smaller earns it. */
 export function Milestone({
-  kicker, title, body, children, tone = 'bom'
+  kicker, title, body, children, tone = 'bom', yael = true
 }: {
   kicker: string; title: string; body: string; children?: React.ReactNode;
   /** `bom` é teal, `parcial` é gold. Um resultado de 0% num cartão verde
    *  diz a coisa errada antes de alguém ler uma palavra. */
   tone?: 'bom' | 'parcial';
+  /** A Yael no alto do cartão (28/10/2026): comemora no `bom` e inclina a
+   *  cabeça no `parcial`. Desligada onde a tela já tem a sua (o fim da letra
+   *  com a carta, o checkpoint) e no A1, que é outro curso. */
+  yael?: boolean;
 }) {
   const parcial = tone === 'parcial';
   return (
     <Card tone={parcial ? 'ember' : 'mint'} className="p-7 sm:p-9 grid gap-4 text-center animate-rise">
+      {yael && <Yael humor={parcial ? 'quase' : 'comemora'} className="justify-self-center w-[84px] -mt-2 -mb-2" />}
       <p className={`font-ui text-[12px] uppercase tracking-[.12em]
         ${parcial ? 'text-[var(--gold-ink)]' : 'text-[var(--mint-ink)]'}`}>{kicker}</p>
       <h2 className="text-[26px] sm:text-[32px] font-bold leading-tight text-ink">{title}</h2>
