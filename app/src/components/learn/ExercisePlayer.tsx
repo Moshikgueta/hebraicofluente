@@ -525,6 +525,19 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'meaning-to-word':
     case 'odd-one-out':
       return null;
+    /* A foto do vocabulário (28/10/2026). Tamanho fixo, para a tela não
+       pular quando ela carrega; o texto alternativo descreve a cena. Se a
+       imagem não carregar, a descrição fica no lugar e a questão continua
+       respondível pelo sentido escrito embaixo. */
+    case 'image-to-word':
+      return (
+        <figure className="grid justify-items-center gap-2 m-0 py-1">
+          <img src={ex.image} alt={ex.imageAlt} width={220} height={220} loading="eager" decoding="async"
+               className="w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] object-cover rounded-[18px]
+                          border border-line bg-surface-2 shadow-[var(--sh)]" />
+          <figcaption className="sr-only">{ex.pt}</figcaption>
+        </figure>
+      );
     /* A palavra à mão, sem vogais - ou, no modo que vai da impressa para a
        cursiva, a palavra impressa, com elas. No modo `letra`, uma letra da
        palavra cursiva vem destacada. */
@@ -736,7 +749,7 @@ function Options({
 /* Which exercises answer in Hebrew. */
 const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'letter-recognition' || ex.kind === 'final-form' ||
-  ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
+  ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' || ex.kind === 'image-to-word' ||
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
   ex.kind === 'odd-one-out' || ex.kind === 'letter-in-word' ||
