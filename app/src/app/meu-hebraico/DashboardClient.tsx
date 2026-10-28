@@ -39,6 +39,8 @@ import { AntesEDepois } from '@/components/platform/AntesEDepois';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { resumoDoDominio } from '@/lib/dominio';
 import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-dashboard-client';
 
 /** Itens vencidos a partir dos quais o painel sugere revisar antes da lição. */
 export const REVISAO_URGENTE = 15;
@@ -153,28 +155,31 @@ export function DashboardClient() {
   /* A frase de orientação do topo: onde a pessoa está e o que vem agora. */
   const totalLetras = course.totalLetters;
   const orientacao = aula0Primeiro
-    ? 'Seu primeiro passo é a Aula 0: uns dez minutos, e a primeira letra abre.'
+    ? tx.orientaAula0
     : terminar
-      ? `Falta terminar os exercícios de ${terminar.nome} para a próxima lição abrir.`
+      ? fmt(tx.orientaTerminar, { nome: terminar.nome })
       : next.kind === 'letter'
         ? (p.mastered === 0
-            ? `Hoje você aprende a sua primeira letra: ${next.letter.namePt}.`
-            : `Você já concluiu ${p.mastered} de ${totalLetras} letras. A próxima é ${next.letter.namePt}.`)
+            ? fmt(tx.orientaPrimeira, { nome: next.letter.namePt })
+            : fmt(tx.orientaLetra, { n: p.mastered, total: totalLetras, nome: next.letter.namePt }))
         : next.kind === 'som'
-          ? `Você já concluiu ${p.mastered} de ${totalLetras} letras. A próxima lição é ${ehContraste(next.som) ? next.nome.toLowerCase() : `o som ${next.nome}`}.`
+          ? fmt(tx.orientaSom, {
+              n: p.mastered, total: totalLetras,
+              licao: ehContraste(next.som) ? next.nome.toLowerCase() : fmt(tx.oSom, { nome: next.nome })
+            })
           : next.kind === 'checkpoint'
-            ? `Você fechou as letras do módulo ${next.module.n}. Falta o checkpoint para seguir.`
+            ? fmt(tx.orientaCheckpoint, { n: next.module.n })
             : next.kind === 'extra'
-              ? `Agora o módulo ${next.module.n}: ${next.module.titlePt}.`
-              : 'Você chegou ao fim do alfabeto. Falta o desafio final.';
+              ? fmt(tx.orientaExtra, { n: next.module.n, titulo: next.module.titlePt })
+              : tx.orientaFim;
 
   /* A lição do plano de hoje: a mesma do botão principal. */
-  const licaoDeHoje = aula0Primeiro ? { nome: 'Aula 0', href: '/inicio' }
+  const licaoDeHoje = aula0Primeiro ? { nome: tx.hojeAula0, href: '/inicio' }
     : terminar ? { nome: terminar.nome, href: rotaDaLicao(terminar.id) }
     : next.kind === 'letter' ? { nome: next.letter.namePt, href: `/licao/${next.letter.id}` }
     : next.kind === 'som' ? { nome: next.nome, href: `/som/${next.som}` }
-    : next.kind === 'checkpoint' ? { nome: `checkpoint ${next.module.n}`, href: `/checkpoint/${next.module.n}` }
-    : next.kind === 'extra' ? { nome: `módulo ${next.module.n}`, href: `/modulo/${next.module.n}` }
+    : next.kind === 'checkpoint' ? { nome: fmt(tx.hojeCheckpoint, { n: next.module.n }), href: `/checkpoint/${next.module.n}` }
+    : next.kind === 'extra' ? { nome: fmt(tx.hojeModulo, { n: next.module.n }), href: `/modulo/${next.module.n}` }
     : null;
 
   return (
@@ -208,102 +213,108 @@ export function DashboardClient() {
       {(needsWarmUp(p.state, p.day) || p.dueCount >= REVISAO_URGENTE) && (
         <Card tone="mint" className="p-5 sm:p-6 grid sm:grid-cols-[1fr_auto] items-center gap-4">
           <div className="grid gap-1">
-            <p className="font-display text-[18px] font-bold text-ink">Revisar antes de continuar</p>
+            <p className="font-display text-[18px] font-bold text-ink">{tx.revisarTitulo}</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               {needsWarmUp(p.state, p.day)
-                ? 'Você esteve fora alguns dias. Três minutos no que estava escapando e a lição de hoje rende muito mais.'
-                : `Você tem ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'} para revisar. Uma revisão rápida agora vai ajudar você a aprender a próxima letra com mais facilidade.`}
+                ? tx.revisarAusente
+                : tx.revisarItens(p.dueCount)}
             </p>
           </div>
           <LinkButton href="/revisao" className="justify-self-start sm:justify-self-end">
-            Revisar agora
+            {tx.revisarAgora}
           </LinkButton>
         </Card>
       )}
 
       {/* The primary action, alone and unmissable. */}
       <section aria-labelledby="continuar">
-        <h2 id="continuar" className="sr-only">Continuar aprendendo</h2>
+        <h2 id="continuar" className="sr-only">{tx.continuarAprendendo}</h2>
         {aula0Primeiro && (
           <div className="grid gap-2">
             <CartaoCurso
-              kicker="Antes da primeira letra"
-              titulo="Como o hebraico funciona"
-              sub="A aula que abre a primeira letra: a direção da leitura, o alfabeto, o nikud e como este curso funciona. Termina com uma checagem curta, e aí o Álef abre."
+              kicker={tx.antesDaPrimeira}
+              titulo={tx.comoFunciona}
+              sub={tx.aula0Sub}
               pct={p.progress}
               href="/inicio"
-              cta="Começar pela Aula 0"
+              cta={tx.aula0Cta}
             />
           </div>
         )}
 
         {!aula0Primeiro && terminar && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Faltam os exercícios de ${terminar.nome}: a próxima lição abre com ${Math.round(LIBERA_MARK * 100)}%.`
-              + (terminar.nota != null ? ` Sua melhor nota até agora: ${Math.round(terminar.nota * 100)}%.` : '')}
+            sub={fmt(tx.terminarSub, { nome: terminar.nome, pct: Math.round(LIBERA_MARK * 100) })
+              + (terminar.nota != null ? fmt(tx.melhorNota, { nota: Math.round(terminar.nota * 100) }) : '')}
             pct={p.progress}
             href={rotaDaLicao(terminar.id)}
-            cta={`Terminar ${terminar.nome}`}
+            cta={fmt(tx.terminarCta, { nome: terminar.nome })}
           />
         )}
 
         {!aula0Primeiro && !terminar && next.kind === 'letter' && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.letter.lesson} - letra ${next.letter.namePt}, som ${somPt(soOLadoDoPonto(next.letter).sound)}`}
+            sub={fmt(tx.letraSub, {
+              modulo: next.module.n, licao: next.letter.lesson, nome: next.letter.namePt,
+              som: somPt(soOLadoDoPonto(next.letter).sound)
+            })}
             pct={p.progress}
             href={`/licao/${next.letter.id}`}
             cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar a lição'}
+              ? tx.continuarAprendendo : tx.comecarLicao}
           />
         )}
 
         {!aula0Primeiro && !terminar && next.kind === 'som' && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.lesson} - ${ehContraste(next.som) ? next.nome.toLowerCase() : `o som ${next.nome}`}`}
+            sub={fmt(tx.somSub, {
+              modulo: next.module.n, licao: next.lesson,
+              nome: ehContraste(next.som) ? next.nome.toLowerCase() : fmt(tx.oSom, { nome: next.nome })
+            })}
             pct={p.progress}
             href={`/som/${next.som}`}
             cta={(p.state.lessons[idDoSom(next.som)]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar a lição'}
+              ? tx.continuarAprendendo : tx.comecarLicao}
           />
         )}
 
         {next.kind === 'checkpoint' && (
           <CartaoCurso
-            kicker={`Checkpoint ${next.module.n}`}
+            kicker={fmt(tx.checkpointKicker, { n: next.module.n })}
             titulo={next.module.titlePt}
-            sub={`As ${next.module.letterIds.length} letras do módulo, juntas.`}
+            sub={fmt(tx.checkpointSub, { n: next.module.letterIds.length })}
             pct={p.progress}
             href={`/checkpoint/${next.module.n}`}
-            cta="Fazer o checkpoint"
+            cta={tx.checkpointCta}
           />
         )}
 
         {next.kind === 'extra' && (
           <CartaoCurso
-            kicker={`Módulo ${next.module.n}`}
+            kicker={fmt(tx.moduloKicker, { n: next.module.n })}
             titulo={next.module.titlePt}
-            sub="Nenhuma letra nova - e é o módulo que separa quem decora de quem lê."
+            sub={tx.extraSub}
             pct={p.progress}
             href={`/modulo/${next.module.n}`}
             cta={(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar o módulo'}
+              ? tx.continuarAprendendo : tx.comecarModulo}
           />
         )}
 
         {next.kind === 'done' && (
           <CartaoCurso
-            kicker="Alfabeto concluído"
-            titulo="Você chegou ao fim do alfabeto."
-            sub="As 22 letras, sem transliteração para se apoiar."
+            kicker={tx.fimKicker}
+            titulo={tx.fimTitulo}
+            sub={tx.fimSub}
             pct={1}
             href="/desafio-final"
-            cta="Ir para o desafio final"
+            cta={tx.fimCta}
           />
         )}
       </section>
@@ -314,15 +325,15 @@ export function DashboardClient() {
       {!aula0Primeiro && primeiraPendente && (
         <Card tone="wash" className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
-            <Badge tone="accent">Minha Primeira Leitura</Badge>
+            <Badge tone="accent">{tx.primeiraBadge}</Badge>
             <p className="font-display text-[17px] font-semibold text-ink mt-1">
-              Módulo {primeiraPendente.n} concluído! Hora de praticar a leitura.
+              {fmt(tx.primeiraTitulo, { n: primeiraPendente.n })}
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Algumas palavras formadas com as letras e os sinais vocálicos que você já aprendeu. Você lê por conta própria, depois ouve e confere.
+              {tx.primeiraTexto}
             </p>
           </div>
-          <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">Ler agora</LinkButton>
+          <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">{tx.lerAgora}</LinkButton>
         </Card>
       )}
 
@@ -339,23 +350,23 @@ export function DashboardClient() {
       {aula0Primeiro ? null : licoesFeitas === 0 ? (
         <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
-            <Badge tone="accent">Antes da primeira letra</Badge>
+            <Badge tone="accent">{tx.antesDaPrimeira}</Badge>
             <p className="font-display text-[17px] font-semibold text-ink mt-1">
-              Como o hebraico funciona
+              {tx.comoFunciona}
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Dez minutos de leitura: a direção, o alfabeto, o que muda em relação
-              ao português e como este curso funciona.
+              {tx.comoFuncionaTexto}
             </p>
           </div>
-          <LinkButton href="/inicio" variant="secondary" className="shrink-0">Ler agora</LinkButton>
+          <LinkButton href="/inicio" variant="secondary" className="shrink-0">{tx.lerAgora}</LinkButton>
         </Card>
       ) : (
         <p className="font-ui text-[13.5px] text-ink-muted">
-          <Link href="/inicio" className="hover:text-[var(--accent)]">
-            Como o hebraico funciona
-          </Link>{' '}
-          · a explicação de antes da primeira letra, para reler quando quiser.
+          {tx.reler(t => (
+            <Link href="/inicio" className="hover:text-[var(--accent)]">
+              {t}
+            </Link>
+          ))}
         </p>
       )}
 
@@ -370,17 +381,18 @@ export function DashboardClient() {
           nada de XP ou desconto por depoimento. Ver /depoimento. */}
       {licoesFeitas >= 6 && (
         <p className="font-ui text-[13.5px] text-ink-muted">
-          <Link href="/depoimento" className="hover:text-[var(--accent)] underline underline-offset-2">
-            Conte como está sendo
-          </Link>{' '}
-          · o seu depoimento ajuda o curso e quem está pensando em começar.
+          {tx.depoimento(t => (
+            <Link href="/depoimento" className="hover:text-[var(--accent)] underline underline-offset-2">
+              {t}
+            </Link>
+          ))}
         </p>
       )}
 
       {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
           e ela responde na sequência certa: o que eu já fiz, o que está
           pendente, e como foi a semana. */}
-      <section aria-label="Seus números" className="grid gap-3
+      <section aria-label={tx.seusNumeros} className="grid gap-3
                           [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
         {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
             (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
@@ -388,15 +400,15 @@ export function DashboardClient() {
         {/* Um zero não informa nada e desanima (28/10/2026): o cartão
             aparece quando há o que contar. */}
         {dominio.contagem.dominada > 0 && (
-          <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
+          <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? tx.letraDominada : tx.letrasDominadas}
                         tom="teal" icone={<IconeLetras />} />
         )}
-        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'lição concluída' : 'lições concluídas'}
+        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? tx.licaoConcluida : tx.licoesConcluidas}
                       tom="teal" icone={<IconeLicoes />} />
         {p.dueCount > 0 && (
-          <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
+          <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? tx.itemARevisar : tx.itensARevisar} tom="gold" icone={<IconeRevisar />} />
         )}
-        {minutosSemana > 0 && <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />}
+        {minutosSemana > 0 && <CartaoNumero n={tempoSemana} rotulo={tx.nestaSemana} tom="neutro" icone={<IconeTempo />} />}
       </section>
 
       {/* Meu domínio das letras (11/10/2026): o que ele SABE, por habilidade,
@@ -404,14 +416,14 @@ export function DashboardClient() {
       {(dominio.contagem.dominada + dominio.contagem.quase > 0 || dominio.paraPraticar.length > 0) && (
         <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
-            <p className="font-display text-[17px] font-semibold text-ink m-0">Meu domínio das letras</p>
+            <p className="font-display text-[17px] font-semibold text-ink m-0">{tx.dominioTitulo}</p>
             <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
-              {`Dominadas: ${dominio.contagem.dominada} · Quase dominadas: ${dominio.contagem.quase}`}
+              {fmt(tx.dominioResumo, { dominadas: dominio.contagem.dominada, quase: dominio.contagem.quase })}
               {dominio.paraPraticar.length > 0 &&
-                ` · Para reforçar: ${dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ')}`}
+                fmt(tx.paraReforcar, { letras: dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ') })}
             </p>
           </div>
-          <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">Ver o meu domínio</LinkButton>
+          <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">{tx.verDominio}</LinkButton>
         </Card>
       )}
 
@@ -433,20 +445,20 @@ export function DashboardClient() {
       <section aria-labelledby="praticar" className="grid gap-3">
         <div className="flex items-baseline justify-between gap-3">
           <h2 id="praticar" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-            Praticar agora
+            {tx.praticarAgora}
           </h2>
           <Link href="/academia"
                 className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                            text-[var(--teal-ink)] hover:underline">
-            Ver tudo →
+            {tx.verTudo}
           </Link>
         </div>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
           {([
-            ['/leitura', 'Leitura', 'Pratique a leitura de palavras no seu ritmo.'],
-            ['/academia?jogo=match', 'Match', 'Junte letra, nome e som.'],
-            ['/academia?jogo=blast', 'Blast', 'Rápido, com sequência de acertos.'],
-            ['/academia?jogo=teste', 'Teste', 'Nota no fim e revisão dos erros.']
+            ['/leitura', tx.leituraTitulo, tx.leituraDesc],
+            ['/academia?jogo=match', tx.matchTitulo, tx.matchDesc],
+            ['/academia?jogo=blast', tx.blastTitulo, tx.blastDesc],
+            ['/academia?jogo=teste', tx.testeTitulo, tx.testeDesc]
           ] as const).map(([href, titulo, desc]) => (
             <li key={href}>
               <Link href={href}
@@ -471,14 +483,14 @@ export function DashboardClient() {
         <section aria-labelledby="alfabeto" className="grid gap-3">
           <div className="flex items-baseline justify-between gap-3">
             <h2 id="alfabeto" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              O alfabeto
+              {tx.alfabeto}
             </h2>
             {/* 44px de altura mesmo com texto de 13px: um link no telefone é
                 acertado com a ponta do dedo, e não com um cursor. */}
             <Link href="/mapa"
                   className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                              text-[var(--teal-ink)] hover:underline">
-              Ver o mapa →
+              {tx.verMapa}
             </Link>
           </div>
           <Card className="p-4 sm:p-5">
@@ -492,7 +504,7 @@ export function DashboardClient() {
             <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer
                                 font-display text-[18px] font-semibold text-ink list-none
                                 [&::-webkit-details-marker]:hidden">
-              Módulos
+              {tx.modulos}
               <span aria-hidden className="font-ui text-[13px] font-normal text-ink-muted
                                            transition-transform group-open:rotate-180">▾</span>
             </summary>
@@ -501,7 +513,7 @@ export function DashboardClient() {
         </section>
 
         <aside className="hidden lg:grid gap-2 content-start">
-          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">Módulos</h2>
+          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">{tx.modulos}</h2>
           <ModuleProgress />
         </aside>
       </div>
@@ -515,21 +527,21 @@ export function DashboardClient() {
 
       {/* No fim, e não no topo: o painel é de quem já comprou. Em linhas, e
           não em cards de venda. */}
-      <CourseShelf headingPt="Seus cursos" variant="rows" />
+      <CourseShelf headingPt={tx.seusCursos} variant="rows" />
     </div>
   );
 }
 
 function hojePorExtenso(): string {
-  const t = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+  const t = new Date().toLocaleDateString(tx.localeDaData, { weekday: 'long', day: 'numeric', month: 'long' });
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 
 function greeting(): string {
   const h = new Date().getHours();
-  if (h < 12) return 'Bom dia';
-  if (h < 19) return 'Boa tarde';
-  return 'Boa noite';
+  if (h < 12) return tx.bomDia;
+  if (h < 19) return tx.boaTarde;
+  return tx.boaNoite;
 }
 
 /* A primeira vez depois da compra.
@@ -543,9 +555,9 @@ function Welcome() {
   /* O caminho até a primeira letra, em três passos (28/10/2026): quem acabou
      de pagar quer saber o que acontece agora e quanto tempo leva. */
   const caminho = [
-    { t: 'Quatro perguntas rápidas', d: 'Por que você quer aprender, quanto tempo por dia, o que já sabe e como te chamar. Um minuto.' },
-    { t: 'Aula 0', d: 'Como o hebraico funciona: a direção da leitura, as vogais e os pontinhos. Uns dez minutos.' },
-    { t: m1 ? `Módulo 1: ${m1.titlePt}` : 'A primeira letra', d: 'Uma letra por lição, com som, escrita à mão e as primeiras palavras.' }
+    { t: tx.passo1Titulo, d: tx.passo1Texto },
+    { t: tx.passo2Titulo, d: tx.passo2Texto },
+    { t: m1 ? fmt(tx.passo3Titulo, { titulo: m1.titlePt }) : tx.passo3Reserva, d: tx.passo3Texto }
   ];
   return (
     <>
@@ -555,17 +567,16 @@ function Welcome() {
               style={{ background: 'radial-gradient(70% 140% at 92% 0%, rgba(143,214,200,.2), transparent 60%)' }} />
         <div className="relative grid gap-3">
           <p className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.14em] text-[var(--teal-lite)]">
-            Bem-vindo ao Hebraico Fluente
+            {tx.bemVindo}
           </p>
           <h1 id="bem-vindo" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-[1.12]">
-            Seu curso está liberado.
+            {tx.liberado}
           </h1>
           <p className="m-0 text-[16.5px] leading-relaxed text-white max-w-[48ch]">
             {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
                 números diferentes na vitrine: letra e lição são grandezas
                 parecidas, e a cópia manual erra em silêncio. */}
-            São {course.totalLetters} letras, em {course.modules.length} módulos. Antes da primeira,
-            quatro perguntas rápidas para o curso se ajustar a você.
+            {fmt(tx.boasVindasTexto, { letras: course.totalLetters, modulos: course.modules.length })}
           </p>
         </div>
         <div aria-hidden className="relative flex justify-center gap-3 py-1">
@@ -577,13 +588,13 @@ function Welcome() {
         </div>
         <div className="relative">
           <LinkButton href="/onboarding" size="lg" full className="!bg-white !text-[var(--navy)] sm:!w-auto">
-            Começar
+            {tx.comecar}
           </LinkButton>
         </div>
       </section>
 
       <Card className="p-6 sm:p-7 grid gap-4">
-        <h2 className="m-0 font-display text-[19px] font-semibold text-ink">O que vem agora</h2>
+        <h2 className="m-0 font-display text-[19px] font-semibold text-ink">{tx.oQueVem}</h2>
         <ol className="grid gap-4 list-none p-0 m-0">
           {caminho.map((c, k) => (
             <li key={c.t} className="grid grid-cols-[auto_1fr] gap-3.5 items-start">

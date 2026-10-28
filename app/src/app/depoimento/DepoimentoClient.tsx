@@ -23,13 +23,15 @@ import { useAccount } from '@/lib/account/store';
 import {
   assinatura, ERROS, TEXTO_MAX, TEXTO_MIN, tamanho, type Depoimento, type Forma
 } from '@/lib/depoimento';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-depoimento-client';
 
 const VAZIO: Depoimento = { texto: '', forma: 'nome', nomePublico: '', cidade: '', publicar: false, contato: false };
 
 const ESTADO_PT = {
-  novo: 'Recebido. O dono do curso ainda vai ler.',
-  aprovado: 'Lido e aprovado para publicação.',
-  recusado: 'Lido. Este texto não vai ser publicado, mas continua valendo como opinião para o curso.'
+  novo: tx.estadoNovo,
+  aprovado: tx.estadoAprovado,
+  recusado: tx.estadoRecusado
 } as const;
 
 const inputCls = 'w-full min-h-[52px] rounded-[var(--r-md)] border border-[color:var(--line)] bg-surface px-4 ' +
@@ -85,16 +87,16 @@ export function DepoimentoClient() {
       });
       if (!r.ok) {
         const { error } = await r.json().catch(() => ({})) as { error?: string };
-        setErro(ERROS[error ?? ''] ?? 'Não deu para enviar agora. Tente de novo em instantes.');
+        setErro(ERROS[error ?? ''] ?? tx.erroEnviar);
         return;
       }
       const novo = { ...d, estado: 'novo' as const };
       setSalvo(novo); setD(novo);
       setOk(d.publicar
-        ? 'Obrigado! Recebemos o seu depoimento e a sua autorização.'
-        : 'Obrigado! Recebemos o seu depoimento. Ele fica só para o dono do curso ler.');
+        ? tx.obrigadoAutorizado
+        : tx.obrigadoPrivado);
     } catch {
-      setErro('Não deu para enviar agora. Confira a internet e tente de novo.');
+      setErro(tx.erroInternet);
     } finally { setEnviando(false); }
   };
 
@@ -104,9 +106,9 @@ export function DepoimentoClient() {
       const r = await fetch(asset('/api/depoimento'), { method: 'DELETE', credentials: 'same-origin', cache: 'no-store' });
       if (!r.ok) throw new Error();
       setSalvo(null); setD({ ...VAZIO, nomePublico: account.session?.account.name ?? '' }); setConfirmarRetirar(false);
-      setOk('Pronto: o depoimento e a autorização foram apagados.');
+      setOk(tx.retirado);
     } catch {
-      setErro('Não deu para retirar agora. Tente de novo em instantes.');
+      setErro(tx.erroRetirar);
     }
   };
 
@@ -114,28 +116,26 @@ export function DepoimentoClient() {
     <div className="grid gap-6 focus-col">
       <header className="grid gap-3">
         <Link href="/meu-hebraico" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Meu hebraico
+          {tx.voltar}
         </Link>
-        <h1 className="text-[27px] sm:text-[32px] font-bold leading-tight">Conte como está sendo</h1>
+        <h1 className="text-[27px] sm:text-[32px] font-bold leading-tight">{tx.titulo}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body">
-          O seu depoimento ajuda o curso a melhorar e ajuda quem está pensando em começar. Escreva do seu jeito,
-          com o que foi bom e com o que não foi.
+          {tx.intro}
         </p>
       </header>
 
       {salvo?.estado && (
         <Card tone="wash" className="p-4 grid gap-1">
-          <Badge tone="accent">Seu depoimento</Badge>
+          <Badge tone="accent">{tx.seuDepoimento}</Badge>
           <p className="font-ui text-[14px] text-ink-body m-0">{ESTADO_PT[salvo.estado]}</p>
         </Card>
       )}
 
       <form onSubmit={enviar} className="grid gap-5" noValidate>
         <Card className="p-5 sm:p-6 grid gap-3">
-          <label htmlFor="dep-texto" className="text-[18px] font-semibold">O seu depoimento</label>
+          <label htmlFor="dep-texto" className="text-[18px] font-semibold">{tx.oSeuDepoimento}</label>
           <p id="dep-dicas" className="font-ui text-[14px] leading-relaxed text-ink-muted m-0">
-            Se ajudar, responda a uma destas: por que você quis aprender a ler hebraico? O que você já consegue
-            ler hoje que não conseguia antes? O que mais ajudou, ou o que poderia ser melhor?
+            {tx.dicas}
           </p>
           <textarea
             id="dep-texto" value={d.texto} onChange={e => muda('texto', e.target.value)}
@@ -144,17 +144,17 @@ export function DepoimentoClient() {
           />
           <p id="dep-conta" aria-live="polite"
              className={`font-ui text-[12.5px] m-0 ${n > TEXTO_MAX ? 'text-[var(--ember)]' : 'text-ink-muted'}`}>
-            {n} de {TEXTO_MAX} caracteres{n < TEXTO_MIN ? ` (mínimo ${TEXTO_MIN})` : ''}
+            {fmt(tx.contagem, { n, max: TEXTO_MAX })}{n < TEXTO_MIN ? fmt(tx.minimo, { min: TEXTO_MIN }) : ''}
           </p>
         </Card>
 
         <Card className="p-5 sm:p-6 grid gap-3">
           <fieldset className="grid gap-2 border-0 p-0 m-0">
-            <legend className="text-[18px] font-semibold mb-2">Como assinar, se for publicado</legend>
+            <legend className="text-[18px] font-semibold mb-2">{tx.comoAssinar}</legend>
             {([
-              ['nome', 'Com o meu nome (e a cidade, se eu quiser)'],
-              ['iniciais', 'Só com as iniciais do nome'],
-              ['anonimo', 'Sem nome: "Aluno do curso"']
+              ['nome', tx.formaNome],
+              ['iniciais', tx.formaIniciais],
+              ['anonimo', tx.formaAnonimo]
             ] as [Forma, string][]).map(([v, rotulo]) => (
               <label key={v} className="flex items-center gap-3 min-h-[44px] font-ui text-[15px] text-ink cursor-pointer">
                 <input type="radio" name="forma" value={v} checked={d.forma === v}
@@ -166,12 +166,12 @@ export function DepoimentoClient() {
           {d.forma !== 'anonimo' && (
             <div className="grid sm:grid-cols-2 gap-3">
               <label className="grid gap-1 font-ui text-[14px] text-ink">
-                {d.forma === 'iniciais' ? 'Nome (só as iniciais aparecem)' : 'Nome que aparece'}
+                {d.forma === 'iniciais' ? tx.nomeIniciais : tx.nomeQueAparece}
                 <input value={d.nomePublico} onChange={e => muda('nomePublico', e.target.value)}
                        maxLength={60} autoComplete="name" className={inputCls} />
               </label>
               <label className="grid gap-1 font-ui text-[14px] text-ink">
-                Cidade (opcional)
+                {tx.cidade}
                 <input value={d.cidade} onChange={e => muda('cidade', e.target.value)}
                        maxLength={60} autoComplete="address-level2" className={inputCls} />
               </label>
@@ -181,7 +181,7 @@ export function DepoimentoClient() {
 
         {n > 0 && (
           <Card tone="mint" className="p-5 sm:p-6 grid gap-2">
-            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">Como apareceria</p>
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.comoApareceria}</p>
             <blockquote className="m-0 text-[16px] leading-relaxed text-ink whitespace-pre-line">“{d.texto.trim()}”</blockquote>
             <p className="font-ui text-[14px] font-semibold text-ink m-0">- {assinatura(d)}</p>
           </Card>
@@ -192,24 +192,20 @@ export function DepoimentoClient() {
             <input type="checkbox" checked={d.publicar} onChange={e => muda('publicar', e.target.checked)}
                    className="w-5 h-5 mt-1 shrink-0 accent-[var(--accent)]" />
             <span>
-              Autorizo o Hebraico Fluente a publicar este depoimento, do jeito que está na prévia acima, no site e
-              em materiais de divulgação do curso, sem pagamento. Posso retirar a autorização quando quiser, nesta
-              mesma página.
+              {tx.autorizo}
             </span>
           </label>
           <label className="flex items-start gap-3 font-ui text-[15px] leading-relaxed text-ink cursor-pointer">
             <input type="checkbox" checked={d.contato} onChange={e => muda('contato', e.target.checked)}
                    className="w-5 h-5 mt-1 shrink-0 accent-[var(--accent)]" />
-            <span>Aceito receber um e-mail do dono do curso sobre este depoimento.</span>
+            <span>{tx.aceitoEmail}</span>
           </label>
           <p className="font-ui text-[13px] leading-relaxed text-ink-muted m-0">
             {/* LEGAL-107 (auditoria de 01/10/2026): a página prometia "o texto
                 não é editado por ninguém", e a vitrine publica trechos. A
                 regra agora é a que se pratica: as palavras são as suas, e
                 todo corte aparece marcado. */}
-            Sem a autorização, o texto fica só para o dono do curso ler. Publicamos o texto como você escreveu, sem
-            trocar nenhuma palavra; se ele precisar ser encurtado, o corte aparece marcado com [...]. Se você retirar a
-            autorização, o depoimento sai de onde estiver publicado em até 7 dias. Mais detalhes na <Link href="/privacidade" className="underline underline-offset-2">Política de Privacidade</Link>.
+            {tx.regras(t => <Link href="/privacidade" className="underline underline-offset-2">{t}</Link>)}
           </p>
         </Card>
 
@@ -217,23 +213,23 @@ export function DepoimentoClient() {
         {ok && <Aviso>{ok}</Aviso>}
 
         <Button type="submit" size="lg" full disabled={enviando}>
-          {enviando ? 'Enviando…' : salvo ? 'Salvar as mudanças' : 'Enviar o depoimento'}
+          {enviando ? tx.enviando : salvo ? tx.salvarMudancas : tx.enviar}
         </Button>
       </form>
 
       {salvo && (
         <Card className="p-5 grid gap-3">
-          <h2 className="text-[17px] font-semibold m-0">Retirar o depoimento</h2>
+          <h2 className="text-[17px] font-semibold m-0">{tx.retirarTitulo}</h2>
           <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-            Apaga o texto e a autorização. Se ele estiver publicado, sai em até 7 dias.
+            {tx.retirarTexto}
           </p>
           {confirmarRetirar ? (
             <div className="flex flex-wrap gap-2">
-              <Button variant="primary" onClick={retirar}>Sim, retirar</Button>
-              <Button variant="secondary" onClick={() => setConfirmarRetirar(false)}>Cancelar</Button>
+              <Button variant="primary" onClick={retirar}>{tx.simRetirar}</Button>
+              <Button variant="secondary" onClick={() => setConfirmarRetirar(false)}>{tx.cancelar}</Button>
             </div>
           ) : (
-            <Button variant="secondary" onClick={() => setConfirmarRetirar(true)}>Retirar o depoimento</Button>
+            <Button variant="secondary" onClick={() => setConfirmarRetirar(true)}>{tx.retirarTitulo}</Button>
           )}
         </Card>
       )}

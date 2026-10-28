@@ -22,11 +22,14 @@ describe('as etapas do caminho', () => {
   it('o mapa começa na Aula 0 e termina no desafio final', () => {
     const s = fonte('app/mapa/CourseMapClient.tsx');
     expect(s.indexOf('<TrechoAula0')).toBeLessThan(s.indexOf('<TrechoFinal />'));
-    expect(s).toContain("'✓ Meta alcançada: '");
+    /* O texto mora no dicionário da tela (app/src/i18n/telas/). */
+    expect(s).toContain("estado === 'feito' ? tx.metaAlcancada : tx.meta");
+    expect(fonte('i18n/telas/painel-course-map-client.ts')).toContain("metaAlcancada: '✓ Meta alcançada: '");
     expect(s).toContain('isLessonMastered(p.state, id)');
   });
 
   it('o certificado diz o que o exame verificou', () => {
-    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('O que o exame verificou:');
+    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('<strong>{tx.verificouRotulo}</strong>');
+    expect(fonte('i18n/telas/painel-certificado-client.tsx')).toContain("verificouRotulo: 'O que o exame verificou:'");
   });
 });
