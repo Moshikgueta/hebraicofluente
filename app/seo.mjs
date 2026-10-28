@@ -52,6 +52,8 @@ const NAO_LISTADAS = [
   '/comece-aqui',
   /* A Minha Biblioteca, da conta (23/10/2026). */
   '/minha-biblioteca',
+  /* O desafio com um amigo (28/10/2026). */
+  '/desafio-amigo',
   /* Só o curso de alfabetização no site (27/10/2026): respondem 301 para a capa. */
   '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ];

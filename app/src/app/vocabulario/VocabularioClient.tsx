@@ -27,6 +27,7 @@ import { track } from '@/lib/analytics';
 import { tx } from '@/i18n/telas/academia-vocabulario-client';
 import { useProgress } from '@/lib/state/store';
 import { noCaderno, palavrasDoCaderno } from '@/lib/caderno';
+import { DesafiarAmigo } from '@/components/learn/DesafiarAmigo';
 
 /* Sem acento e com o "ss" do curso (kissé) igual a um s: quem busca "kise"
    acha a palavra. */
@@ -82,6 +83,9 @@ export function VocabularioClient() {
           </Link>
         )}
       </header>
+
+      {/* O desafio com um amigo: cinco destas palavras num link (28/10/2026). */}
+      <DesafiarAmigo palavras={leitura.legiveis} />
 
       {n > 0 && (
         <div className="grid gap-1.5">

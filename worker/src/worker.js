@@ -50,6 +50,7 @@ import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
 import * as segundaLetra from './api/segunda-letra.js';
+import * as desafio from './api/desafio.js';
 import * as interessados from './api/interessados.js';
 
 /* A página de venda do curso de alfabetização. Foi a capa até 23/10/2026. */
@@ -162,6 +163,11 @@ const ROUTES = {
   'POST /api/portal': estatisticas.contarPortal,
   /* A segunda letra por e-mail, no fim do teste. Ver api/segunda-letra.js. */
   'POST /api/segunda-letra': segundaLetra.pedir,
+  /* O desafio com um amigo (28/10/2026): o aluno assina cinco palavras do
+     curso, e a página pública confere a assinatura. Nada é gravado. Ver
+     api/desafio.js. */
+  'POST /api/desafio': desafio.criar,
+  'GET /api/desafio': desafio.abrir,
   /* A lista de interessados (23/10/2026): entrar, confirmar e sair. Ver api/interessados.js. */
   'POST /api/interessados': interessados.entrar,
   'POST /api/interessados/confirmar': interessados.confirmar,
