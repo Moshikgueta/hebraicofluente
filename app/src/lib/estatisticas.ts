@@ -10,22 +10,25 @@
  */
 
 import type { LearningEvent } from './analytics';
+import { N_FAIXAS } from './tempo-de-etapa';
 
 export type EventoEnviado =
   | { e: 'resposta'; k: string; l: string; c: boolean }
-  | { e: 'etapa'; l: string; s: number };
+  /* `f`: a faixa de tempo ativo da etapa (lib/tempo-de-etapa.ts), quando medida. */
+  | { e: 'etapa'; l: string; s: number; f?: number };
 
 const ID = /^[a-z0-9-]{1,40}$/;
 
 /** O evento do app, reduzido ao que vai para o servidor - ou nada. */
 export function paraEnvio(ev: LearningEvent): EventoEnviado | null {
-  const { letterId, kind, correct, stage, primeira } = ev.props;
+  const { letterId, kind, correct, stage, primeira, faixa } = ev.props;
   if (!letterId || !ID.test(letterId)) return null;
   if (ev.name === 'exercise_answered' && kind && ID.test(kind) && typeof correct === 'boolean') {
     return { e: 'resposta', k: kind, l: letterId, c: correct };
   }
   if (ev.name === 'stage_completed' && primeira === true && Number.isInteger(stage) && stage! >= 1 && stage! <= 5) {
-    return { e: 'etapa', l: letterId, s: stage! };
+    const f = Number.isInteger(faixa) && faixa! >= 0 && faixa! < N_FAIXAS ? faixa! : undefined;
+    return f === undefined ? { e: 'etapa', l: letterId, s: stage! } : { e: 'etapa', l: letterId, s: stage!, f };
   }
   return null;
 }

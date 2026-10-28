@@ -12,6 +12,7 @@ import {
   type GeneroA1, type TranslitA1
 } from './a1-estado';
 import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
+import { faixaDe } from '@/lib/tempo-de-etapa';
 import { chaveDaAtividade, chaveDaEtapa, descobrir, escolherInteresses, guardarNaColecao, registrarAtividade, visitarEtapa, type Interesse } from './raizes-estado';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
@@ -105,7 +106,9 @@ type Ctx = {
   /** The confusions this learner actually has, worst first. */
   confusions: Confusion[];
   setOnboarding: (o: Onboarding) => void;
-  finishStage: (letterId: string, stage: number, units?: number) => void;
+  /** `segundos`: o tempo ativo da etapa (lib/tempo-de-etapa.ts). Só a faixa
+   *  sai, e só na primeira vez que a etapa é concluída. */
+  finishStage: (letterId: string, stage: number, units?: number, segundos?: number) => void;
   /**
    * One answer, with everything the adaptive layer needs to learn from it:
    * which skill it tested, and - on a miss - which wrong option was chosen, so
@@ -356,14 +359,15 @@ export function ProgressProvider({
     track('onboarding_completed', { goalMinutes: o.goalMinutes, reason: o.reason });
   }, [commit, agora]);
 
-  const finishStage = useCallback((letterId: string, stage: number, units?: number) => {
+  const finishStage = useCallback((letterId: string, stage: number, units?: number, segundos?: number) => {
     const d = today();
     const total = units === undefined ? 5 : 3;
     const before = agora().lessons[letterId]?.stagesDone.length ?? 0;
     const primeira = !(agora().lessons[letterId]?.stagesDone ?? []).includes(stage);
     const next = completeStage(agora(), letterId, stage, d, units);
     commit(next);
-    track('stage_completed', { letterId, stage, primeira });
+    const faixa = primeira && segundos !== undefined ? faixaDe(segundos) : null;
+    track('stage_completed', { letterId, stage, primeira, ...(faixa === null ? {} : { faixa }) });
     if (before < total && (next.lessons[letterId]?.stagesDone.length ?? 0) >= total) {
       track('lesson_completed', { letterId });
     }

@@ -16,6 +16,7 @@
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
+import { useTempoAtivo } from '@/lib/tempo-de-etapa';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
@@ -174,10 +175,13 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     gravarLicao(letter.id, { etapa: stage });
   }, [letter.id, stage]);
 
+  /* O tempo ativo da etapa aberta: só a faixa sai, nas estatísticas, na
+     primeira vez que a etapa é concluída (lib/tempo-de-etapa.ts). */
+  const tempoDaEtapa = useTempoAtivo(`${letter.id}:${stage}`);
   const done = useCallback((n: number) => {
-    p.finishStage(letter.id, n);
+    p.finishStage(letter.id, n, undefined, tempoDaEtapa());
     if (n < 5) setStage(n + 1);
-  }, [p, letter.id, setStage]);
+  }, [p, letter.id, setStage, tempoDaEtapa]);
 
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
   const unlockedCard = cultureAt(p.mastered);
@@ -231,7 +235,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
           result={quizResult}
           onResult={r => {
             registrarRodada(`licao-fixacao-${letter.id}`, quiz);
-            setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5);
+            setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5, undefined, tempoDaEtapa());
           }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {

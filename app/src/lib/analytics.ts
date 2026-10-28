@@ -65,6 +65,8 @@ export type EventProps = {
   kind?: string;
   /** Etapa concluída pela primeira vez (e não refeita). */
   primeira?: boolean;
+  /** A faixa de tempo ativo da etapa (lib/tempo-de-etapa.ts), nunca os segundos. */
+  faixa?: number;
 };
 
 export type LearningEvent = { name: EventName; props: EventProps; at: number };

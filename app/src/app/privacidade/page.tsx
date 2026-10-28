@@ -286,12 +286,15 @@ export default function Page() {
           o navegador não guarda mais qual versão você viu, e o que ficou no servidor são só
           totais por dia, sem nome, e-mail, conta nem endereço de IP.
         </p>
-        {/* 30/09/2026: worker/src/api/estatisticas.js. */}
+        {/* 30/09/2026: worker/src/api/estatisticas.js. A faixa de tempo entrou em 28/10/2026
+            (app/src/lib/tempo-de-etapa.ts). */}
         <p>
           Para melhorar as aulas, quem está conectado ao curso manda também, em lote, só contagens de
           aprendizagem: que tipo de exercício, de qual lição, se a resposta foi certa ou errada, e que etapa de
-          qual lição foi concluída pela primeira vez. O servidor soma esses números por dia e não guarda nome,
-          e-mail, conta, endereço de IP, horário nem o que você digitou. Os totais saem depois de um ano.
+          qual lição foi concluída pela primeira vez, com a faixa de tempo que ela levou (por exemplo, "entre 2
+          e 4 minutos", contando só o tempo em que a página estava à vista e em uso; nunca o tempo exato). O
+          servidor soma esses números por dia e não guarda nome, e-mail, conta, endereço de IP, horário nem o
+          que você digitou. Os totais saem depois de um ano.
         </p>
         {/* 03/10/2026: worker/src/api/estatisticas.js, contarDemo. */}
         <p>

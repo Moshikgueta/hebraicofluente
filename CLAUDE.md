@@ -1086,6 +1086,12 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   manda em lote respostas (tipo, lição, certa/errada) e etapas concluídas pela primeira vez.
   O servidor (api/estatisticas.js) soma em `estatisticas (dia, chave, n)`, sem conta, e-mail,
   IP nem horário; apaga depois de 365 dias. O dono lê em /admin/estatisticas.
+- **Tempo por letra** (28/10/2026, decisão do dono): a lição mede o tempo ATIVO de cada etapa
+  (`useTempoAtivo` em lib/tempo-de-etapa.ts: página à vista e gesto no último minuto) e, na
+  primeira conclusão, o lote leva só a FAIXA (0 a 6, "menos de 1 min" a "20 min ou mais"),
+  nunca os segundos. O servidor soma `t|<lição>|<etapa>|<faixa>`; /admin/estatisticas mostra a
+  faixa mediana por etapa e a estimativa por letra (`tempoPorLetra`). É o que confere o "cerca de
+  dez minutos por letra" do site. Privacidade art. 4 diz isso (versão 2026-10-28).
 - LinkButton para rota paga não pré-carrega (evita 403 para quem não comprou). Conta criada
   há menos de 24 h vê o preço antes do aviso "já pagou com outro e-mail?".
 
