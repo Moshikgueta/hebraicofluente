@@ -9,20 +9,30 @@ import { PONTOS_DA_CENA, descobertasDaCena } from '@/lib/cena-exploravel';
 
 const letras = conteudoPago.letters;
 const vocab = vocabularioDoCurso(letras);
+const extras = conteudoPago.extras;
+const ambos = [6, 7];
 
 describe('as cenas exploráveis', () => {
   for (const [n, pontos] of Object.entries(PONTOS_DA_CENA)) {
     const modulo = Number(n);
     it(`módulo ${modulo}: toda palavra é do curso e aparece até o fim do módulo`, () => {
       const ate = letras.filter(l => l.module <= modulo);
+      const ds = descobertasDaCena(modulo, letras, ate, extras, ambos.filter(n => n <= modulo));
       for (const p of pontos!) {
-        const w = vocab.find(x => clean(x.he) === clean(p.he));
-        expect(w, p.he).toBeDefined();
-        expect(w!.he, 'mesma grafia do curso').toBe(p.he);
-        const ds = descobertasDaCena(modulo, letras, ate);
+        if (p.fonte === 'sem-pontos') {
+          expect(extras.unpointed.groups.flatMap(g => g.words).some(w => w.bare === p.he), p.he).toBe(true);
+        } else if (p.fonte === 'gueresh') {
+          expect(extras.gerech.letters.flatMap(l => l.words).some(w => w.he === p.he), p.he).toBe(true);
+        } else {
+          const w = vocab.find(x => clean(x.he) === clean(p.he));
+          expect(w, p.he).toBeDefined();
+          expect(w!.he, 'mesma grafia do curso').toBe(p.he);
+          /* E já se lê no fim do PRÓPRIO módulo (6 e 7 não têm letra nova). */
+          expect(w!.desde, `${p.he} é de antes do fim do módulo`).toBeLessThanOrEqual(Math.max(...ate.map(l => l.order)));
+        }
         expect(ds.find(d => d.he === p.he)?.legivel, `${p.he} se lê no fim do módulo`).toBe(true);
       }
-      expect(descobertasDaCena(modulo, letras, ate)).toHaveLength(pontos!.length);
+      expect(ds).toHaveLength(pontos!.length);
     });
 
     it(`módulo ${modulo}: os pontos não se cobrem e ficam dentro do desenho`, () => {
@@ -45,7 +55,16 @@ describe('as cenas exploráveis', () => {
     expect(yam.falta?.id).toBe('yod');
   });
 
-  it('módulo sem cena não tem pontos', () => {
-    expect(descobertasDaCena(7, letras, letras)).toEqual([]);
+  it('as palavras sem pontos e as do guéresh esperam o próprio módulo', () => {
+    const seis = descobertasDaCena(6, letras, letras, extras, []);
+    expect(seis.every(d => !d.legivel && d.faltaModulo === 6)).toBe(true);
+    expect(descobertasDaCena(6, letras, letras, extras, [6]).every(d => d.legivel && d.palavra.comPontos)).toBe(true);
+    const pij = descobertasDaCena(7, letras, letras, extras, [6]).find(d => d.fonte === 'gueresh')!;
+    expect(pij.faltaModulo).toBe(7);
+    expect(pij.palavra.translit).toBeNull();
+  });
+
+  it('todo módulo tem cena', () => {
+    for (const m of [1, 2, 3, 4, 5, 6, 7]) expect(descobertasDaCena(m, letras, letras, extras, ambos).length, `módulo ${m}`).toBeGreaterThanOrEqual(3);
   });
 });
