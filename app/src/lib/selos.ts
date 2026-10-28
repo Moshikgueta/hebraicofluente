@@ -25,19 +25,21 @@
  * recusa o símbolo escrito à mão fora deste arquivo.
  */
 
+import { tx } from '@/i18n/telas/motor-selos';
+
 export type Selo = 'dica' | 'brasileiro' | 'erro' | 'padrao' | 'curiosidade';
 
 export const SELOS: Record<Selo, { emoji: string; titulo: string }> = {
   /** Como LER uma coisa que se repete: o {{ה}} no fim da palavra, o {{וֹ}}. */
-  dica: { emoji: '💡', titulo: 'Dica de leitura' },
+  dica: { emoji: '💡', titulo: tx.dica },
   /** A comparação com o português, quando ela ajuda. */
-  brasileiro: { emoji: '🇧🇷', titulo: 'Para quem fala português' },
+  brasileiro: { emoji: '🇧🇷', titulo: tx.brasileiro },
   /** O que sai errado da boca de um brasileiro, e o que sai certo. */
-  erro: { emoji: '⚠️', titulo: 'Erro comum' },
+  erro: { emoji: '⚠️', titulo: tx.erro },
   /** O padrão que volta o curso inteiro, e que vale reconhecer de uma vez. */
-  padrao: { emoji: '🧠', titulo: 'Padrão que você vai ver muito' },
+  padrao: { emoji: '🧠', titulo: tx.padrao },
   /** História, cultura, a origem do desenho. Nunca é pré-requisito de nada. */
-  curiosidade: { emoji: '📖', titulo: 'Curiosidade' }
+  curiosidade: { emoji: '📖', titulo: tx.curiosidade }
 };
 
 /** Os cinco símbolos, para quem precisa conferir que ninguém os escreveu à mão. */

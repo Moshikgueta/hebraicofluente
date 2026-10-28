@@ -94,9 +94,9 @@ export function hidratarConteudo(d: ConteudoPago): void {
 
 function naoHidratado(oQue: string): never {
   throw new Error(
-    `conteúdo do curso lido antes de carregar (${oQue}). `
-    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; '
-    + 'se este erro apareceu, alguma coisa renderizou fora dele.'
+    `conteúdo do curso lido antes de carregar (${oQue}). ` // i18n-ok: erro de desenvolvedor
+    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; ' // i18n-ok: erro de desenvolvedor
+    + 'se este erro apareceu, alguma coisa renderizou fora dele.' // i18n-ok: erro de desenvolvedor
   );
 }
 

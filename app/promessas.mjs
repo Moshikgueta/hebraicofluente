@@ -147,7 +147,7 @@ const semComentarios = s => s
 const fontes = [
   ...arquivos(new URL('./src', import.meta.url).pathname).filter(p => /\.(tsx?|mjs)$/.test(p)),
   ...arquivos(new URL('../data', import.meta.url).pathname).filter(p => p.endsWith('.json'))
-].filter(p => !p.endsWith('/lib/credito.ts'));
+].filter(p => !p.endsWith('/lib/credito.ts') && !p.endsWith('/i18n/telas/motor-credito.ts'));
 const ordemNaFonte = [];
 for (const p of fontes) {
   let s = readFileSync(p, 'utf8');

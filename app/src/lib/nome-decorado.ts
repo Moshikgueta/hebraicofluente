@@ -12,11 +12,13 @@
  *     plataforma pode inverter as palavras de um nome composto.
  */
 
+import { tx } from '@/i18n/telas/motor-pequenos';
+
 export type FormatoNome = 'celular' | 'quadrado';
 
 export const FORMATOS_NOME: Record<FormatoNome, { w: number; h: number; rotulo: string }> = {
-  celular: { w: 1080, h: 1920, rotulo: 'Papel de parede' },
-  quadrado: { w: 1080, h: 1080, rotulo: 'Quadrado' }
+  celular: { w: 1080, h: 1920, rotulo: tx.formatoCelular },
+  quadrado: { w: 1080, h: 1080, rotulo: tx.formatoQuadrado }
 };
 
 const C = {

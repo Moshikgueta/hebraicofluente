@@ -163,6 +163,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
 export function useAccount(): AccountValue {
   const v = useContext(Ctx);
-  if (!v) throw new Error('useAccount fora de <AccountProvider>');
+  if (!v) throw new Error('useAccount fora de <AccountProvider>'); // i18n-ok: erro de desenvolvedor
   return v;
 }

@@ -21,6 +21,8 @@ import type { Exercise } from '@/lib/engine/types';
 import type { SomLicao } from '@/lib/engine/extras';
 import { rng, shuffled, take, type Rand } from '@/lib/engine/rng';
 import { ehLicaoDeSom, SOM_PREFIXO } from '@/lib/state/rules';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-sons';
 
 export const idDoSom = (id: string) => `${SOM_PREFIXO}${id}`;
 
@@ -35,7 +37,7 @@ export function nomeDaLicao(
   letras: readonly { id: string; namePt: string }[],
   modulos: readonly { lessons: readonly { som?: string; nomePt?: string }[] }[]
 ): string {
-  if (id === 'aula-0') return 'Aula 0';
+  if (id === 'aula-0') return tx.aula0;
   if (!ehLicaoDeSom(id)) return letras.find(l => l.id === id)?.namePt ?? id;
   const som = id.slice(SOM_PREFIXO.length);
   return modulos.flatMap(m => m.lessons).find(l => l.som === som)?.nomePt ?? som;
@@ -118,8 +120,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
       [par?.translit ?? S.parSom, ...(ov ? [ov.s.translit, ov.par.translit] : [])], rand);
     out.push({
       id: `som-${S.id}-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
-      promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
-      explainPt: `${s.he}, ${S.rotuloPt}, é "${s.translit}". ${par?.he ?? S.parHe}, ${S.parRotuloPt}, seria "${par?.translit ?? S.parSom}".`
+      promptPt: tx.silabaLeitura, he: s.he, options, answer,
+      explainPt: fmt(tx.contrasteSilaba, { he: s.he, rotulo: S.rotuloPt, leitura: s.translit, parHe: par?.he ?? S.parHe, parRotulo: S.parRotuloPt, parLeitura: par?.translit ?? S.parSom })
     });
   });
   /* 2. o som dado, o desenho pedido: com ponto ou sem? */
@@ -130,8 +132,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
     const { options, answer } = comOpcoes(s.he, [par.he, ...(ov ? [ov.s.he, ov.par.he] : [])], rand);
     out.push({
       id: `som-${S.id}-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
-      promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
-      explainPt: `"${s.translit}" é ${s.he}, ${S.rotuloPt}. ${par.he}, ${S.parRotuloPt}, é "${par.translit}".`
+      promptPt: tx.seLeAssim, sound: s.translit, options, answer,
+      explainPt: fmt(tx.contrasteDesenho, { leitura: s.translit, he: s.he, rotulo: S.rotuloPt, parHe: par.he, parRotulo: S.parRotuloPt, parLeitura: par.translit })
     });
   });
   /* 3. a palavra: a leitura certa contra a de quem não olhou o ponto */
@@ -141,8 +143,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
     const { options, answer } = comOpcoes(w.translit, [errada], rand);
     out.push({
       id: `som-${S.id}-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
-      promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
-      explainPt: `${w.he} - "${w.translit}", ${w.pt}. A letra está ${S.rotuloPt}: soa ${S.som.toUpperCase()}.`
+      promptPt: tx.palavraLeitura, he: w.he, options, answer,
+      explainPt: fmt(tx.contrastePalavra, { he: w.he, leitura: w.translit, sentido: w.pt, rotulo: S.rotuloPt, som: S.som.toUpperCase() })
     });
   });
   /* 4. ouvir a sílaba e achar o desenho, onde houver gravação */
@@ -153,8 +155,8 @@ function exerciciosDeContraste(S: SomLicao, temAudio: (id: string) => boolean, r
     const { options, answer } = comOpcoes(s.he, [par.he, ...(ov ? [ov.s.he, ov.par.he] : [])], rand);
     out.push({
       id: `som-${S.id}-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
-      promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
-      explainPt: `Foi ${s.he}, "${s.translit}" - ${S.rotuloPt}.`
+      promptPt: tx.ouvirSilaba, audioId: s.audioId, options, answer,
+      explainPt: fmt(tx.foiRotulo, { he: s.he, leitura: s.translit, rotulo: S.rotuloPt })
     });
   });
   return out;
@@ -176,8 +178,8 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
     const { options, answer } = comOpcoes(s.translit, outras(S.silabas, s, 2).map(x => x.translit), rand);
     out.push({
       id: `som-${S.id}-suave-sil-${i}`, kind: 'syllable-reading', letterId, skill: 'som',
-      promptPt: 'Como se lê esta sílaba?', he: s.he, options, answer,
-      explainPt: `${s.he} é "${s.translit}": ${S.he} ${S.rotuloPt} soa ${S.som.toUpperCase()}, e a vogal decide o resto.`
+      promptPt: tx.silabaLeitura, he: s.he, options, answer,
+      explainPt: fmt(tx.suaveSilaba, { he: s.he, leitura: s.translit, letra: S.he, rotulo: S.rotuloPt, som: S.som.toUpperCase() })
     });
   });
   /* 2. o som dado, a sílaba pedida */
@@ -185,8 +187,8 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
     const { options, answer } = comOpcoes(s.he, outras(S.silabas, s, 2).map(x => x.he), rand);
     out.push({
       id: `som-${S.id}-suave-des-${i}`, kind: 'sound-to-syllable', letterId, skill: 'ler',
-      promptPt: 'Qual destas se lê assim?', sound: s.translit, options, answer,
-      explainPt: `"${s.translit}" é ${s.he}.`
+      promptPt: tx.seLeAssim, sound: s.translit, options, answer,
+      explainPt: fmt(tx.suaveDesenho, { leitura: s.translit, he: s.he })
     });
   });
   /* 3. a palavra: como se lê? (as erradas são outras palavras do som) */
@@ -194,8 +196,8 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
     const { options, answer } = comOpcoes(w.translit, outras(S.palavras, w, 2).map(x => x.translit), rand);
     out.push({
       id: `som-${S.id}-suave-ler-${i}`, kind: 'syllable-reading', letterId, skill: 'ler',
-      promptPt: 'Como se lê esta palavra?', he: w.he, options, answer,
-      explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} soa ${S.som.toUpperCase()}.`
+      promptPt: tx.palavraLeitura, he: w.he, options, answer,
+      explainPt: fmt(tx.suavePalavra, { he: w.he, leitura: w.translit, sentido: w.pt, letra: S.he, som: S.som.toUpperCase() })
     });
   });
   /* 4. a palavra lida: o que quer dizer? */
@@ -203,8 +205,8 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
     const { options, answer } = comOpcoes(w.pt, outras(S.palavras, w, 2).map(x => x.pt), rand);
     out.push({
       id: `som-${S.id}-suave-pal-${i}`, kind: 'word-meaning', letterId, skill: 'ler',
-      promptPt: 'Leia em voz alta. Que palavra é esta?', he: w.he, options, answer,
-      explainPt: `${w.he} - "${w.translit}", ${w.pt}.`
+      promptPt: tx.leiaPalavra, he: w.he, options, answer,
+      explainPt: fmt(tx.palavraSentido, { he: w.he, leitura: w.translit, sentido: w.pt })
     });
   });
   /* 5. ouvir a sílaba e achar o desenho, onde houver gravação */
@@ -213,8 +215,8 @@ function exerciciosDoSomSuave(S: SomLicao, temAudio: (id: string) => boolean, ra
     const { options, answer } = comOpcoes(s.he, outras(S.silabas, s, 2).map(x => x.he), rand);
     out.push({
       id: `som-${S.id}-suave-ouv-${i}`, kind: 'listen-syllable', letterId, skill: 'ouvir',
-      promptPt: 'Ouça. Qual foi a sílaba?', audioId: s.audioId, options, answer,
-      explainPt: `Foi ${s.he}, "${s.translit}".`
+      promptPt: tx.ouvirSilaba, audioId: s.audioId, options, answer,
+      explainPt: fmt(tx.foi, { he: s.he, leitura: s.translit })
     });
   });
   return out;
@@ -239,14 +241,14 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
   const s1 = comOpcoes(S.som, [S.parSom], rand);
   out.push({
     id: `som-${S.id}-letra`, kind: 'syllable-reading', letterId, skill: 'som',
-    promptPt: 'Que som esta letra tem?', he: S.he, options: s1.options, answer: s1.answer,
-    explainPt: `${S.he}, com o guéresh, é ${S.som} - ${S.comoPt}. Sem o sinal, ${S.parHe} é ${S.parSom}.`
+    promptPt: tx.qualSom, he: S.he, options: s1.options, answer: s1.answer,
+    explainPt: fmt(tx.gerechLetra, { he: S.he, som: S.som, como: S.comoPt, parHe: S.parHe, parSom: S.parSom })
   });
   const s2 = comOpcoes(S.he, [S.parHe], rand);
   out.push({
     id: `som-${S.id}-desenho`, kind: 'sound-to-syllable', letterId, skill: 'ler',
-    promptPt: 'Qual destas se lê assim?', sound: S.som, options: s2.options, answer: s2.answer,
-    explainPt: `${S.som} é ${S.he}, com o traço. ${S.parHe}, sem ele, é ${S.parSom}.`
+    promptPt: tx.seLeAssim, sound: S.som, options: s2.options, answer: s2.answer,
+    explainPt: fmt(tx.gerechDesenho, { som: S.som, he: S.he, parHe: S.parHe, parSom: S.parSom })
   });
   /* 2. a palavra de fora: o que quer dizer? */
   S.palavras.forEach((w, i) => {
@@ -254,8 +256,8 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
     const { options, answer } = comOpcoes(w.pt, erradas, rand);
     out.push({
       id: `som-${S.id}-pal-${i}`, kind: 'word-meaning', letterId, skill: 'ler',
-      promptPt: 'Leia em voz alta. Que palavra é esta?', he: w.he, options, answer,
-      explainPt: `${w.he} - "${w.translit}", ${w.pt}. O ${S.he} faz o som ${S.som}.`
+      promptPt: tx.leiaPalavra, he: w.he, options, answer,
+      explainPt: fmt(tx.gerechPalavra, { he: w.he, leitura: w.translit, sentido: w.pt, letra: S.he, som: S.som })
     });
   });
   /* 3. qual palavra tem o som? (as outras têm a letra SEM o guéresh) */
@@ -265,16 +267,16 @@ export function bancoDoSom(S: SomLicao, temAudio: (id: string) => boolean): Exer
     const { options, answer } = comOpcoes(w.he, erradas, rand);
     out.push({
       id: `som-${S.id}-qual-${i}`, kind: 'letter-in-word', letterId, skill: 'rec',
-      promptPt: `Qual destas palavras tem o som ${S.som}?`, letter: S.he, options, answer,
-      explainPt: `${w.he} tem ${S.he}, com o traço. As outras têm ${S.parHe} sem o sinal, que soa ${S.parSom}.`
+      promptPt: fmt(tx.palavraComSom, { som: S.som }), letter: S.he, options, answer,
+      explainPt: fmt(tx.gerechQual, { he: w.he, letra: S.he, parHe: S.parHe, parSom: S.parSom })
     });
   });
   if (temAudio(S.audioId)) {
     const s3 = comOpcoes(S.he, [S.parHe], rand);
     out.push({
       id: `som-${S.id}-ouvir`, kind: 'listen-syllable', letterId, skill: 'ouvir',
-      promptPt: 'Ouça. Qual letra foi dita?', audioId: S.audioId, options: s3.options, answer: s3.answer,
-      explainPt: `Foi ${S.he}: ${S.som}.`
+      promptPt: tx.ouvirLetra, audioId: S.audioId, options: s3.options, answer: s3.answer,
+      explainPt: fmt(tx.gerechOuvir, { he: S.he, som: S.som })
     });
   }
   return out;

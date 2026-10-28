@@ -5,25 +5,28 @@
  * de código - assim dá para tirar só a vogal de uma letra, sem perder a letra.
  */
 
+import { tx } from '@/i18n/telas/motor-teclado-hebraico';
+
 export type Tecla = { ch: string; nome: string };
 
 export const LETRAS: Tecla[] = [
-  ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'],
-  ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yud'], ['כ', 'Kaf'], ['ל', 'Lámed'],
-  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'],
+  /* Os nomes das letras são transliteração: ficam até a etapa 3. */
+  ['א', 'Álef'], ['ב', 'Bet'], ['ג', 'Guímel'], ['ד', 'Dálet'], ['ה', 'He'], ['ו', 'Vav'], // i18n-ok: transliteração
+  ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yud'], ['כ', 'Kaf'], ['ל', 'Lámed'], // i18n-ok: transliteração
+  ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'], // i18n-ok: transliteração
   ['ק', 'Kuf'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 
 export const FINAIS: Tecla[] = [
-  ['ך', 'Kaf final'], ['ם', 'Mem final'], ['ן', 'Nun final'], ['ף', 'Pe final'], ['ץ', 'Tsádi final']
-].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
+  ['ך', 'Kaf'], ['ם', 'Mem'], ['ן', 'Nun'], ['ף', 'Pe'], ['ץ', 'Tsádi'] // i18n-ok: transliteração
+].map(([ch, nome]) => ({ ch: ch!, nome: tx.final(nome!) }));
 
 /* Os sinais que o curso ensina (data/nikud.json e as letras), na ordem em
    que aparecem nas lições. Cada um entra DEPOIS da letra que o leva. */
 export const NIKUD: Tecla[] = [
   ['ַ', 'patach (a)'], ['ָ', 'kamats (a)'], ['ֶ', 'segol (e)'], ['ֵ', 'tsere (e)'],
   ['ִ', 'chirik (i)'], ['ֹ', 'cholam (o)'], ['ֻ', 'kubuts (u)'], ['ְ', 'shva'],
-  ['ּ', 'daguesh (ponto dentro)'], ['ׁ', 'ponto do Shin'], ['ׂ', 'ponto do Sin']
+  ['ּ', tx.daguesh], ['ׁ', tx.pontoShin], ['ׂ', tx.pontoSin]
 ].map(([ch, nome]) => ({ ch: ch!, nome: nome! }));
 
 export type Edicao = { valor: string; cursor: number };
