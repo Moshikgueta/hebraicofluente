@@ -9,8 +9,9 @@
  * contrário: a cidade só aparece no módulo 4, quando o Áyin de עִיר já
  * foi ensinado.
  *
- *   1 O mar         · יָם, מַיִם, תֵה: a praia, o barco, a cidade no morro
- *   2 O jardim      · גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ: a montanha, o rio, o lago
+ *   1 O mar         · יָם, מַיִם, תֵה: a praia, o barco, o copo d'água e o chá
+ *   2 O jardim      · גַן, הַר, נָהָר, אֲגַם, שֶׁמֶשׁ, דָג, גְלִידָה: a montanha, o rio,
+ *                     o lago com o peixe, o carrinho de sorvete
  *   3 A janela      · חַלוֹן, וֶרֶד, לֶחֶם, מִטְרִיָה: janelas, rosas, a padaria
  *   4 A cidade      · עִיר, עֵץ, צֵל, סַל: o portão de pedra, a árvore, a sombra
  *   5 O mercado     · פִּתָה, תַפּוּחַ, קָפֶה, כֶּסֶף: toldos e caixas de fruta
@@ -239,7 +240,7 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       {/* O jardim: árvores redondas e a cerca baixa. */}
       <Oliveira x={44} y={106} s={1.05} />
       <Oliveira x={92} y={108} s={.85} />
-      <Cipreste x={276} y={106} h={34} /><Cipreste x={292} y={108} h={26} />
+      <Cipreste x={258} y={106} h={34} /><Cipreste x={270} y={108} h={26} />
       <path d="M8 110 L120 110" stroke="var(--il-tronco)" strokeWidth="1.6" />
       {Array.from({ length: 12 }, (_, k) => (
         <path key={k} d={`M${12 + k * 9.5} 110 L${12 + k * 9.5} 103`} stroke="var(--il-tronco)" strokeWidth="1.6" />
@@ -247,6 +248,23 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       <g className="il-passaros">
         <path d="M120 26 q4 -4 8 0 q4 -4 8 0" stroke="var(--il-ferro)" strokeWidth="1.3" fill="none" />
         <path d="M142 18 q3 -3 6 0 q3 -3 6 0" stroke="var(--il-ferro)" strokeWidth="1.2" fill="none" />
+      </g>
+      {/* O peixe (דָג) pulando no lago. */}
+      <g className="il-peixe">
+        <path d="M132 104 Q138 99 145 103 Q138 107 132 104 Z" fill="var(--il-toldo-3)" />
+        <path d="M145 103 L150 99 L149 106 Z" fill="var(--il-toldo-3)" />
+        <circle cx="135" cy="103" r=".8" fill="var(--il-ferro)" />
+      </g>
+      {/* O carrinho de sorvete (גְלִידָה), com o guarda-sol listrado. */}
+      <g transform="translate(46 0)">
+        <path d="M250 84 L250 98" stroke="var(--il-ferro)" strokeWidth="1.2" />
+        <path d="M238 86 Q250 76 262 86 Z" fill="var(--il-toldo)" />
+        <path d="M244 86 Q250 79 256 86 Z" fill="var(--il-toldo-2)" />
+        <rect x="240" y="96" width="20" height="10" rx="2" fill="var(--il-toldo-2)" />
+        <rect x="240" y="96" width="20" height="3" fill="var(--il-flor)" />
+        <circle cx="244" cy="108" r="2.4" fill="var(--il-ferro)" /><circle cx="256" cy="108" r="2.4" fill="var(--il-ferro)" />
+        <circle cx="246" cy="93" r="2.2" fill="var(--il-flor)" /><circle cx="250" cy="92" r="2.2" fill="var(--il-fruta-3)" />
+        <circle cx="254" cy="93" r="2.2" fill="var(--il-espuma)" />
       </g>
     </>
   ),
@@ -305,12 +323,25 @@ const CENAS: Record<IdDoCenario, (id: string) => ReactNode> = {
       <circle cx="296.5" cy="39" r="2" fill="var(--il-sol)" className="il-luz" />
       <Mar y={78} />
       {/* O barco, que balança de leve. */}
-      <g className="il-barco">
+      <g transform="translate(48 0)"><g className="il-barco">
         <path d="M84 94 L132 94 L124 104 L92 104 Z" fill="var(--il-barco)" />
         <path d="M106 94 L106 66 L126 90 Z" fill="var(--il-vela)" />
         <path d="M104 94 L104 72 L90 90 Z" fill="var(--il-vela)" opacity=".85" />
+      </g></g>
+      {/* A areia, com o copo d'água (מַיִם) e o chá (תֵה). */}
+      <path d="M0 98 Q44 92 98 100 L112 120 L0 120 Z" fill="var(--il-caminho)" />
+      <Palmeira x={16} y={102} h={40} />
+      <g>
+        <path d="M39 99 L49 99 L47.6 112 L40.4 112 Z" fill="var(--il-espuma)" opacity=".9" />
+        <path d="M39.6 103 L48.4 103 L47.6 112 L40.4 112 Z" fill="var(--il-mar)" />
       </g>
-      <Palmeira x={22} y={80} h={34} />
+      <g>
+        <ellipse cx="88" cy="112" rx="10" ry="2.2" fill="var(--il-pedra-sombra)" />
+        <path d="M81 103 L95 103 Q95 111 88 111 Q81 111 81 103 Z" fill="var(--il-espuma)" />
+        <path d="M95 105 Q99 105 98.4 107.6 Q97.6 109.4 94.2 109" stroke="var(--il-espuma)" strokeWidth="1.4" fill="none" />
+        <ellipse cx="88" cy="103.4" rx="6.6" ry="1.2" fill="var(--il-porta)" />
+        <path className="il-vapor" d="M86 100 Q84 97 86 94 Q88 91 86 88 M90.5 100 Q88.5 97 90.5 94" stroke="var(--il-espuma)" strokeWidth="1.1" fill="none" opacity=".8" />
+      </g>
     </>
   ),
 
