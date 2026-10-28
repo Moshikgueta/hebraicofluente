@@ -420,17 +420,25 @@ export function licaoDaLetra(ordem: number): number | null {
 }
 
 /**
- * Quanto tempo leva, numa frase só, derivada do número de lições.
+ * Quanto tempo leva, numa frase só, derivada do número de letras.
  *
  * Havia três estimativas diferentes no site ("vinte minutos por dia, a
  * maioria termina em seis a oito semanas", "três semanas ou três meses" e
  * "menos de um mês") e um "a maioria" sem nenhum aluno para sustentar
  * (auditoria de 28/09/2026, COM-005). Agora é esta, e a conta está à vista.
+ *
+ * A unidade é a LETRA, e não a lição (28/10/2026, decisão do dono): dizia
+ * "27 lições de cerca de dez minutos", mas a lição 1 tem três letras, e só a
+ * fixação de cada uma são 20 questões. Dez minutos é a estimativa de uma
+ * letra; as lições de som contam como mais uma letra cada.
  */
 export function tempoDoCursoPt(): string {
-  const n = totalLicoes();
-  const umPorDia = n <= 30 ? 'menos de um mês' : `cerca de ${Math.ceil(n / 30)} meses`;
-  const tresPorSemana = Math.max(1, Math.round(n / 3 / 4.3));
-  return `São ${n} lições de cerca de dez minutos. Quem faz uma por dia termina em ${umPorDia}; ` +
-    `quem faz três por semana leva ${tresPorSemana === 1 ? 'cerca de um mês' : `uns ${tresPorSemana} meses`}.`;
+  const letras = course.letters.length;
+  const sons = course.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
+  const unidades = letras + sons;
+  const umPorDia = unidades <= 31 ? 'cerca de um mês' : `cerca de ${Math.round(unidades / 30)} meses`;
+  const tresPorSemana = Math.max(1, Math.round(unidades / 3 / 4.3));
+  return `Cada letra leva cerca de dez minutos, e são ${letras}, mais ${sons} lições de som e os checkpoints. ` +
+    `Quem estuda uma por dia termina em ${umPorDia}; ` +
+    `quem estuda três por semana leva ${tresPorSemana === 1 ? 'cerca de um mês' : `uns ${tresPorSemana} meses`}.`;
 }

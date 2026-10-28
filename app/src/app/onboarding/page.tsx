@@ -28,9 +28,9 @@ const REASONS = [
 ] as const;
 
 const GOALS: { m: DailyGoalMinutes; label: string; note: string }[] = [
-  { m: 5,  label: '5 minutos',  note: 'Uma etapa por dia. Devagar e sempre.' },
-  { m: 10, label: '10 minutos', note: 'O ritmo da maioria. Uma letra a cada dois dias.' },
-  { m: 15, label: '15 minutos', note: 'Uma letra por dia, com folga.' },
+  { m: 5,  label: '5 minutos',  note: 'Uma letra a cada dois dias. Devagar e sempre.' },
+  { m: 10, label: '10 minutos', note: 'Cerca de uma letra por dia.' },
+  { m: 15, label: '15 minutos', note: 'Uma letra por dia, com folga para revisar.' },
   { m: 20, label: '20 minutos', note: 'Intenso. O alfabeto em três semanas.' }
 ];
 

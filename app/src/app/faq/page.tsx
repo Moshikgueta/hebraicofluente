@@ -8,7 +8,7 @@ import {
 } from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { ancora, flagship, brl, fimDoPreLancamento, parcelasMax, pixPrice } from '@/lib/catalog';
-import { course, tempoDoCursoPt } from '@/lib/content-publico';
+import { tempoDoCursoPt } from '@/lib/content-publico';
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
 
 /* O mesmo critério da capa (components/landing/copy.ts): é o manifesto de
@@ -59,10 +59,10 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
        anunciava "21 lições" e esta página, "São 22 lições". Dois números para
        a mesma coisa, na página que se lê logo antes de comprar. A soma agora
        é `totalLicoes()`, uma função só para o site inteiro, e a frase do
-       tempo é `tempoDoCursoPt()`, derivada dela. */
+       tempo é `tempoDoCursoPt()`, derivada das letras. */
     q: 'Quanto tempo leva?',
     a: [
-      `${tempoDoCursoPt()} Elas ensinam as ${course.totalLetters} letras. Não há prazo interno nem turma: o curso espera por você.`
+      `${tempoDoCursoPt()} Não há prazo interno nem turma: o curso espera por você.`
     ]
   },
   /* As duas respostas abaixo mudam com `pagamento.modo` em data/empresa.json,

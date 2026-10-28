@@ -321,7 +321,7 @@ export function CheckoutClient({ slug }: { slug: string }) {
               ? `Versão interativa liberada por ${c.accessMonths} meses.`
               : tipo === 'pacote'
                 ? 'O curso e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
-                : `Acesso liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
+                : `Acesso liberado por ${c.accessMonths} meses. A primeira letra leva cerca de dez minutos.`}
           </p>
           <Button size="lg" onClick={() => irPara(destino)}>{tipo === 'livro' ? 'Abrir o Israel Além do Óbvio' : tipo === 'pacote' ? 'Abrir a Minha Biblioteca' : 'Começar agora'}</Button>
         </Card>

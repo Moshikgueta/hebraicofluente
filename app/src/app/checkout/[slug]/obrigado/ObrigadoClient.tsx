@@ -123,7 +123,7 @@ export function ObrigadoClient({ slug }: { slug: string }) {
               ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses.`
               : tipoDe(c) === 'pacote'
                 ? 'O curso de alfabetização e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
-                : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
+                : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira letra leva cerca de dez minutos.`}
           </p>
           {tipoDe(c) === 'livro'
             /* /israel/ é uma página estática fora do app: link comum, sem o roteador. */
