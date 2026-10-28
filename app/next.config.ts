@@ -16,6 +16,11 @@ const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
 const nextConfig: NextConfig = {
   output: 'export',
   distDir: EM_INGLES ? 'out-en' : undefined,
+  /* Sempre definida, mesmo na build em português: variável NEXT_PUBLIC_ que
+     não existe na build não é embutida, vira uma consulta no navegador, e aí
+     o pacote leva os dois idiomas de cada tela (medido em 28/10/2026). Com
+     o valor fixo, o minificador apaga o idioma que não vai ao ar. */
+  env: { NEXT_PUBLIC_LOCALE: EM_INGLES ? 'en' : 'pt' },
   basePath: basePath || undefined,
   reactStrictMode: true,
   /* Static export has no image optimiser. The only images here are the 27

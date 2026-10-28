@@ -3,9 +3,9 @@
    tudo: na build em português nada muda, e o inglês nunca mexe no hebraico. */
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { pt } from '@/i18n/pt';
-import { en } from '@/i18n/en';
-import { t, LOCALE, LANG_HTML } from '@/i18n';
+import { readdirSync } from 'node:fs';
+import { LOCALE, LANG_HTML, fmt } from '@/i18n';
+import { tx as naoEncontrada } from '@/i18n/telas/nao-encontrada';
 // @ts-expect-error - script de build, sem tipos
 import { ARQUIVOS, carregar, extrair, mesmoHebraico, traduzir } from '../../tools/i18n.mjs';
 
@@ -16,28 +16,62 @@ const TRAVESSAO = new RegExp(`[${String.fromCodePoint(0x2014, 0x2013)}]`);
 const HEBRAICO = /[\u0590-\u05FF\uFB1D-\uFB4F]+/g;
 const variaveis = (s: string) => (s.match(/\{\w+\}/g) ?? []).sort().join(',');
 
+/* Cada arquivo de app/src/i18n/telas/ exporta DICIONARIO = { pt, en } e o
+   `tx` escolhido na build. */
+type Dic = Record<string, unknown>;
+const PASTA = new URL('../src/i18n/telas/', import.meta.url);
+const TELAS = readdirSync(PASTA).filter(f => /\.tsx?$/.test(f));
+const modulos = await Promise.all(TELAS.map(async f => ({
+  arquivo: f,
+  fonte: readFileSync(new URL(f, PASTA), 'utf8'),
+  mod: await import(`../src/i18n/telas/${f.replace(/\.tsx?$/, '')}`) as { DICIONARIO: { pt: Dic; en: Dic }; tx: Dic }
+})));
+
+/* Palavras que denunciam um "inglês" que ficou em português. */
+const PORTUGUES = /[ãõç]|(^|\s)(não|você|para|uma|com|está|também)(\s|$)/i;
+
 describe('o dicionário da interface', () => {
   it('sem a variável, a build é a de hoje, em português', () => {
     expect(LOCALE).toBe('pt');
     expect(LANG_HTML).toBe('pt-BR');
-    expect(t('naoEncontrada.titulo')).toBe('Esta página não existe');
+    expect(naoEncontrada.titulo).toBe('Esta página não existe');
   });
 
-  it('o inglês tem as mesmas chaves e as mesmas variáveis do português', () => {
-    expect(Object.keys(en).sort()).toEqual(Object.keys(pt).sort());
-    for (const [k, v] of Object.entries(pt)) {
-      expect(variaveis(en[k as keyof typeof en]), k).toBe(variaveis(v));
+  it('fmt troca as variáveis e deixa à vista a que falta', () => {
+    expect(fmt('Oi, {nome}. {n} de {total}', { nome: 'Ana', n: 3 })).toBe('Oi, Ana. 3 de {total}');
+  });
+
+  it('todo arquivo escolhe o idioma na linha que a build consegue apagar', () => {
+    for (const { arquivo, fonte, mod } of modulos) {
+      expect(fonte, arquivo).toContain("export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;");
+      expect(mod.tx, arquivo).toBe(mod.DICIONARIO.pt);
     }
   });
 
-  it('nenhum texto em inglês traz travessão nem hebraico que o português não tem', () => {
-    for (const [k, v] of Object.entries(en)) {
-      expect(v, k).not.toMatch(TRAVESSAO);
-      expect((v.match(HEBRAICO) ?? []).sort(), k)
-        .toEqual((pt[k as keyof typeof pt].match(HEBRAICO) ?? []).sort());
+  it('o inglês tem as mesmas chaves, as mesmas variáveis e o mesmo hebraico', () => {
+    for (const { arquivo, mod: { DICIONARIO: { pt, en } } } of modulos) {
+      expect(Object.keys(en).sort(), arquivo).toEqual(Object.keys(pt).sort());
+      for (const [k, v] of Object.entries(pt)) {
+        const e = en[k];
+        const onde = `${arquivo}: ${k}`;
+        expect(typeof e, onde).toBe(typeof v);
+        if (typeof v !== 'string' || typeof e !== 'string') continue;
+        expect(e.trim(), onde).not.toBe('');
+        expect(variaveis(e), onde).toBe(variaveis(v));
+        expect((e.match(HEBRAICO) ?? []).sort(), onde).toEqual((v.match(HEBRAICO) ?? []).sort());
+      }
     }
   });
 
+  it('nenhum inglês traz travessão nem ficou em português', () => {
+    for (const { arquivo, mod: { DICIONARIO: { en } } } of modulos) {
+      for (const [k, v] of Object.entries(en)) {
+        if (typeof v !== 'string') continue;
+        expect(v, `${arquivo}: ${k}`).not.toMatch(TRAVESSAO);
+        expect(v, `${arquivo}: ${k}`).not.toMatch(PORTUGUES);
+      }
+    }
+  });
 });
 
 describe('o inglês do conteúdo (tools/i18n.mjs)', () => {

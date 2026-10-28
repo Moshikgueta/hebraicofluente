@@ -94,7 +94,8 @@ import { RegistroDeOrigem } from '@/components/shell/RegistroDeOrigem';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
-import { t, LANG_HTML } from '@/i18n';
+import { LANG_HTML } from '@/i18n';
+import { tx } from '@/i18n/telas/geral';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -103,14 +104,14 @@ export const metadata: Metadata = {
      chegando sem imagem no WhatsApp, que é o problema que esta camada existe
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
-  title: t('site.titulo'),
+  title: tx.titulo,
   /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
      alfabetização, e os outros são cursos à parte, ainda em produção
      (auditoria de 01/10, CONV-011). */
-  description: t('site.descricao'),
+  description: tx.descricao,
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
-  applicationName: t('marca')
+  applicationName: tx.marca
 };
 
 export const viewport: Viewport = {

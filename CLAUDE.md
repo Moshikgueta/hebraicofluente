@@ -69,8 +69,13 @@ Plano e decisões do dono em `PLANO-INGLES.md` (domínio próprio, US$ 47, Paddl
 Um repositório, um banco, dois sites: `NEXT_PUBLIC_LOCALE=en` gera `app/out-en`,
 servido pelo segundo Worker (`wrangler.en.toml`, mesmo D1, ainda sem domínio e
 sem publicação). Sem a variável, o site brasileiro sai igual.
-- **Texto fixo de tela** vai para `app/src/i18n/pt.ts` E `en.ts` no mesmo
-  commit, lido com `t('chave')`. O tipo de `en.ts` recusa chave faltando.
+- **Texto fixo de tela** mora em `app/src/i18n/telas/<tela>.ts`, com o
+  português (o texto de antes, igual) e o inglês lado a lado, lido como
+  `tx.chave` (`fmt` para variáveis). Ver o molde em `app/src/i18n/index.ts`:
+  a linha do `tx` é escrita igual em todo arquivo, senão o pacote do
+  navegador leva os dois idiomas. `Traducao<typeof pt>` recusa chave faltando.
+- `node tools/textos-soltos.mjs` (de app/) lista o português ainda escrito
+  direto no código das telas do escopo do site em inglês.
 - **Mudou um `data/*.json` do curso?** Rode `node tools/i18n.mjs extrair`: o
   `data/en/` é a lista de trabalho da tradução e `tests/i18n.test.ts` falha se
   ele não acompanhar a fonte. Texto já traduzido cujo português mudou fica
