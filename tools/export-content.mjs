@@ -495,9 +495,14 @@ function main() {
   /* ── as frases ──────────────────────────────────────────────────────
      Copiadas com o hebraico normalizado e com o id de áudio já calculado,
      como tudo o mais: uma gravação futura encaixa sem renomear nada. O
-     `after` vem do dado e é conferido pela V20 do validate.js. */
+     `after` vem do dado e é conferido pela V20 do validate.js.
+
+     A trava da revisão (28/10/2026): uma frase com `"revisado": false` não
+     sai daqui, então nenhuma tela, exercício ou rota a vê. É a mesma regra
+     dos mini-textos - hebraico escrito para o curso só vai ao ar depois de
+     aprovado pelo dono. Sem o campo, a frase é das que já estavam no curso. */
   writeFileSync(join(OUT, 'sentences.json'), JSON.stringify({
-    sentences: sentences.sentences.map(s2 => ({
+    sentences: sentences.sentences.filter(s2 => s2.revisado !== false).map(s2 => ({
       ...s2,
       he: NFC(s2.he),
       audioId: audioIdFor(s2.he),
