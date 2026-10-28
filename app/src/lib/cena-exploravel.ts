@@ -17,6 +17,9 @@
  * aparece só em português, com o nome da letra que falta; as do módulo 6 e
  * do 7 esperam o aluno começar o módulo, que é onde elas são ensinadas.
  *
+ * A cena cresce com o aluno: os pontos `depois` são palavras de módulos
+ * seguintes que combinam com o desenho, e aparecem quando já se leem.
+ *
  * As posições são em unidades do desenho (viewBox 320 x 120), e cada par de
  * pontos fica a 40 unidades ou mais um do outro: no telefone de 390 px uma
  * unidade passa de 1 px, e assim as áreas de toque de 44 px não se cobrem.
@@ -28,13 +31,19 @@ import { FINAL_TO_BASE, clean, consonantsOf } from '@/lib/hebrew';
 import { alfabetoDe, consegueLer, vocabularioDoCurso } from '@/lib/engine/palavras';
 
 export type FonteDoPonto = 'curso' | 'sem-pontos' | 'gueresh';
-export type PontoDaCena = { he: string; x: number; y: number; fonte?: FonteDoPonto };
+/** `depois`: um ponto que a cena ganha quando o aluno avança (28/10/2026).
+ *  A palavra é de um módulo seguinte, e o ponto só aparece quando ela já se
+ *  lê; antes disso ele não existe, nem como dica. */
+export type PontoDaCena = { he: string; x: number; y: number; fonte?: FonteDoPonto; depois?: true };
 
 export const PONTOS_DA_CENA: Partial<Record<number, readonly PontoDaCena[]>> = {
   1: [
     { he: 'יָם', x: 236, y: 100 },
     { he: 'מַיִם', x: 44, y: 87 },
-    { he: 'תֵה', x: 102, y: 94 }
+    { he: 'תֵה', x: 102, y: 94 },
+    { he: 'שֶׁמֶשׁ', x: 62, y: 34, depois: true },
+    { he: 'עִיר', x: 250, y: 58, depois: true },
+    { he: 'עֵץ', x: 12, y: 58, depois: true }
   ],
   2: [
     { he: 'שֶׁמֶשׁ', x: 70, y: 30 },
@@ -43,20 +52,25 @@ export const PONTOS_DA_CENA: Partial<Record<number, readonly PontoDaCena[]>> = {
     { he: 'נָהָר', x: 221, y: 88 },
     { he: 'אֲגַם', x: 182, y: 111 },
     { he: 'דָג', x: 140, y: 93 },
-    { he: 'גְלִידָה', x: 296, y: 68 }
+    { he: 'גְלִידָה', x: 296, y: 68 },
+    { he: 'עֵץ', x: 96, y: 92, depois: true }
   ],
   3: [
     { he: 'וֶרֶד', x: 36, y: 52 },
     { he: 'חַלוֹן', x: 80, y: 78 },
     { he: 'לֶחֶם', x: 121, y: 93 },
-    { he: 'מִטְרִיָה', x: 170, y: 76 }
+    { he: 'מִטְרִיָה', x: 170, y: 76 },
+    { he: 'בַּיִת', x: 257, y: 70, depois: true },
+    { he: 'דֶרֶךְ', x: 220, y: 112, depois: true }
   ],
   4: [
     { he: 'עֵץ', x: 52, y: 74 },
     { he: 'צֵל', x: 84, y: 108 },
     { he: 'עִיר', x: 160, y: 62 },
     { he: 'סַל', x: 244, y: 92 },
-    { he: 'מִיץ', x: 294, y: 86 }
+    { he: 'מִיץ', x: 294, y: 86 },
+    { he: 'שֶׁמֶשׁ', x: 250, y: 34 },
+    { he: 'דֶרֶךְ', x: 160, y: 112, depois: true }
   ],
   5: [
     { he: 'אֹכֶל', x: 36, y: 78 },
@@ -75,7 +89,9 @@ export const PONTOS_DA_CENA: Partial<Record<number, readonly PontoDaCena[]>> = {
     { he: 'פיג׳מה', x: 302, y: 58, fonte: 'gueresh' },
     { he: 'גַג', x: 100, y: 72 },
     { he: 'שֶׁמֶשׁ', x: 168, y: 52 },
-    { he: 'חַלוֹן', x: 194, y: 90 }
+    { he: 'חַלוֹן', x: 194, y: 90 },
+    { he: 'עִיר', x: 28, y: 96 },
+    { he: 'בַּיִת', x: 262, y: 100 }
   ]
 };
 
@@ -128,6 +144,7 @@ export function descobertasDaCena(
     const doModulo = p.fonte === 'sem-pontos' ? 6 : p.fonte === 'gueresh' ? 7 : null;
     const faltaModulo = !falta && doModulo && !modulosComecados.includes(doModulo) ? doModulo : null;
     const legivel = consegueLer(forma, alfabeto) && !faltaModulo;
+    if (p.depois && !legivel) return [];
     return [{ ...p, palavra, legivel, falta, faltaModulo }];
   });
 }
