@@ -1,0 +1,20 @@
+{
+  "_nota": "O que a Action 'Fotos das missões' procura no Wikimedia Commons para o Hebraico na rua (28/10/2026): placas, letreiros, cardápios e rótulos com hebraico grande e legível. O grupo só organiza a busca. Só licenças livres (domínio público, CC0, CC BY, CC BY-SA). O dono escolhe depois, em HEBRAICO-NA-RUA-PARA-REVISAR.md.",
+  "buscas": [
+    { "grupo": 1, "q": "Hebrew street name sign Tel Aviv" },
+    { "grupo": 1, "q": "Jerusalem street sign Hebrew Arabic English" },
+    { "grupo": 1, "q": "Israel road sign Hebrew" },
+    { "grupo": 2, "q": "Hebrew shop sign storefront" },
+    { "grupo": 2, "q": "Israeli bakery sign Hebrew" },
+    { "grupo": 2, "q": "pharmacy sign Hebrew Israel" },
+    { "grupo": 3, "q": "Hebrew menu cafe Israel" },
+    { "grupo": 3, "q": "falafel stand sign Hebrew" },
+    { "grupo": 4, "q": "Israel bus stop sign Hebrew" },
+    { "grupo": 4, "q": "Israel Railways station sign Hebrew" },
+    { "grupo": 5, "q": "Shalom sign Hebrew" },
+    { "grupo": 5, "q": "Hebrew welcome sign Israel" },
+    { "grupo": 6, "q": "Hebrew graffiti wall Tel Aviv" },
+    { "grupo": 6, "q": "Hebrew product label supermarket Israel" }
+  ],
+  "porBusca": 4
+}
