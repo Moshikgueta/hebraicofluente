@@ -212,11 +212,14 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
       expect(s, f).not.toContain('Você já domina');
     }
     const c = fonte('app/concluido/CompletionClient.tsx');
-    expect(c).toContain('${conquistas.size} de ${ACHIEVEMENTS.length}');
+    expect(c).toContain('fmt(tx.conquistasDe, { n: conquistas.size, total: ACHIEVEMENTS.length })');
+    expect(fonte('i18n/telas/painel-completion-client.tsx')).toContain("conquistasDe: '{n} de {total}'");
     expect(c).toContain('isLessonMastered(p.state, l.id)');
     /* Desde 12/10/2026 a regra antiga se chama "lição concluída" (REGRA_DA_CONCLUSAO);
        "dominada" é o domínio por habilidade (lib/dominio.ts). */
-    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('concluídas. ${REGRA_DA_CONCLUSAO}');
+    expect(fonte('app/certificado/CertificadoClient.tsx'))
+      .toContain('fmt(tx.requisitoLicoesDetalhe, { n: gate.lettersDone, total: course.totalLetters })} ${REGRA_DA_CONCLUSAO}');
+    expect(fonte('i18n/telas/painel-certificado-client.tsx')).toContain("requisitoLicoesDetalhe: '{n} de {total} concluídas.'");
     expect(fonte('app/checkpoint/[n]/CheckpointClient.tsx')).toContain('isLessonMastered(p.state, l.id)');
   });
 });
@@ -224,10 +227,13 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
 describe('UXQA-015: /concluido não afirma o que não aconteceu', () => {
   it('"Você está lendo hebraico" e a lista de competências só com o alfabeto dominado', () => {
     const c = fonte('app/concluido/CompletionClient.tsx');
-    expect(c).toContain("? 'Você está lendo hebraico.'");
+    const dic = fonte('i18n/telas/painel-completion-client.tsx');
+    expect(c).toMatch(/alfabetoDominado\s*\?\s*tx\.estaLendo/);
+    expect(dic).toContain("estaLendo: 'Você está lendo hebraico.'");
     expect(c).toContain('alfabetoDominado');
     expect(c).toContain('{alfabetoDominado && (');
-    expect(c).toContain('Faltam ${faltam.length}');
+    expect(c).toContain('tx.faltam(faltam.length)');
+    expect(dic).toContain('`Faltam ${n} ');
   });
 });
 
@@ -246,7 +252,8 @@ describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
     expect(l).toContain('Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)');
     expect(l).toContain('const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);');
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toContain('cta={`Terminar ${terminar.nome}`}');
+    expect(d).toContain('cta={fmt(tx.terminarCta, { nome: terminar.nome })}');
+    expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain("terminarCta: 'Terminar {nome}'");
     expect(d).toContain('porQueTrancada(p.state, ordem, id)');
   });
 });
@@ -255,7 +262,8 @@ describe('CONV-020: no primeiro acesso, a Aula 0 é o botão principal', () => {
   it('enquanto a Aula 0 não foi aberta e nenhuma lição começou', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
     expect(d).toContain('const aula0Primeiro = !aula0Feita(p.state);');
-    expect(d).toContain('cta="Começar pela Aula 0"');
+    expect(d).toContain('cta={tx.aula0Cta}');
+    expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain("aula0Cta: 'Começar pela Aula 0'");
     expect(fonte('app/inicio/StartHereClient.tsx')).toContain("progresso.markFirst('aula-0')");
   });
 });
@@ -337,7 +345,8 @@ describe('CONT-010: o exame cobra só o que o aluno estudou', () => {
 
 describe('UXQA-008: o nome é pedido uma vez', () => {
   it('onboarding, certificado e Meu nome reaproveitam o nome da conta', () => {
-    const o = fonte('app/onboarding/page.tsx');
+    /* A tela e o seu dicionário (app/src/i18n/telas/). */
+    const o = fonte('app/onboarding/page.tsx') + fonte('i18n/telas/painel-onboarding.ts');
     expect(o).not.toContain('Fica só no seu navegador');
     expect(o).toContain('Fica na sua conta');
     expect(o).toContain('primeiroNome(nomeDaConta)');
@@ -372,7 +381,10 @@ describe('CONT-011: uma grafia só', () => {
       expect(s.replace(/"dagesh":/g, '').replace(/"id": "dagesh"/g, ''), f).not.toMatch(/\bdagesh\b/);
     }
     /* As âncoras das partes (o-niqqud...) ficam como estão: são endereço. */
-    const aula0 = fonte('app/inicio/StartHereClient.tsx')
+    const aula0 = (fonte('app/inicio/StartHereClient.tsx')
+      + fonte('i18n/telas/painel-start-here-client.tsx')
+      + fonte('i18n/telas/painel-start-here-perguntas.ts')
+      + fonte('i18n/telas/painel-aula0-passos.ts'))
       .replace(/(['"])(o-niqqud|checagem-niqqud[-a-z]*)\1/g, '')
       .replace(/PERGUNTAS_NIQQUD/g, '');
     expect(aula0).not.toMatch(/niqqud/i);

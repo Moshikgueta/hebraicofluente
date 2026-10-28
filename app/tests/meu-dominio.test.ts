@@ -97,15 +97,24 @@ describe('cada número com o seu nome', () => {
 
   it('no painel, "letras dominadas" vem do domínio e "lições concluídas" da regra antiga', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toMatch(/n=\{dominio\.contagem\.dominada\} rotulo=\{[^}]*'letras dominadas'/);
-    expect(d).toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*'lições concluídas'/);
-    expect(d).not.toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*dominad/);
+    /* Os rótulos moram no dicionário do painel (app/src/i18n/telas/). */
+    const dic = fonte('i18n/telas/painel-dashboard-client.tsx');
+    expect(d).toMatch(/n=\{dominio\.contagem\.dominada\} rotulo=\{[^}]*tx\.letrasDominadas\}/);
+    expect(dic).toContain("letrasDominadas: 'letras dominadas'");
+    expect(d).toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*tx\.licoesConcluidas\}/);
+    expect(dic).toContain("licoesConcluidas: 'lições concluídas'");
+    expect(d).not.toMatch(/n=\{p\.mastered\} rotulo=\{[^}]*(dominad|Dominad)/);
   });
 
   it('as telas que contam pela regra antiga não dizem "dominada"', () => {
     for (const f of ['components/game/AlphabetGrid.tsx', 'app/concluido/CompletionClient.tsx',
       'app/desafio-final/FinalChallengeClient.tsx', 'app/certificado/CertificadoClient.tsx',
       'app/loja/LojaClient.tsx', 'app/checkpoint/[n]/CheckpointClient.tsx']) {
+      const visivel = fonte(f).split('\n').filter(l => !/^\s*(\*|\/\/|\/\*|\{\/\*)/.test(l)).join('\n');
+      expect(visivel, f).not.toMatch(/letras dominadas|Letras dominadas|· dominada|Dominar (é|uma)|Domine as/);
+    }
+    /* E o texto dessas telas que mora nos dicionários (app/src/i18n/telas/). */
+    for (const f of ['i18n/telas/painel-completion-client.tsx', 'i18n/telas/painel-certificado-client.tsx']) {
       const visivel = fonte(f).split('\n').filter(l => !/^\s*(\*|\/\/|\/\*|\{\/\*)/.test(l)).join('\n');
       expect(visivel, f).not.toMatch(/letras dominadas|Letras dominadas|· dominada|Dominar (é|uma)|Domine as/);
     }
