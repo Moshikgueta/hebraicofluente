@@ -27,16 +27,18 @@ deixar o e-mail e receber 5 letras em 14 dias → comprar → estudar → indica
 | 2 | **Conhecer** | fecho de salvar e seguir em todo carrossel; ManyChat LER; nome decorado de presente; DM "obrigado + você já estuda?" | seguidores ganhos e salvamentos por post (Metricool); conversas abertas (anotar) | rodando, DM manual |
 | 3 | **Experimentar** | teste grátis do Álef em `/curso-de-hebraico/#experimente` (bio → `/comece-aqui`) | "Teste grátis da capa": visto → pronto (`/admin/estatisticas`) | pronto |
 | 4 | **Capturar quem não compra** | fim do teste: e-mail com a 2ª letra (Mem) + caixa "quero as próximas letras" → 5 e-mails em 2, 4, 7, 10 e 14 dias, o último com o convite e o preço | `d|segunda-letra`; inscritos confirmados (seção "Lista de interessados") | pronto |
-| 5 | **Decidir** | página de venda, 7 dias para desistir, checkout com PIX e cartão | "O funil por semana": página de venda → checkout → pagamento → compra | pronto; **falta prova social** |
+| 5 | **Decidir** | página de venda (com 1 depoimento, o da Natália, aluna particular), 7 dias para desistir, checkout com PIX e cartão | "O funil por semana": página de venda → checkout → pagamento → compra | pronto; **prova social fraca: 1 depoimento, e não de comprador** |
 | 6 | **Ficar** | e-mails automáticos d1, d3 e d7 (`worker/src/ativacao.js`); mensagem pessoal do dono depois dos 7 dias | lições concluídas por aluno (`/admin/vendas`) | rodando |
 | 7 | **Indicar** | página `/depoimento` existe | depoimentos recebidos (`/admin/depoimentos`) | **parado: falta o pedido** |
 
 ## As lacunas, em ordem de impacto
 
 1. **Prova social na página de venda (etapa 5).** É o que mais pesa na decisão de quem não conhece
-   o professor, e hoje não há nenhum depoimento publicado. O caminho já está pronto: aprovar o
-   pedido de depoimento (`marketing/emails/pedido-de-depoimento.md`) e mandá-lo aos 3 alunos. Com 2
-   ou 3 depoimentos autorizados, eles entram na página. **Depende do dono: aprovar o texto.**
+   o professor. Hoje a página tem um depoimento só, o da Natália, que é aluna particular do
+   professor (o vínculo está dito ao lado, como manda a regra). Falta o de quem comprou o curso
+   online. O caminho: o pedido de depoimento (`marketing/emails/pedido-de-depoimento.md`, aprovado em
+   28/10) aos alunos que já estudaram. Os autorizados entram em `app/src/lib/testimonials.ts`
+   (`DEPOIMENTOS`), a seção da página já se ajusta a mais de um. **Depende do dono: enviar.**
 2. **Levar o Instagram ao teste grátis (etapas 2 → 3).** Os carrosséis da série pedem salvar e
    seguir, de propósito; quem vai ao site vem pelo link da bio e pelo ManyChat. Proposta: nos stories
    do dia de cada post, um story "Faça a primeira letra de graça" com o link `/stories` (que já conta
