@@ -14,7 +14,9 @@ import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
 import { ATIVACAO_DESDE, runAtivacao } from '../../worker/src/ativacao.js';
 // @ts-expect-error - idem
-import { idiomaDaConta, idiomaDoWorker, origemDoIdioma, tituloDoCurso } from '../../worker/src/lib/idioma.js';
+import { FORA_DO_SITE_EN, idiomaDaConta, idiomaDoWorker, origemDoIdioma, tituloDoCurso } from '../../worker/src/lib/idioma.js';
+// @ts-expect-error - idem
+import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
 import { mensagens } from '../../worker/src/lib/mensagens.js';
 // @ts-expect-error - idem
@@ -192,5 +194,32 @@ describe('os textos em inglês', () => {
     expect(m.vencimento).toBe(pt.mensagemDeVencimento);
     expect(m.ativacao).toBe(pt.mensagemDeAtivacao);
     expect(m.data).toBe(pt.dataBR);
+  });
+});
+
+describe('o que o site em inglês não tem', () => {
+  it('os produtos só em português e os painéis do dono ficam de fora; o curso, não', () => {
+    for (const fora of ['/raizes', '/raizes/modulo/1/', '/a1/', '/israel/', '/previa/', '/admin/vendas/',
+      '/api/admin/vendas', '/api/a1/exame/iniciar', '/api/content/a1', '/api/content/raizes', '/api/livro/licenca']) {
+      expect(FORA_DO_SITE_EN.test(fora.replace(/\/+$/, '') || '/'), fora).toBe(true);
+    }
+    for (const dentro of ['/', '/licao/alef', '/curso-de-hebraico', '/academia', '/api/content', '/api/me',
+      '/api/auth/login', '/inicio', '/israeli', '/administrar']) {
+      expect(FORA_DO_SITE_EN.test(dentro), dentro).toBe(false);
+    }
+  });
+
+  it('o Worker em inglês responde 404; o brasileiro segue como antes', async () => {
+    const assets = { fetch: async () => new Response('<h1>404</h1>', { status: 200 }) };
+    const en = envCom({ LOCALE: 'en', SITE_ORIGIN: SITE_EN, ASSETS: assets });
+    const pagina = await worker.fetch(new Request(`${SITE_EN}/raizes/`), en, ctx);
+    expect(pagina.status).toBe(404);
+    expect(pagina.headers.get('x-content-type-options')).toBe('nosniff');
+    const api = await worker.fetch(new Request(`${SITE_EN}/api/content/raizes`), en, ctx);
+    expect(api.status).toBe(404);
+
+    const br = envCom({ ASSETS: assets });
+    const naoBloqueia = await worker.fetch(new Request(`${SITE}/api/content/raizes`), br, ctx);
+    expect(naoBloqueia.status).not.toBe(404);
   });
 });

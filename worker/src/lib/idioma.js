@@ -36,3 +36,12 @@ export function origemDoIdioma(env, idioma) {
 /** O nome do curso no idioma: `titleEn` do catálogo, quando existe. */
 export const tituloDoCurso = (curso, idioma, reserva = '') =>
   (idioma === 'en' && curso && curso.titleEn) || (curso && curso.titlePt) || reserva;
+
+/**
+ * O que o site em inglês não tem: os produtos que só existem em português
+ * (Raízes, A1, o livro e a prévia dele) e os painéis do dono, que ficam no
+ * site brasileiro (o banco é o mesmo). Página e API. O Worker em inglês
+ * responde 404 a isso tudo; o brasileiro não olha esta lista.
+ */
+export const FORA_DO_SITE_EN =
+  /^\/(raizes|a1|israel|previa|admin)(\/|$)|^\/api\/(admin|a1|livro|content\/(raizes|a1))(\/|$)/i;
