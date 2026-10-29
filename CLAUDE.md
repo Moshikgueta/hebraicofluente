@@ -610,12 +610,12 @@ chave `rua`. Imagens em `app/public/media/rua/`. Candidatas: Action "Fotos das m
 (`tools/fotos-rua-pedido.json`); revisão em `HEBRAICO-NA-RUA-PARA-REVISAR.md`.
 `tests/hebraico-na-rua.test.ts`.
 
-## Lembrete para estudar (28/10/2026) - PRONTO E DESLIGADO
-Pedido do dono ("faz tudo", item 6). Desligado até ele aprovar o parágrafo da Privacidade.
+## Lembrete para estudar (28/10/2026) - LIGADO desde 29/10/2026
+Pedido do dono ("faz tudo", item 6). O dono aprovou o parágrafo da Privacidade em 29/10/2026 (versão das políticas 2026-10-29).
 - **Uma chave só:** `privacidade.lembreteDeEstudo` em `data/empresa.json` (`lembreteLigado` no app e
   em `worker/src/api/lembrete.js`). Em `false` não existe nada: a caixa do perfil, o parágrafo do
   art. 4 da Privacidade, `PUT /api/lembrete` (404), o campo `lembrete` do `/api/me` e o envio.
-  **Ligar** = `true`, subir `politicas.atualizadoEm` e publicar. Só `/api/lembrete/sair` funciona
+  **Desligar** = `false`, subir `politicas.atualizadoEm` e publicar. Só `/api/lembrete/sair` funciona
   sempre: e-mail velho sempre sabe tirar a pessoa.
 - Quem pede: a caixa em Sua conta, desmarcada, só com o curso. Tabela `lembretes_estudo` (a linha é o
   consentimento). Sai pela caixa, pelo link de todo lembrete (token `l<id>.<hmac 'lembrete:'>`, página
@@ -623,7 +623,7 @@ Pedido do dono ("faz tudo", item 6). Desligado até ele aprovar o parágrafo da 
 - O envio (`worker/src/lembrete.js`, na varredura): a partir das 19h de Brasília, uma vez por dia por
   conta (`ultimo_dia`, UPDATE condicional = reserva), só se o progresso não tem estudo no dia, e no
   máximo 3 seguidos sem estudo (`seguidos`); estudar zera. Texto sem cobrança nem sequência perdida.
-- `tests/lembrete.test.ts` (chave ligada por mock) e `tests/lembrete-desligado.test.ts`.
+- `tests/lembrete.test.ts` e `tests/lembrete-desligado.test.ts` (chave forçada em false por mock).
 
 ## Instalar no celular (28/10/2026)
 Pedido do dono ("faz tudo", item 7). `app/src/app/manifest.ts` (vira `/manifest.webmanifest`): abre
