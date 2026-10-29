@@ -7,7 +7,8 @@
  * que a lição já ensina, reunido para quem travou no meio de um exercício -
  * o que lembrar, o que a letra faz, como se pronuncia, o erro de brasileiro,
  * as letras que se parecem com ela, e as gravações do professor quando
- * existem (sem gravação, o quadro não aparece; ver GravacaoDoProfessor).
+ * existem (sem gravação, o quadro não aparece; ver GravacaoDoProfessor), e o
+ * vídeo do professor quando há arquivo em video/ (VideoDoMoshik).
  *
  * É um <dialog> nativo: prende o foco, fecha com Esc e devolve o foco ao
  * botão. A folha sobe 12 px ao abrir (220 ms); com movimento reduzido, abre
@@ -16,6 +17,7 @@
 
 import { tx } from '@/i18n/telas/licao-me-explica';
 import { useRef } from 'react';
+import { VideoDoMoshik } from '@/components/learn/VideoDoMoshik';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
@@ -25,6 +27,7 @@ import { somPt } from '@/lib/som-pt';
 
 export function MeExplica({ letter }: { letter: Letter }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const parecidas = letter.confusableWith.map(id => getLetter(id)).filter((l): l is Letter => !!l);
   const e = letter.ensino;
   return (
@@ -39,6 +42,7 @@ export function MeExplica({ letter }: { letter: Letter }) {
       </button>
 
       <dialog ref={ref} aria-labelledby={`me-explica-${letter.id}`}
+              onClose={() => video.current?.pause()}
               onClick={ev => { if (ev.target === ref.current) ref.current?.close(); }}
               className="hf-folha m-0 mt-auto sm:m-auto w-full max-w-[560px] max-h-[86dvh] overflow-y-auto
                          rounded-t-[22px] sm:rounded-[22px] border border-line bg-[var(--card)] p-0 text-ink
@@ -60,6 +64,9 @@ export function MeExplica({ letter }: { letter: Letter }) {
           </div>
 
           <AudioButton audioId={letter.audioId} label={tx.ouvirLetra} />
+
+          {/* O vídeo do professor, quando existe (video/README.md). */}
+          <VideoDoMoshik ref={video} letra={letter.id} nome={letter.namePt} />
 
           {e?.lembrePt && (
             <section className="rounded-[var(--r-md)] bg-[var(--teal-soft)] px-4 py-3 grid gap-1">

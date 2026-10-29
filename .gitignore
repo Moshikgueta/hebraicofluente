@@ -48,3 +48,4 @@ editorial/
 # ficam fora do git porque o repositório é público. Modelos em growth/modelos/.
 growth/reports/
 growth/data/
+app/public/video/

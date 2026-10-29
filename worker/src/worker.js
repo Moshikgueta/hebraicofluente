@@ -390,6 +390,13 @@ async function responder(request, env, ctx) {
       return comRange(request, await env.ASSETS.fetch(request));
     }
 
+    /* ── os vídeos do professor (Me explica, Moshik) ────────────────────
+       Depois do portão, como o áudio, e pelo mesmo motivo do Range: o
+       Safari não toca vídeo sem 206. */
+    if (/^\/video\/[a-z-]+\.(mp4|vtt)$/.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
+      return comRange(request, await env.ASSETS.fetch(request));
+    }
+
     /* ── o PDF do e-book, com a marca da conta ─────────────────────────
        Depois do portão, que já conferiu o direito. Sem como marcar, segue
        para o arquivo como está (api/livro.js). */

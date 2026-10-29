@@ -636,6 +636,16 @@ Pedido do dono ("faz tudo", item 7). `app/src/app/manifest.ts` (vira `/manifest.
   No painel só no celular, depois da primeira letra, e "Agora não" some para sempre
   (`hf-instalar-dispensado`); em Sua conta, sempre.
 
+## Vídeos do professor no "Me explica, Moshik" (28/10/2026)
+Pedido do dono ("faz tudo", item 8). O dono põe `video/<letra>.mp4` (e, se quiser, `<letra>.vtt`)
+na raiz, como o áudio; instruções em `video/README.md`. `tools/videos.mjs` (chamado pelo exportador)
+copia para `app/public/video/` (gitignored) e gera `app/src/lib/video-manifest.ts`; nome que não é
+letra, formato fora de mp4/vtt, legenda sem vídeo ou arquivo acima de 25 MiB param a build.
+- `/video` está no GATED (gate.js) e no PAGAS (lib/seo.ts); o Worker serve com `comRange` (o Safari
+  não toca vídeo sem 206). Sem YouTube nem serviço de fora: nada muda na Privacidade.
+- `VideoDoMoshik` (components/learn): só com o arquivo, só no site em português, `preload="none"`, e a
+  folha pausa ao fechar. `tests/video.test.ts`.
+
 ## Mini-textos de leitura corrida
 
 Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),
