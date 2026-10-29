@@ -368,7 +368,11 @@ fi
 case "$B" in
   http://127.0.0.1*|http://localhost*) ;;
   *)
-    if grep -q '"payments":true' <<<"$HEALTH"; then
+    if [ "$EM_INGLES" = 1 ] && [ "$MODO" = teste ] && [[ "$B" == *.workers.dev* ]]; then
+      # Site em inglês sem domínio: o sandbox do Paddle é permitido
+      # (scripts/pagamento-ativo.mjs, semDominio; TESTE-PADDLE.md).
+      echo "  · Paddle no SANDBOX, num site ainda sem domínio: não cobra nada"
+    elif grep -q '"payments":true' <<<"$HEALTH"; then
       espera "a cobrança no ar é de produção (não de teste)" producao "$MODO"
       espera "a conta da Mercado Pago não é um usuário de teste" nao \
         "$([ "$VENDEDOR" = "usuario-de-teste" ] && echo sim || echo nao)"
