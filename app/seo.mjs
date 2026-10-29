@@ -84,7 +84,11 @@ export function rotas(dir = DIR, base = '') {
 
 /* O 404 é uma página de verdade no export estático, e por isso aparece na
    varredura. Anunciá-la é pedir ao Google que indexe a tela de erro. */
-const TECNICAS = ['/404', '/500'];
+const TECNICAS = ['/404', '/500',
+  /* O lugar vazio do blog sem artigo aprovado (app/blog/[slug]/page.tsx). */
+  '/blog/_',
+  /* E a lista do blog, enquanto ela não tem artigo (content/blog-resumo.json). */
+  ...(JSON.parse(readFileSync(new URL('./content/blog-resumo.json', import.meta.url), 'utf8')).artigos ? [] : ['/blog'])];
 
 const semBarra = (r) => r.replace(/\/+$/, '') || '/';
 const naoListada = (r) =>

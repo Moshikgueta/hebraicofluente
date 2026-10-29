@@ -384,6 +384,22 @@ function main() {
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
 
+  /* O blog (29/10/2026). Só sai o artigo com `revisado: true`: cada um foi
+     escrito para o site e passa pelo dono antes de ir ao ar (BLOG-PARA-REVISAR.md).
+     HF_BLOG_RASCUNHOS=1 mostra os rascunhos numa build LOCAL, para a revisão.
+     O blog é em português: a build em inglês sai sem artigos. */
+  {
+    const blog = readJson('data/blog.json');
+    for (const a of blog.artigos) {
+      if (typeof a.revisado !== 'boolean') throw new Error(`blog.json: ${a.slug} sem "revisado"`);
+    }
+    const rascunhos = process.env.HF_BLOG_RASCUNHOS === '1';
+    const artigos = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
+    writeFileSync(join(OUT, 'blog.json'), JSON.stringify({ artigos }, null, 2) + '\n');
+    /* Só a contagem, para o rodapé (que vai ao navegador) saber se há blog. */
+    writeFileSync(join(OUT, 'blog-resumo.json'), JSON.stringify({ artigos: artigos.length }) + '\n');
+  }
+
   const catalogue = readJson('data/courses.json');
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length

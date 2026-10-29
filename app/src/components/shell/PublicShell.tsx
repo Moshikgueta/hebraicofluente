@@ -38,6 +38,8 @@ import {
 } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/conta-public-shell';
 import { LOCALE } from '@/i18n';
+/* Só a contagem dos artigos aprovados: o texto do blog não vem para o navegador. */
+import blogResumo from '@content/blog-resumo.json';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -337,7 +339,9 @@ function Footer() {
             { href: '/metodo', label: tx.linkMetodo },
             { href: '/cursos', label: tx.osCursos },
             { href: '/alfabeto-hebraico', label: tx.alfabetoHebraico },
-            { href: '/biblia', label: tx.lerABiblia }
+            { href: '/biblia', label: tx.lerABiblia },
+            /* O blog só entra no rodapé quando há artigo aprovado (lib/blog.ts). */
+            ...(blogResumo.artigos > 0 ? [{ href: '/blog', label: tx.blog }] : [])
           ]} />
           {/* Só onde os próximos cursos estão no catálogo: o site em inglês não os tem. */}
           {getCourse('hebraico-a1') && <p className="font-ui text-[12px] leading-relaxed text-ink-muted mt-2 max-w-[30ch]">

@@ -9,6 +9,8 @@ const PUBLIC_PREFIXES = [
   '/metodo', '/cursos', '/sobre', '/faq', '/biblia',
   /* As páginas do alfabeto para a busca (23/10/2026, lib/alfabeto-publico.ts). */
   '/alfabeto-hebraico',
+  /* O blog (29/10/2026): conteúdo aberto, para a busca. */
+  '/blog',
   /* As telas de conta, incluindo as duas de recuperação de senha. Elas são
      públicas pela definição do problema: quem não consegue entrar não pode
      ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e
@@ -81,7 +83,7 @@ export function isPublicRoute(pathname: string | null): boolean {
    nunca o curso. */
 export const ROTAS_LEVES = [
   '/', '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas',
-  '/curso-de-hebraico', '/metodo', '/sobre', '/faq', '/biblia', '/alfabeto-hebraico',
+  '/curso-de-hebraico', '/metodo', '/sobre', '/faq', '/biblia', '/alfabeto-hebraico', '/blog',
   '/termos', '/privacidade', '/reembolso', '/suporte', '/acessibilidade',
   '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha',
   /* A porta do link da bio do Instagram (24/10/2026): quem chega é de celular. */

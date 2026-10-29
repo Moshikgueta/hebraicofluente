@@ -625,6 +625,19 @@ Pedido do dono ("faz tudo", item 6). O dono aprovou o parágrafo da Privacidade 
   máximo 3 seguidos sem estudo (`seguidos`); estudar zera. Texto sem cobrança nem sequência perdida.
 - `tests/lembrete.test.ts` e `tests/lembrete-desligado.test.ts` (chave forçada em false por mock).
 
+## Blog (29/10/2026, pedido do dono)
+`/blog` (lista) e `/blog/<slug>` (um por artigo), conteúdo aberto para a busca. Os artigos moram em
+`data/blog.json`, em blocos (`h2`, `p`, `lista`, `palavras`, `veja`, `cta`), e nascem com
+`revisado: false`: o exportador só leva o aprovado para `app/content/blog.json` (`HF_BLOG_RASCUNHOS=1`
+mostra os rascunhos numa build LOCAL). O documento de revisão é `BLOG-PARA-REVISAR.md`.
+- O hebraico só entre `{{...}}` e só de palavras, sílabas e letras que já estão no curso
+  (`tests/blog.test.ts`); renderiza pelo `<He>` (`app/blog/BlocosDoArtigo.tsx`, componente de servidor).
+- Sem artigo aprovado: a lista existe com `noindex` e fora do sitemap, o rodapé não linka
+  (`content/blog-resumo.json`), e `/blog/_` é só o lugar vazio que o export estático exige (404, fora do
+  sitemap: `TECNICAS` em seo.mjs). Artigo aprovado entra sozinho no sitemap e no rodapé.
+- JSON-LD `Article` (autor e editora: Hebraico Fluente, sem assinatura de pessoa) e as migalhas.
+- O blog é em português: a build em inglês sai sem artigos.
+
 ## Instalar no celular (28/10/2026)
 Pedido do dono ("faz tudo", item 7). `app/src/app/manifest.ts` (vira `/manifest.webmanifest`): abre
 `/meu-hebraico/` em tela cheia, ícones `public/icone-192.png`, `icone-512.png` e `icone-mascara-512.png`
