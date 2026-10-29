@@ -61,7 +61,7 @@ async function marcar(env, id, hoje, seguidos, antes) {
 }
 
 export async function runLembretes(env, at = Date.now(), { limite = 50 } = {}) {
-  if (!lembreteLigado() || !mailReady(env)) return { enviados: 0 };
+  if (!lembreteLigado(env) || !mailReady(env)) return { enviados: 0 };
   const { dia: hoje, hora } = agoraEmBrasilia(at);
   if (hora < HORA_DO_LEMBRETE) return { enviados: 0 };
   let linhas = [];
