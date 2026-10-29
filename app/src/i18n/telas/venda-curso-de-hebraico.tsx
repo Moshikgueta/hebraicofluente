@@ -12,7 +12,7 @@ const pt = {
   parceria: (preco: ReactNode, ate: string | null): ReactNode => (
     <>Seu link garante um preço especial: o curso sai por {preco} no checkout{ate ? `, até ${ate}` : ''}.</>
   ),
-  comecar: (preco: string) => `Começar o curso · ${preco}`
+  quero: 'Quero começar'
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -23,7 +23,7 @@ const en: Traducao<typeof pt> = {
   parceria: (preco: ReactNode, ate: string | null): ReactNode => (
     <>Your link gets you a special price: the course comes to {preco} at checkout{ate ? `, until ${ate}` : ''}.</>
   ),
-  comecar: (preco: string) => `Start the course · ${preco}`
+  quero: 'I want to start'
 };
 
 export const DICIONARIO = { pt, en };
