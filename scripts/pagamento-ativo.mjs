@@ -96,7 +96,13 @@ function rebaixar(porque) {
    reconcile.js). Aqui só se confere se a chave do Paddle autentica, e o
    resumo diz. Sem a chave o site sobe e o checkout diz que o pagamento não
    está ligado. PLANO-INGLES.md, etapa 5. */
-const ehSiteEmIngles = /^\s*LOCALE\s*=\s*"en"/m.test(readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8'));
+const TOML = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+const ehSiteEmIngles = /^\s*LOCALE\s*=\s*"en"/m.test(TOML);
+/* Sem domínio próprio (SITE_ORIGIN no workers.dev) o site em inglês ainda não
+   vende a ninguém, e o teste do Paddle no sandbox roda nele, aviso assinado
+   incluído (decisão do dono, 29/10/2026; TESTE-PADDLE.md). Com o domínio, a
+   mesma regra volta a parar a publicação com chave de sandbox. */
+const semDominio = /^\s*SITE_ORIGIN\s*=\s*"https:\/\/[^"]+\.workers\.dev\/?"/m.test(TOML);
 
 if (ehSiteEmIngles) {
   const chave = String(process.env.PADDLE_API_KEY || '').trim();
@@ -109,7 +115,11 @@ if (ehSiteEmIngles) {
        e2e de produção reprovaria no fim, duas vezes, com a volta automática
        à versão anterior: melhor parar aqui, dizendo por quê. O teste no
        sandbox é feito antes, fora do site publicado (TESTE-PADDLE.md). */
-    if (sandbox) {
+    if (sandbox && semDominio) {
+      diga('⚠ Chave de SANDBOX do Paddle num site ainda sem domínio (workers.dev):');
+      diga('  o checkout é o de teste e não cobra nada. Com o domínio, troque pela');
+      diga('  chave de produção (pdl_live_...) e o token live_ (TESTE-PADDLE.md).');
+    } else if (sandbox) {
       diga('✗ O segredo PADDLE_API_KEY é uma chave de SANDBOX (começa com pdl_sdbx_).');
       diga('  Com ela o comprador iria para um checkout que não cobra nada.');
       diga('  Publicação PARADA; o site continua com a versão anterior.');
