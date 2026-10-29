@@ -1,9 +1,19 @@
-/* O lembrete para estudar nasce DESLIGADO (28/10/2026): a chave
-   `privacidade.lembreteDeEstudo` de data/empresa.json só vira true quando o
-   dono aprovar o parágrafo da Política de Privacidade. Desligado, nada dele
-   existe: rota, campo no /api/me, envio, caixa do perfil e parágrafo. */
+/* O lembrete para estudar com a chave DESLIGADA (forçada por mock neste
+   arquivo). Ligado desde 29/10/2026, com o parágrafo da Privacidade aprovado
+   pelo dono; se um dia for desligado, nada dele pode existir: rota, campo no
+   /api/me, envio, caixa do perfil e parágrafo. */
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+
+vi.mock('../../data/empresa.json', () => {
+  const real = JSON.parse(readFileSync(new URL('../../data/empresa.json', import.meta.url), 'utf8'));
+  return { default: { ...real, privacidade: { ...real.privacidade, lembreteDeEstudo: false } } };
+});
+/* O app lê a cópia de app/content (o alias @content), não data/. */
+vi.mock('@content/empresa.json', () => {
+  const real = JSON.parse(readFileSync(new URL('../content/empresa.json', import.meta.url), 'utf8'));
+  return { default: { ...real, privacidade: { ...real.privacidade, lembreteDeEstudo: false } } };
+});
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
@@ -18,7 +28,7 @@ const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
 
 describe('o lembrete desligado', () => {
-  it('a chave está em false', () => {
+  it('com a chave em false', () => {
     expect(empresa.privacidade.lembreteDeEstudo).toBe(false);
     expect(lembreteLigado()).toBe(false);
   });
@@ -36,6 +46,11 @@ describe('o lembrete desligado', () => {
     const corpo = await (await worker.fetch(new Request(`${SITE}/api/me`, { headers: { cookie } }), env, ctx)).json() as { account: object };
     expect('lembrete' in corpo.account).toBe(false);
     expect(await runLembretes(env, Date.parse('2026-11-02T22:30:00Z'))).toEqual({ enviados: 0 });
+  });
+
+  it('em produção está ligado, e a Privacidade traz o parágrafo', () => {
+    const real = JSON.parse(readFileSync(new URL('../../data/empresa.json', import.meta.url), 'utf8'));
+    expect(real.privacidade.lembreteDeEstudo).toBe(true);
   });
 
   it('o perfil e a Privacidade só mostram com a chave', () => {
