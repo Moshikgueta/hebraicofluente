@@ -30,6 +30,7 @@
  * verdade registrado. Inventá-la para todo mundo a esvaziaria.
  */
 
+import { tocarResposta } from '@/lib/som-do-acerto';
 import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -96,6 +97,7 @@ export function Batalha({
     travado.current = true;
     foco.segurar();
     onResposta?.({ id, letterId, certo, escolhida });
+    tocarResposta(certo);
     if (certo) setAcertos(n => n + 1);
     else { setErros(n => n + 1); setLetrasErradas(l => [...l, letterId]); }
     setMarca({ ok: certo, texto });
