@@ -414,7 +414,10 @@ fi
 # O domínio próprio sai do wrangler.toml, e não da saída do wrangler: é o
 # arquivo que manda em qual endereço o site atende. O www é descartado aqui
 # porque ele existe para redirecionar, não para ser o endereço.
-DOMINIO="$(grep -oP 'pattern\s*=\s*"\K[^"]+(?="\s*,\s*custom_domain\s*=\s*true)' wrangler.toml \
+# Só as linhas de verdade: o exemplo comentado no toml do site em inglês
+# ("<dominio>") virou SITE_ORIGIN em 29/10/2026 e o link do e-mail saiu quebrado.
+DOMINIO="$(grep -vE '^\s*#' wrangler.toml \
+  | grep -oP 'pattern\s*=\s*"\K[^"]+(?="\s*,\s*custom_domain\s*=\s*true)' \
   | grep -v '^www\.' | head -1)"
 
 if [ -n "$DOMINIO" ]; then
