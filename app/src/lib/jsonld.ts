@@ -25,7 +25,7 @@ import { ORIGEM, url } from '@/lib/seo';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from '@/components/landing/faq-capa';
 import { tx } from '@/i18n/telas/motor-jsonld';
-import { LANG_HTML } from '@/i18n';
+import { LANG_HTML, LOCALE } from '@/i18n';
 
 type Json = Record<string, unknown>;
 
@@ -34,6 +34,19 @@ const ID_PROFESSOR = `${ORIGEM}/sobre/#moshik`;
 
 export function organizacao(): Json {
   const e = empresa.endereco;
+  /* O site em inglês não fala do Brasil (decisão do dono, 29/10/2026): sem a
+     razão social, o CNPJ e o endereço, que ficam nos Termos e na Privacidade. */
+  if (LOCALE === 'en') {
+    return {
+      '@type': 'Organization',
+      '@id': ID_ORG,
+      name: empresa.nomeFantasia,
+      url: ORIGEM + '/',
+      logo: `${ORIGEM}/apple-touch-icon.png`,
+      sameAs: [INSTAGRAM],
+      email: empresa.contato.emailSuporte
+    };
+  }
   return {
     '@type': 'Organization',
     '@id': ID_ORG,

@@ -176,7 +176,7 @@
   },
   "mem/ensino/paraBrasileiroPt": {
     "pt": "O som é o M de \"mãe\", mas com uma armadilha: em português o M no fim da sílaba nasaliza a vogal anterior - \"bom\", \"sim\", \"tem\". Em hebraico isso não acontece. {{אִמָא}} é \"íma\", com as duas vogais limpas e o M pronunciado inteiro no meio da palavra.",
-    "en": "The sound is the M of \"mother\", with one trap that speakers of some languages fall into: in Portuguese or French, an M at the end of a syllable nasalizes the vowel before it. That doesn't happen in Hebrew. {{אִמָא}} is \"ima\", with two clear vowels and the M fully pronounced in the middle of the word.",
+    "en": "The sound is the M of \"mother\", with one trap that speakers of some languages fall into: in French, for example, an M at the end of a syllable nasalizes the vowel before it. That doesn't happen in Hebrew. {{אִמָא}} is \"ima\", with two clear vowels and the M fully pronounced in the middle of the word.",
     "comentario": "O original fala da nasalização do português (\"bom\", \"sim\", \"tem\"); quem fala inglês em geral não tem esse problema. etapa 3: pronúncia, rever"
   },
   "mem/ensino/lembrePt": {
@@ -314,7 +314,7 @@
   },
   "mem/brazilianMistake/wrong": {
     "pt": "Ler {{אֵם}} como o \"em\" do português, com a vogal anasalada e o M sumindo.",
-    "en": "Nasalizing the vowel in {{אֵם}} and letting the M fade away, as speakers of some languages (Portuguese, French) tend to do.",
+    "en": "Nasalizing the vowel in {{אֵם}} and letting the M fade away, as speakers of some languages (French, for one) tend to do.",
     "comentario": "O original é o \"em\" do português. Em inglês, \"em\" (o nome da letra M) já soa certo; reformulei sem dizer que é erro típico de quem fala inglês. etapa 3: pronúncia, rever"
   },
   "mem/brazilianMistake/right": {
@@ -324,7 +324,7 @@
   },
   "mem/brazilianMistake/why": {
     "pt": "Em português o M no fim da sílaba nasaliza a vogal antes dele - \"mim\", \"bom\", \"sim\". Em hebraico isso não acontece: o M é sempre pronunciado como consoante inteira, e a vogal continua oral.",
-    "en": "In some languages an M at the end of a syllable nasalizes the vowel before it and nearly disappears (Portuguese \"bom\", \"sim\"). In Hebrew that doesn't happen: the M is always pronounced as a full consonant, and the vowel stays clear.",
+    "en": "In some languages an M at the end of a syllable nasalizes the vowel before it and nearly disappears (French \"parfum\"). In Hebrew that doesn't happen: the M is always pronounced as a full consonant, and the vowel stays clear.",
     "comentario": "etapa 3: pronúncia, rever"
   },
   "mem/bridgeWords/#0/pt": {
@@ -397,7 +397,7 @@
   },
   "tav/ensino/checagem/#0/porque": {
     "pt": "Na maior parte do Brasil o T antes de I e E vira TCH, e o hábito é automático. Em hebraico o {{ת}} é sempre seco: {{תִ}} é \"ti\", nunca \"tchi\".",
-    "en": "In some languages (Brazilian Portuguese, for one) a T before I and E automatically turns into CH, and casual English does something similar in words like \"tree\". In Hebrew {{ת}} is always crisp: {{תִ}} is \"ti\", never \"chee\".",
+    "en": "In some languages a T before I and E automatically turns into CH, and casual English does something similar in words like \"tree\". In Hebrew {{ת}} is always crisp: {{תִ}} is \"ti\", never \"chee\".",
     "comentario": "O original fala do TCH da maior parte do Brasil. etapa 3: pronúncia, rever"
   },
   "tav/ensino/checagem/#1/q": {
@@ -496,7 +496,7 @@
   },
   "tav/brazilianMistake/why": {
     "pt": "Na maior parte do Brasil o T antes de I e E vira TCH - \"tia\", \"noite\". Esse hábito é automático e passa despercebido. Em hebraico o {{ת}} é sempre seco: {{תֵה}} é \"te\", não \"tchê\".",
-    "en": "In some languages (Brazilian Portuguese, for one) a T before I and E turns into CH, and the habit is automatic and goes unnoticed. Casual English does a little of this too (\"tree\" can sound like \"chree\"). In Hebrew {{ת}} is always crisp: {{תֵה}} is \"te\", not \"che\".",
+    "en": "In some languages a T before I and E turns into CH, and the habit is automatic and goes unnoticed. Casual English does a little of this too (\"tree\" can sound like \"chree\"). In Hebrew {{ת}} is always crisp: {{תֵה}} is \"te\", not \"che\".",
     "comentario": "Não afirmo que seja erro típico de quem fala inglês. etapa 3: pronúncia, rever"
   },
   "tav/bridgeWords/#0/pt": {
@@ -537,7 +537,7 @@
   },
   "nun/ensino/paraBrasileiroPt": {
     "pt": "Mesma armadilha do mem: em português o N no fim da sílaba nasaliza a vogal antes dele (\"bem\", \"sin-to\"). Em hebraico o {{ן}} é pronunciado como consoante inteira e a vogal continua limpa - {{מִן}} é \"min\", com o N audível no fim.",
-    "en": "Same trap as with mem: in some languages an N at the end of a syllable nasalizes the vowel before it (Portuguese \"bem\", French \"vin\"). In Hebrew {{ן}} is pronounced as a full consonant and the vowel stays clear - {{מִן}} is \"min\", with the N audible at the end.",
+    "en": "Same trap as with mem: in some languages an N at the end of a syllable nasalizes the vowel before it (French \"vin\", \"bon\"). In Hebrew {{ן}} is pronounced as a full consonant and the vowel stays clear - {{מִן}} is \"min\", with the N audible at the end.",
     "comentario": "etapa 3: pronúncia, rever"
   },
   "nun/ensino/lembrePt": {
@@ -579,7 +579,7 @@
   },
   "nun/ensino/checagem/#2/porque": {
     "pt": "Esse é o reflexo do português. Em hebraico a vogal fica limpa e o N é pronunciado inteiro: \"min\", e não \"mĩ\".",
-    "en": "That is a habit from languages like Portuguese or French. In Hebrew the vowel stays clear and the N is fully pronounced: \"min\", not \"mĩ\".",
+    "en": "That is a habit from languages like French. In Hebrew the vowel stays clear and the N is fully pronounced: \"min\", not \"mĩ\".",
     "comentario": "etapa 3: pronúncia, rever"
   },
   "nun/syllables/#0/ptApprox": {
@@ -666,7 +666,7 @@
   },
   "nun/brazilianMistake/why": {
     "pt": "É o mesmo hábito do {{מ}}: em português o N no fim da sílaba nasaliza a vogal e quase desaparece. Em hebraico ele é uma consoante inteira, encostando a língua atrás dos dentes.",
-    "en": "It's the same habit as with {{מ}}: in some languages (Portuguese, French) an N at the end of a syllable nasalizes the vowel and almost disappears. In Hebrew it is a full consonant, with the tongue touching behind the teeth.",
+    "en": "It's the same habit as with {{מ}}: in some languages (French, for one) an N at the end of a syllable nasalizes the vowel and almost disappears. In Hebrew it is a full consonant, with the tongue touching behind the teeth.",
     "comentario": "etapa 3: pronúncia, rever"
   },
   "nun/bridgeWords/#0/pt": {
@@ -898,7 +898,7 @@
   },
   "he/brazilianMistake/why": {
     "pt": "Em português o H escrito é sempre mudo - \"hotel\" é \"otel\". Em hebraico o {{ה}} no início da palavra é um som de verdade. Na fala rápida muitos israelenses o enfraquecem, mas pronuncie-o: é o padrão e é sempre entendido.",
-    "en": "Some languages never pronounce a written H (in Portuguese, \"hotel\" is \"otel\"), and some English accents drop it too. In Hebrew, {{ה}} at the start of a word is a real sound. In fast speech many Israelis weaken it, but pronounce it: it is the standard and is always understood.",
+    "en": "Some languages never pronounce a written H (in French and Spanish, the H of \"hotel\" is silent), and some English accents drop it too. In Hebrew, {{ה}} at the start of a word is a real sound. In fast speech many Israelis weaken it, but pronounce it: it is the standard and is always understood.",
     "comentario": "Não afirmo que seja erro típico de quem fala inglês. etapa 3: pronúncia, rever"
   },
   "he/bridgeWords/#0/pt": {
@@ -1338,7 +1338,7 @@
   },
   "dalet/ensino/checagem/#0/porque": {
     "pt": "Na maior parte do Brasil o D antes de I e E vira DJ sem a gente perceber. Em hebraico o {{ד}} nunca muda: é sempre o D de \"dado\".",
-    "en": "In some languages (Brazilian Portuguese, for one) a D before I and E turns into a J sound without the speaker noticing, and casual English does something similar in words like \"dream\". In Hebrew {{ד}} never changes: it is always the D of \"day\".",
+    "en": "In some languages a D before I and E turns into a J sound without the speaker noticing, and casual English does something similar in words like \"dream\". In Hebrew {{ד}} never changes: it is always the D of \"day\".",
     "comentario": "O original fala do DJ da maior parte do Brasil. etapa 3: pronúncia, rever"
   },
   "dalet/ensino/checagem/#1/q": {
@@ -1439,7 +1439,7 @@
   },
   "dalet/brazilianMistake/why": {
     "pt": "Na maior parte do Brasil o D antes de I e E vira DJ, e o falante nem percebe. Em hebraico o {{ד}} nunca muda: é sempre o D seco de \"dado\".",
-    "en": "In some languages (Brazilian Portuguese, for one) a D before I and E turns into a J sound, and the speaker doesn't even notice. In Hebrew {{ד}} never changes: it is always the crisp D of \"day\".",
+    "en": "In some languages a D before I and E turns into a J sound, and the speaker doesn't even notice. In Hebrew {{ד}} never changes: it is always the crisp D of \"day\".",
     "comentario": "Não afirmo que seja erro típico de quem fala inglês. etapa 3: pronúncia, rever"
   },
   "dalet/bridgeWords/#0/pt": {
@@ -2342,7 +2342,7 @@
   },
   "zayin/ensino/paraBrasileiroPt": {
     "pt": "Em português o Z no fim da palavra perde a vibração e vira S ou CH - dizemos \"paz\" como \"pas\" (ou \"pash\"), \"luz\" como \"lus\". Em hebraico o {{ז}} continua sonoro onde estiver: a garganta vibra até o fim.",
-    "en": "In some languages a Z at the end of a word loses its buzz and turns into an S - Portuguese says \"paz\" (peace) like \"pas\". English mostly keeps it (\"buzz\", \"quiz\"), and that is exactly what Hebrew wants: {{ז}} stays voiced wherever it is, and your throat vibrates to the very end.",
+    "en": "In some languages a Z at the end of a word loses its buzz and turns into an S - Spanish says \"paz\" (peace) like \"pas\". English mostly keeps it (\"buzz\", \"quiz\"), and that is exactly what Hebrew wants: {{ז}} stays voiced wherever it is, and your throat vibrates to the very end.",
     "comentario": "etapa 3: pronúncia, rever. O original fala do Z final do português; reescrevi para o inglês, que em geral mantém o Z vozeado"
   },
   "zayin/ensino/lembrePt": {
@@ -2363,7 +2363,7 @@
   },
   "zayin/ensino/checagem/#1/porque": {
     "pt": "Esse é o hábito do português. Em hebraico o som de /z/ se mantém em qualquer posição da palavra - e o som de S se escreve com outras letras: o {{שׂ}}, que você já viu, e mais uma, que vem daqui a algumas lições.",
-    "en": "That is a habit some languages have, Portuguese among them. In Hebrew the /z/ sound stays the same in any position in the word - and the S sound is written with other letters: {{שׂ}}, which you have already seen, and one more, coming in a few lessons.",
+    "en": "That is a habit some languages have, Spanish among them. In Hebrew the /z/ sound stays the same in any position in the word - and the S sound is written with other letters: {{שׂ}}, which you have already seen, and one more, coming in a few lessons.",
     "comentario": "etapa 3: pronúncia, rever"
   },
   "zayin/contrastes/ן": {
@@ -2463,7 +2463,7 @@
   },
   "zayin/brazilianMistake/why": {
     "pt": "Em português o Z final vira S ou CH - \"paz\", \"luz\", \"rapaz\". Em hebraico o {{ז}} continua sonoro onde quer que esteja.",
-    "en": "In some languages a final Z turns into S - Portuguese \"paz\", \"luz\". English speakers usually keep it (\"buzz\", \"quiz\"). In Hebrew {{ז}} stays voiced wherever it is.",
+    "en": "In some languages a final Z turns into S - Spanish \"paz\", \"luz\". English speakers usually keep it (\"buzz\", \"quiz\"). In Hebrew {{ז}} stays voiced wherever it is.",
     "comentario": "etapa 3: pronúncia, rever. Erro típico de brasileiro; para quem fala inglês é menos comum, então o texto não diz que é típico deles"
   },
   "zayin/bridgeWords/#0/pt": {

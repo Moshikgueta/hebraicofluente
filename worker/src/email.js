@@ -77,7 +77,7 @@ export function confirmacaoTexto(recebidaEm, idioma = 'pt', contato = `contato@$
     return [
       'Hello,',
       '',
-      `We received your message on ${dataEN(recebidaEm)} at ${horaEN(recebidaEm)} (Brazil time, UTC-3). This is an automatic confirmation, sent the moment it arrived, and it is a record that we received it.`,
+      `We received your message on ${dataEN(recebidaEm)} at ${horaEN(recebidaEm)} (UTC-3). This is an automatic confirmation, sent the moment it arrived, and it is a record that we received it.`,
       '',
       'If you are asking to cancel your purchase, the date that counts is the date you wrote, not the date of our reply. We reply personally within 2 business days.',
       '',

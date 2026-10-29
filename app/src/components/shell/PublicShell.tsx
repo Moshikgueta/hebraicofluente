@@ -37,6 +37,7 @@ import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/conta-public-shell';
+import { LOCALE } from '@/i18n';
 
 /* Os rótulos são os do design. Os destinos são páginas de verdade, e não
    âncoras: `#como` funciona na capa e vira link morto em /cursos, que usa
@@ -367,12 +368,14 @@ function Footer() {
           por que um dado ausente some em vez de virar um travessão. */}
       <div className="border-t border-[color:var(--line-soft)]">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-5 grid gap-1.5">
-          <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
+          {/* O site em inglês não mostra a empresa no rodapé (decisão do dono,
+              29/10/2026): ela fica só nos Termos e na Privacidade, onde a lei pede. */}
+          {LOCALE !== 'en' && <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
             {[nomeLegalCompleto(),
               empresa.cnpj && tx.cnpj(empresa.cnpj),
               enderecoLinha()
             ].filter(Boolean).join(' · ')}
-          </p>
+          </p>}
           <p className="font-ui text-[12px] text-ink-muted">
             {tx.direitos(new Date().getFullYear(), empresa.nomeFantasia)}
           </p>

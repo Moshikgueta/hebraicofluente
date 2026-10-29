@@ -10,6 +10,7 @@ import {
   temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/venda-suporte';
+import { LOCALE } from '@/i18n';
 
 export const metadata: Metadata = meta({
   rota: '/suporte',
@@ -148,7 +149,7 @@ export default function Page() {
           </p>
         </div>
 
-        <Identificacao />
+        {LOCALE !== 'en' && <Identificacao />}
 
         <FaixaCta
           onde="suporte"
