@@ -12,6 +12,8 @@ const pt = {
   /* Abaixo de 360 px, ao lado do \"Quero começar\". */
   minhaContaCurta: 'Conta',
   comecar: 'Quero começar',
+  /* Só no cabeçalho do celular com o texto ampliado (130% e 150%). */
+  comecarCurto: 'Começar',
   comecarOCurso: 'Quero começar',
   entrar: 'Entrar',
   comecarAgora: 'Quero começar',
@@ -62,6 +64,7 @@ const en: Traducao<typeof pt> = {
   minhaConta: 'My account',
   minhaContaCurta: 'Account',
   comecar: 'I want to start',
+  comecarCurto: 'Start',
   comecarOCurso: 'I want to start',
   entrar: 'Sign in',
   comecarAgora: 'I want to start',
