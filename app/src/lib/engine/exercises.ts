@@ -881,10 +881,13 @@ export function buildMiniTest(
      relaxa o teto geral, e nunca o do reconhecer. */
   /* "Estas duas escrevem o MESMO som" também em um (27/10/2026, pedido do
      dono: no Álef ele saía duas vezes, אֵ אֶ e depois אַ אָ). */
+  /* NO MÁXIMO DOIS DE CADA TIPO (27/10/2026, pedido do dono, #266): o teto
+     geral desce de três para dois, e digitar fica em um (P0-4: é o item mais
+     lento, no celular). */
   const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
-    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1, 'type-answer': 1
   };
-  const TETO_GERAL = 3;
+  const TETO_GERAL = 2;
   let tetoGeral = TETO_GERAL;
   const cabe = (ex: Exercise) => {
     const teto = TETO_POR_TIPO[ex.kind] ?? tetoGeral;
@@ -902,6 +905,12 @@ export function buildMiniTest(
     }
   };
 
+  /* A abertura muda de letra para letra (#266): reconhecer a letra, achar a
+     intrusa, achá-la dentro de uma palavra ou ligar cada letra ao seu som. */
+  tentar(girar([exLetterRecognition, exOddOneOut, exLetterInWord, exMatchLetterSound], L.order + 1));
+  /* E o "qual destas é a letra" logo em seguida, quando a abertura foi outra:
+     é um por teste, sempre, e gastá-lo cedo é o que tira do bloco o contraste
+     do par que mostraria a forma final antes da hora (a lição do Kaf). */
   tentar([exLetterRecognition]);
   /* A VARIANTE, que a prática cobrava e a fixação não.
      ─────────────────────────────────────────────────────────────────────
