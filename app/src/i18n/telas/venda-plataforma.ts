@@ -21,7 +21,7 @@ const pt = {
   escreverD: 'A letra impressa e a cursiva, traçada na tela.',
   escreverAlt: 'Tela de escrita, com a letra Lámed impressa e em cursiva',
   ligueT: 'Ligar letra e som',
-  ligueD: 'Cada letra com o seu som, comparado ao português.',
+  ligueD: 'Cada letra com o seu som, explicado com palavras que você já conhece.',
   ligueAlt: 'Exercício de ligar cada letra ao seu som',
   monteT: 'Montar a palavra',
   monteD: 'Letra por letra, da direita para a esquerda.',
