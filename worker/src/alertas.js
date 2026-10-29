@@ -35,7 +35,7 @@ import {
   avisosPurge, bater, contarAcoes, estornosAbertos, reservarAviso, respostas5xxPurge,
   soltarAviso, somar5xx, ultimoBatimento
 } from './lib/db.js';
-import { mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
+import { escapar, mailReady, mensagemDeAlerta, reaisBR, sendMail } from './lib/mail.js';
 import { novosDesde } from './api/depoimentos.js';
 import { estatisticasPurge } from './api/estatisticas.js';
 import { abComprasPurge } from './api/ab.js';
@@ -82,11 +82,27 @@ export async function runAlertas(env, at = Date.now()) {
   try { await estatisticasPurge(env, at); } catch { /* idem */ }
 }
 
+/* Todo alerta diz de qual site veio (29/10/2026). O site em inglês
+   (Moshikgueta/fluent-hebrew) roda este mesmo código, com Worker e banco
+   próprios, e manda os alertas para o mesmo e-mail: sem esta linha, um
+   "backup sem cópia nova" do banco de lá parecia ser o daqui, cujo backup
+   estava em dia. */
+export function comOrigem(env, msg) {
+  const site = String((env && env.SITE_ORIGIN) || '').replace(/\/+$/, '');
+  if (!site) return msg;
+  return {
+    ...msg,
+    subject: msg.subject.replace(/^\[Hebraico Fluente\]/, `[Hebraico Fluente · ${site.replace(/^https?:\/\//, '')}]`),
+    text: `${msg.text}\nEnviado por: ${site}`,
+    html: `${msg.html}<p><small>Enviado por: ${escapar(site)}</small></p>`
+  };
+}
+
 async function enviarAoDono(env, chave, msg) {
   const dono = String(env.SUPPORT_EMAIL || '').trim();
   if (!dono || !mailReady(env)) return false;
   if (!await reservarAviso(env, chave)) return false;   // já mandado nesta janela
-  const r = await sendMail(env, { to: dono, ...msg });
+  const r = await sendMail(env, { to: dono, ...comOrigem(env, msg) });
   if (!r || !r.ok) { await soltarAviso(env, chave); return false; }
   return true;
 }
