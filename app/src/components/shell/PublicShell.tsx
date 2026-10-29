@@ -164,11 +164,12 @@ export function PublicShell({ children }: { children: ReactNode }) {
                  entrou: a conta, e começar o curso. */
               <>
                 <LinkButton href="/minha-biblioteca" variant="ghost" size="sm"
-                            className="whitespace-nowrap px-2.5 sm:px-4">
-                  {tx.minhaConta}
+                            className="whitespace-nowrap px-2.5 max-[359px]:px-1.5 sm:px-4">
+                  <span className="min-[360px]:hidden">{tx.minhaContaCurta}</span>
+                  <span className="max-[359px]:hidden">{tx.minhaConta}</span>
                 </LinkButton>
                 <LinkButton href={`/checkout/${FLAGSHIP}`} size="sm"
-                            className="whitespace-nowrap px-3 sm:px-4">
+                            className="whitespace-nowrap px-3 max-[359px]:px-2 sm:px-4">
                   <span className="sm:hidden">{tx.comecar}</span>
                   <span className="hidden sm:inline">{tx.comecarOCurso}</span>
                 </LinkButton>
@@ -189,14 +190,16 @@ export function PublicShell({ children }: { children: ReactNode }) {
                     página; o caminho de volta para o curso pago, não tinha
                     outro lugar. */}
                 <LinkButton href="/entrar" variant="ghost" size="sm"
-                            className="whitespace-nowrap px-2.5 sm:px-4">
+                            className="whitespace-nowrap px-2.5 max-[359px]:px-1.5 sm:px-4">
                   {tx.entrar}
                 </LinkButton>
-                {/* "Começar agora" cabe a partir de sm; num aparelho de 390 o
-                    rótulo inteiro quebra em duas linhas e empurra o menu
-                    para fora da tela. A palavra que importa é a primeira. */}
+                {/* Desde 29/10/2026 o rótulo é "Quero começar" nas duas
+                    larguras (pedido do dono: o mesmo texto do hero). Os dois
+                    spans ficam para o dia em que o rótulo longo voltar a
+                    ser diferente: num aparelho de 390 ele não pode quebrar
+                    em duas linhas e empurrar o menu para fora da tela. */}
                 <LinkButton href="/curso-de-hebraico" size="sm"
-                            className="whitespace-nowrap px-3 sm:px-4">
+                            className="whitespace-nowrap px-3 max-[359px]:px-2 sm:px-4">
                   {/* Um rótulo inteiro por largura, e não "Começar" + um
                       span com "&nbsp;agora": o `gap` do botão somava ao
                       espaço e abria um vão (auditoria de 01/10, VIS-014). */}

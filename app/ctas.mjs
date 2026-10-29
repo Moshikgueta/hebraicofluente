@@ -52,7 +52,7 @@ async function cenario(nome, aluno) {
   for (const rota of ['metodo','faq','sobre']) {
     await p.goto(`http://127.0.0.1:4409/${rota}/`,{waitUntil:'networkidle'});
     await p.waitForTimeout(700);
-    const fecho = await p.locator('a').filter({hasText:/Quero começar a ler hebraico|Começar o curso|Começar a aprender|Continuar de onde parei|Liberar meu acesso/}).first().innerText().catch(()=>'(nenhum)');
+    const fecho = await p.locator('a').filter({hasText:/Quero começar|Começar o curso|Começar a aprender|Continuar de onde parei|Liberar meu acesso/}).first().innerText().catch(()=>'(nenhum)');
     const vende = await p.locator('a[href*="/checkout/"]').count();
     console.log(`    /${rota.padEnd(7)} fecho: ${fecho.replace(/\s+/g,' ').trim().padEnd(26)} checkout: ${vende}`);
   }
