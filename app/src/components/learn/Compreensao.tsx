@@ -34,6 +34,7 @@
  * assoc    associação: várias linhas, cada uma com os mesmos rótulos
  */
 
+import { tocarResposta } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/licao-compreensao';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -132,7 +133,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                     type="button"
                     aria-disabled={feita}
                     aria-pressed={resp[i] === j}
-                    onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
+                    onClick={() => { if (resp[i] === undefined) tocarResposta(j === p.certa); setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r)); }}
                     className={`min-h-[48px] px-4 py-2.5 text-left rounded-[var(--r-md)] border-2
                                 font-ui text-[14.5px] leading-snug transition-colors
                                 aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
@@ -156,7 +157,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                       type="button"
                       aria-disabled={feita}
                       aria-pressed={resp[i] === j}
-                      onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
+                      onClick={() => { if (resp[i] === undefined) tocarResposta(estaCerta); setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r)); }}
                       className={`min-h-[48px] px-4 rounded-[var(--r-md)] border-2 font-ui
                                   text-[14.5px] font-semibold transition-colors
                                   aria-disabled:cursor-default ${tom(feita, estaCerta, resp[i] === j)}`}
@@ -177,7 +178,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                     type="button"
                     aria-disabled={feita}
                     aria-pressed={resp[i] === j}
-                    onClick={() => setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r))}
+                    onClick={() => { if (resp[i] === undefined) tocarResposta(j === p.certa); setResp(r => (r[i] === undefined ? { ...r, [i]: j } : r)); }}
                     className={`min-h-[88px] grid place-items-center gap-1 px-4 py-3
                                 rounded-[var(--r-md)] border-2 transition-colors
                                 aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
@@ -214,7 +215,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                             aria-disabled={feitaLinha}
                             aria-pressed={escolhida === j}
                             aria-label={`${l.item}: ${r}`}
-                            onClick={() => setAssoc(a => (a[chave] === undefined ? { ...a, [chave]: j } : a))}
+                            onClick={() => { if (assoc[chave] === undefined) tocarResposta(j === l.certa); setAssoc(a => (a[chave] === undefined ? { ...a, [chave]: j } : a)); }}
                             className={`min-h-[40px] px-3 rounded-[var(--r-sm)] border-2 font-ui
                                         text-[13.5px] font-semibold transition-colors
                                         aria-disabled:cursor-default

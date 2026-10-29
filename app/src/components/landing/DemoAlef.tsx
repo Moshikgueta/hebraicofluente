@@ -49,6 +49,7 @@
  * informativo depende delas.
  */
 
+import { tocarResposta } from '@/lib/som-do-acerto';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -290,6 +291,7 @@ export function DemoAlef({
   const responder = (i: number) => {
     const certa = !!OPCOES[i]?.certa;
     setEscolha(i);
+    tocarResposta(certa);
     setTentativas(n => n + 1);
     track('demo_answered', { letterId: 'alef', correct: certa, chosen: OPCOES[i]?.he });
   };
@@ -855,6 +857,7 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
 
   const responder = (i: number) => {
     setEscolha(i);
+    tocarResposta(!!rodada.opcoes[i]?.certa);
     track('demo_answered', { letterId: 'alef', correct: !!rodada.opcoes[i]?.certa, chosen: `${etapa}:${rodada.opcoes[i]?.he}` });
   };
   const proxima = () => {

@@ -16,7 +16,7 @@ import { letrasConcluidas } from '@/lib/vocabulario';
 import { opcoesDaPlaca, placasParaLer } from '@/lib/engine/rua';
 import { clean, stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
-import { tocarSom } from '@/lib/som-do-acerto';
+import { tocarResposta } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/academia-hebraico-na-rua';
 
 export function RuaClient() {
@@ -56,7 +56,7 @@ export function RuaClient() {
                 : escolha === o.he ? 'border-[var(--amber)] bg-[var(--amber-wash)]' : 'border-line bg-surface opacity-70';
               return (
                 <button key={o.he} type="button" disabled={escolha != null}
-                        onClick={() => { setEscolha(o.he); if (eCerta) tocarSom('acerto'); }}
+                        onClick={() => { setEscolha(o.he); tocarResposta(eCerta); }}
                         aria-label={o.translit}
                         className={`grid place-items-center min-h-[72px] rounded-[var(--r-md)] border-2 px-2 ${tom}`}>
                   <He size="lg">{o.he}</He>

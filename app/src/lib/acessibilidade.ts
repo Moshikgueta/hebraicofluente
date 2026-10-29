@@ -52,7 +52,7 @@ export type Prefs = {
   /** Um botão "Ouvir a instrução" em cada exercício, que lê o enunciado em
    *  português com a voz do aparelho (components/learn/OuvirInstrucao.tsx). */
   voz: boolean;
-  /** Cala o som do acerto e da comemoração (lib/som-do-acerto.ts). Os sons
+  /** Cala o som do acerto, do erro e da comemoração (lib/som-do-acerto.ts). Os sons
    *  nascem ligados; esta é a saída. As gravações do curso não mudam. */
   semSons: boolean;
 };

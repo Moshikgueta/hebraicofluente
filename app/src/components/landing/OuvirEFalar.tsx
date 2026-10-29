@@ -26,6 +26,7 @@
  * Não pontua e não guarda nada, como a aula aberta: é amostra.
  */
 
+import { tocarResposta } from '@/lib/som-do-acerto';
 import { useEffect, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { FalarECorrigir } from '@/components/learn/FalarECorrigir';
@@ -137,7 +138,7 @@ function Ouvir({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
           const certa = marcada && o.he === r.certa;
           return (
             <button key={o.he} type="button" disabled={acertou}
-                    onClick={() => setEscolha(o.he)}
+                    onClick={() => { setEscolha(o.he); tocarResposta(o.he === r.certa); }}
                     aria-label={tx.letra(o.he)}
                     className={`min-h-[72px] rounded-[16px] border-[1.5px] grid place-items-center transition-colors duration-200
                       ${certa ? 'border-[var(--teal)] bg-[var(--teal-soft)]'

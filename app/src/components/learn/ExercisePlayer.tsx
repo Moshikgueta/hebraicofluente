@@ -142,12 +142,12 @@ export function ExercisePlayer({
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null, troca });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
-    /* O som acompanha a Yael: plim no acerto, a comemoração na sequência.
-       No erro, silêncio (lib/som-do-acerto.ts). Fora do atualizador do
+    /* O som acompanha a Yael: plim no acerto, a comemoração na sequência e
+       o "hum" baixo no erro (lib/som-do-acerto.ts). Fora do atualizador do
        estado, que o React pode chamar duas vezes. */
     const nova = correct ? seguidas + 1 : 0;
     setSeguidas(nova);
-    if (correct) tocarSom(MARCOS.includes(nova) ? 'comemora' : 'acerto');
+    tocarSom(correct ? (MARCOS.includes(nova) ? 'comemora' : 'acerto') : 'erro');
 
     /* The moment the course is actually selling.
        Reading a whole word right, correctly, at a point where the course has
