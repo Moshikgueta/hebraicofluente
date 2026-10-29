@@ -28,12 +28,13 @@
     "emailSuporte": "contato@hebraicofluente.com.br",
     "emailPrivacidade": "contato@hebraicofluente.com.br",
     "telefone": null,
-    "whatsapp": "+55 41 99991-9434"
+    "whatsapp": "+55 41 99991-9434",
+    "emailEn": "languageswithmoshik@gmail.com"
   },
 
   "atendimento": {
     "horarioPt": "Segunda a sexta, das 9h às 18h (horário de Brasília)",
-    "horarioEn": "Monday to Friday, 9 am to 6 pm (Brazil time, UTC-3)",
+    "horarioEn": "Monday to Friday, 9 am to 6 pm (UTC-3)",
     "prazoRespostaUteis": 2
   },
 
@@ -50,7 +51,7 @@
     "garantiaDias": 7,
     "prazoReembolsoUteis": 10,
     "atualizadoEm": "2026-10-29",
-    "atualizadoEmEn": "2026-10-28"
+    "atualizadoEmEn": "2026-10-29"
   },
 
   "_notaFormas": [

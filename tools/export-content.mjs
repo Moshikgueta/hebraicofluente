@@ -365,6 +365,15 @@ function main() {
       empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: atualizadoEmEn || politicas.atualizadoEm };
       const { horarioEn, ...atendimento } = empresa.atendimento || {};
       if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
+      /* Sem Brasil no site em inglês (decisão do dono, 29/10/2026): o contato é
+         o e-mail próprio dele, sem o .com.br, e o WhatsApp (+55) não aparece. */
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = emailEn
+        ? { ...contato, email: emailEn, emailSuporte: emailEn, emailPrivacidade: emailEn, whatsapp: null }
+        : { ...contato, whatsapp: null };
+    } else {
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = contato;
     }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }

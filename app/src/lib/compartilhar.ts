@@ -12,6 +12,9 @@
 
 import { tx } from '@/i18n/telas/motor-compartilhar';
 
+const ENDERECO = (process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://hebraicofluente.com.br')
+  .replace(/^https?:\/\//, '').replace(/\/+$/, '');
+
 /** A frase da imagem, em primeira pessoa, por conquista. Só as que estão aqui
  *  ganham o botão. `modulo-N` vem do checkpoint aprovado. */
 export const FRASES: Record<string, string> = {
@@ -112,7 +115,9 @@ export async function desenharConquista(frase: string, quando: string): Promise<
   ctx.fillText('Hebraico Fluente', W / 2, 1560);
   ctx.fillStyle = COR.menta;
   ctx.font = `500 36px ${ui}`;
-  ctx.fillText('hebraicofluente.com.br', W / 2, 1616);
+  /* O endereço do site desta build: o site em inglês tem o seu (e não fala do
+     Brasil, decisão do dono de 29/10/2026). */
+  ctx.fillText(ENDERECO, W / 2, 1616);
 
   /* JPEG: um quinto do PNG, e é o que o Instagram guarda de qualquer jeito. */
   return new Promise((ok, erro) => canvas.toBlob(b => (b ? ok(b) : erro(new Error('sem imagem' /* i18n-ok: erro interno */))), 'image/jpeg', 0.92));

@@ -4,6 +4,7 @@ import { PERFIL_LINKEDIN } from '@/lib/professor';
 import { He } from '@/components/hebrew/He';
 import { Container, Reveal, Rubrica } from './base';
 import { tx } from '@/i18n/telas/venda-trajetoria';
+import { LOCALE } from '@/i18n';
 
 /* A trajetória do professor, na versão LONGA (28/09/2026).
  * ─────────────────────────────────────────────────────────────────────────
@@ -34,9 +35,11 @@ const PADROES = [
   tx.padrao5
 ];
 
+/* O site em inglês não fala do Brasil (decisão do dono, 29/10/2026): a parada
+   do caminho sai inteira, e a sala de aula vem logo depois de Israel. */
 const CAMINHO: readonly { t: string; d: string }[] = [
   { t: tx.caminhoIsraelT, d: tx.caminhoIsraelD },
-  { t: tx.caminhoBrasilT, d: tx.caminhoBrasilD },
+  ...(LOCALE === 'en' ? [] : [{ t: tx.caminhoBrasilT, d: tx.caminhoBrasilD }]),
   { t: tx.caminhoSalaT, d: tx.caminhoSalaD },
   { t: tx.caminhoIdiomasT, d: tx.caminhoIdiomasD },
   { t: tx.caminhoMetodologiaT, d: tx.caminhoMetodologiaD },

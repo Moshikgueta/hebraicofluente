@@ -143,7 +143,7 @@ Introduce the letter Mem (מ): its name, its sound and how it appears in a word,
 - Onde: Lesson of מ · common mistake box
 - Id: `letter-mem-common-mistake`
 
-Explain the mistake learners often make: Nasalizing the vowel in אֵם and letting the M fade away, as speakers of some languages (Portuguese, French) tend to do. The right way: Read אֵם with a clear vowel, like the e in "bed", and really close your lips on the final M. Why: In some languages an M at the end of a syllable nasalizes the vowel before it and nearly disappears (Portuguese "bom", "sim"). In Hebrew that doesn't happen: the M is always pronounced as a full consonant, and the vowel stays clear. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Nasalizing the vowel in אֵם and letting the M fade away, as speakers of some languages (French, for one) tend to do. The right way: Read אֵם with a clear vowel, like the e in "bed", and really close your lips on the final M. Why: In some languages an M at the end of a syllable nasalizes the vowel before it and nearly disappears (French "parfum"). In Hebrew that doesn't happen: the M is always pronounced as a full consonant, and the vowel stays clear. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
 
 ### Meet the letter Tav with your teacher
 
@@ -157,7 +157,7 @@ Introduce the letter Tav (ת): its name, its sound and how it appears in a word,
 - Onde: Lesson of ת · common mistake box
 - Id: `letter-tav-common-mistake`
 
-Explain the mistake learners often make: Reading תִי as "chee" and תֵ as "che". The right way: Reading תִי as "ti" and תֵ as "te", with a crisp T. Why: In some languages (Brazilian Portuguese, for one) a T before I and E turns into CH, and the habit is automatic and goes unnoticed. Casual English does a little of this too ("tree" can sound like "chree"). In Hebrew ת is always crisp: תֵה is "te", not "che". Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Reading תִי as "chee" and תֵ as "che". The right way: Reading תִי as "ti" and תֵ as "te", with a crisp T. Why: In some languages a T before I and E turns into CH, and the habit is automatic and goes unnoticed. Casual English does a little of this too ("tree" can sound like "chree"). In Hebrew ת is always crisp: תֵה is "te", not "che". Say the Hebrew examples out loud.
 
 ### Meet the letter Nun with your teacher
 
@@ -171,7 +171,7 @@ Introduce the letter Nun (נ): its name, its sound and how it appears in a word,
 - Onde: Lesson of נ · common mistake box
 - Id: `letter-nun-common-mistake`
 
-Explain the mistake learners often make: Nasalizing the vowel before the N, so that אָמֵן comes out as "amẽ". The right way: Read אָמֵן as "amen", with the N pronounced and the vowel clear. Why: It's the same habit as with מ: in some languages (Portuguese, French) an N at the end of a syllable nasalizes the vowel and almost disappears. In Hebrew it is a full consonant, with the tongue touching behind the teeth. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Nasalizing the vowel before the N, so that אָמֵן comes out as "amẽ". The right way: Read אָמֵן as "amen", with the N pronounced and the vowel clear. Why: It's the same habit as with מ: in some languages (French, for one) an N at the end of a syllable nasalizes the vowel and almost disappears. In Hebrew it is a full consonant, with the tongue touching behind the teeth. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
 
 ### Meet the letter He with your teacher
 
@@ -185,7 +185,7 @@ Introduce the letter He (ה): its name, its sound and how it appears in a word, 
 - Onde: Lesson of ה · common mistake box
 - Id: `letter-he-common-mistake`
 
-Explain the mistake learners often make: Not pronouncing the initial ה, reading הַיוֹם as "ayom". The right way: Breathe the H: "hayom", with air coming out before the vowel. Why: Some languages never pronounce a written H (in Portuguese, "hotel" is "otel"), and some English accents drop it too. In Hebrew, ה at the start of a word is a real sound. In fast speech many Israelis weaken it, but pronounce it: it is the standard and is always understood. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Not pronouncing the initial ה, reading הַיוֹם as "ayom". The right way: Breathe the H: "hayom", with air coming out before the vowel. Why: Some languages never pronounce a written H (in French and Spanish, the H of "hotel" is silent), and some English accents drop it too. In Hebrew, ה at the start of a word is a real sound. In fast speech many Israelis weaken it, but pronounce it: it is the standard and is always understood. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
 
 ### Meet the letter Yud with your teacher
 
@@ -227,7 +227,7 @@ Introduce the letter Dalet (ד): its name, its sound and how it appears in a wor
 - Onde: Lesson of ד · common mistake box
 - Id: `letter-dalet-common-mistake`
 
-Explain the mistake learners often make: Reading דִי as "jee", with a J sound. The right way: Reading דִי as "di", with a crisp D, as in "day". Why: In some languages (Brazilian Portuguese, for one) a D before I and E turns into a J sound, and the speaker doesn't even notice. In Hebrew ד never changes: it is always the crisp D of "day". Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Reading דִי as "jee", with a J sound. The right way: Reading דִי as "di", with a crisp D, as in "day". Why: In some languages a D before I and E turns into a J sound, and the speaker doesn't even notice. In Hebrew ד never changes: it is always the crisp D of "day". Say the Hebrew examples out loud.
 
 ### Meet the letter Shin with your teacher
 
@@ -297,7 +297,7 @@ Introduce the letter Zayin (ז): its name, its sound and how it appears in a wor
 - Onde: Lesson of ז · common mistake box
 - Id: `letter-zayin-common-mistake`
 
-Explain the mistake learners often make: Dropping the buzz of Z at the end of a word: reading אָז (then) as "as". The right way: Keep the Z voiced: "az", with your throat vibrating to the very end. Why: In some languages a final Z turns into S - Portuguese "paz", "luz". English speakers usually keep it ("buzz", "quiz"). In Hebrew ז stays voiced wherever it is. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
+Explain the mistake learners often make: Dropping the buzz of Z at the end of a word: reading אָז (then) as "as". The right way: Keep the Z voiced: "az", with your throat vibrating to the very end. Why: In some languages a final Z turns into S - Spanish "paz", "luz". English speakers usually keep it ("buzz", "quiz"). In Hebrew ז stays voiced wherever it is. Say the Hebrew examples out loud. This box still describes the mistake Portuguese speakers make: if English speakers make a different one, explain that one instead (the native reviewers are checking these).
 
 ### Meet the letter Chet with your teacher
 

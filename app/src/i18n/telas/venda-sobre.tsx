@@ -39,7 +39,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   metaTitulo: 'About Moshik - Hebraico Fluente',
   metaDescricao:
-    'Moshik Gueta, Israeli Hebrew and language teacher: the path through Brazil, ' +
+    'Moshik Gueta, Israeli Hebrew and language teacher: the path through ' +
     'Israel and Buenos Aires behind Hebraico Fluente.',
   trilha: 'About',
 
@@ -55,7 +55,7 @@ const en: Traducao<typeof pt> = {
 
   origemEyebrow: 'The method',
   origemTitulo: 'An adapted method.',
-  origemLead: 'Established principles of language learning, plus what I learned teaching Hebrew to Portuguese speakers.',
+  origemLead: 'Established principles of language learning, plus what I learned teaching Hebrew to beginners.',
   adaptacaoTitulo: 'What I adapted',
   // etapa 3: pronúncia, rever (a adaptação para quem fala inglês ainda está por fazer)
   adaptacaoTexto: 'The exercises, the explanations and the cursive writing were designed around the difficulties of people starting from another language: comparisons with sounds you already know, the mistakes beginners typically make and everything that happens on screen.',

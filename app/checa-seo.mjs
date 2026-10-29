@@ -172,6 +172,8 @@ for (const rota of listadas) {
     }
   }
   if (!org) nota('JSON-LD da página do curso sem Organization');
+  /* O site em inglês sai sem CNPJ no JSON-LD (decisão do dono, 29/10/2026); lá, ele não pode aparecer. */
+  else if (DIR === 'out-en') { if (org.taxID || org.address) nota('JSON-LD em inglês com CNPJ ou endereço da empresa'); }
   else if (empresa.cnpj && org.taxID !== empresa.cnpj) nota(`JSON-LD: CNPJ ${org.taxID}, empresa.json diz ${empresa.cnpj}`);
   if (!faq || !faq.mainEntity?.length) nota('JSON-LD da página do curso sem FAQPage com perguntas');
   else for (const q of faq.mainEntity) {
@@ -179,7 +181,7 @@ for (const rota of listadas) {
     else if (!capa.includes(q.name)) nota(`JSON-LD: a pergunta "${q.name}" não aparece na página do curso`);
   }
   if (!pessoa || pessoa.name !== 'Moshik Gueta') nota('JSON-LD da página do curso sem Person (o professor)');
-  if (blocos.length) console.log(`  JSON-LD do curso: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} · CNPJ ${org?.taxID}`);
+  if (blocos.length) console.log(`  JSON-LD do curso: ${nos.map(n => n['@type']).join(', ')} · preço ${curso?.offers?.price} ${org?.taxID ? ` · CNPJ ${org.taxID}` : ''}`);
 }
 
 /* ── e os da capa ───────────────────────────────────────────────────────

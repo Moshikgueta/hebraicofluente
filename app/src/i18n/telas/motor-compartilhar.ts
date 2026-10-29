@@ -33,7 +33,7 @@ const en: Traducao<typeof pt> = {
   leitor: 'I finished the Hebrew reading course',
   modulo: (n: number): string => `I finished module ${n} of the Hebrew course`,
   // o endereço e o @ do site em inglês ainda não existem: rever com o domínio
-  legenda: 'Learning to read Hebrew with @hebraicofluente · hebraicofluente.com.br',
+  legenda: 'Learning to read Hebrew with @hebraicofluente',
   selo: 'A C H I E V E M E N T'
 };
 

@@ -12,7 +12,7 @@ const pt = {
 const en: Traducao<typeof pt> = {
   linha: (autor: string) => `Method inspired by the work of ${autor}.`,
   // tradução fiel; o dono decide se o site em inglês fala do aluno brasileiro
-  adaptacoes: 'The order in which the letters are introduced comes from his method. The adaptation for Brazilian learners is mine: the exercises, the explanations written for Portuguese speakers, and the cursive writing.'
+  adaptacoes: 'The order in which the letters are introduced comes from his method. The exercises, the explanations and the cursive writing are mine.'
 };
 
 export const DICIONARIO = { pt, en };

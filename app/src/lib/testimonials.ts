@@ -19,6 +19,7 @@
  */
 
 import { tx } from '@/i18n/telas/motor-testimonials';
+import { LOCALE } from '@/i18n';
 
 export type Depoimento = {
   nome: string;
@@ -32,7 +33,10 @@ export type Depoimento = {
   iniciais: string;
 };
 
-export const DEPOIMENTOS: readonly Depoimento[] = [
+/* O site em inglês sai sem depoimento (decisão do dono, 29/10/2026): o da
+   Natália foi escrito em português, por uma aluna do Brasil, e o site em
+   inglês não fala de nenhum dos dois. Volta quando houver um aluno de lá. */
+export const DEPOIMENTOS: readonly Depoimento[] = LOCALE === 'en' ? [] : [
   /* Enviado pela própria aluna ao dono do curso (25/09/2026), para a landing.
      Trecho, sem reescrita: a pedido do dono do curso sai o fim da segunda
      frase ("corrigindo e acompanhando até que você realmente compreenda"),

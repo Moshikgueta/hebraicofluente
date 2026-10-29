@@ -94,13 +94,13 @@ const pt = {
 
 const en: Traducao<typeof pt> = {
   resumo1: 'Israeli, speaks five languages',
-  resumo2: 'Hebrew teacher in Brazil',
+  resumo2: 'Hebrew teacher for beginners',
   resumo3: 'Academic Manager in Tel Aviv',
   resumo4: 'CELTA certificate and studies in Languages and Literature',
   retratoAlt: 'Moshik Gueta, teacher and creator of Hebraico Fluente',
   rubricaProfessor: 'Who is behind Hebraico Fluente',
-  tituloProfessor: 'From Israel to Brazil: a teacher who teaches, learns and thinks about languages.',
-  apresentacao: 'I am Moshik Gueta. It was while teaching Hebrew to Brazilians, in Curitiba, that I understood where people who start from zero get stuck. Hebraico Fluente turns what worked in my classes into a method you follow at your own pace.',
+  tituloProfessor: 'An Israeli teacher who knows where beginners get stuck.',
+  apresentacao: 'I am Moshik Gueta. It was while teaching Hebrew to beginners that I understood where people who start from zero get stuck. Hebraico Fluente turns what worked in my classes into a method you follow at your own pace.',
   historia: 'Read my story',
   linkedin: 'See my LinkedIn profile',
   abreAba: ' (opens in a new tab)',
