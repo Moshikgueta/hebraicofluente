@@ -53,34 +53,15 @@ const RESUMO = [
   tx.resumo4
 ];
 
-export function Professor({ retrato }: { retrato: string | null }) {
+/* Sem o retrato desde 29/10/2026: a foto foi para o hero (Hero.tsx), e a
+   mesma foto duas vezes na página repetia a apresentação. O texto é o mesmo,
+   numa coluna só, no meio. */
+export function Professor() {
   return (
     <section id="sobre" aria-labelledby="sobre-titulo">
       <Container className="pt-20 sm:pt-28">
-        <div className="grid gap-8 lg:gap-[56px] grid-cols-1 sm:grid-cols-[180px_minmax(0,1fr)] lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)] sm:items-center">
+        <div className="max-w-[720px] mx-auto">
           <Reveal>
-            {/* `object-top`: num retrato o rosto fica no terço de cima. */}
-            {retrato ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={retrato}
-                alt={tx.retratoAlt}
-                width={680} height={850} loading="lazy" decoding="async"
-                className="aspect-[4/5] w-full max-w-[240px] sm:max-w-none rounded-[16px]
-                           shadow-[0_0_0_1px_rgba(27,33,31,.06)] object-cover object-top bg-[var(--sand)]"
-              />
-            ) : (
-              <div className="aspect-[4/5] max-w-[240px] sm:max-w-none rounded-[16px] bg-[var(--sand)]
-                              grid place-items-center">
-                <span className="grid place-items-center w-24 h-24 rounded-[26px] bg-[var(--navy)]">
-                  <span style={{ fontSize: 46, marginTop: -3, lineHeight: 1 }}>
-                    <He size="inline" tone="lite" className="leading-none">ע</He>
-                  </span>
-                </span>
-              </div>
-            )}
-          </Reveal>
-          <Reveal delay={100}>
             <Rubrica letra="ז" className="mb-5">{tx.rubricaProfessor}</Rubrica>
             <h2 id="sobre-titulo"
                 className="font-display font-semibold text-[clamp(26px,3vw,38px)] leading-[1.1]

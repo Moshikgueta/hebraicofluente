@@ -47,7 +47,6 @@ import { FLAGSHIP, brl, getCourse } from '@/lib/catalog';
 import { fimDaParceria, guardarParceriaDaUrl, parceriaAtual, precoDaParceria } from '@/lib/parceria';
 import { contarComOrigem } from '@/lib/origem';
 import { useEffect, useState } from 'react';
-import { precoDeVitrine } from '@/lib/vitrine';
 import { useAccount } from '@/lib/account/store';
 import { proximoPasso } from '@/lib/cta';
 import type { HeroMedia } from '@/components/landing/media';
@@ -79,15 +78,12 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
       )}
       <Hero
         primaryHref={passo.href}
-        /* O rótulo diz o que vem do outro lado: o botão leva ao checkout,
-           então ele diz "curso" e o preço, e não uma promessa de leitura
-           que soava como abrir uma aula (auditoria de 01/10, CONV-009). O
-           preço é o mesmo que a caixa de preço mostra (`precoDeVitrine`).
-           Para um aluno pagante segue valendo lib/cta.ts ("Continuar de
-           onde parei"). */
-        primaryLabel={passo.vende ? tx.comecar(brl(precoDeVitrine())) : passo.label}
-        primaryMicro={passo.micro}
-        secondaryHref="#experimente"
+        /* O botão principal leva ao mesmo lugar de sempre (lib/cta.ts): o
+           checkout para quem pode comprar, "Continuar de onde parei" para o
+           aluno pagante. Desde 29/10/2026 o hero não mostra preço (pedido do
+           dono); o preço continua na caixa de preço e na barra fixa. */
+        primaryLabel={passo.vende ? tx.quero : passo.label}
+        retrato={retrato}
         midia={midia}
       />
       {/* A explicação que o hero deixou de carregar (28/09/2026): o que se
@@ -111,7 +107,7 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
       <Decisoes />
       <Metodo />
       <Curriculo />
-      <Professor retrato={retrato} />
+      <Professor />
       <Depoimentos />
       <Preco href={comprar} label={passo.label} owned={account.ready && account.can(FLAGSHIP)} />
       <Faq />

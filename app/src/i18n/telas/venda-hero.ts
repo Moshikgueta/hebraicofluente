@@ -2,49 +2,33 @@ import type { Traducao } from '..';
 
 /* components/landing/Hero.tsx */
 const pt = {
-  desejoIsrael: 'para viajar a Israel',
-  desejoBiblia: 'para ler as letras da Bíblia',
-  desejoAlfabeto: 'para finalmente entender o alfabeto',
-  rubricaCurta: 'Do zero · alfabetização em hebraico',
-  rubricaLonga: 'Alfabetização em hebraico · para iniciantes absolutos',
-  tituloA: 'Ler e escrever hebraico,',
-  tituloB: 'do zero.',
-  paraQuem: 'Para quem é',
-  mesmoQue: 'Mesmo que hoje você não reconheça uma única letra.',
-  umaLetraPorVez: 'Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.',
-  teste: 'Fazer um teste grátis',
-  licao: (n: number) => `Lição ${n}`,
-  laminaSemLicao: 'Uma letra por vez',
-  /* Transliteração: fica igual até a etapa 3. */
-  shin: 'Shin',
-  som: 'Som',
-  somSh: 'sh',
-  comoXicara: 'como o X de «xícara»',
-  aMao: 'À mão',
-  ponto: 'O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma letra vira Sin, com som de S.'
+  /* O hero com a foto do professor (29/10/2026, texto do dono). */
+  titulo: 'Aprenda hebraico com quem nasceu em Israel',
+  subtitulo: 'Leia e escreva em hebraico antes da sua viagem. Uma plataforma interativa criada por Moshik Gueta, israelense e professor de hebraico para brasileiros há mais de 6 anos.',
+  bullet1: 'Do zero, no seu ritmo',
+  bullet2: 'Palavras bíblicas no original',
+  bullet3: 'Feito para quem fala português',
+  whatsapp: 'Falar no WhatsApp',
+  abreWhatsapp: '(abre o WhatsApp)',
+  nome: 'Moshik Gueta',
+  credenciais: 'Israelense · Professor de hebraico · Centenas de alunos brasileiros',
+  fotoAlt: 'Moshik Gueta, professor israelense de hebraico',
+  mockupAlt: 'Tela da plataforma interativa Hebraico Fluente no celular',
 } as const;
 
 const en: Traducao<typeof pt> = {
-  desejoIsrael: 'to travel to Israel',
-  desejoBiblia: 'to read the letters of the Bible',
-  desejoAlfabeto: 'to finally understand the alphabet',
-  rubricaCurta: 'From zero · learn to read Hebrew',
-  rubricaLonga: 'Learn to read Hebrew · for absolute beginners',
-  tituloA: 'Read and write Hebrew,',
-  tituloB: 'from zero.',
-  paraQuem: 'Who it is for',
-  mesmoQue: 'Even if today you cannot recognize a single letter.',
-  umaLetraPorVez: 'One letter at a time, with sound, writing and instant feedback, until you read your first words on your own.',
-  teste: 'Take a free test',
-  licao: (n: number) => `Lesson ${n}`,
-  laminaSemLicao: 'One letter at a time',
-  shin: 'Shin',
-  som: 'Sound',
-  somSh: 'sh',
-  // etapa 3: pronúncia, rever
-  comoXicara: 'like the sh in «ship»',
-  aMao: 'By hand',
-  ponto: 'The dot on top, on the right, is what makes the SH sound. On the left side, the same letter becomes Sin, with an S sound.'
+  // rever: texto do hero adaptado para o site em inglês
+  titulo: 'Learn Hebrew with someone born in Israel',
+  subtitulo: 'Read and write Hebrew before your trip. An interactive platform created by Moshik Gueta, an Israeli Hebrew teacher for more than 6 years.',
+  bullet1: 'From zero, at your own pace',
+  bullet2: 'Biblical words in the original',
+  bullet3: 'Made for English speakers',
+  whatsapp: 'Chat on WhatsApp',
+  abreWhatsapp: '(opens WhatsApp)',
+  nome: 'Moshik Gueta',
+  credenciais: 'Israeli · Hebrew teacher · Hundreds of students',
+  fotoAlt: 'Moshik Gueta, Israeli Hebrew teacher',
+  mockupAlt: 'Screen of the Hebraico Fluente interactive platform on a phone',
 };
 
 export const DICIONARIO = { pt, en };
