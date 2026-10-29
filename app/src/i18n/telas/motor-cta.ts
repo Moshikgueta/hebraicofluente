@@ -9,7 +9,7 @@ const pt = {
   acessoImediato: 'Acesso imediato',
   acessoEmAte: 'Acesso em até {n} dias úteis',
   liberar: 'Liberar meu acesso',
-  comecar: 'Começar a aprender',
+  comecar: 'Quero começar',
   micro: '{quando} · {meses} meses · sem mensalidade'
 } as const;
 
@@ -21,7 +21,7 @@ const en: Traducao<typeof pt> = {
   acessoImediato: 'Instant access',
   acessoEmAte: 'Access within {n} business days',
   liberar: 'Unlock my access',
-  comecar: 'Start learning',
+  comecar: 'I want to start',
   micro: '{quando} · {meses} months · no monthly fee'
 };
 
