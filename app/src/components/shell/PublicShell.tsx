@@ -166,11 +166,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 <LinkButton href="/minha-biblioteca" variant="ghost" size="sm"
                             className="whitespace-nowrap px-2.5 max-[359px]:px-1.5 sm:px-4">
                   <span className="min-[360px]:hidden">{tx.minhaContaCurta}</span>
-                  <span className="max-[359px]:hidden">{tx.minhaConta}</span>
+                  <span className="max-[359px]:hidden"><span className="cab-longo">{tx.minhaConta}</span><span className="cab-curto">{tx.minhaContaCurta}</span></span>
                 </LinkButton>
                 <LinkButton href={`/checkout/${FLAGSHIP}`} size="sm"
                             className="whitespace-nowrap px-3 max-[359px]:px-2 sm:px-4">
-                  <span className="sm:hidden">{tx.comecar}</span>
+                  <span className="sm:hidden"><span className="cab-longo">{tx.comecar}</span><span className="cab-curto">{tx.comecarCurto}</span></span>
                   <span className="hidden sm:inline">{tx.comecarOCurso}</span>
                 </LinkButton>
               </>
@@ -203,7 +203,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                   {/* Um rótulo inteiro por largura, e não "Começar" + um
                       span com "&nbsp;agora": o `gap` do botão somava ao
                       espaço e abria um vão (auditoria de 01/10, VIS-014). */}
-                  <span className="sm:hidden">{tx.comecar}</span>
+                  <span className="sm:hidden"><span className="cab-longo">{tx.comecar}</span><span className="cab-curto">{tx.comecarCurto}</span></span>
                   <span className="hidden sm:inline">{tx.comecarAgora}</span>
                 </LinkButton>
               </>
