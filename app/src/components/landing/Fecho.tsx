@@ -373,6 +373,31 @@ export function Depoimentos() {
  * Mostrar o preço e um "Começar agora" a quem já pagou é a plataforma
  * esquecendo o cliente na própria capa - e no lugar mais constrangedor
  * possível, a caixa de preço. Quem já tem o curso vê a porta dele. */
+/** Os dias de acesso de N meses (12 meses = 365 dias). */
+const diasDeAcesso = (meses: number) => Math.round(meses * 365 / 12);
+
+/* O selo dos dias para desistir: o direito do CDC (art. 49), dito como ele
+   é. Não é "garantia". */
+function SeloDesistencia({ dias }: { dias: number }) {
+  return (
+    <div className="mt-4 flex items-start gap-3 rounded-[14px] bg-[var(--card)] px-3.5 py-3 text-left
+                    shadow-[0_0_0_1px_var(--line)]">
+      <svg aria-hidden viewBox="0 0 24 24" width="30" height="30" fill="none" className="shrink-0 mt-0.5">
+        <path d="M12 2.8 19.5 5.6v5.8c0 4.6-3.1 8.4-7.5 9.8-4.4-1.4-7.5-5.2-7.5-9.8V5.6Z"
+              fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="m8.6 12.1 2.4 2.4 4.6-4.8" stroke="var(--teal)" strokeWidth="1.9"
+              strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <p className="m-0 font-ui text-[13.5px] leading-[1.45] text-ink-body">
+        <span className="block font-ui text-[11.5px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] mb-0.5">
+          {tx.seloRotulo}
+        </span>
+        <strong className="font-semibold text-ink">{tx.desistir(dias)}</strong>
+      </p>
+    </div>
+  );
+}
+
 export function Preco({ href, label, owned }: { href: string; label: string; owned: boolean }) {
   const c = flagship();
   const parcelas = parcelasMax(c.price);
@@ -428,6 +453,12 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                               leading-none text-ink tabular-nums mb-2">
                   {brl(precoDeVitrine())}
                 </p>
+                {/* O custo por dia, logo embaixo do valor cobrado e menor que
+                    ele (29/10/2026, pedido do dono): é a mesma conta, dita
+                    por dia de acesso. Nunca no lugar do preço. */}
+                <p className="font-ui text-[14px] font-medium text-ink-body tabular-nums mb-1.5">
+                  {tx.porDia(brl(Math.round(precoDeVitrine() / diasDeAcesso(c.accessMonths) * 100) / 100), c.accessMonths)}
+                </p>
                 <p className="font-ui text-[14.5px] text-ink-muted mb-6">
                   {/* Em quantas vezes, e não quanto por vez: a taxa do cartão
                       é repassada ao comprador, então quem fecha o valor da
@@ -471,11 +502,9 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 que a Política de Reembolso lê; `check-legal.mjs` confere que
                 a frase saiu no HTML. Não é "garantia": é o direito do CDC,
                 dito como ele é. */}
-            {!owned && (
-              <p className="mt-2 font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-                {tx.desistir(empresa.politicas.arrependimentoDias)}
-              </p>
-            )}
+            {/* Desde 29/10/2026 a frase vem num selo (pedido do dono), com a
+                mesma redação: é ela que check-legal.mjs procura no HTML. */}
+            {!owned && <SeloDesistencia dias={empresa.politicas.arrependimentoDias} />}
             {/* O número riscado diz "é mais barato"; esta linha diz o que ele
                 É. Sem ela, o riscado vira preço de referência inventado - e no
                 Brasil isso é publicidade enganosa, não licença poética. Some

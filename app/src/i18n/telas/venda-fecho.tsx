@@ -73,6 +73,9 @@ const pt = {
   pixAMao: (preco: string, pct: number, meses: number) =>
     `No PIX sai por ${preco} (${pct}% de desconto). Acesso liberado à mão depois de conferido o pagamento, por ${meses} meses.`,
   desistir: (dias: number) => `${dias} dias para desistir e receber 100% de volta, sem justificar.`,
+  /* Ao lado do preço cobrado, nunca no lugar dele (29/10/2026). */
+  porDia: (valor: string, meses: number) => `Cerca de ${valor} por dia nos ${meses} meses de acesso.`,
+  seloRotulo: 'Direito de arrependimento',
   preLancamentoAte: (data: string, cheio: string) =>
     `Preço de pré-lançamento até ${data}. Depois, o curso passa a custar ${cheio}.`,
   depoisDoPreLancamento: (cheio: string) => `Depois do pré-lançamento, o curso passa a custar ${cheio}.`,
@@ -168,6 +171,8 @@ const en: Traducao<typeof pt> = {
     `By PIX it comes to ${preco} (${pct}% off). Access granted by hand once the payment is checked, for ${meses} months.`,
   // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
   desistir: (dias: number) => `${dias} days to cancel and get 100% back, no reason needed.`,
+  porDia: (valor: string, meses: number) => `About ${valor} a day over ${meses} months of access.`,
+  seloRotulo: 'Right to cancel',
   preLancamentoAte: (data: string, cheio: string) =>
     `Pre-launch price until ${data}. After that, the course will cost ${cheio}.`,
   depoisDoPreLancamento: (cheio: string) => `After the pre-launch, the course will cost ${cheio}.`,
