@@ -108,3 +108,14 @@ describe('o wrangler.toml declara o endereço por inteiro', () => {
     expect(toml).toMatch(/^\s*workers_dev\s*=\s*(true|false)\s*$/m);
   });
 });
+
+describe('a publicação só lê domínio de linha de verdade', () => {
+  /* 29/10/2026: o exemplo comentado do toml do site em inglês
+     (`# { pattern = "<dominio>", ... }`) virou SITE_ORIGIN, e o link de
+     confirmação do e-mail saiu para https://<dominio>/. */
+  const setup = readFileSync(new URL('../../scripts/cloudflare-setup.sh', import.meta.url), 'utf8');
+
+  it('tira os comentários do wrangler.toml antes de procurar o domínio', () => {
+    expect(setup).toMatch(/DOMINIO="\$\(grep -vE '\^\\s\*#' wrangler\.toml \\\n\s*\| grep -oP 'pattern/);
+  });
+});
