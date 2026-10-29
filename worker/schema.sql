@@ -422,6 +422,18 @@ CREATE TABLE IF NOT EXISTS novidades (
   criado_em  INTEGER NOT NULL
 );
 
+-- Quem pediu, no perfil, o lembrete para estudar (28/10/2026). A linha
+-- existir É o consentimento; sair apaga a linha. `ultimo_dia` é o último dia
+-- (Brasília, YYYY-MM-DD) em que a varredura cuidou da conta; `seguidos`,
+-- quantos lembretes saíram desde a última vez que a pessoa estudou (no
+-- terceiro, param até ela voltar). Ver worker/src/lembrete.js.
+CREATE TABLE IF NOT EXISTS lembretes_estudo (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  criado_em  INTEGER NOT NULL,
+  ultimo_dia TEXT,
+  seguidos   INTEGER NOT NULL DEFAULT 0
+);
+
 -- Uma execução por vez da varredura de 5 em 5 minutos (28/09/2026,
 -- auditoria INFRA-013). `ate` = até quando a trava vale; ver pegarTrava em
 -- worker/src/lib/db.js.

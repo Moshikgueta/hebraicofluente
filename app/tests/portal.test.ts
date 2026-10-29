@@ -208,19 +208,36 @@ describe('o livro se chama Israel Além do Óbvio (23/10/2026)', () => {
     expect(livro.autorPt).toBe('Moshik Gueta');
   });
 
-  it('o endereço antigo da página do portal leva ao novo', async () => {
+  /* 27/10/2026: o site é só o curso de alfabetização, e as páginas do
+     portal levam à capa (que é a página do curso). */
+  it('o endereço antigo da página do portal leva à capa', async () => {
     const env = envDeTeste();
     for (const c of ['/israel-alem-do-roteiro', '/israel-alem-do-roteiro/']) {
       const r = await worker.fetch(new Request(`${SITE}${c}`), env, ctx);
       expect(r.status, c).toBe(301);
-      expect(r.headers.get('location'), c).toBe(`${SITE}/israel-alem-do-obvio/`);
+      expect(r.headers.get('location'), c).toBe(`${SITE}/`);
     }
+  });
+
+  it('só o curso no site: as jornadas, as experiências e o Comece aqui levam à capa', async () => {
+    const env = envDeTeste();
+    for (const c of ['/aprender-hebraico/', '/descobrir-israel', '/israel-alem-do-obvio/', '/raizes-sefarditas/index.html',
+                     '/comece-aqui/', '/descobrir-israel/index.txt']) {
+      const r = await worker.fetch(new Request(`${SITE}${c}`), env, ctx);
+      expect(r.status, c).toBe(301);
+      expect(r.headers.get('location'), c).toBe(`${SITE}/`);
+    }
+    const comParceria = await worker.fetch(new Request(`${SITE}/comece-aqui/?parceria=bio`), env, ctx);
+    expect(comParceria.headers.get('location')).toBe(`${SITE}/?parceria=bio`);
+    /* /raizes/ (o produto, atrás do portão) e /israel/ não são afetados. */
+    expect((await worker.fetch(new Request(`${SITE}/raizes/`), env, ctx)).headers.get('location') ?? '').not.toBe(`${SITE}/`);
   });
 
   it('nenhum texto público usa o nome antigo', () => {
     const publicos = ['../src/app/israel-alem-do-obvio/page.tsx', '../src/lib/ecossistema.ts', '../src/components/shell/PublicShell.tsx',
       '../src/app/checkout/[slug]/CheckoutClient.tsx', '../src/app/reembolso/page.tsx', '../../worker/src/lib/mail.js',
-      '../../worker/src/api/livro.js', '../../data/courses.json'];
+      '../../worker/src/api/livro.js', '../../data/courses.json',
+      '../src/i18n/telas/conta-public-shell.ts', '../src/i18n/telas/conta-checkout-client.ts'];
     for (const rel of publicos) expect(fonte(rel), rel).not.toMatch(/Além do Roteiro|alem-do-roteiro\.pdf"/);
   });
 });

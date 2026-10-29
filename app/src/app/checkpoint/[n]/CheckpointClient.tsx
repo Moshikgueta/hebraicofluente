@@ -7,6 +7,7 @@
  * Passing is 70%. Failing is not a failure - it is a suggestion to revisit one
  * or two letters, named specifically, and the retry is unlimited. */
 
+import { tx } from '@/i18n/telas/licao-checkpoint-client';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
 import { conquistaDoModulo } from '@/lib/compartilhar';
@@ -19,6 +20,8 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { Milestone, ProgressBar } from '@/components/game/Game';
+import { YaelDiz } from '@/components/aventura/Yael';
+import { tx as falaDaYael } from '@/i18n/telas/aventura-yael';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { Prose } from '@/components/learn/Blocks';
@@ -68,28 +71,33 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
     return (
       <div className="focus-col grid gap-5">
-        <Milestone
-          kicker={`Checkpoint ${mod.n} · ${result.correct} de ${result.total}`}
-          title={passed ? `${pct}% - checkpoint concluído.` : `${pct}% - quase lá.`}
+        {/* A Yael comemora o fim do módulo (28/10/2026); sem a aprovação,
+            inclina a cabeça, a cara de "vamos de novo". Decorativa. */}
+        <YaelDiz humor={passed ? 'comemora' : 'quase'} tamanho={84} className="justify-self-center -mb-2">
+          {passed ? falaDaYael.moduloFechado(mod.n) : falaDaYael.checkpointQuase}
+        </YaelDiz>
+        <Milestone yael={false}
+          kicker={tx.kicker(mod.n, result.correct, result.total)}
+          title={passed ? tx.concluido(pct) : tx.quaseLa(pct)}
           body={passed
-            ? `Você agora conhece ${history.length} letras do alfabeto hebraico.`
-            : 'Faltou pouco. Vale rever as letras abaixo e refazer - sem pressa e sem penalidade.'}
+            ? tx.conhece(history.length)
+            : tx.faltouPouco}
         >
           <Button variant={passed ? 'secondary' : 'primary'} onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
-            Refazer
+            {tx.refazer}
           </Button>
           {passed && (
             <Button onClick={() => router.push(`/modulo/${mod.n}/missao`)}>
-              Missão do módulo
+              {tx.missaoDoModulo}
             </Button>
           )}
           {passed && nextModule && (
             <Button variant="secondary" onClick={() => router.push(`/modulo/${nextModule.n}`)}>
-              Módulo {nextModule.n} - {nextModule.titlePt}
+              {tx.proximoModulo(nextModule.n, nextModule.titlePt)}
             </Button>
           )}
           {passed && !nextModule && (
-            <Button onClick={() => router.push('/desafio-final')}>Ir para o desafio final</Button>
+            <Button onClick={() => router.push('/desafio-final')}>{tx.desafioFinal}</Button>
           )}
           {passed && <CompartilharConquista id={conquistaDoModulo(mod.n)} />}
         </Milestone>
@@ -105,23 +113,21 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         {passed && mod.kind === 'letters' && (
           <Card tone="wash" className="p-5 grid gap-3 sm:flex sm:items-center sm:justify-between sm:gap-5">
             <div className="grid gap-1 min-w-0">
-              <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Minha Primeira Leitura</p>
+              <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.primeiraLeitura}</p>
               <p className="text-[15px] leading-relaxed text-ink-body m-0">
                 {p.state.firsts?.[primeiraLeituraId(mod.n)]
-                  ? 'Você já fez a leitura deste módulo. Dá para ler de novo quando quiser.'
-                  : 'Algumas palavras com as letras deste módulo. Você lê sozinho, depois ouve e confere.'}
+                  ? tx.jaFez
+                  : tx.algumasPalavras}
               </p>
             </div>
-            <LinkButton href={`/leitura?primeira=${mod.n}`} className="shrink-0">Ler agora</LinkButton>
+            <LinkButton href={`/leitura?primeira=${mod.n}`} className="shrink-0">{tx.lerAgora}</LinkButton>
           </Card>
         )}
         {rampa && (
           <Card tone="wash" className="p-5 grid gap-1.5">
-            <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Sem os pontinhos</p>
+            <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.semPontinhos}</p>
             <p className="text-[15px] leading-relaxed text-ink-body m-0">
-              Você leu {rampa.certas} de {rampa.total} palavras sem nikud, do jeito que elas aparecem
-              na rua. Isso não entra na nota: é um aquecimento para o módulo 6, onde os pontos
-              somem de vez.
+              {tx.rampa(rampa.certas, rampa.total)}
             </p>
           </Card>
         )}
@@ -134,7 +140,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         {weak.length > 0 && (
           <Card className="p-5 grid gap-3">
             <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-              Vale voltar nestas
+              {tx.valeVoltar}
             </p>
             <ul className="grid gap-2">
               {weak.map(l => (
@@ -159,7 +165,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       <ExercisePlayer
         key={run}
         exercises={exercises}
-        title={`Checkpoint ${mod.n}`}
+        title={tx.titulo(mod.n)}
         onDone={r => {
           registrarRodada(`checkpoint-${mod.n}`, exercises);
           /* A nota é só dos itens do checkpoint; a rampa sem pontos é
@@ -183,8 +189,8 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-3">
-        <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">← Mapa</Link>
-        <Badge tone="mint">Checkpoint {mod.n}</Badge>
+        <Link href="/mapa" className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">{tx.mapa}</Link>
+        <Badge tone="mint">{tx.titulo(mod.n)}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold leading-tight">{mod.titlePt}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[52ch]">
           <Prose text={mod.introPt} />
@@ -194,7 +200,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       <Card className="p-6 grid gap-4">
         {/* "Concluída" e "dominada" são palavras diferentes (UXQA-005): o
             título não afirma domínio sobre uma letra concluída a 50%. */}
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">As letras deste módulo</p>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">{tx.letrasDoModulo}</p>
         <ul className="grid gap-2">
           {letters.map(l => {
             const done = isLessonComplete(p.state, l.id);
@@ -208,14 +214,14 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
                 <span className={`font-ui text-[14px] ${done ? 'text-ink' : 'text-ink-muted'}`}>
                   {l.namePt}
                   <span className="text-ink-muted">
-                    {dominada ? ' · concluída' : done ? ' · falta a nota dos exercícios' : ''}
+                    {dominada ? tx.concluida : done ? tx.faltaNota : ''}
                   </span>
                 </span>
                 {!dominada && (
                   <Link href={`/licao/${l.id}`}
                         className="ml-auto inline-flex items-center min-h-[44px] pl-3 font-ui text-[13px]
                                    text-[var(--accent)] hover:underline">
-                    {done ? `refazer os exercícios (${REGRA_DO_DOMINIO_CURTA})` : 'fazer a lição'}
+                    {done ? tx.refazerExercicios(REGRA_DO_DOMINIO_CURTA) : tx.fazerLicao}
                   </Link>
                 )}
               </li>
@@ -224,20 +230,18 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         </ul>
         <ProgressBar
           value={letters.length ? readyLetters.length / letters.length : 0}
-          label="Lições concluídas"
+          label={tx.licoesConcluidas}
           sublabel={`${readyLetters.length} / ${letters.length}`}
         />
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-3">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-[var(--accent)]">
-          O que vem no checkpoint?
+          {tx.oQueVem}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body">
-          12 questões misturando reconhecimento, leitura, vocabulário e as formas
-          finais - só com letras que você já viu. Passa com 70%, e dá para refazer
-          quantas vezes quiser.
-          {comRampa && ' No fim vêm 3 palavras que você já conhece, sem os pontinhos, como aparecem na rua. Elas não entram na nota.'}
+          {tx.questoes}
+          {comRampa && tx.comRampa}
         </p>
         <div className="pt-1">
           <HeSeq items={letters.map(l => l.letter)} size="word" />
@@ -246,8 +250,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
 
       {record?.best != null && (
         <p className="font-ui text-[13.5px] text-ink-muted">
-          Melhor resultado até agora: {Math.round(record.best * 100)}% em {record.attempts}{' '}
-          {record.attempts === 1 ? 'tentativa' : 'tentativas'}.
+          {tx.melhor(Math.round(record.best * 100), record.attempts)}
         </p>
       )}
 
@@ -255,23 +258,22 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       {readyLetters.length < letters.length ? (
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Faltam {letters.length - readyLetters.length} lições deste módulo. Você pode
-            fazer o checkpoint assim mesmo, mas ele cobra as {letters.length} letras.
+            {tx.faltam(letters.length - readyLetters.length, letters.length)}
           </p>
           <Button variant="secondary" className="justify-self-start"
                   onClick={() => { track('checkpoint_started', { checkpointId: mod.checkpoint?.id }); setPhase('running'); }}>
-            Fazer mesmo assim
+            {tx.mesmoAssim}
           </Button>
         </Card>
       ) : (
         <Button size="lg" full
                 onClick={() => { track('checkpoint_started', { checkpointId: mod.checkpoint?.id }); setPhase('running'); }}>
-          Começar o checkpoint
+          {tx.comecar}
         </Button>
       )}
 
       <LinkButton href="/mapa" variant="ghost" size="sm" className="justify-self-center">
-        Voltar ao mapa
+        {tx.voltarMapa}
       </LinkButton>
     </div>
   );

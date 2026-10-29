@@ -66,12 +66,19 @@ import { Prose, RegraCursiva } from '@/components/learn/Blocks';
 import { Compreensao, type ItemCompreensao } from '@/components/learn/Compreensao';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
 import { AULA0_CONCLUIDA, AULA0_MINIMO, AULA0_PERGUNTAS, aula0Feita } from '@/lib/state/rules';
-import { AbrirTodas, Parte, Partes, useAbrirParte } from '@/components/learn/Partes';
+import { AbrirTodas, Parte, Partes, SoNaPagina, useAbrirParte } from '@/components/learn/Partes';
+import {
+  Aula0BarraDoPasso, Aula0Capa, Aula0Fim, Aula0NavDoPasso, PASSOS_DA_AULA0, useModoDaAula0
+} from './Aula0Passos';
 import {
   ANALOGIA_CURSIVA, CURSIVA_NO_CURSO, MESMA_LETRA,
   ONDE_CURSIVA, ONDE_IMPRESSA
 } from '@/lib/cursiva';
 import type { NikudIntro, NikudSound } from '@/lib/content';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-start-here-client';
+import { tx as tq } from '@/i18n/telas/painel-start-here-perguntas';
+import { translit as grafia } from '@/i18n/translit';
 
 /* ── as oito perguntas do nikud ──────────────────────────────────────────
    Cada uma existe contra um mal-entendido específico, e não para cobrir o
@@ -83,69 +90,61 @@ import type { NikudIntro, NikudSound } from '@/lib/content';
 const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
   {
     t: 'escolha',
-    q: 'O que é o nikud?',
-    opcoes: [
-      'Um conjunto de letras novas do alfabeto',
-      'Um sistema de sinais que ajuda a indicar a pronúncia e os sons de vogal',
-      'A forma cursiva do hebraico'
-    ],
+    q: tq.n1q,
+    opcoes: [tq.n1o1, tq.n1o2, tq.n1o3],
     certa: 1,
-    porque: 'O nikud não é feito de letras novas. São pequenos sinais colocados junto às letras para mostrar como a palavra se pronuncia.'
+    porque: tq.n1p
   },
   {
     t: 'visual',
-    q: 'Qual destes exemplos tem nikud?',
+    q: tq.n2q,
     opcoes: ['בַ', 'ב'],
     certa: 0,
-    porque: 'A letra é a mesma nos dois. O que muda é o traço embaixo dela, que marca o som de vogal.'
+    porque: tq.n2p
   },
   {
     t: 'visual',
-    q: 'Nesta dupla, qual é o SINAL de nikud - e não a letra?',
+    q: tq.n3q,
     opcoes: ['◌ַ', 'ב'],
     certa: 0,
-    porque: 'A letra é ב. O traço sozinho aparece aqui pendurado num círculo pontilhado porque um sinal de nikud não existe sozinho: ele sempre se apoia numa letra.'
+    porque: tq.n3p
   },
   {
     t: 'vf',
-    q: 'Sem nikud é impossível ler hebraico.',
+    q: tq.n4q,
     certa: false,
-    porque: 'No hebraico moderno a maior parte dos textos é escrita sem nikud. Quem fala a língua reconhece as palavras pelo contexto, pelo vocabulário e pelos padrões da língua - como você lê "casa" sem precisar soletrar.'
+    porque: tq.n4p
   },
   {
     t: 'vf',
-    q: 'Quando um texto não tem nikud, a palavra é falada sem som de vogal.',
+    q: tq.n5q,
     certa: false,
-    porque: 'Os sons continuam lá na fala. O que some é a marcação escrita deles - a palavra é pronunciada igual, com nikud ou sem.'
+    porque: tq.n5p
   },
   {
     t: 'escolha',
-    q: 'Como um israelense lê uma placa sem nikud?',
-    opcoes: [
-      'Ele adivinha a pronúncia letra por letra',
-      'Ele reconhece a palavra pelo contexto e pelos padrões que já conhece',
-      'Ele só consegue ler palavras curtas'
-    ],
+    q: tq.n6q,
+    opcoes: [tq.n6o1, tq.n6o2, tq.n6o3],
     certa: 1,
-    porque: 'É reconhecimento, não adivinhação: quem já tem o vocabulário identifica a palavra inteira de uma vez. É por isso que ler sem nikud vem DEPOIS de conhecer as palavras, e não antes.'
+    porque: tq.n6p
   },
   {
     t: 'vf',
-    q: 'Todo ponto que aparece dentro ou perto de uma letra hebraica é uma vogal.',
+    q: tq.n7q,
     certa: false,
-    porque: 'Existem outros sinais com aparência parecida: o daguesh, o ponto dentro da letra (em בּ, כּ e פּ ele muda o som; nas outras quase não se ouve), e o ponto que distingue שׁ de שׂ. Nenhum dos dois é vogal. Atenção: o ponto dentro do ו (וּ) é outra coisa, é a vogal U.'
+    porque: tq.n7p
   },
   {
     t: 'assoc',
-    q: 'Onde você espera encontrar nikud?',
-    rotulos: ['Costuma ter', 'Costuma não ter'],
+    q: tq.n8q,
+    rotulos: [tq.n8r1, tq.n8r2],
     linhas: [
-      { item: 'Livro para quem está aprendendo', certa: 0 },
-      { item: 'Livro infantil e texto religioso', certa: 0 },
-      { item: 'Jornal, site e placa de rua', certa: 1 },
-      { item: 'Mensagem de celular', certa: 1 }
+      { item: tq.n8l1, certa: 0 },
+      { item: tq.n8l2, certa: 0 },
+      { item: tq.n8l3, certa: 1 },
+      { item: tq.n8l4, certa: 1 }
     ],
-    porque: 'Material de aprendizagem e texto infantil ou religioso usam os sinais; o hebraico do dia a dia, quase nunca. É por isso que o curso começa com eles e vai tirando: o objetivo é você depender cada vez menos do apoio.'
+    porque: tq.n8p
   }
 ];
 
@@ -155,29 +154,31 @@ const PERGUNTAS_NIQQUD: ItemCompreensao[] = [
    saber mais?": listar conteúdo opcional num índice é a maneira mais rápida
    de ele deixar de ser opcional. */
 const INDICE: { id: string; t: string }[] = [
-  { id: 'o-sistema',         t: 'Não é o mesmo sistema do português' },
-  { id: 'a-comparacao',      t: 'Uma comparação para sentir a diferença' },
-  { id: 'as-vogais',         t: 'Então onde estão as vogais?' },
-  { id: 'o-niqqud',          t: 'O nikud, os pontinhos das vogais' },
-  { id: 'checagem-niqqud',   t: 'Checagem: entendeu o nikud?' },
-  { id: 'as-quatro-letras',  t: 'Quatro letras especiais' },
-  { id: 'a-direcao',         t: 'Da direita para a esquerda' },
-  { id: 'duas-direcoes',     t: 'Quando a linha tem duas direções' },
-  { id: 'maiuscula-e-finais', t: 'Maiúscula, formas finais e "letra muda"' },
-  { id: 'impressa-e-cursiva', t: 'Impressa e cursiva: dois desenhos' },
-  { id: 'que-hebraico',      t: 'Que hebraico é este?' },
-  { id: 'o-caminho',         t: 'O caminho, do início ao fim' },
-  { id: 'atividade',         t: 'Checagem final: dezessete perguntas' },
-  { id: 'como-funciona',     t: 'Como este curso funciona' }
+  { id: 'o-sistema',         t: tx.iSistema },
+  { id: 'a-comparacao',      t: tx.iComparacao },
+  { id: 'as-vogais',         t: tx.iVogais },
+  { id: 'o-niqqud',          t: tx.iNikud },
+  { id: 'checagem-niqqud',   t: tx.iChecagemNikud },
+  { id: 'as-quatro-letras',  t: tx.iQuatro },
+  { id: 'a-direcao',         t: tx.iDirecao },
+  { id: 'duas-direcoes',     t: tx.iDuas },
+  { id: 'maiuscula-e-finais', t: tx.iMaiuscula },
+  { id: 'impressa-e-cursiva', t: tx.iCursiva },
+  { id: 'que-hebraico',      t: tx.iQueHebraico },
+  { id: 'o-caminho',         t: tx.iCaminho },
+  { id: 'atividade',         t: tx.iAtividade },
+  { id: 'como-funciona',     t: tx.iComoFunciona }
 ];
 
 /* As partes que abrem com um clique (components/learn/Partes.tsx): as do
    índice, mais "Como praticar", que fica fora dele. */
 const PARTES = [...INDICE.map(i => i.id), 'como-praticar'];
 
+const VAZIO: ReadonlySet<string> = new Set();
+
 const SOUND_LABEL: Record<string, string> = {
-  a: 'o som A', e: 'o som E', i: 'o som I', o: 'o som O', u: 'o som U',
-  sheva: 'sem vogal'
+  a: tx.somA, e: tx.somE, i: tx.somI, o: tx.somO, u: tx.somU,
+  sheva: tx.semVogal
 };
 
 export type AlfabetoProps = {
@@ -204,29 +205,45 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
   /* A lista das vogais sabe quais têm gravação só depois que o manifesto
      chega; isto a redesenha quando chega. */
   useRegistroDeAudio();
+
+  /* A capa, os passos, a página inteira e o fim (28/10/2026): ver
+     Aula0Passos.tsx. As partes continuam todas no HTML em qualquer modo. */
+  const { modo, setModo, passo, guardado, irAoPasso } = useModoDaAula0();
+  const aula0FeitaJa = progresso.ready && aula0Feita(progresso.state);
+  const passoVisivel = modo === 'pagina' ? null
+    : modo === 'passos' ? PASSOS_DA_AULA0[passo]!.partes
+    : VAZIO;
   return (
     <div className="grid gap-6 reading">
-      <header className="grid gap-3">
+      {modo === 'capa' && (
+        <Aula0Capa feita={aula0FeitaJa} guardado={guardado}
+                   comecar={irAoPasso} paginaInteira={() => setModo('pagina')} />
+      )}
+      {modo === 'fim' && (
+        <Aula0Fim primeiraLicao={curso.primeiraLicao} letra={alfabeto.exemplo}
+                  paginaInteira={() => setModo('pagina')} />
+      )}
+      {modo === 'passos' && <Aula0BarraDoPasso passo={passo} sair={() => setModo('capa')} />}
+
+      <header hidden={modo !== 'pagina'} className="grid gap-3">
         <Link href="/mapa"
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-          ← Mapa
+          {tx.voltarMapa}
         </Link>
         {/* O nome aparece aqui porque agora ele também está na navegação:
             quem toca em "Aula 0" na barra de baixo precisa chegar numa tela
             que se chama assim, ou o rótulo é de outra coisa. */}
-        <Badge tone="accent">Aula 0 · antes da primeira letra</Badge>
+        <Badge tone="accent">{tx.badge}</Badge>
         <h1 className="text-[27px] sm:text-[34px] font-bold leading-tight">
-          Como o alfabeto hebraico funciona?
+          {tx.titulo}
         </h1>
         <p className="text-[16.5px] leading-relaxed text-ink-body max-w-[54ch]">
-          Dez minutos de leitura, sem nada para decorar. A ideia é você entender a
-          lógica da escrita antes de aprender a primeira letra - depois disso, cada
-          lição vai parecer muito mais simples.
+          {tx.lead}
         </p>
         <Aula0Situacao />
       </header>
 
-      <Partes ids={PARTES} abertaDeInicio="o-sistema">
+      <Partes ids={PARTES} abertaDeInicio="o-sistema" passo={passoVisivel}>
       {/* ── o índice ────────────────────────────────────────
           Esta página passou de oito quadros para onze, e num telefone isso é
           um rolo de dúzias de telas. Uma página de "leia antes de começar"
@@ -237,10 +254,11 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           Os destinos são conferidos por varrer-curso.mjs: um item de índice
           que aponta para um id que não existe leva a lugar nenhum e não
           quebra nada, que é a definição do defeito que ninguém encontra. */}
+      <SoNaPagina>
       <nav aria-labelledby="indice"
            className="rounded-[var(--r-lg)] border border-line bg-surface p-5 grid gap-3">
         <h2 id="indice" className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-ink-muted">
-          O que tem nesta página?
+          {tx.indiceTitulo}
         </h2>
         <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-0.5 list-none p-0 m-0">
           {INDICE.map((it, i) => (
@@ -259,72 +277,52 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
       </nav>
 
       <p className="font-ui text-[14.5px] text-ink-muted -mb-3">
-        Cada parte abre com um clique no título.
+        {tx.abreComClique}
       </p>
       <AbrirTodas />
+      </SoNaPagina>
 
       {/* ── 1 · o sistema é outro ─────────────────────────────────────── */}
-      <Parte id="o-sistema" titulo={<>Não é o mesmo sistema do português</>}>
+      <Parte id="o-sistema" titulo={<>{tx.iSistema}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Em português, consoantes e vogais são letras do mesmo tipo, e a gente
-          escreve todas em fila:
+          {tx.sistemaP1}
         </p>
         <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
-          <p className="font-display text-[30px] font-bold tracking-[.12em] text-ink">CASA</p>
+          <p className="font-display text-[30px] font-bold tracking-[.12em] text-ink">{tx.palavraCasa}</p>
           <p className="font-ui text-[14px] text-ink-muted">
-            C <span className="text-[var(--accent)]">A</span> S{' '}
-            <span className="text-[var(--accent)]">A</span> - duas consoantes e duas
-            vogais, todas escritas
+            {tx.casaLegenda(v => <span className="text-[var(--accent)]">{v}</span>)}
           </p>
         </div>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          O hebraico organiza isso de outro jeito: <strong className="font-semibold text-ink">
-          as letras representam principalmente as consoantes</strong>, e os sons de
-          vogal são marcados por fora delas - ou, em muitos textos, nem são marcados.
+          {tx.sistemaP2()}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)]
                       bg-surface-2 px-4 py-3">
-          Um sistema de escrita assim tem nome: <strong className="font-semibold text-ink">abjad</strong>.
-          A palavra não importa para ler nada - ela só é útil para você reconhecer o
-          termo quando encontrar por aí. O que importa é a ideia: as letras são, em
-          essência, as consoantes.
+          {tx.sistemaP3()}
         </p>
       </Parte>
 
       {/* ── 2 · a analogia, marcada como analogia ─────────────────────── */}
-      <Parte id="a-comparacao" titulo={<>Uma comparação para sentir a diferença</>}>
+      <Parte id="a-comparacao" titulo={<>{tx.iComparacao}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Imagine que em português a gente escrevesse só <strong className="font-semibold text-ink">
-          C S</strong> e soubesse pelo contexto se ali está escrito <em>casa</em>,{' '}
-          <em>coisa</em> ou <em>cisão</em>. Quem lê português reconheceria a palavra
-          pelo resto da frase.
+          {tx.comparacaoP1()}
         </p>
+        <CasaSemVogais />
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
-          Isto é só uma <strong className="font-semibold text-ink">analogia</strong>, e
-          não uma descrição do hebraico: o hebraico não é português sem vogais, e tem
-          recursos próprios para marcar os sons - você vai ver os três logo abaixo. A
-          comparação serve para uma coisa só: entender por que as vogais nem sempre
-          aparecem escritas do mesmo jeito que aqui.
+          {tx.comparacaoP2()}
         </p>
       </Parte>
 
       {/* ── 3 e 5 · onde estão as vogais, e o que NÃO dizer ───────────── */}
-      <Parte id="as-vogais" titulo={<>Então onde estão as vogais?</>}>
+      <Parte id="as-vogais" titulo={<>{tx.iVogais}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Esta é a primeira pergunta de quase todo mundo, e ela tem resposta. O
-          hebraico <strong className="font-semibold text-ink">tem sons de vogal como
-          qualquer língua</strong> - as pessoas falam <He size="inline">שָׁלוֹם</He>{' '}
-          com um "a" e um "o" bem audíveis. O que muda é a forma de representá-los na
-          escrita, e há três:
+          {tx.vogaisP1(<He size="inline">שָׁלוֹם</He>)}
         </p>
         <ol className="grid gap-3 list-none p-0 m-0 text-[15.5px] leading-relaxed text-ink-body">
           {[
-            ['Sinais de vogal',
-              'Pontos e traços colocados embaixo, dentro ou ao lado da consoante. É o nikud, explicado no quadro seguinte - e é com ele que este curso começa.'],
-            ['Algumas letras que ajudam',
-              'Quatro letras podem, dependendo da palavra, participar da representação de um som de vogal em vez de soar como consoante. Você as conhece daqui a pouco.'],
-            ['O contexto',
-              'Quem já conhece a palavra a reconhece sem nenhum sinal - que é como israelense lê jornal, placa e mensagem de celular todo dia.']
+            [tx.vogal1T, tx.vogal1D],
+            [tx.vogal2T, tx.vogal2D],
+            [tx.vogal3T, tx.vogal3D]
           ].map(([t, d], i) => (
             <li key={t} className="flex gap-3">
               <span aria-hidden
@@ -340,44 +338,36 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         {/* O item 5 do pedido: desmontar a frase que circula por aí. */}
         <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-2">
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-            Cuidado com esta frase
+            {tx.cuidadoTitulo}
           </p>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Você vai ler por aí que <em>"o hebraico não tem vogais"</em>. É um resumo
-            ruim, e atrapalha. O certo é: <strong className="font-semibold text-ink">a
-            língua tem os sons de vogal</strong>; o que o alfabeto básico não tem são
-            letras independentes para todas elas, do jeito que o português tem A, E, I,
-            O, U.
+            {tx.cuidadoP()}
           </p>
         </div>
       </Parte>
 
       {/* ── 4 · o nikud ──────────────────────────────────────────────── */}
-      <Parte id="o-niqqud" titulo={<>O nikud: os pontinhos que marcam as vogais</>}>
+      <Parte id="o-niqqud" titulo={<>{tx.tNikud}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <strong className="font-semibold text-ink">Nikud</strong>{' '}
-          (<He size="inline">נִקוּד</He>) é o sistema de pontos e traços colocados perto
-          das letras para indicar os sons de vogal. A mesma palavra, com e sem eles:
+          {tx.nikudP1(<He size="inline">נִקוּד</He>)}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">שָׁלוֹם</He>
             <p className="font-ui text-[12.5px] text-ink-muted text-center">
-              com nikud - dá para ler sem conhecer a palavra
+              {tx.comNikud}
             </p>
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">שלום</He>
             <p className="font-ui text-[12.5px] text-ink-muted text-center">
-              sem nikud - é assim que aparece na rua
+              {tx.semNikud}
             </p>
           </div>
         </div>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
           {[
-            'Material para iniciante costuma trazer nikud - inclusive este curso, no começo.',
-            'Livro infantil, texto religioso e poesia também usam bastante.',
-            'No hebraico do dia a dia, a maior parte dos textos vem sem: placa, jornal, site, mensagem de celular.'
+            tx.nikudL1, tx.nikudL2, tx.nikudL3
           ].map(t => (
             <li key={t} className="flex gap-3">
               <span aria-hidden className="text-[var(--accent)] shrink-0">→</span>
@@ -387,11 +377,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
         </ul>
         <MesmasConsoantes />
         <GravacaoDoProfessor id="intro-nikud-vowels"
-          textoPt="Consoantes, vogais e o nikud, lidos em voz alta." />
+          textoPt={tx.gravacaoNikud} />
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
-          Por isso o curso faz os dois, nesta ordem: primeiro você lê com os sinais,
-          que é o que permite ler sem adivinhar; depois eles vão saindo aos poucos, até
-          você ler como se lê de verdade.
+          {tx.nikudP2}
         </p>
         {/* Nem todo pontinho é vogal. Esta ressalva fica AQUI, colada na
             explicação, porque é o mal-entendido que a explicação cria: quem
@@ -400,17 +388,11 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             fecha. A pergunta 7 da checagem cobra exatamente isto. */}
         <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-2">
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-            Uma ressalva importante
+            {tx.ressalvaTitulo}
           </p>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Nem todo ponto que aparece dentro ou perto de uma letra é vogal. Há outros
-            sinais que usam a mesma aparência e fazem outra coisa: o ponto dentro de{' '}
-            <He size="inline">בּ</He>, que muda o som da consoante, e o ponto que
-            distingue <He size="inline">שׁ</He> de <He size="inline">שׂ</He>, que diz
-            qual das duas letras está ali. Você aprende cada um no seu momento - por
-            ora, só saiba que eles existem e não são vogais. A exceção, que você vai ver
-            logo: o ponto no meio do <He size="inline">ו</He> (<He size="inline">וּ</He>) é
-            a vogal U.
+            {tx.ressalvaP(<He size="inline">בּ</He>, <He size="inline">שׁ</He>, <He size="inline">שׂ</He>,
+              <He size="inline">ו</He>, <He size="inline">וּ</He>)}
           </p>
         </div>
       </Parte>
@@ -421,24 +403,24 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           "achar que entendeu": ele é simples de ler e difícil de acreditar,
           porque contraria o que a pessoa acha que sabe sobre escrita. Então
           o curso não segue sem perguntar. */}
-      <Parte id="checagem-niqqud" titulo={<>Checagem: entendeu o nikud? Oito perguntas</>}>
+      <Parte id="checagem-niqqud" titulo={<>{tx.tChecagemNikud}</>}>
       <Compreensao
         id="checagem-niqqud-perguntas"
         tituloOculto
-        titulo="Entendeu o nikud? Oito perguntas"
-        intro="Não vale nota e não tranca nada - é só para confirmar que a ideia ficou de pé antes de seguir. Se errar, a explicação aparece na hora."
+        titulo={tx.checagemNikudTitulo}
+        intro={tx.checagemNikudIntro}
         perguntas={PERGUNTAS_NIQQUD}
         fecho={{
-          bom: 'Ótimo. Agora você já sabe o que é o nikud e por que ele aparece. Vamos entender como esses sinais funcionam na prática.',
-          parcial: 'Vale reler o quadro acima antes de seguir - são duas ou três ideias, e elas voltam em toda lição do curso.'
+          bom: tx.checagemNikudBom,
+          parcial: tx.checagemNikudParcial
         }}
       />
       </Parte>
 
       {/* ── 6 · as quatro letras especiais ────────────────────────────── */}
-      <Parte id="as-quatro-letras" titulo={<>Quatro letras se comportam de um jeito especial</>}>
+      <Parte id="as-quatro-letras" titulo={<>{tx.tQuatro}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Estas quatro merecem um aviso desde já:
+          {tx.quatroP1}
         </p>
         <ul className="flex flex-wrap gap-2.5 list-none p-0 m-0">
           {alfabeto.especiais.map(e => (
@@ -450,58 +432,45 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </ul>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Dependendo da palavra e da posição, elas podem soar como consoante, podem
-          participar da representação de um som de vogal, ou podem aparecer sem um som
-          consonantal claro. Não é exceção esquisita: é o resultado de a escrita
-          hebraica ter uns bons milhares de anos, e essas letras terem sido as
-          primeiras a ganhar essa segunda função.
+          {tx.quatroP2}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)]
                       bg-surface-2 px-4 py-3">
-          Você não precisa de nenhuma regra agora. Isto está aqui para que, lá na
-          frente, você não pense <em>"mas você disse que todas as letras são
-          consoantes"</em>. Cada uma dessas quatro tem a sua lição, e é lá que o
-          assunto é ensinado.
+          {tx.quatroP3()}
         </p>
       </Parte>
 
       {/* ── 7 · a direção, com atividade ──────────────────────────────── */}
-      <Parte id="a-direcao" titulo={<>Da direita para a esquerda</>}>
+      <Parte id="a-direcao" titulo={<>{tx.iDirecao}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          O hebraico se lê e se escreve da direita para a esquerda. A primeira letra de
-          uma palavra é a que está mais à direita - o contrário do português, e é a
-          única coisa que você precisa desaprender.
+          {tx.direcaoP1}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
-            <p className="font-display text-[22px] font-bold tracking-[.1em] text-ink">BOM DIA</p>
+            <p className="font-display text-[22px] font-bold tracking-[.1em] text-ink">{tx.bomDia}</p>
             <p className="font-ui text-[12px] uppercase tracking-[.1em] text-ink-muted">
-              começa aqui →
+              {tx.comecaAquiEsq}
             </p>
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">שָׁלוֹם</He>
             <p className="font-ui text-[12px] uppercase tracking-[.1em] text-ink-muted">
-              ← começa aqui
+              {tx.comecaAquiDir}
             </p>
           </div>
         </div>
 
         <p className="text-[15px] leading-relaxed text-ink-body">
-          Só o hebraico corre ao contrário. A tela do curso continua em português, da
-          esquerda para a direita: os botões, as explicações e as transliterações.
+          {tx.direcaoP2}
         </p>
 
         <PorOndeComeca />
         <PrimeiraEUltima />
         <GravacaoDoProfessor id="intro-rtl-reading"
-          textoPt="Como ler uma palavra da direita para a esquerda, com a palavra שָׁלוֹם." />
+          textoPt={tx.gravacaoDirecao} />
 
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
-          Os <strong className="font-semibold text-ink">números</strong> são a exceção:
-          continuam sendo escritos e lidos da esquerda para a direita, como aqui. É o
-          que faz uma linha ter duas direções ao mesmo tempo - e o próximo quadro
-          mostra isso acontecendo.
+          {tx.direcaoP3()}
         </p>
       </Parte>
 
@@ -512,11 +481,9 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           para a direita. E ela vai ver isso antes de terminar o curso - numa
           placa, num preço, num site. Sem este quadro, o primeiro encontro com
           uma linha assim parece erro de impressão ou defeito da tela. */}
-      <Parte id="duas-direcoes" titulo={<>Quando a linha tem duas direções</>}>
+      <Parte id="duas-direcoes" titulo={<>{tx.iDuas}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Número, preço, telefone, endereço de site: tudo isso continua correndo da
-          esquerda para a direita dentro de uma linha hebraica. Não é mistura errada
-          nem defeito - é assim que se escreve. Veja onde cada pedaço vai parar:
+          {tx.duasP1}
         </p>
         <ul className="grid gap-3 list-none p-0 m-0">
           {LINHAS_MISTAS.map(l => (
@@ -530,46 +497,36 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           <span className="inline-flex items-center gap-1.5">
             <span aria-hidden className="w-3 h-3 rounded-[3px] bg-[var(--accent-wash)]
                                          border border-[color:var(--accent-soft)]" />
-            trecho que corre da esquerda para a direita
+            {tx.legendaTrecho}
           </span>
         </p>
         <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-4">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            A regra é uma só: <strong className="font-semibold text-ink">cada trecho mantém
-            a sua própria direção</strong>. O que a linha hebraica decide é a ORDEM em que
-            os trechos entram nela - da direita para a esquerda. Por isso o número, que
-            você lê normalmente, aparece na ponta que aqui pareceria a errada.
+            {tx.duasP2()}
           </p>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Duas consequências práticas, para você não achar que quebrou alguma coisa.
-            Digitando, o cursor pula de um lado para o outro quando você passa do
-            hebraico para o número - é o normal. E copiando uma linha dessas para um
-            lugar que não é hebraico, as peças podem aparecer noutra ordem na tela:
-            o texto guardado continua o mesmo, só a montagem visual mudou.
+            {tx.duasP3}
           </p>
         </div>
       </Parte>
 
       {/* ── 8, 9 e 10 · maiúscula, formas finais, letra muda ──────────── */}
-      <Parte id="maiuscula-e-finais" titulo={<>Maiúscula, formas finais e &quot;letra muda&quot;</>}>
+      <Parte id="maiuscula-e-finais" titulo={<>{tx.iMaiuscula}</>}>
         <div className="grid gap-3">
           <h3 className="font-display text-[17px] font-semibold">
-            Não existe maiúscula e minúscula
+            {tx.semMaiusculaT}
           </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
-            Em português, a mesma letra tem duas formas: A e a, B e b. Em hebraico,
-            não. Uma letra tem um desenho só, esteja ela no começo da frase, num nome
-            próprio ou no meio de uma palavra qualquer.
+            {tx.semMaiusculaP}
           </p>
         </div>
 
         <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-5">
           <h3 className="font-display text-[17px] font-semibold">
-            Mas {alfabeto.finais.length} letras mudam de forma no fim da palavra
+            {fmt(tx.finaisT, { n: alfabeto.finais.length })}
           </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
-            É a mesma letra e normalmente o mesmo som. O que muda é o formato quando
-            ela aparece no fim da palavra:
+            {tx.finaisP}
           </p>
           <ul className="flex flex-wrap gap-2.5 list-none p-0 m-0">
             {alfabeto.finais.map(f => (
@@ -583,28 +540,19 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             ))}
           </ul>
           <p className="font-ui text-[13.5px] text-ink-muted">
-            As regras completas ficam nas lições de cada uma. Por ora basta saber que
-            a letra não virou outra letra.
+            {tx.finaisNota}
           </p>
         </div>
 
         <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-5">
           <h3 className="font-display text-[17px] font-semibold">
-            E o que é uma "letra muda"?
+            {tx.mudaT}
           </h3>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
-            Você vai encontrar esse termo já na primeira lição, então vale defini-lo
-            agora: <strong className="font-semibold text-ink">uma letra muda é uma
-            letra que aparece escrita na palavra, mas que naquele caso não tem um som
-            próprio perceptível na pronúncia.</strong>
+            {tx.mudaP1()}
           </p>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Duas coisas importantes. Primeira: isso não quer dizer que ela esteja
-            sobrando - ela segura o sinal de vogal, marca o início da palavra, ou está
-            ali por história da língua. Segunda:{' '}
-            <strong className="font-semibold text-ink">uma letra não é "sempre
-            muda"</strong>. O comportamento depende da palavra e da posição, e é por
-            isso que cada caso é ensinado no seu lugar.
+            {tx.mudaP2()}
           </p>
         </div>
       </Parte>
@@ -623,27 +571,24 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
 
           O texto vem de lib/cursiva.ts, que é o mesmo que a etapa
           "Escrever" de cada lição lê. */}
-      <Parte id="impressa-e-cursiva" titulo={<>A mesma letra tem dois desenhos: impressa e cursiva</>}>
+      <Parte id="impressa-e-cursiva" titulo={<>{tx.tCursiva}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Tudo o que você viu até aqui está em <strong className="font-semibold text-ink">letra
-          impressa</strong> - a forma dos livros e das telas. Existe uma segunda forma, a{' '}
-          <strong className="font-semibold text-ink">cursiva</strong>, que é a que os
-          israelenses usam para escrever à mão. Elas não se parecem muito:
+          {tx.cursivaP1()}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg">{alfabeto.exemplo}</He>
-            <p className="font-ui text-[12.5px] text-ink-muted text-center">impressa</p>
+            <p className="font-ui text-[12.5px] text-ink-muted text-center">{tx.impressa}</p>
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
             <He size="lg" cursive>{alfabeto.exemplo}</He>
-            <p className="font-ui text-[12.5px] text-ink-muted text-center">cursiva</p>
+            <p className="font-ui text-[12.5px] text-ink-muted text-center">{tx.cursiva}</p>
           </div>
         </div>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              A impressa aparece em
+              {tx.impressaEm}
             </p>
             <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
               {ONDE_IMPRESSA.join(', ')}.
@@ -651,7 +596,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              A cursiva aparece em
+              {tx.cursivaEm}
             </p>
             <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
               {ONDE_CURSIVA.join(', ')}.
@@ -682,58 +627,34 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           O que NENHUMA linha aqui faz é prometer compreensão: ler e entender
           são trabalhos diferentes, e um curso de alfabetização entrega o
           primeiro. Dizer o contrário venderia melhor e seria mentira. */}
-      <Parte id="que-hebraico" titulo={<>Que hebraico é este que você vai aprender?</>}>
+      <Parte id="que-hebraico" titulo={<>{tx.tQueHebraico}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Talvez você tenha ouvido falar em "hebraico bíblico" e "hebraico moderno" e
-          esteja se perguntando qual dos dois está nesta tela. A resposta começa pela
-          parte que resolve quase tudo:{' '}
-          <strong className="font-semibold text-ink">o alfabeto é o mesmo</strong>. As
-          {' '}{alfabeto.total} letras que aparecem num rolo da Torah são as mesmas
-          {' '}{alfabeto.total} letras da placa de ônibus em Tel Aviv. Nenhuma foi
-          criada, nenhuma se aposentou.
+          {tx.queP1(alfabeto.total)}
         </p>
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              O que é igual?
+              {tx.igualT}
             </p>
             <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
-              {[
-                'As letras, o desenho delas e a direção da escrita.',
-                'O nikud, quando aparece.',
-                'A maior parte das raízes: as letras que carregam o sentido de uma família inteira de palavras.'
-              ].map(t => <li key={t}>{t}</li>)}
+              {[tx.igual1, tx.igual2, tx.igual3].map(t => <li key={t}>{t}</li>)}
             </ul>
           </div>
           <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-1.5">
             <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-              O que mudou?
+              {tx.mudouT}
             </p>
             <ul className="grid gap-1.5 text-[14.5px] leading-relaxed text-ink-body">
-              {[
-                'Milhares de palavras que o mundo antigo não tinha - avião, computador, eletricidade.',
-                'O sistema dos verbos, que funciona de outro jeito.',
-                'A pronúncia, que se acomodou numa forma padrão no último século.'
-              ].map(t => <li key={t}>{t}</li>)}
+              {[tx.mudou1, tx.mudou2, tx.mudou3].map(t => <li key={t}>{t}</li>)}
             </ul>
           </div>
         </div>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          Um e outro são a mesma língua em fases diferentes - como o português de
-          Camões e o daqui, só que com um intervalo bem maior no meio.{' '}
-          <strong className="font-semibold text-ink">Este curso ensina a LER</strong>: as
-          letras, os sinais, e a juntada delas em palavras. As palavras dos exercícios
-          são do hebraico de hoje, porque são as que você vai encontrar - mas a leitura
-          que você ganha serve para os dois textos, porque o alfabeto é um só.
+          {tx.queP2()}
         </p>
         <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)]
                       bg-surface-2 px-4 py-3">
-          Uma honestidade, para você não se decepcionar depois:{' '}
-          <strong className="font-semibold text-ink">ler e entender são dois
-          trabalhos</strong>. Ao fim daqui você lê em voz alta o que estiver escrito -
-          inclusive um versículo. Entender tudo o que leu é o passo seguinte, e a
-          poesia bíblica é difícil até para quem nasceu falando hebraico - por isso as
-          edições israelenses costumam vir com notas.
+          {tx.queP3()}
         </p>
       </Parte>
 
@@ -752,48 +673,37 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           para dentro dele. A primeira versão deste quadro copiava a frase
           de abertura da carta e derrubou o deploy 93, que é exatamente o
           trabalho daquele verificador. */}
+      <SoNaPagina noPasso="que-hebraico">
       <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
                             hover:bg-surface-2 flex items-center justify-between gap-3">
-          <span>Quer saber mais? Como uma língua voltou a ser falada</span>
+          <span>{tx.historiaResumo}</span>
           <span aria-hidden className="text-ink-muted">▾</span>
         </summary>
         <div className="px-5 pb-5 grid gap-3 border-t border-[color:var(--line-soft)] pt-4
                         text-[15px] leading-relaxed text-ink-body">
           <p>
-            Entre as duas fases há um intervalo de uns mil e setecentos anos em que
-            ninguém crescia falando esta língua. Ela não sumiu: seguiu no livro, na
-            reza e nas cartas entre comunidades distantes. O que ela não era é a língua
-            em que se pede o almoço - essa era o iídiche, o ladino, o árabe ou o
-            português, conforme o lugar.
+            {tx.historia1}
           </p>
           <p>
-            A virada começa no fim do século XIX. O nome mais lembrado é o de Eliezer
-            Ben-Yehuda (1858-1922), que se instalou em Jerusalém em 1881 e criou o
-            próprio filho ouvindo hebraico e mais nada; Itamar entrou para a história
-            como uma das primeiras crianças em séculos a ter o hebraico como primeira língua.
+            {tx.historia2}
           </p>
           <p>
-            Só que uma língua não volta pela decisão de uma família. Voltou porque
-            escolas resolveram dar aula assim, professores resolveram ensinar assim,
-            jornais resolveram sair assim, e muita gente resolveu falar em casa um
-            idioma que ninguém ali tinha como materno. Hoje há milhões de pessoas para
-            quem ele é a primeira língua.
+            {tx.historia3}
           </p>
           <p className="border-t border-[color:var(--line-soft)] pt-3">
-            É daí que vem o que você leu no quadro de cima. A palavra para computador
-            precisou ser inventada, porque não havia; as letras, não - ninguém desenhou
-            um alfabeto novo, só voltou a falar em voz alta o que já estava escrito.
+            {tx.historia4}
           </p>
           <Link href="/historia"
                 className="font-ui text-[14px] font-semibold text-[var(--accent)]
                            underline underline-offset-4 min-h-[44px] inline-flex items-center">
-            A história inteira, em cartas →
+            {tx.historiaLink}
           </Link>
         </div>
       </details>
+      </SoNaPagina>
       {/* ── 11 · o mapa ───────────────────────────────────────────────── */}
-      <Parte id="o-caminho" tone="wash" titulo={<>O caminho, do início ao fim</>}>
+      <Parte id="o-caminho" tone="wash" titulo={<>{tx.iCaminho}</>}>
         {/* Uma CORRENTE, e não dez cartões empilhados.
             ──────────────────────────────────────────────────────────────
             Eram cinco cartões, e o caminho de verdade tem dez passos - os
@@ -804,10 +714,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             cinco de antes e leem como o que são: um percurso. */}
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-2 list-none p-0 m-0">
           {[
-            'Entender o sistema', 'Aprender as letras', 'Ligar forma e som',
-            'Entender o nikud', 'Combinar letras', 'Ler sílabas',
-            'Ler palavras', 'Reconhecer padrões', 'Depender menos do nikud',
-            'Ler hebraico de verdade'
+            tx.caminho1, tx.caminho2, tx.caminho3,
+            tx.caminho4, tx.caminho5, tx.caminho6,
+            tx.caminho7, tx.caminho8, tx.caminho9,
+            tx.caminho10
           ].map((t, i, todos) => (
             <li key={t} className="flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-surface
@@ -824,8 +734,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </ol>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          O último passo é o que o curso persegue desde o primeiro: ler sem os sinais de
-          apoio, como está escrito na rua.
+          {tx.caminhoNota}
         </p>
         {/* ── 12 · a mensagem que acalma, sem promessa de venda ──────────
             Era um parágrafo dizendo "você não precisa entender tudo agora".
@@ -835,16 +744,10 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             cinco abaixo são as que este módulo acabou de apresentar. */}
         <div className="grid gap-3 border-t border-[color:var(--line-soft)] pt-4">
           <h3 className="font-ui text-[15px] font-semibold text-ink">
-            Cinco coisas que parecem estranhas agora, e logo vão fazer sentido
+            {tx.estranhasT}
           </h3>
           <ul className="grid gap-2 list-none p-0 m-0">
-            {[
-              'Ler da direita para a esquerda.',
-              'Nem todas as vogais aparecerem como letras.',
-              'Algumas letras mudarem de desenho no fim da palavra.',
-              'Pontinhos pequenos mudarem a leitura.',
-              'Uma letra poder ter mais de uma função.'
-            ].map(t => (
+            {[tx.estranha1, tx.estranha2, tx.estranha3, tx.estranha4, tx.estranha5].map(t => (
               <li key={t} className="flex gap-3 text-[15px] leading-relaxed text-ink-body">
                 <span aria-hidden className="text-[var(--accent)] shrink-0">→</span>
                 <span>{t}</span>
@@ -852,8 +755,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             ))}
           </ul>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Você não precisa dominar nada disso agora - nem é para dominar. Cada uma
-            dessas ideias volta no momento certo, dentro da lição que precisa dela.
+            {tx.estranhasP}
           </p>
         </div>
 
@@ -861,33 +763,32 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             estranha DEPOIS - quando abre o mapa e vê {{מ}} em segundo. A
             resposta mora lá, e aqui fica o aviso de que ela existe. */}
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          As letras não vêm em ordem alfabética, e isso é de propósito:{' '}
-          <Link href="/mapa"
-                className="font-semibold text-[var(--accent)] underline underline-offset-4">
-            o mapa explica por quê
-          </Link>.
+          {tx.ordemP(t => (
+            <Link href="/mapa"
+                  className="font-semibold text-[var(--accent)] underline underline-offset-4">
+              {t}
+            </Link>
+          ))}
         </p>
       </Parte>
 
       {/* ── 13 · a atividade rápida, agora sobre a página inteira ─────── */}
-      <Parte id="atividade" titulo={<>Checagem final: dezessete perguntas</>}>
-      <ChecagemFinal />
+      <Parte id="atividade" titulo={<>{tx.iAtividade}</>}>
+      <ChecagemFinal aoPassar={() => { if (modo === 'passos') setModo('fim'); }} />
       </Parte>
 
       {/* ── como o curso funciona ─────────────────────────────────────── */}
-      <Parte id="como-funciona" titulo={<>Como este curso funciona?</>}>
+      <Parte id="como-funciona" titulo={<>{tx.tComoFunciona}</>}>
         <p className="text-[15.5px] leading-relaxed text-ink-body">
-          São {curso.licoes} lições em {curso.modulos} módulos, e uma regra que vale do
-          começo ao fim: nada aparece na tela antes de ter sido ensinado. Você nunca vê
-          uma palavra com uma letra que ainda não conhece.
+          {fmt(tx.comoP1, { licoes: curso.licoes, modulos: curso.modulos })}
         </p>
         <ol className="grid gap-3 list-none p-0 m-0 text-[15.5px] leading-relaxed text-ink-body">
           {[
-            ['A lição', 'Uma letra por vez: o desenho, o som, como se escreve à mão e as primeiras palavras que ela forma. Dez minutos, mais ou menos.'],
-            ['Os exercícios', 'Corrigem na hora e dizem POR QUE, e não só "errou".'],
-            ['A revisão', 'O que escapa volta sozinho, no intervalo certo. Não é lição nova: é o que evita ter de recomeçar.'],
-            ['O fim de cada módulo', 'Uma verificação curta do que aquele módulo ensinou - para você saber que pode seguir, não para dar nota.'],
-            ['O fim do curso', 'Um desafio final com o alfabeto inteiro, e o certificado com o seu nome.']
+            [tx.como1T, tx.como1D],
+            [tx.como2T, tx.como2D],
+            [tx.como3T, tx.como3D],
+            [tx.como4T, tx.como4D],
+            [tx.como5T, tx.como5D]
           ].map(([t, d]) => (
             <li key={t} className="grid gap-0.5">
               <span className="font-ui text-[14.5px] font-bold text-ink">{t}</span>
@@ -896,19 +797,13 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </ol>
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-4">
-          Seu progresso fica salvo sozinho. Dá para parar no meio de uma lição, fechar
-          o navegador e voltar semana que vem: a plataforma reabre onde você parou.
+          {tx.comoP2}
         </p>
       </Parte>
 
-      <Parte id="como-praticar" tone="wash" titulo={<>Como praticar de verdade?</>}>
+      <Parte id="como-praticar" tone="wash" titulo={<>{tx.tPraticar}</>}>
         <ul className="grid gap-2.5 text-[15px] leading-relaxed text-ink-body">
-          {[
-            'Leia em voz alta. Sempre. Ouvir o próprio som é metade do aprendizado.',
-            'Pouco e todo dia bate muito de vez em quando.',
-            'Errar faz parte: o que você erra volta na revisão, no dia certo.',
-            'Escreva à mão. É o que fixa a forma da letra.'
-          ].map(t => (
+          {[tx.praticar1, tx.praticar2, tx.praticar3, tx.praticar4].map(t => (
             <li key={t} className="flex gap-3">
               <span aria-hidden className="text-[var(--accent)]">→</span>
               <span>{t}</span>
@@ -922,10 +817,11 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           nunca viu hebraico: doze sinais de uma vez, antes da primeira letra,
           é a definição de sobrecarga. Fica aqui, a um clique, e o curso
           ensina cada sinal na hora certa. */}
+      <SoNaPagina noPasso="o-niqqud">
       <details className="rounded-[var(--r-lg)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-5 font-ui text-[15px] font-semibold text-ink
                             hover:bg-surface-2 flex items-center justify-between gap-3">
-          <span>Quer saber mais? O quadro completo dos sinais de vogal</span>
+          <span>{tx.quadroResumo}</span>
           <span aria-hidden className="text-ink-muted">▾</span>
         </summary>
         <div className="px-5 pb-5 grid gap-4 border-t border-[color:var(--line-soft)] pt-4">
@@ -939,8 +835,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
             </p>
           </div>
           <p className="font-ui text-[13.5px] text-ink-muted">
-            Aprenda pelo SOM, não pelo nome: vários sinais diferentes fazem o mesmo som,
-            e é essa a dificuldade de verdade.
+            {tx.quadroNota}
           </p>
           {sounds.map(s => (
             <div key={s.sound} className="grid gap-2">
@@ -958,7 +853,7 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
                     {/* Tocar na vogal é ouvir (27/09/2026), sem botão à parte. */}
                     <button type="button" onClick={() => tocarClipe(g.audioId)}
                             disabled={!hasAudio(g.audioId)}
-                            aria-label={`${g.namePt}${hasAudio(g.audioId) ? ': ouvir' : ''}`}
+                            aria-label={`${g.namePt}${hasAudio(g.audioId) ? tx.ouvirSufixo : ''}`}
                             className="w-full text-left flex items-center gap-4 rounded-[var(--r-md)] bg-surface-2 px-4 py-3
                                        min-h-[56px] enabled:hover:bg-[var(--accent-wash)] enabled:active:scale-[.99] transition">
                       <He size="lg">{g.demo}</He>
@@ -977,16 +872,35 @@ export function StartHereClient({ sounds, intro, alfabeto, curso }: {
           ))}
         </div>
       </details>
+      </SoNaPagina>
       </Partes>
+
+      {modo === 'passos' && <Aula0NavDoPasso passo={passo} irPara={irAoPasso} />}
 
       {/* O destino sai do CURSO, e não escrito à mão.
           Escrito à mão ele estava - e apontava para a SEGUNDA letra. A tela
           que existe para não assustar ninguém mandava o iniciante pular a
           primeira lição, e nada nunca reclamou: o endereço existe, a página
           abre, e só quem conhece a ordem do alfabeto perceberia. */}
+      <div hidden={modo !== 'pagina'} className="contents">
       <LinkButton href={`/licao/${curso.primeiraLicao}`} size="lg" full>
-        Ir para a primeira letra
+        {tx.irPrimeira}
       </LinkButton>
+      </div>
+    </div>
+  );
+}
+
+/* A analogia, vista (28/10/2026): as vogais de CASA se apagam e voltam, e
+   sobra C S. Com movimento reduzido, a palavra fica inteira e a legenda diz. */
+function CasaSemVogais() {
+  return (
+    <div className="rounded-[var(--r-md)] bg-surface-2 p-5 grid gap-2 justify-items-center">
+      <p aria-label={tx.casaAria}
+         className="m-0 font-display text-[34px] font-bold tracking-[.18em] text-ink">
+        {tx.casaSome(v => <span aria-hidden className="vogal-some">{v}</span>)}
+      </p>
+      <p className="m-0 font-ui text-[13.5px] text-ink-muted">{tx.casaSobra}</p>
     </div>
   );
 }
@@ -1034,7 +948,7 @@ function LinhaMista({ partes }: { partes: readonly PedacoLinha[] }) {
 const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
   {
     partes: [{ t: 'he', s: 'רחוב הרצל' }, { t: 'lat', s: '42' }],
-    nota: 'Uma placa de rua. O nome começa na direita; o número da casa fica na ponta esquerda, e continua sendo quarenta e dois.'
+    nota: tx.linhaRua
   },
   {
     /* Um letreiro de ônibus, e não um preço: o preço pedia a preposição
@@ -1042,11 +956,11 @@ const LINHAS_MISTAS: { partes: PedacoLinha[]; nota: string }[] = [
        escreve com traço. Ela apareceria solta na linha, e a tela que ensina
        direção estaria ensinando ortografia errada de passagem. */
     partes: [{ t: 'he', s: 'קו' }, { t: 'lat', s: '18' }, { t: 'he', s: 'לתל אביב' }],
-    nota: 'Um letreiro de ônibus: linha 18 para Tel Aviv. O número fica no meio, com hebraico dos dois lados - e cada lado corre para onde é dele.'
+    nota: tx.linhaOnibus
   },
   {
     partes: [{ t: 'he', s: 'טלפון' }, { t: 'lat', s: '050-1234567' }],
-    nota: 'Um telefone. O traço no meio não muda de lugar: o número inteiro é um bloco só, lido da esquerda para a direita.'
+    nota: tx.linhaTelefone
   }
 ];
 
@@ -1066,13 +980,13 @@ function Aula0Situacao() {
     <p className={`font-ui text-[14.5px] leading-relaxed rounded-[var(--r-md)] px-4 py-3 max-w-[60ch]
                    ${feita ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]' : 'bg-surface-2 text-ink-body'}`}>
       {feita
-        ? 'Aula 0 concluída. As letras estão abertas, e esta página fica aqui para você voltar quando quiser.'
-        : `Esta aula é obrigatória: a primeira letra abre quando você terminar a checagem final, no fim da página, com pelo menos ${AULA0_MINIMO} acertos em ${AULA0_PERGUNTAS}. Dá para refazer quantas vezes quiser.`}
+        ? tx.situacaoFeita
+        : fmt(tx.situacaoObrigatoria, { minimo: AULA0_MINIMO, total: AULA0_PERGUNTAS })}
     </p>
   );
 }
 
-function ChecagemFinal() {
+function ChecagemFinal({ aoPassar }: { aoPassar: () => void }) {
   const p = useProgress();
   const [tentativa, setTentativa] = useState(0);
   const [certas, setCertas] = useState<number | null>(null);
@@ -1083,16 +997,21 @@ function ChecagemFinal() {
         key={tentativa}
         id="atividade-perguntas"
         tituloOculto
-        titulo="E o resto? Dezessete perguntas"
-        intro={`A última conferência antes das letras, sobre tudo o que esta página explicou. Para abrir a primeira letra, acerte pelo menos ${AULA0_MINIMO} das ${AULA0_PERGUNTAS}. Errar faz aparecer a explicação, e dá para refazer quantas vezes quiser.`}
+        titulo={tx.finalTitulo}
+        intro={fmt(tx.finalIntro, { minimo: AULA0_MINIMO, total: AULA0_PERGUNTAS })}
         perguntas={PERGUNTAS_GERAIS}
         fecho={{
-          bom: 'O mapa está na cabeça. Pode começar pelas letras.',
-          parcial: 'O que escapou está explicado acima: dá para reler agora e refazer a checagem.'
+          bom: tx.finalBom,
+          parcial: tx.finalParcial
         }}
         aoCompletar={n => {
           setCertas(n);
-          if (n >= AULA0_MINIMO) p.markFirst(AULA0_CONCLUIDA);
+          if (n >= AULA0_MINIMO) {
+            p.markFirst(AULA0_CONCLUIDA);
+            /* Nos passos, o resultado fica à vista um instante e a
+               comemoração entra no lugar. */
+            setTimeout(aoPassar, 1400);
+          }
         }}
       />
       {certas !== null && (
@@ -1101,16 +1020,16 @@ function ChecagemFinal() {
                          ${passou ? 'bg-[var(--teal-soft)]' : 'bg-[var(--gold-soft)]'}`}>
           <p className={`font-ui text-[15px] leading-relaxed m-0 ${passou ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
             {passou
-              ? `${certas} de ${AULA0_PERGUNTAS}. Aula 0 concluída: a primeira letra está aberta.`
-              : `${certas} de ${AULA0_PERGUNTAS}. Para abrir a primeira letra são ${AULA0_MINIMO}. Releia as partes que escaparam e refaça a checagem.`}
+              ? fmt(tx.finalPassou, { certas, total: AULA0_PERGUNTAS })
+              : fmt(tx.finalNaoPassou, { certas, total: AULA0_PERGUNTAS, minimo: AULA0_MINIMO })}
           </p>
           <div className="flex flex-wrap gap-2">
             {passou
-              ? <LinkButton href="/licao/alef" size="lg">Começar: a letra Álef</LinkButton>
+              ? <LinkButton href="/licao/alef" size="lg">{tx.comecarAlef}</LinkButton>
               : <button type="button"
                         onClick={() => { setCertas(null); setTentativa(n => n + 1); }}
                         className="min-h-[44px] px-4 rounded-[var(--r-md)] border border-line bg-surface font-ui text-[15px] text-ink hover:bg-surface-2">
-                  Refazer a checagem
+                  {tx.refazerChecagem}
                 </button>}
           </div>
         </div>
@@ -1125,7 +1044,7 @@ function ChecagemFinal() {
    na mesma ordem visual da palavra (a primeira à direita), e o leitor de
    tela as lê na ordem de leitura: a lista está em `dir="rtl"`. */
 const PALAVRA_DEMO = { he: 'שָׁלוֹם', letras: [
-  { g: 'שׁ', nome: 'a primeira' }, { g: 'ל', nome: '' }, { g: 'ו', nome: '' }, { g: 'ם', nome: 'a última' }
+  { g: 'שׁ', nome: tx.letraPrimeiraNome }, { g: 'ל', nome: '' }, { g: 'ו', nome: '' }, { g: 'ם', nome: tx.letraUltimaNome }
 ] };
 
 function PrimeiraEUltima() {
@@ -1141,25 +1060,25 @@ function PrimeiraEUltima() {
   return (
     <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
       <p className="font-ui text-[14px] font-semibold text-ink">
-        {pergunta === 'primeira' ? 'Agora toque na PRIMEIRA letra de שָׁלוֹם.'
-          : pergunta === 'ultima' ? 'E agora na ÚLTIMA letra.'
-          : 'Isso. A primeira é a da direita, a última é a da esquerda.'}
+        {pergunta === 'primeira' ? tx.toquePrimeira
+          : pergunta === 'ultima' ? tx.toqueUltima
+          : tx.toqueFim}
       </p>
       <div className="grid justify-items-center gap-1">
         <He size="lg">{PALAVRA_DEMO.he}</He>
         {/* A seta corre da direita para a esquerda, no sentido da leitura. */}
         <div aria-hidden className="relative w-40 h-4 overflow-hidden">
-          <span className="seta-rtl absolute top-0 font-ui text-[14px] text-[var(--accent)]">← leitura</span>
+          <span className="seta-rtl absolute top-0 font-ui text-[14px] text-[var(--accent)]">{tx.setaLeitura}</span>
         </div>
       </div>
-      <ol dir="rtl" className="flex justify-center gap-2 list-none p-0 m-0" aria-label="As letras de שָׁלוֹם, na ordem de leitura">
+      <ol dir="rtl" className="flex justify-center gap-2 list-none p-0 m-0" aria-label={tx.letrasAria}>
         {PALAVRA_DEMO.letras.map((l, k) => {
           const acertada = (pergunta !== 'primeira' && k === 0)
             || (pergunta === 'fim' && k === PALAVRA_DEMO.letras.length - 1);
           return (
             <li key={k}>
               <button type="button" onClick={() => tocar(k)}
-                      aria-label={`Letra ${k + 1} de ${PALAVRA_DEMO.letras.length}`}
+                      aria-label={fmt(tx.letraAria, { n: k + 1, total: PALAVRA_DEMO.letras.length })}
                       className={`min-w-[52px] min-h-[56px] rounded-[var(--r-sm)] border grid place-items-center
                         ${acertada ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
                           : erro === k ? 'border-[var(--gold)] bg-[var(--gold-soft)]'
@@ -1173,14 +1092,14 @@ function PrimeiraEUltima() {
       <p role="status" className="font-ui text-[14px] leading-relaxed min-h-[1.5em] m-0">
         {erro !== null && (
           <span className="text-[var(--gold-ink)]">
-            Ainda não. {pergunta === 'primeira'
-              ? 'A primeira letra é a que está mais à DIREITA.'
-              : 'A última letra é a que está mais à ESQUERDA, onde a leitura termina.'}
+            {tx.aindaNao} {pergunta === 'primeira'
+              ? tx.erroPrimeira
+              : tx.erroUltima}
           </span>
         )}
         {pergunta === 'fim' && (
           <span className="text-[var(--teal-ink)]">
-            Em português, BOM DIA começa no B, à esquerda. Em hebraico, שָׁלוֹם começa no שׁ, à direita.
+            {tx.fimComparacao}
           </span>
         )}
       </p>
@@ -1193,20 +1112,19 @@ function PrimeiraEUltima() {
    são três palavras diferentes. E os sinais ficam embaixo, em cima ou
    dentro da letra, conforme o sinal. */
 const MESMAS = [
-  { he: 'סֵפֶר', translit: 'séfer', pt: 'livro' },
-  { he: 'סָפַר', translit: 'safár', pt: 'contou' },
-  { he: 'סַפָּר', translit: 'sapár', pt: 'barbeiro' }
+  { he: 'סֵפֶר', translit: grafia('séfer'), pt: tx.sentidoLivro }, // i18n-ok: transliteração (etapa 3)
+  { he: 'סָפַר', translit: grafia('safár'), pt: tx.sentidoContou }, // i18n-ok: transliteração (etapa 3)
+  { he: 'סַפָּר', translit: grafia('sapár'), pt: tx.sentidoBarbeiro } // i18n-ok: transliteração (etapa 3)
 ];
 
 function MesmasConsoantes() {
   return (
     <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
       <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-        As mesmas letras, três palavras
+        {tx.mesmasT}
       </p>
       <p className="text-[15px] leading-relaxed text-ink-body">
-        Sem nikud, <He size="inline">ספר</He> são só três consoantes: S, F (ou P) e R. Com nikud,
-        a leitura fica decidida:
+        {tx.mesmasP1(<He size="inline">ספר</He>)}
       </p>
       <ul className="grid grid-cols-3 gap-2 list-none p-0 m-0">
         {MESMAS.map(w => (
@@ -1218,10 +1136,7 @@ function MesmasConsoantes() {
         ))}
       </ul>
       <p className="text-[14.5px] leading-relaxed text-ink-body">
-        Repare onde os sinais ficam: quase todos <strong className="font-semibold text-ink">embaixo</strong> da
-        letra; o ponto do <He size="inline">פּ</He> fica <strong className="font-semibold text-ink">dentro</strong> dela
-        e muda o som de F para P; e há sinais que ficam <strong className="font-semibold text-ink">em cima</strong>,
-        como o O de <He size="inline">שָׁלוֹם</He>. Você não precisa decorar nada disso agora.
+        {tx.mesmasP2(<He size="inline">פּ</He>, <He size="inline">שָׁלוֹם</He>)}
       </p>
     </div>
   );
@@ -1233,27 +1148,27 @@ function PorOndeComeca() {
   return (
     <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
       <p className="font-ui text-[14px] font-semibold text-ink">
-        Rápido: por onde começa a leitura desta palavra?
+        {tx.comecaPergunta}
       </p>
       <div className="flex items-center justify-center gap-4 py-2">
         <button
           type="button"
           onClick={() => setEscolha('esq')}
-          aria-label="Começa pela esquerda"
+          aria-label={tx.comecaAriaEsq}
           className="min-h-[44px] px-3 rounded-[var(--r-sm)] border border-line
                      font-ui text-[13px] text-ink-body hover:bg-surface-2"
         >
-          por aqui
+          {tx.porAqui}
         </button>
         <He size="lg">מַיִם</He>
         <button
           type="button"
           onClick={() => setEscolha('dir')}
-          aria-label="Começa pela direita"
+          aria-label={tx.comecaAriaDir}
           className="min-h-[44px] px-3 rounded-[var(--r-sm)] border border-line
                      font-ui text-[13px] text-ink-body hover:bg-surface-2"
         >
-          por aqui
+          {tx.porAqui}
         </button>
       </div>
       {escolha && (
@@ -1263,8 +1178,8 @@ function PorOndeComeca() {
                          ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'
                          : 'bg-[var(--gold-soft)] text-[var(--gold-ink)]'}`}>
           {escolha === 'dir'
-            ? 'Isso. Pela direita: a primeira letra é a que está mais à direita, e a leitura corre para a esquerda.'
-            : 'Ainda não. Em hebraico a leitura começa pela DIREITA e corre para a esquerda - o contrário do português.'}
+            ? tx.comecaCerto
+            : tx.comecaErrado}
         </p>
       )}
     </div>
@@ -1281,10 +1196,10 @@ function NoCaderno() {
   return (
     <div className="rounded-[var(--r-md)] border border-[color:var(--line)] p-4 grid gap-3">
       <p className="font-ui text-[14px] font-semibold text-ink">
-        Rápido: qual forma você usaria para escrever no caderno?
+        {tx.cadernoPergunta}
       </p>
       <div className="grid grid-cols-2 gap-2.5">
-        {([['imp', 'impressa'], ['cur', 'cursiva']] as const).map(([k, rotulo]) => (
+        {([['imp', tx.impressa], ['cur', tx.cursiva]] as const).map(([k, rotulo]) => (
           <button
             key={k}
             type="button"
@@ -1309,8 +1224,8 @@ function NoCaderno() {
                          ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'
                          : 'bg-[var(--gold-soft)] text-[var(--gold-ink)]'}`}>
           {escolha === 'cur'
-            ? 'Isso. Caderno, recado, formulário, lista: tudo o que é escrito à mão vai em cursiva.'
-            : 'A impressa é a forma de LER - livro, site, placa. Para escrever à mão, a forma é a cursiva.'}
+            ? tx.cadernoCerto
+            : tx.cadernoErrado}
         </p>
       )}
     </div>
@@ -1335,143 +1250,115 @@ function NoCaderno() {
 const PERGUNTAS_GERAIS: ItemCompreensao[] = [
   {
     t: 'escolha',
-    q: 'O hebraico é lido em qual direção?',
-    opcoes: ['Da direita para a esquerda', 'Da esquerda para a direita', 'De cima para baixo'],
+    q: tq.g1q,
+    opcoes: [tq.g1o1, tq.g1o2, tq.g1o3],
     certa: 0,
-    porque: 'A primeira letra de uma palavra é a que está mais à direita. Os números são a exceção: continuam da esquerda para a direita.'
+    porque: tq.g1p
   },
   {
     t: 'escolha',
-    q: 'Num sistema de escrita do tipo abjad, as letras representam principalmente:',
-    opcoes: ['Vogais', 'Consoantes', 'Números'],
+    q: tq.g2q,
+    opcoes: [tq.g2o1, tq.g2o2, tq.g2o3],
     certa: 1,
-    porque: 'As letras são, em essência, as consoantes. Os sons de vogal são marcados por fora delas - ou não são marcados.'
+    porque: tq.g2p
   },
   {
     t: 'escolha',
-    q: 'O hebraico tem sons de vogal?',
-    opcoes: ['Tem, como qualquer língua', 'Não tem nenhum', 'Só em palavras estrangeiras'],
+    q: tq.g3q,
+    opcoes: [tq.g3o1, tq.g3o2, tq.g3o3],
     certa: 0,
-    porque: 'A língua tem os sons. O que muda é a representação na escrita: o alfabeto básico não tem uma letra independente para cada vogal, como o português tem.'
+    porque: tq.g3p
   },
   {
     t: 'vf',
-    q: 'Existem letras maiúsculas e minúsculas em hebraico.',
+    q: tq.g4q,
     certa: false,
-    porque: 'Uma letra tem um desenho só, no começo da frase ou no meio da palavra. O que existe é outra coisa: cinco letras mudam de forma quando aparecem no fim da palavra.'
+    porque: tq.g4p
   },
   {
     t: 'visual',
-    q: 'Qual destas é a forma FINAL da mesma letra - a que aparece no fim da palavra?',
+    q: tq.g5q,
     opcoes: ['ם', 'מ'],
     certa: 0,
-    porque: 'É a mesma letra e o mesmo som. Só o formato muda quando ela fecha a palavra.'
+    porque: tq.g5p
   },
   {
     t: 'escolha',
-    q: 'O que quer dizer "letra muda"?',
-    opcoes: [
-      'Uma letra que foi escrita por engano e deveria ser apagada',
-      'Uma letra que aparece escrita, mas que naquele caso não tem som próprio perceptível',
-      'Uma letra que mudou de desenho'
-    ],
+    q: tq.g6q,
+    opcoes: [tq.g6o1, tq.g6o2, tq.g6o3],
     certa: 1,
-    porque: 'Ela não está sobrando: pode estar segurando um sinal de vogal, marcando o início da palavra, ou ali por história da língua. E não é "sempre muda" - depende da palavra.'
+    porque: tq.g6p
   },
   {
     t: 'vf',
-    q: 'Uma letra na forma final virou outra letra, com outro som.',
+    q: tq.g7q,
     certa: false,
-    porque: 'É a mesma letra e normalmente o mesmo som. O que muda é o formato quando ela fecha a palavra - como um M que ganhasse outro desenho só no fim.'
+    porque: tq.g7p
   },
   {
     t: 'escolha',
-    q: 'Por que {{א}}, {{ה}}, {{ו}} e {{י}} ganharam um aviso nesta página?',
-    opcoes: [
-      'Porque são as mais difíceis de desenhar à mão',
-      'Porque, dependendo da palavra, podem participar de um som de vogal em vez de soar como consoante',
-      'Porque só aparecem no fim da palavra'
-    ],
+    q: tq.g8q,
+    opcoes: [tq.g8o1, tq.g8o2, tq.g8o3],
     certa: 1,
-    porque: 'O aviso existe para que, lá na frente, você não pense "mas você disse que todas as letras são consoantes". Cada uma dessas quatro tem a sua lição, e a regra é ensinada lá.'
+    porque: tq.g8p
   },
   {
     t: 'vf',
-    q: 'Numa linha hebraica, um número também é lido da direita para a esquerda.',
+    q: tq.g9q,
     certa: false,
-    porque: 'Cada trecho mantém a sua própria direção: o número continua da esquerda para a direita, e você o lê normalmente. O que a linha hebraica decide é a ORDEM em que os trechos entram nela.'
+    porque: tq.g9p
   },
   {
     t: 'escolha',
-    q: 'Numa placa hebraica que diz "rua Herzl 42", onde aparece o 42?',
-    opcoes: [
-      'Na ponta esquerda da linha',
-      'Na ponta direita da linha, que é onde a leitura começa',
-      'Em cima do nome da rua'
-    ],
+    q: tq.g10q,
+    opcoes: [tq.g10o1, tq.g10o2, tq.g10o3],
     certa: 0,
-    porque: 'O nome da rua começa na direita e corre para a esquerda, então o número, que vem depois, para na ponta esquerda. Continua sendo quarenta e dois.'
+    porque: tq.g10p
   },
   {
     t: 'vf',
-    q: 'As letras de um rolo da Torá são as mesmas de uma placa de rua de hoje.',
+    q: tq.g11q,
     certa: true,
-    porque: 'São as mesmas letras num rolo da Torah e numa placa de ônibus em Tel Aviv. O que mudou de uma fase para a outra foi a língua por cima delas: palavras novas, outro sistema de verbos, a pronúncia.'
+    porque: tq.g11p
   },
   {
     t: 'escolha',
-    q: 'O que você consegue fazer ao terminar este curso?',
-    opcoes: [
-      'Ler em voz alta o que estiver escrito, inclusive um versículo',
-      'Entender qualquer texto bíblico sem ajuda nenhuma',
-      'Conversar em hebraico sobre qualquer assunto'
-    ],
+    q: tq.g12q,
+    opcoes: [tq.g12o1, tq.g12o2, tq.g12o3],
     certa: 0,
-    porque: 'Ler e entender são dois trabalhos. Este curso entrega o primeiro, que é a porta para os outros dois - e a poesia bíblica é difícil até para quem nasceu falando hebraico.'
+    porque: tq.g12p
   },
   {
     t: 'escolha',
-    q: 'Por que o curso começa com nikud e vai tirando os sinais aos poucos?',
-    opcoes: [
-      'Porque o nikud é mais bonito no começo',
-      'Porque com os sinais dá para ler sem adivinhar, e o hebraico do dia a dia vem sem eles',
-      'Porque o nikud só existe em material para criança'
-    ],
+    q: tq.g13q,
+    opcoes: [tq.g13o1, tq.g13o2, tq.g13o3],
     certa: 1,
-    porque: 'Os sinais são o apoio que permite ler antes de conhecer a palavra. Como placa, jornal e mensagem vêm sem eles, o objetivo é você depender cada vez menos do apoio.'
+    porque: tq.g13p
   },
   {
     t: 'vf',
-    q: 'Num exercício, pode aparecer uma palavra com uma letra que você ainda não estudou.',
+    q: tq.g14q,
     certa: false,
-    porque: 'É uma regra do curso, do começo ao fim: nada aparece na tela antes de ter sido ensinado. Toda palavra de um exercício é feita só com as letras que já passaram.'
+    porque: tq.g14p
   },
   {
     t: 'escolha',
-    q: 'Você vai anotar um telefone num papel, em hebraico. Que forma de letra você usa?',
-    opcoes: [
-      'A cursiva, que é a forma de escrever à mão',
-      'A impressa, igual à do livro',
-      'Tanto faz: as duas são usadas para escrever à mão'
-    ],
+    q: tq.g15q,
+    opcoes: [tq.g15o1, tq.g15o2, tq.g15o3],
     certa: 0,
-    porque: 'Para ler, impressa; para escrever à mão, cursiva. Dá para desenhar a impressa à mão, mas ninguém faz - seria como copiar a fonte do livro letra por letra.'
+    porque: tq.g15p
   },
   {
     t: 'vf',
-    q: 'A impressa e a cursiva são dois alfabetos diferentes, com nomes e sons diferentes.',
+    q: tq.g16q,
     certa: false,
-    porque: 'São dois desenhos da MESMA letra. Mesmo nome, mesmo som, mesmo lugar no alfabeto - como a letra de forma e a letra de mão em português.'
+    porque: tq.g16p
   },
   {
     t: 'escolha',
-    q: 'O curso ensina as letras em ordem alfabética?',
-    opcoes: [
-      'Não: a ordem é outra, escolhida para você começar a ler mais cedo',
-      'Sim, começando pela primeira letra do alfabeto',
-      'Não, a ordem é sorteada para cada aluno'
-    ],
+    q: tq.g17q,
+    opcoes: [tq.g17o1, tq.g17o2, tq.g17o3],
     certa: 0,
-    porque: 'A ordem alfabética continua existindo e importando - é a do dicionário -, mas começar por ela atrasa a leitura: as primeiras letras dela não formam palavra entre si. O mapa do curso explica a troca em detalhe.'
+    porque: tq.g17p
   }
 ];

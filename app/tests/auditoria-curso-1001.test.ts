@@ -93,14 +93,14 @@ describe('CONT-001: "Ligue cada letra ao seu som" nunca tem duas cartas com o me
           const direita = ex.pairs.map(p => p.right);
           expect(new Set(direita).size, `${raw.id}#${s}: ${direita.join(' | ')}`).toBe(direita.length);
           /* E nem som parcial em comum (Kaf "k ou raspado" ao lado de Kuf "k"). */
-          const sons = ex.pairs.map(p => letters.find(x => x.letter === p.left)!)
+          const sons = ex.pairs.map(p => letters.find(x => x.letter === p.left.replace('\u05BC', ''))!)
             .map(x => (x.id === L.id ? L.sound : x.sound));
           for (let i = 0; i < sons.length; i++) {
             for (let j = i + 1; j < sons.length; j++) {
               expect(somEmComum(sons[i]!, sons[j]!), `${raw.id}#${s}: ${sons[i]} / ${sons[j]}`).toBe(false);
             }
           }
-          expect(ex.pairs.some(p => p.left === L.letter)).toBe(true);
+          expect(ex.pairs.some(p => p.left === (L.letraComPonto ?? L.letter))).toBe(true);
         }
       }
     }
@@ -212,11 +212,14 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
       expect(s, f).not.toContain('Você já domina');
     }
     const c = fonte('app/concluido/CompletionClient.tsx');
-    expect(c).toContain('${conquistas.size} de ${ACHIEVEMENTS.length}');
+    expect(c).toContain('fmt(tx.conquistasDe, { n: conquistas.size, total: ACHIEVEMENTS.length })');
+    expect(fonte('i18n/telas/painel-completion-client.tsx')).toContain("conquistasDe: '{n} de {total}'");
     expect(c).toContain('isLessonMastered(p.state, l.id)');
     /* Desde 12/10/2026 a regra antiga se chama "lição concluída" (REGRA_DA_CONCLUSAO);
        "dominada" é o domínio por habilidade (lib/dominio.ts). */
-    expect(fonte('app/certificado/CertificadoClient.tsx')).toContain('concluídas. ${REGRA_DA_CONCLUSAO}');
+    expect(fonte('app/certificado/CertificadoClient.tsx'))
+      .toContain('fmt(tx.requisitoLicoesDetalhe, { n: gate.lettersDone, total: course.totalLetters })} ${REGRA_DA_CONCLUSAO}');
+    expect(fonte('i18n/telas/painel-certificado-client.tsx')).toContain("requisitoLicoesDetalhe: '{n} de {total} concluídas.'");
     expect(fonte('app/checkpoint/[n]/CheckpointClient.tsx')).toContain('isLessonMastered(p.state, l.id)');
   });
 });
@@ -224,17 +227,20 @@ describe('UXQA-005 / CONT-007: concluída e dominada, com os números das consta
 describe('UXQA-015: /concluido não afirma o que não aconteceu', () => {
   it('"Você está lendo hebraico" e a lista de competências só com o alfabeto dominado', () => {
     const c = fonte('app/concluido/CompletionClient.tsx');
-    expect(c).toContain("? 'Você está lendo hebraico.'");
+    const dic = fonte('i18n/telas/painel-completion-client.tsx');
+    expect(c).toMatch(/alfabetoDominado\s*\?\s*tx\.estaLendo/);
+    expect(dic).toContain("estaLendo: 'Você está lendo hebraico.'");
     expect(c).toContain('alfabetoDominado');
     expect(c).toContain('{alfabetoDominado && (');
-    expect(c).toContain('Faltam ${faltam.length}');
+    expect(c).toContain('tx.faltam(faltam.length)');
+    expect(dic).toContain('`Faltam ${n} ');
   });
 });
 
 describe('VIS-004: o painel e a revisão contam a mesma fila, e dizem "itens"', () => {
   it('a revisão aceita as letras que têm item na fila', () => {
     expect(fonte('app/revisao/ReviewClient.tsx')).toContain('Object.values(p.state.srs).some(i => i.letterId === l.id)');
-    const painel = fonte('components/platform/Painel.tsx');
+    const painel = fonte('components/platform/Painel.tsx') + fonte('i18n/telas/conta-painel.ts');
     expect(painel).toContain('itens precisam de uma revisão rápida');
     expect(painel).not.toContain('letras precisam de uma revisão rápida');
   });
@@ -243,10 +249,13 @@ describe('VIS-004: o painel e a revisão contam a mesma fila, e dizem "itens"', 
 describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
   it('a lição troca o botão principal, e o painel aponta "Terminar"', () => {
     const l = fonte('app/licao/[letterId]/LessonClient.tsx');
-    expect(l).toContain('Refazer os exercícios (precisa de ${Math.round(LIBERA_MARK * 100)}%)');
+    /* O texto mora no dicionário da tela (i18n); a tela passa o número. */
+    expect(l).toContain('tx.refazerPrecisa(Math.round(LIBERA_MARK * 100))');
+    expect(fonte('i18n/telas/licao-lesson-client.tsx')).toContain('Refazer os exercícios (precisa de ${libera}%)');
     expect(l).toContain('const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);');
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
-    expect(d).toContain('cta={`Terminar ${terminar.nome}`}');
+    expect(d).toContain('cta={fmt(tx.terminarCta, { nome: terminar.nome })}');
+    expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain("terminarCta: 'Terminar {nome}'");
     expect(d).toContain('porQueTrancada(p.state, ordem, id)');
   });
 });
@@ -255,7 +264,8 @@ describe('CONV-020: no primeiro acesso, a Aula 0 é o botão principal', () => {
   it('enquanto a Aula 0 não foi aberta e nenhuma lição começou', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
     expect(d).toContain('const aula0Primeiro = !aula0Feita(p.state);');
-    expect(d).toContain('cta="Começar pela Aula 0"');
+    expect(d).toContain('cta={tx.aula0Cta}');
+    expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain("aula0Cta: 'Começar pela Aula 0'");
     expect(fonte('app/inicio/StartHereClient.tsx')).toContain("progresso.markFirst('aula-0')");
   });
 });
@@ -263,12 +273,16 @@ describe('CONV-020: no primeiro acesso, a Aula 0 é o botão principal', () => {
 describe('VIS-005, VIS-008, VIS-013: teclado e leitor de tela', () => {
   it('o ligar da lição tem aria-pressed, mantém o foco e anuncia cada par', () => {
     const a = fonte('components/learn/Answers.tsx');
+    /* Os anúncios moram no dicionário da tela (i18n). */
+    const anuncios = fonte('i18n/telas/licao-answers.tsx');
     expect(a).toContain('aria-pressed={isPicked}');
     expect(a).toContain('aria-disabled={settled || isMatched}');
     expect(a).not.toMatch(/\sdisabled=\{settled \|\| isMatched\}/);
     expect(a).toContain('<p role="status" aria-live="polite" className="sr-only">{anuncio}</p>');
-    expect(a).toContain('Par certo: ');
-    expect(a).toContain('Não combinam: ');
+    expect(a).toContain('setAnuncio(tx.parCerto(');
+    expect(a).toContain('setAnuncio(tx.naoCombinam(');
+    expect(anuncios).toContain('Par certo: ');
+    expect(anuncios).toContain('Não combinam: ');
   });
 
   it('perguntas da etapa 1, jogos e dicas não jogam o foco no <body>', () => {
@@ -294,19 +308,26 @@ describe('VIS-005, VIS-008, VIS-013: teclado e leitor de tela', () => {
 describe('VIS-009 e UXQA-012: a Academia', () => {
   it('os jogos sem material dizem quando abrem, e o vazio tem título', () => {
     const a = fonte('app/academia/AcademiaClient.tsx');
-    expect(a).toContain('`Abre com ${info.minimo} letras`');
+    /* Os textos moram no dicionário da tela (i18n), lidos como tx.chave. */
+    const d = fonte('i18n/telas/academia-academia-client.tsx');
+    expect(a).toContain('fmt(tx.abreCom, { n: info.minimo })');
+    expect(d).toContain("abreCom: 'Abre com {n} letras'");
     expect(a).toContain('disabled={!!fechados[jogo]}');
-    expect(a).toContain('<h1 className="text-[23px] font-bold">Ainda não há material suficiente</h1>');
+    expect(a).toContain('<h1 className="text-[23px] font-bold">{tx.semMaterialTitulo}</h1>');
+    expect(d).toContain("semMaterialTitulo: 'Ainda não há material suficiente'");
   });
 
   it('o teclado da tela vem primeiro; o guia do sistema fica recolhido', () => {
     const a = fonte('app/academia/AcademiaClient.tsx');
-    const tela = a.indexOf('Usar o teclado da tela');
+    const d = fonte('i18n/telas/academia-academia-client.tsx');
+    expect(d).toContain("usarTecladoTela: 'Usar o teclado da tela'");
+    const tela = a.indexOf('{tx.usarTecladoTela}');
     const guia = a.indexOf('<GuiaTeclado');
     expect(tela).toBeGreaterThan(0);
     expect(guia).toBeGreaterThan(tela);
     expect(a).toContain('<details');
     expect(a).not.toContain('Este é o único exercício do curso que pede o teclado hebraico');
+    expect(d).not.toContain('Este é o único exercício do curso que pede o teclado hebraico');
   });
 });
 
@@ -324,12 +345,14 @@ describe('CONT-010: o exame cobra só o que o aluno estudou', () => {
     const r = examReport([{ partId: 'letras', correct: 10, total: 10 }]);
     expect(r.bandPt.bodyPt).not.toContain('não viu antes');
     expect(fonte('lib/engine/exam.ts')).not.toContain('não viu antes');
+    expect(fonte('i18n/telas/motor-exam.ts')).not.toContain('não viu antes');
   });
 });
 
 describe('UXQA-008: o nome é pedido uma vez', () => {
   it('onboarding, certificado e Meu nome reaproveitam o nome da conta', () => {
-    const o = fonte('app/onboarding/page.tsx');
+    /* A tela e o seu dicionário (app/src/i18n/telas/). */
+    const o = fonte('app/onboarding/page.tsx') + fonte('i18n/telas/painel-onboarding.ts');
     expect(o).not.toContain('Fica só no seu navegador');
     expect(o).toContain('Fica na sua conta');
     expect(o).toContain('primeiroNome(nomeDaConta)');
@@ -364,7 +387,10 @@ describe('CONT-011: uma grafia só', () => {
       expect(s.replace(/"dagesh":/g, '').replace(/"id": "dagesh"/g, ''), f).not.toMatch(/\bdagesh\b/);
     }
     /* As âncoras das partes (o-niqqud...) ficam como estão: são endereço. */
-    const aula0 = fonte('app/inicio/StartHereClient.tsx')
+    const aula0 = (fonte('app/inicio/StartHereClient.tsx')
+      + fonte('i18n/telas/painel-start-here-client.tsx')
+      + fonte('i18n/telas/painel-start-here-perguntas.ts')
+      + fonte('i18n/telas/painel-aula0-passos.ts'))
       .replace(/(['"])(o-niqqud|checagem-niqqud[-a-z]*)\1/g, '')
       .replace(/PERGUNTAS_NIQQUD/g, '');
     expect(aula0).not.toMatch(/niqqud/i);

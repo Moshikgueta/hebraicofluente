@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Aviso, Erro } from '@/components/platform/Campo';
+import { tx } from '@/i18n/telas/conta-sair-da-lista';
 
 export function SairDaLista() {
   const t = useSearchParams().get('t') ?? '';
@@ -21,6 +22,8 @@ export function SairDaLista() {
      `i` é da lista de interessados (worker/src/api/interessados.js); os
      outros, do aviso do próximo curso para quem tem conta. */
   const interessado = t.startsWith('i');
+  /* E o que começa com `l`, do lembrete para estudar (api/lembrete.js). */
+  const lembrete = t.startsWith('l');
   const [estado, setEstado] = useState<'pronto' | 'enviando' | 'saiu' | 'invalido' | 'erro'>(
     t ? 'pronto' : 'invalido'
   );
@@ -28,7 +31,8 @@ export function SairDaLista() {
   async function sair() {
     setEstado('enviando');
     try {
-      const r = await fetch(interessado ? '/api/interessados/sair' : '/api/novidades/sair', {
+      const rota = interessado ? '/api/interessados/sair' : lembrete ? '/api/lembrete/sair' : '/api/novidades/sair';
+      const r = await fetch(rota, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ t })
@@ -41,32 +45,32 @@ export function SairDaLista() {
 
   return (
     <div className="focus-col grid gap-6 py-6">
-      <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">Sair da lista</h1>
+      <h1 className="text-[27px] sm:text-[31px] font-bold leading-tight">{tx.titulo}</h1>
       <Card className="p-6 grid gap-4">
         {estado === 'saiu' ? (
           interessado ? (
-            <Aviso>Pronto: você saiu da lista e não vai receber mais nenhum e-mail dela.</Aviso>
+            <Aviso>{tx.saiuInteressado}</Aviso>
+          ) : lembrete ? (
+            <Aviso>{tx.saiuLembrete}</Aviso>
           ) : (
             <Aviso>
-              Pronto: você não vai mais receber o aviso do próximo curso. Sua conta e seu
-              acesso continuam iguais.
+              {tx.saiuAviso}
             </Aviso>
           )
         ) : estado === 'invalido' ? (
           <Erro>
-            Este link não está completo. Abra de novo pelo e-mail, ou desmarque o aviso
-            em <Link href="/perfil" className="underline">Sua conta</Link>.
+            {tx.invalidoAntes}<Link href="/perfil" className="underline">{tx.suaConta}</Link>.
           </Erro>
         ) : (
           <>
             <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
               {interessado
-                ? 'Você não vai mais receber nenhum e-mail desta lista: nem as próximas letras, nem os avisos que pediu.'
-                : 'Você não vai mais receber o e-mail que avisa quando o próximo curso abrir. Isso não muda nada na sua conta nem no seu acesso.'}
+                ? tx.confirmarInteressado
+                : lembrete ? tx.confirmarLembrete : tx.confirmarAviso}
             </p>
-            {estado === 'erro' && <Erro>Não consegui agora. Tente de novo em instantes.</Erro>}
+            {estado === 'erro' && <Erro>{tx.erro}</Erro>}
             <Button size="lg" onClick={() => void sair()} disabled={estado === 'enviando'}>
-              {estado === 'enviando' ? 'Saindo…' : 'Sair da lista'}
+              {estado === 'enviando' ? tx.saindo : tx.sair}
             </Button>
           </>
         )}

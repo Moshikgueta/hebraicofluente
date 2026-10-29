@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
+import { tx } from '@/i18n/telas/academia-leitura-client';
 import { LeituraClient } from './LeituraClient';
 
 export const metadata: Metadata = meta({
   rota: '/leitura',
-  title: 'Laboratório de Leitura - Hebraico Fluente',
-  description: 'Ler palavras em hebraico com as letras que você já aprendeu, com mais ou menos ajuda.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 export default function LeituraPage() { return <LeituraClient />; }

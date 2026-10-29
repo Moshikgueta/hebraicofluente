@@ -28,6 +28,7 @@ import { useAccount } from '@/lib/account/store';
 import { getCourse, tipoDe } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
 import { decidirFase, DESISTE_MS, FINAL, type Fase } from './fase';
+import { tx } from '@/i18n/telas/conta-obrigado';
 
 const POLL_MS = 3_000;
 
@@ -99,10 +100,10 @@ export function ObrigadoClient({ slug }: { slug: string }) {
         <Card className="p-8 grid gap-4 justify-items-center text-center" aria-busy="true">
           <Skeleton className="h-[52px] w-[52px] rounded-full" />
           <p className="font-display text-[19px] font-bold text-ink">
-            Confirmando seu pagamento…
+            {tx.confirmando}
           </p>
           <p className="font-ui text-[14px] leading-relaxed text-ink-muted max-w-[40ch]">
-            Isso costuma levar alguns segundos. Não feche esta página.
+            {tx.naoFeche}
           </p>
         </Card>
       </Wrap>
@@ -114,23 +115,23 @@ export function ObrigadoClient({ slug }: { slug: string }) {
       <Wrap>
         <Card tone="mint" className="p-8 grid gap-4 justify-items-center text-center">
           <He size="lg" dim>ע</He>
-          <Badge tone="mint">Pagamento confirmado</Badge>
+          <Badge tone="mint">{tx.pagamentoConfirmado}</Badge>
           <h1 className="font-display text-[26px] sm:text-[30px] font-bold text-ink max-w-[20ch]">
-            {tipoDe(c) === 'livro' ? 'Pronto. O Israel Além do Óbvio é seu.' : tipoDe(c) === 'pacote' ? 'Pronto. O combo é seu.' : 'Pronto. O curso é seu.'}
+            {tipoDe(c) === 'livro' ? tx.prontoLivro : tipoDe(c) === 'pacote' ? tx.prontoCombo : tx.prontoCurso}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
             {tipoDe(c) === 'livro'
-              ? `${c.titlePt}: versão interativa liberada por ${c.accessMonths} meses.`
+              ? tx.livroLiberado(c.titlePt, c.accessMonths)
               : tipoDe(c) === 'pacote'
-                ? 'O curso de alfabetização e o Israel Além do Óbvio estão liberados, no mesmo login. Os dois ficam na Minha Biblioteca.'
-                : `${c.titlePt}, liberado por ${c.accessMonths} meses. A primeira lição leva dez minutos.`}
+                ? tx.comboLiberado
+                : tx.cursoLiberado(c.titlePt, c.accessMonths)}
           </p>
           {tipoDe(c) === 'livro'
             /* /israel/ é uma página estática fora do app: link comum, sem o roteador. */
-            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">Abrir o Israel Além do Óbvio</a>
+            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">{tx.abrirLivro}</a>
             : tipoDe(c) === 'pacote'
-              ? <LinkButton href="/minha-biblioteca" size="lg">Abrir a Minha Biblioteca</LinkButton>
-              : <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>}
+              ? <LinkButton href="/minha-biblioteca" size="lg">{tx.abrirBiblioteca}</LinkButton>
+              : <LinkButton href="/meu-hebraico" size="lg">{tx.comecarAgora}</LinkButton>}
         </Card>
       </Wrap>
     );
@@ -144,19 +145,16 @@ export function ObrigadoClient({ slug }: { slug: string }) {
       <Wrap>
         <Card tone="amber" className="p-8 grid gap-4">
           <h1 className="font-display text-[23px] font-bold text-ink">
-            Seu pagamento está em análise pela operadora.
+            {tx.emAnalise}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            A operadora do cartão está conferindo a compra. Você não precisa
-            fazer nada: quando ela aprovar, o acesso entra sozinho e você recebe
-            um e-mail de confirmação.
+            {tx.emAnaliseTexto}
           </p>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-            Isso costuma levar de alguns minutos a dois dias úteis. Se passar
-            disso, escreva para {suporte} com o e-mail da compra.
+            {tx.emAnalisePrazoAntes}{suporte}{tx.emAnalisePrazoDepois}
           </p>
           <LinkButton href="/meu-hebraico" variant="secondary" className="justify-self-start">
-            Ir para Meu Hebraico
+            {tx.irParaMeuHebraico}
           </LinkButton>
         </Card>
       </Wrap>
@@ -169,14 +167,13 @@ export function ObrigadoClient({ slug }: { slug: string }) {
       <Wrap>
         <Card className="p-8 grid gap-4">
           <h1 className="font-display text-[23px] font-bold text-ink">
-            Este pagamento foi devolvido.
+            {tx.devolvido}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            O valor desta compra está estornado, e o acesso que ela dava está
-            encerrado. Se você não pediu o estorno, escreva para {suporte}.
+            {tx.devolvidoTextoAntes}{suporte}{tx.devolvidoTextoDepois}
           </p>
           <div className="flex flex-wrap gap-3">
-            <LinkButton href="/perfil" variant="secondary">Ver minhas compras</LinkButton>
+            <LinkButton href="/perfil" variant="secondary">{tx.verMinhasCompras}</LinkButton>
           </div>
         </Card>
       </Wrap>
@@ -188,14 +185,13 @@ export function ObrigadoClient({ slug }: { slug: string }) {
       <Wrap>
         <Card className="p-8 grid gap-4">
           <h1 className="font-display text-[23px] font-bold text-ink">
-            O cartão foi recusado.
+            {tx.recusado}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Nada foi cobrado. Pode ter sido o limite, um dado digitado errado ou
-            uma recusa do banco. Dá para tentar de novo com outro cartão ou por PIX.
+            {tx.recusadoTexto}
           </p>
           <div className="flex flex-wrap gap-3">
-            <LinkButton href={`/checkout/${slug}`}>Tentar de novo</LinkButton>
+            <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
           </div>
         </Card>
       </Wrap>
@@ -211,17 +207,17 @@ export function ObrigadoClient({ slug }: { slug: string }) {
         <Card className="p-8 grid gap-4">
           <h1 className="font-display text-[23px] font-bold text-ink">
             {phase === 'expirado'
-              ? 'O prazo deste pagamento terminou.'
-              : 'Ainda não há pagamento neste pedido.'}
+              ? tx.expirado
+              : tx.semPagamento}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
             {phase === 'expirado'
-              ? 'Nenhum pagamento chegou para este pedido, e nada foi cobrado. Para comprar, é só começar de novo.'
-              : 'Se você saiu da tela de pagamento sem concluir, nada foi cobrado: é só tentar de novo. Se acabou de pagar, o acesso entra sozinho assim que a confirmação chegar, e você recebe um e-mail.'}
+              ? tx.expiradoTexto
+              : tx.semPagamentoTexto}
           </p>
           <div className="flex flex-wrap gap-3">
-            <LinkButton href={`/checkout/${slug}`}>Tentar de novo</LinkButton>
-            <LinkButton href="/meu-hebraico" variant="secondary">Meu Hebraico</LinkButton>
+            <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
+            <LinkButton href="/meu-hebraico" variant="secondary">{tx.meuHebraico}</LinkButton>
           </div>
         </Card>
       </Wrap>
@@ -234,16 +230,16 @@ export function ObrigadoClient({ slug }: { slug: string }) {
     <Wrap>
       <Card className="p-8 grid gap-4">
         <h1 className="font-display text-[23px] font-bold text-ink">
-          {phase === 'nao-concluido' ? 'O pagamento não foi concluído.' : 'Não consegui confirmar por aqui.'}
+          {phase === 'nao-concluido' ? tx.naoConcluido : tx.naoConsegui}
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
           {phase === 'nao-concluido'
-            ? 'Nada foi cobrado. Dá para tentar de novo, com cartão ou por PIX.'
-            : 'Se você já pagou, o acesso entra sozinho assim que a confirmação chegar: abra Meu Hebraico daqui a alguns minutos. Se não pagou, é só refazer.'}
+            ? tx.naoConcluidoTexto
+            : tx.naoConseguiTexto}
         </p>
         <div className="flex flex-wrap gap-3">
-          <LinkButton href={`/checkout/${slug}`}>Tentar de novo</LinkButton>
-          <LinkButton href="/meu-hebraico" variant="secondary">Meu Hebraico</LinkButton>
+          <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="secondary">{tx.meuHebraico}</LinkButton>
         </div>
       </Card>
     </Wrap>

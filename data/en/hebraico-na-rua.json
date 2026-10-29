@@ -1,0 +1,30 @@
+{
+  "placas/rua-derech/mostraPt": {
+    "pt": "Placa de estrada para a Estrada de Burma, em hebraico, árabe e inglês.",
+    "en": "Road sign to the Burma Road, in Hebrew, Arabic and English."
+  },
+  "placas/rua-bait/mostraPt": {
+    "pt": "Placa de uma farmácia num centro médico em Holon.",
+    "en": "Sign for a pharmacy at a medical center in Holon."
+  },
+  "placas/rua-shalom/mostraPt": {
+    "pt": "Placa que indica uma sinagoga em Ramat Gan.",
+    "en": "Sign pointing to a synagogue in Ramat Gan."
+  },
+  "placas/rua-lechem/mostraPt": {
+    "pt": "Placa da padaria de 1943 no moshav Moledet.",
+    "en": "Sign of the 1943 bakery in Moshav Moledet."
+  },
+  "placas/rua-maim/mostraPt": {
+    "pt": "Placa de pedra sobre um canal de água antigo, num jardim de Jerusalém.",
+    "en": "Stone plaque over an ancient water channel in a Jerusalem garden."
+  },
+  "placas/rua-israel/mostraPt": {
+    "pt": "Placa de um reservatório de água no vale do Jordão.",
+    "en": "Sign of a water reservoir in the Jordan Valley."
+  },
+  "placas/rua-ani/mostraPt": {
+    "pt": "Faixa de uma escola em Petah Tikva.",
+    "en": "Banner of a school in Petah Tikva."
+  }
+}

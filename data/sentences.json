@@ -317,6 +317,137 @@
         { "he": "קָפֶה", "translit": "kafé", "pt": "café" }
       ],
       "notePt": "A última letra do curso está aqui dentro. Com ela você lê um pedido inteiro."
+    },
+    {
+      "id": "mi-ata",
+      "he": "מִי אַתָה?",
+      "translit": "mi atá?",
+      "pt": "Quem é você?",
+      "after": 6,
+      "era": "moderno",
+      "words": [
+        { "he": "מִי", "translit": "mi", "pt": "quem" },
+        { "he": "אַתָה", "translit": "atá", "pt": "você" }
+      ],
+      "notePt": "Assim se pergunta a um homem. Para uma mulher, o \"você\" é outra palavra, mais curta."
+    },
+    {
+      "id": "hine-haiam",
+      "he": "הִנֵה הַיָם",
+      "translit": "hiné hayám",
+      "pt": "Olha o mar.",
+      "after": 6,
+      "era": "moderno",
+      "words": [
+        { "he": "הִנֵה", "translit": "hiné", "pt": "olha, aqui está" },
+        { "he": "הַיָם", "translit": "hayám", "pt": "o mar" }
+      ],
+      "notePt": "{{הִנֵה}} aponta para algo que está à vista: \"olha\", \"aqui está\"."
+    },
+    {
+      "id": "hine-dag",
+      "he": "הִנֵה דָג!",
+      "translit": "hiné dag!",
+      "pt": "Olha um peixe!",
+      "after": 8,
+      "era": "moderno",
+      "words": [
+        { "he": "הִנֵה", "translit": "hiné", "pt": "olha, aqui está" },
+        { "he": "דָג", "translit": "dag", "pt": "peixe" }
+      ],
+      "notePt": "A mesma fala do Dani no texto \"O peixe\", do módulo 2."
+    },
+    {
+      "id": "gam-ani",
+      "he": "גַם אֲנִי",
+      "translit": "gam aní",
+      "pt": "Eu também.",
+      "after": 7,
+      "era": "moderno",
+      "words": [
+        { "he": "גַם", "translit": "gam", "pt": "também" },
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" }
+      ],
+      "notePt": "Em hebraico o \"também\" vem antes: {{גַם}}, depois {{אֲנִי}}."
+    },
+    {
+      "id": "mi-sham",
+      "he": "מִי שָׁם?",
+      "translit": "mi sham?",
+      "pt": "Quem está aí?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "מִי", "translit": "mi", "pt": "quem" },
+        { "he": "שָׁם", "translit": "sham", "pt": "aí, ali" }
+      ],
+      "notePt": "Não há verbo \"estar\": {{מִי}} e {{שָׁם}} já fazem a pergunta."
+    },
+    {
+      "id": "iesh-te",
+      "he": "יֵשׁ תֵה?",
+      "translit": "yesh te?",
+      "pt": "Tem chá?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" },
+        { "he": "תֵה", "translit": "te", "pt": "chá" }
+      ],
+      "notePt": "{{יֵשׁ}} é o \"tem\" de \"tem chá?\": diz que uma coisa existe ou está ali."
+    },
+    {
+      "id": "ma-iesh",
+      "he": "מָה יֵשׁ?",
+      "translit": "ma yesh?",
+      "pt": "O que foi?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "מָה", "translit": "ma", "pt": "o que" },
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" }
+      ],
+      "notePt": "Ao pé da letra, \"o que tem?\". No dia a dia, é o \"o que foi?\" de quem nota alguma coisa."
+    },
+    {
+      "id": "haieled-sham",
+      "he": "הַיֶלֶד שָׁם",
+      "translit": "hayéled sham",
+      "pt": "O menino está ali.",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "הַיֶלֶד", "translit": "hayéled", "pt": "o menino" },
+        { "he": "שָׁם", "translit": "sham", "pt": "ali" }
+      ],
+      "notePt": "O {{הַ}} na frente é o \"o\": {{יֶלֶד}}, menino; {{הַיֶלֶד}}, o menino."
+    },
+    {
+      "id": "iesh-glida",
+      "he": "יֵשׁ גְלִידָה!",
+      "translit": "yesh glidá!",
+      "pt": "Tem sorvete!",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" },
+        { "he": "גְלִידָה", "translit": "glidá", "pt": "sorvete" }
+      ],
+      "notePt": "A mesma frase de \"tem chá?\", agora com a notícia boa."
+    },
+    {
+      "id": "hi-ima-sheli",
+      "he": "הִיא אִמָא שֶׁלִי",
+      "translit": "hi íma shelí",
+      "pt": "Ela é a minha mãe.",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "הִיא", "translit": "hi", "pt": "ela" },
+        { "he": "אִמָא", "translit": "íma", "pt": "mãe" },
+        { "he": "שֶׁלִי", "translit": "shelí", "pt": "meu, minha" }
+      ],
+      "notePt": "{{שֶׁלִי}} vem depois da coisa: \"mãe minha\". Serve para meu e para minha."
     }
   ]
 }

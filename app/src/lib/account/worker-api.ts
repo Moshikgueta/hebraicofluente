@@ -20,7 +20,7 @@
 
 import type { PlatformApi } from './api';
 import type { Origem } from '@/lib/origem';
-import { AuthError, type AuthErrorCode, type Compras, type Order, type PaymentMethod, type Session } from './types';
+import { AuthError, type AuthErrorCode, type Compras, type CreatedOrder, type Order, type PaymentMethod, type Session } from './types';
 
 /* Sempre a própria origem. Isto já foi `process.env.NEXT_PUBLIC_API_BASE`, e
    como a variável nunca era definida no build o empacotador não a congelava:
@@ -149,8 +149,12 @@ export class WorkerApi implements PlatformApi {
     await call<{ ok: true }>('/novidades', { method: 'PUT', body: JSON.stringify({ quero }) });
   }
 
+  async setLembrete(quero: boolean): Promise<void> {
+    await call<{ ok: true }>('/lembrete', { method: 'PUT', body: JSON.stringify({ quero }) });
+  }
+
   startOrder(input: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }) {
-    return call<Order & { redirectUrl?: string }>('/pay/create', {
+    return call<CreatedOrder>('/pay/create', {
       method: 'POST', body: JSON.stringify(input)
     });
   }

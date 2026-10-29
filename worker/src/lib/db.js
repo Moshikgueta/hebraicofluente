@@ -22,13 +22,14 @@ export const findAccountByEmail = (env, email) =>
 export const findAccountById = (env, id) =>
   env.DB.prepare('SELECT * FROM accounts WHERE id = ?').bind(id).first();
 
-export async function createAccount(env, { email, name, hash, salt, iterations }) {
+export async function createAccount(env, { email, name, hash, salt, iterations, idioma = 'pt' }) {
   const mail = normalizeEmail(email);
+  /* `idioma`: o do site em que a conta nasce (lib/idioma.js, migração 0004). */
   await env.DB.prepare(
-    `INSERT INTO accounts (email, name, pass_hash, pass_salt, pass_iter, created_at)
-     VALUES (?, ?, ?, ?, ?, ?)`
+    `INSERT INTO accounts (email, name, pass_hash, pass_salt, pass_iter, created_at, idioma)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
   ).bind(mail, String(name || '').trim().slice(0, 80), hash, salt,
-         iterations || PBKDF2_ITER, now()).run();
+         iterations || PBKDF2_ITER, now(), idioma === 'en' ? 'en' : 'pt').run();
   return findAccountByEmail(env, mail);
 }
 
@@ -707,9 +708,9 @@ export async function createOrder(env, o) {
   await env.DB.prepare(
     `INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method,
                          installments, status, provider, created_at, parceria, origem, campanha)
-     VALUES (?, ?, ?, ?, 'BRL', ?, ?, 'pending', 'mercadopago', ?, ?, ?, ?)`
-  ).bind(id, o.accountId, o.courseSlug, o.amountCents, o.method,
-         o.installments || 1, now(), o.parceria || null, o.origem || null, o.campanha || null).run();
+     VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?, ?)`
+  ).bind(id, o.accountId, o.courseSlug, o.amountCents, o.currency || 'BRL', o.method,
+         o.installments || 1, o.provider || 'mercadopago', now(), o.parceria || null, o.origem || null, o.campanha || null).run();
   return getOrder(env, id);
 }
 
@@ -832,6 +833,24 @@ export async function novidadesMarcar(env, accountId, quer, at = now()) {
   ).bind(...(quer ? [accountId, at] : [accountId])).run();
 }
 
+/* ── o lembrete para estudar (worker/src/lembrete.js) ────────────────────
+   Mesmo desenho da lista de novidades: sem a tabela, ninguém pediu. */
+
+/** A pessoa pediu o lembrete para estudar? */
+export async function lembreteQuer(env, accountId) {
+  try {
+    return !!await env.DB.prepare('SELECT 1 AS x FROM lembretes_estudo WHERE account_id = ?')
+      .bind(accountId).first();
+  } catch { return false; }
+}
+
+export async function lembreteMarcar(env, accountId, quer, at = now()) {
+  await env.DB.prepare(quer
+    ? 'INSERT INTO lembretes_estudo (account_id, criado_em) VALUES (?, ?) ON CONFLICT(account_id) DO NOTHING'
+    : 'DELETE FROM lembretes_estudo WHERE account_id = ?'
+  ).bind(...(quer ? [accountId, at] : [accountId])).run();
+}
+
 /** Outro pedido PAGO da mesma conta e do mesmo curso, pago dentro da janela
  *  (auditoria de 28/09, PAY-004). null quando não há. */
 export async function outroPedidoPagoRecente(env, order, janelaMs, at = now()) {
@@ -903,7 +922,7 @@ export async function vencimentosParaAvisar(env, { limit = 20 } = {}, at = now()
   const D = 86_400_000;
   try {
     const { results } = await env.DB.prepare(
-      `SELECT e.account_id, e.course_slug, e.expires_at, a.email, a.name, m.marco
+      `SELECT e.account_id, e.course_slug, e.expires_at, a.email, a.name, a.idioma, m.marco
          FROM entitlements e
          JOIN accounts a ON a.id = e.account_id
          JOIN (SELECT 'd30' AS marco, ?1 AS de, ?2 AS ate
@@ -963,7 +982,7 @@ export async function ativacoesParaAvisar(env, { cursos, desde, limit = 20 }, at
   const lista = cursos.map((_, i) => `?${i + 9}`).join(', ');
   try {
     const { results } = await env.DB.prepare(
-      `SELECT o.id AS order_id, o.account_id, o.course_slug, o.paid_at, a.email, a.name,
+      `SELECT o.id AS order_id, o.account_id, o.course_slug, o.paid_at, a.email, a.name, a.idioma,
               p.updated_at AS progresso_em, m.marco,
               (SELECT COUNT(*) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.lessons') l
                 WHERE json_extract(l.value, '$.completedAt') IS NOT NULL) AS concluidas
@@ -1415,6 +1434,10 @@ export async function deleteAccount(env, accountId) {
   /* A lista de novidades guarda a vontade de receber e-mail: some junto. */
   try {
     await env.DB.prepare('DELETE FROM novidades WHERE account_id = ?').bind(id).run();
+  } catch { /* tabela ausente */ }
+  /* O pedido do lembrete para estudar também é vontade de receber e-mail. */
+  try {
+    await env.DB.prepare('DELETE FROM lembretes_estudo WHERE account_id = ?').bind(id).run();
   } catch { /* tabela ausente */ }
   /* O código pendente do segundo fator do administrador. */
   try {

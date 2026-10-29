@@ -20,13 +20,15 @@ import { concluidasSemDominio, REGRA_DA_CONCLUSAO, REGRA_DO_DOMINIO_CURTA } from
 import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
+import { tx } from '@/i18n/telas/academia-loja-client';
 
 const MOTIVO: Record<Recusa, string> = {
-  saldo: 'Saldo insuficiente.',
-  limite: `Você já tem ${MAX_FOLGAS} folgas guardadas.`,
-  'ja-tem': 'Você já tem este item.',
-  'sem-alvo': 'Não há carta fechada para abrir.',
-  'sem-nome': 'Confirme primeiro a grafia do seu nome.'
+  saldo: tx.motivoSaldo,
+  limite: tx.motivoLimite(MAX_FOLGAS),
+  'ja-tem': tx.motivoJaTem,
+  'sem-alvo': tx.motivoSemAlvo,
+  'sem-nome': tx.motivoSemNome
 };
 
 export function LojaClient() {
@@ -42,30 +44,30 @@ export function LojaClient() {
 
   const trocar = (item: keyof typeof ITENS, alvo?: string, feito?: string) => {
     const r = p.comprar(item, alvo);
-    setAviso(r ? MOTIVO[r] : (feito ?? 'Pronto!'));
+    setAviso(r ? MOTIVO[r] : (feito ?? tx.pronto));
   };
 
   if (!p.ready) return null;
+  const nomeItem = ITENS['nome-decorado'];
 
   return (
     <div className="grid gap-6">
       <header className="grid gap-3">
-        <h1 className="text-[27px] sm:text-[33px] font-bold m-0">Recompensas</h1>
+        <h1 className="text-[27px] sm:text-[33px] font-bold m-0">{tx.titulo}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Troque o XP que você juntou estudando. O seu XP total é a sua conquista e nunca diminui -
-          o que você gasta sai do saldo.
+          {tx.intro}
         </p>
         <div className="grid grid-cols-2 gap-3">
           {/* As cores escritas aqui, e não herdadas do tom: o cartão escuro
               herdava a tinta escura do texto e o saldo sumia. */}
           <div className="rounded-[var(--r-lg)] p-4 grid gap-0.5 bg-[var(--navy)] text-white">
-            <span className="font-ui text-[12px] uppercase tracking-[.07em] text-white/80">Saldo para trocar</span>
-            <span className="font-display text-[30px] font-bold tabular-nums text-white">◆ {livre.toLocaleString('pt-BR')}</span>
+            <span className="font-ui text-[12px] uppercase tracking-[.07em] text-white/80">{tx.saldoParaTrocar}</span>
+            <span className="font-display text-[30px] font-bold tabular-nums text-white">◆ {livre.toLocaleString(tx.localeNumero)}</span>
           </div>
           <Card className="p-4 grid gap-0.5">
-            <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">XP total</span>
-            <span className="font-display text-[30px] font-bold tabular-nums text-ink">{s.xp.toLocaleString('pt-BR')}</span>
-            {gasto(s) > 0 && <span className="font-ui text-[12px] text-ink-muted">{gasto(s).toLocaleString('pt-BR')} já trocados</span>}
+            <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.xpTotal}</span>
+            <span className="font-display text-[30px] font-bold tabular-nums text-ink">{s.xp.toLocaleString(tx.localeNumero)}</span>
+            {gasto(s) > 0 && <span className="font-ui text-[12px] text-ink-muted">{tx.jaTrocados(gasto(s).toLocaleString(tx.localeNumero))}</span>}
           </Card>
         </div>
         {aviso && <p role="status" className="font-ui text-[14.5px] font-semibold text-[var(--teal-ink)] m-0">{aviso}</p>}
@@ -73,38 +75,38 @@ export function LojaClient() {
 
       {/* Dia de folga */}
       <Item titulo={ITENS.folga.titulo} custo={ITENS.folga.custo} icone={<IconeEscudo size={26} />} descricao={ITENS.folga.descricao}
-            detalhe={folgas ? `Você tem ${folgas} ${folgas === 1 ? 'folga guardada' : 'folgas guardadas'}.` : 'Nenhuma folga guardada.'}
+            detalhe={folgas ? tx.folgasGuardadas(folgas) : tx.nenhumaFolga}
             pode={livre >= ITENS.folga.custo && folgas < MAX_FOLGAS}
             porQueNao={folgas >= MAX_FOLGAS ? MOTIVO.limite : MOTIVO.saldo}
-            onTrocar={() => trocar('folga', undefined, 'Folga guardada. Se faltar um dia, ela protege a sua sequência.')} />
+            onTrocar={() => trocar('folga', undefined, tx.folgaFeito)} />
 
       {/* Carta de cultura antecipada */}
       <Item titulo={ITENS.carta.titulo} custo={ITENS.carta.custo} icone={<IconePergaminho size={26} />} descricao={ITENS.carta.descricao}
-            detalhe={proxima ? <>A próxima: <strong>{proxima.titlePt}</strong> (abriria com {proxima.unlockAt} letras).</> : 'Todas as cartas já estão abertas.'}
+            detalhe={proxima ? tx.proximaCarta(proxima.titlePt, proxima.unlockAt) : tx.todasAbertas}
             pode={!!proxima && livre >= ITENS.carta.custo}
             porQueNao={!proxima ? MOTIVO['sem-alvo'] : MOTIVO.saldo}
-            onTrocar={() => proxima && trocar('carta', proxima.id, 'Carta aberta! Leia em Viagem pela história.')}
-            depois={compradas.size > 0 ? <Link href="/historia" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline">Ler as cartas →</Link> : null} />
+            onTrocar={() => proxima && trocar('carta', proxima.id, tx.cartaFeito)}
+            depois={compradas.size > 0 ? <Link href="/historia" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline">{tx.lerCartas}</Link> : null} />
 
-      {/* Nome decorado */}
-      {temNomeDecorado(s) && s.nomeHebraico ? (
+      {/* Nome decorado (só onde a "Meu nome em hebraico" existe, lib/recursos.ts) */}
+      {!MEU_NOME_EM_HEBRAICO ? null : temNomeDecorado(s) && s.nomeHebraico ? (
         <NomeDecorado nomeHe={s.nomeHebraico.texto} nomePt={s.onboarding?.name ?? ''} />
       ) : (
-        <Item titulo={ITENS['nome-decorado'].titulo} custo={ITENS['nome-decorado'].custo} icone={<IconeBrilho size={26} />}
-              descricao={ITENS['nome-decorado'].descricao}
+        <Item titulo={nomeItem.titulo} custo={nomeItem.custo} icone={<IconeBrilho size={26} />}
+              descricao={nomeItem.descricao}
               detalhe={s.nomeHebraico
-                ? <>O seu nome: <He size="word">{s.nomeHebraico.texto}</He></>
-                : <>Antes, confirme como se escreve o seu nome em <Link href="/meu-nome" className="underline">Meu nome</Link>.</>}
-              pode={!!s.nomeHebraico && livre >= ITENS['nome-decorado'].custo}
+                ? tx.seuNome(<He size="word">{s.nomeHebraico.texto}</He>)
+                : tx.confirmeNome(<Link href="/meu-nome" className="underline">{tx.meuNome}</Link>)}
+              pode={!!s.nomeHebraico && livre >= nomeItem.custo}
               porQueNao={!s.nomeHebraico ? MOTIVO['sem-nome'] : MOTIVO.saldo}
-              onTrocar={() => trocar('nome-decorado', undefined, 'Pronto! Escolha o formato e baixe a imagem.')} />
+              onTrocar={() => trocar('nome-decorado', undefined, tx.nomeFeito)} />
       )}
 
       <LeiturasBonus livre={livre} mastered={p.mastered} semDominio={concluidasSemDominio(s)}
                      totalLetras={allLetters().length} minhas={leiturasCompradas(s)}
                      onTrocar={(item, id, legivel) => trocar(item, id, legivel
-                       ? 'Leitura aberta! Ela está em Leituras bônus.'
-                       : 'Leitura guardada em Leituras bônus. Volte a ela quando concluir as lições das letras do texto.')} />
+                       ? tx.leituraAberta
+                       : tx.leituraGuardada)} />
     </div>
   );
 }
@@ -124,22 +126,20 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
   return (
     <section className="grid gap-3" aria-labelledby="leituras-bonus">
       <div className="grid gap-1">
-        <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">Leituras bônus</h2>
+        <h2 id="leituras-bonus" className="font-display text-[21px] font-bold m-0">{tx.leiturasBonus}</h2>
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-          Trechos e versículos do Antigo Testamento, com transliteração, tradução e a leitura gravada, linha a linha.
+          {tx.leiturasIntro}
           {' '}{ITENS['texto-bonus'].custo === ITENS.bencao.custo
-            ? <>Cada leitura ◆ {ITENS.bencao.custo}.</>
-            : <>Texto bíblico ◆ {ITENS['texto-bonus'].custo}, versículo ◆ {ITENS.bencao.custo}.</>}
+            ? tx.cadaLeitura(ITENS.bencao.custo)
+            : tx.textoEVersiculo(ITENS['texto-bonus'].custo, ITENS.bencao.custo)}
         </p>
         {adiantadas && (
           <div className="rounded-[var(--r-md)] bg-surface-2 px-4 py-3 grid gap-1.5 font-ui text-[14px] leading-relaxed text-ink-body">
             <p className="m-0">
-              Você pode trocar qualquer leitura agora. Ela fica guardada em Leituras bônus, e já dá para ouvir e
-              acompanhar pela transliteração e pela tradução.
+              {tx.podeTrocar}
             </p>
             <p className="m-0">
-              Ler sozinho, direto do hebraico, vem depois: cada leitura diz quantas lições de letras concluídas ela pede.
-              Quando chegar lá, volte a ela. Você concluiu <strong>{mastered} de {totalLetras} lições de letras</strong>.
+              {tx.lerSozinho(mastered, totalLetras)}
             </p>
             <p className="m-0">
               {REGRA_DA_CONCLUSAO}
@@ -147,19 +147,19 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
             {semDominio > 0 && (
               <p className="m-0">
                 {semDominio === 1
-                  ? `Uma lição que você concluiu ficou abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer os exercícios dela já conta.`
-                  : `${semDominio} lições que você concluiu ficaram abaixo de ${REGRA_DO_DOMINIO_CURTA}. Refazer os exercícios delas já conta.`}{' '}
-                <Link href="/mapa" className="text-[var(--accent)] underline">Ver as lições</Link>
+                  ? tx.semDominioUma(REGRA_DO_DOMINIO_CURTA)
+                  : tx.semDominioVarias(semDominio, REGRA_DO_DOMINIO_CURTA)}{' '}
+                <Link href="/mapa" className="text-[var(--accent)] underline">{tx.verLicoes}</Link>
               </p>
             )}
           </div>
         )}
         <Link href="/nikud-biblico" className="font-ui text-[14px] text-[var(--accent)] underline justify-self-start">
-          Guia opcional e gratuito: o nikud da Bíblia →
+          {tx.guiaNikud}
         </Link>
         {minhas.size > 0 && (
           <Link href="/bonus" className="font-ui text-[14px] font-semibold text-[var(--accent)] underline justify-self-start">
-            Ler as minhas leituras →
+            {tx.lerMinhas}
           </Link>
         )}
       </div>
@@ -174,7 +174,7 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
              espremia o título a uma palavra por linha no celular. */
           const nota = !tem && livre < custo ? MOTIVO.saldo
             : legivel ? null
-            : `Para ler sozinho: ${l.after} lições de letras concluídas (${faltam === 1 ? 'falta 1' : `faltam ${faltam}`}).`;
+            : tx.paraLerSozinho(l.after, faltam);
           return (
             <li key={l.id}>
               <Card className="p-4 grid gap-2">
@@ -184,10 +184,10 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
                     <span className="font-ui text-[13px] text-ink-muted">{l.fontePt}</span>
                   </div>
                   {tem ? (
-                    <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">Ler</LinkButton>
+                    <LinkButton href={`/bonus?l=${l.id}`} variant="secondary">{tx.ler}</LinkButton>
                   ) : (
                     <Button onClick={() => onTrocar(item, l.id, legivel)} disabled={livre < custo} size="md">
-                      Trocar por ◆ {custo}
+                      {tx.trocarPor(custo)}
                     </Button>
                   )}
                 </div>
@@ -216,7 +216,7 @@ function Item({ titulo, custo, icone, descricao, detalhe, pode, porQueNao, onTro
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-3">
-        <Button onClick={onTrocar} disabled={!pode} size="md">Trocar por ◆ {custo}</Button>
+        <Button onClick={onTrocar} disabled={!pode} size="md">{tx.trocarPor(custo)}</Button>
         {!pode && <span className="font-ui text-[13px] text-ink-muted">{porQueNao}</span>}
         {depois}
       </div>
@@ -248,10 +248,10 @@ function NomeDecorado({ nomeHe, nomePt }: { nomeHe: string; nomePt: string }) {
   return (
     <Card className="p-5 grid gap-4">
       <div className="grid gap-1">
-        <h2 className="font-display text-[18px] font-semibold m-0">Seu nome em hebraico decorado</h2>
-        <p className="font-ui text-[14px] text-ink-body m-0">Já é seu. Escolha o formato e baixe quantas vezes quiser.</p>
+        <h2 className="font-display text-[18px] font-semibold m-0">{tx.nomeDecoradoTitulo}</h2>
+        <p className="font-ui text-[14px] text-ink-body m-0">{tx.nomeDecoradoTexto}</p>
       </div>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Formato">
+      <div className="flex flex-wrap gap-2" role="group" aria-label={tx.formato}>
         {(Object.keys(FORMATOS_NOME) as FormatoNome[]).map(f => (
           <button key={f} type="button" aria-pressed={f === formato} onClick={() => setFormato(f)}
                   className={`min-h-[44px] px-4 rounded-[var(--r-md)] border font-ui text-[14px]
@@ -260,9 +260,9 @@ function NomeDecorado({ nomeHe, nomePt }: { nomeHe: string; nomePt: string }) {
           </button>
         ))}
       </div>
-      <canvas ref={ref} aria-label={`O nome ${nomeHe} decorado`}
+      <canvas ref={ref} aria-label={tx.nomeDecoradoAria(nomeHe)}
               className={`w-full rounded-[var(--r-md)] border border-line ${formato === 'celular' ? 'max-w-[280px]' : 'max-w-[420px]'}`} />
-      <div><Button onClick={baixar}>Baixar a imagem</Button></div>
+      <div><Button onClick={baixar}>{tx.baixarImagem}</Button></div>
     </Card>
   );
 }

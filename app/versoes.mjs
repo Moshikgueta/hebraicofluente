@@ -39,15 +39,19 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const OUT = 'out';
-const ARQUIVO = '../data/politicas-versoes';
+/* O site em inglês (NEXT_PUBLIC_LOCALE=en, export em out-en) tem Termos,
+   Privacidade e Reembolso próprios (PLANO-INGLES.md, etapa 6), e as versões
+   deles moram à parte, em data/politicas-versoes-en/: o Worker em inglês lê
+   o atual.json de lá (worker/src/lib/versoes.js), e as versões do site
+   brasileiro, que nasceram neste repositório, não se misturam com elas. */
+const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+const OUT = EM_INGLES ? 'out-en' : 'out';
+const ARQUIVO = EM_INGLES ? '../data/politicas-versoes-en' : '../data/politicas-versoes';
 const ATUAL = join(ARQUIVO, 'atual.json');
 
-export const DOCUMENTOS = [
-  ['termos', 'Termos de Uso'],
-  ['reembolso', 'Reembolso e Cancelamento'],
-  ['privacidade', 'Política de Privacidade']
-];
+export const DOCUMENTOS = EM_INGLES
+  ? [['termos', 'Terms of Use'], ['reembolso', 'Refunds and Cancellation'], ['privacidade', 'Privacy Policy']]
+  : [['termos', 'Termos de Uso'], ['reembolso', 'Reembolso e Cancelamento'], ['privacidade', 'Política de Privacidade']];
 
 /** O HTML de dentro de `<article data-politica="doc">`, ou null. */
 export function trechoDoDocumento(html, doc) {
@@ -89,13 +93,16 @@ function copiaFixa(doc, titulo, versao, trecho, hojeIso) {
       return `<${tag}${href ? ` href="${href[1]}"` : ''}${fecha}>`;
     });
   const dia = hojeIso.split('-').reverse().join('/');
+  const aviso = EM_INGLES
+    ? `Fixed copy of this version (code <strong>${versao}</strong>), saved on ${hojeIso} and never changed afterwards. The version in force today is at <a href="/${doc}/">/${doc}/</a>.`
+    : `Cópia fixa desta versão (código <strong>${versao}</strong>), guardada em ${dia} e nunca alterada depois. A versão em vigor hoje está em <a href="/${doc}/">/${doc}/</a>.`;
   return `<!doctype html>
-<html lang="pt-BR">
+<html lang="${EM_INGLES ? 'en' : 'pt-BR'}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>${titulo} - versão ${versao} - Hebraico Fluente</title>
+<title>${titulo} - ${EM_INGLES ? 'version' : 'versão'} ${versao} - Hebraico Fluente</title>
 <style>
 body{margin:0;background:#fff;color:#1d2a2e;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
@@ -107,7 +114,7 @@ a{color:#1d545e}ul{padding-left:20px}dl div{display:flex;gap:12px}dt{min-width:1
 </head>
 <body>
 <main>
-<p class="aviso">Cópia fixa desta versão (código <strong>${versao}</strong>), guardada em ${dia} e nunca alterada depois. A versão em vigor hoje está em <a href="/${doc}/">/${doc}/</a>.</p>
+<p class="aviso">${aviso}</p>
 ${limpo}
 </main>
 </body>

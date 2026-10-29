@@ -37,6 +37,7 @@ import { AudioButton } from '@/components/learn/AudioButton';
 import type { Batalha as Dados, RodadaBatalha } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-batalha';
 
 type Marca = { ok: boolean; texto: string | null } | null;
 
@@ -113,7 +114,7 @@ export function Batalha({
       <Placar i={i} total={total} acertos={acertos} par={parDaRodada}
               meta={rodada.tipo === 'som' ? 'som' : 'desenho'} />
 
-      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Rodada ${i + 1} de ${total}`}
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={tx.rodadaDe(i + 1, total)}
            className="grid gap-5 outline-none">
 
       {rodada.tipo === 'qual' && (
@@ -151,10 +152,10 @@ function Placar({
     <div className="flex items-center gap-3 flex-wrap">
       <span className={`rounded-full px-2.5 py-1 font-ui text-[12px] font-semibold
         ${meta === 'som' ? 'bg-[var(--gold-soft)] text-[var(--gold-ink)]' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
-        {meta === 'som' ? 'Parecidas no som' : 'Parecidas no desenho'}
+        {meta === 'som' ? tx.parecidasSom : tx.parecidasDesenho}
       </span>
       <p className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted flex-1 min-w-[160px]">
-        Inimigas de hoje{' '}
+        {tx.inimigasDeHoje}{' '}
         <span className="inline-flex items-center gap-1.5 align-middle">
           <He size="inline" tone="teal" className="font-bold">{par[0].letter}</He>
           <span aria-hidden className="text-ink-muted">·</span>
@@ -162,7 +163,7 @@ function Placar({
         </span>
       </p>
       <p className="font-ui text-[13px] text-ink-muted tabular-nums shrink-0" aria-live="polite">
-        {Math.min(i + 1, total)} / {total} · {acertos} {acertos === 1 ? 'acerto' : 'acertos'}
+        {tx.placar(Math.min(i + 1, total), total, acertos)}
       </p>
     </div>
   );
@@ -219,8 +220,8 @@ function Relampago({
     <div className="grid gap-4 justify-items-center">
       <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
         {fase === 'espera'
-          ? 'A letra vai aparecer por um instante. Toque quando estiver pronto.'
-          : 'Qual letra passou?'}
+          ? tx.relampagoEspera
+          : tx.relampagoPergunta}
       </p>
 
       <div className="grid place-items-center min-h-[128px] w-full max-w-[420px]
@@ -235,10 +236,10 @@ function Relampago({
                        font-ui text-[16px] font-semibold text-ink hover:bg-surface-2
                        active:scale-[.98] transition-[background-color,transform]"
           >
-            Mostrar a letra
+            {tx.mostrarLetra}
           </button>
         ) : (
-          <span aria-hidden className="font-ui text-[15px] text-ink-muted">passou</span>
+          <span aria-hidden className="font-ui text-[15px] text-ink-muted">{tx.passou}</span>
         )}
       </div>
 
@@ -255,7 +256,7 @@ function Relampago({
               disabled={mostra || fase === 'espera'}
               onClick={() => fechar(
                 certa,
-                certa ? null : porQueErrou(r.alvo, o) ?? `Era a ${r.alvo.namePt}.`,
+                certa ? null : porQueErrou(r.alvo, o) ?? tx.eraA(r.alvo.namePt),
                 r.alvo.id, `batalha:${r.alvo.id}:l${idx}`,
                 certa ? undefined : o.letter
               )}
@@ -267,7 +268,7 @@ function Relampago({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {tx.nomeDaOpcao(o.namePt, !!r.final)}
               {mostra && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
@@ -294,10 +295,10 @@ function Som({
   return (
     <div className="grid gap-4 justify-items-center">
       <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
-        Ouça a sílaba e escolha a letra que você ouviu.
+        {tx.somInstrucao}
       </p>
       <div className="grid place-items-center min-h-[96px]" onClickCapture={() => setOuviu(true)}>
-        <AudioButton audioId={r.audioId} label="Ouvir" ariaLabel="Ouvir a sílaba" size="lg" slow />
+        <AudioButton audioId={r.audioId} label={tx.ouvir} ariaLabel={tx.ouvirSilaba} size="lg" slow />
       </div>
       <div className="grid grid-cols-2 gap-2.5 w-full max-w-[420px]" dir="rtl">
         {r.opcoes.map(o => {
@@ -323,7 +324,7 @@ function Som({
         })}
       </div>
       {!ouviu && !marca && (
-        <p className="font-ui text-[13px] text-ink-muted m-0">Toque em Ouvir primeiro.</p>
+        <p className="font-ui text-[13px] text-ink-muted m-0">{tx.ouvirPrimeiro}</p>
       )}
     </div>
   );
@@ -339,7 +340,7 @@ function Qual({
 }) {
   return (
     <div className="grid gap-4 justify-items-center">
-      <p className="font-ui text-[14px] text-ink-muted">Qual letra é esta?</p>
+      <p className="font-ui text-[14px] text-ink-muted">{tx.qualLetra}</p>
       <div className="grid place-items-center min-h-[128px]">
         <He size="display" tone={marca ? (marca.ok ? 'teal' : 'ink') : 'ink'}>{r.glifo}</He>
       </div>
@@ -354,7 +355,7 @@ function Qual({
               disabled={mostrar}
               onClick={() => fechar(
                 certa,
-                certa ? null : porQueErrou(r.alvo, o) ?? `Esta é a ${r.alvo.namePt}.`,
+                certa ? null : porQueErrou(r.alvo, o) ?? tx.estaEA(r.alvo.namePt),
                 r.alvo.id, `batalha:${r.alvo.id}:q${idx}`,
                 certa ? undefined : o.letter
               )}
@@ -366,7 +367,7 @@ function Qual({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink hover:bg-surface-2 active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {tx.nomeDaOpcao(o.namePt, !!r.final)}
               {mostrar && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
@@ -395,8 +396,14 @@ function Todas({
       /* Tocar na errada encerra a rodada: aqui a pergunta é "você distingue",
          e continuar depois de um engano transformaria o jogo em tentativa e
          erro, que é exatamente o que ele existe para desfazer. */
-      fechar(false, porQueErrou(r.alvo, r.outra), r.alvo.id,
-             `batalha:${r.alvo.id}:t${idx}`, cel.glifo);
+      /* A outra forma da MESMA letra: o retorno diz qual forma é qual, e não
+         a diferença entre as duas letras do par. */
+      const mesma = cel.letterId === r.alvo.id;
+      const texto = !mesma ? porQueErrou(r.alvo, r.outra)
+        : r.glifo === r.alvo.finalForm
+          ? tx.pediaFinal(r.alvo.namePt)
+          : tx.pediaComeco(r.alvo.namePt);
+      fechar(false, texto, r.alvo.id, `batalha:${r.alvo.id}:t${idx}`, mesma ? undefined : cel.glifo);
       return;
     }
     setTocadas(t => [...t, id]);
@@ -408,8 +415,7 @@ function Todas({
   return (
     <div className="grid gap-4">
       <p className="font-ui text-[15px] text-ink-body text-center">
-        Toque em todas as letras{' '}
-        <He size="inline" tone="teal" className="font-bold">{r.glifo}</He>
+        {tx.toqueEmTodas(<He size="inline" tone="teal" className="font-bold">{r.glifo}</He>)}
       </p>
       <ul className="grid gap-2 list-none p-0 m-0
                      [grid-template-columns:repeat(auto-fit,minmax(58px,1fr))]">
@@ -454,7 +460,7 @@ function Intruso({
 }) {
   return (
     <div className="grid gap-4">
-      <p className="font-ui text-[15px] text-ink-body text-center">Qual é diferente?</p>
+      <p className="font-ui text-[15px] text-ink-body text-center">{tx.qualDiferente}</p>
       <ul className="grid gap-2 list-none p-0 m-0
                      [grid-template-columns:repeat(auto-fit,minmax(58px,1fr))]">
         {r.fila.map(c => (
@@ -499,7 +505,7 @@ function Retorno({ marca }: { marca: Marca }) {
              ${marca.ok
                ? 'border-[color:var(--edge-teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)] font-semibold'
                : 'border-[color:var(--edge-gold)] bg-[var(--gold-soft)] text-[var(--gold-body)]'}`}>
-          {marca.ok ? 'Isso!' : marca.texto ?? 'Olhe o desenho com calma e tente a próxima.'}
+          {marca.ok ? tx.isso : marca.texto ?? tx.olheComCalma}
         </p>
       )}
     </div>

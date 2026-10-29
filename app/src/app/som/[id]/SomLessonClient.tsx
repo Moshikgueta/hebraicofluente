@@ -16,6 +16,7 @@
  *   5 fixação    - o mesmo tipo de pergunta, com nota; 75% domina
  */
 
+import { tx } from '@/i18n/telas/licao-som-lesson-client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -24,6 +25,7 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import { alvoDoSom } from '@/lib/fixacao';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
@@ -44,11 +46,11 @@ import { escolherRodada, registrarRodada } from '@/lib/rodadas';
    ler o som sozinho, e o lado a lado com Bet, Kaf e Pe é a lição 20. O Sin e
    os sons modernos seguem com o contraste. */
 const etapasDe = (S: SomLicao) => [
-  { n: 1, label: 'Conhecer' },
-  { n: 2, label: 'Palavras' },
-  { n: 3, label: S.tipo === 'daguesh' ? 'Ler' : 'Contraste' },
-  { n: 4, label: 'Fixação' },
-  { n: 5, label: 'Exercícios' }
+  { n: 1, label: tx.conhecer },
+  { n: 2, label: tx.palavras },
+  { n: 3, label: S.tipo === 'daguesh' ? tx.ler : tx.contraste },
+  { n: 4, label: tx.fixacao },
+  { n: 5, label: tx.exercicios }
 ];
 
 export function SomLessonClient({ som: S }: { som: SomLicao }) {
@@ -89,7 +91,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
 
   const destino = useDestino(S.modulo, id, ordem);
 
-  if (trancada) return <Trancada titulo={`O som ${S.namePt} ainda não abriu`} trancada={trancada} />;
+  if (trancada) return <Trancada titulo={tx.naoAbriu(S.namePt)} trancada={trancada} />;
 
   const stagesDone = p.state.lessons[id]?.stagesDone ?? [];
 
@@ -99,11 +101,11 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
         <div className="flex items-center justify-between gap-3">
           <Link href="/mapa"
                 className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px] text-ink-muted hover:text-ink-body">
-            ← Mapa
+            {tx.mapa}
           </Link>
-          <Badge tone="accent">Módulo {S.modulo} · lição {S.licao} · som {S.namePt}</Badge>
+          <Badge tone="accent">{tx.badge(S.modulo, S.licao, S.namePt)}</Badge>
         </div>
-        <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
+        <ol className="flex items-center gap-1.5" aria-label={tx.etapas}>
           {etapasDe(S).map(s => {
             const isDone = stagesDone.includes(s.n);
             const isNow = stage === s.n;
@@ -111,7 +113,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
               <li key={s.n} className="flex-1">
                 <button type="button" onClick={() => setStage(s.n)}
                         aria-current={isNow ? 'step' : undefined}
-                        aria-label={`Etapa ${s.n} de 5 - ${s.label}`}
+                        aria-label={tx.etapaDe(s.n, s.label)}
                         className="w-full min-h-[44px] grid content-center gap-1.5">
                   <span className={`block h-1.5 rounded-full transition-colors
                     ${isNow ? 'bg-[var(--accent)]' : isDone ? 'bg-[var(--green)]' : 'bg-surface-2'}`} />
@@ -145,7 +147,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
           <ExercisePlayer
             key={`fix-${S.id}-${tentativa}`}
             exercises={teste}
-            title={`Exercícios - som ${S.namePt}`}
+            title={tx.exerciciosSom(S.namePt)}
             onDone={r => {
               track('quiz_completed', { letterId: id, score: r.score });
               registrarRodada(`som-fixacao-${S.id}`, teste);
@@ -170,13 +172,13 @@ export function useDestino(modulo: number, id: string, ordem: readonly string[])
     const seguinte = ordem[ordem.indexOf(id) + 1];
     if (seguinte && doModulo.has(seguinte)) {
       const nome = nomeDaLicao(seguinte, allLetters(), course.modules);
-      const dica = seguinte === idDoSom(CONTRASTE) ? 'Em seguida: os três pares lado a lado'
-        : seguinte.startsWith('som-') ? `Em seguida: o som ${nome}` : `Em seguida: letra ${nome}`;
+      const dica = seguinte === idDoSom(CONTRASTE) ? tx.emSeguidaPares
+        : seguinte.startsWith('som-') ? tx.emSeguidaSom(nome) : tx.emSeguidaLetra(nome);
       return { href: rotaDaLicao(seguinte), dica };
     }
-    if (mod?.checkpoint) return { href: `/checkpoint/${mod.n}`, dica: `Em seguida: Checkpoint ${mod.n}` };
-    if (mod && !mod.letterIds.length) return { href: '/extra/sons-modernos', dica: 'Em seguida: os três sons juntos, e o fecho do alfabeto' };
-    return { href: '/mapa', dica: 'De volta ao mapa do curso' };
+    if (mod?.checkpoint) return { href: `/checkpoint/${mod.n}`, dica: tx.emSeguidaCheckpoint(mod.n) };
+    if (mod && !mod.letterIds.length) return { href: '/extra/sons-modernos', dica: tx.emSeguidaSons };
+    return { href: '/mapa', dica: tx.deVolta };
   }, [modulo, ordem, id]);
 }
 
@@ -189,15 +191,15 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
         <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
           {trancada.falta === 'aula0'
-            ? <>Antes das letras e dos sons, conclua a Aula 0.</>
+            ? tx.trancadaAula0
             : trancada.falta === 'licao'
-            ? <>Esta lição vem depois de <strong className="font-semibold text-ink">{anterior}</strong>, e essa lição ainda não foi concluída.</>
-            : <>Faltam os exercícios de <strong className="font-semibold text-ink">{anterior}</strong>: sua melhor nota lá
-              foi {Math.round((trancada.nota ?? 0) * 100)}%, e esta lição abre a partir de {Math.round(LIBERA_MARK * 100)}%.</>}
+            ? tx.trancadaLicao(<strong className="font-semibold text-ink">{anterior}</strong>)
+            : tx.trancadaNota(<strong className="font-semibold text-ink">{anterior}</strong>,
+                Math.round((trancada.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))}
         </p>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>Ir para {anterior}</LinkButton>
-          <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+          <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>{tx.irPara(anterior)}</LinkButton>
+          <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
         </div>
       </Card>
     </div>
@@ -205,6 +207,40 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
 }
 
 /* ── 1 · conhecer ──────────────────────────────────────────────────────── */
+function FormaFinalDoSom({ S }: { S: SomLicao }) {
+  const p = useProgress();
+  const base = S.depoisDe ?? S.id;
+  return (
+    <Card className="p-6 grid gap-4">
+      <h2 className="text-[19px] font-semibold">{tx.noFimDaPalavraTitulo}</h2>
+      <div className="flex items-center justify-center gap-5 rounded-[var(--r-md)] bg-surface-2 px-4 py-4">
+        <span className="grid justify-items-center gap-1">
+          <He size="lg">{S.he}</He>
+          <span className="font-ui text-[12px] text-ink-muted">{tx.noComeco}</span>
+        </span>
+        <span aria-hidden className="text-ink-muted text-[20px]">→</span>
+        <span className="grid justify-items-center gap-1">
+          <He size="lg">{S.finalHe!}</He>
+          <span className="font-ui text-[12px] text-ink-muted">{tx.noFim}</span>
+        </span>
+        <span className="grid justify-items-center gap-1">
+          <He size="lg" cursive>{S.finalHe!}</He>
+          <span className="font-ui text-[12px] text-ink-muted">{tx.noFimAMao}</span>
+        </span>
+      </div>
+      <p className="text-[15.5px] leading-relaxed text-ink-body">
+        {tx.finalMuda(S.namePt)}
+      </p>
+      <WritingCanvas
+        glyph={S.finalHe!}
+        letterId={`${base}-final`}
+        label={tx.formaFinal(S.namePt)}
+        onScored={score => p.recordWriting(base, score)}
+      />
+    </Card>
+  );
+}
+
 function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
   return (
     <div className="grid gap-5">
@@ -222,29 +258,36 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
           {S.finalHe && (
             <span className="grid justify-items-center gap-1">
               <He size="xl">{S.finalHe}</He>
-              <span className="font-ui text-[13px] text-ink-muted">no fim da palavra</span>
+              <span className="font-ui text-[13px] text-ink-muted">{tx.noFimDaPalavra}</span>
             </span>
           )}
         </div>
         {S.tipo === 'gerech' && hasAudio(S.audioId) && (
-          <div className="flex justify-center"><AudioButton audioId={S.audioId} label={`Ouvir ${S.namePt}`} /></div>
+          <div className="flex justify-center"><AudioButton audioId={S.audioId} label={tx.ouvir(S.namePt)} /></div>
         )}
         <p className="text-[16px] leading-relaxed text-ink-body"><Prose text={S.introPt} /></p>
       </Card>
 
       <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar?</h2>
-        <p className="text-[15.5px] leading-relaxed text-ink-body">Soa como {S.comoPt.includes('{{') ? <Prose text={S.comoPt} /> : S.comoPt}.</p>
+        <h2 className="text-[19px] font-semibold">{tx.comoPronunciar}</h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">{tx.soaComo(S.comoPt.includes('{{') ? <Prose text={S.comoPt} /> : S.comoPt)}</p>
         <OndeNasceOSom articulacao={S.articulacao} letra={S.namePt} />
       </Card>
 
       <Card tone="wash" className="p-6 grid gap-2">
-        <h2 className="text-[18px] font-semibold">Quando a letra tem este som?</h2>
+        <h2 className="text-[18px] font-semibold">{tx.quandoTem}</h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body"><Prose text={S.regraPt} /></p>
         <p className="text-[15px] leading-relaxed text-ink-body border-t border-[color:var(--line-soft)] pt-3">
           <Prose text={S.irmaoPt} />
         </p>
       </Card>
+
+      {/* A forma final mora aqui, e não na lição da letra (27/10/2026, pedido
+          do dono: "coloca a ך junto com a כ e não com a Kaf"). Ela nunca leva o
+          ponto e soa sempre como este som, então é aqui que se aprende a
+          reconhecê-la e a escrevê-la. Saiu da lição do Kaf e do Pe junto com o
+          traçado (soOLadoDoPonto em lib/sons.ts). */}
+      {S.finalHe && <FormaFinalDoSom S={S} />}
 
       <BrazilianTip mistake={S.erro} />
 
@@ -261,8 +304,8 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       {S.silabas.length > 0 && (
         <Card className="p-6 grid gap-4">
           <div className="grid gap-1">
-            <h2 className="text-[19px] font-semibold">O som com cada vogal</h2>
-            <p className="font-ui text-[13.5px] text-ink-muted">{S.rotuloPt[0]!.toUpperCase() + S.rotuloPt.slice(1)}, em todas. Leia da direita para a esquerda.</p>
+            <h2 className="text-[19px] font-semibold">{tx.comCadaVogal}</h2>
+            <p className="font-ui text-[13.5px] text-ink-muted">{tx.emTodas(S.rotuloPt[0]!.toUpperCase() + S.rotuloPt.slice(1))}</p>
           </div>
           {/* Como na lição da letra (27/09/2026): tocar na sílaba toca o som,
               e o gravar-e-comparar fica logo abaixo. Sem gravação, a lista. */}
@@ -283,16 +326,16 @@ function Conhecer({ S, onDone }: { S: SomLicao; onDone: () => void }) {
 
       <Compreensao
         id={`checagem-som-${S.id}`}
-        titulo="Entendeu? Perguntas rápidas"
-        intro="Não vale nota e não tranca nada. Se errar, a explicação aparece na hora."
+        titulo={tx.entendeu}
+        intro={tx.naoVaiNota}
         perguntas={S.checagem}
         fecho={{
-          bom: 'Boa. Agora as palavras que têm este som.',
-          parcial: 'Vale reler o quadro "Quando a letra tem este som" - é a decisão que você vai tomar em toda palavra.'
+          bom: tx.fechoBom,
+          parcial: tx.fechoParcial
         }}
       />
 
-      <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarPalavras}</Button>
     </div>
   );
 }
@@ -302,11 +345,11 @@ function Palavras({ S, onDone }: { S: SomLicao; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">Palavras com o som {S.namePt}</h2>
+        <h2 className="text-[21px] font-bold">{tx.palavrasComOSom(S.namePt)}</h2>
         <p className="font-ui text-[14px] text-ink-muted">
           {S.tipo === 'gerech'
-            ? 'Palavras que vieram de fora: você já sabe como soam. Leia antes de revelar.'
-            : `Tente ler antes de revelar. A letra destacada está ${S.rotuloPt}.`}
+            ? tx.vieramDeFora
+            : tx.tenteLer(S.rotuloPt)}
         </p>
       </div>
       <div className="grid gap-3">
@@ -314,9 +357,9 @@ function Palavras({ S, onDone }: { S: SomLicao; onDone: () => void }) {
           <WordReveal key={w.he} word={{ ...w, use: null }} mark={marcaDe(S, w.he)} />
         ))}
       </div>
-      <CompararPronuncia itens={S.palavras} titulo="Compare a sua leitura das palavras com a do curso" />
+      <CompararPronuncia itens={S.palavras} titulo={tx.comparepalavras} />
       <Button size="lg" onClick={onDone} full>
-        {S.tipo === 'daguesh' ? 'Continuar para a leitura' : 'Continuar para o contraste'}
+        {S.tipo === 'daguesh' ? tx.continuarLeitura : tx.continuarContraste}
       </Button>
     </div>
   );
@@ -327,10 +370,9 @@ function Ler({ S, onDone }: { S: SomLicao; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">Ler o {S.namePt} em voz alta</h2>
+        <h2 className="text-[21px] font-bold">{tx.lerEmVozAlta(S.namePt)}</h2>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          Só o som <strong>{S.som}</strong>, sem pressa. Leia cada sílaba e cada palavra em voz alta, da direita para a
-          esquerda{S.finalHe ? <>, e repare no <He size="inline">{S.finalHe}</He> do fim da palavra</> : null}.
+          {tx.soOSom(<strong>{S.som}</strong>, S.finalHe ? <He size="inline">{S.finalHe}</He> : null)}
         </p>
       </div>
 
@@ -345,18 +387,18 @@ function Ler({ S, onDone }: { S: SomLicao; onDone: () => void }) {
 
       <Card className="p-5 grid gap-2 content-start">
         <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)]">
-          Com o som {S.som} · <He size="inline">{S.he}</He>
+          {tx.comOSom(S.som)}<He size="inline">{S.he}</He>
         </p>
         {S.palavras.map(w => <Linha key={w.he} w={w} mark={marcaDe(S, w.he)} />)}
       </Card>
 
       <GravarLeitura
-        titulo="Leia as palavras em voz alta"
-        instrucao={`Leia as palavras com ${S.som}, grave e confira se o som saiu ${S.som.toUpperCase()} em todas.`}
+        titulo={tx.leiaPalavras}
+        instrucao={tx.leiaPalavrasInstrucao(S.som, S.som.toUpperCase())}
         maxSegundos={60}
       />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
     </div>
   );
 }
@@ -366,13 +408,12 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">{S.parNomePt} ou {S.namePt}?</h2>
+        <h2 className="text-[21px] font-bold">{tx.ouPar(S.parNomePt, S.namePt)}</h2>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
           {S.tipo !== 'gerech'
-            ? <>Lado a lado: {S.parRotuloPt} e {S.rotuloPt}. Leia cada linha em voz alta, primeiro a coluna da direita e depois a
-              da esquerda, e sinta a boca mudar: <strong>{S.parSom}</strong> e <strong>{S.som}</strong>.</>
-            : <>Lado a lado, com e sem o traço. Sem ele, <He size="inline">{S.parHe}</He> é <strong>{S.parSom}</strong>;
-              com ele, <He size="inline">{S.he}</He> é <strong>{S.som}</strong>.</>}
+            ? tx.ladoALado(S.parRotuloPt, S.rotuloPt, <strong>{S.parSom}</strong>, <strong>{S.som}</strong>)
+            : tx.comTraco(<He size="inline">{S.parHe}</He>, <strong>{S.parSom}</strong>,
+                <He size="inline">{S.he}</He>, <strong>{S.som}</strong>)}
         </p>
       </div>
 
@@ -397,25 +438,25 @@ function Contraste({ S, onDone }: { S: SomLicao; onDone: () => void }) {
       <div className="grid sm:grid-cols-2 gap-3">
         <Card className="p-5 grid gap-2 content-start">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-[var(--accent)]">
-            Com o som {S.som} · <He size="inline">{S.he}</He>
+            {tx.comOSom(S.som)}<He size="inline">{S.he}</He>
           </p>
           {S.palavras.map(w => <Linha key={w.he} w={w} mark={marcaDe(S, w.he)} />)}
         </Card>
         <Card className="p-5 grid gap-2 content-start">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Com o som {S.parSom} · <He size="inline">{S.parHe}</He>
+            {tx.comOSom(S.parSom)}<He size="inline">{S.parHe}</He>
           </p>
           {S.parPalavras.map(w => <Linha key={w.he} w={w} mark={S.tipo === 'ponto' ? [...S.parHe][0]! : S.parHe} />)}
         </Card>
       </div>
 
       <GravarLeitura
-        titulo="Leia as duas colunas em voz alta"
-        instrucao={`Leia as palavras com ${S.som} e depois as com ${S.parSom}, grave e confira se a diferença aparece.`}
+        titulo={tx.leiaColunas}
+        instrucao={tx.leiaColunasInstrucao(S.som, S.parSom)}
         maxSegundos={60}
       />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a fixação</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
     </div>
   );
 }
@@ -436,7 +477,7 @@ export function Par({ he, translit, audioId, destaque = false }: {
       ${destaque ? 'bg-[var(--accent-wash)]' : 'bg-surface-2'}`}>
       <He size="lg">{he}</He>
       <span className="font-ui text-[14px] font-semibold text-ink">{translit}</span>
-      {hasAudio(audioId) && <AudioButton audioId={audioId} label="" ariaLabel={`Ouvir ${translit}`} size="sm" />}
+      {hasAudio(audioId) && <AudioButton audioId={audioId} label="" ariaLabel={tx.ouvirItem(translit)} size="sm" />}
     </span>
   );
 }
@@ -450,7 +491,7 @@ export function Linha({ w, mark }: { w: { he: string; translit: string; pt: stri
         <span className="font-ui text-[12.5px] text-ink-muted">{w.pt}</span>
       </span>
       {hasAudio(w.audioId) && (
-        <span className="ml-auto"><AudioButton audioId={w.audioId} label="" ariaLabel={`Ouvir ${w.translit}`} size="sm" /></span>
+        <span className="ml-auto"><AudioButton audioId={w.audioId} label="" ariaLabel={tx.ouvirItem(w.translit)} size="sm" /></span>
       )}
     </div>
   );
@@ -465,18 +506,18 @@ function Resultado({ S, r, onRetry, onNext, dica }: {
   return (
     <Milestone
       tone={bom ? 'bom' : 'parcial'}
-      kicker={`${r.correct} de ${r.total} · ${pct}%`}
-      title={bom ? `O som ${S.namePt} está firme.` : `Vamos firmar o ${S.namePt}.`}
+      kicker={tx.placar(r.correct, r.total, pct)}
+      title={bom ? tx.firme(S.namePt) : tx.vamosFirmar(S.namePt)}
       body={S.tipo === 'daguesh'
         ? (bom
-          ? `Você lê ${S.he} ${S.rotuloPt} como ${S.som.toUpperCase()}, com cada vogal. Pode seguir.`
-          : `Refaça quando quiser: as perguntas mudam. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`)
+          ? tx.daguheshBom(S.he, S.rotuloPt, S.som.toUpperCase())
+          : tx.daguheshRefaca(Math.round(LIBERA_MARK * 100)))
         : bom
-          ? `Você decide entre ${S.parSom} e ${S.som} olhando a letra. Pode seguir.`
-          : `Refaça quando quiser: as perguntas mudam, e o que conta é decidir entre ${S.parSom} e ${S.som} sem hesitar. A próxima lição abre a partir de ${Math.round(LIBERA_MARK * 100)}%.`}
+          ? tx.decideBom(S.parSom, S.som)
+          : tx.decideRefaca(S.parSom, S.som, Math.round(LIBERA_MARK * 100))}
     >
-      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>Refazer os exercícios</Button>
-      <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>Concluir e continuar</Button>
+      <Button variant={bom ? 'secondary' : 'primary'} onClick={onRetry}>{tx.refazer}</Button>
+      <Button variant={bom ? 'primary' : 'secondary'} onClick={onNext}>{tx.concluir}</Button>
       <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{dica}</p>
     </Milestone>
   );

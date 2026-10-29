@@ -10,7 +10,8 @@
 import { describe, expect, it } from 'vitest';
 import { course } from '@/lib/content-publico';
 import { conteudoPago } from '@/lib/content-servidor';
-import { textosPublicados, type Texto } from '@/lib/engine/textos';
+import { textoLidoId, textosPublicados, type Texto } from '@/lib/engine/textos';
+import { existsSync } from 'node:fs';
 import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 
 const todos: Texto[] = conteudoPago.textos;
@@ -23,8 +24,10 @@ const letrasDe = (he: string) => [...he.normalize('NFD')].filter(c => /[א-ת]/.
 const hebraicoEm = (t: string) => [...t.matchAll(/\{\{([^}]+)\}\}/g)].map(m => m[1]!);
 
 describe('os mini-textos', () => {
-  it('há um texto em cada módulo do 3 ao 7', () => {
-    expect(textos.map(t => t.modulo).sort()).toEqual([3, 4, 5, 6, 7]);
+  /* O do módulo 2 entrou em 28/10/2026 (aprovado pelo dono no mesmo dia). Ele
+     segue a mesma régua das letras: sem o Vav, nem como sinal de vogal. */
+  it('há um texto em cada módulo do 2 ao 7', () => {
+    expect(textos.filter(t => !t.n).map(t => t.modulo).sort()).toEqual([2, 3, 4, 5, 6, 7]);
   });
 
   it('não usam letra que o aluno ainda não viu naquele módulo', () => {
@@ -71,6 +74,15 @@ describe('os mini-textos', () => {
         }
       }
     }
+  });
+
+  it('os segundos textos (aprovados em 28/10/2026) têm o "lido" e a página próprios', () => {
+    const segundos = textos.filter(t => t.n === 2);
+    expect(segundos.map(t => t.modulo).sort()).toEqual([3, 4, 5, 6, 7]);
+    expect(segundos.every(t => t.revisado === true)).toBe(true);
+    expect(textoLidoId(3, false, 2)).toBe('texto-3-2');
+    expect(textoLidoId(3)).toBe('texto-3');
+    expect(existsSync('src/app/modulo/[n]/texto-2/page.tsx')).toBe(true);
   });
 
   it('o aluno só vê o texto depois de revisado', () => {

@@ -1,0 +1,281 @@
+import type { ReactNode } from 'react';
+import type { Traducao } from '..';
+
+/* components/landing/DemoAlef.tsx: o teste grátis da capa. As frases com
+   hebraico passam pelo TextoComHebraico, que põe cada trecho num <He>; o
+   inglês carrega exatamente o mesmo hebraico. */
+const pt = {
+  porqueMem: 'Este é o Mem. Ele tem uma base reta e uma pequena abertura embaixo, à esquerda.',
+  porqueShin: 'Este é o Shin, e ele tem três hastes subindo, como um garfo.',
+  porqueBet: 'Este é o Bet, com a base reta apoiada na linha.',
+  /* Transliteração: fica igual até a etapa 3. */
+  palavraTranslit: 'ába',
+  palavraPt: 'pai',
+
+  compararPergunta: 'E agora: qual das duas é o Álef?',
+  compararPorque: 'Este é o Áyin. O א tem um traço diagonal no meio, ligando os dois cantos. O ע é aberto em cima, com dois braços que descem para um pé só.',
+  compararAcerto: 'O traço diagonal no meio é a marca do Álef. O Áyin, aberto em cima, é a letra que mais se confunde com ele.',
+
+  vogal1Pergunta: 'Como se lê isto?',
+  vogal1PorqueA: 'O tracinho embaixo é que seria o «a». Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».',
+  vogal1PorqueO: 'O «o» é um ponto em cima: em cima de um ו (אוֹ) ou da própria letra (אֹ). Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».',
+  vogal1Acerto: 'O ponto embaixo é a vogal «i». O Álef só segura.',
+  vogal2Pergunta: 'E isto?',
+  vogal2PorqueU: 'No «u» o ponto fica no meio do ו. Aqui o ponto está em cima do ו, e isso é a vogal «o».',
+  vogal2PorqueA: 'O nome da letra começa com A, e isso engana: o Álef não é a vogal A. O ו com um ponto em cima é a vogal «o».',
+  vogal2Acerto: 'O ו com um ponto em cima é a vogal «o».',
+  vogal3Pergunta: 'Última: e esta?',
+  vogal3PorqueE: 'O «e» são pontinhos embaixo, três (אֶ) ou dois (אֵ). Aqui há um tracinho só, e o tracinho é a vogal «a».',
+  vogal3PorqueI: 'O «i» é um ponto. Aqui há um tracinho, e o tracinho é a vogal «a».',
+  vogal3Acerto: 'O tracinho embaixo é a vogal «a». Você acabou de ler três sílabas.',
+  ouvirPergunta: 'Agora ouça e toque na sílaba que você ouviu.',
+  ouvirPorqueA: 'Esta é «a», com o tracinho embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.',
+  ouvirPorqueI: 'Esta é «i», com o ponto embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.',
+  ouvirAcerto: 'אוּ é «u». Você ouviu o som e achou a forma escrita.',
+
+  achar1Pergunta: 'Qual destas palavras começa com Álef?',
+  achar1PorqueShin: 'Esta começa com Shin, a letra da direita. Em hebraico a palavra começa à direita.',
+  achar1PorqueTav: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.',
+  achar1PorqueBet: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.',
+  achar1Acerto: 'אֶתְמוֹל se lê «etmól» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
+  ouvirEtmol: 'Ouvir «etmól»',
+  achar2Pergunta: 'Mais uma: qual começa com Álef?',
+  achar2PorqueMem: 'Esta começa com Mem, a letra da direita. Procure o Álef na ponta direita.',
+  achar2PorqueLamed: 'Esta começa com Lámed, a letra da direita. Procure o Álef na ponta direita.',
+  achar2PorqueYud: 'Esta começa com Yud, a letra da direita. Procure o Álef na ponta direita.',
+  achar2Acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida» (o ch aqui não é o ch de «chave»: é um R raspado na garganta, como o R carioca de «carro»). Duas palavras de verdade, e você achou o Álef nas duas.',
+  ouvirOchel: 'Ouvir «óchel»',
+
+  rotuloConhecer: 'Conhecer',
+  rotuloReconhecer: 'Reconhecer',
+  rotuloComparar: 'Comparar',
+  rotuloVogais: 'Vogais',
+  rotuloEscrever: 'Escrever',
+  rotuloAchar: 'Achar',
+  rotuloLer: 'Ler',
+  rotuloPronto: 'Pronto',
+
+  rubrica: (n: number) => `Teste grátis · ${n} exercícios`,
+  titulo: 'Experimente aprender sua primeira letra.',
+  lead: 'Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras, descobre como ela segura as vogais, escreve com o dedo e acha ela dentro de palavras de verdade - do mesmo jeito que acontece dentro do curso.',
+  etapaDe: (n: number, total: number, rotulo: string) => `${n} de ${total} · ${rotulo}`,
+
+  conhecerTitulo: 'O Álef é a primeira letra do alfabeto - e ela não tem som próprio.',
+  conhecerTexto: 'Ele é a letra que carrega a vogal: sozinho não se pronuncia, e o som que você ouve vem do sinal que aparece embaixo ou ao lado dele. É por isso que o Álef abre o alfabeto e abre tantas palavras.',
+  ouvirNome: 'Ouvir o nome da letra',
+  entendi: 'Entendi · testar agora',
+
+  qualAlef: 'Qual destas é o Álef?',
+  toqueLetra: 'Toque na letra que você acabou de ver.',
+  issoAlef: (he: ReactNode): ReactNode => <>Isso! {he} é o Álef.</>,
+  achouSegunda: 'Achou na segunda - que é exatamente como se aprende uma forma nova.',
+  primeira: 'Primeira tentativa. Você já sabe separar o Álef de três letras parecidas.',
+  continuar: 'Continuar →',
+  quase: 'Quase.',
+  formaDoAlef: (porque: string, he: ReactNode): ReactNode => (
+    <>{porque} O Álef tem esta forma:{' '}{he} - duas hastes inclinadas apoiadas numa terceira. Toque de novo.</>
+  ),
+
+  seguirVogais: 'Agora as vogais →',
+  vogaisTitulo: 'Uma letra, cinco sons.',
+  vogaisTexto: 'O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Toque em cada sílaba para ouvir o professor, e depois responda.',
+  vogaisLista: 'As vogais com o Álef',
+  ouvirSom: (som: string) => `Ouvir «${som}»`,
+  seguirEscrever: 'Agora escreva você →',
+
+  escreverTitulo: 'Agora escreva o Álef com o dedo.',
+  escreverTexto: 'Repare que a letra à mão não tem o mesmo desenho da que você viu: em hebraico se lê na forma impressa e se escreve na cursiva, que é a que aparece num bilhete em Israel.',
+  /* Nome da letra: transliteração, fica igual até a etapa 3. */
+  alef: 'Álef',
+  passeODedo: 'Passe o dedo por cima do modelo.',
+  direcao: '← escreva nesta direção ←',
+  conferir: 'Conferir',
+  limpar: 'Limpar',
+  seguirAchar: 'Agora ache o Álef →',
+  seguirLer: 'Agora leia uma palavra →',
+
+  lerTitulo: 'Você já consegue achar o Álef aqui dentro.',
+  lerTexto: 'Esta é uma palavra hebraica de verdade, e o Álef aparece nas duas pontas - lembrando que em hebraico se lê da direita para a esquerda. A letra do meio é o Bet, que o curso também ensina.',
+  lerApoio: 'A transliteração ao lado é o apoio do começo. Ela vai diminuindo ao longo do curso, até você ler direto do hebraico.',
+  terminei: 'Terminei a primeira letra',
+  ouvirProfessor: 'Ouvir o professor',
+
+  umDe: (total: number) => `1 de ${total} letras`,
+  aprendeu: 'Você acabou de aprender sua primeira letra em hebraico.',
+  oQueFez: 'O que você fez agora',
+  faltam: (n: number) => `Faltam ${n}. Imagine onde você chega aprendendo uma de cada vez, do mesmo jeito.`,
+  queroAsOutras: (n: number) => `Quero aprender as outras ${n}`,
+  cursoPor: (preco: ReactNode): ReactNode => <>Curso completo de alfabetização por{' '}{preco}.</>,
+  comece: 'Comece do zero, avance no seu ritmo, e o progresso fica salvo.',
+  deNovo: 'Fazer o teste de novo',
+
+  ouvir: 'Ouvir',
+  deN: (n: number, total: number) => `${n} de ${total}`,
+  toqueResposta: 'Toque na resposta.',
+  isso: 'Isso!',
+  proxima: 'Próxima →',
+  ouvirDeNovo: 'Ouça de novo e toque outra vez.',
+  toqueDeNovo: 'Toque de novo.',
+
+  segundaTitulo: (email: ReactNode): ReactNode => <>Ainda não quer decidir? Receba a segunda letra por {email}.</>,
+  emailPalavra: 'e-mail',
+  segundaTexto: 'Mandamos um e-mail com o Mem, a segunda letra do curso. Seu endereço só entra numa lista se você marcar a caixa abaixo.',
+  segundaPronto: (email: ReactNode): ReactNode => (
+    <>Pronto! A segunda letra está a caminho de {email}. Se não chegar em alguns minutos, olhe a caixa de spam.</>
+  ),
+  segundaConfirme: ' Para receber as próximas letras, confirme pelo link que vai no mesmo e-mail.',
+  seuEmail: 'Seu e-mail',
+  enviando: 'Enviando…',
+  mandar: 'Mandar a segunda letra',
+  querLista: 'Quero receber também as próximas letras e as novidades do curso por e-mail. Posso sair quando quiser.',
+  privacidade: 'Privacidade',
+  emailInvalido: 'Confira o e-mail: parece que falta alguma coisa.',
+  emailErro: 'Não consegui mandar agora. Tente de novo daqui a pouco.',
+
+  feito1: 'Reconheceu o Álef entre quatro letras parecidas',
+  feito2: 'Separou o Álef do Áyin, a letra que mais se confunde com ele',
+  feito3: 'Leu três sílabas com vogais',
+  feito4: 'Reconheceu uma sílaba só de ouvir',
+  feitoEscreveu: 'Escreveu o Álef com o dedo',
+  feito5: 'Achou o Álef em duas palavras de verdade',
+  feito6: 'Leu a palavra אַבָּא, «pai»'
+} as const;
+
+const en: Traducao<typeof pt> = {
+  porqueMem: 'This is Mem. It has a straight base and a small opening at the bottom left.',
+  porqueShin: 'This is Shin, and it has three prongs going up, like a fork.',
+  porqueBet: 'This is Bet, with its straight base resting on the line.',
+  palavraTranslit: 'aba',
+  palavraPt: 'dad',
+
+  compararPergunta: 'And now: which of the two is Alef?',
+  compararPorque: 'This is Ayin. The א has a diagonal stroke in the middle, joining the two corners. The ע is open at the top, with two arms that come down to a single foot.',
+  compararAcerto: 'The diagonal stroke in the middle is the mark of Alef. Ayin, open at the top, is the letter most often confused with it.',
+
+  vogal1Pergunta: 'How do you read this?',
+  vogal1PorqueA: 'The little line underneath is what would make «a». Here there is a dot under Alef, and the dot is the vowel «i».',
+  vogal1PorqueO: '«o» is a dot on top: on top of a ו (אוֹ) or of the letter itself (אֹ). Here there is a dot under Alef, and the dot is the vowel «i».',
+  vogal1Acerto: 'The dot underneath is the vowel «i». Alef just holds it.',
+  vogal2Pergunta: 'And this?',
+  vogal2PorqueU: 'In «u» the dot sits in the middle of the ו. Here the dot is on top of the ו, and that is the vowel «o».',
+  vogal2PorqueA: 'Alef begins with an A, but do not let that fool you: Alef is not the vowel A. The ו with a dot on top is the vowel «o».',
+  vogal2Acerto: 'The ו with a dot on top is the vowel «o».',
+  vogal3Pergunta: 'Last one: and this?',
+  vogal3PorqueE: '«e» is little dots underneath, three (אֶ) or two (אֵ). Here there is just one little line, and the line is the vowel «a».',
+  vogal3PorqueI: '«i» is a dot. Here there is a little line, and the line is the vowel «a».',
+  vogal3Acerto: 'The little line underneath is the vowel «a». You just read three syllables.',
+  ouvirPergunta: 'Now listen and tap the syllable you heard.',
+  ouvirPorqueA: 'This one is «a», with the little line underneath. What you heard was «u»: the ו with a dot in the middle.',
+  ouvirPorqueI: 'This one is «i», with the dot underneath. What you heard was «u»: the ו with a dot in the middle.',
+  ouvirAcerto: 'אוּ is «u». You heard the sound and found the written form.',
+
+  achar1Pergunta: 'Which of these words starts with Alef?',
+  achar1PorqueShin: 'This one starts with Shin, the letter on the right. In Hebrew a word starts on the right.',
+  achar1PorqueTav: 'This one starts with Tav, the letter on the right. In Hebrew a word starts on the right.',
+  achar1PorqueBet: 'This one starts with Bet, the letter on the right. In Hebrew a word starts on the right.',
+  achar1Acerto: 'אֶתְמוֹל reads «etmol» and means «yesterday». Alef is on the right, holding the «e».',
+  ouvirEtmol: 'Hear «etmol»',
+  achar2Pergunta: 'One more: which one starts with Alef?',
+  achar2PorqueMem: 'This one starts with Mem, the letter on the right. Look for Alef at the right end.',
+  achar2PorqueLamed: 'This one starts with Lamed, the letter on the right. Look for Alef at the right end.',
+  achar2PorqueYud: 'This one starts with Yud, the letter on the right. Look for Alef at the right end.',
+  // etapa 3: pronúncia, rever
+  achar2Acerto: 'אֹכֶל reads «ochel» and means «food» (the ch here is not the ch in «chair»: it is a rasp in the throat, like the ch in Scottish «loch»). Two real words, and you found Alef in both.',
+  ouvirOchel: 'Hear «ochel»',
+
+  rotuloConhecer: 'Meet',
+  rotuloReconhecer: 'Recognize',
+  rotuloComparar: 'Compare',
+  rotuloVogais: 'Vowels',
+  rotuloEscrever: 'Write',
+  rotuloAchar: 'Find',
+  rotuloLer: 'Read',
+  rotuloPronto: 'Done',
+
+  rubrica: (n: number) => `Free test · ${n} exercises`,
+  titulo: 'Try learning your first letter.',
+  lead: 'No sign-up and no card. You meet the letter, find it among others, discover how it holds the vowels, write it with your finger and find it inside real words - just the way it happens inside the course.',
+  etapaDe: (n: number, total: number, rotulo: string) => `${n} of ${total} · ${rotulo}`,
+
+  conhecerTitulo: 'Alef is the first letter of the alphabet - and it has no sound of its own.',
+  conhecerTexto: 'It is the letter that carries the vowel: on its own it is not pronounced, and the sound you hear comes from the sign that appears under it or next to it. That is why Alef opens the alphabet and opens so many words.',
+  ouvirNome: 'Hear the letter\'s name',
+  entendi: 'Got it · test me now',
+
+  qualAlef: 'Which of these is Alef?',
+  toqueLetra: 'Tap the letter you just saw.',
+  issoAlef: (he: ReactNode): ReactNode => <>That's it! {he} is Alef.</>,
+  achouSegunda: 'You found it on the second try - which is exactly how a new shape is learned.',
+  primeira: 'First try. You can already tell Alef apart from three similar letters.',
+  continuar: 'Continue →',
+  quase: 'Almost.',
+  formaDoAlef: (porque: string, he: ReactNode): ReactNode => (
+    <>{porque} Alef has this shape:{' '}{he} - two slanted strokes resting on a third. Tap again.</>
+  ),
+
+  seguirVogais: 'Now the vowels →',
+  vogaisTitulo: 'One letter, five sounds.',
+  vogaisTexto: 'Alef has no sound: the sound comes from the vowel sign that goes with it. Tap each syllable to hear the teacher, and then answer.',
+  vogaisLista: 'The vowels with Alef',
+  ouvirSom: (som: string) => `Hear «${som}»`,
+  seguirEscrever: 'Now you write it →',
+
+  escreverTitulo: 'Now write Alef with your finger.',
+  escreverTexto: 'Notice that the handwritten letter does not look the same as the one you saw: in Hebrew you read the printed form and write in cursive, which is what you see on a handwritten note in Israel.',
+  alef: 'Alef',
+  passeODedo: 'Run your finger over the model.',
+  direcao: '← write in this direction ←',
+  conferir: 'Check',
+  limpar: 'Clear',
+  seguirAchar: 'Now find Alef →',
+  seguirLer: 'Now read a word →',
+
+  lerTitulo: 'You can already find Alef in here.',
+  lerTexto: 'This is a real Hebrew word, and Alef appears at both ends - remember that Hebrew is read from right to left. The letter in the middle is Bet, which the course also teaches.',
+  lerApoio: 'The transliteration next to it is the support at the start. It fades over the course, until you read straight from the Hebrew.',
+  terminei: 'I finished the first letter',
+  ouvirProfessor: 'Hear the teacher',
+
+  umDe: (total: number) => `1 of ${total} letters`,
+  aprendeu: 'You just learned your first letter in Hebrew.',
+  oQueFez: 'What you just did',
+  faltam: (n: number) => `${n} to go. Imagine where you get to by learning one at a time, the same way.`,
+  queroAsOutras: (n: number) => `I want to learn the other ${n}`,
+  cursoPor: (preco: ReactNode): ReactNode => <>Complete learn-to-read course for{' '}{preco}.</>,
+  comece: 'Start from zero, move at your own pace, and your progress is saved.',
+  deNovo: 'Take the test again',
+
+  ouvir: 'Listen',
+  deN: (n: number, total: number) => `${n} of ${total}`,
+  toqueResposta: 'Tap the answer.',
+  isso: 'That\'s it!',
+  proxima: 'Next →',
+  ouvirDeNovo: 'Listen again and tap once more.',
+  toqueDeNovo: 'Tap again.',
+
+  segundaTitulo: (email: ReactNode): ReactNode => <>Not ready to decide? Get the second letter by {email}.</>,
+  emailPalavra: 'email',
+  segundaTexto: 'We send one email with Mem, the second letter of the course. Your address only goes on a list if you check the box below.',
+  segundaPronto: (email: ReactNode): ReactNode => (
+    <>Done! The second letter is on its way to {email}. If it does not arrive in a few minutes, check your spam folder.</>
+  ),
+  segundaConfirme: ' To get the next letters, confirm through the link in that same email.',
+  seuEmail: 'Your email',
+  enviando: 'Sending…',
+  mandar: 'Send me the second letter',
+  querLista: 'I also want to get the next letters and course news by email. I can unsubscribe anytime.',
+  privacidade: 'Privacy',
+  emailInvalido: 'Check the email: something seems to be missing.',
+  emailErro: 'I could not send it right now. Please try again in a little while.',
+
+  feito1: 'Recognized Alef among four similar letters',
+  feito2: 'Told Alef apart from Ayin, the letter most often confused with it',
+  feito3: 'Read three syllables with vowels',
+  feito4: 'Recognized a syllable just by hearing it',
+  feitoEscreveu: 'Wrote Alef with your finger',
+  feito5: 'Found Alef in two real words',
+  feito6: 'Read the word אַבָּא, «dad»'
+};
+
+export const DICIONARIO = { pt, en };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;

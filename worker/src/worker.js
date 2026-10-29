@@ -38,6 +38,7 @@ import { licenca as licencaDoLivro, pdfMarcado, CAMINHO_DO_PDF } from './api/liv
 import * as exameA1 from './api/exame-a1.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
+import * as lembrete from './api/lembrete.js';
 import * as meusDados from './api/meus-dados.js';
 import * as csp from './api/csp.js';
 import * as marca from './api/marca.js';
@@ -45,10 +46,12 @@ import * as depoimentos from './api/depoimentos.js';
 import * as avaliacoes from './api/avaliacoes.js';
 import * as estatisticas from './api/estatisticas.js';
 import { campanhaValida } from './lib/origem.js';
+import { idiomaDoWorker, FORA_DO_SITE_EN } from './lib/idioma.js';
 import * as adminCodigo from './api/admin-codigo.js';
 import * as estornosAdmin from './api/estornos-admin.js';
 import * as vendasAdmin from './api/vendas-admin.js';
 import * as segundaLetra from './api/segunda-letra.js';
+import * as desafio from './api/desafio.js';
 import * as interessados from './api/interessados.js';
 
 /* A página de venda do curso de alfabetização. Foi a capa até 23/10/2026. */
@@ -76,6 +79,9 @@ const ROUTES = {
   /* A lista do aviso do próximo curso: entrar e sair (api/novidades.js). */
   'PUT /api/novidades': novidades.marcar,
   'POST /api/novidades/sair': novidades.sair,
+  /* O lembrete para estudar (api/lembrete.js): 404 enquanto desligado. */
+  'PUT /api/lembrete': lembrete.marcar,
+  'POST /api/lembrete/sair': lembrete.sair,
   'GET /api/me': auth.me,
   'GET /api/health': auth.health,
 
@@ -86,6 +92,8 @@ const ROUTES = {
      de assinatura recusa o que não for legítimo, seja qual for o verbo. */
   'POST /api/pay/webhook': pay.webhook,
   'GET /api/pay/webhook': pay.webhook,
+  /* O aviso do Paddle (site em inglês). Assinatura própria, ver lib/paddle.js. */
+  'POST /api/pay/paddle': pay.webhookPaddle,
 
   'GET /api/orders': pay.orders,
   /* O PIX ainda pagável do próprio pedido, para o checkout e o /perfil
@@ -161,6 +169,11 @@ const ROUTES = {
   'POST /api/portal': estatisticas.contarPortal,
   /* A segunda letra por e-mail, no fim do teste. Ver api/segunda-letra.js. */
   'POST /api/segunda-letra': segundaLetra.pedir,
+  /* O desafio com um amigo (28/10/2026): o aluno assina cinco palavras do
+     curso, e a página pública confere a assinatura. Nada é gravado. Ver
+     api/desafio.js. */
+  'POST /api/desafio': desafio.criar,
+  'GET /api/desafio': desafio.abrir,
   /* A lista de interessados (23/10/2026): entrar, confirmar e sair. Ver api/interessados.js. */
   'POST /api/interessados': interessados.entrar,
   'POST /api/interessados/confirmar': interessados.confirmar,
@@ -234,6 +247,18 @@ async function responder(request, env, ctx) {
       return Response.redirect(url.toString(), 301);
     }
 
+    /* ── o que o site em inglês não tem ─────────────────────────────────
+       Os produtos só em português e os painéis do dono existem no export em
+       inglês (é o mesmo código), mas não fazem parte dele: 404, com a página
+       de erro do próprio site (lib/idioma.js, PLANO-INGLES.md). */
+    if (idiomaDoWorker(env) === 'en' && FORA_DO_SITE_EN.test(path)) {
+      if (path.startsWith('/api/')) return json({ error: 'not-found' }, 404);
+      const pagina = env.ASSETS ? await env.ASSETS.fetch(new Request(new URL('/404.html', url))) : null;
+      return new Response(pagina && pagina.ok ? pagina.body : 'Not found', {
+        status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
+    }
+
     /* ── links de campanha ───────────────────────────────────────────
        /sefarad (parceria com a associação sefardita, 02/10/2026) e, desde
        04/10/2026, /bio, /stories e /dm (Instagram): cada um soma uma
@@ -276,7 +301,16 @@ async function responder(request, env, ctx) {
     /* O livro mudou de nome (23/10/2026): Israel Além do Óbvio. A página do
        portal foi junto, e o endereço antigo leva para a nova. O slug do
        catálogo, o direito de acesso e /israel/ continuam os mesmos. */
-    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/', '/israel-alem-do-roteiro': '/israel-alem-do-obvio/' };
+    const ATALHOS = { '/contato': '/suporte/', '/minha-conta': '/meu-hebraico/', '/israel-alem-do-roteiro': '/' };
+    /* Só o curso de alfabetização no site (27/10/2026, decisão do dono): as
+       páginas das jornadas, das duas experiências "Em breve" e o "Comece
+       aqui" levam à capa, que é a página do curso. A consulta vai junto
+       (`?parceria=` de um link da bio já publicado). As páginas continuam no
+       build, para voltarem sem reescrever nada: é só tirar esta linha. */
+    if (/^\/(aprender-hebraico|descobrir-israel|israel-alem-do-obvio|raizes-sefarditas|comece-aqui)(\/(index\.(html|txt))?)?$/i.test(path)
+        && (request.method === 'GET' || request.method === 'HEAD')) {
+      return new Response(null, { status: 301, headers: { Location: `${url.origin}/${url.search}` } });
+    }
     if (ATALHOS[path.toLowerCase()] && (request.method === 'GET' || request.method === 'HEAD')) {
       return new Response(null, { status: 301, headers: { Location: `${url.origin}${ATALHOS[path.toLowerCase()]}` } });
     }
@@ -295,13 +329,13 @@ async function responder(request, env, ctx) {
          se declara de outro lugar é recusada. Quem não declara nada - o
          curl do e2e, um script de operação - passa: a defesa é contra o
          navegador da vítima, não contra ferramentas.
-         O webhook fica de fora porque a Mercado Pago é, legitimamente,
-         outra origem; a assinatura HMAC é a trava dele. O relato de CSP
+         Os webhooks ficam de fora porque a Mercado Pago e o Paddle são,
+         legitimamente, outra origem; a assinatura HMAC é a trava dele. O relato de CSP
          também: quem o manda é o próprio navegador, que nem sempre declara a
          origem do mesmo jeito, e ele não escreve nada além de uma linha de
          trilha com freio. */
       if (request.method !== 'GET' && request.method !== 'HEAD'
-          && path !== '/api/pay/webhook' && path !== '/api/csp-report') {
+          && path !== '/api/pay/webhook' && path !== '/api/pay/paddle' && path !== '/api/csp-report') {
         const site = request.headers.get('Sec-Fetch-Site');
         const origin = request.headers.get('Origin');
         const cruzada = site === 'cross-site' || site === 'same-site'
@@ -353,6 +387,13 @@ async function responder(request, env, ctx) {
          responde assim, mas o `wrangler dev` devolve 200 inteiro e ignora o
          Range. Se vier 200 com Range no pedido, a fatia é feita aqui
          (lib/range.js); um 206 pronto passa como veio. */
+      return comRange(request, await env.ASSETS.fetch(request));
+    }
+
+    /* ── os vídeos do professor (Me explica, Moshik) ────────────────────
+       Depois do portão, como o áudio, e pelo mesmo motivo do Range: o
+       Safari não toca vídeo sem 206. */
+    if (/^\/video\/[a-z-]+\.(mp4|vtt)$/.test(path) && (request.method === 'GET' || request.method === 'HEAD')) {
       return comRange(request, await env.ASSETS.fetch(request));
     }
 
@@ -491,6 +532,20 @@ function cspEstrita(hashes, nonce = novoNonce()) {
     + '; report-uri /api/csp-report';
 }
 
+/* O checkout do Paddle (PLANO-INGLES.md, etapa 5): o Paddle.js vem de
+   cdn.paddle.com e abre o pagamento num iframe de buy.paddle.com (ou
+   sandbox-buy, no ambiente de teste). Liberado SÓ nas páginas de /checkout:
+   o resto do site continua sem nenhum script de terceiro. Apple Pay e Google
+   Pay, dentro do iframe, pedem a permissão `payment` para a origem dele. */
+const naCompra = path => /^\/checkout\//i.test(path);
+const PADDLE_FRAMES = 'https://buy.paddle.com https://sandbox-buy.paddle.com';
+const comPaddle = csp => csp
+  .replace(/script-src ([^;]*)/, "script-src $1 https://cdn.paddle.com")
+  .replace(/style-src ([^;]*)/, "style-src $1 https://cdn.paddle.com")
+  .replace(/img-src ([^;]*)/, "img-src $1 https://*.paddle.com")
+  .replace(/connect-src ([^;]*)/, "connect-src $1 https://*.paddle.com")
+  .replace("frame-ancestors 'none'", `frame-src ${PADDLE_FRAMES}; frame-ancestors 'none'`);
+
 /* O painel do dono do curso. Também libera o microfone: é onde as
    pronúncias do curso são gravadas (app/src/app/admin/gravar). */
 const isAdminPath = path => /^\/admin(\/|$)/i.test(path);
@@ -518,9 +573,12 @@ function blindar(res, path, hashes = null) {
      outras páginas públicas e a API continuam fechadas. 23/10/2026: a página
      de venda saiu da capa para /curso-de-hebraico (a capa virou o portal das
      jornadas, que não grava ninguém), e o microfone foi junto. */
-  const naVenda = path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
+  /* 27/10/2026: a capa voltou a ser a página do curso, e o microfone com ela. */
+  const naVenda = path === '/' || path === '/index.html'
+    || path === '/curso-de-hebraico' || path === '/curso-de-hebraico/index.html';
   const mic = isGatedPath(path) || isAdminPath(path) || naVenda ? 'microphone=(self)' : 'microphone=()';
-  h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), payment=()`);
+  const pagar = naCompra(path) ? `payment=(self "https://buy.paddle.com" "https://sandbox-buy.paddle.com")` : 'payment=()';
+  h.set('Permissions-Policy', `camera=(), ${mic}, geolocation=(), ${pagar}`);
   const tipo = h.get('Content-Type') || '';
   if (tipo.startsWith('text/html')) {
     /* A estrita VALE desde 01/10/2026 (decisão do dono, depois de dias de
@@ -528,7 +586,8 @@ function blindar(res, path, hashes = null) {
        extensões e o script que o navegador do Instagram injeta, a política
        de sempre já bloqueava). Página sem lista de hashes (HTML gerado pelo
        próprio Worker, build antiga) sai com a de sempre. */
-    h.set('Content-Security-Policy', hashes ? cspEstrita(hashes) : CSP);
+    const politica = hashes ? cspEstrita(hashes) : CSP;
+    h.set('Content-Security-Policy', naCompra(path) ? comPaddle(politica) : politica);
     h.set('X-Frame-Options', 'DENY');
   }
   /* O painel do dono do curso: fora de busca e fora de cache. A página em

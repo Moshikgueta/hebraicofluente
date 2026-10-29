@@ -22,6 +22,7 @@ import { allLetters, getLetter } from '@/lib/content';
 import { reviewDebt } from '@/lib/state/rules';
 import { SKILL_LABEL } from '@/lib/state/types';
 import { useMemo } from 'react';
+import { tx } from '@/i18n/telas/academia-debt';
 
 export function ParaRevisar({ limit = 6 }: { limit?: number }) {
   const p = useProgress();
@@ -45,10 +46,9 @@ export function ParaRevisar({ limit = 6 }: { limit?: number }) {
   if (!debt.length) {
     return (
       <Card className="p-5 grid gap-2">
-        <h3 className="font-display text-[16px] font-bold text-ink">Para revisar</h3>
+        <h3 className="font-display text-[16px] font-bold text-ink">{tx.paraRevisar}</h3>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          Nada pendente. Quando você errar alguma coisa, ela aparece aqui - com o
-          motivo, não só a letra.
+          {tx.nadaPendente}
         </p>
       </Card>
     );
@@ -58,9 +58,9 @@ export function ParaRevisar({ limit = 6 }: { limit?: number }) {
     <Card className="overflow-hidden">
       <div className="px-4 sm:px-5 py-3 border-b border-[color:var(--line-soft)]
                       flex items-baseline justify-between gap-3">
-        <h3 className="font-display text-[16px] font-bold text-ink">Para revisar</h3>
+        <h3 className="font-display text-[16px] font-bold text-ink">{tx.paraRevisar}</h3>
         <span className="font-ui text-[12px] text-ink-muted tabular-nums">
-          {debt.length} {debt.length === 1 ? 'letra' : 'letras'}
+          {tx.nLetras(debt.length)}
         </span>
       </div>
       <ul className="divide-y divide-[color:var(--line-soft)]">
@@ -69,7 +69,7 @@ export function ParaRevisar({ limit = 6 }: { limit?: number }) {
           if (!L) return null;
           const reasons = [
             ...d.skills.map(s => SKILL_LABEL[s].toLowerCase()),
-            ...(d.due ? [`${d.due} ${d.due === 1 ? 'item' : 'itens'} na fila`] : [])
+            ...(d.due ? [tx.naFila(d.due)] : [])
           ];
           return (
             <li key={d.letterId}>
@@ -82,13 +82,13 @@ export function ParaRevisar({ limit = 6 }: { limit?: number }) {
                 <span className="grid gap-0.5 min-w-0 flex-1">
                   <span className="font-ui text-[14px] font-medium text-ink">{L.namePt}</span>
                   <span className="font-ui text-[12.5px] text-ink-muted truncate">
-                    {reasons.length ? reasons.join(' · ') : 'na fila de revisão'}
+                    {reasons.length ? reasons.join(' · ') : tx.naFilaDeRevisao}
                   </span>
                 </span>
                 {d.confusedWith.length > 0 && (
                   <span className="flex items-center gap-1 shrink-0"
-                        title={`Você está trocando com ${d.confusedWith.join(', ')}`}>
-                    <span aria-hidden className="font-ui text-[11px] text-ink-muted">troca com</span>
+                        title={tx.trocando(d.confusedWith.join(', '))}>
+                    <span aria-hidden className="font-ui text-[11px] text-ink-muted">{tx.trocaCom}</span>
                     <He size="inline">{d.confusedWith[0]!}</He>
                   </span>
                 )}

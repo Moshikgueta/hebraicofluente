@@ -14,6 +14,8 @@
  * Letra nova aqui precisa da gravação em AMOSTRA_AUDIO (lib/amostra-audio.ts).
  */
 import type { NomeAmostra } from '@/lib/amostra-audio';
+import { tx } from '@/i18n/telas/motor-alfabeto-publico';
+import { translit as grafia } from '@/i18n/translit';
 
 export type LetraPublica = {
   id: string;
@@ -28,46 +30,46 @@ export type LetraPublica = {
 export const LETRAS_PUBLICAS: readonly LetraPublica[] = [
   {
     id: 'alef', audioNome: 'alef',
-    exemplo: { he: 'אַבָּא', translit: 'ába', pt: 'pai', audio: 'aba' },
+    exemplo: { he: 'אַבָּא', translit: grafia('ába'), pt: tx.alefSentido, audio: 'aba' }, // i18n-ok: transliteração, etapa 3
     erro: {
-      errado: 'Tentar produzir algum som para o {{א}}, ou tratá-lo como um A fixo.',
-      certo: 'Ler apenas a vogal marcada: {{אוֹ}} é "o", {{אִ}} é "i".'
+      errado: tx.alefErrado,
+      certo: tx.alefCerto
     },
     parecidas: ['ע']
   },
   {
     id: 'mem', audioNome: 'mem',
-    exemplo: { he: 'אִמָא', translit: 'íma', pt: 'mãe', audio: 'ima' },
+    exemplo: { he: 'אִמָא', translit: grafia('íma'), pt: tx.memSentido, audio: 'ima' }, // i18n-ok: transliteração, etapa 3
     erro: {
-      errado: 'Ler {{אֵם}} como o "em" do português, com a vogal anasalada e o M sumindo.',
-      certo: 'Ler {{אֵם}} com a vogal oral, como o E de "mesa", e fechar os lábios de verdade no M do fim.'
+      errado: tx.memErrado,
+      certo: tx.memCerto
     },
     parecidas: ['ס']
   },
   {
     id: 'tav', audioNome: 'tav',
-    exemplo: { he: 'אֶמֶת', translit: 'émet', pt: 'verdade', audio: 'emet' },
+    exemplo: { he: 'אֶמֶת', translit: grafia('émet'), pt: tx.tavSentido, audio: 'emet' }, // i18n-ok: transliteração, etapa 3
     erro: {
-      errado: 'Ler {{תִי}} como "tchi" e {{תֵ}} como "tche".',
-      certo: 'Ler {{תִי}} como "ti" e {{תֵ}} como "te", com o T seco.'
+      errado: tx.tavErrado,
+      certo: tx.tavCerto
     },
     parecidas: ['ח', 'ה']
   },
   {
     id: 'shin', audioNome: 'shin',
-    exemplo: { he: 'שָׁלוֹם', translit: 'shalóm', pt: 'paz / olá / tchau', audio: 'shalom' },
+    exemplo: { he: 'שָׁלוֹם', translit: grafia('shalóm'), pt: tx.shinSentido, audio: 'shalom' }, // i18n-ok: transliteração, etapa 3
     erro: {
-      errado: 'Ler {{ש}} como S: "salóm", "sem".',
-      certo: 'Ler {{ש}} como o X de "xícara" ou o CH de "chave" (transliterado "sh"): "shalóm", "shem".'
+      errado: tx.shinErrado,
+      certo: tx.shinCerto
     },
     parecidas: ['ע']
   },
   {
     id: 'lamed', audioNome: 'lamed',
-    exemplo: { he: 'לַיְלָה', translit: 'láyla', pt: 'noite', audio: 'laila' },
+    exemplo: { he: 'לַיְלָה', translit: grafia('láyla'), pt: tx.lamedSentido, audio: 'laila' }, // i18n-ok: transliteração, etapa 3
     erro: {
-      errado: 'Ler {{שֶׁל}} como "sheu", transformando o L final em U.',
-      certo: 'Ler {{שֶׁל}} como "shel", com o L bem apoiado na ponta da língua.'
+      errado: tx.lamedErrado,
+      certo: tx.lamedCerto
     },
     parecidas: ['ן', 'ו']
   }

@@ -27,6 +27,7 @@ import { course, licaoDaLetra } from '@/lib/content-publico';
 import { Container, Rubrica } from './base';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { SEM_MIDIA, type HeroMedia } from './media';
+import { tx } from '@/i18n/telas/venda-hero';
 
 /* A entrada do hero é CSS (`hero-entra` em globals.css), não estado do React
    (23/10/2026, velocidade no celular). Com o estado, o título nascia com
@@ -38,7 +39,7 @@ import { SEM_MIDIA, type HeroMedia } from './media';
 /* Os três desejos de quem chega (a versão "híbrida" do hero, escolhida pelo
    dono do curso em 28/09/2026). Eram selos com borda; viraram uma linha
    corrida com separadores, que diz o mesmo sem disputar com os botões. */
-const DESEJOS = ['para viajar a Israel', 'para ler as letras da Bíblia', 'para finalmente entender o alfabeto'];
+const DESEJOS = [tx.desejoIsrael, tx.desejoBiblia, tx.desejoAlfabeto];
 
 /* A mensagem central é em PORTUGUÊS, inteira.
  * ─────────────────────────────────────────────────────────────────────────
@@ -76,16 +77,16 @@ export function Hero({
               uma linha o que se aprende (CLAUDE.md, "Teste A/B do hero"). */}
           <div className="hero-entra" data-entrada style={entra(1)}>
             <Rubrica className="mb-5 sm:mb-6">
-              <span className="sm:hidden">Do zero · alfabetização em hebraico</span>
-              <span className="hidden sm:inline">Alfabetização em hebraico · para iniciantes absolutos</span>
+              <span className="sm:hidden">{tx.rubricaCurta}</span>
+              <span className="hidden sm:inline">{tx.rubricaLonga}</span>
             </Rubrica>
             <h1 className="font-display font-semibold text-[clamp(38px,4.6vw,60px)] leading-[1.02]
                            tracking-[-0.038em] m-0 mb-5">
-              Ler e escrever hebraico, <span className="text-[var(--teal-ink)]">do zero.</span>
+              {tx.tituloA} <span className="text-[var(--teal-ink)]">{tx.tituloB}</span>
             </h1>
             <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 list-none p-0 m-0 mb-7
                            font-ui text-[15px] sm:text-[16px] font-medium text-ink-body"
-                aria-label="Para quem é">
+                aria-label={tx.paraQuem}>
               {DESEJOS.map(t => (
                 <li key={t} className="inline-flex items-center gap-2.5 mr-2">
                   <span aria-hidden className="w-[5px] h-[5px] rounded-full bg-[var(--gold)]" />
@@ -97,10 +98,10 @@ export function Hero({
           <div className="hero-entra" data-entrada style={entra(2)}>
             <p className="font-display text-[clamp(21px,2.1vw,26px)] leading-[1.32] font-medium tracking-[-0.02em]
                           text-ink max-w-[30ch] m-0 mb-2">
-              Mesmo que hoje você não reconheça uma única letra.
+              {tx.mesmoQue}
             </p>
             <p className="font-ui text-[16.5px] sm:text-[18px] leading-[1.55] text-ink-muted max-w-[46ch] m-0 mb-8">
-              Uma letra por vez, com som, escrita e correção na hora, até ler suas primeiras palavras sozinho.
+              {tx.umaLetraPorVez}
             </p>
           </div>
 
@@ -134,7 +135,7 @@ export function Hero({
               >
                 {/* Leva ao TESTE, e não a um texto sobre ele, e é «teste», não
                     «aula»: o curso não vende aula ao vivo nem videoaula. */}
-                Fazer um teste grátis
+                {tx.teste}
               </Link>
             </div>
             {/* A microcópia responde a pergunta que trava o clique: "e o que
@@ -299,10 +300,10 @@ function Lamina() {
                        shadow-[0_0_0_1px_var(--line),0_2px_4px_rgba(27,33,31,.04),0_30px_60px_-30px_rgba(14,59,67,.35)]">
       <div className="flex items-baseline justify-between gap-4 px-5 sm:px-6 py-4 border-b border-line">
         <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-ink-muted tabular-nums">
-          {licao ? `Lição ${licao}` : 'Uma letra por vez'}
+          {licao ? tx.licao(licao) : tx.laminaSemLicao}
         </span>
         <span className="font-ui text-[12px] font-semibold uppercase tracking-[.12em] text-[var(--teal-ink)]">
-          Shin
+          {tx.shin}
         </span>
       </div>
 
@@ -313,19 +314,19 @@ function Lamina() {
 
       <div className="grid grid-cols-2 border-t border-line">
         <div className="px-5 sm:px-6 py-5 border-r border-line">
-          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0 mb-2">Som</p>
-          <p className="font-display text-[26px] leading-none font-semibold tracking-[-0.02em] text-ink m-0 mb-1.5">sh</p>
-          <p className="font-ui text-[14.5px] leading-[1.45] text-ink-body m-0">como o X de «xícara»</p>
+          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0 mb-2">{tx.som}</p>
+          <p className="font-display text-[26px] leading-none font-semibold tracking-[-0.02em] text-ink m-0 mb-1.5">{tx.somSh}</p>
+          <p className="font-ui text-[14.5px] leading-[1.45] text-ink-body m-0">{tx.comoXicara}</p>
         </div>
         <div className="px-3 sm:px-5 py-4 grid justify-items-center content-center gap-1 text-center">
-          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0">À mão</p>
-          <DiagramaDeTracado letterId="shin" label="Shin" movimentos={1}
+          <p className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted m-0">{tx.aMao}</p>
+          <DiagramaDeTracado letterId="shin" label={tx.shin} movimentos={1}
                              className="[&_img]:w-[92px] sm:[&_img]:w-[104px]" />
         </div>
       </div>
 
       <figcaption className="px-5 sm:px-6 py-4 border-t border-line font-ui text-[14.5px] leading-[1.5] text-ink-body">
-        O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma letra vira Sin, com som de S.
+        {tx.ponto}
       </figcaption>
     </figure>
   );

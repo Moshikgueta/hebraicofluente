@@ -48,10 +48,10 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { OUT } from './saida.mjs';
 
-const OUT = 'out';
 if (!existsSync(OUT)) {
-  console.error('out/ não existe. Rode a build antes:  npm run build && node promessas.mjs');
+  console.error(`${OUT}/ não existe.`.slice(0) + ' Rode a build antes:  npm run build && node promessas.mjs');
   process.exit(1);
 }
 
@@ -71,7 +71,11 @@ const PROMESSAS = [
   'Reproduzir áudio',
   'Qual som você ouviu',
   'escuta e leitura',
-  'Cinco tipos de exercício'
+  'Cinco tipos de exercício',
+  /* O site em inglês: as mesmas promessas, no texto de lá. */
+  'recorded by the teacher',
+  'recorded by a native',
+  'Hear the teacher'
 ];
 
 /* As rotas pagas não entram: o HTML delas só sai para quem já comprou, e não
@@ -141,13 +145,16 @@ console.log('✓ nenhuma página livre mostra {{...}} cru.');
      · no HTML publicado, toda frase visível que fala da ordem das letras
        atribui ao método ("vem do método"). */
 const ORDEM = /(sequ[eê]ncia|ordem)\s+(das|em que as)\s+letras/i;
+/* No HTML do site em inglês, a mesma frase em inglês, atribuída ao método. */
+const ORDEM_HTML = /(sequ[eê]ncia|ordem)\s+(das|em que as)\s+letras|(sequence|order)\s+(of the|in which the)\s+letters/i;
+const DO_METODO = /vem do método|comes from (his|the) method/i;
 const semComentarios = s => s
   .replace(/\/\*[\s\S]*?\*\//g, ' ')
   .replace(/(^|[^:'"`])\/\/.*$/gm, '$1');
 const fontes = [
   ...arquivos(new URL('./src', import.meta.url).pathname).filter(p => /\.(tsx?|mjs)$/.test(p)),
   ...arquivos(new URL('../data', import.meta.url).pathname).filter(p => p.endsWith('.json'))
-].filter(p => !p.endsWith('/lib/credito.ts'));
+].filter(p => !p.endsWith('/lib/credito.ts') && !p.endsWith('/i18n/telas/motor-credito.ts'));
 const ordemNaFonte = [];
 for (const p of fontes) {
   let s = readFileSync(p, 'utf8');
@@ -168,7 +175,7 @@ for (const p of paginas.filter(p => p.endsWith('.html'))) {
   try { html = readFileSync(p, 'utf8'); } catch { continue; }
   const visivel = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
   for (const frase of visivel.split(/(?<=[.!?])\s+/)) {
-    if (ORDEM.test(frase) && !/vem do método/i.test(frase)) {
+    if (ORDEM_HTML.test(frase) && !DO_METODO.test(frase)) {
       ordemNoHtml.push(`${rotaDe(p)}: "${frase.trim().slice(0, 120)}"`);
     }
   }
@@ -193,7 +200,10 @@ const NEGACOES = [
   'voz sintética',
   'espanhol latino',
   'gravações estão em produção',
-  'gravações com falante nativo estão planejadas'
+  'gravações com falante nativo estão planejadas',
+  'speech synthesizer',
+  'synthetic voice',
+  'recordings are in production'
 ];
 
 if (TEM_AUDIO) {

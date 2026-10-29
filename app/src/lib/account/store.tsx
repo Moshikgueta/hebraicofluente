@@ -24,7 +24,7 @@ import {
   type ReactNode
 } from 'react';
 import { api, apiMode, isDemo, type ApiMode } from './api';
-import { hasAccess, type Order, type PaymentMethod, type Session } from './types';
+import { hasAccess, type CreatedOrder, type Order, type PaymentMethod, type Session } from './types';
 import type { Origem } from '@/lib/origem';
 
 type AccountValue = {
@@ -56,9 +56,11 @@ type AccountValue = {
   confirmEmail(token: string): Promise<void>;
   /** A caixa do perfil do aviso do próximo curso. */
   setNovidades(quero: boolean): Promise<void>;
+  /** A caixa do perfil do lembrete para estudar. */
+  setLembrete(quero: boolean): Promise<void>;
 
   startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
-    Promise<Order & { redirectUrl?: string }>;
+    Promise<CreatedOrder>;
   orderStatus(id: string): Promise<Order>;
   requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;
 
@@ -150,6 +152,10 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       await (await api()).setNovidades(quero);
       setSession(s => s && { ...s, account: { ...s.account, novidades: quero } });
     },
+    async setLembrete(quero) {
+      await (await api()).setLembrete(quero);
+      setSession(s => s && { ...s, account: { ...s.account, lembrete: quero } });
+    },
 
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),
@@ -163,6 +169,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
 export function useAccount(): AccountValue {
   const v = useContext(Ctx);
-  if (!v) throw new Error('useAccount fora de <AccountProvider>');
+  if (!v) throw new Error('useAccount fora de <AccountProvider>'); // i18n-ok: erro de desenvolvedor
   return v;
 }

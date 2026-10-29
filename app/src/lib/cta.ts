@@ -22,6 +22,8 @@
 
 import { FLAGSHIP, getCourse, isPlayable, allCourses, paginaDeVenda, type CatalogCourse } from './catalog';
 import { confirmaSozinho, empresa } from './empresa';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-cta';
 
 export type Passo = {
   href: string;
@@ -53,8 +55,8 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
   if (curso && !isPlayable(curso)) {
     return {
       href: paginaDeVenda(slug),
-      label: 'Ver o que vem neste curso',
-      micro: 'Em breve. A página mostra o plano completo.',
+      label: tx.embreveLabel,
+      micro: tx.embreveMicro,
       vende: false
     };
   }
@@ -62,8 +64,8 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
   if (conta.ready && conta.can(slug)) {
     return {
       href: '/meu-hebraico',
-      label: 'Continuar de onde parei',
-      micro: 'Seu progresso está salvo.',
+      label: tx.continuarLabel,
+      micro: tx.continuarMicro,
       vende: false
     };
   }
@@ -74,12 +76,12 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
      (auditoria de 01/10/2026, LEGAL-103): o botão não pode prometer o que o
      checkout logo depois desmente. */
   const quando = confirmaSozinho()
-    ? 'Acesso imediato'
-    : `Acesso em até ${empresa.atendimento.prazoRespostaUteis} dias úteis`;
+    ? tx.acessoImediato
+    : fmt(tx.acessoEmAte, { n: empresa.atendimento.prazoRespostaUteis });
   return {
     href: `/checkout/${slug}`,
-    label: conta.ready && conta.signedIn ? 'Liberar meu acesso' : 'Começar a aprender',
-    micro: `${quando} · ${meses} meses · sem mensalidade`,
+    label: conta.ready && conta.signedIn ? tx.liberar : tx.comecar,
+    micro: fmt(tx.micro, { quando, meses }),
     vende: true
   };
 }
@@ -92,6 +94,13 @@ export function proximoPasso(conta: Conta, slug: string = FLAGSHIP): Passo {
  * alfabetização. Devolve `null` quando não sobrou nada para oferecer - e aí
  * a seção inteira não é renderizada, em vez de virar um botão morto.
  */
+/** O curso logo depois de `atual` na trilha (A1 depois da alfabetização),
+ *  tenha a conta ou não. */
+export function cursoSeguinte(atual: string = FLAGSHIP): CatalogCourse | null {
+  const aqui = getCourse(atual);
+  return [...allCourses()].sort((a, b) => a.n - b.n).find(c => c.n > (aqui?.n ?? 0)) ?? null;
+}
+
 export function proximoCurso(conta: Conta, atual: string = FLAGSHIP): CatalogCourse | null {
   if (!conta.ready) return null;
   const aqui = getCourse(atual);

@@ -7,7 +7,10 @@
  *   · resposta   - tipo do exercício, lição, certa ou errada;
  *   · etapa      - lição e etapa, só na PRIMEIRA vez que ela é concluída
  *                  (repetir uma etapa não conta de novo: o funil é de
- *                  alunos, não de cliques).
+ *                  alunos, não de cliques);
+ *   · tempo      - junto da etapa, a FAIXA de tempo ativo que ela levou
+ *                  (28/10/2026, app/src/lib/tempo-de-etapa.ts): 0 a 6, de
+ *                  "menos de 1 min" a "20 min ou mais". Nunca os segundos.
  *
  * O que é guardado é uma linha por dia e por chave, com um contador:
  * `estatisticas (dia, chave, n)`. Nenhuma linha tem conta, e-mail, IP,
@@ -40,6 +43,18 @@ const DIA_MS = 86_400_000;
 
 const hojeBrasilia = (at = Date.now()) => new Date(at - 3 * 3_600_000).toISOString().slice(0, 10);
 
+/** As faixas de tempo vão de 0 a FAIXAS - 1 (as mesmas de app/src/lib/tempo-de-etapa.ts). */
+export const FAIXAS = 7;
+
+/** A faixa de tempo de uma etapa vira a chave `t|<lição>|<etapa>|<faixa>`, ou null. */
+export function chaveDoTempo(ev) {
+  if (!ev || ev.e !== 'etapa' || ev.f === undefined) return null;
+  const base = chaveDe(ev);
+  const f = Number(ev.f);
+  if (!base || !Number.isInteger(f) || f < 0 || f >= FAIXAS) return null;
+  return `t|${String(ev.l)}|${Number(ev.s)}|${f}`;
+}
+
 /** O evento do app vira uma chave de contador, ou null se não serve. */
 export function chaveDe(ev) {
   if (!ev || typeof ev !== 'object') return null;
@@ -69,8 +84,9 @@ export async function registrar({ request, env }) {
   const eventos = b && Array.isArray(b.eventos) ? b.eventos.slice(0, MAX_EVENTOS) : [];
   const soma = new Map();
   for (const ev of eventos) {
-    const k = chaveDe(ev);
-    if (k) soma.set(k, (soma.get(k) || 0) + 1);
+    for (const k of [chaveDe(ev), chaveDoTempo(ev)]) {
+      if (k) soma.set(k, (soma.get(k) || 0) + 1);
+    }
   }
   if (!soma.size) return new Response(null, { status: 204 });
   const dia = hojeBrasilia();
@@ -99,7 +115,9 @@ export const LINKS_DE_CAMPANHA = new Map([
 /* Os links que vão para a página "Comece aqui" (24/10/2026, decisão do dono)
    em vez do teste grátis: só a bio, que recebe gente de todo post. Stories e
    direct chegam de um conteúdo que já diz do que se trata. */
-export const PARA_O_COMECE_AQUI = new Set(['bio']);
+/* A bio ia para o "Comece aqui" (24/10/2026); desde 27/10/2026 o site fica só
+   com o curso de alfabetização, e ela vai direto à página do curso. */
+export const PARA_O_COMECE_AQUI = new Set([]);
 const ROBO = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|curl|wget|python|headless/i;
 
 export async function contarCampanha(env, origem, request) {
@@ -315,6 +333,7 @@ export async function ler({ request, env }) {
   } catch { /* tabela ausente: nada ainda */ }
   const respostas = new Map();
   const etapas = [];
+  const tempos = [];
   const campanhas = [];
   const demo = [];
   const motivos = [];
@@ -330,6 +349,8 @@ export async function ler({ request, env }) {
       respostas.set(k, r);
     } else if (p[0] === 'e' && p.length === 3) {
       etapas.push({ licao: p[1], etapa: Number(p[2]), n });
+    } else if (p[0] === 't' && p.length === 4) {
+      tempos.push({ licao: p[1], etapa: Number(p[2]), faixa: Number(p[3]), n });
     } else if (p[0] === 'o' && p.length === 2) {
       campanhas.push({ origem: p[1], visitas: n });
     } else if (p[0] === 'd' && p.length === 2) {
@@ -349,7 +370,7 @@ export async function ler({ request, env }) {
   /* A lista de interessados: o total de hoje (não depende do período). */
   const interessados = await resumoDaLista(env);
   const semanas = await funilSemanal(env);
-  return json({ dias, desde, respostas: [...respostas.values()], etapas, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes, interessados, semanas });
+  return json({ dias, desde, respostas: [...respostas.values()], etapas, tempos, campanhas, demo, motivos, portal, porFonte, pedidos, pedidosDeTeste: testes, interessados, semanas });
 }
 
 /** Soma 1 numa chave de contador, hoje. Nunca lança: estatística perdida

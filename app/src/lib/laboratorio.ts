@@ -27,16 +27,22 @@
 import type { Letter } from '@/lib/content';
 import { FINAL_TO_BASE, clean, clusters, stripNikud } from '@/lib/hebrew';
 import { letrasDaGrafia, consegueLer, type PalavraDoCurso } from '@/lib/engine/palavras';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-laboratorio';
+import { translit as grafia } from '@/i18n/translit';
 
 export type NivelDeApoio = 'guiada' | 'menos-ajuda' | 'independente';
 
-export const NIVEIS: readonly { id: NivelDeApoio; tituloPt: string; resumoPt: string }[] = [
-  { id: 'guiada', tituloPt: 'Leitura guiada',
-    resumoPt: 'Com nikud, explicação letra por letra e áudio disponível quando você precisar.' },
-  { id: 'menos-ajuda', tituloPt: 'Leitura com menos ajuda',
-    resumoPt: 'Tente ler por conta própria. Você pode acessar dicas quando precisar.' },
-  { id: 'independente', tituloPt: 'Leitura independente',
-    resumoPt: 'Leia a palavra por conta própria e depois confira a pronúncia.' }
+/* `curtoPt`: o rótulo do seletor de uma linha (27/10/2026, rodada 2 da
+   experiência): os três cartões empurravam a palavra para baixo da dobra no
+   celular. */
+export const NIVEIS: readonly { id: NivelDeApoio; tituloPt: string; curtoPt: string; resumoPt: string }[] = [
+  { id: 'guiada', tituloPt: tx.guiadaTitulo, curtoPt: tx.guiadaCurto,
+    resumoPt: tx.guiadaResumo },
+  { id: 'menos-ajuda', tituloPt: tx.menosAjudaTitulo, curtoPt: tx.menosAjudaCurto,
+    resumoPt: tx.menosAjudaResumo },
+  { id: 'independente', tituloPt: tx.independenteTitulo, curtoPt: tx.independenteCurto,
+    resumoPt: tx.independenteResumo }
 ];
 
 /** Uma vogal como o curso a ensina, pelo SOM. */
@@ -92,9 +98,9 @@ export type PalavraDoBanco = {
 
 /* Os sinais, pelo ponto de código. Os nomes são os de data/nikud.json. */
 const SINAIS: Record<string, { nome: string; vogal: Vogal | null }> = {
-  'ַ': { nome: 'pátach', vogal: 'a' },
+  'ַ': { nome: grafia('pátach'), vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
   'ָ': { nome: 'kamats', vogal: 'a' },
-  'ֲ': { nome: 'chataf pátach', vogal: 'a' },
+  'ֲ': { nome: grafia('chataf pátach'), vogal: 'a' }, // i18n-ok: nome do sinal (transliteração, etapa 3)
   'ֶ': { nome: 'segol', vogal: 'e' },
   'ֵ': { nome: 'tsere', vogal: 'e' },
   'ֱ': { nome: 'chataf segol', vogal: 'e' },
@@ -151,10 +157,9 @@ export function pedacosDe(he: string, letras: readonly Letter[], translit = ''):
     if (cholamMale || shuruk) {
       return {
         grafia: g, letra, nomePt: L?.namePt ?? 'Vav', somPt: '',
-        vogal: cholamMale ? 'o' : 'u', sinaisPt: [cholamMale ? 'cholam malê' : 'shuruk'],
+        vogal: cholamMale ? 'o' : 'u', sinaisPt: [cholamMale ? grafia('cholam malê') : 'shuruk'], // i18n-ok: nome do sinal (transliteração, etapa 3)
         apoioDeVogal: true, papel: 'vogal',
-        notaPt: cholamMale ? 'Aqui, o Vav com o ponto acima representa o som O.'
-                           : 'Aqui, o Vav com o ponto dentro representa o som U.'
+        notaPt: cholamMale ? tx.vavO : tx.vavU
       };
     }
 
@@ -164,7 +169,7 @@ export function pedacosDe(he: string, letras: readonly Letter[], translit = ''):
     let papel: PapelDaLetra = 'consoante';
     if (letra === 'ש' && marcas.includes(PONTO_SIN)) { nomePt = 'Sin'; somPt = '/s/'; }
     else if (letra === 'ש' && marcas.includes(PONTO_SHIN)) { somPt = '/ʃ/'; }
-    if (final) nomePt = `${nomePt} final`;
+    if (final) nomePt = fmt(tx.nomeFinal, { nome: nomePt });
 
     /* Álef e Áyin: na pronúncia israelense mais comum, nenhum dos dois soa
        como consoante NESTA palavra. Com vogal, quem soa é a vogal; sem vogal,
@@ -172,35 +177,34 @@ export function pedacosDe(he: string, letras: readonly Letter[], translit = ''):
     if (letra === 'א') {
       somPt = '';
       papel = vogal ? 'vogal' : 'apoio';
-      notaPt = vogal ? `Nesta palavra, o Álef não tem som próprio: quem soa é a vogal ${vogal.toUpperCase()}.`
-                     : 'Nesta palavra, o Álef não tem som próprio.';
+      notaPt = vogal ? fmt(tx.alefComVogal, { vogal: vogal.toUpperCase() })
+                     : tx.alefSemVogal;
     }
     if (letra === 'ע') {
       somPt = '';
       papel = vogal ? 'vogal' : 'apoio';
-      notaPt = 'Na pronúncia israelense mais comum, o Áyin não soa como consoante nesta palavra. '
-        + 'Em algumas tradições, ele é pronunciado no fundo da garganta.';
+      notaPt = tx.ayin;
     }
     /* O ה no fim, sem vogal própria e depois de uma vogal: apoio da vogal
        final (תוֹדָה). Não vale para o He com som. */
     if (letra === 'ה' && ultima && !vogal && anterior) {
       somPt = ''; papel = 'apoio';
-      notaPt = 'No fim de muitas palavras, o He não tem som próprio e ajuda a representar a vogal final.';
+      notaPt = tx.heFinal;
     }
     /* O pátach do fim que se lê ANTES da consoante: só em ח ou ע finais,
        depois de uma vogal que não é A (רוּחַ, תַפּוּחַ). */
     if ((letra === 'ח' || letra === 'ע') && ultima && marcas.includes('\u05B7') && anterior && anterior !== 'a') {
-      notaPt = 'Aqui temos um pátach especial: o som A é pronunciado antes da consoante final.';
+      notaPt = tx.patachFurtivo;
     }
     /* O י sem sinal depois de uma vogal é apoio, não o som /j/: מִי é "mi".
        Depois de E, ditongo só quando a transliteração aprovada diz "ei". */
     if (letra === 'י' && !marcas.length && anterior) {
       somPt = ''; papel = 'apoio';
-      notaPt = anterior === 'i' ? 'Aqui, o Yud ajuda a representar a vogal I, sem produzir um som separado.'
+      notaPt = anterior === 'i' ? tx.yudI
         : anterior === 'e' ? (tl.includes('ei')
-            ? 'Nesta palavra, o E e o Yud formam o som "ei".'
-            : 'Aqui, o Yud faz parte da representação da vogal E. Ouça como esta palavra é pronunciada.')
-        : 'Aqui o Yud não tem som próprio.';
+            ? tx.yudEi
+            : tx.yudE)
+        : tx.yudMudo;
     }
 
     return {
@@ -351,25 +355,23 @@ export function palavrasDaPrimeiraLeitura(
    cada frase promete (tests/laboratorio.test.ts). */
 
 /** "1 palavra", "5 palavras". */
-export const nPalavras = (n: number): string => (n === 1 ? '1 palavra' : `${n} palavras`);
+export const nPalavras = (n: number): string => tx.nPalavras(n);
 
 /** A instrução de cada nível. Só promete o áudio quando a palavra tem. */
 export function instrucao(nivel: NivelDeApoio, temAudio: boolean): string {
   if (nivel === 'guiada') {
-    return temAudio
-      ? 'Leia da direita para a esquerda, em voz alta. Se precisar, explore as letras uma a uma ou ouça a pronúncia.'
-      : 'Leia da direita para a esquerda, em voz alta. Se precisar, explore as letras uma a uma.';
+    return temAudio ? tx.guiadaAudio : tx.guiadaSemAudio;
   }
-  if (nivel === 'menos-ajuda') return 'Tente ler em voz alta sem ajuda. Se precisar, você pode acessar as dicas abaixo.';
-  return 'Leia a palavra em voz alta por conta própria. Depois, confira a pronúncia.';
+  if (nivel === 'menos-ajuda') return tx.menosAjuda;
+  return tx.independente;
 }
 
 /** O que a letra faz nesta palavra, em poucas palavras. */
 export function descricao(p: PedacoDaPalavra, comVogal: boolean): string {
   const V = comVogal && p.vogal ? p.vogal.toUpperCase() : null;
-  if (p.papel === 'vogal') return V ? `vogal ${V}` : 'vogal';
+  if (p.papel === 'vogal') return V ? fmt(tx.vogalCom, { vogal: V }) : tx.vogal;
   if (p.papel === 'apoio') {
-    return p.letra === 'א' || p.letra === 'ע' ? 'sem som de consoante aqui' : 'apoio da vogal';
+    return p.letra === 'א' || p.letra === 'ע' ? tx.semConsoante : tx.apoioDaVogal;
   }
   return V ? `${p.somPt} + ${V}` : p.somPt;
 }
@@ -378,11 +380,11 @@ export function descricao(p: PedacoDaPalavra, comVogal: boolean): string {
  *  "sem ouvir a pronúncia antes" quando foi assim. */
 export function mensagemDaPrimeiraLeitura(total: number, certas: number, ouviuAlguma: boolean): string {
   const marcou = certas === 0
-    ? 'Nenhuma foi marcada como lida corretamente ainda: vale ler de novo, com calma.'
-    : `Marcou ${certas === 1 ? '1 delas' : `${certas} delas`} como ${certas === 1 ? 'lida corretamente' : 'lidas corretamente'}.`;
+    ? tx.nenhumaCerta
+    : tx.marcou(certas);
   return ouviuAlguma
-    ? `Você praticou a leitura de ${nPalavras(total)} em hebraico. ${marcou} Da próxima vez, tente ler cada palavra antes de ouvir.`
-    : `Você praticou a leitura de ${nPalavras(total)} em hebraico sem ouvir a pronúncia antes. ${marcou}`
-      + (certas > 0 ? ' Isso é um grande passo: você está começando a ler hebraico!' : '');
+    ? tx.praticouOuvindo(nPalavras(total), marcou)
+    : tx.praticouSemOuvir(nPalavras(total), marcou)
+      + (certas > 0 ? tx.grandePasso : '');
 }
 

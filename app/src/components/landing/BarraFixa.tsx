@@ -30,6 +30,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { brl, flagship, parcelasMax } from '@/lib/catalog';
 import { empresa, parcelasCurto, temCartao } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/venda-barra-fixa';
 
 /* Os alvos que apagam a barra. Ficam aqui, e não espalhados, porque são os
    ids que as seções de Fecho.tsx já expõem - se um sumir, o efeito abaixo
@@ -99,7 +100,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
           {/* Só com cartão nesta publicação (LEGAL-103). */}
           {temCartao() && (
             <span className="block text-[12.5px] text-ink-muted tabular-nums">
-              ou {parcelasCurto(parcelas)} no cartão
+              {tx.parcelas(parcelasCurto(parcelas))}
             </span>
           )}
           {/* A versão curta da linha da caixa de preço (CONV-001): a barra
@@ -107,7 +108,7 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
               decide aqui sem saber que pode desistir. Uma linha a mais no
               bloco de texto; a barra continua na altura do botão. */}
           <span className="block text-[12.5px] text-ink-muted tabular-nums">
-            {empresa.politicas.arrependimentoDias} dias para desistir
+            {tx.desistir(empresa.politicas.arrependimentoDias)}
           </span>
         </p>
         <Link

@@ -22,7 +22,9 @@
 import { fail, json, readJson } from '../lib/http.js';
 import { normalizeEmail, throttled } from '../lib/db.js';
 import { sha256hex } from '../lib/crypto.js';
-import { mailReady, mensagemDaSegundaLetra, sendMail } from '../lib/mail.js';
+import { mailReady, sendMail } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { idiomaDoWorker } from '../lib/idioma.js';
 import { emailOk, ip } from './auth.js';
 import { contarEtapa } from './estatisticas.js';
 import { inscrever, linkDeConfirmacao } from './interessados.js';
@@ -47,7 +49,8 @@ export async function pedir({ request, env }) {
     const r = await inscrever(env, { email, interesse: 'curso', origem: b.origem });
     if (r && !r.confirmado) confirmar = await linkDeConfirmacao(env, r.id);
   }
-  const m = mensagemDaSegundaLetra({ site, suporte: env.SUPPORT_EMAIL || '', confirmar });
+  /* No idioma do site em que a pessoa fez o teste (lib/idioma.js). */
+  const m = mensagens(idiomaDoWorker(env)).segundaLetra({ site, suporte: env.SUPPORT_EMAIL || '', confirmar });
   const r = await sendMail(env, { to: email, ...m });
   if (!r.ok) {
     console.error('segunda-letra', r.motivo, r.status || '', r.detalhe || '');

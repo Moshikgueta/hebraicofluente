@@ -1,0 +1,243 @@
+import type { ReactNode } from 'react';
+import type { Traducao } from '..';
+
+/* app/meu-hebraico/DashboardClient.tsx - o painel do aluno e a boas-vindas
+   da primeira vez. Frase com um link no meio é função: o link entra pronto,
+   com o texto que o dicionário dá. */
+type Link = (texto: string) => ReactNode;
+
+const pt = {
+  /* a data do topo e a saudação */
+  localeDaData: 'pt-BR',
+  bomDia: 'Bom dia',
+  boaTarde: 'Boa tarde',
+  boaNoite: 'Boa noite',
+
+  /* a frase de orientação */
+  orientaAula0: 'Seu primeiro passo é a Aula 0: uns dez minutos, e a primeira letra abre.',
+  orientaTerminar: 'Falta terminar os exercícios de {nome} para a próxima lição abrir.',
+  orientaPrimeira: 'Hoje você aprende a sua primeira letra: {nome}.',
+  orientaLetra: 'Você já concluiu {n} de {total} letras. A próxima é {nome}.',
+  orientaSom: 'Você já concluiu {n} de {total} letras. A próxima lição é {licao}.',
+  oSom: 'o som {nome}',
+  orientaCheckpoint: 'Você fechou as letras do módulo {n}. Falta o checkpoint para seguir.',
+  orientaExtra: 'Agora o módulo {n}: {titulo}.',
+  orientaFim: 'Você chegou ao fim do alfabeto. Falta o desafio final.',
+
+  /* a lição do plano de hoje */
+  hojeAula0: 'Aula 0',
+  hojeCheckpoint: 'checkpoint {n}',
+  hojeModulo: 'módulo {n}',
+
+  /* revisar antes */
+  revisarTitulo: 'Revisar antes de continuar',
+  revisarAusente: 'Você esteve fora alguns dias. Três minutos no que estava escapando e a lição de hoje rende muito mais.',
+  revisarItens: (n: number) => `Você tem ${n} ${n === 1 ? 'item' : 'itens'} para revisar. Uma revisão rápida agora vai ajudar você a aprender a próxima letra com mais facilidade.`,
+  revisarAgora: 'Revisar agora',
+
+  /* a ação principal */
+  continuarAprendendo: 'Continuar aprendendo',
+  antesDaPrimeira: 'Antes da primeira letra',
+  comoFunciona: 'Como o hebraico funciona',
+  aula0Sub: 'A aula que abre a primeira letra: a direção da leitura, o alfabeto, o nikud e como este curso funciona. Termina com uma checagem curta, e aí o Álef abre.',
+  aula0Cta: 'Começar pela Aula 0',
+  emAndamento: 'Curso em andamento',
+  terminarSub: 'Faltam os exercícios de {nome}: a próxima lição abre com {pct}%.',
+  melhorNota: ' Sua melhor nota até agora: {nota}%.',
+  terminarCta: 'Terminar {nome}',
+  letraSub: 'Módulo {modulo} · lição {licao} - letra {nome}, som {som}',
+  somSub: 'Módulo {modulo} · lição {licao} - {nome}',
+  comecarLicao: 'Começar a lição',
+  checkpointKicker: 'Checkpoint {n}',
+  checkpointSub: 'As {n} letras do módulo, juntas.',
+  checkpointCta: 'Fazer o checkpoint',
+  moduloKicker: 'Módulo {n}',
+  extraSub: 'Nenhuma letra nova - e é o módulo que separa quem decora de quem lê.',
+  comecarModulo: 'Começar o módulo',
+  fimKicker: 'Alfabeto concluído',
+  fimTitulo: 'Você chegou ao fim do alfabeto.',
+  fimSub: 'As 22 letras, sem transliteração para se apoiar.',
+  fimCta: 'Ir para o desafio final',
+
+  /* a Primeira Leitura */
+  primeiraBadge: 'Minha Primeira Leitura',
+  primeiraTitulo: 'Módulo {n} concluído! Hora de praticar a leitura.',
+  primeiraTexto: 'Algumas palavras formadas com as letras e os sinais vocálicos que você já aprendeu. Você lê por conta própria, depois ouve e confere.',
+  lerAgora: 'Ler agora',
+
+  /* a Aula 0 para quem já começou */
+  comoFuncionaTexto: 'Dez minutos de leitura: a direção, o alfabeto, o que muda em relação ao português e como este curso funciona.',
+  reler: (link: Link) => <>{link('Como o hebraico funciona')}{' '}· a explicação de antes da primeira letra, para reler quando quiser.</>,
+  depoimento: (link: Link) => <>{link('Conte como está sendo')}{' '}· o seu depoimento ajuda o curso e quem está pensando em começar.</>,
+
+  /* os números */
+  seusNumeros: 'Seus números',
+  letraDominada: 'letra dominada',
+  letrasDominadas: 'letras dominadas',
+  licaoConcluida: 'lição concluída',
+  licoesConcluidas: 'lições concluídas',
+  itemARevisar: 'item a revisar',
+  itensARevisar: 'itens a revisar',
+  nestaSemana: 'nesta semana',
+  dominioTitulo: 'Meu domínio das letras',
+  dominioResumo: 'Dominadas: {dominadas} · Quase dominadas: {quase}',
+  paraReforcar: ' · Para reforçar: {letras}',
+  verDominio: 'Ver o meu domínio',
+
+  /* praticar */
+  praticarAgora: 'Praticar agora',
+  verTudo: 'Ver tudo →',
+  praticarPoucos: 'Praticar em poucos minutos',
+  atalhoDesafio: 'Desafio do dia',
+  atalhoDesafioFeito: 'feito hoje',
+  atalhoDesafioTempo: '3 minutos',
+  atalhoFlashcards: 'Flashcards',
+  atalhoFlashcardsDesc: 'letras e palavras',
+  atalhoLeitura: 'Leitura',
+  atalhoLeituraDesc: 'textos e laboratório',
+  diaSeguido: 'dia seguido',
+  diasSeguidos: 'dias seguidos',
+  verSeuProgresso: 'Ver o seu progresso',
+  leituraTitulo: 'Leitura',
+  leituraDesc: 'Pratique a leitura de palavras no seu ritmo.',
+  matchTitulo: 'Match',
+  matchDesc: 'Junte letra, nome e som.',
+  blastTitulo: 'Blast',
+  blastDesc: 'Rápido, com sequência de acertos.',
+  testeTitulo: 'Teste',
+  testeDesc: 'Nota no fim e revisão dos erros.',
+
+  /* o alfabeto e os módulos */
+  alfabeto: 'O alfabeto',
+  verMapa: 'Ver o mapa →',
+  modulos: 'Módulos',
+  seusCursos: 'Seus cursos',
+
+  /* a boas-vindas */
+  passo1Titulo: 'Quatro perguntas rápidas',
+  passo1Texto: 'Por que você quer aprender, quanto tempo por dia, o que já sabe e como te chamar. Um minuto.',
+  passo2Titulo: 'Aula 0',
+  passo2Texto: 'Como o hebraico funciona: a direção da leitura, as vogais e os pontinhos. Uns dez minutos.',
+  passo3Titulo: 'Módulo 1: {titulo}',
+  passo3Reserva: 'A primeira letra',
+  passo3Texto: 'Uma letra por lição, com som, escrita à mão e as primeiras palavras.',
+  bemVindo: 'Bem-vindo ao Hebraico Fluente',
+  liberado: 'Seu curso está liberado.',
+  boasVindasTexto: 'São {letras} letras, em {modulos} módulos. Antes da primeira, quatro perguntas rápidas para o curso se ajustar a você.',
+  comecar: 'Começar',
+  oQueVem: 'O que vem agora'
+} as const;
+
+const en: Traducao<typeof pt> = {
+  localeDaData: 'en-US',
+  bomDia: 'Good morning',
+  boaTarde: 'Good afternoon',
+  boaNoite: 'Good evening',
+
+  orientaAula0: 'Your first step is Lesson 0: about ten minutes, and the first letter opens.',
+  orientaTerminar: 'You still need to finish the exercises for {nome} for the next lesson to open.',
+  orientaPrimeira: 'Today you learn your first letter: {nome}.',
+  orientaLetra: 'You have completed {n} of {total} letters. The next one is {nome}.',
+  orientaSom: 'You have completed {n} of {total} letters. The next lesson is {licao}.',
+  oSom: 'the {nome} sound',
+  orientaCheckpoint: 'You finished the letters of module {n}. The checkpoint is what is left before moving on.',
+  orientaExtra: 'Now module {n}: {titulo}.',
+  orientaFim: 'You have reached the end of the alphabet. The final challenge is what is left.',
+
+  hojeAula0: 'Lesson 0',
+  hojeCheckpoint: 'checkpoint {n}',
+  hojeModulo: 'module {n}',
+
+  revisarTitulo: 'Review before you continue',
+  revisarAusente: 'You have been away a few days. Three minutes on what was slipping and today\'s lesson goes much further.',
+  revisarItens: (n: number) => `You have ${n} ${n === 1 ? 'item' : 'items'} to review. A quick review now will help you learn the next letter more easily.`,
+  revisarAgora: 'Review now',
+
+  continuarAprendendo: 'Keep learning',
+  antesDaPrimeira: 'Before the first letter',
+  comoFunciona: 'How Hebrew works',
+  aula0Sub: 'The lesson that opens the first letter: the reading direction, the alphabet, nikud and how this course works. It ends with a short check, and then Aleph opens.',
+  aula0Cta: 'Start with Lesson 0',
+  emAndamento: 'Course in progress',
+  terminarSub: 'The exercises for {nome} are still to do: the next lesson opens at {pct}%.',
+  melhorNota: ' Your best score so far: {nota}%.',
+  terminarCta: 'Finish {nome}',
+  letraSub: 'Module {modulo} · lesson {licao} - letter {nome}, sound {som}',
+  somSub: 'Module {modulo} · lesson {licao} - {nome}',
+  comecarLicao: 'Start the lesson',
+  checkpointKicker: 'Checkpoint {n}',
+  checkpointSub: 'The {n} letters of the module, together.',
+  checkpointCta: 'Take the checkpoint',
+  moduloKicker: 'Module {n}',
+  extraSub: 'No new letter - and it is the module that separates memorizing from reading.',
+  comecarModulo: 'Start the module',
+  fimKicker: 'Alphabet complete',
+  fimTitulo: 'You have reached the end of the alphabet.',
+  fimSub: 'All 22 letters, with no transliteration to lean on.',
+  fimCta: 'Go to the final challenge',
+
+  primeiraBadge: 'My First Reading',
+  primeiraTitulo: 'Module {n} complete! Time to practice reading.',
+  primeiraTexto: 'A few words made with the letters and vowel signs you have already learned. You read on your own, then listen and check.',
+  lerAgora: 'Read now',
+
+  comoFuncionaTexto: 'Ten minutes of reading: the direction, the alphabet, what is different from English and how this course works.',
+  reler: (link: Link) => <>{link('How Hebrew works')}{' '}· the explanation from before the first letter, to reread whenever you like.</>,
+  depoimento: (link: Link) => <>{link('Tell us how it is going')}{' '}· your testimonial helps the course and people thinking about starting.</>,
+
+  seusNumeros: 'Your numbers',
+  letraDominada: 'letter mastered',
+  letrasDominadas: 'letters mastered',
+  licaoConcluida: 'lesson completed',
+  licoesConcluidas: 'lessons completed',
+  itemARevisar: 'item to review',
+  itensARevisar: 'items to review',
+  nestaSemana: 'this week',
+  dominioTitulo: 'My letter mastery',
+  dominioResumo: 'Mastered: {dominadas} · Almost mastered: {quase}',
+  paraReforcar: ' · To reinforce: {letras}',
+  verDominio: 'See my mastery',
+
+  praticarAgora: 'Practice now',
+  verTudo: 'See all →',
+  praticarPoucos: 'Practice in a few minutes',
+  atalhoDesafio: 'Daily challenge',
+  atalhoDesafioFeito: 'done today',
+  atalhoDesafioTempo: '3 minutes',
+  atalhoFlashcards: 'Flashcards',
+  atalhoFlashcardsDesc: 'letters and words',
+  atalhoLeitura: 'Reading',
+  atalhoLeituraDesc: 'texts and the lab',
+  diaSeguido: 'day in a row',
+  diasSeguidos: 'days in a row',
+  verSeuProgresso: 'See your progress',
+  leituraTitulo: 'Reading',
+  leituraDesc: 'Practice reading words at your own pace.',
+  matchTitulo: 'Match',
+  matchDesc: 'Pair up letter, name and sound.',
+  blastTitulo: 'Blast',
+  blastDesc: 'Fast, with streaks of right answers.',
+  testeTitulo: 'Quiz',
+  testeDesc: 'A score at the end and a review of your mistakes.',
+
+  alfabeto: 'The alphabet',
+  verMapa: 'See the map →',
+  modulos: 'Modules',
+  seusCursos: 'Your courses',
+
+  passo1Titulo: 'Four quick questions',
+  passo1Texto: 'Why you want to learn, how much time per day, what you already know and what to call you. One minute.',
+  passo2Titulo: 'Lesson 0',
+  passo2Texto: 'How Hebrew works: the reading direction, the vowels and the little dots. About ten minutes.',
+  passo3Titulo: 'Module 1: {titulo}',
+  passo3Reserva: 'The first letter',
+  passo3Texto: 'One letter per lesson, with sound, handwriting and the first words.',
+  bemVindo: 'Welcome to Hebraico Fluente',
+  liberado: 'Your course is unlocked.',
+  boasVindasTexto: 'There are {letras} letters, in {modulos} modules. Before the first one, four quick questions so the course fits you.',
+  comecar: 'Start',
+  oQueVem: 'What comes next'
+};
+
+export const DICIONARIO = { pt, en };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;

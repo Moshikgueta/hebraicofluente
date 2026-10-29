@@ -28,10 +28,10 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { OUT } from './saida.mjs';
 
-const OUT = 'out';
 if (!existsSync(OUT)) {
-  console.error('out/ não existe. Rode a build antes:  npm run build && node pacote.mjs');
+  console.error(`${OUT}/ não existe.`.slice(0) + ' Rode a build antes:  npm run build && node pacote.mjs');
   process.exit(1);
 }
 

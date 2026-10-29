@@ -11,7 +11,7 @@
     "outro lugar.",
     "",
     "PREÇOS (23/10/2026, decisão do dono): dois produtos e um combo só.",
-    "  Alfabetização em Hebraico        R$ 147 de pré-lançamento, R$ 197 oficial",
+    "  Alfabetização em Hebraico        R$ 147 de pré-lançamento, R$ 297 oficial",
     "  Israel Além do Óbvio             R$ 197 de pré-lançamento, R$ 297 oficial",
     "  Descubra Israel + Aprenda Hebraico (o combo) R$ 297, R$ 397 oficial",
     "brl é o preço de pré-lançamento, que é o cobrado; listBrl é o oficial, que",
@@ -19,7 +19,8 @@
     "(decisão do dono, 23/10/2026: a Action virar-preco só roda à mão). Virar =",
     "brl recebe o listBrl e listBrl vira null; nenhuma tela é editada junto.",
     "Histórico: R$ 147 até 31/10 em 28/09; R$ 197 de 12/10 a 19/10; R$ 147 até",
-    "30/11 em 19/10 (oficial R$ 297); sem data e com oficial R$ 197 em 23/10.",
+    "30/11 em 19/10 (oficial R$ 297); sem data e com oficial R$ 197 em 23/10;",
+    "oficial R$ 297 em 27/10 (o cobrado continua R$ 147).",
     "",
     "OS OUTROS TRÊS PREÇOS SÃO PROVISÓRIOS. São um ponto de partida plausível",
     "para o mercado brasileiro, não uma decisão comercial - troque antes de",
@@ -37,6 +38,12 @@
     "Enquadramento): não publicar antes de o contador confirmar."
   ],
 
+  "_usd": [
+    "usd é o preço do site em inglês, em dólares inteiros, cobrado pelo Paddle",
+    "(decisão do dono, 28/10/2026: US$ 47). Só o curso que tem usd está à venda",
+    "lá: a build em inglês tira da vitrine e do checkout quem não tem, e o",
+    "Worker recusa o pedido. Sem parcelas, sem desconto e sem preço riscado."
+  ],
   "currency": "BRL",
 
   "courses": [
@@ -45,13 +52,29 @@
       "code": "01",
       "n": 1,
       "titlePt": "Alfabetização em Hebraico",
+      "titleEn": "Learn to Read Hebrew",
+      "levelEn": "From zero",
+      "taglineEn": "The 22 letters, the vowel signs and reading whole words.",
+      "summaryEn": "Do you look at Hebrew and not know where to start? Here you learn letter by letter, in the order that pays off most, and read a real word in the very first lesson.",
+      "outcomesEn": [
+        "Recognize the 22 letters - including the five final forms - out of order and out of context.",
+        "Read new words with nikud on your own, even without knowing what they mean.",
+        "Read the most common words without nikud, which is how Hebrew really appears.",
+        "Write the letters by hand in cursive, with the stroke order shown, and recognize the printed form.",
+        "Decode signs, labels and tags - Hebrew as it appears on the street."
+      ],
+      "forWhomEn": [
+        "People who have never seen the Hebrew alphabet and think they will not manage.",
+        "People who tried before and stopped at the first wall of look-alike letters.",
+        "People who are traveling, have Israeli family or read for religious reasons and want to decode on their own."
+      ],
       "levelPt": "Do zero",
       "cefr": null,
       "status": "available",
       "engine": "alfabetizacao",
       "modulesFrom": "alfabetizacao",
       "taglinePt": "As 22 letras, os sinais de vogal e a leitura de palavras inteiras.",
-      "summaryPt": "Você olha para o hebraico e não sabe por onde começar? Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na terceira lição.",
+      "summaryPt": "Você olha para o hebraico e não sabe por onde começar? Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na primeira lição.",
       "outcomesPt": [
         "Reconhecer as 22 letras - incluindo as cinco formas finais - fora de ordem e fora de contexto.",
         "Ler sozinho palavras novas com nikud, mesmo sem saber o que elas significam.",
@@ -65,7 +88,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 147, "listBrl": 197, "installments": 12, "pixDiscountPct": 10 },
+      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "usd": 47 },
       "accessMonths": 12
     },
 

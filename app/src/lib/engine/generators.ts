@@ -20,6 +20,8 @@ import {
 import { shuffled, take, type Rand } from './rng';
 import { temClipe } from '@/lib/audio-registro';
 import { somEmComum, somPt } from '@/lib/som-pt';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-generators';
 
 /* ── só o que já foi GRAVADO vira exercício de escuta ─────────────────────
    Todo item do curso tem `audioId`, gravado ou não: o id sai do hebraico.
@@ -79,7 +81,8 @@ function optionsWith<T>(correct: T, wrong: T[], rand: Rand): { options: T[]; ans
  * as duas portas passam por aqui. A forma final tem exercício próprio
  * (`exFinalForm`), onde a base É a errada de propósito.
  */
-export const mesmaLetra = (L: Letter, g: string): boolean => g === L.letter || g === L.finalForm;
+export const mesmaLetra = (L: Letter, g: string): boolean =>
+  g === L.letter || g === L.finalForm || (!!L.finalDoSom && g === L.finalDoSom);
 
 function letterDistractors(L: Letter, ctx: Ctx, rand: Rand, n: number): string[] {
   const confusable = L.confusableWith.filter(c => !mesmaLetra(L, c));
@@ -124,11 +127,11 @@ export const exLetterRecognition: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(L.letter, wrong, rand);
   return {
     id: `${L.id}-rec-${i}`, kind: 'letter-recognition', letterId: L.id, skill: 'rec',
-    promptPt: `Qual destas é a letra ${L.namePt}?`,
+    promptPt: fmt(tx.recPergunta, { nome: L.namePt }),
     letter: L.letter, options, answer,
-    whyPt: options.map(o => o === L.letter ? null : `Essa não é ${L.namePt}.`),
+    whyPt: options.map(o => o === L.letter ? null : fmt(tx.recNaoE, { nome: L.namePt })),
     hintsPt: [L.soundNotePt],
-    explainPt: `${L.namePt} faz o som ${somPt(L.sound)}.`
+    explainPt: fmt(tx.recExplica, { nome: L.namePt, som: somPt(L.sound) })
   };
 };
 
@@ -138,9 +141,9 @@ export const exPrintVsCursive: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(L.letter, wrong, rand);
   return {
     id: `${L.id}-cur-${i}`, kind: 'print-vs-cursive', letterId: L.id, skill: 'rec',
-    promptPt: 'Qual destas é a mesma letra, escrita à mão?',
+    promptPt: tx.cursivaPergunta,
     letter: L.letter, mostra: 'impressa', options, answer,
-    explainPt: 'A cursiva é o que se escreve à mão; a de imprensa é o que se lê.'
+    explainPt: tx.cursivaExplica
   };
 };
 
@@ -161,12 +164,12 @@ export const exFinalForm: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(L.finalForm, wrong.slice(0, 3), rand);
   return {
     id: `${L.id}-fin-${i}`, kind: 'final-form', letterId: L.id, skill: 'rec',
-    promptPt: `Qual é a forma final de ${L.namePt}, a que aparece no fim da palavra?`,
+    promptPt: fmt(tx.finalPergunta, { nome: L.namePt }),
     letter: L.letter, options, answer,
-    hintsPt: ['Quase todas as formas finais descem abaixo da linha.'],
+    hintsPt: [tx.finalDica],
     explainPt: SOM_DA_FINAL_SUAVE[L.finalForm]
-      ? `Outro desenho, e quase sempre descendo abaixo da linha. E no fim da palavra o som é sempre o suave: ${L.finalForm} = ${SOM_DA_FINAL_SUAVE[L.finalForm]}.`
-      : 'Mesmo som, outro desenho - e quase sempre descendo abaixo da linha.'
+      ? fmt(tx.finalExplicaSuave, { final: L.finalForm, som: SOM_DA_FINAL_SUAVE[L.finalForm]! })
+      : tx.finalExplicaMesmo
   };
 };
 
@@ -186,10 +189,10 @@ export const exOddOneOut: Gen = (L, _ctx, rand, i) => {
   const options = Array.from({ length: size }, (_, k) => (k === answer ? intruder : L.letter));
   return {
     id: `${L.id}-odd-${i}`, kind: 'odd-one-out', letterId: L.id, skill: 'rec',
-    promptPt: `Uma destas não é ${L.namePt}. Qual?`,
+    promptPt: fmt(tx.intrusaPergunta, { nome: L.namePt }),
     options, answer,
-    whyPt: options.map((o, k) => k === answer ? null : `Essa é ${L.namePt}.`),
-    explainPt: `A intrusa era ${intruder} - repare no que muda no desenho.`
+    whyPt: options.map((o, k) => k === answer ? null : fmt(tx.intrusaEssaE, { nome: L.namePt })),
+    explainPt: fmt(tx.intrusaExplica, { letra: intruder })
   };
 };
 
@@ -215,13 +218,13 @@ export const exVowelSound: Gen = (L, _ctx, rand, i) => {
   const byVowel = new Map(pool.map(s => [s.vowel, s]));
   return {
     id: `${L.id}-vow-${i}`, kind: 'vowel-sound', letterId: L.id, skill: 'som',
-    promptPt: 'Que vogal está escrita aqui?',
+    promptPt: tx.vogalPergunta,
     he: target.he,
     options, answer,
     audioId: target.audioId,
     whyPt: options.map(v => v === target.vowel ? null
-      : `${byVowel.get(v)?.translit ?? v} se escreve de outro jeito.`),
-    hintsPt: ['Olhe só o sinal, ignore a consoante.'],
+      : fmt(tx.vogalOutroJeito, { leitura: byVowel.get(v)?.translit ?? v })),
+    hintsPt: [tx.vogalDica],
     explainPt: `${target.translit} - ${target.ptApprox}.`
   };
 };
@@ -266,17 +269,22 @@ export const exVowelPair: Gen = (L, ctx, rand, i) => {
   const answer = options.indexOf(som.sound);
   if (answer < 0 || options.length < 3) return null;
 
+  /* A consoante como a lição a ensina (27/10/2026): na lição do Kaf, que só
+     mostra o lado COM o ponto (soOLadoDoPonto), כַ sem o ponto já se lê
+     "cha", o som do Chaf, que ainda não foi ensinado. Quando todas as
+     leituras que a letra traz têm daguesh, a sílaba sai com ele: כַּ כָּ. */
+  const V = L.variantes ?? [];
+  const base = V.length && V.every(v => v.he.includes('\u05BC')) ? V[0]!.he : L.letter;
+  const silaba = (sinal: string) => `${base}${sinal}`.normalize('NFC');
   return {
     id: `${L.id}-parvogal-${som.sound}`,
     kind: 'vowel-pair', letterId: L.id, skill: 'som',
-    promptPt: 'Estas duas escrevem o MESMO som. Qual é?',
-    he: `${L.letter}${a.sign} ${L.letter}${b.sign}`,
+    promptPt: tx.parPergunta,
+    he: `${silaba(a.sign)} ${silaba(b.sign)}`,
     options, answer,
-    whyPt: options.map(v => v === som.sound ? null : `Esse som se escreve de outro jeito.`),
-    hintsPt: ['Os dois desenhos são diferentes. O som que sai é o mesmo.'],
-    explainPt: `${a.namePt} e ${b.namePt} escrevem o mesmo som. ` +
-      'Dois desenhos para um som é a parte do nikud que mais confunde no começo - ' +
-      'e é por isso que não adianta decorar o desenho sozinho.'
+    whyPt: options.map(v => v === som.sound ? null : tx.parOutroJeito),
+    hintsPt: [tx.parDica],
+    explainPt: fmt(tx.parExplica, { a: a.namePt, b: b.namePt })
   };
 };
 
@@ -330,19 +338,16 @@ export const exLetterVariant: Gen = (L, _ctx, rand, i) => {
        niqqud dentro é um id que muda de forma conforme quem o normaliza. */
     id: `${L.id}-variante-${i}`,
     kind: 'letter-variant', letterId: L.id, skill: 'som',
-    promptPt: `Qual destas se lê com ${alvo.comoPt}?`,
+    promptPt: fmt(tx.varPergunta, { como: alvo.comoPt }),
     /* O enunciado já traz o som; o estímulo grande seria repetir. */
     he: '',
     options, answer,
     whyPt: options.map(g => g === alvo.he ? null
       : crua(g)
-        ? 'Essa é a letra sem sinal nenhum: ela não diz qual das leituras é. '
-          + `Para ${alvo.comoPt}, o sinal é ${alvo.ondePt}.`
-        : `Essa é a outra leitura. Para ${alvo.comoPt}, o sinal é ${alvo.ondePt}.`),
-    hintsPt: [`O sinal de ${alvo.nomePt} é ${alvo.ondePt}.`],
-    explainPt: `${alvo.nomePt}: ${alvo.ondePt}, e o som é ${alvo.comoPt}. `
-      + 'A letra é a mesma nas duas - quem decide é o sinal. Sem sinal, é o '
-      + 'contexto da palavra que diz, e é por isso que ler sem niqqud vem depois.'
+        ? fmt(tx.varCrua, { como: alvo.comoPt, onde: alvo.ondePt })
+        : fmt(tx.varOutra, { como: alvo.comoPt, onde: alvo.ondePt })),
+    hintsPt: [fmt(tx.varDica, { nome: alvo.nomePt, onde: alvo.ondePt })],
+    explainPt: fmt(tx.varExplica, { nome: alvo.nomePt, onde: alvo.ondePt, como: alvo.comoPt })
   };
 };
 
@@ -356,10 +361,10 @@ export const exSoundToSyllable: Gen = (L, _ctx, rand, i) => {
   const byHe = new Map(pool.map(s => [s.he, s]));
   return {
     id: `${L.id}-s2s-${i}`, kind: 'sound-to-syllable', letterId: L.id, skill: 'ler',
-    promptPt: `Qual destas se lê “${target.translit}”?`,
+    promptPt: fmt(tx.seLePergunta, { leitura: target.translit }),
     sound: target.translit,
     options, answer,
-    whyPt: options.map(o => o === target.he ? null : `Essa lê-se “${byHe.get(o)?.translit ?? '?'}”.`),
+    whyPt: options.map(o => o === target.he ? null : fmt(tx.essaLeSe, { leitura: byHe.get(o)?.translit ?? '?' })),
     explainPt: `${target.translit} - ${target.ptApprox}.`
   };
 };
@@ -380,12 +385,12 @@ export const exListenSyllable: Gen = (L, _ctx, rand, i) => {
   const byHe = new Map(pool.map(s => [s.he, s]));
   return {
     id: `${L.id}-lsy-${i}`, kind: 'listen-syllable', letterId: L.id, skill: 'ouvir',
-    promptPt: 'Qual destas sílabas você ouviu?',
+    promptPt: tx.ouvirSilabaPergunta,
     audioId: target.audioId,
     options, answer,
     whyPt: options.map(o => o === target.he ? null
-      : `Você escolheu “${byHe.get(o)?.translit}”, mas o som era “${target.translit}”.`),
-    hintsPt: ['Ouça de novo e preste atenção só na vogal.'],
+      : fmt(tx.ouvirSilabaErro, { escolhida: String(byHe.get(o)?.translit), certa: target.translit })),
+    hintsPt: [tx.ouvirSilabaDica],
     explainPt: `${target.he} - ${target.translit}. ${target.ptApprox}.`
   };
 };
@@ -412,11 +417,11 @@ export const exBuildSyllable: Gen = (L, _ctx, rand, i) => {
   if (options.length < 3) return null;
   return {
     id: `${L.id}-bsy-${i}`, kind: 'build-syllable', letterId: L.id, skill: 'ler',
-    promptPt: `Monte a sílaba “${target.translit}”.`,
+    promptPt: fmt(tx.monteSilaba, { leitura: target.translit }),
     target: target.he, consonant, vowels: options, answer, sound: target.translit,
     audioId: target.audioId,
     hintsPt: [`${target.ptApprox}.`],
-    explainPt: `${target.he} - ${target.translit}. O sinal vale o mesmo em qualquer consoante.`
+    explainPt: fmt(tx.monteSilabaExplica, { he: target.he, leitura: target.translit })
   };
 };
 
@@ -443,10 +448,10 @@ export const exBuildWord: Gen = (L, _ctx, rand, i) => {
   if (shuffledTiles.join('') === tiles.join('')) shuffledTiles = [...shuffledTiles].reverse();
   return {
     id: `${L.id}-bwd-${i}`, kind: 'build-word', letterId: L.id, skill: 'ler',
-    promptPt: `Monte a palavra “${target.pt}”.`,
+    promptPt: fmt(tx.montePalavra, { sentido: target.pt }),
     target: target.he, tiles: shuffledTiles, hintPt: target.translit,
     audioId: target.audioId,
-    hintsPt: ['Comece pela direita - a primeira letra da palavra fica desse lado.'],
+    hintsPt: [tx.montePalavraDica],
     explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
@@ -477,11 +482,12 @@ export const exMatchLetterSound: Gen = (L, ctx, rand, i) => {
   if (chosen.length < 3) return null;
   return {
     id: `${L.id}-mls-${i}`, kind: 'match', letterId: L.id, skill: 'som',
-    promptPt: 'Ligue cada letra ao seu som.',
-    pairs: shuffled(chosen, rand).map(x => ({ left: x.letter, right: somPt(x.sound) })),
+    promptPt: tx.ligueLetraSom,
+    /* A letra da lição com o daguesh quando é ele que faz o som (כּ ↔ K). */
+    pairs: shuffled(chosen, rand).map(x => ({ left: x.letraComPonto ?? x.letter, right: somPt(x.sound) })),
     leftKind: 'glyph', rightKind: 'text',
-    labelLeft: 'Letra', labelRight: 'Som',
-    explainPt: 'O som é a única coisa que a forma da letra não mostra - é o que precisa ser decorado.'
+    labelLeft: tx.rotuloLetra, labelRight: tx.rotuloSom,
+    explainPt: tx.ligueLetraSomExplica
   };
 };
 
@@ -561,16 +567,15 @@ export const exVariantSyllable: Gen = (L, _ctx, rand, i) => {
   return {
     id: `${L.id}-varsil-${i}`,
     kind: 'letter-variant', letterId: L.id, skill: 'ler',
-    promptPt: `Qual destas se lê “${certa.leitura}”?`,
+    promptPt: fmt(tx.seLePergunta, { leitura: certa.leitura }),
     he: '',
     options, answer,
     whyPt: opcoes.map(m => m.he === certa.he ? null
       : m.v.he === alvo.he
-        ? `A leitura está certa, a vogal não: essa lê-se “${m.leitura}”.`
-        : `Essa lê-se “${m.leitura}” - é a outra leitura da letra, ${m.v.ondePt}.`),
-    hintsPt: [`${alvo.nomePt}: ${alvo.ondePt}.`],
-    explainPt: `${alvo.nomePt} é ${alvo.ondePt}, e soa ${alvo.comoPt}. `
-      + 'A letra é a mesma nas duas - quem decide é o sinal, e a vogal vem depois dele.'
+        ? fmt(tx.varSilabaVogalErrada, { leitura: m.leitura })
+        : fmt(tx.varSilabaOutraLeitura, { leitura: m.leitura, onde: m.v.ondePt })),
+    hintsPt: [fmt(tx.varSilabaDica, { nome: alvo.nomePt, onde: alvo.ondePt })],
+    explainPt: fmt(tx.varSilabaExplica, { nome: alvo.nomePt, onde: alvo.ondePt, como: alvo.comoPt })
   };
 };
 
@@ -582,11 +587,11 @@ export const exMatchWordMeaning: Gen = (L, ctx, rand, i) => {
   if (chosen.length < 3) return null;
   return {
     id: `${L.id}-mwm-${i}`, kind: 'match', letterId: L.id, skill: 'ler',
-    promptPt: 'Ligue cada palavra ao seu significado.',
+    promptPt: tx.liguePalavraSentido,
     pairs: chosen.map(w => ({ left: w.he, right: w.pt })),
     leftKind: 'reading', rightKind: 'text',
-    labelLeft: 'Hebraico', labelRight: 'Português',
-    explainPt: 'Ler é reconhecer o bloco inteiro, não uma letra de cada vez.'
+    labelLeft: tx.rotuloHebraico, labelRight: tx.rotuloPortugues,
+    explainPt: tx.liguePalavraExplica
   };
 };
 
@@ -596,11 +601,11 @@ export const exMatchSyllable: Gen = (L, _ctx, rand, i) => {
   if (chosen.length < 3) return null;
   return {
     id: `${L.id}-msy-${i}`, kind: 'match', letterId: L.id, skill: 'ler',
-    promptPt: 'Ligue cada sílaba à sua leitura.',
+    promptPt: tx.ligueSilaba,
     pairs: chosen.map(s => ({ left: s.he, right: s.translit })),
     leftKind: 'reading', rightKind: 'text',
-    labelLeft: 'Sílaba', labelRight: 'Leitura',
-    explainPt: 'A consoante é sempre a mesma. O que muda é o sinal.'
+    labelLeft: tx.rotuloSilaba, labelRight: tx.rotuloLeitura,
+    explainPt: tx.ligueSilabaExplica
   };
 };
 
@@ -621,15 +626,15 @@ export const exTypeTranslit: Gen = (L, _ctx, rand, i) => {
   if (!target) return null;
   return {
     id: `${L.id}-typ-${i}`, kind: 'type-answer', letterId: L.id, skill: 'ler',
-    promptPt: 'Leia a palavra e escreva como ela soa.',
+    promptPt: tx.digiteTranslit,
     he: target.he,
     accept: [target.translit],
-    placeholder: 'escreva aqui',
+    placeholder: tx.escrevaAqui,
     want: 'translit',
     audioId: target.audioId,
     hintsPt: [
-      `Começa com “${target.translit[0]}”.`,
-      `São ${target.translit.length} letras.`
+      fmt(tx.comecaCom, { inicio: target.translit[0]! }),
+      fmt(tx.saoLetras, { n: target.translit.length })
     ],
     explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
@@ -652,15 +657,15 @@ export const exTypeSyllable: Gen = (L, _ctx, _rand, i) => {
   if (!target || !target.translit) return null;
   return {
     id: `${L.id}-tsy-${i}`, kind: 'type-answer', letterId: L.id, skill: 'ler',
-    promptPt: 'Como se lê esta sílaba? Escreva.',
+    promptPt: tx.digiteSilaba,
     he: target.he,
     accept: [target.translit],
-    placeholder: 'escreva aqui',
+    placeholder: tx.escrevaAqui,
     want: 'translit',
     audioId: target.audioId,
     hintsPt: [
-      'Primeiro o som da consoante, depois o da vogal.',
-      `Começa com “${target.translit[0]}”.`
+      tx.digiteSilabaDica,
+      fmt(tx.comecaCom, { inicio: target.translit[0]! })
     ],
     explainPt: `${target.he} - ${target.translit}. ${target.ptApprox}.`
   };
@@ -672,15 +677,15 @@ export const exTypeHeard: Gen = (L, _ctx, rand, i) => {
   if (!target) return null;
   return {
     id: `${L.id}-tph-${i}`, kind: 'type-answer', letterId: L.id, skill: 'ouvir',
-    promptPt: 'Escreva o que você ouviu.',
+    promptPt: tx.digiteOuvido,
     /* A transliteração ou a própria palavra em hebraico, com ou sem nikud
        (`typedIsCorrect`, 04/10/2026). Só aqui: onde a palavra hebraica está
        na tela, aceitá-la de volta seria copiar, e não ler. */
     accept: [target.translit, target.he],
-    placeholder: 'escreva aqui',
+    placeholder: tx.escrevaAqui,
     want: 'translit',
     audioId: target.audioId,
-    hintsPt: [`Começa com “${target.translit[0]}”.`, `Quer dizer “${target.pt}”.`],
+    hintsPt: [fmt(tx.comecaCom, { inicio: target.translit[0]! }), fmt(tx.querDizer, { sentido: target.pt })],
     explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
@@ -696,7 +701,7 @@ export const exSyllableReading: Gen = (L, _ctx, rand, i) => {
   const { options, answer } = optionsWith(target.translit, take(wrong, 2, rand), rand);
   return {
     id: `${L.id}-syl-${i}`, kind: 'syllable-reading', letterId: L.id, skill: 'ler',
-    promptPt: 'Como se lê esta sílaba?',
+    promptPt: tx.silabaLeitura,
     he: target.he, options, answer,
     audioId: target.audioId,
     explainPt: target.ptApprox
@@ -712,10 +717,10 @@ export const exWordMeaning: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(target.pt, wrong, rand);
   return {
     id: `${L.id}-mean-${i}`, kind: 'word-meaning', letterId: L.id, skill: 'ler',
-    promptPt: 'Leia a palavra. O que ela quer dizer?',
+    promptPt: tx.palavraSentido,
     he: target.he, options, answer,
     audioId: target.audioId,
-    hintsPt: [`Começa com o som “${target.translit[0]}”.`],
+    hintsPt: [fmt(tx.comecaComSom, { inicio: target.translit[0]! })],
     explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
@@ -758,8 +763,8 @@ export const exSentenceReading: Gen = (L, ctx, rand, i) => {
   return {
     id: `${L.id}-frase-${alvo.id}`, kind: 'sentence-reading', letterId: L.id, skill: 'ler',
     promptPt: alvo.words.length > 1
-      ? 'Leia a frase inteira. O que ela quer dizer?'
-      : 'Leia. O que está escrito?',
+      ? tx.fraseInteira
+      : tx.fraseUma,
     he: alvo.he,
     words: alvo.words.map(w => ({ he: w.he, translit: w.translit, pt: w.pt })),
     options, answer,
@@ -767,7 +772,7 @@ export const exSentenceReading: Gen = (L, ctx, rand, i) => {
     /* A dica dá a PRIMEIRA palavra, não a frase. Quem trava numa palavra
        destrava com ela; quem não leu nada continua sem ler. */
     hintsPt: alvo.words.length > 1
-      ? [`A primeira palavra é “${alvo.words[0]!.pt}”.`]
+      ? [fmt(tx.primeiraPalavra, { sentido: alvo.words[0]!.pt })]
       : undefined,
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. ${alvo.notePt}`
   };
@@ -795,7 +800,7 @@ export const exListenSentence: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(alvo.he, wrong, rand);
   return {
     id: `${L.id}-ouvir-frase-${alvo.id}`, kind: 'audio-recognition', letterId: L.id, skill: 'ouvir',
-    promptPt: 'Qual frase você ouviu?',
+    promptPt: tx.ouvirFrase,
     audioId: alvo.audioId, options, answer,
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}`
   };
@@ -810,10 +815,10 @@ export const exListenMeaning: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(alvo.pt, wrong, rand);
   return {
     id: `${L.id}-ouvir-sentido-${alvo.id}`, kind: 'listen-meaning', letterId: L.id, skill: 'ouvir',
-    promptPt: 'Ouça a frase. O que ela quer dizer?',
+    promptPt: tx.ouvirSentido,
     audioId: alvo.audioId, options, answer,
     /* A primeira palavra, como na leitura: destrava quem pegou metade. */
-    hintsPt: alvo.words.length > 1 ? [`A frase começa com “${alvo.words[0]!.translit}”.`] : undefined,
+    hintsPt: alvo.words.length > 1 ? [fmt(tx.fraseComeca, { inicio: alvo.words[0]!.translit })] : undefined,
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}`
   };
 };
@@ -827,9 +832,35 @@ export const exMeaningToWord: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(target.he, wrong, rand);
   return {
     id: `${L.id}-m2w-${i}`, kind: 'meaning-to-word', letterId: L.id, skill: 'ler',
-    promptPt: `Qual destas palavras quer dizer “${target.pt}”?`,
+    promptPt: fmt(tx.sentidoPalavra, { sentido: target.pt }),
     pt: target.pt, options, answer,
     explainPt: `${target.he} - ${target.translit}`
+  };
+};
+
+/**
+ * Imagem e palavra (28/10/2026, pedido do dono: "תמונה ומילה"): a foto do
+ * vocabulário, e o aluno escolhe a palavra hebraica certa.
+ *
+ * Só com palavra que ele LÊ (`wordsToRead` desta letra) e que tem imagem; as
+ * alternativas saem das palavras que ele já leu, nunca com o mesmo sentido
+ * da certa (duas respostas certas para a mesma foto seria um defeito).
+ */
+export const exImageToWord: Gen = (L, ctx, rand, i) => {
+  const comImagem = L.wordsToRead.filter(w => !!w.image);
+  const target = at(comImagem, i);
+  if (!target?.image) return null;
+  const pool = ctx.history.flatMap(x => x.wordsToRead).filter(w => w.pt !== target.pt);
+  const wrong = wordDistractors(target, pool, rand, 3).map(w => w.he);
+  if (wrong.length < 2) return null;
+  const { options, answer } = optionsWith(target.he, wrong, rand);
+  return {
+    id: `${L.id}-img-${clean(target.he)}`, kind: 'image-to-word', letterId: L.id, skill: 'ler',
+    promptPt: tx.imagemPalavra,
+    /* Sem áudio: ouvir a palavra antes de escolher entregaria a resposta, e
+       o que se treina aqui é ler. */
+    image: target.image, imageAlt: target.imageAlt ?? target.pt, pt: target.pt, options, answer,
+    explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
 };
 
@@ -843,7 +874,7 @@ export const exCompleteWord: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(correct, wrong.slice(0, 3), rand);
   return {
     id: `${L.id}-gap-${i}`, kind: 'complete-word', letterId: L.id, skill: 'ler',
-    promptPt: 'Falta uma letra. Qual delas completa a palavra?',
+    promptPt: tx.completePalavra,
     parts: gapAtLetter(target.he, L.letter),
     hintPt: target.pt, options, answer,
     audioId: target.audioId,
@@ -860,7 +891,7 @@ export const exAudioWord: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(target.he, wrong, rand);
   return {
     id: `${L.id}-aud-${i}`, kind: 'audio-recognition', letterId: L.id, skill: 'ouvir',
-    promptPt: 'Qual palavra você ouviu?',
+    promptPt: tx.ouvirPalavra,
     audioId: target.audioId, options, answer,
     explainPt: `${target.he} - ${target.translit} - ${target.pt}`
   };
@@ -889,19 +920,19 @@ export const exLetterInWord: Gen = (L, ctx, rand, i) => {
 
   return {
     id: `${L.id}-inword-${i}`, kind: 'letter-in-word', letterId: L.id, skill: 'rec',
-    promptPt: `Em qual destas palavras aparece a letra ${L.namePt}?`,
+    promptPt: fmt(tx.naPalavraPergunta, { nome: L.namePt }),
     letter: L.letter, options, answer,
     whyPt: options.map(o => {
       if (o === alvo.he) return null;
       const w = pool.find(x => x.he === o);
-      return w ? `${w.pt} não tem ${L.namePt}.` : null;
+      return w ? fmt(tx.naPalavraNaoTem, { palavra: w.pt, nome: L.namePt }) : null;
     }),
     hintsPt: [final
-      ? `Cuidado: no fim da palavra ela muda de desenho.`
-      : `Procure a forma ${L.letter} dentro da palavra.`],
+      ? tx.naPalavraDicaFinal
+      : fmt(tx.naPalavraDica, { letra: L.letter })],
     explainPt: final
-      ? `${alvo.pt} termina com ${L.finalForm}, que é a forma final de ${L.namePt}.`
-      : `${alvo.pt} tem ${L.namePt}.`
+      ? fmt(tx.naPalavraExplicaFinal, { palavra: alvo.pt, final: L.finalForm!, nome: L.namePt })
+      : fmt(tx.naPalavraExplica, { palavra: alvo.pt, nome: L.namePt })
   };
 };
 
@@ -924,19 +955,19 @@ export const exLetterPosition: Gen = (L, ctx, rand, i) => {
   if (idx < 0 && fin) idx = cl.findIndex(c => c[0] === fin);
   if (idx < 0) return null;
 
-  const OPCOES = ['No começo', 'No meio', 'No fim'];
+  const OPCOES = [tx.posComeco, tx.posMeio, tx.posFim];
   const certa = idx === 0 ? 0 : idx === cl.length - 1 ? 2 : 1;
 
   return {
     id: `${L.id}-pos-${i}`, kind: 'letter-position', letterId: L.id, skill: 'rec',
-    promptPt: `Onde está a letra ${L.namePt} nesta palavra?`,
+    promptPt: fmt(tx.posPergunta, { nome: L.namePt }),
     he: alvo.he, letter: L.letter,
     options: OPCOES, answer: certa,
     whyPt: OPCOES.map((_, k) => k === certa ? null
-      : 'O hebraico se lê da direita para a esquerda - o começo da palavra é o lado direito.'),
-    hintsPt: ['Lembre: o começo da palavra é a letra mais à DIREITA.'],
+      : tx.posErro),
+    hintsPt: [tx.posDica],
     explainPt: certa === 2 && fin
-      ? `${alvo.pt}: no fim, ${L.namePt} vira ${fin}.`
+      ? fmt(tx.posExplicaFinal, { palavra: alvo.pt, nome: L.namePt, final: fin })
       : `${alvo.pt} - ${alvo.translit}.`
   };
 };
@@ -979,17 +1010,17 @@ export const exConfusablePick: Gen = (L, ctx, rand, i) => {
 
   return {
     id: `${L.id}-conf-${i}`, kind: 'letter-recognition', letterId: L.id, skill: 'rec',
-    promptPt: `Entre estas parecidas, qual é ${L.namePt}?`,
+    promptPt: fmt(tx.parecidasPergunta, { nome: L.namePt }),
     letter: L.letter, options, answer,
     whyPt: options.map(o => {
       if (o === L.letter) return null;
       const traco = contraste(o);
       if (traco) return traco;
       const nome = nomeDe(o);
-      return nome ? `Essa é ${nome}. Olhe o desenho de novo.` : 'Essa é outra letra, bem parecida.';
+      return nome ? fmt(tx.parecidasEssaE, { nome }) : tx.parecidasOutra;
     }),
     hintsPt: [L.soundNotePt],
-    explainPt: `${L.namePt} faz o som ${somPt(L.sound)}. As outras aqui são as que mais se parecem com ela.`
+    explainPt: fmt(tx.parecidasExplica, { nome: L.namePt, som: somPt(L.sound) })
   };
 };
 
@@ -1022,21 +1053,21 @@ export const exFinalInWord: Gen = (L, ctx, rand, i) => {
 
   return {
     id: `${L.id}-finword-${i}`, kind: 'final-form', letterId: L.id, skill: 'rec',
-    promptPt: `Qual forma de ${L.namePt} aparece no FIM desta palavra?`,
+    promptPt: fmt(tx.finalNaPalavraPergunta, { nome: L.namePt }),
     letter: alvo.he, options, answer,
     whyPt: options.map(o => {
       if (o === L.finalForm) return null;
       if (o === L.letter) {
-        return `${L.letter} é a forma de começo e meio. No fim da palavra ela vira ${L.finalForm}.`;
+        return fmt(tx.finalNaPalavraBase, { letra: L.letter, final: L.finalForm! });
       }
       const nome = nomeFinal(o);
-      return nome ? `Essa é a forma final de ${nome}, não de ${L.namePt}.`
-                  : 'Essa é a forma final de outra letra.';
+      return nome ? fmt(tx.finalNaPalavraOutra, { outra: nome, nome: L.namePt })
+                  : tx.finalNaPalavraAlheia;
     }),
-    hintsPt: ['A forma final quase sempre desce abaixo da linha.'],
+    hintsPt: [tx.finalNaPalavraDica],
     explainPt: SOM_DA_FINAL_SUAVE[L.finalForm]
-      ? `${alvo.pt} termina em ${L.finalForm}. Mesma letra, outro desenho - e no fim da palavra o som é sempre o suave: ${L.finalForm} = ${SOM_DA_FINAL_SUAVE[L.finalForm]}.`
-      : `${alvo.pt} termina em ${L.finalForm}. Mesma letra, mesmo som - só o desenho muda no fim da palavra.`
+      ? fmt(tx.finalNaPalavraSuave, { palavra: alvo.pt, final: L.finalForm, som: SOM_DA_FINAL_SUAVE[L.finalForm]! })
+      : fmt(tx.finalNaPalavraMesmo, { palavra: alvo.pt, final: L.finalForm })
   };
 };
 
@@ -1056,12 +1087,11 @@ export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
   const { options, answer } = optionsWith(L.letter, wrong, rand);
   return {
     id: `${L.id}-cur2-${i}`, kind: 'print-vs-cursive', letterId: L.id, skill: 'rec',
-    promptPt: 'Esta letra está escrita à mão. Qual é ela em letra de imprensa?',
+    promptPt: tx.cursivaParaImpressa,
     letter: L.letter, mostra: 'cursiva', options, answer,
-    whyPt: options.map(o => o === L.letter ? null : 'Essa é outra letra.'),
-    hintsPt: ['Na cursiva vale olhar a direção dos traços, e não o contorno.'],
-    explainPt: `${L.namePt} à mão e ${L.namePt} no livro são a mesma letra em dois desenhos - `
-      + 'e ler o bilhete de alguém pede a primeira.'
+    whyPt: options.map(o => o === L.letter ? null : tx.outraLetra),
+    hintsPt: [tx.cursivaParaImpressaDica],
+    explainPt: fmt(tx.cursivaParaImpressaExplica, { nome: L.namePt })
   };
 };
 
@@ -1098,6 +1128,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exPrintVsCursive,
   exListenSyllable,
   exMeaningToWord,
+  exImageToWord,
   exTypeTranslit,
   exMatchWordMeaning,
   exCursiveToPrint,

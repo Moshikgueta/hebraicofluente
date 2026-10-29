@@ -154,9 +154,15 @@ export function courseHref(c: CatalogCourse): string {
    vai para a tela. Misturar os dois é o bug clássico de cobrança, então as
    duas funções têm nomes diferentes e a de centavos diz "cents". */
 
+/* No site em inglês o catálogo já sai em dólar (tools/export-content.mjs põe
+   o `usd` no lugar do `brl`), e esta função escreve "$47". O nome ficou: são
+   dezenas de telas, e todas leem o preço do mesmo campo. */
 export const brl = (v: number): string =>
-  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL',
-    minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
+  process.env.NEXT_PUBLIC_LOCALE === 'en'
+    ? v.toLocaleString('en-US', { style: 'currency', currency: 'USD',
+        minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
+    : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL',
+        minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
 
 export const cents = (v: number): number => Math.round(v * 100);
 

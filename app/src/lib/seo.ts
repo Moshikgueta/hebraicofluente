@@ -28,6 +28,8 @@
  */
 
 import type { Metadata } from 'next';
+import { tx } from '@/i18n/telas/motor-seo';
+import { LOCALE, OG_LOCALE } from '@/i18n';
 
 /** O domínio público. O mesmo `SITE_ORIGIN` que o Worker usa. */
 export const ORIGEM = (process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://hebraicofluente.com.br')
@@ -40,8 +42,8 @@ export const PAGAS = [
   '/historia', '/inicio', '/onboarding', '/meu-hebraico',
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
   /* 11/10/2026: o Laboratório de Leitura e a Minha Primeira Leitura. */
-  '/leitura',
-  '/audio', '/stroke-order', '/som', '/loja', '/bonus', '/nikud-biblico', '/depoimento',
+  '/leitura', '/leituras', '/hebraico-na-rua',
+  '/audio', '/stroke-order', '/video', '/som', '/loja', '/bonus', '/nikud-biblico', '/depoimento',
   /* 06/10/2026: o curso Hebraico A1 (outro curso; ver worker/src/gate.js). */
   '/a1',
   /* 21/10/2026: o e-book Israel Além do Óbvio (outro produto). */
@@ -75,6 +77,8 @@ export const NAO_LISTADAS = [
   '/comece-aqui',
   /* A Minha Biblioteca (23/10/2026): da conta, sem nada para a busca. */
   '/minha-biblioteca',
+  /* O desafio com um amigo (28/10/2026): cada link é de uma pessoa. */
+  '/desafio-amigo',
   /* As cópias fixas de cada versão das políticas (app/versoes.mjs, LEGAL-104).
      Existem para quem aceitou aquela versão; na busca, só a de hoje. */
   '/termos/v', '/reembolso/v', '/privacidade/v',
@@ -88,7 +92,11 @@ export const NAO_LISTADAS = [
   /* A página de venda antiga do curso: o Worker responde 301 para
      /curso-de-hebraico (23/10/2026). Anunciar as duas era dividir o curso
      em dois endereços na busca. */
-  '/cursos/alfabetizacao'
+  '/cursos/alfabetizacao',
+  /* Só o curso de alfabetização no site (27/10/2026, decisão do dono): as
+     páginas das jornadas, das duas experiências "Em breve" e o "Comece aqui"
+     continuam no código, mas o Worker responde 301 para a capa. */
+  '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ] as const;
 
 /** A rota, na forma canônica que o portão também usa para comparar. */
@@ -122,19 +130,25 @@ export function url(rota: string): string {
    editorial e usa /media/og-previa.jpg, do mesmo gerador. */
 /* Nome novo a cada cartão novo: /media sai com cache de um ano, e o WhatsApp
    e o Instagram guardam a imagem pelo endereço. */
-export const OG = { src: '/media/og-portal.jpg', largura: 1200, altura: 630 } as const;
+export const OG = { src: '/media/og-curso.jpg', largura: 1200, altura: 630 } as const;
 const OG_POR_PORTA: readonly { prefixos: readonly string[]; src: string; alt: string }[] = [
   { prefixos: ['/curso-de-hebraico', '/aprender-hebraico', '/metodo', '/checkout', '/biblia', '/cursos/alfabetizacao'],
-    src: '/media/og-curso.jpg', alt: 'Hebraico Fluente: aprenda a ler hebraico do zero' },
+    src: '/media/og-curso.jpg', alt: tx.ogCurso },
   { prefixos: ['/israel-alem-do-obvio', '/descobrir-israel'],
-    src: '/media/og-livro.jpg', alt: 'Israel Além do Óbvio, de Moshik Gueta: em breve' }
+    src: '/media/og-livro.jpg', alt: tx.ogLivro }
 ];
 
 /** O cartão de compartilhamento de uma rota. */
 export function ogDaRota(rota: string): { src: string; alt: string } {
+  /* O site em inglês tem um cartão só, em inglês (tools/og.mjs), em toda rota:
+     ele só vende o curso. */
+  if (LOCALE === 'en') return { src: '/media/og-curso-en.jpg', alt: tx.ogCurso };
   const r = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '') || '/';
   const porta = OG_POR_PORTA.find(p => p.prefixos.some(x => r === x || r.startsWith(x + '/')));
-  return porta ? { src: porta.src, alt: porta.alt } : { src: OG.src, alt: 'Hebraico Fluente: aprender hebraico, descobrir Israel e as raízes sefarditas' };
+  /* Desde 27/10/2026 o site é só o curso de alfabetização (decisão do dono):
+     a capa e o resto do site levam o cartão do curso. O do portal
+     (og-portal.jpg, as três jornadas) fica para quando elas voltarem. */
+  return porta ? { src: porta.src, alt: porta.alt } : { src: OG_POR_PORTA[0]!.src, alt: OG_POR_PORTA[0]!.alt };
 }
 
 /**
@@ -166,7 +180,7 @@ export function meta({
       type: tipo,
       url: canonical,
       siteName: 'Hebraico Fluente',
-      locale: 'pt_BR',
+      locale: OG_LOCALE,
       title,
       description,
       images: [{ url: og.src, width: OG.largura, height: OG.altura, alt: og.alt }]

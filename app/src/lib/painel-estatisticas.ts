@@ -1,6 +1,8 @@
 /* As tabelas do painel de estatísticas (30/09/2026), sem navegador: o que
  * o dono lê em /admin/estatisticas. Ver worker/src/api/estatisticas.js. */
 
+import { MEIO_MIN, N_FAIXAS } from './tempo-de-etapa';
+
 export type Resposta = { kind: string; licao: string; total: number; erros: number };
 export type Etapa = { licao: string; etapa: number; n: number };
 
@@ -21,6 +23,7 @@ export const TIPO_PT: Record<string, string> = {
   'listen-syllable': 'Ouvir a sílaba',
   'match': 'Ligar pares',
   'meaning-to-word': 'Do sentido à palavra',
+  'image-to-word': 'Imagem e palavra',
   'odd-one-out': 'Achar a intrusa',
   'print-vs-cursive': 'Impressa e cursiva',
   'scene-reading': 'Cena do mundo real',
@@ -55,6 +58,60 @@ export function ondeParam(etapas: readonly Etapa[], ordem: readonly { id: string
     const terminaram = conta.get(`${id}|${ultima}`) ?? 0;
     return { id, comecaram, terminaram, taxa: comecaram ? terminaram / comecaram : null };
   });
+}
+
+/** Uma faixa de tempo de uma etapa (worker/src/api/estatisticas.js, chave `t|...`). */
+export type Tempo = { licao: string; etapa: number; faixa: number; n: number };
+
+/** O índice da faixa do meio de um histograma por faixa, ou null sem dado. */
+export function faixaMediana(hist: readonly number[]): number | null {
+  const total = hist.reduce((a, b) => a + b, 0);
+  if (!total) return null;
+  let soma = 0;
+  for (let i = 0; i < hist.length; i++) {
+    soma += hist[i] ?? 0;
+    if (soma >= total / 2) return i;
+  }
+  return hist.length - 1;
+}
+
+/**
+ * Quanto tempo leva cada letra (28/10/2026), na ordem do curso.
+ *
+ * Por etapa, a faixa mediana; por letra, a ESTIMATIVA = a soma dos meios das
+ * faixas medianas das etapas medidas. É uma estimativa, e a tela diz isso: a
+ * mediana da soma não é a soma das medianas, e o servidor só guarda faixas.
+ * `amostras` é o menor número de medidas entre as etapas da letra: o tamanho
+ * que a conta merece de confiança.
+ */
+export function tempoPorLetra(
+  tempos: readonly Tempo[], ordem: readonly { id: string; etapas: number }[], n = N_FAIXAS
+) {
+  const hist = new Map<string, number[]>();
+  for (const t of tempos) {
+    if (!Number.isInteger(t.faixa) || t.faixa < 0 || t.faixa >= n) continue;
+    const k = `${t.licao}|${t.etapa}`;
+    const h = hist.get(k) ?? new Array<number>(n).fill(0);
+    h[t.faixa] = (h[t.faixa] ?? 0) + t.n;
+    hist.set(k, h);
+  }
+  const out: { id: string; etapas: (number | null)[]; minutos: number; amostras: number }[] = [];
+  for (const { id, etapas } of ordem) {
+    const porEtapa: (number | null)[] = [];
+    let minutos = 0, medidas = 0, amostras = Infinity;
+    for (let e = 1; e <= etapas; e++) {
+      const h = hist.get(`${id}|${e}`);
+      const f = h ? faixaMediana(h) : null;
+      porEtapa.push(f);
+      if (f !== null) {
+        minutos += MEIO_MIN[f] ?? 0;
+        medidas++;
+        amostras = Math.min(amostras, h!.reduce((a, b) => a + b, 0));
+      }
+    }
+    if (medidas) out.push({ id, etapas: porEtapa, minutos, amostras: amostras === Infinity ? 0 : amostras });
+  }
+  return out;
 }
 
 /** A ordem do curso tirada do plano público (modules.json): letras e sons

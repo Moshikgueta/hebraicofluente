@@ -19,10 +19,11 @@
 import type { PlatformApi } from './api';
 import {
   AuthError, emailLooksValid, normalizeEmail, passwordOk,
-  type Compras, type Entitlement, type Order, type PaymentMethod, type Session
+  type Compras, type CreatedOrder, type Entitlement, type Order, type PaymentMethod, type Session
 } from './types';
 import { getCourse } from '@/lib/catalog';
 import { cents } from '@/lib/catalog';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 const KEY = 'hf-platform-local-v1';
 
@@ -41,6 +42,8 @@ type Stored = {
     verified?: boolean;
     /** Pediu o aviso do próximo curso. */
     novidades?: boolean;
+    /** Pediu o lembrete para estudar. */
+    lembrete?: boolean;
     entitlements: Entitlement[];
     orders: Order[];
   }>;
@@ -122,7 +125,8 @@ export class LocalApi implements PlatformApi {
       account: {
         id: a.id, name: a.name, email: a.email, createdAt: a.createdAt,
         emailVerified: !!a.verified,
-        novidades: !!a.novidades
+        novidades: !!a.novidades,
+        lembrete: !!a.lembrete
       },
       entitlements: a.entitlements
     };
@@ -297,6 +301,15 @@ export class LocalApi implements PlatformApi {
     write(s);
   }
 
+  async setLembrete(quero: boolean): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    a.lembrete = quero;
+    write(s);
+  }
+
   async deleteAccount({ password }: { password: string }): Promise<void> {
     await tick();
     const s = read();
@@ -317,7 +330,7 @@ export class LocalApi implements PlatformApi {
 
   async startOrder(
     { courseSlug, method }: { courseSlug: string; method: PaymentMethod; installments?: number }
-  ): Promise<Order & { redirectUrl?: string }> {
+  ): Promise<CreatedOrder> {
     await tick();
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;
@@ -356,7 +369,7 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     const order = a.orders.find(o => o.id === orderId);
-    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
 
     const age = Date.now() - new Date(order.createdAt).getTime();
     if (order.status === 'pending' && age > 3_000) {
@@ -417,7 +430,7 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     const order = a.orders.find(o => o.id === orderId);
-    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
     if (order.desistenciaEm) return { pedidoEm: order.desistenciaEm };
     if (order.status !== 'paid') throw new AuthError('nao-pago');
     if (!order.desistirAte || Date.now() > new Date(order.desistirAte).getTime()) {

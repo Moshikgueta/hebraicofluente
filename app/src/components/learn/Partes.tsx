@@ -10,20 +10,30 @@
  * continua inteira para o buscador e o link do índice continua achando o
  * título. Clicar num item do índice abre a parte dele; um endereço com
  * `#id` também abre, ao carregar ou ao mudar.
+ *
+ * Modo em passos (28/10/2026, pedido do dono: a Aula 0 "fraca e nada
+ * chamativa"): com `passo`, só as partes daquele passo aparecem, abertas e
+ * sem o botão de abrir e fechar, e o resto da página (índice, "Abrir todas",
+ * os "Quer saber mais?") some. Tudo continua no HTML, com `hidden`: o índice
+ * e os destinos dele seguem existindo para `varrer-curso.mjs`.
  */
 
+import { tx } from '@/i18n/telas/licao-partes';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 
 type Ctx = {
   ids: string[]; abertas: Set<string>;
+  /** As partes do passo à vista; `null` é a página inteira. */
+  passo: ReadonlySet<string> | null;
   alternar: (id: string) => void; abrir: (id: string) => void; todas: (abrir: boolean) => void;
 };
 const PartesCtx = createContext<Ctx | null>(null);
 
-export function Partes({ ids, abertaDeInicio, children }: {
+export function Partes({ ids, abertaDeInicio, passo = null, children }: {
   ids: string[];
   abertaDeInicio?: string;
+  passo?: ReadonlySet<string> | null;
   children: ReactNode;
 }) {
   const [abertas, setAbertas] = useState<Set<string>>(() => new Set(abertaDeInicio ? [abertaDeInicio] : []));
@@ -49,7 +59,7 @@ export function Partes({ ids, abertaDeInicio, children }: {
   }, [ids, abrir]);
 
   const todas = useCallback((abrirTodas: boolean) => setAbertas(abrirTodas ? new Set(ids) : new Set()), [ids]);
-  const valor = useMemo(() => ({ ids, abertas, alternar, abrir, todas }), [ids, abertas, alternar, abrir, todas]);
+  const valor = useMemo(() => ({ ids, abertas, passo, alternar, abrir, todas }), [ids, abertas, passo, alternar, abrir, todas]);
 
   return <PartesCtx.Provider value={valor}>{children}</PartesCtx.Provider>;
 }
@@ -65,10 +75,18 @@ export function AbrirTodas() {
               onClick={() => ctx.todas(!todasAbertas)}
               className="min-h-[44px] px-3 font-ui text-[14px] font-semibold text-[var(--accent)]
                          underline underline-offset-4">
-        {todasAbertas ? 'Fechar todas as partes' : 'Abrir todas as partes'}
+        {todasAbertas ? tx.fecharTodas : tx.abrirTodas}
       </button>
     </div>
   );
+}
+
+/** O que só aparece na página inteira: o índice, "Abrir todas", os "Quer
+ *  saber mais?". Com `noPasso`, aparece também no passo daquela parte. */
+export function SoNaPagina({ noPasso, children }: { noPasso?: string; children: ReactNode }) {
+  const passo = useContext(PartesCtx)?.passo ?? null;
+  const visivel = !passo || (!!noPasso && passo.has(noPasso));
+  return <div hidden={!visivel} className="contents">{children}</div>;
 }
 
 /** O que o índice usa para abrir a parte antes de o navegador rolar até ela. */
@@ -85,6 +103,22 @@ export function Parte({ id, titulo, tone, children }: {
   const ctx = useContext(PartesCtx);
   const aberta = ctx ? ctx.abertas.has(id) : true;
   const corpo = `${id}-corpo`;
+  if (ctx?.passo) {
+    /* No passo, a parte é a tela: título grande e o texto sempre aberto. */
+    return (
+      <div hidden={!ctx.passo.has(id)} className="contents">
+        <Card tone={tone} className="p-0 overflow-hidden">
+          <h2 id={id} className="scroll-mt-4 m-0 px-5 sm:px-6 pt-6 pb-1 font-display text-[22px]
+                                 sm:text-[24px] font-semibold leading-snug text-ink">
+            {titulo}
+          </h2>
+          <div id={corpo} className="px-5 sm:px-6 pb-6 pt-3 grid gap-4">
+            {children}
+          </div>
+        </Card>
+      </div>
+    );
+  }
   return (
     <Card tone={tone} className="p-0 overflow-hidden">
       <h2 id={id} className="scroll-mt-4 m-0">

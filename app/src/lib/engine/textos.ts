@@ -42,6 +42,9 @@ export type Texto = {
    *  aluno já acumulou nas lições, sem palavra nova. Uma por módulo, do 1 ao 7,
    *  ao lado do texto do módulo. `novas` traz só os nomes e os prefixos. */
   revisao?: boolean;
+  /** O segundo texto do módulo (28/10/2026, aprovados pelo dono no mesmo
+   *  dia): /modulo/N/texto-2, com o "lido" próprio (`textoLidoId(n, false, 2)`). */
+  n?: number;
   /** Mostrar sem nikud, como chega de verdade (módulo 6). */
   semPontos?: boolean;
   linhas: LinhaDeTexto[];
@@ -54,8 +57,8 @@ export const textosPublicados = (textos: readonly Texto[]): Texto[] =>
   textos.filter(t => t.revisado);
 
 /** O `firsts` que registra o texto do módulo `n` como lido. */
-export const textoLidoId = (n: number, revisao = false): string =>
-  revisao ? `revisao-texto-${n}` : `texto-${n}`;
+export const textoLidoId = (n: number, revisao = false, ordem = 1): string =>
+  revisao ? `revisao-texto-${n}` : ordem > 1 ? `texto-${n}-${ordem}` : `texto-${n}`;
 
 /**
  * As palavras que um texto acrescenta ao vocabulário do aluno, depois de lido.

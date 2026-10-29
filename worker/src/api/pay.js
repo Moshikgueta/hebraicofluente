@@ -30,14 +30,20 @@ import {
   recordEvent, refundOrder, reservarAviso, soltarAviso, throttled, ultimoPagamentoDe, updateOrder
 } from '../lib/db.js';
 import {
-  dataBR, dataHoraBR, mailReady, mensagemDeArrependimento, mensagemDeArrependimentoDono,
-  mensagemDeAlerta, mensagemDeCompra, mensagemDeEstorno, reaisBR, sendMail
+  dataBR, dataHoraBR, mailReady, mensagemDeArrependimentoDono,
+  mensagemDeAlerta, reaisBR, sendMail
 } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { idiomaDaConta, tituloDoCurso } from '../lib/idioma.js';
 import {
   cancelPayment, createCardPreference, createPix, getPayment, mapStatus, paymentsFor, paymentsOfChargeback,
   paymentsOfMerchantOrder, refundPayment, verifyWebhookSignature
 } from '../lib/mercadopago.js';
 import { brCode, confereBrCode } from '../lib/pix.js';
+import {
+  buscarTransacao, conferirAssinatura, criarTransacao, ehSandbox, estornarTransacao, idDeTransacao,
+  paddlePronto, pagamentoDe, tokenDoCliente
+} from '../lib/paddle.js';
 import empresa from '../../../data/empresa.json';
 import { gravarTermosDoPedido, linkDaVersao, versaoAtual } from '../lib/versoes.js';
 
@@ -50,6 +56,12 @@ import { gravarTermosDoPedido, linkDaVersao, versaoAtual } from '../lib/versoes.
  */
 const PAGAMENTO = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
 const pixDireto = () => PAGAMENTO === 'pix-direto';
+
+/* O site em inglês cobra pelo Paddle (PLANO-INGLES.md, etapa 5), em dólar.
+   Decidido pelo idioma do Worker, e não por data/empresa.json: o arquivo é o
+   mesmo nas duas builds, e o build do app decide pelo mesmo critério
+   (NEXT_PUBLIC_LOCALE, lib/empresa.ts). */
+const paddle = env => !!env && env.LOCALE === 'en';
 
 /* E QUAIS FORMAS a conta do provedor aceita nesta build.
  * ─────────────────────────────────────────────────────────────────────────
@@ -79,6 +91,12 @@ const aceita = forma => {
 const DIA = 86_400_000;
 const BRASILIA = 3 * 3_600_000;
 const DIAS_ARREPENDIMENTO = Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7;
+/* No site em inglês, 14 dias: é o prazo que as regras do Paddle para o
+   comprador garantem (PLANO-INGLES.md, etapa 5; o texto da política é da
+   etapa 6). Lido do pedido, e não do Worker, para que um pedido nunca mude
+   de prazo depois de pago. */
+export const DIAS_PADDLE = 14;
+const diasDoPedido = row => (row && row.provider === 'paddle' ? DIAS_PADDLE : DIAS_ARREPENDIMENTO);
 
 export function prazoDeDesistencia(paidAt, dias = DIAS_ARREPENDIMENTO) {
   if (!paidAt || !dias) return null;
@@ -98,7 +116,7 @@ const toOrder = (row, desistenciaEm = null, estorno = null, ultimoPagamento = un
   paidAt: row.paid_at ? new Date(Number(row.paid_at)).toISOString() : null,
   /* Até quando o botão "Desistir da compra" aparece. Só para pedido pago. */
   desistirAte: row.status === 'paid' && row.paid_at
-    ? new Date(prazoDeDesistencia(row.paid_at)).toISOString() : null,
+    ? new Date(prazoDeDesistencia(row.paid_at, diasDoPedido(row))).toISOString() : null,
   desistenciaEm: desistenciaEm ? new Date(desistenciaEm).toISOString() : null,
   /* Como o dinheiro está voltando: `automatico` (o site pediu o estorno à
      Mercado Pago), `manual` (o dono estorna) ou null (não houve desistência). */
@@ -148,7 +166,12 @@ export async function create({ request, env }) {
 
      No modo `pix-direto` isso não se aplica: o BR Code não depende de token
      nenhum, que é exatamente o motivo de esse modo existir. */
-  if (!pixDireto() && !env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
+  if (paddle(env)) {
+    /* Sem a chave, ou com o token do Paddle.js de outro ambiente, o checkout
+       abriria e recusaria todo cartão: melhor dizer que não está ligado. */
+    if (!paddlePronto(env) || !tokenDoCliente(env)) return fail('payments-off', 503);
+    if (!(Number(course.price && course.price.usd) > 0)) return fail('server', 404);
+  } else if (!pixDireto() && !env.MP_ACCESS_TOKEN) return fail('payments-off', 503);
 
   /* Já é dono: não cobra de novo. Vender duas vezes a mesma coisa para a mesma
      pessoa é estorno garantido - e é um erro fácil de cometer quando o
@@ -181,6 +204,8 @@ export async function create({ request, env }) {
 
      O checkout já esconde o que não dá para cobrar. Isto é para quem chama a
      API direto, e para o dia em que a tela e o servidor discordarem. */
+  if (paddle(env)) return criarNoPaddle(env, request, account, course, body);
+
   const pedido = body.method === 'card' ? 'card' : 'pix';
   if (!aceita(pedido)) return fail(pedido === 'card' ? 'card-off' : 'pix-off', 409);
 
@@ -308,6 +333,37 @@ export async function create({ request, env }) {
        funcionar. O texto desse código (app/src/lib/account/types.ts) diz
        que o problema é nosso e dá o endereço do suporte, que é o único
        caminho que resolve para ela hoje. */
+    return fail('payment-failed', 502);
+  }
+}
+
+/* ── o pedido no Paddle ─────────────────────────────────────────────────
+ * Um meio só (`paddle`): cartão, PayPal, Apple Pay e Google Pay aparecem no
+ * próprio checkout do Paddle, que decide pelo país do comprador. Sem
+ * parcelas e sem desconto: o valor é `price.usd` do catálogo, em centavos.
+ * A tela recebe o id da transação e o token do Paddle.js e abre o checkout
+ * por cima da página; quem vê o número do cartão é só o Paddle. */
+async function criarNoPaddle(env, request, account, course, body) {
+  const amountCents = Math.round(Number(course.price.usd) * 100);
+  const { fonte: origem, campanha } = origemDoCorpo(body.origem);
+  const order = await createOrder(env, {
+    accountId: account.id, courseSlug: course.slug, amountCents, method: 'paddle', installments: 1,
+    origem, campanha, currency: 'USD', provider: 'paddle'
+  });
+  await gravarTermosDoPedido(env, order.id);
+  try {
+    const txn = await criarTransacao(env, { order, course, account });
+    if (!txn || !idDeTransacao(txn.id)) throw new Error('paddle sem id de transacao');
+    await updateOrder(env, order.id, { provider_ref: txn.id });
+    return json({
+      ...toOrder(await getOrder(env, order.id)),
+      paddle: { transactionId: txn.id, clientToken: tokenDoCliente(env), sandbox: ehSandbox(env) }
+    });
+  } catch (e) {
+    await updateOrder(env, order.id, { status: 'failed' });
+    let detalhe = '';
+    try { detalhe = e && e.data ? JSON.stringify(e.data).slice(0, 400) : ''; } catch { /* idem */ }
+    await log(env, account.id, 'pay-create-failed', `${order.id} paddle ${e.message || e} ${detalhe}`.trim());
     return fail('payment-failed', 502);
   }
 }
@@ -443,7 +499,7 @@ export async function desistir({ request, env, ctx }) {
   }
 
   if (order.status !== 'paid') return fail('nao-pago', 409);
-  const ate = prazoDeDesistencia(order.paid_at);
+  const ate = prazoDeDesistencia(order.paid_at, diasDoPedido(order));
   if (!ate || Date.now() > ate) return fail('fora-do-prazo', 409);
 
   const r = await pedirArrependimento(env, {
@@ -482,8 +538,10 @@ const espera = n => Math.min(5 * 60_000 * 2 ** Math.max(0, n - 1), 6 * 3_600_000
 /** Dá para estornar sozinho? Só um pagamento da Mercado Pago, com o id dele,
  *  e com a credencial no ar. PIX direto, liberação à mão e convite não. */
 const estornavel = (env, order) =>
-  !pixDireto() && !!env.MP_ACCESS_TOKEN && order.provider === 'mercadopago'
-  && /^\d{1,24}$/.test(String(order.provider_ref || ''));
+  order.provider === 'paddle'
+    ? paddlePronto(env) && idDeTransacao(order.provider_ref)
+    : !pixDireto() && !!env.MP_ACCESS_TOKEN && order.provider === 'mercadopago'
+      && /^\d{1,24}$/.test(String(order.provider_ref || ''));
 
 /** Cria o estorno do pedido e faz a primeira tentativa. Devolve o estado. */
 export async function iniciarEstorno(env, order) {
@@ -513,7 +571,9 @@ async function tentarEstorno(env, row) {
   }
   const tentativas = Number(row.tentativas || 0) + 1;
   try {
-    const refund = await refundPayment(env, row.payment_id, `estorno-${order.id}`);
+    const refund = idDeTransacao(row.payment_id)
+      ? await estornarTransacao(env, row.payment_id)
+      : await refundPayment(env, row.payment_id, `estorno-${order.id}`);
     await estornoAtualizar(env, order.id, {
       estado: 'pedido', tentativas, refund_id: String(refund && refund.id || ''), erro: ''
     });
@@ -571,9 +631,15 @@ async function avisarEstornoTravado(env, order, motivo) {
         assunto: `Estorno automático falhou: ${order.id}`,
         linhas: [
           `O estorno da desistência do pedido ${order.id} (${reaisBR(order.amount_cents, order.currency)}) falhou ${MAX_TENTATIVAS} vezes.`,
-          `Última resposta da Mercado Pago: ${motivo || 'sem detalhe'}.`,
-          '',
-          'Devolva pelo painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro).',
+          ...(order.provider === 'paddle' ? [
+            `Última resposta do Paddle: ${motivo || 'sem detalhe'}.`,
+            '',
+            `Devolva pelo painel do Paddle (Transactions -> ${order.provider_ref || 'a transação'} -> Refund).`
+          ] : [
+            `Última resposta da Mercado Pago: ${motivo || 'sem detalhe'}.`,
+            '',
+            'Devolva pelo painel da Mercado Pago (Atividade -> o pagamento -> Devolver dinheiro).'
+          ]),
           'Quando ela confirmar, o acesso fecha sozinho e este pedido sai do lembrete diário.'
         ]
       })
@@ -608,6 +674,7 @@ async function avisarDesistencia(env, order, account, pedidoEm, estado, motivo =
   try {
     if (!mailReady(env)) return;
     const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
+    const cursoDoAluno = tituloDoCurso(getCourse(order.course_slug), idiomaDaConta(account), curso);
     const valor = reaisBR(order.amount_cents, order.currency);
     const quando = dataHoraBR(pedidoEm);
     const prazoUteis = Number(empresa.politicas?.prazoReembolsoUteis) || 10;
@@ -615,8 +682,8 @@ async function avisarDesistencia(env, order, account, pedidoEm, estado, motivo =
 
     const r = await sendMail(env, {
       to: account.email,
-      ...mensagemDeArrependimento({
-        nome: account.name || '', curso, valor, pedido: order.id, pedidoEm: quando,
+      ...mensagens(idiomaDaConta(account)).arrependimento({
+        nome: account.name || '', curso: cursoDoAluno, valor, pedido: order.id, pedidoEm: quando,
         prazoUteis, cartao: order.method === 'card', marca,
         suporte: empresa.contato?.emailSuporte || '',
         estornoPedido: estado === 'pedido' || estado === 'concluido'
@@ -731,6 +798,42 @@ export async function webhook({ request, env }) {
   return json({ ok: true });
 }
 
+/* ── POST /api/pay/paddle ─────────────────────────────────────────────────
+ * O aviso do Paddle. Mesmo desenho do da Mercado Pago: a assinatura prova
+ * QUEM mandou; o que aconteceu vem de uma consulta nossa à transação, que
+ * segue pelo mesmo `applyPayment`. Interessa `transaction.*` (pago,
+ * concluído) e `adjustment.*` (estorno, contestação); o resto responde 200. */
+export async function webhookPaddle({ request, env }) {
+  if (!paddle(env)) return json({ ok: true });
+  const corpo = await request.text();
+  if (corpo.length > 128 * 1024) return json({ ok: true });
+
+  const recusa = {};
+  if (!await conferirAssinatura(env, request, corpo, recusa)) {
+    if (!await throttled(env, `whk-h:${ip(request)}`, 1, 3_600_000)) {
+      await log(env, null, 'webhook-bad-signature', `paddle ${recusa.motivo || ''}`.trim());
+    }
+    return json({ error: 'bad-signature' }, 401);
+  }
+
+  let aviso;
+  try { aviso = JSON.parse(corpo); } catch { return json({ ok: true }); }
+  const tipo = String(aviso && aviso.event_type || '');
+  const dados = (aviso && aviso.data) || {};
+  const txnId = tipo.startsWith('transaction.') ? dados.id
+    : tipo.startsWith('adjustment.') ? dados.transaction_id
+    : null;
+  if (!idDeTransacao(txnId)) return json({ ok: true });
+
+  const r = await settleFromPaymentId(env, String(txnId), 'webhook');
+  if (tipo.startsWith('adjustment.') && dados.action === 'chargeback') {
+    await log(env, null, 'contestacao', `paddle ${txnId}`);
+  }
+  /* 500 faz o Paddle reenviar, que é o que se quer de um erro nosso. */
+  if (r === 'erro') return json({ error: 'retry' }, 500);
+  return json({ ok: true });
+}
+
 /* ── a liberação ────────────────────────────────────────────────────────── */
 
 /**
@@ -744,6 +847,11 @@ export async function webhook({ request, env }) {
 export async function settleFromProvider(env, order, source) {
   await updateOrder(env, order.id, { checked_at: Date.now() });
   try {
+    /* No Paddle o id da transação é conhecido desde a criação: pergunta direto. */
+    if (order.provider === 'paddle') {
+      if (!idDeTransacao(order.provider_ref)) return null;
+      return await applyPayment(env, order, pagamentoDe(await buscarTransacao(env, order.provider_ref)), source);
+    }
     const found = await paymentsFor(env, order.id);
     if (!found.length) return null;
     /* Se houver mais de um (o comprador tentou duas vezes), o aprovado manda. */
@@ -764,7 +872,9 @@ export async function settleFromProvider(env, order, source) {
  *  Mercado Pago deve reenviar o aviso. */
 export async function settleFromPaymentId(env, paymentId, source) {
   try {
-    const payment = await getPayment(env, paymentId);
+    const payment = idDeTransacao(paymentId)
+      ? pagamentoDe(await buscarTransacao(env, paymentId))
+      : await getPayment(env, paymentId);
     const orderId = payment?.external_reference;
     if (!orderId) return null;
     const order = await getOrder(env, orderId);
@@ -1044,13 +1154,17 @@ export async function avisarEstorno(env, order, { contestacao = false, restaAte 
     if (!mailReady(env)) return;
     const account = await findAccountById(env, order.account_id);
     if (!account?.email || /\.(invalid|local)$/i.test(account.email)) return;
-    const curso = getCourse(order.course_slug)?.titlePt || order.course_slug;
+    /* Na língua da conta: o aviso do provedor e o painel do dono rodam no
+       Worker brasileiro para as contas dos dois sites (lib/idioma.js). */
+    const idioma = idiomaDaConta(account);
+    const m = mensagens(idioma);
+    const curso = tituloDoCurso(getCourse(order.course_slug), idioma, order.course_slug);
     const r = await sendMail(env, {
       to: account.email,
-      ...mensagemDeEstorno({
+      ...m.estorno({
         nome: account.name || '', curso, valor: reaisBR(order.amount_cents, order.currency),
         pedido: order.id, cartao: order.method === 'card', contestacao,
-        restaAte: restaAte ? dataBR(restaAte) : '',
+        restaAte: restaAte ? m.data(restaAte) : '',
         marca: empresa.nomeFantasia || 'Hebraico Fluente',
         suporte: empresa.contato?.emailSuporte || ''
       })
@@ -1120,19 +1234,22 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
     const vence = await entitlementExpiry(env, account.id, itensDoPedido(curso)[0]?.courseSlug || order.course_slug);
     const site = String(env.SITE_ORIGIN || '').replace(/\/+$/, '');
 
-    const msg = mensagemDeCompra({
+    /* No idioma da conta: o site em inglês manda o recibo em inglês. */
+    const idioma = idiomaDaConta(account);
+    const m = mensagens(idioma);
+    const msg = m.compra({
       nome: account.name || '',
-      curso: curso?.titlePt || order.course_slug,
+      curso: tituloDoCurso(curso, idioma, order.course_slug),
       valor: reaisBR(order.amount_cents, order.currency),
       pedido: order.id,
-      expiraEm: dataBR(vence),
+      expiraEm: m.data(vence),
       link: tipo === 'livro' ? `${site}/israel/` : `${site}/meu-hebraico/`,
       tipo,
       ebook: tipo === 'pacote' ? `${site}/israel/` : null,
       aula0: `${site}/inicio/`,
       marca: empresa.nomeFantasia || 'Hebraico Fluente',
       suporte: empresa.contato?.emailSuporte || '',
-      arrependimentoDias: empresa.politicas?.arrependimentoDias || 0,
+      arrependimentoDias: diasDoPedido(order),
       /* Uma renovação não diz "seu acesso está liberado" a quem já estava
          estudando: diz que foi estendido. É a mesma compra e outra notícia. */
       renovacao: !primeiraCompra,
@@ -1140,11 +1257,12 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
          IV), e onde desistir pelo site (art. 5º). */
       /* LEGAL-104: a cópia FIXA da versão que valeu para este pedido, e não
          a página de hoje. Pedido de antes da coluna: a versão em vigor. */
-      termos: linkDaVersao(site, 'termos', order.termos_versao || versaoAtual('termos')),
-      reembolso: linkDaVersao(site, 'reembolso', versaoAtual('reembolso')),
+      termos: linkDaVersao(site, 'termos', order.termos_versao || versaoAtual('termos', env)),
+      reembolso: linkDaVersao(site, 'reembolso', versaoAtual('reembolso', env)),
       versao: [
-        dataBR(Date.parse(`${empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
-        (order.termos_versao || versaoAtual('termos')) && `código ${order.termos_versao || versaoAtual('termos')}`
+        m.data(Date.parse(`${(idioma === 'en' && empresa.politicas?.atualizadoEmEn) || empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
+        (order.termos_versao || versaoAtual('termos', env))
+          && `${idioma === 'en' ? 'code' : 'código'} ${order.termos_versao || versaoAtual('termos', env)}`
       ].filter(Boolean).join(', '),
       desistir: `${site}/perfil/`
     });

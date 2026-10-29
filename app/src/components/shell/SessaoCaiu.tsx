@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SESSAO_CAIU } from '@/lib/state/worker';
+import { tx } from '@/i18n/telas/sessao-caiu';
 
 export function SessaoCaiu() {
   const [caiu, setCaiu] = useState(false);
@@ -32,11 +33,11 @@ export function SessaoCaiu() {
          className="border-b border-[color:var(--amber-line,var(--line-soft))] bg-[var(--amber-wash)]">
       <p className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-2.5
                     font-ui text-[13.5px] leading-relaxed text-ink-body m-0">
-        <strong className="font-semibold">Sua sessão terminou.</strong>{' '}
-        O que você fizer agora fica salvo só neste aparelho, até você entrar de novo.{' '}
+        <strong className="font-semibold">{tx.titulo}</strong>{' '}
+        {tx.texto}{' '}
         <Link href={`/entrar?next=${encodeURIComponent(pathname)}`}
               className="font-semibold text-[var(--accent)] hover:underline">
-          Entrar de novo
+          {tx.entrar}
         </Link>
       </p>
     </div>

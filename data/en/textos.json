@@ -1,0 +1,2347 @@
+{
+  "textos/#0/tituloPt": {
+    "pt": "O peixe",
+    "en": "The fish"
+  },
+  "textos/#0/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#0/introPt": {
+    "pt": "Na praia, a Maya e o Dani acham alguma coisa na água, e a mãe do Dani tem a última palavra. Só as letras dos módulos 1 e 2, e quase só palavras que você já leu nas lições.",
+    "en": "At the beach, Maya and Dani find something in the water, and Dani's mom has the last word. Only the letters from modules 1 and 2, and almost only words you've already read in the lessons."
+  },
+  "textos/#0/linhas/#0/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#0/linhas/#0/pt": {
+    "pt": "Maya, olha o mar!",
+    "en": "Maya, look at the sea!"
+  },
+  "textos/#0/linhas/#1/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#0/linhas/#1/pt": {
+    "pt": "Tem peixe ali?",
+    "en": "Is there a fish there?"
+  },
+  "textos/#0/linhas/#2/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#0/linhas/#2/pt": {
+    "pt": "Tem! Olha um peixe!",
+    "en": "There is! Look, a fish!"
+  },
+  "textos/#0/linhas/#3/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#0/linhas/#3/pt": {
+    "pt": "O que tem ali, Dani?",
+    "en": "What's there, Dani?"
+  },
+  "textos/#0/linhas/#4/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#0/linhas/#4/pt": {
+    "pt": "Um peixe, mãe! Olha, ali.",
+    "en": "A fish, Mom! Look, there."
+  },
+  "textos/#0/linhas/#5/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#0/linhas/#5/pt": {
+    "pt": "O peixe é meu!",
+    "en": "The fish is mine!"
+  },
+  "textos/#0/linhas/#6/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#0/linhas/#6/pt": {
+    "pt": "Não, Maya. O peixe é do mar.",
+    "en": "No, Maya. The fish belongs to the sea."
+  },
+  "textos/#0/novas/#0/pt": {
+    "pt": "meu, minha",
+    "en": "my, mine"
+  },
+  "textos/#0/novas/#1/pt": {
+    "pt": "Maya (nome)",
+    "en": "Maya (name)"
+  },
+  "textos/#0/novas/#2/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#0/novas/#3/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#0/perguntas/#0/q": {
+    "pt": "O que as crianças veem no mar?",
+    "en": "What do the children see in the sea?"
+  },
+  "textos/#0/perguntas/#0/opcoes/#0": {
+    "pt": "Um peixe",
+    "en": "A fish"
+  },
+  "textos/#0/perguntas/#0/opcoes/#1": {
+    "pt": "Um sorvete",
+    "en": "An ice cream"
+  },
+  "textos/#0/perguntas/#0/opcoes/#2": {
+    "pt": "A mãe",
+    "en": "Mom"
+  },
+  "textos/#0/perguntas/#0/porque": {
+    "pt": "{{הִנֵה דָג}}: olha um peixe.",
+    "en": "{{הִנֵה דָג}}: look, a fish."
+  },
+  "textos/#0/perguntas/#1/q": {
+    "pt": "Quem diz que o peixe é seu?",
+    "en": "Who says the fish is theirs?"
+  },
+  "textos/#0/perguntas/#1/opcoes/#0": {
+    "pt": "A Maya",
+    "en": "Maya"
+  },
+  "textos/#0/perguntas/#1/opcoes/#1": {
+    "pt": "O Dani",
+    "en": "Dani"
+  },
+  "textos/#0/perguntas/#1/opcoes/#2": {
+    "pt": "A mãe",
+    "en": "Mom"
+  },
+  "textos/#0/perguntas/#1/porque": {
+    "pt": "A Maya diz {{הַדָג שֶׁלִי}}: o peixe é meu.",
+    "en": "Maya says {{הַדָג שֶׁלִי}}: the fish is mine."
+  },
+  "textos/#0/perguntas/#2/q": {
+    "pt": "Para a mãe, o peixe é do mar.",
+    "en": "For Mom, the fish belongs to the sea."
+  },
+  "textos/#0/perguntas/#2/porque": {
+    "pt": "{{הַדָג שֶׁל הַיָם}}: o peixe é do mar.",
+    "en": "{{הַדָג שֶׁל הַיָם}}: the fish belongs to the sea."
+  },
+  "textos/#1/tituloPt": {
+    "pt": "Tem pão?",
+    "en": "Is there bread?"
+  },
+  "textos/#1/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#1/introPt": {
+    "pt": "Dana acorda, a casa está em silêncio, e ela manda uma mensagem para a mãe, que já saiu. É a primeira conversa que você lê inteira em hebraico.",
+    "en": "Dana wakes up, the house is quiet, and she sends a message to her mom, who has already left. This is the first conversation you read entirely in Hebrew."
+  },
+  "textos/#1/linhas/#0/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#1/linhas/#0/pt": {
+    "pt": "Mãe, tem pão?",
+    "en": "Mom, is there bread?"
+  },
+  "textos/#1/linhas/#1/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#1/linhas/#1/pt": {
+    "pt": "Tem pão fresco, e tem chá quente também.",
+    "en": "There's fresh bread, and there's hot tea too."
+  },
+  "textos/#1/linhas/#2/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#1/linhas/#2/pt": {
+    "pt": "Obrigada! E o Yonatan?",
+    "en": "Thanks! And Yonatan?"
+  },
+  "textos/#1/linhas/#3/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#1/linhas/#3/pt": {
+    "pt": "Ele está dormindo.",
+    "en": "He's sleeping."
+  },
+  "textos/#1/novas/#0/pt": {
+    "pt": "Dana (nome)",
+    "en": "Dana (name)"
+  },
+  "textos/#1/novas/#1/pt": {
+    "pt": "Yonatan (nome)",
+    "en": "Yonatan (name)"
+  },
+  "textos/#1/novas/#2/pt": {
+    "pt": "também",
+    "en": "also, too"
+  },
+  "textos/#1/novas/#3/pt": {
+    "pt": "quente",
+    "en": "hot"
+  },
+  "textos/#1/novas/#4/pt": {
+    "pt": "dorme, está dormindo",
+    "en": "sleeps, is sleeping"
+  },
+  "textos/#1/novas/#5/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#1/perguntas/#0/q": {
+    "pt": "O que a Dana pergunta primeiro?",
+    "en": "What does Dana ask first?"
+  },
+  "textos/#1/perguntas/#0/opcoes/#0": {
+    "pt": "Se tem pão",
+    "en": "Whether there's bread"
+  },
+  "textos/#1/perguntas/#0/opcoes/#1": {
+    "pt": "Se tem chá",
+    "en": "Whether there's tea"
+  },
+  "textos/#1/perguntas/#0/opcoes/#2": {
+    "pt": "Onde está o Yonatan",
+    "en": "Where Yonatan is"
+  },
+  "textos/#1/perguntas/#0/porque": {
+    "pt": "{{אִמָא, יֵשׁ לֶחֶם?}}: mãe, tem pão?",
+    "en": "{{אִמָא, יֵשׁ לֶחֶם?}}: Mom, is there bread?"
+  },
+  "textos/#1/perguntas/#1/q": {
+    "pt": "O chá está frio.",
+    "en": "The tea is cold."
+  },
+  "textos/#1/perguntas/#1/porque": {
+    "pt": "{{חַם}} é quente: o chá está quente.",
+    "en": "{{חַם}} means hot: the tea is hot."
+  },
+  "textos/#1/perguntas/#2/q": {
+    "pt": "O que o Yonatan está fazendo?",
+    "en": "What is Yonatan doing?"
+  },
+  "textos/#1/perguntas/#2/opcoes/#0": {
+    "pt": "Tomando chá",
+    "en": "Drinking tea"
+  },
+  "textos/#1/perguntas/#2/opcoes/#1": {
+    "pt": "Comendo pão",
+    "en": "Eating bread"
+  },
+  "textos/#1/perguntas/#2/opcoes/#2": {
+    "pt": "Dormindo",
+    "en": "Sleeping"
+  },
+  "textos/#1/perguntas/#2/porque": {
+    "pt": "{{הוּא יָשֵׁן}}: ele está dormindo.",
+    "en": "{{הוּא יָשֵׁן}}: he's sleeping."
+  },
+  "textos/#1/perguntas/#3/q": {
+    "pt": "O pão é fresco.",
+    "en": "The bread is fresh."
+  },
+  "textos/#1/perguntas/#3/porque": {
+    "pt": "{{טָרִי}} é fresco.",
+    "en": "{{טָרִי}} means fresh."
+  },
+  "textos/#2/tituloPt": {
+    "pt": "Uma mensagem da montanha",
+    "en": "A message from the mountain"
+  },
+  "textos/#2/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#2/introPt": {
+    "pt": "A Noa foi passar uns dias na montanha, e o Dan manda uma mensagem para saber como ela está.",
+    "en": "Noa went to spend a few days in the mountains, and Dan sends a message to see how she's doing."
+  },
+  "textos/#2/linhas/#0/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#2/linhas/#0/pt": {
+    "pt": "Oi, Noa, tudo bem?",
+    "en": "Hi, Noa, how are you?"
+  },
+  "textos/#2/linhas/#1/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#2/linhas/#1/pt": {
+    "pt": "Ótimo! Estou na montanha.",
+    "en": "Great! I'm on the mountain."
+  },
+  "textos/#2/linhas/#2/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#2/linhas/#2/pt": {
+    "pt": "Está frio aí?",
+    "en": "Is it cold there?"
+  },
+  "textos/#2/linhas/#3/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#2/linhas/#3/pt": {
+    "pt": "Um pouco. Estou tomando chá.",
+    "en": "A little. I'm drinking tea."
+  },
+  "textos/#2/linhas/#4/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#2/linhas/#4/pt": {
+    "pt": "Quando você volta?",
+    "en": "When are you coming back?"
+  },
+  "textos/#2/linhas/#5/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#2/linhas/#5/pt": {
+    "pt": "Amanhã. Quero mais um dia!",
+    "en": "Tomorrow. I want one more day!"
+  },
+  "textos/#2/novas/#0/pt": {
+    "pt": "Noa (nome)",
+    "en": "Noa (name)"
+  },
+  "textos/#2/novas/#1/pt": {
+    "pt": "Dan (nome)",
+    "en": "Dan (name)"
+  },
+  "textos/#2/novas/#2/pt": {
+    "pt": "oi",
+    "en": "hi"
+  },
+  "textos/#2/novas/#3/pt": {
+    "pt": "tudo bem? (o que se ouve?)",
+    "en": "how are you? (literally \"what is heard?\")"
+  },
+  "textos/#2/novas/#4/pt": {
+    "pt": "ótimo",
+    "en": "great"
+  },
+  "textos/#2/novas/#5/pt": {
+    "pt": "frio",
+    "en": "cold"
+  },
+  "textos/#2/novas/#6/pt": {
+    "pt": "lá, aí",
+    "en": "there"
+  },
+  "textos/#2/novas/#7/pt": {
+    "pt": "um pouco",
+    "en": "a little"
+  },
+  "textos/#2/novas/#8/pt": {
+    "pt": "volta (ela volta)",
+    "en": "comes back (she comes back)"
+  },
+  "textos/#2/novas/#9/pt": {
+    "pt": "amanhã",
+    "en": "tomorrow"
+  },
+  "textos/#2/novas/#10/pt": {
+    "pt": "mais, ainda",
+    "en": "more, another"
+  },
+  "textos/#2/perguntas/#0/q": {
+    "pt": "Onde a Noa está?",
+    "en": "Where is Noa?"
+  },
+  "textos/#2/perguntas/#0/opcoes/#0": {
+    "pt": "Em casa",
+    "en": "At home"
+  },
+  "textos/#2/perguntas/#0/opcoes/#1": {
+    "pt": "Na montanha",
+    "en": "On the mountain"
+  },
+  "textos/#2/perguntas/#0/opcoes/#2": {
+    "pt": "No mar",
+    "en": "At the sea"
+  },
+  "textos/#2/perguntas/#0/porque": {
+    "pt": "{{אֲנִי עַל הָהָר}}: estou na montanha.",
+    "en": "{{אֲנִי עַל הָהָר}}: I'm on the mountain."
+  },
+  "textos/#2/perguntas/#1/q": {
+    "pt": "Está muito frio na montanha.",
+    "en": "It's very cold on the mountain."
+  },
+  "textos/#2/perguntas/#1/porque": {
+    "pt": "{{קְצָת}}: só um pouco.",
+    "en": "{{קְצָת}}: only a little."
+  },
+  "textos/#2/perguntas/#2/q": {
+    "pt": "Quando ela volta?",
+    "en": "When is she coming back?"
+  },
+  "textos/#2/perguntas/#2/opcoes/#0": {
+    "pt": "Hoje",
+    "en": "Today"
+  },
+  "textos/#2/perguntas/#2/opcoes/#1": {
+    "pt": "Amanhã",
+    "en": "Tomorrow"
+  },
+  "textos/#2/perguntas/#2/opcoes/#2": {
+    "pt": "Daqui a uma semana",
+    "en": "In a week"
+  },
+  "textos/#2/perguntas/#2/porque": {
+    "pt": "{{מָחָר}} é amanhã.",
+    "en": "{{מָחָר}} means tomorrow."
+  },
+  "textos/#2/perguntas/#3/q": {
+    "pt": "A Noa quer ficar mais um dia.",
+    "en": "Noa wants to stay one more day."
+  },
+  "textos/#2/perguntas/#3/porque": {
+    "pt": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: quero mais um dia!",
+    "en": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: I want one more day!"
+  },
+  "textos/#3/tituloPt": {
+    "pt": "Sábado de manhã",
+    "en": "Saturday morning"
+  },
+  "textos/#3/tipoPt": {
+    "pt": "Grupo da família no WhatsApp",
+    "en": "Family WhatsApp group"
+  },
+  "textos/#3/introPt": {
+    "pt": "Sábado de manhã, cada um num canto da casa, e o pai escreve no grupo da família.",
+    "en": "Saturday morning, everyone in a different corner of the house, and Dad writes in the family group."
+  },
+  "textos/#3/linhas/#0/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#3/linhas/#0/pt": {
+    "pt": "Bom dia! Quem quer café?",
+    "en": "Good morning! Who wants coffee?"
+  },
+  "textos/#3/linhas/#1/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#3/linhas/#1/pt": {
+    "pt": "Eu!",
+    "en": "Me!"
+  },
+  "textos/#3/linhas/#2/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#3/linhas/#2/pt": {
+    "pt": "Eu também. Estou no jardim.",
+    "en": "Me too. I'm in the garden."
+  },
+  "textos/#3/linhas/#3/quem": {
+    "pt": "Yonatan",
+    "en": "Yonatan"
+  },
+  "textos/#3/linhas/#3/pt": {
+    "pt": "O cachorro quer sair!",
+    "en": "The dog wants to go out!"
+  },
+  "textos/#3/linhas/#4/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#3/linhas/#4/pt": {
+    "pt": "Já vou. Shabát shalóm!",
+    "en": "Coming. Shabat shalom!"
+  },
+  "textos/#3/novas/#0/pt": {
+    "pt": "café",
+    "en": "coffee"
+  },
+  "textos/#3/novas/#1/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "en": "in the (attached to the word)"
+  },
+  "textos/#3/novas/#2/pt": {
+    "pt": "sair",
+    "en": "to go out"
+  },
+  "textos/#3/novas/#3/pt": {
+    "pt": "vem, está vindo",
+    "en": "comes, is coming"
+  },
+  "textos/#3/novas/#4/pt": {
+    "pt": "bom sábado (a saudação do sábado)",
+    "en": "good Shabbat (the Saturday greeting)"
+  },
+  "textos/#3/perguntas/#0/q": {
+    "pt": "Quem oferece café?",
+    "en": "Who offers coffee?"
+  },
+  "textos/#3/perguntas/#0/opcoes/#0": {
+    "pt": "O pai",
+    "en": "Dad"
+  },
+  "textos/#3/perguntas/#0/opcoes/#1": {
+    "pt": "A mãe",
+    "en": "Mom"
+  },
+  "textos/#3/perguntas/#0/opcoes/#2": {
+    "pt": "A Dana",
+    "en": "Dana"
+  },
+  "textos/#3/perguntas/#0/porque": {
+    "pt": "É o pai quem pergunta {{מִי רוֹצֶה קָפֶה?}}",
+    "en": "It's Dad who asks {{מִי רוֹצֶה קָפֶה?}}"
+  },
+  "textos/#3/perguntas/#1/q": {
+    "pt": "Onde a mãe está?",
+    "en": "Where is Mom?"
+  },
+  "textos/#3/perguntas/#1/opcoes/#0": {
+    "pt": "Na cozinha",
+    "en": "In the kitchen"
+  },
+  "textos/#3/perguntas/#1/opcoes/#1": {
+    "pt": "No jardim",
+    "en": "In the garden"
+  },
+  "textos/#3/perguntas/#1/opcoes/#2": {
+    "pt": "Na rua",
+    "en": "On the street"
+  },
+  "textos/#3/perguntas/#1/porque": {
+    "pt": "{{אֲנִי בַּגַן}}: estou no jardim.",
+    "en": "{{אֲנִי בַּגַן}}: I'm in the garden."
+  },
+  "textos/#3/perguntas/#2/q": {
+    "pt": "O cachorro quer sair.",
+    "en": "The dog wants to go out."
+  },
+  "textos/#3/perguntas/#3/q": {
+    "pt": "A conversa é num dia de semana.",
+    "en": "The conversation is on a weekday."
+  },
+  "textos/#3/perguntas/#3/porque": {
+    "pt": "{{שַׁבָּת שָׁלוֹם}}: é sábado.",
+    "en": "{{שַׁבָּת שָׁלוֹם}}: it's Saturday."
+  },
+  "textos/#4/tituloPt": {
+    "pt": "A caminho de casa",
+    "en": "On the way home"
+  },
+  "textos/#4/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#4/introPt": {
+    "pt": "O Dani está voltando para casa, e a mãe manda mensagem. Como toda mensagem de verdade, chega sem os pontos das vogais.",
+    "en": "Dani is heading home, and his mom sends a message. Like every real message, it arrives without the vowel dots."
+  },
+  "textos/#4/linhas/#0/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#4/linhas/#0/pt": {
+    "pt": "Dani, onde você está?",
+    "en": "Dani, where are you?"
+  },
+  "textos/#4/linhas/#1/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#4/linhas/#1/pt": {
+    "pt": "A caminho de casa.",
+    "en": "On the way home."
+  },
+  "textos/#4/linhas/#2/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#4/linhas/#2/pt": {
+    "pt": "Você está com a chave?",
+    "en": "Do you have the key?"
+  },
+  "textos/#4/linhas/#3/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#4/linhas/#3/pt": {
+    "pt": "Sim. Chego em casa em dez minutos.",
+    "en": "Yes. I'm getting home in ten minutes."
+  },
+  "textos/#4/linhas/#4/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#4/linhas/#4/pt": {
+    "pt": "Ótimo. Tem comida na geladeira.",
+    "en": "Great. There's food in the fridge."
+  },
+  "textos/#4/linhas/#5/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#4/linhas/#5/pt": {
+    "pt": "Obrigado, mãe!",
+    "en": "Thanks, Mom!"
+  },
+  "textos/#4/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#4/novas/#1/pt": {
+    "pt": "onde",
+    "en": "where"
+  },
+  "textos/#4/novas/#2/pt": {
+    "pt": "a caminho de casa",
+    "en": "on the way home"
+  },
+  "textos/#4/novas/#3/pt": {
+    "pt": "você tem",
+    "en": "you have"
+  },
+  "textos/#4/novas/#4/pt": {
+    "pt": "chave",
+    "en": "key"
+  },
+  "textos/#4/novas/#5/pt": {
+    "pt": "daqui a, em (tempo)",
+    "en": "in (time from now)"
+  },
+  "textos/#4/novas/#6/pt": {
+    "pt": "dez",
+    "en": "ten"
+  },
+  "textos/#4/novas/#7/pt": {
+    "pt": "minutos",
+    "en": "minutes"
+  },
+  "textos/#4/novas/#8/pt": {
+    "pt": "comida",
+    "en": "food"
+  },
+  "textos/#4/novas/#9/pt": {
+    "pt": "geladeira",
+    "en": "fridge"
+  },
+  "textos/#4/perguntas/#0/q": {
+    "pt": "O que a mãe pergunta primeiro?",
+    "en": "What does Mom ask first?"
+  },
+  "textos/#4/perguntas/#0/opcoes/#0": {
+    "pt": "Onde o Dani está",
+    "en": "Where Dani is"
+  },
+  "textos/#4/perguntas/#0/opcoes/#1": {
+    "pt": "Se ele está com fome",
+    "en": "Whether he's hungry"
+  },
+  "textos/#4/perguntas/#0/opcoes/#2": {
+    "pt": "Quando ele sai",
+    "en": "When he's leaving"
+  },
+  "textos/#4/perguntas/#0/porque": {
+    "pt": "{{אֵיפֹה אַתָה?}}: onde você está?",
+    "en": "{{אֵיפֹה אַתָה?}}: where are you?"
+  },
+  "textos/#4/perguntas/#1/q": {
+    "pt": "Em quanto tempo o Dani chega?",
+    "en": "How soon does Dani get home?"
+  },
+  "textos/#4/perguntas/#1/opcoes/#0": {
+    "pt": "Dois minutos",
+    "en": "Two minutes"
+  },
+  "textos/#4/perguntas/#1/opcoes/#1": {
+    "pt": "Dez minutos",
+    "en": "Ten minutes"
+  },
+  "textos/#4/perguntas/#1/opcoes/#2": {
+    "pt": "Uma hora",
+    "en": "An hour"
+  },
+  "textos/#4/perguntas/#1/porque": {
+    "pt": "{{עֶשֶׂר דַקוֹת}}: dez minutos.",
+    "en": "{{עֶשֶׂר דַקוֹת}}: ten minutes."
+  },
+  "textos/#4/perguntas/#2/q": {
+    "pt": "O Dani está sem a chave.",
+    "en": "Dani doesn't have the key."
+  },
+  "textos/#4/perguntas/#2/porque": {
+    "pt": "A mãe pergunta {{יֵשׁ לְךָ מַפְתֵחַ?}} e ele responde {{כֵּן}}: sim.",
+    "en": "Mom asks {{יֵשׁ לְךָ מַפְתֵחַ?}} and he answers {{כֵּן}}: yes."
+  },
+  "textos/#4/perguntas/#3/q": {
+    "pt": "Tem comida na geladeira.",
+    "en": "There's food in the fridge."
+  },
+  "textos/#5/tituloPt": {
+    "pt": "No hotel",
+    "en": "At the hotel"
+  },
+  "textos/#5/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#5/introPt": {
+    "pt": "A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber como ela está. Repare nas palavras de fora, com o guéresh.",
+    "en": "Dana is traveling around South America, and her mom sends a message to see how she's doing. Notice the borrowed words, with the geresh."
+  },
+  "textos/#5/linhas/#0/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#5/linhas/#0/pt": {
+    "pt": "Dana, você está no hotel?",
+    "en": "Dana, are you at the hotel?"
+  },
+  "textos/#5/linhas/#1/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#5/linhas/#1/pt": {
+    "pt": "Sim! Estou fazendo o check-in agora.",
+    "en": "Yes! I'm checking in now."
+  },
+  "textos/#5/linhas/#2/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#5/linhas/#2/pt": {
+    "pt": "Você tem pijama?",
+    "en": "Do you have pajamas?"
+  },
+  "textos/#5/linhas/#3/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#5/linhas/#3/pt": {
+    "pt": "Não tenho! Compro aqui.",
+    "en": "I don't! I'm buying some here."
+  },
+  "textos/#5/linhas/#4/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#5/linhas/#4/pt": {
+    "pt": "E amanhã?",
+    "en": "And tomorrow?"
+  },
+  "textos/#5/linhas/#5/quem": {
+    "pt": "Dana",
+    "en": "Dana"
+  },
+  "textos/#5/linhas/#5/pt": {
+    "pt": "Amanhã, Chile! Beijos!",
+    "en": "Tomorrow, Chile! Kisses!"
+  },
+  "textos/#5/novas/#0/pt": {
+    "pt": "hotel",
+    "en": "hotel"
+  },
+  "textos/#5/novas/#1/pt": {
+    "pt": "faz, está fazendo (ela)",
+    "en": "does, is doing (she)"
+  },
+  "textos/#5/novas/#2/pt": {
+    "pt": "check-in",
+    "en": "check-in"
+  },
+  "textos/#5/novas/#3/pt": {
+    "pt": "agora",
+    "en": "now"
+  },
+  "textos/#5/novas/#4/pt": {
+    "pt": "você tem (para mulher)",
+    "en": "you have (to a woman)"
+  },
+  "textos/#5/novas/#5/pt": {
+    "pt": "eu não tenho",
+    "en": "I don't have"
+  },
+  "textos/#5/novas/#6/pt": {
+    "pt": "compra, está comprando (ela)",
+    "en": "buys, is buying (she)"
+  },
+  "textos/#5/novas/#7/pt": {
+    "pt": "aqui",
+    "en": "here"
+  },
+  "textos/#5/novas/#8/pt": {
+    "pt": "beijos",
+    "en": "kisses"
+  },
+  "textos/#5/perguntas/#0/q": {
+    "pt": "Onde a Dana está?",
+    "en": "Where is Dana?"
+  },
+  "textos/#5/perguntas/#0/opcoes/#0": {
+    "pt": "No aeroporto",
+    "en": "At the airport"
+  },
+  "textos/#5/perguntas/#0/opcoes/#1": {
+    "pt": "No hotel",
+    "en": "At the hotel"
+  },
+  "textos/#5/perguntas/#0/opcoes/#2": {
+    "pt": "Em casa",
+    "en": "At home"
+  },
+  "textos/#5/perguntas/#0/porque": {
+    "pt": "A mãe pergunta {{אַתְ בַּמָלוֹן?}} e ela responde {{כֵּן}}: sim.",
+    "en": "Mom asks {{אַתְ בַּמָלוֹן?}} and she answers {{כֵּן}}: yes."
+  },
+  "textos/#5/perguntas/#1/q": {
+    "pt": "O que a Dana está fazendo agora?",
+    "en": "What is Dana doing now?"
+  },
+  "textos/#5/perguntas/#1/opcoes/#0": {
+    "pt": "O check-in",
+    "en": "Checking in"
+  },
+  "textos/#5/perguntas/#1/opcoes/#1": {
+    "pt": "Comprando pijama",
+    "en": "Buying pajamas"
+  },
+  "textos/#5/perguntas/#1/opcoes/#2": {
+    "pt": "Dormindo",
+    "en": "Sleeping"
+  },
+  "textos/#5/perguntas/#1/porque": {
+    "pt": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estou fazendo o check-in agora.",
+    "en": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: I'm checking in now."
+  },
+  "textos/#5/perguntas/#2/q": {
+    "pt": "A Dana tem pijama.",
+    "en": "Dana has pajamas."
+  },
+  "textos/#5/perguntas/#2/porque": {
+    "pt": "{{אֵין לִי!}}: não tenho - e ela vai comprar aí mesmo, onde está.",
+    "en": "{{אֵין לִי!}}: I don't - and she's buying some right there, where she is."
+  },
+  "textos/#5/perguntas/#3/q": {
+    "pt": "Para onde ela vai amanhã?",
+    "en": "Where is she going tomorrow?"
+  },
+  "textos/#5/perguntas/#3/opcoes/#0": {
+    "pt": "Chile",
+    "en": "Chile"
+  },
+  "textos/#5/perguntas/#3/opcoes/#1": {
+    "pt": "Tchéquia",
+    "en": "Czechia"
+  },
+  "textos/#5/perguntas/#3/opcoes/#2": {
+    "pt": "Israel",
+    "en": "Israel"
+  },
+  "textos/#5/perguntas/#3/porque": {
+    "pt": "{{מָחָר צ׳ילה}}: amanhã, Chile.",
+    "en": "{{מָחָר צ׳ילה}}: tomorrow, Chile."
+  },
+  "textos/#6/tituloPt": {
+    "pt": "Na praia",
+    "en": "At the beach"
+  },
+  "textos/#6/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#6/introPt": {
+    "pt": "Natan e Maya se conhecem na praia. Tudo aqui usa só as seis letras do módulo, as palavras que você já leu nas lições e os sinais de vogal que você já aprendeu, incluindo {{וֹ}} e {{וּ}}.",
+    "en": "Natan and Maya meet at the beach. Everything here uses only the six letters of the module, the words you've already read in the lessons, and the vowel signs you've already learned, including {{וֹ}} and {{וּ}}."
+  },
+  "textos/#6/linhas/#0/quem": {
+    "pt": "Natan",
+    "en": "Natan"
+  },
+  "textos/#6/linhas/#0/pt": {
+    "pt": "Quem é você?",
+    "en": "Who are you?"
+  },
+  "textos/#6/linhas/#1/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#6/linhas/#1/pt": {
+    "pt": "Eu sou a Maya. Quem é você?",
+    "en": "I'm Maya. Who are you?"
+  },
+  "textos/#6/linhas/#2/quem": {
+    "pt": "Natan",
+    "en": "Natan"
+  },
+  "textos/#6/linhas/#2/pt": {
+    "pt": "Eu sou o Natan. Olha a mamãe aqui.",
+    "en": "I'm Natan. Look, here's Mom."
+  },
+  "textos/#6/linhas/#3/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#6/linhas/#3/pt": {
+    "pt": "Aqui está um chá.",
+    "en": "Here's some tea."
+  },
+  "textos/#6/linhas/#4/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#6/linhas/#4/pt": {
+    "pt": "Chá? Olha o mar ali!",
+    "en": "Tea? Look at the sea over there!"
+  },
+  "textos/#6/linhas/#5/quem": {
+    "pt": "Natan",
+    "en": "Natan"
+  },
+  "textos/#6/linhas/#5/pt": {
+    "pt": "Hoje é dia de praia!",
+    "en": "Today is a beach day!"
+  },
+  "textos/#6/novas/#0/pt": {
+    "pt": "Natan (nome)",
+    "en": "Natan (name)"
+  },
+  "textos/#6/novas/#1/pt": {
+    "pt": "Maya (nome)",
+    "en": "Maya (name)"
+  },
+  "textos/#6/novas/#2/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#6/perguntas/#0/q": {
+    "pt": "Como se chama a menina?",
+    "en": "What is the girl's name?"
+  },
+  "textos/#6/perguntas/#0/opcoes/#0": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#6/perguntas/#0/opcoes/#1": {
+    "pt": "Natan",
+    "en": "Natan"
+  },
+  "textos/#6/perguntas/#0/opcoes/#2": {
+    "pt": "Ima",
+    "en": "Ima"
+  },
+  "textos/#6/perguntas/#0/porque": {
+    "pt": "{{אֲנִי מַיָה}}: eu sou a Maya.",
+    "en": "{{אֲנִי מַיָה}}: I'm Maya."
+  },
+  "textos/#6/perguntas/#1/q": {
+    "pt": "Quem traz o chá?",
+    "en": "Who brings the tea?"
+  },
+  "textos/#6/perguntas/#1/opcoes/#0": {
+    "pt": "A Maya",
+    "en": "Maya"
+  },
+  "textos/#6/perguntas/#1/opcoes/#1": {
+    "pt": "A mãe",
+    "en": "Mom"
+  },
+  "textos/#6/perguntas/#1/opcoes/#2": {
+    "pt": "O Natan",
+    "en": "Natan"
+  },
+  "textos/#6/perguntas/#1/porque": {
+    "pt": "A mãe diz {{הִנֵה תֵה}}: aqui está um chá.",
+    "en": "Mom says {{הִנֵה תֵה}}: here's some tea."
+  },
+  "textos/#6/perguntas/#2/q": {
+    "pt": "A Maya fala do mar.",
+    "en": "Maya talks about the sea."
+  },
+  "textos/#6/perguntas/#2/porque": {
+    "pt": "Ela responde {{תֵה? הִנֵה הַיָם!}}: chá? Olha o mar ali!",
+    "en": "She answers {{תֵה? הִנֵה הַיָם!}}: tea? Look at the sea over there!"
+  },
+  "textos/#7/tituloPt": {
+    "pt": "Sorvete para todos",
+    "en": "Ice cream for everyone"
+  },
+  "textos/#7/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#7/introPt": {
+    "pt": "A Maya visita a tia, e a tia tem uma surpresa. Só palavras que você já leu nas lições dos módulos 1 e 2.",
+    "en": "Maya visits her aunt, and her aunt has a surprise. Only words you've already read in the lessons of modules 1 and 2."
+  },
+  "textos/#7/linhas/#0/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#7/linhas/#0/pt": {
+    "pt": "Olá, tia!",
+    "en": "Hello, Auntie!"
+  },
+  "textos/#7/linhas/#1/quem": {
+    "pt": "Tia",
+    "en": "Aunt"
+  },
+  "textos/#7/linhas/#1/pt": {
+    "pt": "Olá, Maya! Aqui está um sorvete.",
+    "en": "Hello, Maya! Here's an ice cream."
+  },
+  "textos/#7/linhas/#2/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#7/linhas/#2/pt": {
+    "pt": "Obrigada, tia!",
+    "en": "Thank you, Auntie!"
+  },
+  "textos/#7/linhas/#3/quem": {
+    "pt": "Tia",
+    "en": "Aunt"
+  },
+  "textos/#7/linhas/#3/pt": {
+    "pt": "Quem é o menino ali?",
+    "en": "Who's the boy over there?"
+  },
+  "textos/#7/linhas/#4/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#7/linhas/#4/pt": {
+    "pt": "É o Dani.",
+    "en": "It's Dani."
+  },
+  "textos/#7/linhas/#5/quem": {
+    "pt": "Tia",
+    "en": "Aunt"
+  },
+  "textos/#7/linhas/#5/pt": {
+    "pt": "Tem sorvete para o Dani também!",
+    "en": "There's ice cream for Dani too!"
+  },
+  "textos/#7/novas/#0/pt": {
+    "pt": "Maya (nome)",
+    "en": "Maya (name)"
+  },
+  "textos/#7/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#7/novas/#2/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#7/novas/#3/pt": {
+    "pt": "para (grudado na palavra)",
+    "en": "to, for (attached to the word)"
+  },
+  "textos/#7/perguntas/#0/q": {
+    "pt": "O que a tia dá para a Maya?",
+    "en": "What does the aunt give Maya?"
+  },
+  "textos/#7/perguntas/#0/opcoes/#0": {
+    "pt": "Chá",
+    "en": "Tea"
+  },
+  "textos/#7/perguntas/#0/opcoes/#1": {
+    "pt": "Sorvete",
+    "en": "Ice cream"
+  },
+  "textos/#7/perguntas/#0/opcoes/#2": {
+    "pt": "Água",
+    "en": "Water"
+  },
+  "textos/#7/perguntas/#0/porque": {
+    "pt": "{{הִנֵה גְלִידָה}}: aqui está um sorvete.",
+    "en": "{{הִנֵה גְלִידָה}}: here's an ice cream."
+  },
+  "textos/#7/perguntas/#1/q": {
+    "pt": "Quem é o menino ali?",
+    "en": "Who's the boy over there?"
+  },
+  "textos/#7/perguntas/#1/opcoes/#0": {
+    "pt": "O Natan",
+    "en": "Natan"
+  },
+  "textos/#7/perguntas/#1/opcoes/#1": {
+    "pt": "O Dani",
+    "en": "Dani"
+  },
+  "textos/#7/perguntas/#1/opcoes/#2": {
+    "pt": "O tio",
+    "en": "Her uncle",
+    "comentario": "\"O tio\": usei \"Her uncle\" (o tio da Maya)."
+  },
+  "textos/#7/perguntas/#1/porque": {
+    "pt": "{{הוּא דָנִי}}: é o Dani.",
+    "en": "{{הוּא דָנִי}}: it's Dani."
+  },
+  "textos/#7/perguntas/#2/q": {
+    "pt": "Só a Maya ganha sorvete.",
+    "en": "Only Maya gets ice cream."
+  },
+  "textos/#7/perguntas/#2/porque": {
+    "pt": "{{גַם לְדָנִי}}: para o Dani também.",
+    "en": "{{גַם לְדָנִי}}: for Dani too."
+  },
+  "textos/#8/tituloPt": {
+    "pt": "Um passeio",
+    "en": "An outing"
+  },
+  "textos/#8/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#8/introPt": {
+    "pt": "O Dani quer saber o que vai levar no passeio. Todas as palavras já apareceram nas lições.",
+    "en": "Dani wants to know what he's taking on the outing. Every word has already appeared in the lessons."
+  },
+  "textos/#8/linhas/#0/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#8/linhas/#0/pt": {
+    "pt": "Mãe, hoje tem passeio?",
+    "en": "Mom, is there an outing today?"
+  },
+  "textos/#8/linhas/#1/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#8/linhas/#1/pt": {
+    "pt": "Hoje tem passeio até o rio.",
+    "en": "Today there's an outing to the river."
+  },
+  "textos/#8/linhas/#2/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#8/linhas/#2/pt": {
+    "pt": "E pão também?",
+    "en": "And bread too?"
+  },
+  "textos/#8/linhas/#3/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#8/linhas/#3/pt": {
+    "pt": "Aqui tem pão fresco, e água também.",
+    "en": "Here's fresh bread, and water too."
+  },
+  "textos/#8/linhas/#4/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#8/linhas/#4/pt": {
+    "pt": "E guarda-chuva também?",
+    "en": "And an umbrella too?"
+  },
+  "textos/#8/linhas/#5/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#8/linhas/#5/pt": {
+    "pt": "Não. Hoje tem sol.",
+    "en": "No. Today it's sunny."
+  },
+  "textos/#8/linhas/#6/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#8/linhas/#6/pt": {
+    "pt": "Que sorte!",
+    "en": "Lucky!"
+  },
+  "textos/#8/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#8/novas/#1/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#8/novas/#2/pt": {
+    "pt": "até o, para o (grudado na palavra)",
+    "en": "to the (attached to the word)"
+  },
+  "textos/#8/perguntas/#0/q": {
+    "pt": "Para onde é o passeio?",
+    "en": "Where is the outing going?"
+  },
+  "textos/#8/perguntas/#0/opcoes/#0": {
+    "pt": "Para o mar",
+    "en": "To the sea"
+  },
+  "textos/#8/perguntas/#0/opcoes/#1": {
+    "pt": "Para o rio",
+    "en": "To the river"
+  },
+  "textos/#8/perguntas/#0/opcoes/#2": {
+    "pt": "Para o jardim",
+    "en": "To the garden"
+  },
+  "textos/#8/perguntas/#0/porque": {
+    "pt": "{{טִיוּל לַנָהָר}}: passeio até o rio.",
+    "en": "{{טִיוּל לַנָהָר}}: an outing to the river."
+  },
+  "textos/#8/perguntas/#1/q": {
+    "pt": "O pão é fresco.",
+    "en": "The bread is fresh."
+  },
+  "textos/#8/perguntas/#1/porque": {
+    "pt": "{{לֶחֶם טָרִי}}: pão fresco.",
+    "en": "{{לֶחֶם טָרִי}}: fresh bread."
+  },
+  "textos/#8/perguntas/#2/q": {
+    "pt": "Por que o Dani não leva guarda-chuva?",
+    "en": "Why isn't Dani taking an umbrella?"
+  },
+  "textos/#8/perguntas/#2/opcoes/#0": {
+    "pt": "Porque hoje tem sol",
+    "en": "Because it's sunny today"
+  },
+  "textos/#8/perguntas/#2/opcoes/#1": {
+    "pt": "Porque não tem guarda-chuva",
+    "en": "Because he has no umbrella"
+  },
+  "textos/#8/perguntas/#2/opcoes/#2": {
+    "pt": "Porque o passeio é amanhã",
+    "en": "Because the outing is tomorrow"
+  },
+  "textos/#8/perguntas/#2/porque": {
+    "pt": "{{הַיוֹם יֵשׁ שֶׁמֶשׁ}}: hoje tem sol.",
+    "en": "{{הַיוֹם יֵשׁ שֶׁמֶשׁ}}: today it's sunny."
+  },
+  "textos/#9/tituloPt": {
+    "pt": "Meio-dia na cidade",
+    "en": "Noon in the city"
+  },
+  "textos/#9/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#9/introPt": {
+    "pt": "A Noa conhece o Dani na cidade, ao meio-dia. Só palavras que você já leu nas lições.",
+    "en": "Noa meets Dani in the city, at noon. Only words you've already read in the lessons."
+  },
+  "textos/#9/linhas/#0/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#9/linhas/#0/pt": {
+    "pt": "Com licença, você é estudante?",
+    "en": "Excuse me, are you a student?"
+  },
+  "textos/#9/linhas/#1/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#9/linhas/#1/pt": {
+    "pt": "Sou um estudante novo. E você?",
+    "en": "I'm a new student. And you?"
+  },
+  "textos/#9/linhas/#2/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#9/linhas/#2/pt": {
+    "pt": "Eu sou a Noa, muito prazer! Você quer um suco?",
+    "en": "I'm Noa, nice to meet you! Do you want some juice?"
+  },
+  "textos/#9/linhas/#3/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#9/linhas/#3/pt": {
+    "pt": "Não, obrigado. Quero um lugar tranquilo.",
+    "en": "No, thanks. I want a quiet place."
+  },
+  "textos/#9/linhas/#4/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#9/linhas/#4/pt": {
+    "pt": "Olha aqui uma árvore grande, e sombra.",
+    "en": "Look, here's a big tree, and shade."
+  },
+  "textos/#9/linhas/#5/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#9/linhas/#5/pt": {
+    "pt": "Obrigado, Noa. Que legal!",
+    "en": "Thanks, Noa. How nice!"
+  },
+  "textos/#9/novas/#0/pt": {
+    "pt": "Noa (nome)",
+    "en": "Noa (name)"
+  },
+  "textos/#9/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#9/novas/#2/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#9/perguntas/#0/q": {
+    "pt": "O Dani é um estudante novo.",
+    "en": "Dani is a new student."
+  },
+  "textos/#9/perguntas/#0/porque": {
+    "pt": "{{אֲנִי סְטוּדֶנְט חָדָשׁ}}: sou um estudante novo.",
+    "en": "{{אֲנִי סְטוּדֶנְט חָדָשׁ}}: I'm a new student."
+  },
+  "textos/#9/perguntas/#1/q": {
+    "pt": "O que a Noa oferece?",
+    "en": "What does Noa offer?"
+  },
+  "textos/#9/perguntas/#1/opcoes/#0": {
+    "pt": "Café",
+    "en": "Coffee"
+  },
+  "textos/#9/perguntas/#1/opcoes/#1": {
+    "pt": "Suco",
+    "en": "Juice"
+  },
+  "textos/#9/perguntas/#1/opcoes/#2": {
+    "pt": "Água",
+    "en": "Water"
+  },
+  "textos/#9/perguntas/#1/porque": {
+    "pt": "{{אַתָה רוֹצֶה מִיץ?}}: você quer um suco?",
+    "en": "{{אַתָה רוֹצֶה מִיץ?}}: do you want some juice?"
+  },
+  "textos/#9/perguntas/#2/q": {
+    "pt": "O que o Dani procura?",
+    "en": "What is Dani looking for?"
+  },
+  "textos/#9/perguntas/#2/opcoes/#0": {
+    "pt": "Um lugar tranquilo",
+    "en": "A quiet place"
+  },
+  "textos/#9/perguntas/#2/opcoes/#1": {
+    "pt": "Um ônibus",
+    "en": "A bus"
+  },
+  "textos/#9/perguntas/#2/opcoes/#2": {
+    "pt": "Uma árvore pequena",
+    "en": "A small tree"
+  },
+  "textos/#9/perguntas/#2/porque": {
+    "pt": "{{מָקוֹם שֶׁקֶט}}: um lugar tranquilo.",
+    "en": "{{מָקוֹם שֶׁקֶט}}: a quiet place."
+  },
+  "textos/#10/tituloPt": {
+    "pt": "Café da manhã",
+    "en": "Breakfast"
+  },
+  "textos/#10/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#10/introPt": {
+    "pt": "Manhã corrida na casa do Dani. Agora, com o ב, o כ e o פ, já dá para ler a família inteira à mesa.",
+    "en": "A rushed morning at Dani's house. Now, with ב, כ and פ, you can read the whole family at the table."
+  },
+  "textos/#10/linhas/#0/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#10/linhas/#0/pt": {
+    "pt": "Bom dia, família! Tem café e chá.",
+    "en": "Good morning, family! There's coffee and tea."
+  },
+  "textos/#10/linhas/#1/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#10/linhas/#1/pt": {
+    "pt": "Obrigada! E comida?",
+    "en": "Thanks! And food?"
+  },
+  "textos/#10/linhas/#2/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#10/linhas/#2/pt": {
+    "pt": "Aqui tem pão, e maçã também.",
+    "en": "Here's bread, and an apple too."
+  },
+  "textos/#10/linhas/#3/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#10/linhas/#3/pt": {
+    "pt": "Pai, o ônibus! Agora!",
+    "en": "Dad, the bus! Now!"
+  },
+  "textos/#10/linhas/#4/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#10/linhas/#4/pt": {
+    "pt": "Calma, um momento! Aqui está a mochila.",
+    "en": "Easy, just a moment! Here's the backpack."
+  },
+  "textos/#10/linhas/#5/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#10/linhas/#5/pt": {
+    "pt": "Obrigado, pai! Tchau!",
+    "en": "Thanks, Dad! Bye!"
+  },
+  "textos/#10/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#10/novas/#1/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#10/novas/#2/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#10/perguntas/#0/q": {
+    "pt": "O que o pai oferece primeiro?",
+    "en": "What does Dad offer first?"
+  },
+  "textos/#10/perguntas/#0/opcoes/#0": {
+    "pt": "Café e chá",
+    "en": "Coffee and tea"
+  },
+  "textos/#10/perguntas/#0/opcoes/#1": {
+    "pt": "Pão e maçã",
+    "en": "Bread and an apple"
+  },
+  "textos/#10/perguntas/#0/opcoes/#2": {
+    "pt": "Suco",
+    "en": "Juice"
+  },
+  "textos/#10/perguntas/#0/porque": {
+    "pt": "{{הִנֵה קָפֶה וְתֵה}}: tem café e chá.",
+    "en": "{{הִנֵה קָפֶה וְתֵה}}: there's coffee and tea."
+  },
+  "textos/#10/perguntas/#1/q": {
+    "pt": "O Dani está com pressa por causa do ônibus.",
+    "en": "Dani is in a hurry because of the bus."
+  },
+  "textos/#10/perguntas/#1/porque": {
+    "pt": "{{הָאוֹטוֹבּוּס! עַכְשָׁיו!}}: o ônibus! Agora!",
+    "en": "{{הָאוֹטוֹבּוּס! עַכְשָׁיו!}}: the bus! Now!"
+  },
+  "textos/#10/perguntas/#2/q": {
+    "pt": "O que o pai entrega ao Dani?",
+    "en": "What does Dad hand Dani?"
+  },
+  "textos/#10/perguntas/#2/opcoes/#0": {
+    "pt": "O telefone",
+    "en": "The phone"
+  },
+  "textos/#10/perguntas/#2/opcoes/#1": {
+    "pt": "A mochila",
+    "en": "The backpack"
+  },
+  "textos/#10/perguntas/#2/opcoes/#2": {
+    "pt": "O livro",
+    "en": "The book"
+  },
+  "textos/#10/perguntas/#2/porque": {
+    "pt": "{{הִנֵה הַתִיק}}: aqui está a mochila.",
+    "en": "{{הִנֵה הַתִיק}}: here's the backpack."
+  },
+  "textos/#11/tituloPt": {
+    "pt": "Mensagem",
+    "en": "Message"
+  },
+  "textos/#11/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#11/introPt": {
+    "pt": "O Dani e o Tom combinam um café. Como numa mensagem de verdade, sem os pontos das vogais, e só com palavras que você já leu.",
+    "en": "Dani and Tom set up a coffee. Like a real message, without the vowel dots, and only with words you've already read."
+  },
+  "textos/#11/linhas/#0/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#11/linhas/#0/pt": {
+    "pt": "Oi, amigo! Você está na cidade?",
+    "en": "Hi, buddy! Are you in town?"
+  },
+  "textos/#11/linhas/#1/quem": {
+    "pt": "Tom",
+    "en": "Tom"
+  },
+  "textos/#11/linhas/#1/pt": {
+    "pt": "Sim, estou na rua. Um momento.",
+    "en": "Yes, I'm on the street. One moment."
+  },
+  "textos/#11/linhas/#2/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#11/linhas/#2/pt": {
+    "pt": "Quero um café. Você também?",
+    "en": "I want a coffee. You too?"
+  },
+  "textos/#11/linhas/#3/quem": {
+    "pt": "Tom",
+    "en": "Tom"
+  },
+  "textos/#11/linhas/#3/pt": {
+    "pt": "Não, só um suco. E comida!",
+    "en": "No, just a juice. And food!"
+  },
+  "textos/#11/linhas/#4/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#11/linhas/#4/pt": {
+    "pt": "Ótimo. Agora?",
+    "en": "Great. Now?"
+  },
+  "textos/#11/linhas/#5/quem": {
+    "pt": "Tom",
+    "en": "Tom"
+  },
+  "textos/#11/linhas/#5/pt": {
+    "pt": "Agora!",
+    "en": "Now!"
+  },
+  "textos/#11/novas/#0/pt": {
+    "pt": "Tom (nome)",
+    "en": "Tom (name)"
+  },
+  "textos/#11/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#11/novas/#2/pt": {
+    "pt": "em, no, na (grudado na palavra)",
+    "en": "in, in the (attached to the word)"
+  },
+  "textos/#11/novas/#3/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#11/perguntas/#0/q": {
+    "pt": "Onde o Tom está?",
+    "en": "Where is Tom?"
+  },
+  "textos/#11/perguntas/#0/opcoes/#0": {
+    "pt": "Em casa",
+    "en": "At home"
+  },
+  "textos/#11/perguntas/#0/opcoes/#1": {
+    "pt": "Na rua",
+    "en": "On the street"
+  },
+  "textos/#11/perguntas/#0/opcoes/#2": {
+    "pt": "No ônibus",
+    "en": "On the bus"
+  },
+  "textos/#11/perguntas/#0/porque": {
+    "pt": "{{אֲנִי בָּרְחוֹב}}: estou na rua.",
+    "en": "{{אֲנִי בָּרְחוֹב}}: I'm on the street."
+  },
+  "textos/#11/perguntas/#1/q": {
+    "pt": "O Tom também quer café.",
+    "en": "Tom wants coffee too."
+  },
+  "textos/#11/perguntas/#1/porque": {
+    "pt": "{{לֹא, רַק מִיץ}}: não, só um suco.",
+    "en": "{{לֹא, רַק מִיץ}}: no, just a juice."
+  },
+  "textos/#11/perguntas/#2/q": {
+    "pt": "Quando eles se encontram?",
+    "en": "When do they meet?"
+  },
+  "textos/#11/perguntas/#2/opcoes/#0": {
+    "pt": "Agora",
+    "en": "Now"
+  },
+  "textos/#11/perguntas/#2/opcoes/#1": {
+    "pt": "Amanhã",
+    "en": "Tomorrow"
+  },
+  "textos/#11/perguntas/#2/opcoes/#2": {
+    "pt": "À noite",
+    "en": "In the evening"
+  },
+  "textos/#11/perguntas/#2/porque": {
+    "pt": "{{עַכְשָׁיו!}}: agora!",
+    "en": "{{עַכְשָׁיו!}}: now!"
+  },
+  "textos/#12/tituloPt": {
+    "pt": "Viagem ao Chile",
+    "en": "Trip to Chile"
+  },
+  "textos/#12/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#12/introPt": {
+    "pt": "A Maya está viajando, e o Dani quer saber o que ela levou na mochila. Repare nas palavras de fora, com o guéresh.",
+    "en": "Maya is traveling, and Dani wants to know what she packed in her backpack. Notice the borrowed words, with the geresh."
+  },
+  "textos/#12/linhas/#0/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#12/linhas/#0/pt": {
+    "pt": "Dani, hoje estou no Chile!",
+    "en": "Dani, today I'm in Chile!"
+  },
+  "textos/#12/linhas/#1/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#12/linhas/#1/pt": {
+    "pt": "No Chile? Que lindo! O que tem na mochila?",
+    "en": "In Chile? How beautiful! What's in the backpack?"
+  },
+  "textos/#12/linhas/#2/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#12/linhas/#2/pt": {
+    "pt": "Pijama, gel, um livro e dinheiro.",
+    "en": "Pajamas, gel, a book, and money."
+  },
+  "textos/#12/linhas/#3/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#12/linhas/#3/pt": {
+    "pt": "E guarda-chuva também?",
+    "en": "And an umbrella too?"
+  },
+  "textos/#12/linhas/#4/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#12/linhas/#4/pt": {
+    "pt": "Não. Hoje tem sol.",
+    "en": "No. Today it's sunny."
+  },
+  "textos/#12/linhas/#5/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#12/linhas/#5/pt": {
+    "pt": "Que sorte! Tchau, Maya!",
+    "en": "Lucky! Bye, Maya!"
+  },
+  "textos/#12/novas/#0/pt": {
+    "pt": "Maya (nome)",
+    "en": "Maya (name)"
+  },
+  "textos/#12/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#12/novas/#2/pt": {
+    "pt": "em, no, na (grudado na palavra)",
+    "en": "in, in the (attached to the word)"
+  },
+  "textos/#12/novas/#3/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#12/perguntas/#0/q": {
+    "pt": "Onde a Maya está hoje?",
+    "en": "Where is Maya today?"
+  },
+  "textos/#12/perguntas/#0/opcoes/#0": {
+    "pt": "No Chile",
+    "en": "In Chile"
+  },
+  "textos/#12/perguntas/#0/opcoes/#1": {
+    "pt": "Na Tchéquia",
+    "en": "In Czechia"
+  },
+  "textos/#12/perguntas/#0/opcoes/#2": {
+    "pt": "Em Israel",
+    "en": "In Israel"
+  },
+  "textos/#12/perguntas/#0/porque": {
+    "pt": "{{הַיוֹם אֲנִי בְּצ׳ילה}}: hoje estou no Chile.",
+    "en": "{{הַיוֹם אֲנִי בְּצ׳ילה}}: today I'm in Chile."
+  },
+  "textos/#12/perguntas/#1/q": {
+    "pt": "A Maya levou um guarda-chuva.",
+    "en": "Maya took an umbrella."
+  },
+  "textos/#12/perguntas/#1/porque": {
+    "pt": "{{לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.}}: não, hoje tem sol.",
+    "en": "{{לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.}}: no, today it's sunny."
+  },
+  "textos/#12/perguntas/#2/q": {
+    "pt": "Qual destas coisas está na mochila?",
+    "en": "Which of these things is in the backpack?"
+  },
+  "textos/#12/perguntas/#2/opcoes/#0": {
+    "pt": "Pijama",
+    "en": "Pajamas"
+  },
+  "textos/#12/perguntas/#2/opcoes/#1": {
+    "pt": "Bola",
+    "en": "A ball"
+  },
+  "textos/#12/perguntas/#2/opcoes/#2": {
+    "pt": "Telefone",
+    "en": "A phone"
+  },
+  "textos/#12/perguntas/#2/porque": {
+    "pt": "{{פיג׳מה}} é pijama.",
+    "en": "{{פיג׳מה}} means pajamas."
+  },
+  "textos/#13/tituloPt": {
+    "pt": "A rosa",
+    "en": "The rose"
+  },
+  "textos/#13/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#13/introPt": {
+    "pt": "O Dani e a mãe estão no jardim.",
+    "en": "Dani and his mom are in the garden."
+  },
+  "textos/#13/linhas/#0/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#13/linhas/#0/pt": {
+    "pt": "Mãe, o que é isto?",
+    "en": "Mom, what is this?"
+  },
+  "textos/#13/linhas/#1/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#13/linhas/#1/pt": {
+    "pt": "É uma rosa.",
+    "en": "It's a rose."
+  },
+  "textos/#13/linhas/#2/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#13/linhas/#2/pt": {
+    "pt": "Uma rosa grande!",
+    "en": "A big rose!"
+  },
+  "textos/#13/linhas/#3/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#13/linhas/#3/pt": {
+    "pt": "Olha, tem uma rosa lá também.",
+    "en": "Look, there's a rose over there too."
+  },
+  "textos/#13/linhas/#4/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#13/linhas/#4/pt": {
+    "pt": "Uma rosa para a mamãe!",
+    "en": "A rose for Mom!"
+  },
+  "textos/#13/linhas/#5/quem": {
+    "pt": "Mãe",
+    "en": "Mom"
+  },
+  "textos/#13/linhas/#5/pt": {
+    "pt": "Obrigada, Dani!",
+    "en": "Thank you, Dani!"
+  },
+  "textos/#13/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "en": "Dani (name)"
+  },
+  "textos/#13/novas/#1/pt": {
+    "pt": "para (grudado na palavra)",
+    "en": "to, for (attached to the word)"
+  },
+  "textos/#13/perguntas/#0/q": {
+    "pt": "O que a mãe mostra ao Dani?",
+    "en": "What does Mom show Dani?"
+  },
+  "textos/#13/perguntas/#0/opcoes/#0": {
+    "pt": "Uma rosa",
+    "en": "A rose"
+  },
+  "textos/#13/perguntas/#0/opcoes/#1": {
+    "pt": "Um peixe",
+    "en": "A fish"
+  },
+  "textos/#13/perguntas/#0/opcoes/#2": {
+    "pt": "O mar",
+    "en": "The sea"
+  },
+  "textos/#13/perguntas/#0/porque": {
+    "pt": "{{זֶה וֶרֶד}}: é uma rosa.",
+    "en": "{{זֶה וֶרֶד}}: it's a rose."
+  },
+  "textos/#13/perguntas/#1/q": {
+    "pt": "A rosa é pequena.",
+    "en": "The rose is small."
+  },
+  "textos/#13/perguntas/#1/porque": {
+    "pt": "{{וֶרֶד גָדוֹל!}}: uma rosa grande.",
+    "en": "{{וֶרֶד גָדוֹל!}}: a big rose."
+  },
+  "textos/#13/perguntas/#2/q": {
+    "pt": "Para quem o Dani quer a rosa?",
+    "en": "Who does Dani want the rose for?"
+  },
+  "textos/#13/perguntas/#2/opcoes/#0": {
+    "pt": "Para a mãe",
+    "en": "For Mom"
+  },
+  "textos/#13/perguntas/#2/opcoes/#1": {
+    "pt": "Para a Maya",
+    "en": "For Maya"
+  },
+  "textos/#13/perguntas/#2/opcoes/#2": {
+    "pt": "Para o pai",
+    "en": "For Dad"
+  },
+  "textos/#13/perguntas/#2/porque": {
+    "pt": "{{וֶרֶד לְאִמָא!}}: uma rosa para a mamãe.",
+    "en": "{{וֶרֶד לְאִמָא!}}: a rose for Mom."
+  },
+  "textos/#14/tituloPt": {
+    "pt": "Um suco gelado",
+    "en": "A cold juice"
+  },
+  "textos/#14/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "en": "WhatsApp chat"
+  },
+  "textos/#14/introPt": {
+    "pt": "É meio-dia, faz calor, e a Noa manda uma mensagem para o Dan.",
+    "en": "It's noon, it's hot, and Noa sends Dan a message."
+  },
+  "textos/#14/linhas/#0/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#14/linhas/#0/pt": {
+    "pt": "Oi, Dan, o que você está fazendo?",
+    "en": "Hi, Dan, what are you doing?"
+  },
+  "textos/#14/linhas/#1/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#14/linhas/#1/pt": {
+    "pt": "Estou tomando um suco gelado.",
+    "en": "I'm drinking a cold juice."
+  },
+  "textos/#14/linhas/#2/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#14/linhas/#2/pt": {
+    "pt": "Que suco?",
+    "en": "What juice?"
+  },
+  "textos/#14/linhas/#3/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#14/linhas/#3/pt": {
+    "pt": "Suco fresco.",
+    "en": "Fresh juice."
+  },
+  "textos/#14/linhas/#4/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#14/linhas/#4/pt": {
+    "pt": "Eu também quero!",
+    "en": "I want some too!"
+  },
+  "textos/#14/linhas/#5/quem": {
+    "pt": "Dan",
+    "en": "Dan"
+  },
+  "textos/#14/linhas/#5/pt": {
+    "pt": "Tem mais.",
+    "en": "There's more."
+  },
+  "textos/#14/linhas/#6/quem": {
+    "pt": "Noa",
+    "en": "Noa"
+  },
+  "textos/#14/linhas/#6/pt": {
+    "pt": "Estou aí num instante!",
+    "en": "I'll be right there!"
+  },
+  "textos/#14/novas/#0/pt": {
+    "pt": "Dan (nome)",
+    "en": "Dan (name)"
+  },
+  "textos/#14/novas/#1/pt": {
+    "pt": "oi",
+    "en": "hi"
+  },
+  "textos/#14/novas/#2/pt": {
+    "pt": "faz, está fazendo",
+    "en": "does, is doing"
+  },
+  "textos/#14/novas/#3/pt": {
+    "pt": "bebe, está tomando",
+    "en": "drinks, is drinking"
+  },
+  "textos/#14/novas/#4/pt": {
+    "pt": "gelado, frio",
+    "en": "cold"
+  },
+  "textos/#14/novas/#5/pt": {
+    "pt": "qual, que",
+    "en": "which, what"
+  },
+  "textos/#14/novas/#6/pt": {
+    "pt": "quer (para mulher)",
+    "en": "wants (said of a woman)"
+  },
+  "textos/#14/perguntas/#0/q": {
+    "pt": "O que o Dan está tomando?",
+    "en": "What is Dan drinking?"
+  },
+  "textos/#14/perguntas/#0/opcoes/#0": {
+    "pt": "Chá",
+    "en": "Tea"
+  },
+  "textos/#14/perguntas/#0/opcoes/#1": {
+    "pt": "Suco",
+    "en": "Juice"
+  },
+  "textos/#14/perguntas/#0/opcoes/#2": {
+    "pt": "Água",
+    "en": "Water"
+  },
+  "textos/#14/perguntas/#0/porque": {
+    "pt": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: estou tomando um suco gelado.",
+    "en": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: I'm drinking a cold juice."
+  },
+  "textos/#14/perguntas/#1/q": {
+    "pt": "O suco está quente.",
+    "en": "The juice is hot."
+  },
+  "textos/#14/perguntas/#1/porque": {
+    "pt": "{{מִיץ קַר}}: um suco gelado.",
+    "en": "{{מִיץ קַר}}: a cold juice."
+  },
+  "textos/#14/perguntas/#2/q": {
+    "pt": "A Noa também quer suco.",
+    "en": "Noa wants juice too."
+  },
+  "textos/#14/perguntas/#2/porque": {
+    "pt": "{{גַם אֲנִי רוֹצָה!}}: eu também quero!",
+    "en": "{{גַם אֲנִי רוֹצָה!}}: I want some too!"
+  },
+  "textos/#15/tituloPt": {
+    "pt": "No mercado",
+    "en": "At the grocery store"
+  },
+  "textos/#15/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#15/introPt": {
+    "pt": "A Maya passa no mercado de manhã.",
+    "en": "Maya stops at the grocery store in the morning."
+  },
+  "textos/#15/linhas/#0/quem": {
+    "pt": "Vendedor",
+    "en": "Seller"
+  },
+  "textos/#15/linhas/#0/pt": {
+    "pt": "Bom dia! O que você quer?",
+    "en": "Good morning! What would you like?"
+  },
+  "textos/#15/linhas/#1/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#15/linhas/#1/pt": {
+    "pt": "Um pão sírio, por favor.",
+    "en": "A pita, please."
+  },
+  "textos/#15/linhas/#2/quem": {
+    "pt": "Vendedor",
+    "en": "Seller"
+  },
+  "textos/#15/linhas/#2/pt": {
+    "pt": "Mais alguma coisa?",
+    "en": "Anything else?"
+  },
+  "textos/#15/linhas/#3/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#15/linhas/#3/pt": {
+    "pt": "Sim, um café.",
+    "en": "Yes, a coffee."
+  },
+  "textos/#15/linhas/#4/quem": {
+    "pt": "Vendedor",
+    "en": "Seller"
+  },
+  "textos/#15/linhas/#4/pt": {
+    "pt": "Aqui está. São vinte shekels.",
+    "en": "Here you go. That's twenty shekels."
+  },
+  "textos/#15/linhas/#5/quem": {
+    "pt": "Maya",
+    "en": "Maya"
+  },
+  "textos/#15/linhas/#5/pt": {
+    "pt": "Muito obrigada!",
+    "en": "Thank you very much!"
+  },
+  "textos/#15/novas/#0/pt": {
+    "pt": "alguma coisa",
+    "en": "something"
+  },
+  "textos/#15/novas/#1/pt": {
+    "pt": "shekel (a moeda de Israel)",
+    "en": "shekel (Israel's currency)"
+  },
+  "textos/#15/novas/#2/pt": {
+    "pt": "muita (תוֹדָה רַבָּה: muito obrigado)",
+    "en": "much (תוֹדָה רַבָּה: thank you very much)"
+  },
+  "textos/#15/novas/#3/pt": {
+    "pt": "quer (para mulher)",
+    "en": "wants (said of a woman)"
+  },
+  "textos/#15/perguntas/#0/q": {
+    "pt": "O que a Maya pede primeiro?",
+    "en": "What does Maya ask for first?"
+  },
+  "textos/#15/perguntas/#0/opcoes/#0": {
+    "pt": "Um pão sírio",
+    "en": "A pita"
+  },
+  "textos/#15/perguntas/#0/opcoes/#1": {
+    "pt": "Um café",
+    "en": "A coffee"
+  },
+  "textos/#15/perguntas/#0/opcoes/#2": {
+    "pt": "Um suco",
+    "en": "A juice"
+  },
+  "textos/#15/perguntas/#0/porque": {
+    "pt": "{{פִּתָה, בְּבַקָשָׁה}}: um pão sírio, por favor.",
+    "en": "{{פִּתָה, בְּבַקָשָׁה}}: a pita, please."
+  },
+  "textos/#15/perguntas/#1/q": {
+    "pt": "A Maya também quer um café.",
+    "en": "Maya also wants a coffee."
+  },
+  "textos/#15/perguntas/#1/porque": {
+    "pt": "{{כֵּן, קָפֶה}}: sim, um café.",
+    "en": "{{כֵּן, קָפֶה}}: yes, a coffee."
+  },
+  "textos/#15/perguntas/#2/q": {
+    "pt": "Quanto custa?",
+    "en": "How much does it cost?"
+  },
+  "textos/#15/perguntas/#2/opcoes/#0": {
+    "pt": "Dez shekels",
+    "en": "Ten shekels"
+  },
+  "textos/#15/perguntas/#2/opcoes/#1": {
+    "pt": "Vinte shekels",
+    "en": "Twenty shekels"
+  },
+  "textos/#15/perguntas/#2/opcoes/#2": {
+    "pt": "Quatro shekels",
+    "en": "Four shekels"
+  },
+  "textos/#15/perguntas/#2/porque": {
+    "pt": "{{עֶשְׂרִים שֶׁקֶל}}: vinte shekels.",
+    "en": "{{עֶשְׂרִים שֶׁקֶל}}: twenty shekels."
+  },
+  "textos/#16/tituloPt": {
+    "pt": "O bilhete da mãe",
+    "en": "Mom's note"
+  },
+  "textos/#16/tipoPt": {
+    "pt": "Bilhete",
+    "en": "Note"
+  },
+  "textos/#16/introPt": {
+    "pt": "O Dani chega em casa e encontra um bilhete da mãe.",
+    "en": "Dani gets home and finds a note from his mom."
+  },
+  "textos/#16/linhas/#0/pt": {
+    "pt": "Para o Dani,",
+    "en": "To Dani,"
+  },
+  "textos/#16/linhas/#1/pt": {
+    "pt": "Tem pão e queijo na mesa.",
+    "en": "There's bread and cheese on the table."
+  },
+  "textos/#16/linhas/#2/pt": {
+    "pt": "O suco está na geladeira.",
+    "en": "The juice is in the fridge."
+  },
+  "textos/#16/linhas/#3/pt": {
+    "pt": "Estou no trabalho até as quatro.",
+    "en": "I'm at work until four."
+  },
+  "textos/#16/linhas/#4/pt": {
+    "pt": "Com amor, mãe",
+    "en": "Love, Mom"
+  },
+  "textos/#16/novas/#0/pt": {
+    "pt": "para (grudado na palavra)",
+    "en": "to, for (attached to the word)"
+  },
+  "textos/#16/novas/#1/pt": {
+    "pt": "e (grudado na palavra)",
+    "en": "and (attached to the word)"
+  },
+  "textos/#16/novas/#2/pt": {
+    "pt": "queijo",
+    "en": "cheese"
+  },
+  "textos/#16/novas/#3/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "en": "the (attached to the word)"
+  },
+  "textos/#16/novas/#4/pt": {
+    "pt": "mesa",
+    "en": "table"
+  },
+  "textos/#16/novas/#5/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "en": "in the (attached to the word)"
+  },
+  "textos/#16/novas/#6/pt": {
+    "pt": "geladeira",
+    "en": "fridge"
+  },
+  "textos/#16/novas/#7/pt": {
+    "pt": "trabalho",
+    "en": "work"
+  },
+  "textos/#16/novas/#8/pt": {
+    "pt": "até",
+    "en": "until"
+  },
+  "textos/#16/novas/#9/pt": {
+    "pt": "ama (ela ama); no fim do bilhete, com amor",
+    "en": "loves (she loves); at the end of the note, love"
+  },
+  "textos/#16/perguntas/#0/q": {
+    "pt": "Onde está o suco?",
+    "en": "Where is the juice?"
+  },
+  "textos/#16/perguntas/#0/opcoes/#0": {
+    "pt": "Na mesa",
+    "en": "On the table"
+  },
+  "textos/#16/perguntas/#0/opcoes/#1": {
+    "pt": "Na geladeira",
+    "en": "In the fridge"
+  },
+  "textos/#16/perguntas/#0/opcoes/#2": {
+    "pt": "Na mochila",
+    "en": "In the backpack"
+  },
+  "textos/#16/perguntas/#0/porque": {
+    "pt": "{{הַמִיץ בַּמְקָרֵר}}: o suco está na geladeira.",
+    "en": "{{הַמִיץ בַּמְקָרֵר}}: the juice is in the fridge."
+  },
+  "textos/#16/perguntas/#1/q": {
+    "pt": "Tem pão na mesa.",
+    "en": "There's bread on the table."
+  },
+  "textos/#16/perguntas/#1/porque": {
+    "pt": "{{יֵשׁ לֶחֶם}}: tem pão.",
+    "en": "{{יֵשׁ לֶחֶם}}: there's bread."
+  },
+  "textos/#16/perguntas/#2/q": {
+    "pt": "Até que horas a mãe trabalha?",
+    "en": "Until what time does Mom work?"
+  },
+  "textos/#16/perguntas/#2/opcoes/#0": {
+    "pt": "Até as quatro",
+    "en": "Until four"
+  },
+  "textos/#16/perguntas/#2/opcoes/#1": {
+    "pt": "Até as cinco",
+    "en": "Until five"
+  },
+  "textos/#16/perguntas/#2/opcoes/#2": {
+    "pt": "Até o meio-dia",
+    "en": "Until noon"
+  },
+  "textos/#16/perguntas/#2/porque": {
+    "pt": "{{עַד אַרְבַּע}}: até as quatro.",
+    "en": "{{עַד אַרְבַּע}}: until four."
+  },
+  "textos/#17/tituloPt": {
+    "pt": "A girafa",
+    "en": "The giraffe"
+  },
+  "textos/#17/tipoPt": {
+    "pt": "Conversa",
+    "en": "Conversation"
+  },
+  "textos/#17/introPt": {
+    "pt": "O Dani e o pai passeiam no zoológico.",
+    "en": "Dani and his dad are walking around the zoo."
+  },
+  "textos/#17/linhas/#0/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#17/linhas/#0/pt": {
+    "pt": "Pai, olha! Uma girafa!",
+    "en": "Dad, look! A giraffe!"
+  },
+  "textos/#17/linhas/#1/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#17/linhas/#1/pt": {
+    "pt": "É. Ela é muito grande.",
+    "en": "Yes. She's very big."
+  },
+  "textos/#17/linhas/#2/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#17/linhas/#2/pt": {
+    "pt": "O que ela come?",
+    "en": "What does she eat?"
+  },
+  "textos/#17/linhas/#3/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#17/linhas/#3/pt": {
+    "pt": "Folhas da árvore.",
+    "en": "Leaves from the tree."
+  },
+  "textos/#17/linhas/#4/quem": {
+    "pt": "Dani",
+    "en": "Dani"
+  },
+  "textos/#17/linhas/#4/pt": {
+    "pt": "Eu também quero comer!",
+    "en": "I want to eat too!"
+  },
+  "textos/#17/linhas/#5/quem": {
+    "pt": "Pai",
+    "en": "Dad"
+  },
+  "textos/#17/linhas/#5/pt": {
+    "pt": "Tem pão sírio na mochila.",
+    "en": "There's pita in the backpack."
+  },
+  "textos/#17/novas/#0/pt": {
+    "pt": "olha! (para homem)",
+    "en": "look! (to a man)"
+  },
+  "textos/#17/novas/#1/pt": {
+    "pt": "grande (para feminino)",
+    "en": "big (feminine)"
+  },
+  "textos/#17/novas/#2/pt": {
+    "pt": "come (ela come)",
+    "en": "eats (she eats)"
+  },
+  "textos/#17/novas/#3/pt": {
+    "pt": "folhas",
+    "en": "leaves"
+  },
+  "textos/#17/novas/#4/pt": {
+    "pt": "de o, da (grudado na palavra)",
+    "en": "from the (attached to the word)"
+  },
+  "textos/#17/novas/#5/pt": {
+    "pt": "comer",
+    "en": "to eat"
+  },
+  "textos/#17/novas/#6/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "en": "in the (attached to the word)"
+  },
+  "textos/#17/perguntas/#0/q": {
+    "pt": "Que animal o Dani vê?",
+    "en": "What animal does Dani see?"
+  },
+  "textos/#17/perguntas/#0/opcoes/#0": {
+    "pt": "Uma girafa",
+    "en": "A giraffe"
+  },
+  "textos/#17/perguntas/#0/opcoes/#1": {
+    "pt": "Um cavalo",
+    "en": "A horse"
+  },
+  "textos/#17/perguntas/#0/opcoes/#2": {
+    "pt": "Um cachorro",
+    "en": "A dog"
+  },
+  "textos/#17/perguntas/#0/porque": {
+    "pt": "{{ג׳ירפה}}: girafa.",
+    "en": "{{ג׳ירפה}}: giraffe."
+  },
+  "textos/#17/perguntas/#1/q": {
+    "pt": "A girafa é pequena.",
+    "en": "The giraffe is small."
+  },
+  "textos/#17/perguntas/#1/porque": {
+    "pt": "{{הִיא גְדוֹלָה מְאוֹד}}: ela é muito grande.",
+    "en": "{{הִיא גְדוֹלָה מְאוֹד}}: she's very big."
+  },
+  "textos/#17/perguntas/#2/q": {
+    "pt": "O que a girafa come?",
+    "en": "What does the giraffe eat?"
+  },
+  "textos/#17/perguntas/#2/opcoes/#0": {
+    "pt": "Folhas",
+    "en": "Leaves"
+  },
+  "textos/#17/perguntas/#2/opcoes/#1": {
+    "pt": "Pão sírio",
+    "en": "Pita"
+  },
+  "textos/#17/perguntas/#2/opcoes/#2": {
+    "pt": "Sorvete",
+    "en": "Ice cream"
+  },
+  "textos/#17/perguntas/#2/porque": {
+    "pt": "{{עָלִים מֵהָעֵץ}}: folhas da árvore.",
+    "en": "{{עָלִים מֵהָעֵץ}}: leaves from the tree."
+  }
+}

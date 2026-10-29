@@ -81,7 +81,7 @@ describe('os três lembretes', () => {
 
     expect(await rodar(env, T0 + 3_600_000), 'antes de um dia, nada').toHaveLength(0);
     const d1 = await rodar(env, T0 + 1 * DIA + 3_600_000);
-    expect(d1.map(m => m.subject)).toEqual(['Sua primeira lição leva dez minutos']);
+    expect(d1.map(m => m.subject)).toEqual(['Sua primeira letra leva dez minutos']);
     expect(d1[0]!.to).toBe('ana@exemplo.com');
     expect(d1[0]!.text).toContain(`${SITE}/inicio/`);
     expect(await rodar(env, T0 + 2 * DIA + 3_600_000), 'o mesmo marco não repete').toHaveLength(0);
@@ -141,7 +141,7 @@ describe('os três lembretes', () => {
       enviados.push({ to: String(b.to?.[0] ?? b.to ?? ''), subject: b.subject, text: b.text, html: b.html });
       return new Response('{"id":"m2"}', { status: 200 });
     });
-    expect((await rodar(env, T0 + 2 * DIA)).map(m => m.subject)).toEqual(['Sua primeira lição leva dez minutos']);
+    expect((await rodar(env, T0 + 2 * DIA)).map(m => m.subject)).toEqual(['Sua primeira letra leva dez minutos']);
   });
 });
 

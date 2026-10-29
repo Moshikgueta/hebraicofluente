@@ -59,7 +59,7 @@ describe('tools/virar-preco.mjs', () => {
     const real = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
     const r = virar(real);
     const preco = (slug: string) => JSON.parse(r.texto).courses.find((x: { slug: string }) => x.slug === slug).price;
-    expect(preco('alfabetizacao')).toMatchObject({ brl: 197, listBrl: null });
+    expect(preco('alfabetizacao')).toMatchObject({ brl: 297, listBrl: null });
     expect(preco('israel-alem-do-roteiro')).toMatchObject({ brl: 297, listBrl: null });
     expect(preco('alfabetizacao-e-israel')).toMatchObject({ brl: 397, listBrl: null });
   });

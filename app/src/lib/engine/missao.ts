@@ -26,11 +26,21 @@ import type { Extras } from './extras';
 import type { Exercise } from './types';
 import { shuffled, type Rand } from './rng';
 import { stripNikud } from '@/lib/hebrew';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-generators';
 
 export type PassoMissao =
   | { tipo: 'ler'; he: string; ondePt: string; erradas: string[]; semPontos?: boolean }
   | { tipo: 'achar'; he: string; promptPt: string; erradas: string[] }
   | { tipo: 'transliterar'; he: string; promptPt: string; semPontos?: boolean };
+
+/** Uma foto de verdade da missão (data/fotos-missoes.json): só as aprovadas
+ *  pelo dono chegam aqui, e sempre com o crédito. */
+export type FotoDaMissao = {
+  id: string; missao: number; arquivo: string; pagina: string;
+  autor: string; licenca: string; licencaUrl?: string; data?: string;
+  mostraPt: string; largura: number; altura: number;
+};
 
 export type Missao = {
   modulo: number;
@@ -38,6 +48,7 @@ export type Missao = {
   situacaoPt: string;
   passos: PassoMissao[];
   fechoPt: string;
+  foto?: FotoDaMissao;
 };
 
 export type Verbete = { he: string; pt: string; translit?: string; audioId?: string | null };
@@ -73,7 +84,7 @@ export function palavrasDaMissao(m: Missao): string[] {
 
 function verbete(lex: ReadonlyMap<string, Verbete>, he: string, m: Missao): Verbete {
   const v = lex.get(he);
-  if (!v) throw new Error(`missão do módulo ${m.modulo}: "${he}" não é palavra do curso`);
+  if (!v) throw new Error(`missão do módulo ${m.modulo}: "${he}" não é palavra do curso`); // i18n-ok: erro de conteúdo, só no teste e na build
   return v;
 }
 
@@ -92,7 +103,7 @@ export function montarMissao(m: Missao, lex: ReadonlyMap<string, Verbete>, rand:
         [...new Set([certa, ...p.erradas.map(e => verbete(lex, e, m).pt)])], rand);
       return {
         ...base, kind: 'scene-reading',
-        promptPt: 'Leia. O que está escrito?',
+        promptPt: tx.fraseUma,
         he: mostra(p.he, p.semPontos), wherePt: p.ondePt,
         options, answer: options.indexOf(certa),
         audioId: v.audioId ?? null, explainPt: explica
@@ -109,17 +120,17 @@ export function montarMissao(m: Missao, lex: ReadonlyMap<string, Verbete>, rand:
       };
     }
     if (!v.translit) {
-      throw new Error(`missão do módulo ${m.modulo}: "${p.he}" não tem transliteração no curso`);
+      throw new Error(`missão do módulo ${m.modulo}: "${p.he}" não tem transliteração no curso`); // i18n-ok: erro de conteúdo, só no teste e na build
     }
     return {
       ...base, kind: 'type-answer',
       promptPt: p.promptPt,
       he: mostra(p.he, p.semPontos),
       accept: [v.translit],
-      placeholder: 'escreva aqui',
+      placeholder: tx.escrevaAqui,
       want: 'translit',
       audioId: v.audioId ?? null,
-      hintsPt: [`Começa com “${v.translit[0]}”.`],
+      hintsPt: [fmt(tx.comecaCom, { inicio: v.translit[0]! })],
       explainPt: explica
     };
   });

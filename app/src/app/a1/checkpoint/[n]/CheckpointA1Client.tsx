@@ -65,7 +65,7 @@ export function CheckpointA1Client({ n }: { n: number }) {
     const titulo = (u: number) => cursoA1().unidades.find(x => x.n === u)?.tituloPt ?? '';
     return (
       <div className="focus-col grid gap-5">
-        <Milestone tone={passou ? 'bom' : 'parcial'}
+        <Milestone yael={false} tone={passou ? 'bom' : 'parcial'}
           kicker={`${cp.tituloPt} · ${fim.certas} de ${fim.total} (${Math.round(fim.nota * 100)}%)`}
           title={passou ? 'Checkpoint aprovado.' : 'Ainda não: o checkpoint passa com 70%.'}
           body={passou ? 'O que você aprendeu nesses módulos continua firme. Siga em frente.' : 'Reveja as unidades abaixo e tente de novo: cada tentativa é um sorteio novo.'} />

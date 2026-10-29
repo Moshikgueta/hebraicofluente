@@ -86,13 +86,16 @@ describe('uma frase só (LEGAL-102, LEGAL-109, CONV-013, PAY-B-011)', () => {
       'app/faq/page.tsx', 'app/termos/page.tsx', 'app/suporte/page.tsx', 'app/reembolso/page.tsx',
       'components/shell/PublicShell.tsx', 'app/cursos/[slug]/CourseClient.tsx',
       'app/checkout/[slug]/CheckoutClient.tsx', 'components/landing/Fecho.tsx',
-      'components/landing/BarraFixa.tsx', 'components/platform/CourseCard.tsx'
+      'components/landing/BarraFixa.tsx', 'components/platform/CourseCard.tsx',
+      'i18n/telas/conta-public-shell.ts', 'i18n/telas/conta-checkout-client.ts',
+      'i18n/telas/conta-course-card.ts'
     ]) {
       const s = ler(f);
       expect(s, f).not.toMatch(/em até \{?\$?\{?parcelas(Max\([^)]*\))?\}?[x×]/);
       expect(s, f).not.toMatch(/mesmo dia útil|resolve na hora|confirmação de recebimento chega na hora/);
     }
     expect(ler('lib/account/types.ts')).not.toContain('resolve na hora');
+    expect(ler('i18n/telas/motor-account-types.ts')).not.toContain('resolve na hora');
   });
 });
 

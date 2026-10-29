@@ -109,7 +109,7 @@ log('\n── os exercícios gravam a nota ────────────�
          que ela foi gravada, não que foi boa. */
       const estado = () => p.evaluate(() => {
         const main = document.querySelector('main');
-        const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
+        const botoes = [...main.querySelectorAll('button:not([aria-haspopup]):not(dialog *)')].map((el, i) => ({
           i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
           off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
           rotulo: el.getAttribute('aria-label') || ''
@@ -133,7 +133,7 @@ log('\n── os exercícios gravam a nota ────────────�
 
         const seguir = e.botoes.find(x => !x.off
           && /^Continuar|^Próxim|^Ver resultado|^Concluir/.test(x.txt));
-        if (seguir) { await p.locator('main button').nth(seguir.i).click().catch(() => {}); }
+        if (seguir) { await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(seguir.i).click().catch(() => {}); }
         else if (e.temCampo) {
           await p.locator('main input').first().fill('x');
           await p.keyboard.press('Enter');
@@ -147,7 +147,7 @@ log('\n── os exercícios gravam a nota ────────────�
              até ser acertado (a prática de revisão), e um robô que toca
              sempre a primeira nunca acerta quando a certa não é ela. */
           const alvo = alvos[Math.floor(Math.random() * alvos.length)];
-          await p.locator('main button').nth(alvo.i).click().catch(() => {});
+          await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvo.i).click().catch(() => {});
         }
         await p.waitForTimeout(260);
       }
@@ -199,12 +199,14 @@ log('\n── a conta de lições concluídas ───────────�
 
     const texto = await p.evaluate(() => (document.querySelector('main')?.innerText || '')
       .replace(/\s+/g, ' '));
-    const m = texto.match(/(\d+)\s+de\s+(\d+)\s+lições\s+concluídas/);
-    if (!m) erro(`${caso.nome}: não achei a frase "N de M lições concluídas" no painel`);
+    /* Desde 28/10/2026 (painel mais curto) a conta mora na faixa de números
+       do painel, "N lições concluídas", sem o "de 22" da grade antiga. */
+    const m = texto.match(/(\d+)\s+(?:de\s+(\d+)\s+)?liç(?:ão|ões)\s+concluídas?/);
+    if (!m) erro(`${caso.nome}: não achei a frase "N lições concluídas" no painel`);
     else if (Number(m[1]) !== caso.conta) {
       erro(`${caso.nome}: o painel diz ${m[1]} e deveria dizer ${caso.conta}`);
     } else {
-      ok(`${caso.nome}: ${m[1]} de ${m[2]}`);
+      ok(`${caso.nome}: ${m[1]} ${m[1] === '1' ? 'concluída' : 'concluídas'}`);
     }
     await ctx.close();
   }

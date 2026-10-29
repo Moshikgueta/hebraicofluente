@@ -94,6 +94,9 @@ import { RegistroDeOrigem } from '@/components/shell/RegistroDeOrigem';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
+import { LANG_HTML } from '@/i18n';
+import { tx } from '@/i18n/telas/geral';
+import { tx as txLayout } from '@/i18n/telas/conta-layout';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -102,16 +105,17 @@ export const metadata: Metadata = {
      chegando sem imagem no WhatsApp, que é o problema que esta camada existe
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
-  title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
+  title: tx.titulo,
   /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
      alfabetização, e os outros são cursos à parte, ainda em produção
      (auditoria de 01/10, CONV-011). */
-  description:
-    'Hebraico para brasileiros, começando pelo alfabeto: aulas interativas, correção na ' +
-    'hora e progresso que continua de onde você parou.',
+  description: tx.descricao,
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
-  applicationName: 'Hebraico Fluente'
+  applicationName: tx.marca,
+  /* Aberto pela tela de início do iPhone, o curso vem em tela cheia, com o
+     nome curto embaixo do ícone (ver app/manifest.ts). */
+  appleWebApp: { capable: true, title: tx.marca, statusBarStyle: 'default' }
 };
 
 export const viewport: Viewport = {
@@ -126,7 +130,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
-      lang="pt-BR"
+      lang={LANG_HTML}
       dir="ltr"
       className={`${display.variable} ${ui.variable} ${hebrew.variable} ${cursive.variable}`}
     >
@@ -144,7 +148,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3
                      focus:bg-surface focus:text-ink focus:px-4 focus:py-2 focus:rounded-md"
         >
-          Pular para o conteúdo
+          {txLayout.pularParaConteudo}
         </a>
         {/* A conta por fora do progresso, e não o contrário: quem decide se
             esta rota pode ser vista é a sessão, e o progresso é o que se

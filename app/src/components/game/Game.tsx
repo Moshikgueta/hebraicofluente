@@ -11,6 +11,8 @@ import { IconeChama } from '@/components/shell/NavIcons';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
+import { Yael } from '@/components/aventura/Yael';
+import { tx } from '@/i18n/telas/academia-game';
 
 export function ProgressBar({
   value, label, sublabel
@@ -27,7 +29,7 @@ export function ProgressBar({
       <div
         className="h-2 rounded-full bg-surface-2 overflow-hidden"
         role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}
-        aria-label={label ?? 'Progresso'}
+        aria-label={label ?? tx.progresso}
       >
         <div
           className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500 ease-[var(--ease)]"
@@ -47,19 +49,19 @@ export function StreakCard({ days, goalUnits, goalTarget }: {
       <div className="flex items-center gap-2.5">
         <span aria-hidden className={days > 0 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}><IconeChama size={22} /></span>
         <p className="font-display text-[19px] font-bold text-ink">
-          {days === 0 ? 'Comece hoje'
-            : days === 1 ? '1 dia seguido'
-            : `${days} dias seguidos`}
+          {days === 0 ? tx.comeceHoje
+            : days === 1 ? tx.umDia
+            : tx.dias(days)}
         </p>
       </div>
       <ProgressBar
         value={goalTarget ? goalUnits / goalTarget : 0}
-        label={met ? 'Meta de hoje concluída' : 'Meta de hoje'}
+        label={met ? tx.metaConcluida : tx.meta}
         sublabel={`${Math.round((Math.min(goalUnits, goalTarget) / goalTarget) * 100)}%`}
       />
       {days === 0 && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          Seu progresso continua aqui, sem prazo. Vamos retomar?
+          {tx.retomar}
         </p>
       )}
     </Card>
@@ -70,8 +72,8 @@ export function XPIndicator({ xp }: { xp: number }) {
   return (
     <span className="inline-flex items-center gap-1.5 font-ui text-[13px] font-semibold text-ink-body">
       <span aria-hidden className="text-[var(--accent)]">◆</span>
-      <span className="tabular-nums">{xp.toLocaleString('pt-BR')}</span>
-      <span className="text-ink-muted font-normal">XP</span>
+      <span className="tabular-nums">{xp.toLocaleString(tx.localeNumero)}</span>
+      <span className="text-ink-muted font-normal">{tx.xp}</span>
     </span>
   );
 }
@@ -101,7 +103,7 @@ export function AchievementBadge({
         )}
         <p className={`font-display text-[15px] font-semibold ${unlocked ? 'text-ink' : 'text-ink-body'}`}>
           {def.titlePt}
-          {!unlocked && <span className="sr-only"> (ainda não conquistada)</span>}
+          {!unlocked && <span className="sr-only">{tx.naoConquistada}</span>}
         </p>
       </div>
       {!compact && (
@@ -116,16 +118,21 @@ export function AchievementBadge({
 /* The one strong celebration. Reserved for a completed letter, a checkpoint
    and the end of the course - nothing smaller earns it. */
 export function Milestone({
-  kicker, title, body, children, tone = 'bom'
+  kicker, title, body, children, tone = 'bom', yael = true
 }: {
   kicker: string; title: string; body: string; children?: React.ReactNode;
   /** `bom` é teal, `parcial` é gold. Um resultado de 0% num cartão verde
    *  diz a coisa errada antes de alguém ler uma palavra. */
   tone?: 'bom' | 'parcial';
+  /** A Yael no alto do cartão (28/10/2026): comemora no `bom` e inclina a
+   *  cabeça no `parcial`. Desligada onde a tela já tem a sua (o fim da letra
+   *  com a carta, o checkpoint) e no A1, que é outro curso. */
+  yael?: boolean;
 }) {
   const parcial = tone === 'parcial';
   return (
     <Card tone={parcial ? 'ember' : 'mint'} className="p-7 sm:p-9 grid gap-4 text-center animate-rise">
+      {yael && <Yael humor={parcial ? 'quase' : 'comemora'} className="justify-self-center w-[84px] -mt-2 -mb-2" />}
       <p className={`font-ui text-[12px] uppercase tracking-[.12em]
         ${parcial ? 'text-[var(--gold-ink)]' : 'text-[var(--mint-ink)]'}`}>{kicker}</p>
       <h2 className="text-[26px] sm:text-[32px] font-bold leading-tight text-ink">{title}</h2>

@@ -54,6 +54,9 @@ const GATED = [
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
   /* 11/10/2026: o Laboratório de Leitura e a Minha Primeira Leitura. */
   '/leitura',
+  /* 28/10/2026: as leituras todas num lugar só (app/leituras). */
+  '/leituras',
+  '/hebraico-na-rua',
   /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
      portão em vez de serem descobertos públicos depois. Atenção: o
      AudioButton também aparece em página livre (a landing, `Fecho.tsx`), e
@@ -67,6 +70,8 @@ const GATED = [
      saem por /tracado-amostra/, que é público - ver
      tools/export-content.mjs. */
   '/stroke-order',
+  /* 28/10/2026: os vídeos do professor no "Me explica, Moshik" (video/ na raiz). */
+  '/video',
   /* 26/09/2026: as lições de som (Vet, Chaf, Fe, Tch, Dj, J). */
   '/som',
   /* 27/09/2026: as recompensas (trocar XP) e as leituras bônus que elas abrem. */

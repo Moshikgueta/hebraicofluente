@@ -23,6 +23,7 @@
  * que passou a buscar de /api/content.
  */
 
+import type { PlacaDaRua } from '@/lib/engine/rua';
 import lettersJson from '@content/letters.json';
 import nikudJson from '@content/nikud.json';
 import extrasJson from '@content/extras.json';
@@ -51,6 +52,7 @@ export type ConteudoPago = {
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
   missoes: Missao[];
+  rua: PlacaDaRua[];
   textos: Texto[];
   bonus: LeituraBonus[];
   guiaNikud: GuiaNikud | null;
@@ -73,6 +75,7 @@ export const conteudoPago: ConteudoPago = {
   strokes: (strokeJson as unknown as { box: number; letters: Record<string, StrokeSet> }).letters,
   culture: (cultureJson as unknown as { cards: CultureCard[] }).cards,
   missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes,
+  rua: (missoesJson as unknown as { rua?: PlacaDaRua[] }).rua ?? [],
   textos: (textosJson as unknown as { textos: Texto[] }).textos,
   bonus: (bonusJson as unknown as { leituras: LeituraBonus[] }).leituras,
   guiaNikud: (bonusJson as unknown as { guia?: GuiaNikud }).guia ?? null

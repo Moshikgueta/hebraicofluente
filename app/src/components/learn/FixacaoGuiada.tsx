@@ -22,6 +22,7 @@
  * um por tela. Dois a quatro minutos.
  */
 
+import { tx } from '@/i18n/telas/licao-fixacao-guiada';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -55,6 +56,12 @@ export type AlvoFixacao = {
   lembrePt: string;
   /** Mostrar a cursiva no passo de observar. */
   cursiva: boolean;
+  /** A forma da letra para a memória visual, quando `glifo` traz o daguesh:
+   *  ali se compara o desenho, e o ponto entregaria a resposta. */
+  glifoForma?: string;
+  /** O desenho à mão, quando não é o mesmo glifo: à mão não se escrevem os
+   *  pontos (o Sin cursivo é o ש cursivo). Sem ele, a cursiva usa `glifo`. */
+  glifoCursivo?: string | null;
   /** Duas ou três palavras curtas, já legíveis neste ponto do curso. */
   palavras: PalavraDaFixacao[];
   /** Os glifos destacados dentro das palavras (a letra e a final). */
@@ -70,17 +77,16 @@ export type AlvoFixacao = {
 export type Passo = 'ouvir' | 'observar' | 'som' | 'memoria' | 'revisao';
 
 const NOMES: Record<Passo, string> = {
-  ouvir: 'Ouça e repita',
-  observar: 'Observe e reconheça',
-  som: 'Letra e som',
-  memoria: 'Memória visual',
-  revisao: 'Revisão rápida'
+  ouvir: tx.ouvir,
+  observar: tx.observar,
+  som: tx.som,
+  memoria: tx.memoria,
+  revisao: tx.revisao
 };
 
 const TODOS: readonly Passo[] = ['ouvir', 'observar', 'som', 'memoria', 'revisao'];
-const NUMERO = ['Zero', 'Um', 'Dois', 'Três', 'Quatro', 'Cinco'];
 
-export function FixacaoGuiada({ alvo, onDone, rotuloFim = 'Ir para os exercícios', so, rotuloDoGrupo }: {
+export function FixacaoGuiada({ alvo, onDone, rotuloFim = tx.irParaExercicios, so, rotuloDoGrupo }: {
   alvo: AlvoFixacao;
   onDone: () => void;
   rotuloFim?: string;
@@ -111,20 +117,19 @@ export function FixacaoGuiada({ alvo, onDone, rotuloFim = 'Ir para os exercício
     <div className="grid gap-5">
       <Card tone="wash" className="p-5 grid gap-1.5">
         <p className="font-display text-[17px] font-semibold text-ink">
-          Fixação: aprender e lembrar, sem nota{rotuloDoGrupo ? ` · ${rotuloDoGrupo}` : ''}
+          {tx.cabecalho}{rotuloDoGrupo ? ` · ${rotuloDoGrupo}` : ''}
         </p>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          {NUMERO[passos.length] ?? passos.length} passos curtos com {alvo.nome}. Aqui não existe erro que conte: se escolher
-          errado, aparece uma dica e você tenta de novo. Os exercícios com nota vêm depois.
+          {tx.intro(passos.length, alvo.nome)}
         </p>
       </Card>
 
-      <ol className="flex items-center gap-1.5 list-none p-0 m-0" aria-label="Passos da fixação">
+      <ol className="flex items-center gap-1.5 list-none p-0 m-0" aria-label={tx.passos}>
         {passos.map((p, k) => (
           <li key={p} className="flex-1">
             <span aria-current={k === i ? 'step' : undefined}
                   className={`block h-1.5 rounded-full ${k < i ? 'bg-[var(--green)]' : k === i ? 'bg-[var(--accent)]' : 'bg-surface-2'}`} />
-            <span className="sr-only">{`Passo ${k + 1} de ${passos.length}: ${NOMES[p]}`}</span>
+            <span className="sr-only">{tx.passoDe(k + 1, passos.length, NOMES[p])}</span>
           </li>
         ))}
       </ol>
@@ -145,10 +150,10 @@ export function FixacaoGuiada({ alvo, onDone, rotuloFim = 'Ir para os exercício
 
       <div className="grid sm:grid-cols-[auto_1fr] gap-2">
         {i > 0 && (
-          <Button variant="ghost" onClick={() => setI(n => n - 1)}>Voltar</Button>
+          <Button variant="ghost" onClick={() => setI(n => n - 1)}>{tx.voltar}</Button>
         )}
         <Button size="lg" onClick={seguir} full>
-          {ultimo ? rotuloFim : 'Continuar'}
+          {ultimo ? rotuloFim : tx.continuar}
         </Button>
       </div>
     </div>
@@ -160,12 +165,11 @@ function Ouvir({ alvo }: { alvo: AlvoFixacao }) {
   return (
     <div className="grid gap-4">
       <p className="text-[15.5px] leading-relaxed text-ink-body">
-        Ouça a letra e cada palavra, e repita em voz alta. Em cada palavra, a letra
-        {' '}{alvo.nome} está destacada.
+        {tx.ouvirIntro(alvo.nome)}
       </p>
       <div className="flex items-center justify-center gap-4 rounded-[var(--r-md)] bg-surface-2 py-6">
         <He size="xl">{alvo.glifo}</He>
-        <AudioButton audioId={alvo.audioId ?? null} ariaLabel={`Ouvir ${alvo.nome}`} />
+        <AudioButton audioId={alvo.audioId ?? null} ariaLabel={tx.ouvirItem(alvo.nome)} />
       </div>
       <ul className="grid gap-2.5 list-none p-0 m-0">
         {alvo.palavras.map(w => (
@@ -175,7 +179,7 @@ function Ouvir({ alvo }: { alvo: AlvoFixacao }) {
             </div>
             <div className="flex items-center gap-3">
               <He size="word" marks={alvo.destaque}>{w.he}</He>
-              <AudioButton audioId={w.audioId ?? null} size="sm" ariaLabel={`Ouvir ${w.translit}`} />
+              <AudioButton audioId={w.audioId ?? null} size="sm" ariaLabel={tx.ouvirItem(w.translit)} />
             </div>
           </li>
         ))}
@@ -187,17 +191,17 @@ function Ouvir({ alvo }: { alvo: AlvoFixacao }) {
 /* ── 2 · observe e reconheça ────────────────────────────────────────────── */
 function Observar({ alvo }: { alvo: AlvoFixacao }) {
   const formas: { rotulo: string; glifo: string; cursiva: boolean }[] = [
-    { rotulo: 'impressa', glifo: alvo.glifo, cursiva: false },
-    ...(alvo.cursiva ? [{ rotulo: 'cursiva (à mão)', glifo: alvo.glifo, cursiva: true }] : []),
-    ...(alvo.final ? [{ rotulo: 'no fim da palavra', glifo: alvo.final, cursiva: false }] : []),
+    { rotulo: tx.impressa, glifo: alvo.glifo, cursiva: false },
+    ...(alvo.cursiva ? [{ rotulo: tx.cursiva, glifo: alvo.glifoCursivo ?? alvo.glifo, cursiva: true }] : []),
+    ...(alvo.final ? [{ rotulo: tx.noFim, glifo: alvo.final, cursiva: false }] : []),
     /* A final também à mão (pedido do dono, 19/10/2026): quem escreve um
        bilhete escreve o ם cursivo, e ele não se parece com o impresso. */
-    ...(alvo.final && alvo.cursiva ? [{ rotulo: 'no fim, cursiva (à mão)', glifo: alvo.final, cursiva: true }] : [])
+    ...(alvo.final && alvo.cursiva ? [{ rotulo: tx.noFimCursiva, glifo: alvo.final, cursiva: true }] : [])
   ];
   return (
     <div className="grid gap-4">
       <p className="text-[15.5px] leading-relaxed text-ink-body">
-        A mesma letra, nas formas em que você vai encontrá-la. Olhe com calma.
+        {tx.formas}
       </p>
       <ul className={`grid grid-cols-2 ${formas.length === 4 ? 'sm:grid-cols-4' : 'sm:grid-cols-3'} gap-3 list-none p-0 m-0`}>
         {formas.map(f => (
@@ -208,7 +212,7 @@ function Observar({ alvo }: { alvo: AlvoFixacao }) {
         ))}
       </ul>
       <p className="text-[15px] leading-relaxed text-ink-body rounded-[var(--r-md)] border border-line px-4 py-3">
-        <strong className="font-semibold text-ink">Repare: </strong>
+        <strong className="font-semibold text-ink">{tx.repare}</strong>
         <Prose text={alvo.lembrePt} />
       </p>
     </div>
@@ -227,10 +231,10 @@ function LetraESom({ alvo }: { alvo: AlvoFixacao }) {
     <div className="grid gap-4">
       <div className="flex items-center justify-center gap-4 rounded-[var(--r-md)] bg-surface-2 py-6">
         <He size="xl">{alvo.glifo}</He>
-        <AudioButton audioId={alvo.audioId ?? null} ariaLabel={`Ouvir ${alvo.nome}`} />
+        <AudioButton audioId={alvo.audioId ?? null} ariaLabel={tx.ouvirItem(alvo.nome)} />
       </div>
-      <p className="font-ui text-[15px] font-semibold text-ink">Que som esta letra faz?</p>
-      <div className="grid grid-cols-3 gap-2" role="group" aria-label="Escolha o som">
+      <p className="font-ui text-[15px] font-semibold text-ink">{tx.queSom}</p>
+      <div className="grid grid-cols-3 gap-2" role="group" aria-label={tx.escolhaOSom}>
         {opcoes.map(o => {
           const errou = errados.includes(o);
           const acerto = certo && o === alvo.som;
@@ -248,9 +252,9 @@ function LetraESom({ alvo }: { alvo: AlvoFixacao }) {
       </div>
       <p role="status" className="font-ui text-[14.5px] leading-relaxed min-h-[1.5em]">
         {certo
-          ? <span className="text-[var(--teal-ink)]">Isso: {alvo.nome} faz o som {alvo.som}.</span>
+          ? <span className="text-[var(--teal-ink)]">{tx.issoSom(alvo.nome, alvo.som)}</span>
           : errados.length > 0
-            ? <span className="text-[var(--gold-ink)]">Ainda não. Dica: <Prose text={alvo.lembrePt} /> Tente de novo.</span>
+            ? <span className="text-[var(--gold-ink)]">{tx.aindaNao(<Prose text={alvo.lembrePt} />)}</span>
             : null}
       </p>
     </div>
@@ -261,6 +265,7 @@ function LetraESom({ alvo }: { alvo: AlvoFixacao }) {
 const OLHAR_MS = 3000;
 
 function Memoria({ alvo }: { alvo: AlvoFixacao }) {
+  const forma = alvo.glifoForma ?? alvo.glifo;
   const [fase, setFase] = useState<'olhar' | 'escolher' | 'certo'>('olhar');
   const [errados, setErrados] = useState<string[]>([]);
   const [rodada, setRodada] = useState(0);
@@ -270,31 +275,31 @@ function Memoria({ alvo }: { alvo: AlvoFixacao }) {
     return () => clearTimeout(t);
   }, [fase, rodada]);
   const opcoes = useMemo(
-    () => shuffled([alvo.glifo, ...alvo.outrosGlifos.filter(g => g !== alvo.glifo).slice(0, 3)], rng(`fix-mem-${alvo.id}-${rodada}`)),
-    [alvo, rodada]
+    () => shuffled([forma, ...alvo.outrosGlifos.filter(g => g !== forma).slice(0, 3)], rng(`fix-mem-${alvo.id}-${rodada}`)),
+    [alvo, forma, rodada]
   );
   return (
     <div className="grid gap-4">
       {fase === 'olhar' ? (
         <>
           <p className="text-[15.5px] leading-relaxed text-ink-body">
-            Olhe bem para a letra. Em três segundos ela some, e você vai procurá-la.
+            {tx.olhe}
           </p>
           <div className="grid place-items-center rounded-[var(--r-md)] bg-surface-2 py-8">
-            <He size="display">{alvo.glifo}</He>
+            <He size="display">{forma}</He>
           </div>
-          <Button variant="secondary" onClick={() => setFase('escolher')}>Já memorizei</Button>
+          <Button variant="secondary" onClick={() => setFase('escolher')}>{tx.jaMemorizei}</Button>
         </>
       ) : (
         <>
-          <p className="font-ui text-[15px] font-semibold text-ink">Qual era a letra?</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Escolha a letra">
+          <p className="font-ui text-[15px] font-semibold text-ink">{tx.qualEra}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label={tx.escolhaALetra}>
             {opcoes.map(g => {
               const errou = errados.includes(g);
-              const acerto = fase === 'certo' && g === alvo.glifo;
+              const acerto = fase === 'certo' && g === forma;
               return (
                 <button key={g} type="button" disabled={fase === 'certo' || errou}
-                        onClick={() => (g === alvo.glifo ? setFase('certo') : setErrados(e => [...e, g]))}
+                        onClick={() => (g === forma ? setFase('certo') : setErrados(e => [...e, g]))}
                         className={`min-h-[72px] rounded-[var(--r-sm)] border grid place-items-center
                           ${acerto ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
                             : errou ? 'border-line bg-surface opacity-50'
@@ -306,12 +311,12 @@ function Memoria({ alvo }: { alvo: AlvoFixacao }) {
           </div>
           <p role="status" className="font-ui text-[14.5px] leading-relaxed min-h-[1.5em]">
             {fase === 'certo'
-              ? <span className="text-[var(--teal-ink)]">Isso, era {alvo.nome}.</span>
+              ? <span className="text-[var(--teal-ink)]">{tx.issoEra(alvo.nome)}</span>
               : errados.length > 0
-                ? <span className="text-[var(--gold-ink)]">Essa não. Quer ver a letra de novo?{' '}
+                ? <span className="text-[var(--gold-ink)]">{tx.essaNao}{' '}
                     <button type="button" className="underline min-h-[44px]"
                             onClick={() => { setErrados([]); setRodada(n => n + 1); setFase('olhar'); }}>
-                      Ver de novo
+                      {tx.verDeNovo}
                     </button>
                   </span>
                 : null}
@@ -327,7 +332,7 @@ function Revisao({ alvo }: { alvo: AlvoFixacao }) {
   return (
     <div className="grid gap-4">
       <p className="text-[15.5px] leading-relaxed text-ink-body">
-        A letra nova ao lado de letras que você já conhece. Ouça cada uma e compare.
+        {tx.revisaoIntro}
       </p>
       <ul className="grid gap-3 list-none p-0 m-0">
         {[{ glifo: alvo.glifo, nome: alvo.nome, som: alvo.som, audioId: alvo.audioId, notaPt: null, nova: true },
@@ -338,13 +343,13 @@ function Revisao({ alvo }: { alvo: AlvoFixacao }) {
             <He size="lg">{c.glifo}</He>
             <div className="grid gap-0.5 min-w-0 flex-1">
               <span className="font-ui text-[15px] text-ink">
-                <strong className="font-semibold">{c.nome}</strong> · {c.som}{c.nova ? ' · nova' : ''}
+                <strong className="font-semibold">{c.nome}</strong> · {c.som}{c.nova ? tx.nova : ''}
               </span>
               {c.notaPt && (
                 <span className="font-ui text-[13.5px] leading-snug text-ink-muted"><Prose text={c.notaPt} /></span>
               )}
             </div>
-            <AudioButton audioId={c.audioId ?? null} size="sm" ariaLabel={`Ouvir ${c.nome}`} />
+            <AudioButton audioId={c.audioId ?? null} size="sm" ariaLabel={tx.ouvirItem(c.nome)} />
           </li>
         ))}
       </ul>

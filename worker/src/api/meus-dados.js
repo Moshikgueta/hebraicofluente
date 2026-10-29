@@ -37,6 +37,7 @@ export async function dadosDaConta(env, account, agora = Date.now()) {
   const depo = await uma(env,
     'SELECT texto, forma, nome_publico, cidade, publicar, contato, estado, criado_em, atualizado_em FROM depoimentos WHERE account_id = ?', id);
   const novidades = await uma(env, 'SELECT criado_em FROM novidades WHERE account_id = ?', id);
+  const lembrete = await uma(env, 'SELECT criado_em FROM lembretes_estudo WHERE account_id = ?', id);
 
   return {
     geradoEm: iso(agora),
@@ -67,6 +68,7 @@ export async function dadosDaConta(env, account, agora = Date.now()) {
       'SELECT action, created_at FROM access_log WHERE account_id = ? ORDER BY created_at', id))
       .map(r => ({ acao: r.action, em: iso(r.created_at) })),
     avisoDoProximoCurso: novidades ? { pedidoEm: iso(novidades.criado_em) } : null,
+    lembreteParaEstudar: lembrete ? { pedidoEm: iso(lembrete.criado_em) } : null,
     depoimento: depo ? {
       texto: depo.texto, forma: depo.forma, nomePublico: depo.nome_publico, cidade: depo.cidade,
       autorizouPublicar: !!depo.publicar, aceitaContato: !!depo.contato, situacao: depo.estado,

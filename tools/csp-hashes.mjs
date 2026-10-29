@@ -20,7 +20,7 @@
  * bloqueado em /api/csp-report e não bloqueia nada. Só depois de dias sem
  * relato ela passa a valer.
  *
- *   node tools/csp-hashes.mjs [pasta do export, padrão app/out]
+ *   node tools/csp-hashes.mjs [pasta do export, padrão app/out (app/out-en no inglês)]
  */
 import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
@@ -61,7 +61,8 @@ function* htmls(dir) {
    roda no CI ANTES do build: uma conferência da pasta no topo do módulo
    derrubava o teste (e a publicação) por falta de um out/ que ele nem usa. */
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const OUT = process.argv[2] || new URL('../app/out', import.meta.url).pathname;
+  const padrao = process.env.NEXT_PUBLIC_LOCALE === 'en' ? '../app/out-en' : '../app/out';
+  const OUT = process.argv[2] || new URL(padrao, import.meta.url).pathname;
   if (!existsSync(OUT)) { console.error(`csp-hashes: ${OUT} não existe; rode o build antes.`); process.exit(1); }
   const mapa = {};
   let total = 0;

@@ -29,6 +29,8 @@
 
 import courseJson from '@content/course.json';
 import bibliaJson from '@content/biblia.json';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-content-publico';
 
 export type Word = {
   he: string;
@@ -172,6 +174,13 @@ export type Letter = {
   lesson: number;
   letter: string;
   finalForm: string | null;
+  /** Só na lição de Bet, Kaf e Pe (soOLadoDoPonto em lib/sons.ts): a letra
+   *  com o daguesh, o desenho que tem o som que a lição ensina (כּ = K). */
+  letraComPonto?: string;
+  /** Só na lição de Kaf e Pe: a forma final, que soa como o lado SEM o ponto
+   *  e por isso é ensinada na lição do som (ך no Chaf, ף no Fe). Continua
+   *  sendo a mesma letra: nunca é alternativa errada de "qual é o Kaf". */
+  finalDoSom?: string | null;
   nameHe: string;
   namePt: string;
   translit: string;
@@ -413,17 +422,23 @@ export function licaoDaLetra(ordem: number): number | null {
 }
 
 /**
- * Quanto tempo leva, numa frase só, derivada do número de lições.
+ * Quanto tempo leva, numa frase só, derivada do número de letras.
  *
  * Havia três estimativas diferentes no site ("vinte minutos por dia, a
  * maioria termina em seis a oito semanas", "três semanas ou três meses" e
  * "menos de um mês") e um "a maioria" sem nenhum aluno para sustentar
  * (auditoria de 28/09/2026, COM-005). Agora é esta, e a conta está à vista.
+ *
+ * A unidade é a LETRA, e não a lição (28/10/2026, decisão do dono): dizia
+ * "27 lições de cerca de dez minutos", mas a lição 1 tem três letras, e só a
+ * fixação de cada uma são 20 questões. Dez minutos é a estimativa de uma
+ * letra; as lições de som contam como mais uma letra cada.
  */
 export function tempoDoCursoPt(): string {
-  const n = totalLicoes();
-  const umPorDia = n <= 30 ? 'menos de um mês' : `cerca de ${Math.ceil(n / 30)} meses`;
-  const tresPorSemana = Math.max(1, Math.round(n / 3 / 4.3));
-  return `São ${n} lições de cerca de dez minutos. Quem faz uma por dia termina em ${umPorDia}; ` +
-    `quem faz três por semana leva ${tresPorSemana === 1 ? 'cerca de um mês' : `uns ${tresPorSemana} meses`}.`;
+  const letras = course.letters.length;
+  const sons = course.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
+  const unidades = letras + sons;
+  const umPorDia = unidades <= 31 ? tx.umMes : tx.meses(Math.round(unidades / 30));
+  const tresPorSemana = Math.max(1, Math.round(unidades / 3 / 4.3));
+  return fmt(tx.tempo, { letras, sons, umPorDia, tresPorSemana: tx.tresPorSemana(tresPorSemana) });
 }

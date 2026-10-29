@@ -14,6 +14,8 @@
  */
 
 import { empresa, prazoResposta } from '@/lib/empresa';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-account-types';
 
 export type Account = {
   id: string;
@@ -28,6 +30,9 @@ export type Account = {
   /** Pediu, no perfil, um e-mail quando o próximo curso abrir. Ausente =
    *  não pediu. Ver worker/src/api/novidades.js. */
   novidades?: boolean;
+  /** Pediu, no perfil, o lembrete para estudar. Ausente = não pediu, ou o
+   *  lembrete está desligado. Ver worker/src/api/lembrete.js. */
+  lembrete?: boolean;
   /** Conta de administrador (ADMIN_EMAILS): vê todos os módulos de Raízes
    *  abertos, para revisar. Não abre nenhum produto sem o direito no banco. */
   revisor?: boolean;
@@ -83,7 +88,14 @@ export type AcessoVencido = { courseSlug: string; expiredAt: string };
 /** O que o /perfil lê da conta: os pedidos e os acessos vencidos. */
 export type Compras = { orders: Order[]; vencidos: AcessoVencido[] };
 
-export type PaymentMethod = 'pix' | 'card';
+export type PaymentMethod = 'pix' | 'card' | 'paddle';
+
+/** O que o checkout precisa para abrir o Paddle (site em inglês). */
+export type PaddleCheckout = { transactionId: string; clientToken: string; sandbox: boolean };
+
+/** O pedido recém-criado: com a URL do cartão da Mercado Pago, ou com a
+ *  transação do Paddle, quando o pagamento é fora daqui. */
+export type CreatedOrder = Order & { redirectUrl?: string; paddle?: PaddleCheckout };
 export type OrderStatus = 'pending' | 'paid' | 'failed' | 'refunded' | 'expired';
 
 /* ── erros ──────────────────────────────────────────────────────────────
@@ -106,49 +118,49 @@ export class AuthError extends Error {
 
 export const MESSAGES: Record<AuthErrorCode, string> = {
   /* Não diz se foi o e-mail ou a senha: dizer entrega quais e-mails têm conta. */
-  'bad-credentials': 'E-mail ou senha não conferem.',
-  'email-taken': 'Já existe uma conta com esse e-mail. Tente entrar.',
-  'weak-password': 'A senha precisa de pelo menos 8 caracteres.',
-  'invalid-email': 'Esse e-mail não parece válido.',
-  'termos': 'Para criar a conta, marque que você leu e aceita os Termos de Uso.',
-  'idade': 'Para criar a conta, confirme que tem 18 anos ou mais, ou que é o responsável por quem vai estudar.',
-  'not-signed-in': 'Você precisa entrar para continuar.',
-  'offline': 'Sem conexão. Tente de novo em um instante.',
-  'server': 'Alguma coisa quebrou do nosso lado. Tente de novo.',
-  'rate-limited': 'Tentativas demais. Espere um minuto.',
+  'bad-credentials': tx.badCredentials,
+  'email-taken': tx.emailTaken,
+  'weak-password': tx.weakPassword,
+  'invalid-email': tx.invalidEmail,
+  'termos': tx.termos,
+  'idade': tx.idade,
+  'not-signed-in': tx.notSignedIn,
+  'offline': tx.offline,
+  'server': tx.server,
+  'rate-limited': tx.rateLimited,
   /* O teto da hora (worker/src/api/auth.js). Dizer "um minuto" aqui mandaria
      a pessoa tentar de novo em vão sessenta vezes. */
-  'rate-limited-hora': 'Tentativas demais por agora. Tente de novo daqui a uma hora.',
+  'rate-limited-hora': tx.rateLimitedHora,
   /* Não é erro: é a plataforma no ar antes de o meio de pagamento estar
      ligado. Dizer isso evita que alguém tente três vezes e conclua que o
      cartão dele foi recusado. */
-  'payments-off': `O pagamento ainda não está ativado. Escreva para ${empresa.contato.emailSuporte} e liberamos seu acesso.`,
+  'payments-off': fmt(tx.paymentsOff, { email: String(empresa.contato.emailSuporte) }),
   /* Um código para quatro situações - link errado, vencido, já usado e
      inexistente - porque distinguir só ajuda quem está tentando adivinhar. A
      frase diz o que fazer, que é a única coisa útil nas quatro. */
-  'bad-token': 'Esse link não vale mais. Peça outro - eles duram uma hora e funcionam uma vez só.',
+  'bad-token': tx.badToken,
   /* O pagamento não chegou a ser criado: o provedor recusou. NÃO manda tentar
      de novo, ao contrário do `server` genérico - a causa é de configuração
      nossa, e repetir vai falhar de novo. A pessoa está com o cartão na mão;
      o que serve a ela é saber que o problema não é dela e ter para onde
      escrever. */
-  'payment-failed': `Não conseguimos gerar o pagamento agora, e o problema é nosso, não seu. Nada foi cobrado. Escreva para ${empresa.contato.emailSuporte}: respondemos ${prazoResposta()}.`,
+  'payment-failed': fmt(tx.paymentFailed, { email: String(empresa.contato.emailSuporte), prazo: prazoResposta() }),
   /* O checkout não oferece cartão quando só existe PIX, então em uso normal
      ninguém vê esta frase: ela é a rede para um pedido antigo aberto numa aba
      esquecida, ou para alguém chamando a API na mão. Diz o que fazer em vez de
      dizer que deu erro, porque o caminho que funciona está na mesma tela. */
-  'card-off': 'No momento só aceitamos PIX. Volte e escolha PIX - o código sai na hora.',
+  'card-off': tx.cardOff,
   /* O espelho do de cima, para quando é o PIX que a conta do provedor não
      tem habilitado. Mesma regra: dizer o caminho que funciona, que está na
      mesma tela, em vez de anunciar um defeito. */
-  'pix-off': 'No momento só aceitamos cartão de crédito. Volte e escolha cartão - dá para parcelar.',
+  'pix-off': tx.pixOff,
   /* Não é erro, é a compra repetida barrada. A renovação abre sozinha nos
      últimos 45 dias; antes disso não há o que pagar. */
-  'already-owned': 'Este curso já está na sua conta. A renovação abre nos últimos 45 dias de acesso.',
+  'already-owned': tx.alreadyOwned,
   /* A desistência pelo site. Passado o prazo, o caminho é o mesmo da Política
      de Reembolso para depois dos sete dias: escrever. */
-  'fora-do-prazo': `O prazo de ${empresa.politicas.arrependimentoDias} dias para desistir desta compra terminou. Se houver problema técnico ou cobrança indevida, escreva para ${empresa.contato.emailSuporte}.`,
-  'nao-pago': 'Esta compra não está paga, então não há o que devolver.'
+  'fora-do-prazo': fmt(tx.foraDoPrazo, { dias: String(empresa.politicas.arrependimentoDias), email: String(empresa.contato.emailSuporte) }),
+  'nao-pago': tx.naoPago
 };
 
 /* ── regras de acesso ────────────────────────────────────────────────────

@@ -81,6 +81,9 @@ const BASE = `
 
 const marca = (cor = '') => `<div class="marca"><span class="selo"><span>ע</span></span><b${cor ? ` style="color:${cor}"` : ''}>Hebraico Fluente</b></div>`;
 const shalom = `<div class="palavra"><span class="he" lang="he" dir="rtl">שָׁלוֹם</span><span class="tr">shalóm</span><span class="pt">olá · paz</span></div>`;
+/* O mesmo quadro no cartão em inglês: a transliteração do site de fora (sem
+   acento) e o sentido em inglês. */
+const shalomEn = `<div class="palavra"><span class="he" lang="he" dir="rtl">שָׁלוֹם</span><span class="tr">shalom</span><span class="pt">hello · peace</span></div>`;
 const foto = `.foto { position:absolute; inset:0; background:url(data:image/webp;base64,${b64('app/public/media/hero.webp')}) 68% 50% / cover; opacity:.5 }
   .veu  { position:absolute; inset:0; background:linear-gradient(95deg, var(--cream) 0%, rgba(251,249,245,.97) 34%,
           rgba(251,249,245,.7) 54%, rgba(251,249,245,.4) 78%, rgba(251,249,245,.62) 100%) }`;
@@ -133,6 +136,27 @@ const CARTOES = [
         </div>
       </div>`
   },
+  /* O cartão do site em inglês (PLANO-INGLES.md, etapa 7): o mesmo desenho
+     do og-curso, com o texto em inglês. É o único do site de fora, que só
+     vende o curso (`ogDaRota` em app/src/lib/seo.ts). */
+  {
+    arquivo: 'og-curso-en.jpg',
+    lang: 'en',
+    css: `${foto}
+      h1 { font-family:D; font-weight:700; font-size:74px; line-height:1.03; letter-spacing:-.035em; color:var(--navy); max-width:15ch }
+      .pe { display:flex; align-items:flex-end; justify-content:space-between; gap:40px }
+      .fatos { font-family:U; font-size:23px; color:var(--ink-muted); display:flex; gap:14px; align-items:center }
+      .fatos i { width:4px; height:4px; border-radius:50%; background:var(--line); display:block }`,
+    corpo: `<div class="foto"></div><div class="veu"></div>
+      <div class="card">
+        ${marca()}
+        <h1>Learn to read Hebrew from zero.</h1>
+        <div class="pe">
+          <div class="fatos"><span>${licoes} lessons</span><i></i><span>${curso.letters.length} letters</span><i></i><span>at your own pace</span></div>
+          ${shalomEn}
+        </div>
+      </div>`
+  },
   ...[['og-livro.jpg', 'Em breve'], ['og-previa.jpg', 'Prévia grátis']].map(([arquivo, selo]) => ({
     arquivo,
     css: `body { background:var(--navy) }
@@ -162,8 +186,10 @@ const CARTOES = [
 const navegador = await chromium.launch({ executablePath: process.env.HF_CHROMIUM || undefined });
 const pagina = await navegador.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 mkdirSync(new URL('app/public/media/', raiz), { recursive: true });
-for (const c of CARTOES) {
-  await pagina.setContent(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><style>${BASE}\n${c.css}</style></head><body>${c.corpo}</body></html>`, { waitUntil: 'load' });
+/* `node tools/og.mjs og-curso-en.jpg` refaz só os cartões pedidos. */
+const pedidos = process.argv.slice(2);
+for (const c of CARTOES.filter(c => !pedidos.length || pedidos.includes(c.arquivo))) {
+  await pagina.setContent(`<!doctype html><html lang="${c.lang || 'pt-BR'}"><head><meta charset="utf-8"><style>${BASE}\n${c.css}</style></head><body>${c.corpo}</body></html>`, { waitUntil: 'load' });
   await pagina.evaluate(() => document.fonts.ready);
   await pagina.waitForTimeout(250);
   /* JPEG, e não PNG: um décimo do tamanho. O WhatsApp busca esta imagem

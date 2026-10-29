@@ -19,6 +19,7 @@
  */
 
 import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+import { tx } from '@/i18n/telas/motor-etapas-da-licao';
 
 const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
 
@@ -31,18 +32,14 @@ export type EtapaDaLicao = {
 
 export const ETAPAS_DA_LICAO: readonly EtapaDaLicao[] = [
   {
-    aba: 'Conhecer',
-    descricaoPt: TEM_AUDIO
-      ? 'A forma, o nome e o som da letra, com o áudio do professor e a explicação em português.'
-      : 'A forma, o nome e o som da letra, com a explicação em português.'
+    aba: tx.conhecer,
+    descricaoPt: TEM_AUDIO ? tx.conhecerAudio : tx.conhecerSemAudio
   },
-  { aba: 'Palavras', descricaoPt: 'Palavras reais para ler, montadas só com letras que você já aprendeu.' },
-  { aba: 'Escrever', descricaoPt: 'A letra em cursiva, traçada com o dedo na ordem certa dos traços.' },
-  { aba: 'Fixação', descricaoPt: 'Ouvir, observar e lembrar a letra, com apoio a cada passo e sem nota.' },
-  { aba: 'Exercícios', descricaoPt: 'Exercícios variados com nota, corrigidos na hora. O que você errar volta depois, na revisão.' }
+  { aba: tx.palavras, descricaoPt: tx.palavrasDesc },
+  { aba: tx.escrever, descricaoPt: tx.escreverDesc },
+  { aba: tx.fixacao, descricaoPt: tx.fixacaoDesc },
+  { aba: tx.exercicios, descricaoPt: tx.exerciciosDesc }
 ];
 
 /** "Cinco", "Seis"... para a frase que conta as etapas. */
-export const quantasEtapasPt = (): string =>
-  ['Zero', 'Uma', 'Duas', 'Três', 'Quatro', 'Cinco', 'Seis', 'Sete'][ETAPAS_DA_LICAO.length]
-  ?? String(ETAPAS_DA_LICAO.length);
+export const quantasEtapasPt = (): string => tx.numero(ETAPAS_DA_LICAO.length);

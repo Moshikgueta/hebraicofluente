@@ -24,6 +24,10 @@ import { consonantsToKnow } from '@/lib/hebrew';
 import { normalizeTyped } from '@/lib/engine/types';
 import { stripNikud } from '@/lib/hebrew';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-vocabulario-client';
+import { useProgress } from '@/lib/state/store';
+import { noCaderno, palavrasDoCaderno } from '@/lib/caderno';
+import { DesafiarAmigo } from '@/components/learn/DesafiarAmigo';
 
 /* Sem acento e com o "ss" do curso (kissé) igual a um s: quem busca "kise"
    acha a palavra. */
@@ -31,7 +35,12 @@ const semAcento = (s: string) => normalizeTyped(s).replace(/ss/g, 's');
 
 export function VocabularioClient() {
   const leitura = useLeitura();
+  const p = useProgress();
   const [busca, setBusca] = useState('');
+  /* Meu caderno (lib/caderno.ts): a estrela guarda a palavra, e o filtro
+     mostra só as guardadas. Guardar não muda nada no curso: é para rever. */
+  const [soCaderno, setSoCaderno] = useState(false);
+  const guardadas = palavrasDoCaderno(p.state.caderno, leitura.legiveis).length;
   const n = leitura.legiveis.length;
   const faltam = leitura.total - n;
 
@@ -39,25 +48,23 @@ export function VocabularioClient() {
 
   const achadas = useMemo(() => {
     const q = busca.trim();
-    if (!q) return leitura.legiveis;
+    const base = soCaderno ? palavrasDoCaderno(p.state.caderno, leitura.legiveis) : leitura.legiveis;
+    if (!q) return base;
     const qHe = stripNikud(q);
     const qLat = semAcento(q);
-    return leitura.legiveis.filter(w =>
+    return base.filter(w =>
       (qHe && /[א-ת]/.test(qHe) && stripNikud(w.he).includes(qHe))
       || semAcento(w.translit).includes(qLat)
       || semAcento(w.pt).includes(qLat));
-  }, [busca, leitura.legiveis]);
+  }, [busca, leitura.legiveis, soCaderno, p.state.caderno]);
 
   return (
     <div className="grid gap-6 py-2">
       <header className="grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Meu vocabulário</p>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.meuVocabulario}</p>
         <h1 className="text-[28px] font-bold m-0 text-balance">{fraseDeLeitura(n)}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          São as palavras do curso escritas só com as {leitura.letras.length} letras que você
-          já concluiu.{faltam > 0
-            ? ` Mais ${faltam} chegam com as próximas letras.`
-            : ' É o vocabulário inteiro do curso.'}
+          {tx.intro(leitura.letras.length, faltam)}
         </p>
         {/* A forma à mão de cada palavra está logo abaixo; aqui é onde se
             pratica escrevê-la. */}
@@ -65,50 +72,70 @@ export function VocabularioClient() {
           <Link href="/academia?treino=palavras-a-mao"
                 className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
                            text-[var(--teal-ink)] underline">
-            Praticar estas palavras à mão, em cursiva
+            {tx.praticarAMao}
           </Link>
         )}
         {n > 0 && (
           <Link href="/leitura"
                 className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium
                            text-[var(--teal-ink)] underline">
-            Pratique a leitura destas palavras no Laboratório de Leitura.
+            {tx.praticarLeitura}
           </Link>
         )}
       </header>
 
+      {/* O desafio com um amigo: cinco destas palavras num link (28/10/2026). */}
+      <DesafiarAmigo palavras={leitura.legiveis} />
+
       {n > 0 && (
         <div className="grid gap-1.5">
           <label htmlFor="busca-vocab" className="font-ui text-[14px] font-semibold text-ink">
-            Procurar
+            {tx.procurar}
           </label>
           <input
             id="busca-vocab"
             type="search"
             value={busca}
             onChange={e => setBusca(e.target.value)}
-            placeholder="em hebraico, transliteração ou português"
+            placeholder={tx.placeholder}
             dir="auto"
             autoComplete="off" autoCapitalize="off" spellCheck={false}
             className="min-h-[48px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                        font-ui text-[16px] text-ink focus:border-[var(--accent-soft)]"
           />
           <p className="font-ui text-[13px] text-ink-muted m-0" role="status">
-            {busca.trim() ? `${achadas.length} de ${n}` : `${n} palavras`}
+            {busca.trim() || soCaderno ? tx.achadas(achadas.length, n) : tx.nPalavras(n)}
           </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <button type="button" aria-pressed={soCaderno} onClick={() => setSoCaderno(v => !v)}
+                    className={`inline-flex items-center gap-1.5 min-h-[44px] rounded-full border px-3.5 font-ui text-[14px] font-semibold
+                                ${soCaderno ? 'border-[var(--gold-solid)] bg-[var(--gold-solid)] text-white' : 'border-line bg-surface text-ink'}`}>
+              <span aria-hidden>★</span>{tx.soOCaderno(guardadas)}
+            </button>
+            {guardadas > 0 && (
+              <Link href="/academia?treino=flashcards-caderno"
+                    className="inline-flex items-center min-h-[44px] font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
+                {tx.treinarCaderno}
+              </Link>
+            )}
+          </div>
+          {guardadas === 0 && <p className="font-ui text-[13px] text-ink-muted m-0">{tx.cadernoDica}</p>}
         </div>
       )}
 
       {n === 0 ? (
         <p className="font-ui text-[15px] text-ink-body">
-          Conclua a lição do Mem e a primeira palavra aparece aqui.{' '}
-          <Link href="/mapa" className="underline">Ir para o curso</Link>
+          {tx.vazio}{' '}
+          <Link href="/mapa" className="underline">{tx.irCurso}</Link>
         </p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0" aria-label="Palavras" data-vocabulario>
+        <ul className="grid gap-3 grid-cols-[minmax(0,1fr)] sm:grid-cols-2 list-none p-0 m-0" aria-label={tx.palavras} data-vocabulario>
           {achadas.map(w => (
             <li key={w.he} className="rounded-[var(--r-lg)] border border-line bg-surface p-4 grid gap-3">
-              <div className="flex items-start gap-4">
+              {/* flex-wrap: uma palavra longa no tamanho grande (מִשְׁפָּחָה) não
+                  cabe ao lado do botão de ouvir num telefone de 390 px, e o
+                  cartão empurrava a página para o lado. O botão desce. */}
+              <div className="flex flex-wrap items-start gap-4">
                 {w.image ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img src={w.image} alt={w.imageAlt ?? ''} width={72} height={72}
@@ -124,15 +151,29 @@ export function VocabularioClient() {
                 </div>
                 {/* O nome no botão: eram 32 botões "Ouvir" iguais para o leitor
                     de tela (auditoria de 28/09, UX-011). */}
-                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={`Ouvir ${w.translit}`} />}
+                <div className="grid gap-2 justify-items-end shrink-0">
+                {hasAudio(w.audioId) && <AudioButton audioId={w.audioId} size="sm" ariaLabel={tx.ouvir(w.translit)} />}
+                {(() => {
+                  const guardada = noCaderno(p.state.caderno, w.he);
+                  return (
+                    <button type="button" aria-pressed={guardada} onClick={() => p.alternarCaderno(w.he)}
+                            aria-label={guardada ? tx.tirarDoCaderno(w.translit) : tx.porNoCaderno(w.translit)}
+                            className={`grid place-items-center w-11 h-11 shrink-0 rounded-full border text-[20px] leading-none
+                                        transition-transform duration-150 active:scale-90
+                                        ${guardada ? 'border-[var(--gold-solid)] bg-[var(--gold-solid)] text-white' : 'border-line bg-surface text-ink-muted'}`}>
+                      <span aria-hidden>{guardada ? '★' : '☆'}</span>
+                    </button>
+                  );
+                })()}
+                </div>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {/* As LETRAS que é preciso conhecer para ler a palavra - pela
                     mesma regra da leitura: o ו de לוֹ, antes do Vav, é vogal e
                     não entra aqui. Mostrá-lo como letra seria ensinar o Vav
                     antes da hora, que foi o que a primeira versão fez. */}
-                <div className="flex items-center gap-2" aria-label="As letras desta palavra" data-letras>
-                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Letras</span>
+                <div className="flex items-center gap-2" aria-label={tx.letrasDaPalavra} data-letras>
+                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.letras}</span>
                   <span className="he-seq">
                     {[...new Set(consonantsToKnow(w.he))].map(g => (
                       <span key={g} className="rounded-md bg-surface-2 px-1.5"><He size="inline">{g}</He></span>
@@ -148,7 +189,7 @@ export function VocabularioClient() {
                     pede, e por isso a escrita de palavras (palavrasAcumuladas)
                     continua com a régua estrita. */}
                 <div className="flex items-center gap-2" data-cursiva>
-                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">À mão</span>
+                  <span className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.aMao}</span>
                   <He size="lg" cursive>{stripNikud(w.he)}</He>
                 </div>
               </div>
@@ -156,10 +197,12 @@ export function VocabularioClient() {
           ))}
         </ul>
       )}
+      {soCaderno && !busca.trim() && n > 0 && achadas.length === 0 && (
+        <p className="font-ui text-[15px] text-ink-body">{tx.cadernoVazio}</p>
+      )}
       {busca.trim() && n > 0 && achadas.length === 0 && (
         <p className="font-ui text-[15px] text-ink-body">
-          Nenhuma palavra que você já lê tem “{busca}”. A palavra pode usar uma letra que
-          ainda vem pela frente.
+          {tx.nenhuma(busca)}
         </p>
       )}
     </div>

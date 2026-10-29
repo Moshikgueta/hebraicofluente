@@ -28,25 +28,30 @@
     "emailSuporte": "contato@hebraicofluente.com.br",
     "emailPrivacidade": "contato@hebraicofluente.com.br",
     "telefone": null,
-    "whatsapp": "+55 41 99991-9434"
+    "whatsapp": "+55 41 99991-9434",
+    "emailEn": "languageswithmoshik@gmail.com"
   },
 
   "atendimento": {
     "horarioPt": "Segunda a sexta, das 9h às 18h (horário de Brasília)",
+    "horarioEn": "Monday to Friday, 9 am to 6 pm (UTC-3)",
     "prazoRespostaUteis": 2
   },
 
   "privacidade": {
     "encarregadoNome": null,
     "agentePequenoPorte": true,
-    "prazoLgpdDias": 15
+    "prazoLgpdDias": 15,
+    "_notaLembrete": "O lembrete para estudar (worker/src/lembrete.js). false = a caixa do perfil, a rota, o envio e o parágrafo da Política de Privacidade não existem. Ligado em 29/10/2026, com o parágrafo da Privacidade aprovado pelo dono. Desligar: false, subir politicas.atualizadoEm e publicar.",
+    "lembreteDeEstudo": true
   },
 
   "politicas": {
     "arrependimentoDias": 7,
     "garantiaDias": 7,
     "prazoReembolsoUteis": 10,
-    "atualizadoEm": "2026-10-23"
+    "atualizadoEm": "2026-10-29",
+    "atualizadoEmEn": "2026-10-29"
   },
 
   "_notaFormas": [

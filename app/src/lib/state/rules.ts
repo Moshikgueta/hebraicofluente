@@ -11,6 +11,9 @@ import type {
 } from './types';
 import { SKILLS } from './types';
 import { folgasLivres, usarFolgas } from '@/lib/loja';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-rules';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 
 export const today = (d: Date = new Date()): string => {
   /* Local date, not UTC: a learner practising at 22h in São Paulo must get
@@ -257,11 +260,11 @@ export const acertosPara = (marca: number, total: number = FIXACAO_ITENS): numbe
   Math.ceil(marca * total - 1e-9);
 
 /** "8 de 10", derivado das constantes. */
-export const REGRA_DO_DOMINIO_CURTA = `${acertosPara(MASTERY_MARK)} de ${FIXACAO_ITENS}`;
+export const REGRA_DO_DOMINIO_CURTA = fmt(tx.regraCurta, { certos: acertosPara(MASTERY_MARK), total: FIXACAO_ITENS });
 
 /** A regra inteira, para a tela dizer o que "dominar" quer dizer. */
 export const REGRA_DO_DOMINIO =
-  `concluir as ${STAGE_COUNT} etapas da lição e acertar pelo menos ${REGRA_DO_DOMINIO_CURTA} nos exercícios`;
+  fmt(tx.regraDominio, { etapas: STAGE_COUNT, regra: REGRA_DO_DOMINIO_CURTA });
 
 /**
  * A mesma regra, dita como o que ela é desde 12/10/2026: uma lição
@@ -271,7 +274,7 @@ export const REGRA_DO_DOMINIO =
  * é a de lib/dominio.ts.
  */
 export const REGRA_DA_CONCLUSAO =
-  `Uma lição conta como concluída quando você termina as ${STAGE_COUNT} etapas e acerta pelo menos ${REGRA_DO_DOMINIO_CURTA} nos exercícios.`;
+  fmt(tx.regraConclusao, { etapas: STAGE_COUNT, regra: REGRA_DO_DOMINIO_CURTA });
 
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
@@ -354,11 +357,11 @@ export function recordCheckpoint(
 export type MasteryLevel = 'novo' | 'aprendendo' | 'praticando' | 'forte' | 'revisar';
 
 export const MASTERY_LABEL: Record<MasteryLevel, string> = {
-  novo: 'ainda não visto',
-  aprendendo: 'aprendendo',
-  praticando: 'praticando',
-  forte: 'forte',
-  revisar: 'precisa de revisão'
+  novo: tx.nivelNovo,
+  aprendendo: tx.nivelAprendendo,
+  praticando: tx.nivelPraticando,
+  forte: tx.nivelForte,
+  revisar: tx.nivelRevisar
 };
 
 export const emptySkill = (): SkillStat => ({ hits: 0, misses: 0, streak: 0, lastOn: null });
@@ -781,45 +784,46 @@ export type AchievementDef = {
 };
 
 export const ACHIEVEMENTS: AchievementDef[] = [
-  { id: 'primeira-letra', titlePt: 'Primeira letra', descPt: 'Você concluiu a sua primeira lição.',
+  { id: 'primeira-letra', titlePt: tx.primeiraLetraTitulo, descPt: tx.primeiraLetraDesc,
     test: s => lettersMastered(s) >= 1 },
-  { id: 'primeira-palavra', titlePt: 'Primeira palavra lida', descPt: 'Você leu uma palavra inteira em hebraico.',
+  { id: 'primeira-palavra', titlePt: tx.primeiraPalavraTitulo, descPt: tx.primeiraPalavraDesc,
     test: s => lettersMastered(s) >= 3 },
-  { id: 'modulo-1', titlePt: 'Módulo 1', descPt: 'Seis letras e o primeiro checkpoint.',
+  { id: 'modulo-1', titlePt: tx.modulo1Titulo, descPt: tx.modulo1Desc,
     test: s => !!s.checkpoints['cp1']?.passedAt },
-  { id: 'tres-dias', titlePt: 'Três dias seguidos', descPt: 'A constância é o que faz a leitura virar automática.',
+  { id: 'tres-dias', titlePt: tx.tresDiasTitulo, descPt: tx.tresDiasDesc,
     test: (s, d) => displayStreak(s, d) >= 3 },
-  { id: 'dez-letras', titlePt: 'Dez letras', descPt: 'Quase metade do alfabeto.',
+  { id: 'dez-letras', titlePt: tx.dezLetrasTitulo, descPt: tx.dezLetrasDesc,
     test: s => lettersMastered(s) >= 10 },
-  { id: 'metade', titlePt: 'Metade do alfabeto', descPt: 'Onze das 22 letras.',
+  { id: 'metade', titlePt: tx.metadeTitulo, descPt: tx.metadeDesc,
     test: s => lettersMastered(s) >= 11 },
-  { id: 'checkpoint-perfeito', titlePt: 'Checkpoint perfeito', descPt: 'Um checkpoint sem nenhum erro.',
+  { id: 'checkpoint-perfeito', titlePt: tx.checkpointPerfeitoTitulo, descPt: tx.checkpointPerfeitoDesc,
     test: s => Object.values(s.checkpoints).some(c => (c.best ?? 0) >= 1) },
-  { id: 'vinte-e-duas', titlePt: '22 letras', descPt: 'O alfabeto inteiro.',
+  { id: 'vinte-e-duas', titlePt: tx.vinteEDuasTitulo, descPt: tx.vinteEDuasDesc,
     test: s => lettersMastered(s) >= 22 },
-  { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh - como elas aparecem na rua.',
+  { id: 'sem-o-ponto', titlePt: tx.semOPontoTitulo, descPt: tx.semOPontoDesc,
     test: s => !!s.checkpoints['cp6']?.passedAt },
-  { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O guéresh e as três letras que o hebraico moderno inventou sem inventar letra.',
+  { id: 'sons-modernos', titlePt: tx.sonsModernosTitulo, descPt: tx.sonsModernosDesc,
     test: s => !!s.checkpoints['cp7']?.passedAt },
   /* Not a count of anything. The one moment the course is actually selling:
      a whole word decoded with no transliteration on the screen. */
-  { id: 'sem-apoio', titlePt: 'Sem apoio', descPt: 'Você leu uma palavra inteira sem transliteração.',
+  { id: 'sem-apoio', titlePt: tx.semApoioTitulo, descPt: tx.semApoioDesc,
     test: s => !!s.firsts['leitura-sem-translit'] },
-  { id: 'leitor', titlePt: 'Leitor de hebraico', descPt: 'Você concluiu o desafio final.',
+  { id: 'leitor', titlePt: tx.leitorTitulo, descPt: tx.leitorDesc,
     test: s => !!s.finalChallenge.completedAt },
   /* As palavras que ele consegue ler. A CONTA é feita em lib/vocabulario.ts,
      nas telas do curso, porque precisa do vocabulário - que não pode ser lido
      numa página pública. Aqui só se lê o marco que ela gravou. */
-  { id: 'le-10', titlePt: '10 palavras', descPt: 'Você já consegue ler 10 palavras em hebraico.',
+  { id: 'le-10', titlePt: tx.lePalavrasTitulo(10), descPt: tx.lePalavrasDesc(10),
     test: s => !!s.firsts['le-10'] },
-  { id: 'le-25', titlePt: '25 palavras', descPt: 'Você já consegue ler 25 palavras em hebraico.',
+  { id: 'le-25', titlePt: tx.lePalavrasTitulo(25), descPt: tx.lePalavrasDesc(25),
     test: s => !!s.firsts['le-25'] },
-  { id: 'le-50', titlePt: '50 palavras', descPt: 'Você já consegue ler 50 palavras em hebraico.',
+  { id: 'le-50', titlePt: tx.lePalavrasTitulo(50), descPt: tx.lePalavrasDesc(50),
     test: s => !!s.firsts['le-50'] },
-  { id: 'le-100', titlePt: '100 palavras', descPt: 'Você já consegue ler 100 palavras em hebraico.',
+  { id: 'le-100', titlePt: tx.lePalavrasTitulo(100), descPt: tx.lePalavrasDesc(100),
     test: s => !!s.firsts['le-100'] },
-  { id: 'meu-nome', titlePt: 'Meu nome em hebraico', descPt: 'Você escreveu o seu nome com as letras que aprendeu.',
-    test: s => !!s.firsts['meu-nome'] }
+  /* Só onde a "Meu nome em hebraico" existe (lib/recursos.ts). */
+  ...(MEU_NOME_EM_HEBRAICO ? [{ id: 'meu-nome', titlePt: tx.meuNomeTitulo, descPt: tx.meuNomeDesc,
+    test: (s: LearnerState) => !!s.firsts['meu-nome'] }] : [])
 ];
 
 /** Returns the state plus the achievements unlocked by this change. */
@@ -852,7 +856,7 @@ export function supportLevel(mastered: number): SupportLevel {
 }
 
 export const supportLabel = (level: SupportLevel): string =>
-  level === 'on-request' ? 'Precisa de ajuda?' : 'Mostrar leitura';
+  level === 'on-request' ? tx.precisaAjuda : tx.mostrarLeitura;
 
 /* ── overall progress ───────────────────────────────────────────────────── */
 

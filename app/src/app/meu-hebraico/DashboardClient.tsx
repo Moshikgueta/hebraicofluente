@@ -18,27 +18,24 @@ import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
-import {
-  CartaoCurso, CartaoNumero, CartaoRevisao, CartaoSemana,
-  IconeLetras, IconeLicoes, IconeRevisar, IconeTempo
-} from '@/components/platform/Painel';
+import { CartaoCurso, PlanoDeHoje } from '@/components/platform/Painel';
 import { flagship } from '@/lib/catalog';
 import { TesteFinalCard } from '@/components/game/TesteFinal';
-import { AlphabetGrid, ModuleProgress } from '@/components/game/AlphabetGrid';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
-import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { alphabetComplete, aula0Feita, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
-import { CourseShelf } from '@/components/platform/CourseShelf';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
-import { AntesEDepois } from '@/components/platform/AntesEDepois';
+import { TrilhaDoModulo } from '@/components/platform/TrilhaDoModulo';
+import { InstalarApp } from '@/components/platform/InstalarApp';
+import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { resumoDoDominio } from '@/lib/dominio';
 import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-dashboard-client';
 
 /** Itens vencidos a partir dos quais o painel sugere revisar antes da lição. */
 export const REVISAO_URGENTE = 15;
@@ -121,17 +118,6 @@ export function DashboardClient() {
   const licoesFeitas = Object.values(p.state.lessons)
     .filter(l => (l?.stagesDone.length ?? 0) >= 5).length;
 
-  /* `units` são blocos de 20 segundos - ver a nota em Painel.tsx. */
-  const minutosSemana = Math.round(
-    Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(`${p.day}T12:00:00Z`);
-      d.setUTCDate(d.getUTCDate() - i);
-      return p.state.days[d.toISOString().slice(0, 10)]?.units ?? 0;
-    }).reduce((a, b) => a + b, 0) / 3
-  );
-  const tempoSemana = minutosSemana >= 60
-    ? `${Math.floor(minutosSemana / 60)}h${String(minutosSemana % 60).padStart(2, '0')}`
-    : `${minutosSemana}min`;
 
   if (!p.ready) return <DashboardSkeleton />;
 
@@ -150,33 +136,52 @@ export function DashboardClient() {
     || account.session?.account.name.trim().split(/\s+/)[0]
     || '';
 
+  /* A frase de orientação do topo: onde a pessoa está e o que vem agora. */
+  const totalLetras = course.totalLetters;
+  const orientacao = aula0Primeiro
+    ? tx.orientaAula0
+    : terminar
+      ? fmt(tx.orientaTerminar, { nome: terminar.nome })
+      : next.kind === 'letter'
+        ? (p.mastered === 0
+            ? fmt(tx.orientaPrimeira, { nome: next.letter.namePt })
+            : fmt(tx.orientaLetra, { n: p.mastered, total: totalLetras, nome: next.letter.namePt }))
+        : next.kind === 'som'
+          ? fmt(tx.orientaSom, {
+              n: p.mastered, total: totalLetras,
+              licao: ehContraste(next.som) ? next.nome.toLowerCase() : fmt(tx.oSom, { nome: next.nome })
+            })
+          : next.kind === 'checkpoint'
+            ? fmt(tx.orientaCheckpoint, { n: next.module.n })
+            : next.kind === 'extra'
+              ? fmt(tx.orientaExtra, { n: next.module.n, titulo: next.module.titlePt })
+              : tx.orientaFim;
+
+  /* A lição do plano de hoje: a mesma do botão principal. */
+  const licaoDeHoje = aula0Primeiro ? { nome: tx.hojeAula0, href: '/inicio' }
+    : terminar ? { nome: terminar.nome, href: rotaDaLicao(terminar.id) }
+    : next.kind === 'letter' ? { nome: next.letter.namePt, href: `/licao/${next.letter.id}` }
+    : next.kind === 'som' ? { nome: next.nome, href: `/som/${next.som}` }
+    : next.kind === 'checkpoint' ? { nome: fmt(tx.hojeCheckpoint, { n: next.module.n }), href: `/checkpoint/${next.module.n}` }
+    : next.kind === 'extra' ? { nome: fmt(tx.hojeModulo, { n: next.module.n }), href: `/modulo/${next.module.n}` }
+    : null;
+
   return (
     <div className="grid gap-6 sm:gap-8">
-      <header className="flex items-start gap-5 flex-wrap">
-        <div className="flex-1 min-w-[240px]">
-          <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1] tracking-[-0.028em] mb-1">
-            {greeting()}{name ? `, ${name}` : ''}.
-          </h1>
-          <p className="font-ui text-[16px] sm:text-[16.5px] text-ink-muted">
-            {p.mastered === 0
-              ? 'Vamos continuar seu hebraico? Começamos pela primeira letra.'
-              : 'Continue de onde você parou.'}
-          </p>
-        </div>
-        {/* A sequência sai do cartão e vira pílula no cabeçalho: é o número
-            que a pessoa quer ver primeiro, e ele não precisa de um cartão
-            inteiro para ser lido. */}
-        {p.streak > 0 && (
-          <p className="flex items-center gap-2.5 rounded-full bg-[var(--gold-soft)] px-4 py-2.5">
-            <svg width="17" height="17" viewBox="0 0 18 18" fill="none" aria-hidden>
-              <path d="M9 2c1.8 2.8.7 4.3-.6 5.7-1.2 1.3-2.2 2.5-2.2 4.3a2.8 2.8 0 0 0 5.6 0c0-.8-.2-1.4-.6-2.1 1.9.9 3 2.4 3 4.2A5.2 5.2 0 0 1 9 16a5.2 5.2 0 0 1-5.2-5.2C3.8 7 7.4 5.6 9 2Z"
-                    stroke="var(--gold)" strokeWidth="1.35" strokeLinejoin="round" />
-            </svg>
-            <span className="font-ui text-[15px] font-bold text-[var(--gold-ink)] tabular-nums">
-              {p.streak} {p.streak === 1 ? 'dia seguido' : 'dias seguidos'}
-            </span>
-          </p>
-        )}
+      {/* A boas-vindas (28/10/2026, pedido do dono: "feia e sem informação
+          que oriente"). Data, saudação e UMA frase que diz em que ponto do
+          curso a pessoa está e o que vem agora. O detalhe do dia fica no
+          "Seu plano de hoje", logo abaixo do botão principal. */}
+      <header className="grid gap-1">
+        <p className="m-0 font-ui text-[13px] font-semibold uppercase tracking-[.1em] text-[var(--accent)]">
+          {hojePorExtenso()}
+        </p>
+        <h1 className="m-0 font-display text-[28px] sm:text-[32px] font-semibold leading-[1.1] tracking-[-0.028em]">
+          {greeting()}{name ? `, ${name}` : ''}.
+        </h1>
+        <p className="m-0 font-ui text-[16px] sm:text-[16.5px] leading-snug text-ink-body max-w-[52ch]">
+          {orientacao}
+        </p>
       </header>
 
       <AccessNotice />
@@ -192,119 +197,179 @@ export function DashboardClient() {
       {(needsWarmUp(p.state, p.day) || p.dueCount >= REVISAO_URGENTE) && (
         <Card tone="mint" className="p-5 sm:p-6 grid sm:grid-cols-[1fr_auto] items-center gap-4">
           <div className="grid gap-1">
-            <p className="font-display text-[18px] font-bold text-ink">Revisar antes de continuar</p>
+            <p className="font-display text-[18px] font-bold text-ink">{tx.revisarTitulo}</p>
             <p className="font-ui text-[14px] leading-relaxed text-ink-body">
               {needsWarmUp(p.state, p.day)
-                ? 'Você esteve fora alguns dias. Três minutos no que estava escapando e a lição de hoje rende muito mais.'
-                : `Você tem ${p.dueCount} ${p.dueCount === 1 ? 'item' : 'itens'} para revisar. Uma revisão rápida agora vai ajudar você a aprender a próxima letra com mais facilidade.`}
+                ? tx.revisarAusente
+                : tx.revisarItens(p.dueCount)}
             </p>
           </div>
           <LinkButton href="/revisao" className="justify-self-start sm:justify-self-end">
-            Revisar agora
+            {tx.revisarAgora}
           </LinkButton>
         </Card>
       )}
 
       {/* The primary action, alone and unmissable. */}
       <section aria-labelledby="continuar">
-        <h2 id="continuar" className="sr-only">Continuar aprendendo</h2>
+        <h2 id="continuar" className="sr-only">{tx.continuarAprendendo}</h2>
         {aula0Primeiro && (
           <div className="grid gap-2">
             <CartaoCurso
-              kicker="Antes da primeira letra"
-              titulo="Como o hebraico funciona"
-              sub="A aula que abre a primeira letra: a direção da leitura, o alfabeto, o nikud e como este curso funciona. Termina com uma checagem curta, e aí o Álef abre."
+              kicker={tx.antesDaPrimeira}
+              titulo={tx.comoFunciona}
+              sub={tx.aula0Sub}
               pct={p.progress}
               href="/inicio"
-              cta="Começar pela Aula 0"
+              cta={tx.aula0Cta}
+              modulo={1}
             />
           </div>
         )}
 
         {!aula0Primeiro && terminar && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Faltam os exercícios de ${terminar.nome}: a próxima lição abre com ${Math.round(LIBERA_MARK * 100)}%.`
-              + (terminar.nota != null ? ` Sua melhor nota até agora: ${Math.round(terminar.nota * 100)}%.` : '')}
+            sub={fmt(tx.terminarSub, { nome: terminar.nome, pct: Math.round(LIBERA_MARK * 100) })
+              + (terminar.nota != null ? fmt(tx.melhorNota, { nota: Math.round(terminar.nota * 100) }) : '')}
             pct={p.progress}
             href={rotaDaLicao(terminar.id)}
-            cta={`Terminar ${terminar.nome}`}
+            cta={fmt(tx.terminarCta, { nome: terminar.nome })}
+            modulo={next.kind !== 'done' ? next.module.n : undefined}
           />
         )}
 
         {!aula0Primeiro && !terminar && next.kind === 'letter' && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.letter.lesson} - letra ${next.letter.namePt}, som ${somPt(soOLadoDoPonto(next.letter).sound)}`}
+            sub={fmt(tx.letraSub, {
+              modulo: next.module.n, licao: next.letter.lesson, nome: next.letter.namePt,
+              som: somPt(soOLadoDoPonto(next.letter).sound)
+            })}
             pct={p.progress}
             href={`/licao/${next.letter.id}`}
             cta={(p.state.lessons[next.letter.id]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar a lição'}
+              ? tx.continuarAprendendo : tx.comecarLicao}
+            modulo={next.module.n}
+            letra={next.letter.letraComPonto ?? next.letter.letter}
           />
         )}
 
         {!aula0Primeiro && !terminar && next.kind === 'som' && (
           <CartaoCurso
-            kicker="Curso em andamento"
+            kicker={tx.emAndamento}
             titulo={flagship().titlePt}
-            sub={`Módulo ${next.module.n} · lição ${next.lesson} - ${ehContraste(next.som) ? next.nome.toLowerCase() : `o som ${next.nome}`}`}
+            sub={fmt(tx.somSub, {
+              modulo: next.module.n, licao: next.lesson,
+              nome: ehContraste(next.som) ? next.nome.toLowerCase() : fmt(tx.oSom, { nome: next.nome })
+            })}
             pct={p.progress}
             href={`/som/${next.som}`}
             cta={(p.state.lessons[idDoSom(next.som)]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar a lição'}
+              ? tx.continuarAprendendo : tx.comecarLicao}
+            modulo={next.module.n}
           />
         )}
 
         {next.kind === 'checkpoint' && (
           <CartaoCurso
-            kicker={`Checkpoint ${next.module.n}`}
+            kicker={fmt(tx.checkpointKicker, { n: next.module.n })}
             titulo={next.module.titlePt}
-            sub={`As ${next.module.letterIds.length} letras do módulo, juntas.`}
+            sub={fmt(tx.checkpointSub, { n: next.module.letterIds.length })}
             pct={p.progress}
             href={`/checkpoint/${next.module.n}`}
-            cta="Fazer o checkpoint"
+            cta={tx.checkpointCta}
+            modulo={next.module.n}
           />
         )}
 
         {next.kind === 'extra' && (
           <CartaoCurso
-            kicker={`Módulo ${next.module.n}`}
+            kicker={fmt(tx.moduloKicker, { n: next.module.n })}
             titulo={next.module.titlePt}
-            sub="Nenhuma letra nova - e é o módulo que separa quem decora de quem lê."
+            sub={tx.extraSub}
             pct={p.progress}
             href={`/modulo/${next.module.n}`}
             cta={(p.state.lessons[next.module.id]?.stagesDone.length ?? 0) > 0
-              ? 'Continuar aprendendo' : 'Começar o módulo'}
+              ? tx.continuarAprendendo : tx.comecarModulo}
+            modulo={next.module.n}
           />
         )}
 
         {next.kind === 'done' && (
           <CartaoCurso
-            kicker="Alfabeto concluído"
-            titulo="Você chegou ao fim do alfabeto."
-            sub="As 22 letras, sem transliteração para se apoiar."
+            kicker={tx.fimKicker}
+            titulo={tx.fimTitulo}
+            sub={tx.fimSub}
             pct={1}
             href="/desafio-final"
-            cta="Ir para o desafio final"
+            cta={tx.fimCta}
+            modulo={7}
           />
         )}
       </section>
+
+      {/* O caminho do módulo (28/10/2026): as letras dele, tocáveis. */}
+      {!aula0Primeiro && next.kind !== 'done' && <TrilhaDoModulo modulo={next.module} />}
+
+      <PlanoDeHoje licao={licaoDeHoje} semDesafio={!aula0Primeiro} />
+
+      {/* Três atalhos de prática, numa fileira (28/10/2026). Antes eram
+          quatro cartões de jogo e um teste final, a duas telas daqui. */}
+      {!aula0Primeiro && (
+        <section aria-labelledby="praticar" className="grid gap-2.5 min-w-0">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 id="praticar" className="m-0 font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              {tx.praticarPoucos}
+            </h2>
+            <Link href="/academia" className="inline-flex items-center min-h-[44px] font-ui text-[13px] text-[var(--teal-ink)] hover:underline">
+              {tx.verTudo}
+            </Link>
+          </div>
+          <ul className="min-w-0 grid grid-cols-3 gap-2.5 list-none p-0 m-0">
+            {([
+              ['/academia?treino=desafio', desafioFeitoHoje(p.state, p.day) ? '✓' : '5', tx.atalhoDesafio,
+                desafioFeitoHoje(p.state, p.day) ? tx.atalhoDesafioFeito : tx.atalhoDesafioTempo],
+              ['/academia?treino=flashcards-letras', 'א', tx.atalhoFlashcards, tx.atalhoFlashcardsDesc],
+              ['/leituras', 'אב', tx.atalhoLeitura, tx.atalhoLeituraDesc]
+            ] as const).map(([href, icone, titulo, desc]) => (
+              <li key={href} className="min-w-0">
+                <Link href={href}
+                      className="h-full grid justify-items-center content-start gap-1 text-center rounded-[16px] border border-line
+                                 bg-[var(--card)] px-2 py-3.5 transition-[box-shadow,border-color,transform] duration-[200ms]
+                                 hover:shadow-[var(--sh)] hover:border-[var(--teal)] active:scale-[.96]">
+                  <span aria-hidden className="grid place-items-center w-11 h-11 rounded-full bg-[var(--teal-soft)] text-[var(--teal-ink)]
+                                               font-ui text-[17px] font-bold">
+                    {/[א-ת]/.test(icone) ? <He size="inline" tone="teal">{icone}</He> : icone}
+                  </span>
+                  <span className="font-display text-[14.5px] font-semibold leading-tight text-ink [overflow-wrap:anywhere]">{titulo}</span>
+                  <span className="font-ui text-[12px] leading-tight text-ink-muted">{desc}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* O curso como app no celular, depois da primeira letra (28/10/2026).
+          Some de vez com "Agora não". */}
+      {!aula0Primeiro && licoesFeitas > 0 && <InstalarApp variante="cartao" />}
 
       {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
       {!aula0Primeiro && primeiraPendente && (
         <Card tone="wash" className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
-            <Badge tone="accent">Minha Primeira Leitura</Badge>
+            <Badge tone="accent">{tx.primeiraBadge}</Badge>
             <p className="font-display text-[17px] font-semibold text-ink mt-1">
-              Módulo {primeiraPendente.n} concluído! Hora de praticar a leitura.
+              {fmt(tx.primeiraTitulo, { n: primeiraPendente.n })}
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Algumas palavras formadas com as letras e os sinais vocálicos que você já aprendeu. Você lê por conta própria, depois ouve e confere.
+              {tx.primeiraTexto}
             </p>
           </div>
-          <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">Ler agora</LinkButton>
+          <LinkButton href={`/leitura?primeira=${primeiraPendente.n}`} className="shrink-0">{tx.lerAgora}</LinkButton>
         </Card>
       )}
 
@@ -321,166 +386,65 @@ export function DashboardClient() {
       {aula0Primeiro ? null : licoesFeitas === 0 ? (
         <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
-            <Badge tone="accent">Antes da primeira letra</Badge>
+            <Badge tone="accent">{tx.antesDaPrimeira}</Badge>
             <p className="font-display text-[17px] font-semibold text-ink mt-1">
-              Como o hebraico funciona
+              {tx.comoFunciona}
             </p>
             <p className="text-[14.5px] leading-relaxed text-ink-body">
-              Dez minutos de leitura: a direção, o alfabeto, o que muda em relação
-              ao português e como este curso funciona.
+              {tx.comoFuncionaTexto}
             </p>
           </div>
-          <LinkButton href="/inicio" variant="secondary" className="shrink-0">Ler agora</LinkButton>
+          <LinkButton href="/inicio" variant="secondary" className="shrink-0">{tx.lerAgora}</LinkButton>
         </Card>
-      ) : (
+      ) : null}
+
+
+      {/* A Aula 0 para reler, numa linha (o mapa também a tem). O painel
+          precisa linkar /inicio: é a regra da varredura do curso. */}
+      {!aula0Primeiro && licoesFeitas > 0 && (
         <p className="font-ui text-[13.5px] text-ink-muted">
-          <Link href="/inicio" className="hover:text-[var(--accent)]">
-            Como o hebraico funciona
-          </Link>{' '}
-          · a explicação de antes da primeira letra, para reler quando quiser.
+          {tx.reler(t => (
+            <Link href="/inicio" className="inline-flex items-center min-h-[44px] hover:text-[var(--accent)] underline underline-offset-2">
+              {t}
+            </Link>
+          ))}
         </p>
       )}
-
-      {/* Logo depois da ação de hoje, e antes dos números: os quatro
-          contadores dizem QUANTO foi feito, e este cartão diz o que aquilo
-          virou. Ele só aparece quando há frase legível - por volta da metade
-          do alfabeto - e some sozinho antes disso. */}
-      <AntesEDepois />
 
       {/* O pedido de depoimento (29/09/2026), só depois de seis lições - antes
           disso a pessoa ainda não tem o que contar. Discreto e sem troca:
           nada de XP ou desconto por depoimento. Ver /depoimento. */}
       {licoesFeitas >= 6 && (
         <p className="font-ui text-[13.5px] text-ink-muted">
-          <Link href="/depoimento" className="hover:text-[var(--accent)] underline underline-offset-2">
-            Conte como está sendo
-          </Link>{' '}
-          · o seu depoimento ajuda o curso e quem está pensando em começar.
+          {tx.depoimento(t => (
+            <Link href="/depoimento" className="hover:text-[var(--accent)] underline underline-offset-2">
+              {t}
+            </Link>
+          ))}
         </p>
       )}
 
-      {/* Os quatro números, e depois revisar e a semana. É a ordem do design,
-          e ela responde na sequência certa: o que eu já fiz, o que está
-          pendente, e como foi a semana. */}
-      <section aria-label="Seus números" className="grid gap-3
-                          [grid-template-columns:repeat(auto-fit,minmax(168px,1fr))]">
-        {/* 12/10/2026: "letras dominadas" é o domínio por habilidade
-            (lib/dominio.ts); "lições concluídas" é a regra antiga, as cinco
-            etapas com 75% (`p.mastered`), a mesma do alfabeto abaixo. */}
-        <CartaoNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? 'letra dominada' : 'letras dominadas'}
-                      tom="teal" icone={<IconeLetras />} />
-        <CartaoNumero n={p.mastered} rotulo={p.mastered === 1 ? 'lição concluída' : 'lições concluídas'}
-                      tom="teal" icone={<IconeLicoes />} />
-        <CartaoNumero n={p.dueCount} rotulo={p.dueCount === 1 ? "item a revisar" : "itens a revisar"} tom="gold" icone={<IconeRevisar />} />
-        <CartaoNumero n={tempoSemana} rotulo="nesta semana" tom="neutro" icone={<IconeTempo />} />
-      </section>
-
-      {/* Meu domínio das letras (11/10/2026): o que ele SABE, por habilidade,
-          ao lado do que ele concluiu. Some até haver um exercício feito. */}
-      {dominio.letras.length > 0 && (
-        <Card className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
-          <div className="grid gap-1 min-w-0">
-            <p className="font-display text-[17px] font-semibold text-ink m-0">Meu domínio das letras</p>
-            <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">
-              {`Dominadas: ${dominio.contagem.dominada} · Quase dominadas: ${dominio.contagem.quase}`}
-              {dominio.paraPraticar.length > 0 &&
-                ` · Para reforçar: ${dominio.paraPraticar.map(d => getLetter(d.letterId)?.namePt).join(', ')}`}
-            </p>
-          </div>
-          <LinkButton href="/meu-hebraico/dominio" variant="secondary" className="shrink-0">Ver o meu domínio</LinkButton>
-        </Card>
+      {/* Os números numa faixa só (28/10/2026, painel mais curto): o que já
+          foi feito, e a porta para o Progresso, onde ficam o domínio, as
+          palavras que você lê, a semana e o seu nome. Um zero não informa
+          nada e desanima: o número aparece quando há o que contar. */}
+      {licoesFeitas > 0 && (
+        <Link href="/conquistas"
+              className="flex items-center gap-4 rounded-[16px] border border-line
+                         bg-[var(--card)] px-4 py-3.5 transition-[box-shadow,border-color] duration-[200ms]
+                         hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
+          <MiniNumero n={p.mastered} rotulo={p.mastered === 1 ? tx.licaoConcluida : tx.licoesConcluidas} />
+          {dominio.contagem.dominada > 0 && (
+            <MiniNumero n={dominio.contagem.dominada} rotulo={dominio.contagem.dominada === 1 ? tx.letraDominada : tx.letrasDominadas} />
+          )}
+          {p.streak > 0 && <MiniNumero n={p.streak} rotulo={p.streak === 1 ? tx.diaSeguido : tx.diasSeguidos} />}
+          <span aria-hidden className="ml-auto font-ui text-[18px] text-[var(--teal-ink)]">→</span>
+          <span className="sr-only">{tx.verSeuProgresso}</span>
+        </Link>
       )}
 
-      {/* "Letras dominadas" é o que o curso mede; "palavras que você lê" é o
-          que o aluno sente. Os dois ficam juntos, e o segundo leva ao
-          vocabulário. Some enquanto não há letra concluída. */}
-      {licoesFeitas > 0 && <ContadorDeLeitura />}
-      <CartaoMeuNome />
-
-      <div className="grid gap-3.5 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] items-start">
-        <CartaoRevisao />
-        <CartaoSemana />
-      </div>
-
-      {/* Os exercícios disponíveis, num lugar só. Antes eles existiam apenas
-          dentro da Academia, a dois toques de distância - e um jogo que é
-          preciso procurar não é jogado. O teste final fecha a fileira, com o
-          cadeado dizendo quantas letras faltam. */}
-      <section aria-labelledby="praticar" className="grid gap-3">
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 id="praticar" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-            Praticar agora
-          </h2>
-          <Link href="/academia"
-                className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                           text-[var(--teal-ink)] hover:underline">
-            Ver tudo →
-          </Link>
-        </div>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
-          {([
-            ['/leitura', 'Leitura', 'Pratique a leitura de palavras no seu ritmo.'],
-            ['/academia?jogo=match', 'Match', 'Junte letra, nome e som.'],
-            ['/academia?jogo=blast', 'Blast', 'Rápido, com sequência de acertos.'],
-            ['/academia?jogo=teste', 'Teste', 'Nota no fim e revisão dos erros.']
-          ] as const).map(([href, titulo, desc]) => (
-            <li key={href}>
-              <Link href={href}
-                    className="h-full flex flex-col gap-1 rounded-[16px] border border-line
-                               bg-[var(--card)] p-4 transition-[box-shadow,border-color]
-                               duration-[250ms] hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
-                <span className="font-display text-[16px] font-semibold tracking-[-0.018em] text-ink">
-                  {titulo}
-                </span>
-                <span className="font-ui text-[13px] leading-[1.45] text-ink-muted">{desc}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <TesteFinalCard compacto />
-      </section>
-
-      {/* A grade do alfabeto e a lista de módulos. Ficam DEPOIS dos números
-          e do cartão de revisão: são a resposta para "onde estou no curso
-          inteiro", que é uma pergunta mais calma do que "o que faço agora". */}
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(250px,1fr)] lg:gap-6 lg:items-start">
-        <section aria-labelledby="alfabeto" className="grid gap-3">
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 id="alfabeto" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              O alfabeto
-            </h2>
-            {/* 44px de altura mesmo com texto de 13px: um link no telefone é
-                acertado com a ponta do dedo, e não com um cursor. */}
-            <Link href="/mapa"
-                  className="inline-flex items-center min-h-[44px] font-ui text-[13px]
-                             text-[var(--teal-ink)] hover:underline">
-              Ver o mapa →
-            </Link>
-          </div>
-          <Card className="p-4 sm:p-5">
-            <AlphabetGrid />
-          </Card>
-
-          {/* Fechado no telefone: a grade logo acima já responde "onde estou",
-              e a lista de sete módulos repetia a mesma informação por mais
-              600px. Quem quer o detalhe abre. */}
-          <details className="lg:hidden group">
-            <summary className="flex items-center gap-2 min-h-[44px] cursor-pointer
-                                font-display text-[18px] font-semibold text-ink list-none
-                                [&::-webkit-details-marker]:hidden">
-              Módulos
-              <span aria-hidden className="font-ui text-[13px] font-normal text-ink-muted
-                                           transition-transform group-open:rotate-180">▾</span>
-            </summary>
-            <div className="pt-2"><ModuleProgress /></div>
-          </details>
-        </section>
-
-        <aside className="hidden lg:grid gap-2 content-start">
-          <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">Módulos</h2>
-          <ModuleProgress />
-        </aside>
-      </div>
+      {/* O teste final só aparece quando importa: com o alfabeto fechado. */}
+      {alfabetoFechado && <TesteFinalCard compacto />}
 
       {/* A oferta do curso seguinte aparece num momento só: quando as 22
           letras estão fechadas. Antes disso o aluno está no meio de uma
@@ -489,18 +453,29 @@ export function DashboardClient() {
           pergunta que ele mesmo está fazendo. */}
       {alfabetoFechado && <OfertaProximoCurso />}
 
-      {/* No fim, e não no topo: o painel é de quem já comprou. Em linhas, e
-          não em cards de venda. */}
-      <CourseShelf headingPt="Seus cursos" variant="rows" />
     </div>
   );
 }
 
+function MiniNumero({ n, rotulo }: { n: number; rotulo: string }) {
+  return (
+    <span className="grid gap-0.5 min-w-0">
+      <span className="font-display text-[22px] font-semibold leading-none text-[var(--teal-ink)] tabular-nums">{n}</span>
+      <span className="font-ui text-[12px] leading-tight text-ink-muted">{rotulo}</span>
+    </span>
+  );
+}
+
+function hojePorExtenso(): string {
+  const t = new Date().toLocaleDateString(tx.localeDaData, { weekday: 'long', day: 'numeric', month: 'long' });
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 function greeting(): string {
   const h = new Date().getHours();
-  if (h < 12) return 'Bom dia';
-  if (h < 19) return 'Boa tarde';
-  return 'Boa noite';
+  if (h < 12) return tx.bomDia;
+  if (h < 19) return tx.boaTarde;
+  return tx.boaNoite;
 }
 
 /* A primeira vez depois da compra.
@@ -511,40 +486,68 @@ function greeting(): string {
  * o nome e a meta diária. */
 function Welcome() {
   const m1 = getModule(1);
+  /* O caminho até a primeira letra, em três passos (28/10/2026): quem acabou
+     de pagar quer saber o que acontece agora e quanto tempo leva. */
+  const caminho = [
+    { t: tx.passo1Titulo, d: tx.passo1Texto },
+    { t: tx.passo2Titulo, d: tx.passo2Texto },
+    { t: m1 ? fmt(tx.passo3Titulo, { titulo: m1.titlePt }) : tx.passo3Reserva, d: tx.passo3Texto }
+  ];
   return (
     <>
-      <Card tone="wash" className="p-7 sm:p-10 grid gap-5 text-center">
-        <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-          Bem-vindo ao Hebraico Fluente
-        </p>
-        <div className="flex justify-center gap-3 py-2">
-          {['מ', 'ת', 'א', 'נ', 'ה', 'י'].map(l => (
-            <He key={l} size="lg" dim>{l}</He>
+      <section aria-labelledby="bem-vindo"
+               className="relative overflow-hidden rounded-[20px] bg-[var(--navy)] text-white px-6 py-8 sm:px-10 sm:py-11 grid gap-6">
+        <span aria-hidden className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(70% 140% at 92% 0%, rgba(143,214,200,.2), transparent 60%)' }} />
+        <div className="relative grid gap-3">
+          <p className="m-0 font-ui text-[12.5px] font-bold uppercase tracking-[.14em] text-[var(--teal-lite)]">
+            {tx.bemVindo}
+          </p>
+          <h1 id="bem-vindo" className="m-0 text-white text-[30px] sm:text-[38px] font-bold leading-[1.12]">
+            {tx.liberado}
+          </h1>
+          <p className="m-0 text-[16.5px] leading-relaxed text-white max-w-[48ch]">
+            {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
+                números diferentes na vitrine: letra e lição são grandezas
+                parecidas, e a cópia manual erra em silêncio. */}
+            {fmt(tx.boasVindasTexto, { letras: course.totalLetters, modulos: course.modules.length })}
+          </p>
+        </div>
+        <div aria-hidden className="relative flex justify-center gap-3 py-1">
+          {['מ', 'ת', 'א', 'נ', 'ה', 'י'].map((l, k) => (
+            <span key={l} className="animate-rise" style={{ animationDelay: `${k * 90}ms` }}>
+              <He size="lg" className="text-white/85">{l}</He>
+            </span>
           ))}
         </div>
-        <h1 className="text-[30px] sm:text-[38px] font-bold leading-[1.15]">
-          Seu curso está liberado.
-        </h1>
-        <p className="text-[17px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-          {/* O "22" estava escrito à mão aqui. É o mesmo defeito que pôs dois
-              números diferentes na vitrine: letra e lição são grandezas
-              parecidas, e a cópia manual erra em silêncio. */}
-          São {course.totalLetters} letras, em {course.modules.length} módulos.
-          Antes da primeira, três perguntas rápidas: por que você quer aprender, quanto
-          tempo por dia dá para estudar e o que você já sabe.
-        </p>
-        <div className="pt-2">
-          <LinkButton href="/onboarding" size="lg">Começar</LinkButton>
+        <div className="relative">
+          <LinkButton href="/onboarding" size="lg" full className="!bg-white !text-[var(--navy)] sm:!w-auto">
+            {tx.comecar}
+          </LinkButton>
         </div>
-      </Card>
+      </section>
 
-      {m1 && (
-        <Card className="p-6 grid gap-3">
-          <Badge tone="accent">Começa assim</Badge>
-          <p className="font-display text-[18px] font-semibold">{m1.titlePt}</p>
-          <p className="text-[15px] leading-relaxed text-ink-body"><Prose text={m1.milestonePt} /></p>
-        </Card>
-      )}
+      <Card className="p-6 sm:p-7 grid gap-4">
+        <h2 className="m-0 font-display text-[19px] font-semibold text-ink">{tx.oQueVem}</h2>
+        <ol className="grid gap-4 list-none p-0 m-0">
+          {caminho.map((c, k) => (
+            <li key={c.t} className="grid grid-cols-[auto_1fr] gap-3.5 items-start">
+              <span aria-hidden
+                    className="grid place-items-center w-8 h-8 rounded-full bg-[var(--teal-soft)]
+                               text-[var(--teal-ink)] font-ui text-[14px] font-bold tabular-nums">{k + 1}</span>
+              <span className="grid gap-0.5">
+                <span className="font-ui text-[15.5px] font-semibold text-ink">{c.t}</span>
+                <span className="font-ui text-[14px] leading-relaxed text-ink-body">{c.d}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        {m1 && (
+          <p className="m-0 border-t border-[color:var(--line-soft)] pt-4 text-[14.5px] leading-relaxed text-ink-body">
+            <Prose text={m1.milestonePt} />
+          </p>
+        )}
+      </Card>
     </>
   );
 }

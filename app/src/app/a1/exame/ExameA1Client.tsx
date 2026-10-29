@@ -113,7 +113,7 @@ export function ExameA1Client() {
         <header className="grid gap-2">
           <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Exame final · {atual.tituloParte}</p>
           <div className="h-2 rounded-full bg-surface-2 overflow-hidden" aria-hidden>
-            <div className="h-full bg-[var(--accent)] transition-all" style={{ width: `${((pos + 1) / plana.length) * 100}%` }} />
+            <div className="h-full w-full origin-left bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]" style={{ transform: `scaleX(${(pos + 1) / plana.length})` }} />
           </div>
           <p className="font-ui text-[13px] text-ink-muted m-0" aria-live="polite">
             Pergunta {pos + 1} de {plana.length} · {respondidas} respondidas

@@ -34,6 +34,7 @@
  * assoc    associação: várias linhas, cada uma com os mesmos rótulos
  */
 
+import { tx } from '@/i18n/telas/licao-compreensao';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -137,7 +138,9 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                                 aria-disabled:cursor-default ${tom(feita, j === p.certa, resp[i] === j)}`}
                   >
                     {feita && j === p.certa && <span aria-hidden>✓ </span>}
-                    {o}
+                    {/* A alternativa pode citar hebraico ({{ק}}): passa pelo
+                        Prose, como o enunciado, senão as chaves vão à tela. */}
+                    <Prose text={o} />
                   </button>
                 ))}
               </div>
@@ -145,7 +148,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
 
             {p.t === 'vf' && (
               <div className="grid grid-cols-2 gap-2">
-                {['Verdadeiro', 'Falso'].map((o, j) => {
+                {[tx.verdadeiro, tx.falso].map((o, j) => {
                   const estaCerta = j === (p.certa ? 0 : 1);
                   return (
                     <button
@@ -231,7 +234,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
             {feita && (
               <p role="status" className="font-ui text-[14px] leading-relaxed text-ink-body">
                 <strong className="font-semibold text-ink">
-                  {certo ? 'Isso. ' : 'A resposta certa é a marcada em verde. '}
+                  {certo ? tx.isso : tx.certaEmVerde}
                 </strong>
                 <Prose text={p.porque} />
               </p>
@@ -243,7 +246,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
       {completo && (
         <Card tone="wash" className="p-5 grid gap-1.5 text-center">
           <p className="font-display text-[18px] font-bold text-ink">
-            {certas} de {perguntas.length}
+            {tx.placar(certas, perguntas.length)}
           </p>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[52ch] mx-auto">
             {/* "Demonstrou compreensão" não é acertar tudo: quem acerta a

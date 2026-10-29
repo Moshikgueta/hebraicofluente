@@ -65,5 +65,7 @@ describe('a forma final é a mesma letra', () => {
       }
     }
     expect(culpados.slice(0, 10)).toEqual([]);
-  });
+    /* Milhares de blocos: uns 4,5 s, colado no prazo padrão de 5 s (o mesmo
+       caso do teste de 40 rodadas em order-rule.test.ts). */
+  }, 20_000);
 });

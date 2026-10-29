@@ -25,6 +25,8 @@ import { Card } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { AudioButton, hasAudio, useRegistroDeAudio } from '@/components/learn/AudioButton';
 import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { Cenario, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { EscadaDeLeitura, MarcoDeLeitura, lidasNoNivel, marcoAlcancado } from '@/components/aventura/EscadaDeLeitura';
 import { allLetters, course, extras, getModule } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
 import { aula0Feita, isLessonComplete, letraAtual } from '@/lib/state/rules';
@@ -37,6 +39,7 @@ import {
   palavrasDaPrimeiraLeitura, palavrasDaRodada, primeiraLeituraId,
   type NivelDeApoio, type PalavraDoBanco
 } from '@/lib/laboratorio';
+import { tx } from '@/i18n/telas/academia-leitura-client';
 
 const CHAVE_NIVEL = 'hf-leitura-nivel';
 const POR_RODADA = 5;
@@ -79,7 +82,14 @@ function Laboratorio() {
   const [rodada, setRodada] = useState(0);
   const [i, setI] = useState(0);
   const [certas, setCertas] = useState(0);
+  const [marco, setMarco] = useState<string | null>(null);
   useEffect(() => { setNivel(nivelGuardado()); }, []);
+
+  /* O lugar do aluno: o módulo da última letra começada. */
+  const lugar = useMemo(() => {
+    const comecadas = allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0);
+    return Math.min(7, Math.max(1, ...comecadas.map(l => l.module), 1)) as IdDoCenario;
+  }, [p.state.lessons]);
 
   /* Sem nikud só depois da etapa "Sem o ponto" (etapa 3 do módulo 6). */
   const semPontosLiberado = (p.state.lessons.mod6?.stagesDone ?? []).includes(3);
@@ -112,77 +122,101 @@ function Laboratorio() {
   return (
     <div className="grid gap-6 py-2 max-w-[44rem]">
       <header className="grid gap-2">
-        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">Laboratório de Leitura</p>
-        <h1 className="text-[28px] font-bold m-0 text-balance">Aprenda a ler hebraico, uma palavra de cada vez.</h1>
+        {/* O lugar onde o aluno está na aventura (28/10/2026, Laboratório
+            2.0): a leitura acontece ali. Decorativo. */}
+        <div aria-hidden className="h-[64px] sm:h-[120px] overflow-hidden rounded-[var(--r-lg)] border border-line mb-1 il-entra">
+          <Cenario n={lugar} vivo />
+        </div>
+        <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.laboratorio}</p>
+        <h1 className="text-[28px] font-bold m-0 text-balance">{tx.titulo}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-          Pratique a leitura com palavras formadas pelas letras e pelos sinais vocálicos que você já
-          aprendeu. Tente ler em voz alta antes de conferir a pronúncia.
+          {tx.intro}
         </p>
         <GravacaoDoProfessor id="reading-lab-how-to"
-          textoPt="Como ler uma palavra nova, passo a passo." />
+          textoPt={tx.gravacaoComoLer} />
       </header>
 
       {!palavras.length ? (
         <Card className="p-5 grid gap-3">
           <p className="font-ui text-[15px] text-ink-body m-0">
-            Conclua a lição da letra Mem para liberar suas primeiras palavras.
+            {tx.vazio}
           </p>
-          <LinkButton href={destinoDoCurso} variant="secondary" className="justify-self-start">Ir para o curso</LinkButton>
+          <LinkButton href={destinoDoCurso} variant="secondary" className="justify-self-start">{tx.irCurso}</LinkButton>
         </Card>
       ) : (
         <>
           <fieldset className="grid gap-2 border-0 p-0 m-0">
-            <legend className="font-ui text-[14px] font-semibold text-ink mb-2">De quanta ajuda você precisa?</legend>
-            <div className="grid sm:grid-cols-3 gap-2">
+            <legend className="font-ui text-[14px] font-semibold text-ink mb-2">{tx.quantaAjuda}</legend>
+            {/* Um seletor de uma linha, e só a descrição do nível escolhido: os
+                três cartões empurravam a palavra para baixo da dobra no celular. */}
+            <div className="grid grid-cols-3 gap-1 rounded-[var(--r-md)] border border-line bg-surface-2 p-1">
               {NIVEIS.map(n => (
                 <label key={n.id}
-                       className={`grid gap-1 rounded-[var(--r-md)] border-2 p-3 cursor-pointer min-h-[44px]
-                         ${nivel === n.id ? 'border-[var(--accent)] bg-[var(--accent-wash)]' : 'border-line bg-surface hover:bg-surface-2'}`}>
-                  <span className="flex items-center gap-2 font-ui text-[15px] font-semibold text-ink">
-                    <input type="radio" name="nivel" value={n.id} checked={nivel === n.id}
-                           onChange={() => escolher(n.id)} className="accent-[var(--accent)]" />
-                    {n.tituloPt}
-                  </span>
-                  <span className="font-ui text-[13.5px] leading-snug text-ink-muted">{n.resumoPt}</span>
+                       className={`grid place-items-center rounded-[calc(var(--r-md)-4px)] min-h-[44px] px-1.5 cursor-pointer
+                         font-ui text-[14px] font-semibold text-center leading-tight
+                         transition-[background-color,color,box-shadow] duration-[var(--dur-toque)]
+                         has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[var(--accent)]
+                         ${nivel === n.id ? 'bg-surface text-ink shadow-[0_1px_2px_rgba(0,0,0,.08)]' : 'text-ink-muted hover:text-ink'}`}>
+                  <input type="radio" name="nivel" value={n.id} checked={nivel === n.id}
+                         onChange={() => escolher(n.id)} className="sr-only" />
+                  {n.curtoPt}
                 </label>
               ))}
             </div>
+            <p className="font-ui text-[13.5px] leading-snug text-ink-muted m-0" aria-live="polite">
+              <span className="font-semibold text-ink-body">{NIVEIS.find(n => n.id === nivel)?.tituloPt}.</span>{' '}
+              {NIVEIS.find(n => n.id === nivel)?.resumoPt}
+            </p>
             {nivel === 'independente' && !semPontosLiberado && (
               <p className="font-ui text-[13.5px] leading-snug text-ink-muted m-0">
-                Por enquanto, as palavras aparecem com nikud (sinais vocálicos). A leitura sem nikud será
-                liberada depois da etapa &quot;Sem o ponto&quot;, no módulo 6.
+                {tx.aindaComNikud}
               </p>
             )}
           </fieldset>
 
           {acabou ? (
             <Card className="p-6 grid gap-4" tone="wash">
-              <h2 className="text-[22px] font-semibold m-0">Rodada concluída</h2>
+              <h2 className="text-[22px] font-semibold m-0">{tx.rodadaConcluida}</h2>
               <p className="font-ui text-[15.5px] leading-relaxed text-ink-body m-0">
-                Você marcou {certas} de {nPalavras(palavras.length)} como lidas corretamente.
+                {tx.voceMarcou(certas, nPalavras(palavras.length))}
               </p>
               <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted m-0">
-                Esta é a sua própria avaliação. O seu domínio das letras vem dos exercícios corrigidos pelo curso.
+                {tx.autoavaliacao}
               </p>
               <div className="flex flex-wrap gap-2">
-                <Button size="lg" onClick={outra}>Mais cinco palavras</Button>
-                <LinkButton href="/meu-hebraico" variant="ghost">Voltar ao painel</LinkButton>
+                <Button size="lg" onClick={outra}>{tx.maisCinco}</Button>
+                <LinkButton href="/meu-hebraico" variant="ghost">{tx.voltarPainel}</LinkButton>
               </div>
             </Card>
           ) : palavra ? (
+            <>
+            {/* Onde a rodada está: um ponto por palavra. */}
+            <div aria-hidden className="flex gap-1.5">
+              {palavras.map((w, k) => (
+                <span key={w.id} className={`h-1.5 flex-1 rounded-full transition-colors duration-[var(--dur)]
+                  ${k < i ? 'bg-[var(--teal)]' : k === i ? 'bg-[var(--teal-lite)]' : 'bg-[var(--line)]'}`} />
+              ))}
+            </div>
             <LerPalavra
               key={`${rodada}-${i}-${palavra.id}`}
               palavra={palavra}
               nivel={nivel}
               semPontos={nivel === 'independente' && semPontosLiberado && !!palavra.semNikud}
-              posicao={`${i + 1} de ${palavras.length}`}
+              posicao={tx.posicao(i + 1, palavras.length)}
               onFim={leuCerto => {
+                if (leuCerto) setMarco(marcoAlcancado(lidasNoNivel(p.state, nivel), nivel));
                 p.registrarLeitura(`laboratorio-${nivel}`, leuCerto);
                 if (leuCerto) setCertas(c => c + 1);
                 setI(n => n + 1);
               }}
             />
+            </>
           ) : null}
+
+          {/* Embaixo da palavra: no celular a palavra fica na primeira tela, e o
+              marco aparece logo abaixo dela, onde o olho já está. */}
+          {marco && <MarcoDeLeitura texto={marco} onFechar={() => setMarco(null)} />}
+          <EscadaDeLeitura state={p.state} nivel={nivel} />
         </>
       )}
     </div>
@@ -212,12 +246,12 @@ export function LerPalavra({ palavra, nivel, semPontos, posicao, onFim }: {
 
   return (
     <Card className="p-5 sm:p-7 grid gap-5">
-      <p className="font-ui text-[13px] text-ink-muted tabular-nums m-0">Palavra {posicao}</p>
+      <p className="font-ui text-[13px] text-ink-muted tabular-nums m-0">{tx.palavra(posicao)}</p>
 
       <div className="grid place-items-center rounded-[var(--r-md)] bg-surface-2 py-8 px-3" aria-live="polite">
         <He size="display" pedaco={pedaco}>{escrita}</He>
         {semPontos && fase === 'ler' && (
-          <p className="font-ui text-[13px] text-ink-muted mt-2 m-0">Sem nikud, como em muitas placas em Israel.</p>
+          <p className="font-ui text-[13px] text-ink-muted mt-2 m-0">{tx.semNikudPlacas}</p>
         )}
       </div>
 
@@ -227,23 +261,23 @@ export function LerPalavra({ palavra, nivel, semPontos, posicao, onFim }: {
           {nivel === 'guiada' && (
             <div className="flex flex-wrap items-center gap-2">
               <Button variant="secondary" onClick={() => setVerLetras(v => !v)}>
-                {verLetras ? 'Esconder as letras' : 'Ver as letras'}
+                {verLetras ? tx.esconderLetras : tx.verLetras}
               </Button>
               {temAudio && (
                 <span onClickCapture={() => setOuviuAntes(true)}>
-                  <AudioButton audioId={palavra.audioId} label="Ouvir" ariaLabel="Ouvir a palavra" />
+                  <AudioButton audioId={palavra.audioId} label={tx.ouvir} ariaLabel={tx.ouvirPalavra} />
                 </span>
               )}
             </div>
           )}
           {nivel === 'menos-ajuda' && !verLetras && (
-            <Button variant="ghost" onClick={() => setVerLetras(true)}>Preciso de ajuda</Button>
+            <Button variant="ghost" onClick={() => setVerLetras(true)}>{tx.precisoAjuda}</Button>
           )}
           {verLetras && nivel !== 'independente' && (
             <LetrasDaPalavra palavra={palavra} ativo={pedaco} onAtivo={setPedaco} />
           )}
           <Button size="lg" full onClick={() => { setPedaco(null); setFase('conferir'); }}>
-            Já li. Conferir resposta
+            {tx.jaLi}
           </Button>
         </>
       ) : (
@@ -254,27 +288,27 @@ export function LerPalavra({ palavra, nivel, semPontos, posicao, onFim }: {
               <p className="font-ui text-[22px] font-semibold text-ink m-0" dir="ltr">{palavra.translit}</p>
             ) : (
               <div className="flex justify-center">
-                <Button variant="secondary" onClick={() => setTranslit(true)}>Conferir a transliteração</Button>
+                <Button variant="secondary" onClick={() => setTranslit(true)}>{tx.conferirTranslit}</Button>
               </div>
             )}
             {temAudio ? (
               <div className="flex justify-center">
-                <AudioButton audioId={palavra.audioId} label="Ouvir e comparar" ariaLabel={`Ouvir ${palavra.translit}`} />
+                <AudioButton audioId={palavra.audioId} label={tx.ouvirComparar} ariaLabel={tx.ouvirTranslit(palavra.translit)} />
               </div>
             ) : translit ? (
               <p className="font-ui text-[13.5px] leading-snug text-ink-muted m-0">
-                Confira a pronúncia indicada pela transliteração. Ela ajuda, mas não substitui ouvir a palavra.
+                {tx.confiraPronuncia}
               </p>
             ) : null}
             {sentido
-              ? <p className="font-ui text-[16px] text-ink-body m-0">Quer dizer: <strong className="font-semibold">{palavra.pt}</strong></p>
-              : <div className="flex justify-center"><Button variant="ghost" onClick={() => setSentido(true)}>Ver o significado</Button></div>}
+              ? <p className="font-ui text-[16px] text-ink-body m-0">{tx.querDizer}<strong className="font-semibold">{palavra.pt}</strong></p>
+              : <div className="flex justify-center"><Button variant="ghost" onClick={() => setSentido(true)}>{tx.verSignificado}</Button></div>}
           </div>
           <div className="grid gap-2">
-            <p className="font-ui text-[15px] font-semibold text-ink m-0">Você conseguiu ler corretamente?</p>
+            <p className="font-ui text-[15px] font-semibold text-ink m-0">{tx.conseguiu}</p>
             <div className="grid sm:grid-cols-2 gap-2">
-              <Button onClick={() => onFim(true, ouviuAntes)}>Sim, consegui!</Button>
-              <Button variant="secondary" onClick={() => onFim(false, ouviuAntes)}>Ainda preciso praticar.</Button>
+              <Button onClick={() => onFim(true, ouviuAntes)}>{tx.simConsegui}</Button>
+              <Button variant="secondary" onClick={() => onFim(false, ouviuAntes)}>{tx.precisoPraticar}</Button>
             </div>
           </div>
         </>
@@ -295,16 +329,16 @@ function LetrasDaPalavra({ palavra, ativo, onAtivo }: {
       <div className="flex flex-wrap items-center gap-2">
         <Button size="sm" variant="secondary"
                 onClick={() => onAtivo(ativo === null || ativo >= n - 1 ? 0 : ativo + 1)}>
-          {ativo === null ? 'Explorar letra por letra' : ativo >= n - 1 ? 'Começar de novo' : 'Próxima letra'}
+          {ativo === null ? tx.explorar : ativo >= n - 1 ? tx.comecarDeNovo : tx.proximaLetra}
         </Button>
-        <span className="font-ui text-[13.5px] text-ink-muted">A primeira letra é a da direita.</span>
+        <span className="font-ui text-[13.5px] text-ink-muted">{tx.primeiraDireita}</span>
       </div>
       {!ok && (
         <p className="font-ui text-[13.5px] leading-snug text-[var(--gold-ink)] m-0">
-          Nesta palavra, a pronúncia de uma das vogais merece atenção especial. Observe a palavra e depois confira a pronúncia.
+          {tx.vogalAtencao}
         </p>
       )}
-      <ol dir="rtl" className="flex flex-wrap gap-2 list-none p-0 m-0" aria-label="As letras da palavra, na ordem de leitura">
+      <ol dir="rtl" className="flex flex-wrap gap-2 list-none p-0 m-0" aria-label={tx.letrasNaOrdem}>
         {palavra.pedacos.map((p, k) => (
           <li key={k}>
             <button type="button" onClick={() => onAtivo(k)} aria-pressed={ativo === k}
@@ -322,7 +356,7 @@ function LetrasDaPalavra({ palavra, ativo, onAtivo }: {
       {ativo !== null && palavra.pedacos[ativo] && (
         <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0" role="status">
           <strong className="font-semibold">{palavra.pedacos[ativo]!.nomePt}</strong>
-          {ok && palavra.pedacos[ativo]!.sinaisPt.length > 0 && ` · sinal: ${palavra.pedacos[ativo]!.sinaisPt.join(', ')}`}
+          {ok && palavra.pedacos[ativo]!.sinaisPt.length > 0 && tx.sinal(palavra.pedacos[ativo]!.sinaisPt.join(', '))}
           {ok && palavra.pedacos[ativo]!.notaPt ? `. ${palavra.pedacos[ativo]!.notaPt}` : ''}
         </p>
       )}
@@ -365,9 +399,9 @@ function PrimeiraLeitura({ n }: { n: number }) {
     return (
       <Card className="p-5 my-4 grid gap-3">
         <p className="font-ui text-[15px] text-ink-body m-0">
-          Não encontramos esta atividade. Confira o endereço ou volte ao painel.
+          {tx.naoEncontrada}
         </p>
-        <LinkButton href="/meu-hebraico" variant="secondary" className="justify-self-start">Voltar ao painel</LinkButton>
+        <LinkButton href="/meu-hebraico" variant="secondary" className="justify-self-start">{tx.voltarPainel}</LinkButton>
       </Card>
     );
   }
@@ -375,8 +409,8 @@ function PrimeiraLeitura({ n }: { n: number }) {
   if (!deLetras) {
     return (
       <Card className="p-5 my-4 grid gap-3">
-        <p className="font-ui text-[15px] text-ink-body m-0">Esta atividade ainda não está disponível.</p>
-        <LinkButton href="/leitura" variant="secondary" className="justify-self-start">Ir para o Laboratório de Leitura</LinkButton>
+        <p className="font-ui text-[15px] text-ink-body m-0">{tx.indisponivel}</p>
+        <LinkButton href="/leitura" variant="secondary" className="justify-self-start">{tx.irLaboratorio}</LinkButton>
       </Card>
     );
   }
@@ -385,7 +419,7 @@ function PrimeiraLeitura({ n }: { n: number }) {
     <div className="grid gap-6 py-2 max-w-[44rem]">
       <header className="grid gap-2">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">
-          Minha Primeira Leitura · Módulo {mod.n}
+          {tx.primeiraModulo(mod.n)}
         </p>
         <h1 className="text-[28px] font-bold m-0 text-balance">{mod.titlePt}</h1>
       </header>
@@ -393,36 +427,35 @@ function PrimeiraLeitura({ n }: { n: number }) {
       {!concluiu ? (
         <Card className="p-5 grid gap-3">
           <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-            Esta atividade será liberada quando você concluir todas as lições do módulo {mod.n}.
+            {tx.liberadaQuando(mod.n)}
           </p>
-          <LinkButton href="/mapa" variant="secondary" className="justify-self-start">Ver o meu curso</LinkButton>
+          <LinkButton href="/mapa" variant="secondary" className="justify-self-start">{tx.verCurso}</LinkButton>
         </Card>
       ) : !palavras.length ? (
         /* Módulo concluído e nenhuma palavra: é um problema de dados, não uma trava. */
         <Card className="p-5 grid gap-3">
           <p className="font-ui text-[15px] text-ink-body m-0">
-            Não encontramos palavras para esta leitura. Enquanto isso, pratique no Laboratório de Leitura.
+            {tx.semPalavras}
           </p>
-          <LinkButton href="/leitura" variant="secondary" className="justify-self-start">Ir para o Laboratório de Leitura</LinkButton>
+          <LinkButton href="/leitura" variant="secondary" className="justify-self-start">{tx.irLaboratorio}</LinkButton>
         </Card>
       ) : i < 0 ? (
         <Card tone="wash" className="p-6 grid gap-4">
           <p className="font-ui text-[16px] leading-relaxed text-ink-body m-0">
-            {nPalavras(palavras.length)} formadas com as letras e os sinais vocálicos que você já aprendeu.
-            Leia cada uma por conta própria, em voz alta, antes de ouvir. Depois ouça e confira.
+            {tx.introPrimeira(nPalavras(palavras.length))}
           </p>
-          <Button size="lg" onClick={() => setI(0)}>Começar a leitura</Button>
+          <Button size="lg" onClick={() => setI(0)}>{tx.comecarLeitura}</Button>
         </Card>
       ) : acabou ? (
         <Card tone="wash" className="p-6 grid gap-4">
-          <h2 className="text-[22px] font-semibold m-0">Primeira leitura concluída!</h2>
+          <h2 className="text-[22px] font-semibold m-0">{tx.primeiraConcluida}</h2>
           <p className="font-ui text-[15.5px] leading-relaxed text-ink-body m-0">
             {mensagemDaPrimeiraLeitura(palavras.length, certas, ouviuAlguma)}
           </p>
           <div className="flex flex-wrap gap-2">
-            <Button variant="secondary" onClick={() => { setI(0); setCertas(0); setOuviuAlguma(false); }}>Ler de novo</Button>
-            <LinkButton href="/leitura" size="lg">Continuar no Laboratório de Leitura</LinkButton>
-            <LinkButton href="/meu-hebraico" variant="ghost">Voltar ao painel</LinkButton>
+            <Button variant="secondary" onClick={() => { setI(0); setCertas(0); setOuviuAlguma(false); }}>{tx.lerDeNovo}</Button>
+            <LinkButton href="/leitura" size="lg">{tx.continuarLaboratorio}</LinkButton>
+            <LinkButton href="/meu-hebraico" variant="ghost">{tx.voltarPainel}</LinkButton>
           </div>
         </Card>
       ) : (
@@ -431,7 +464,7 @@ function PrimeiraLeitura({ n }: { n: number }) {
           palavra={palavras[i]!}
           nivel="menos-ajuda"
           semPontos={false}
-          posicao={`${i + 1} de ${palavras.length}`}
+          posicao={tx.posicao(i + 1, palavras.length)}
           onFim={(leuCerto, ouviu) => {
             p.registrarLeitura(primeiraLeituraId(mod.n), leuCerto);
             if (leuCerto) setCertas(c => c + 1);

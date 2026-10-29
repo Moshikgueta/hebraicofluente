@@ -823,7 +823,7 @@ export function mensagemDeArrependimentoDono({
 export function mensagemDeEstorno({
   nome, curso, valor, pedido, cartao, contestacao = false, restaAte = '', marca, suporte
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   const abertura = contestacao
     ? `A compra do curso ${curso} está contestada junto ao banco ou à operadora, e o valor está devolvido.`
@@ -889,7 +889,7 @@ export function mensagemDeEstorno({
 export function mensagemDeVencimento({
   nome, curso, quando, dias, marco, meses, renovar, marca, suporte
 }) {
-  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const ola = saudacao(nome);
   const assinatura = marca || 'Hebraico Fluente';
   const fim = marco === 'fim';
   const faltam = Number(dias) === 1 ? 'amanhã' : `daqui a ${dias} dias`;
@@ -956,17 +956,17 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
 
   let subject; let corpo; let link; let rotulo;
   if (marco === 'd1') {
-    subject = 'Sua primeira lição leva dez minutos';
+    subject = 'Sua primeira letra leva dez minutos';
     corpo = [
       `Seu acesso ao curso ${curso} está liberado.`,
-      'O jeito mais simples de começar é a Aula 0, que mostra como o hebraico funciona, e depois a primeira letra, o Álef. A primeira lição leva dez minutos.'
+      'O jeito mais simples de começar é a Aula 0, que mostra como o hebraico funciona, e depois a primeira letra, o Álef, que leva cerca de dez minutos.'
     ];
     link = inicio; rotulo = 'Começar pela Aula 0';
   } else if (marco === 'd3') {
     subject = 'Ficou alguma dúvida para começar?';
     corpo = [
       `O seu curso ${curso} ainda não tem nenhuma lição concluída.`,
-      'Às vezes o que segura é uma coisa pequena. A primeira letra é o Álef, e ela já leva você à primeira palavra na lição seguinte.',
+      'Às vezes o que segura é uma coisa pequena. A primeira letra é o Álef, e com a letra seguinte, o Mem, você já lê a primeira palavra.',
       ajuda
     ];
     link = primeira; rotulo = 'Abrir a primeira letra';
@@ -979,7 +979,7 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
         ]
       : [
           `Faz uma semana que o seu acesso ao curso ${curso} foi liberado.`,
-          'Uma letra por vez: a primeira lição leva dez minutos.',
+          'Uma letra por vez: cada uma leva cerca de dez minutos.',
           ajuda
         ];
     link = feitas > 0 ? painel : primeira; rotulo = feitas > 0 ? 'Continuar o curso' : 'Abrir a primeira letra';
@@ -991,6 +991,36 @@ export function mensagemDeAtivacao({ nome: cru, curso, marco, concluidas, inicio
     ...corpo.map(l => `<p>${escapar(l)}</p>`),
     `<p><a href="${escapar(link)}">${escapar(rotulo)}</a></p>`,
     `<p><small>${escapar(fecho)}</small></p>`,
+    `<p>${escapar(assinatura)}</p>`
+  ].join('');
+  return { subject, text, html };
+}
+
+/**
+ * O lembrete para estudar (worker/src/lembrete.js): só para quem pediu em Sua
+ * conta, no máximo um por dia, e nunca mais de três seguidos sem estudo. O
+ * texto não cobra, não fala em sequência perdida nem em prazo: diz que hoje
+ * ainda não teve hebraico, oferece o caminho curto e explica como parar.
+ */
+export function mensagemDeLembrete({ nome: cru, painel, praticar, sair, marca }) {
+  const nome = nomeSeguro(cru);
+  const ola = nome ? `Oi, ${nome}.` : 'Oi.';
+  const assinatura = marca || 'Hebraico Fluente';
+  const subject = 'Dez minutos de hebraico hoje?';
+  const corpo = [
+    'Hoje ainda não teve hebraico por aqui. Uma letra leva cerca de dez minutos, e o curso guarda onde você parou.',
+    `Se o dia está curto, uma rodada em Praticar também conta: ${praticar}`
+  ];
+  const rotulo = 'Continuar de onde parei';
+  const fecho = 'Você recebe este e-mail porque pediu o lembrete em Sua conta. Depois de três lembretes sem estudo, eles param sozinhos até você voltar.';
+  const saida = `Para não receber mais: ${sair}`;
+  const text = [ola, '', ...corpo.flatMap(l => [l, '']), `${rotulo}: ${painel}`, '', fecho, saida, '', assinatura].join('\n');
+  const html = [
+    `<p>${escapar(ola)}</p>`,
+    `<p>${escapar(corpo[0])}</p>`,
+    `<p>Se o dia está curto, <a href="${escapar(praticar)}">uma rodada em Praticar</a> também conta.</p>`,
+    `<p><a href="${escapar(painel)}">${escapar(rotulo)}</a></p>`,
+    `<p><small>${escapar(fecho)} <a href="${escapar(sair)}">Não quero mais o lembrete</a>.</small></p>`,
     `<p>${escapar(assinatura)}</p>`
   ].join('');
   return { subject, text, html };
@@ -1037,6 +1067,8 @@ export function dataHoraBR(ms) {
 /** Centavos em reais, como o site escreve. */
 export function reaisBR(centavos, moeda = 'BRL') {
   const v = Number(centavos || 0) / 100;
+  /* O site em inglês cobra em dólar (Paddle): "$47.00", no formato de lá. */
+  if (moeda === 'USD') return `$${v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   const n = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return moeda === 'BRL' ? `R$ ${n}` : `${n} ${moeda}`;
 }
@@ -1050,7 +1082,7 @@ function saudacao(nome) {
 }
 
 /** O nome do aluno entra no HTML. Um nome com `<` não pode virar marcação. */
-function escapar(s) {
+export function escapar(s) {
   return String(s === null || s === undefined ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');

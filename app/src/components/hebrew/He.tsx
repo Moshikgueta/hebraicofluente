@@ -60,7 +60,9 @@ const TONE = {
   muted: 'text-ink-muted',
   paper: 'text-[var(--cream)]',
   teal:  'text-[var(--teal-ink)]',
-  navy:  'text-[var(--navy)]',
+  /* `--accent` e não `--navy` (28/10/2026): no claro são o mesmo azul; no
+     escuro o `--navy` é fundo, e como tinta dava 2,5:1. */
+  navy:  'text-[var(--accent)]',
   /* Teal claro: existe SÓ sobre navy - a marca, os rótulos e os ícones
      dentro dos blocos escuros. Sobre creme ele não passa em contraste. */
   lite:  'text-[var(--teal-lite)]'

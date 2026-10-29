@@ -60,6 +60,10 @@ export type Exercise =
   | (ChoiceBase & { kind: 'word-meaning'; he: string })
   | (ChoiceBase & { kind: 'sentence-reading'; he: string; words: { he: string; translit: string; pt: string }[] })
   | (ChoiceBase & { kind: 'meaning-to-word'; pt: string })
+  /* A foto do vocabulário e as palavras em hebraico (28/10/2026, pedido do
+     dono: "תמונה ומילה"). A imagem é a de data/imagens-vocabulario.json, e
+     `imageAlt` descreve a cena para quem não vê. */
+  | (ChoiceBase & { kind: 'image-to-word'; image: string; imageAlt: string; pt: string })
   | (ChoiceBase & { kind: 'complete-word'; parts: (string | null)[]; hintPt: string })
   | (ChoiceBase & { kind: 'audio-recognition'; audioId: string })
   /* A frase OUVIDA, sem o texto na tela, e a pergunta é o que ela quer dizer.

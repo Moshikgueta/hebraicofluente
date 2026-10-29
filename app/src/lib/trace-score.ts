@@ -24,6 +24,8 @@
  * sampling it, so "near" already means "within about a finger's width".
  */
 
+import { tx } from '@/i18n/telas/motor-trace-score';
+
 export type TraceVerdict = {
   /** 0-1, for the skill model. */
   score: number;
@@ -103,22 +105,22 @@ export function scoreTrace(input: TraceInput): TraceVerdict {
      the learner nothing about what to change. Accurate but short means draw
      more of it; plenty of ink in the wrong places means follow the shape. */
   if (bom) {
-    return { score, dentro, cobertura, tone: 'good', message: 'Muito bem! A forma está lá.' };
+    return { score, dentro, cobertura, tone: 'good', message: tx.bom };
   }
   if (dentro >= 0.5) {
     return {
       score, dentro, cobertura, tone: 'try',
-      message: 'Quase! Faltou parte da letra - tente cobrir o modelo inteiro.'
+      message: tx.faltouParte
     };
   }
   if (cobertura >= 0.35 || dentro >= 0.3) {
     return {
       score, dentro, cobertura, tone: 'try',
-      message: 'Quase! Tente seguir um pouco mais a forma do modelo.'
+      message: tx.sigaAForma
     };
   }
   return {
     score, dentro, cobertura, tone: 'try',
-    message: 'Tente de novo olhando o modelo. Toque em “Ver o traçado” para rever a ordem.'
+    message: tx.deNovo
   };
 }

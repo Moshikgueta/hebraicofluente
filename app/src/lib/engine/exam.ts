@@ -35,6 +35,7 @@ import {
   type Exercise, type SceneLike, type SentenceLike
 } from './exercises';
 import { rng, shuffled } from './rng';
+import { tx } from '@/i18n/telas/motor-exam';
 import { buildSemPontos } from './palavras';
 import { buildGerechQuiz, type Extras } from './extras';
 
@@ -56,8 +57,8 @@ export type ExamPart = {
 
 export const EXAM_PARTS: ExamPart[] = [
   {
-    id: 'letras', titlePt: 'As letras', skill: 'rec', count: 5, practiceMode: 'letras',
-    descPt: 'Reconhecer a forma, fora de ordem, incluindo as cinco formas finais.'
+    id: 'letras', titlePt: tx.letrasTitulo, skill: 'rec', count: 5, practiceMode: 'letras',
+    descPt: tx.letrasDesc
   },
   /* A parte que separa reconhecer de ter decorado.
    *
@@ -68,23 +69,21 @@ export const EXAM_PARTS: ExamPart[] = [
    * parecidas, ou não reconhece a mesma letra noutra fonte - e é esse nome que
    * a pessoa leva para a Academia. */
   {
-    id: 'dificeis', titlePt: 'As letras difíceis', skill: 'rec', count: 5,
+    id: 'dificeis', titlePt: tx.dificeisTitulo, skill: 'rec', count: 5,
     practiceMode: 'letras',
-    descPt: 'As que se parecem entre si, a mesma letra em outra fonte, e achar ' +
-      'uma letra dentro de uma palavra - no começo, no meio ou no fim.'
+    descPt: tx.dificeisDesc
   },
   {
-    id: 'sinais', titlePt: 'Os sinais de vogal', skill: 'som', count: 5, practiceMode: 'vogais',
-    descPt: 'Que som cada sinal faz - independente da consoante em que ele está.'
+    id: 'sinais', titlePt: tx.sinaisTitulo, skill: 'som', count: 5, practiceMode: 'vogais',
+    descPt: tx.sinaisDesc
   },
   {
-    id: 'silabas', titlePt: 'Sílabas', skill: 'ler', count: 5, practiceMode: 'silabas',
-    descPt: 'Consoante mais vogal, nas duas direções: ler e montar.'
+    id: 'silabas', titlePt: tx.silabasTitulo, skill: 'ler', count: 5, practiceMode: 'silabas',
+    descPt: tx.silabasDesc
   },
   {
-    id: 'palavras', titlePt: 'Palavras', skill: 'ler', count: 7, practiceMode: 'palavras',
-    descPt: 'Palavras inteiras: ler, completar, montar, escrever - e achar uma ' +
-      'letra dentro delas, no começo, no meio ou no fim.'
+    id: 'palavras', titlePt: tx.palavrasTitulo, skill: 'ler', count: 7, practiceMode: 'palavras',
+    descPt: tx.palavrasDesc
   },
   /* A frase entrou no curso depois do exame, e por um tempo o curso ensinou
      uma coisa que não media. Ela fica DEPOIS de palavras e antes do mundo
@@ -95,28 +94,28 @@ export const EXAM_PARTS: ExamPart[] = [
      cinco pegaria quase um quarto do acervo numa prova só - o que faz a
      segunda tentativa virar memória em vez de leitura. */
   {
-    id: 'frases', titlePt: 'Frases', skill: 'ler', count: 3, practiceMode: 'palavras',
-    descPt: 'Duas ou três palavras juntas. Sem transliteração.'
+    id: 'frases', titlePt: tx.frasesTitulo, skill: 'ler', count: 3, practiceMode: 'palavras',
+    descPt: tx.frasesDesc
   },
   /* Os módulos 6 e 7 ensinavam duas coisas que o exame não media (auditoria
      de 28/09, PED-042): ler sem os pontos, como na rua, e o guéresh. Poucos
      itens de cada, porque são o fim do curso e não o centro dele. */
   {
-    id: 'sempontos', titlePt: 'Sem os pontos', skill: 'ler', count: 3, practiceMode: 'palavras',
-    descPt: 'Palavras que você conhece, escritas como na rua: sem os sinais de vogal.'
+    id: 'sempontos', titlePt: tx.semPontosTitulo, skill: 'ler', count: 3, practiceMode: 'palavras',
+    descPt: tx.semPontosDesc
   },
   {
-    id: 'gerech', titlePt: 'Os sons de fora', skill: 'som', count: 2, practiceMode: 'palavras',
-    descPt: 'O sinal ׳ que dá ao hebraico os sons de TCH, DJ e J.'
+    id: 'gerech', titlePt: tx.gerechTitulo, skill: 'som', count: 2, practiceMode: 'palavras',
+    descPt: tx.gerechDesc
   },
   {
-    id: 'escuta', titlePt: 'Escuta', skill: 'ouvir', count: 5, practiceMode: 'ouvir',
+    id: 'escuta', titlePt: tx.escutaTitulo, skill: 'ouvir', count: 5, practiceMode: 'ouvir',
     needsAudio: true,
-    descPt: 'Só o som, sem ver antes.'
+    descPt: tx.escutaDesc
   },
   {
-    id: 'mundo', titlePt: 'Hebraico de verdade', skill: 'ler', count: 5, practiceMode: 'palavras',
-    descPt: 'Palavras como você vai encontrá-las: numa garrafa, numa porta, num recibo.'
+    id: 'mundo', titlePt: tx.mundoTitulo, skill: 'ler', count: 5, practiceMode: 'palavras',
+    descPt: tx.mundoDesc
   }
 ];
 
@@ -256,24 +255,20 @@ export function examReport(results: PartResult[]): ExamReport {
 function band(score: number, weakCount: number): { titlePt: string; bodyPt: string } {
   if (score >= 0.9) {
     return {
-      titlePt: 'Você lê hebraico.',
-      bodyPt: 'Não é força de expressão: você decodificou as palavras do curso sozinho, ' +
-        'sem transliteração e sem pistas. O que falta agora é volume de leitura, não método.'
+      titlePt: tx.faixaOtimaTitulo,
+      bodyPt: tx.faixaOtimaTexto
     };
   }
   if (score >= EXAM_PASS) {
     return {
-      titlePt: 'Aprovado - e dá para ver onde apertar.',
+      titlePt: tx.faixaAprovadoTitulo,
       bodyPt: weakCount
-        ? 'Você lê. Uma parte ficou abaixo do resto, e ela está marcada aqui embaixo ' +
-          'com o link para treinar exatamente isso.'
-        : 'Você lê, e de forma equilibrada - nenhuma parte ficou para trás.'
+        ? tx.faixaAprovadoFraca
+        : tx.faixaAprovadoEquilibrado
     };
   }
   return {
-    titlePt: 'Ainda não - e isso é informação, não veredito.',
-    bodyPt: 'O exame não tem limite de tentativas e não custa nada. Abaixo está ' +
-      'exatamente qual parte derrubou a nota e onde treinar. Volte quando quiser: ' +
-      'quase sempre é uma parte só.'
+    titlePt: tx.faixaAindaNaoTitulo,
+    bodyPt: tx.faixaAindaNaoTexto
   };
 }

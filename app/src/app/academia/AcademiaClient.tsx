@@ -13,6 +13,8 @@
  * motivating; "o tempo médio é 28 s" is a reason to stop.
  */
 
+import { DESAFIO_ID, desafioDoDia, desafioFeitoHoje } from '@/lib/engine/desafio';
+import { Flashcards, cartasDoBaralho, type Baralho } from '@/components/learn/Flashcards';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import { useCallback, useEffect, useMemo, useState, type FocusEvent } from 'react';
 
@@ -48,6 +50,7 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, type Letter } from '@/lib/content';
 import { onCarrier } from '@/lib/hebrew';
 import { availableModes, buildGym, confusionPair, type GymMode } from '@/lib/engine/gym';
+import { comOsSonsFeitos, idDoSom } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { GuiaTeclado } from '@/components/learn/GuiaTeclado';
 import {
@@ -67,6 +70,8 @@ import {
 } from '@/lib/engine/deck';
 import { letterMastery } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/academia-academia-client';
 
 /* Os que saem do BARALHO (lib/engine/deck.ts) e os que saem do motor de
    reconhecimento (lib/engine/jogos.ts). São duas famílias de verdade, e o
@@ -83,6 +88,9 @@ type Screen =
   | { kind: 'menu' }
   /* Palavras inteiras em cursiva, à mão. */
   | { kind: 'palavras-a-mao' }
+  | { kind: 'flashcards'; baralho: Baralho }
+  | { kind: 'desafio'; startedAt: number }
+  | { kind: 'desafioFim'; acertos: number; total: number }
   | { kind: 'run'; mode: GymMode; startedAt: number }
   /* O guia do teclado, entre o toque no modo de digitação e o modo. */
   | { kind: 'teclado'; mode: GymMode }
@@ -105,38 +113,47 @@ type Screen =
 
 /* Os três jogos, descritos no mesmo formato dos modos da academia - é a
    mesma prateleira, e eles não são um anexo. */
-export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; minimo: number }> = {
+/* `treinaPt` (28/10/2026, rodada 3 da experiência): a habilidade, numa linha.
+   Os seis cartões eram iguais, e o aluno escolhia pelo nome do jogo sem saber
+   o que cada um exercita. */
+export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; treinaPt: string; minimo: number }> = {
   match: {
-    titlePt: 'Match',
-    descPt: 'Junte cada letra ao seu nome, ao seu som ou a uma palavra.',
+    titlePt: tx.jogoMatchTitulo,
+    descPt: tx.jogoMatchDesc,
+    treinaPt: tx.jogoMatchTreina,
     minimo: 3
   },
   blast: {
-    titlePt: 'Blast',
-    descPt: 'Rápido: aparece uma letra, você escolhe. Sequência de acertos na tela.',
+    titlePt: tx.jogoBlastTitulo,
+    descPt: tx.jogoBlastDesc,
+    treinaPt: tx.jogoBlastTreina,
     minimo: 4
   },
   teste: {
-    titlePt: 'Teste',
-    descPt: 'Sem correção durante. No fim, a nota e a lista do que escapou.',
+    titlePt: tx.jogoTesteTitulo,
+    descPt: tx.jogoTesteDesc,
+    treinaPt: tx.jogoTesteTreina,
     minimo: 4
   },
   /* Os três que entraram em 22/09/2026. Entram NESTA prateleira, e não numa
      tela nova: já existia um lugar para praticar, e um segundo seria dois
      lugares onde o aluno procura a mesma coisa. */
   caca: {
-    titlePt: 'Caça à letra',
-    descPt: 'Encontre a letra certa no meio da confusão.',
+    titlePt: tx.jogoCacaTitulo,
+    descPt: tx.jogoCacaDesc,
+    treinaPt: tx.jogoCacaTreina,
     minimo: 3
   },
   batalha: {
-    titlePt: 'Batalha das parecidas',
-    descPt: 'Duas letras que se parecem, cara a cara, até a diferença ficar óbvia.',
+    titlePt: tx.jogoBatalhaTitulo,
+    descPt: tx.jogoBatalhaDesc,
+    treinaPt: tx.jogoBatalhaTreina,
     minimo: 2
   },
   cursiva: {
-    titlePt: 'Impressa × cursiva',
-    descPt: 'A mesma letra nos dois alfabetos: o do livro e o da mão.',
+    titlePt: tx.jogoCursivaTitulo,
+    descPt: tx.jogoCursivaDesc,
+    treinaPt: tx.jogoCursivaTreina,
     minimo: 3
   }
 };
@@ -148,10 +165,20 @@ export function AcademiaClient() {
   /* Only what has been unlocked. A letter whose lesson was started counts:
      the learner has met it, and practising it is exactly what they should be
      doing. */
+  /* As palavras de som (טוֹב, do Vet) entram quando a lição do som começa,
+     pela mesma régua (27/10/2026): antes, terminar o Bet já as trazia. */
   const unlocked = useMemo<Letter[]>(
-    () => allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
+    () => allLetters()
+      .filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0)
+      .map(l => comOsSonsFeitos(l, som => (p.state.lessons[idDoSom(som)]?.stagesDone.length ?? 0) > 0)),
     [p.state.lessons]
   );
+
+  /* O desafio do dia, montado uma vez por dia (lib/engine/desafio.ts). */
+  const desafio = useMemo(() => desafioDoDia(unlocked, p.weak, p.day, audioAvailable()),
+    [unlocked.length, p.day]);
+  const desafioFeito = desafioFeitoHoje(p.state, p.day);
+  const nPalavras = useMemo(() => cartasDoBaralho('palavras', unlocked, allLetters()).length, [unlocked]);
 
   const audio = audioAvailable();
   const modes = useMemo(
@@ -203,6 +230,10 @@ export function AcademiaClient() {
   const treino = busca?.get('treino');
   useEffect(() => {
     if (treino === 'palavras-a-mao') setScreen({ kind: 'palavras-a-mao' });
+    if (treino === 'desafio') setScreen({ kind: 'desafio', startedAt: Date.now() });
+    if (treino === 'flashcards-letras') setScreen({ kind: 'flashcards', baralho: 'letras' });
+    if (treino === 'flashcards-palavras') setScreen({ kind: 'flashcards', baralho: 'palavras' });
+    if (treino === 'flashcards-caderno') setScreen({ kind: 'flashcards', baralho: 'caderno' });
   }, [treino]);
 
   /* As letras que mais custam entram primeiro no baralho. É o mesmo sinal que
@@ -253,8 +284,8 @@ export function AcademiaClient() {
       }
       if (!falta) continue;
       out[jogo] = unlocked.length < info.minimo
-        ? `Abre com ${info.minimo} letras`
-        : jogo === 'batalha' ? 'Abre quando houver duas letras parecidas' : 'Abre com mais letras';
+        ? fmt(tx.abreCom, { n: info.minimo })
+        : jogo === 'batalha' ? tx.abreParecidas : tx.abreMais;
     }
     return out;
   }, [unlocked, fazerJogo, fazerNovo]);
@@ -302,8 +333,8 @@ export function AcademiaClient() {
       return (
         <Empty onBack={() => setScreen({ kind: 'menu' })}>
           {jogo === 'batalha'
-            ? 'Ainda não há duas letras parecidas entre as que você aprendeu. Siga mais uma lição e volte.'
-            : 'Ainda não há letras suficientes para montar a rodada. Siga mais uma lição e volte.'}
+            ? tx.vazioBatalha
+            : tx.vazioRodada}
         </Empty>
       );
     }
@@ -350,8 +381,8 @@ export function AcademiaClient() {
       return (
         <Empty onBack={() => setScreen({ kind: 'menu' })}>
           {screen.jogo === 'match'
-            ? 'O Match precisa de pelo menos três pares diferentes. Siga mais uma lição e volte.'
-            : 'Ainda não há letras suficientes para montar as alternativas. Siga mais uma lição e volte.'}
+            ? tx.vazioMatch
+            : tx.vazioAlternativas}
         </Empty>
       );
     }
@@ -408,16 +439,16 @@ export function AcademiaClient() {
   if (screen.kind === 'testeFim') {
     return (
       <div className="focus-col grid gap-5">
-        <GymHeader mode={{ titlePt: 'Teste' } as GymMode} label="Resultado"
+        <GymHeader mode={{ titlePt: tx.jogoTesteTitulo } as GymMode} label={tx.resultado}
                    onBack={() => setScreen({ kind: 'menu' })} />
         <RelatorioTeste
           r={screen.r}
           onRefazer={() => setScreen({ kind: 'jogo', jogo: 'teste', rodada: screen.rodada + 1 })}
         >
           <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
-            Voltar para a academia
+            {tx.voltarAcademia}
           </Button>
-          <LinkButton href="/meu-hebraico" variant="ghost">Continuar o curso</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="ghost">{tx.continuarCurso}</LinkButton>
         </RelatorioTeste>
       </div>
     );
@@ -435,27 +466,27 @@ export function AcademiaClient() {
        viraria enfeite e pararia de significar alguma coisa. */
     const par = jogo === 'batalha' ? confusionPair(p.state, unlocked) : null;
     const arco = par && pct >= 70 && Object.keys(p.state.confusions).length > 0
-      ? `Você confundia ${par[0].namePt} e ${par[1].namePt}. Agora acertou ${r.acertos} de ${r.total}.`
+      ? tx.arco(par[0].namePt, par[1].namePt, r.acertos, r.total)
       : null;
 
     return (
       <div className="focus-col grid gap-5">
         <Milestone
           kicker={jogo === 'match'
-            ? `${r.total} pares · ${r.erros} ${r.erros === 1 ? 'erro' : 'erros'} · ${r.segundos}s`
-            : `${r.acertos} de ${r.total} · ${pct}%`}
-          title={arco ?? (r.erros === 0 ? 'Sem um erro.' : pct >= 70 ? 'Boa sessão.' : 'Sessão feita.')}
+            ? tx.kickerMatch(r.total, r.erros, r.segundos)
+            : tx.kickerPlacar(r.acertos, r.total, pct)}
+          title={arco ?? (r.erros === 0 ? tx.semErro : pct >= 70 ? tx.boaSessao : tx.sessaoFeita)}
           body={r.erros === 0
-            ? 'Esse conjunto está firme. Vale aumentar o material: siga mais uma letra.'
-            : 'O que escapou já entrou na fila de revisão, no dia certo de voltar.'}
+            ? tx.corpoFirme
+            : tx.corpoEscapouDia}
         >
           <Button onClick={() => setScreen({ kind: 'jogo', jogo, rodada: screen.rodada + 1 })}>
-            Mais uma
+            {tx.maisUma}
           </Button>
           <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
-            Escolher outro
+            {tx.escolherOutro}
           </Button>
-          <LinkButton href="/meu-hebraico" variant="ghost">Continuar o curso</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="ghost">{tx.continuarCurso}</LinkButton>
         </Milestone>
       </div>
     );
@@ -465,29 +496,28 @@ export function AcademiaClient() {
     const mode = screen.mode;
     return (
       <div className="focus-col grid gap-5">
-        <GymHeader mode={mode} label="Antes: o teclado hebraico" onBack={() => setScreen({ kind: 'menu' })} />
+        <GymHeader mode={mode} label={tx.tecladoRotulo} onBack={() => setScreen({ kind: 'menu' })} />
         {/* O teclado da tela primeiro (UXQA-012): ele funciona em qualquer
             aparelho, sem configurar nada (components/learn/TecladoHebraico.tsx).
             Instalar o teclado do sistema continua sendo o melhor para quem
             vai digitar muito, e fica como opção recolhida, logo abaixo. */}
         <p className="font-ui text-[16px] leading-relaxed text-ink-body m-0">
-          Este exercício pede para escrever em hebraico, e tem um teclado hebraico na tela:
-          é só tocar nas letras, sem instalar nada.
+          {tx.tecladoTexto}
         </p>
         <Button size="lg" onClick={() => {
           p.markFirst('teclado-hebraico');
           track('gym_started', { mode: mode.id });
           setScreen({ kind: 'run', mode, startedAt: Date.now() });
         }}>
-          Usar o teclado da tela
+          {tx.usarTecladoTela}
         </Button>
         <details className="rounded-[var(--r-md)] border border-line bg-surface px-4 py-3">
           <summary className="min-h-[44px] flex items-center cursor-pointer font-ui text-[15px] font-semibold text-ink">
-            Prefere o teclado hebraico do seu aparelho? Veja como adicionar
+            {tx.tecladoSistema}
           </summary>
           <div className="grid gap-3 pt-2">
             <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">
-              Adicione uma vez - leva um minuto - e ele fica disponível ao lado do português.
+              {tx.tecladoSistemaTexto}
             </p>
             <GuiaTeclado onConfirmar={() => {
               p.markFirst('teclado-hebraico');
@@ -506,7 +536,7 @@ export function AcademiaClient() {
     if (!run.exercises.length) {
       return (
         <Empty onBack={() => setScreen({ kind: 'menu' })}>
-          Este modo ainda não tem material suficiente. Siga mais uma lição e volte.
+          {tx.vazioModo}
         </Empty>
       );
     }
@@ -545,18 +575,18 @@ export function AcademiaClient() {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={bateu ? 'Recorde seu.' : pct >= 80 ? 'Boa sessão.' : 'Sessão feita.'}
+          kicker={tx.kickerPlacar(result.correct, result.total, pct)}
+          title={bateu ? tx.recordeSeu : pct >= 80 ? tx.boaSessao : tx.sessaoFeita}
           body={
             mode.timed && earlier != null
               ? bateu
-                ? `${seconds} s, contra ${earlier} s da última vez.`
-                : `Você levou ${seconds} s. Da última vez: ${earlier} s.`
+                ? tx.tempoBateu(seconds, earlier)
+                : tx.tempoLevou(seconds, earlier)
               : mode.timed
-                ? `Você levou ${seconds} s. Da próxima vez dá para comparar.`
+                ? tx.tempoPrimeiro(seconds)
                 : pct >= 80
-                  ? 'Esse material está firme. Vale trocar de modo.'
-                  : 'O que escapou já entrou na fila de revisão.'
+                  ? tx.materialFirme
+                  : tx.escapouFila
           }
         >
           {/* O placar do modo cronometrado, em números separados.
@@ -568,10 +598,10 @@ export function AcademiaClient() {
           {mode.timed && (
             <dl className="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 list-none p-0 m-0 mb-1">
               {([
-                ['Acertos', String(result.correct)],
-                ['Erros', String(result.total - result.correct)],
-                ['Precisão', `${pct}%`],
-                ['Tempo', `${seconds}s`]
+                [tx.acertos, String(result.correct)],
+                [tx.erros, String(result.total - result.correct)],
+                [tx.precisao, `${pct}%`],
+                [tx.tempo, `${seconds}s`]
               ] as const).map(([rotulo, valor]) => (
                 <div key={rotulo}
                      className="rounded-[var(--r-md)] border border-line bg-surface px-3 py-2.5
@@ -586,12 +616,12 @@ export function AcademiaClient() {
           )}
           {mode.timed && recorde != null && (
             <p className="font-ui text-[13.5px] text-ink-muted m-0 mb-1">
-              Seu melhor tempo neste modo: <strong className="font-semibold text-ink">{recorde}s</strong>.
+              {tx.melhorTempo(<strong className="font-semibold text-ink">{recorde}s</strong>)}
             </p>
           )}
-          <Button onClick={() => start(mode)}>Mais uma</Button>
+          <Button onClick={() => start(mode)}>{tx.maisUma}</Button>
           <Button variant="secondary" onClick={() => setScreen({ kind: 'menu' })}>
-            Escolher outro modo
+            {tx.escolherOutroModo}
           </Button>
         </Milestone>
       </div>
@@ -602,19 +632,71 @@ export function AcademiaClient() {
     return (
       <div className="grid gap-5">
         <GymHeader
-          mode={{ titlePt: 'Sons e sinais' } as GymMode}
-          label="Tudo o que você já pode ler"
+          mode={{ titlePt: tx.sonsESinais } as GymMode}
+          label={tx.tudoQuePodeLer}
           onBack={() => setScreen({ kind: 'menu' })}
         />
         <SoundLab letters={unlocked} />
         <div className="grid gap-2 reading">
-          <h2 className="font-display text-[19px] font-bold text-ink mt-2">Os sinais de vogal</h2>
+          <h2 className="font-display text-[19px] font-bold text-ink mt-2">{tx.sinaisDeVogal}</h2>
           <p className="font-ui text-[14px] text-ink-muted">
-            O mesmo sinal vale em qualquer consoante. É por isso que aprender cinco
-            sinais vale mais do que decorar sílaba por sílaba.
+            {tx.sinaisTexto}
           </p>
         </div>
         <VowelSigns demoLetter={unlocked[unlocked.length - 1]?.letter} />
+      </div>
+    );
+  }
+
+  if (screen.kind === 'desafio') {
+    return (
+      <div className="grid gap-5">
+        <GymHeader mode={{ titlePt: tx.desafioDoDia } as GymMode}
+                   label={tx.desafioRotulo}
+                   onBack={() => setScreen({ kind: 'menu' })} />
+        <ExercisePlayer
+          key={`desafio-${screen.startedAt}`}
+          exercises={desafio}
+          title={tx.desafioDoDia}
+          onDone={r => {
+            p.finishGym(DESAFIO_ID, r.score, Math.round((Date.now() - screen.startedAt) / 1000));
+            setScreen({ kind: 'desafioFim', acertos: r.correct, total: r.total });
+            requestAnimationFrame(() => window.scrollTo({ top: 0 }));
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (screen.kind === 'desafioFim') {
+    return (
+      <div className="grid gap-4 justify-items-center text-center rounded-[var(--r-lg)] bg-[var(--accent-bg)]
+                      text-white px-6 py-9 shadow-[var(--sh)]">
+        <span aria-hidden className="animate-pop grid place-items-center w-16 h-16 rounded-full bg-white text-[var(--navy)] text-[30px] font-bold">✓</span>
+        <h2 className="m-0 text-white text-[24px] font-bold">{tx.desafioFeitoTitulo}</h2>
+        <p className="m-0 font-ui text-[15.5px] text-white max-w-[36ch]">
+          {tx.desafioFeitoTexto(screen.acertos, screen.total)}
+        </p>
+        <button type="button" onClick={() => setScreen({ kind: 'menu' })}
+                className="min-h-[48px] px-5 rounded-[var(--r-md)] bg-white font-ui text-[15px] font-semibold text-[var(--navy)] active:scale-[.97]">
+          {tx.voltarPraticar}
+        </button>
+      </div>
+    );
+  }
+
+  if (screen.kind === 'flashcards') {
+    const deLetras = screen.baralho === 'letras';
+    const doCaderno = screen.baralho === 'caderno';
+    return (
+      <div className="grid gap-5">
+        <GymHeader
+          mode={{ titlePt: deLetras ? tx.flashLetrasTitulo : doCaderno ? tx.flashCadernoTitulo : tx.flashPalavrasTitulo } as GymMode}
+          label={deLetras ? tx.flashLetrasRotulo : doCaderno ? tx.flashCadernoRotulo : tx.flashPalavrasRotulo}
+          onBack={() => setScreen({ kind: 'menu' })}
+        />
+        <Flashcards baralho={screen.baralho} letras={unlocked} todas={allLetters()}
+                    semente={`flash-${p.day}`} caderno={p.state.caderno} onBack={() => setScreen({ kind: 'menu' })} />
       </div>
     );
   }
@@ -623,8 +705,8 @@ export function AcademiaClient() {
     return (
       <div className="grid gap-5">
         <GymHeader
-          mode={{ titlePt: 'Palavras à mão' } as GymMode}
-          label="Escreva em cursiva as palavras que você já aprendeu"
+          mode={{ titlePt: tx.palavrasAMao } as GymMode}
+          label={tx.palavrasAMaoRotulo}
           onBack={() => setScreen({ kind: 'menu' })}
         />
         <EscreverPalavras letras={unlocked} semente={`a-mao-${p.day}`}
@@ -642,12 +724,12 @@ export function AcademiaClient() {
         const s = (l: Letter) => p.state.skills[l.id]?.escrever?.streak ?? -1;
         return s(a) - s(b) || b.order - a.order;
       })[0] ?? unlocked[unlocked.length - 1];
-    if (!target) return <Empty onBack={() => setScreen({ kind: 'menu' })}>Faça a primeira lição.</Empty>;
+    if (!target) return <Empty onBack={() => setScreen({ kind: 'menu' })}>{tx.vazioEscrita}</Empty>;
     return (
       <div className="grid gap-5">
         <GymHeader
-          mode={{ titlePt: 'Escrita' } as GymMode}
-          label={`A letra que mais precisa: ${target.namePt}`}
+          mode={{ titlePt: tx.escrita } as GymMode}
+          label={tx.letraQueMaisPrecisa(target.namePt)}
           onBack={() => setScreen({ kind: 'menu' })}
         />
         <WritingCanvas
@@ -663,21 +745,19 @@ export function AcademiaClient() {
   return (
     <div className="grid gap-6">
       <header className="grid gap-3 reading">
-        <Badge tone="accent">Academia de Leitura</Badge>
-        <h1 className="text-[27px] sm:text-[33px] font-bold">Praticar</h1>
+        <Badge tone="accent">{tx.academiaDeLeitura}</Badge>
+        <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.praticar}</h1>
         <p className="font-ui text-[15px] text-ink-muted">
-          Tudo aqui é montado com as letras que você já aprendeu - {unlocked.length} até
-          agora. Escolha o que quer treinar, ou deixe a revisão escolher por você.
+          {tx.intro(unlocked.length)}
         </p>
       </header>
 
       {!unlocked.length ? (
         <Card tone="amber" className="p-6 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            A academia abre depois da primeira lição - ela só usa letras que você já viu,
-            e por enquanto não há nenhuma.
+            {tx.abreDepois}
           </p>
-          <LinkButton href="/meu-hebraico" className="justify-self-start">Começar a primeira letra</LinkButton>
+          <LinkButton href="/meu-hebraico" className="justify-self-start">{tx.comecarPrimeira}</LinkButton>
         </Card>
       ) : (
         <>
@@ -690,9 +770,89 @@ export function AcademiaClient() {
               existe "jogo de baralho" e "jogo de reconhecimento" - existe o
               que ele quer jogar agora. A divisão é do código, e o código não
               é assunto dele. */}
+          {/* As três portas que vieram da barra (28/10/2026, navegação em quatro
+              portas): a revisão, a leitura e as palavras moram aqui agora. A
+              revisão vem primeiro e diz quantos itens esperam. */}
+          <section aria-labelledby="rever" className="grid gap-3">
+            <h2 id="rever" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              {tx.reverELer}
+            </h2>
+            <ul className="grid gap-2.5 sm:grid-cols-3 list-none p-0 m-0">
+              <li className="sm:col-span-3">
+                <button type="button" disabled={!desafio.length}
+                        onClick={() => setScreen({ kind: 'desafio', startedAt: Date.now() })}
+                        className="w-full text-left flex items-center gap-3 rounded-[16px] border border-[var(--teal)]
+                                   bg-[var(--teal-soft)] p-4 min-h-[72px] transition-transform active:scale-[.98] disabled:opacity-60">
+                  <span aria-hidden className={`shrink-0 grid place-items-center w-10 h-10 rounded-full font-bold text-[16px]
+                    ${desafioFeito ? 'bg-[var(--teal)] text-white' : 'bg-[var(--card)] text-[var(--teal-ink)] border border-[var(--teal)]'}`}>
+                    {desafioFeito ? '✓' : '5'}
+                  </span>
+                  <span className="grid gap-0.5 min-w-0">
+                    <span className="font-display text-[16.5px] font-semibold text-ink">{tx.desafioDoDia}</span>
+                    <span className="font-ui text-[13px] leading-snug text-[var(--teal-ink)]">
+                      {desafioFeito ? tx.desafioFeitoHoje : tx.desafioConvite}
+                    </span>
+                  </span>
+                </button>
+              </li>
+              {([
+                ['/revisao', tx.revisao, p.dueCount > 0
+                  ? tx.revisaoEspera(p.dueCount)
+                  : tx.revisaoEmDia, p.dueCount > 0],
+                ['/leituras', tx.leituras, tx.leiturasDesc, false],
+                ['/vocabulario', tx.suasPalavras, tx.suasPalavrasDesc(nPalavras), false]
+              ] as const).map(([href, titulo, desc, destaque]) => (
+                <li key={href}>
+                  <Link href={href}
+                        className={`h-full flex flex-col gap-1 rounded-[16px] border p-4 min-h-[88px]
+                                    transition-[box-shadow,border-color] duration-[250ms] hover:shadow-[var(--sh)] active:scale-[.98]
+                                    ${destaque ? 'border-[var(--gold)] bg-[var(--gold-soft)]' : 'border-line bg-[var(--card)] hover:border-[var(--teal)]'}`}>
+                    <span className="font-display text-[16.5px] font-semibold text-ink">{titulo}</span>
+                    <span className={`font-ui text-[13px] leading-snug ${destaque ? 'text-[var(--gold-ink)] font-semibold' : 'text-ink-muted'}`}>{desc}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Os flashcards (28/10/2026, pedido do dono): o jeito mais rápido de
+              rever, em dois baralhos. */}
+          <section aria-labelledby="flashcards" className="grid gap-3">
+            <h2 id="flashcards" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              {tx.flashcards}
+            </h2>
+            <ul className="grid gap-3 grid-cols-2 list-none p-0 m-0">
+              {([
+                ['letras', tx.letras, tx.cartasLetras(unlocked.length)],
+                ['palavras', tx.palavras, tx.cartasPalavras(nPalavras)]
+              ] as const).map(([baralho, titulo, desc]) => (
+                <li key={baralho}>
+                  <button type="button" disabled={baralho === 'palavras' && nPalavras === 0}
+                          onClick={() => setScreen({ kind: 'flashcards', baralho })}
+                          className="relative w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)] p-4 grid gap-1
+                                     transition-[box-shadow,border-color] duration-[250ms] enabled:hover:shadow-[var(--sh)]
+                                     enabled:hover:border-[var(--teal)] enabled:active:scale-[.98] disabled:opacity-60">
+                    {/* Duas cartas empilhadas, a de cima levemente girada. */}
+                    <span aria-hidden className="relative h-11 w-10 mb-1">
+                      <span className="absolute inset-0 rounded-[8px] bg-[var(--teal-soft)] border border-[var(--teal)] rotate-[-8deg]" />
+                      <span className="absolute inset-0 rounded-[8px] bg-[var(--card)] border border-line rotate-[4deg]
+                                       grid place-items-center font-display text-[15px] font-bold text-[var(--teal-ink)]">
+                        {baralho === 'letras'
+                          ? <He size="inline">א</He>
+                          : <span className="grid gap-1 w-5"><span className="h-[3px] rounded bg-[var(--teal)]" /><span className="h-[3px] w-3 rounded bg-[var(--teal)]" /></span>}
+                      </span>
+                    </span>
+                    <span className="font-display text-[17px] font-semibold text-ink">{titulo}</span>
+                    <span className="font-ui text-[12.5px] leading-snug text-ink-muted">{desc}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section aria-labelledby="jogos" className="grid gap-3">
             <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              Jogos de prática
+              {tx.jogosDePratica}
             </h2>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
               {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
@@ -713,6 +873,9 @@ export function AcademiaClient() {
                     <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
                       {JOGOS[jogo].titlePt}
                     </span>
+                    <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
+                      {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
+                    </span>
                     <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
                       {JOGOS[jogo].descPt}
                     </span>
@@ -728,7 +891,7 @@ export function AcademiaClient() {
           </section>
 
           <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mt-2">
-            Treinar por assunto
+            {tx.treinarPorAssunto}
           </h2>
           <ul className="grid gap-3 sm:grid-cols-2">
             {modes.map(({ mode, ready, whyNot }) => (
@@ -757,7 +920,7 @@ export function AcademiaClient() {
                     <span className="font-display text-[16px] font-bold text-ink">{mode.titlePt}</span>
                     {mode.timed && (
                       <span className="ml-auto font-ui text-[11px] uppercase tracking-[.07em]
-                                       text-[var(--accent)]">tempo</span>
+                                       text-[var(--accent)]">{tx.tempoMarca}</span>
                     )}
                   </span>
                   <span className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
@@ -777,18 +940,18 @@ export function AcademiaClient() {
               a learner who came here to practise should not land on a table. */}
           <div className="grid gap-3 sm:grid-cols-2">
             <ReferenceCard
-              title="Sons e sinais"
-              desc="A tabela inteira: cada letra com cada vogal, para ouvir e comparar."
+              title={tx.sonsESinais}
+              desc={tx.refSonsDesc}
               onClick={() => setScreen({ kind: 'lab' })}
             />
             <ReferenceCard
-              title="Escrita"
-              desc="Traçar e escrever à mão a letra que mais precisa."
+              title={tx.escrita}
+              desc={tx.refEscritaDesc}
               onClick={() => setScreen({ kind: 'escrita' })}
             />
             <ReferenceCard
-              title="Palavras à mão"
-              desc="Escrever em cursiva palavras inteiras que você já aprendeu, e não só letras soltas."
+              title={tx.palavrasAMao}
+              desc={tx.refPalavrasDesc}
               onClick={() => setScreen({ kind: 'palavras-a-mao' })}
             />
           </div>
@@ -898,11 +1061,16 @@ function GymBest({ modeId }: { modeId: string }) {
   const p = useProgress();
   const rec = p.state.gym?.[modeId];
   if (!rec?.runs) return null;
+  /* Quando foi a última vez: é o que diz qual jogo está esquecido. */
+  const dias = rec.lastOn ? Math.round((Date.parse(p.day) - Date.parse(rec.lastOn)) / 864e5) : NaN;
+  const quando = !Number.isFinite(dias) || dias < 0 ? null
+    : dias === 0 ? tx.hoje : dias === 1 ? tx.ontem : tx.haDias(dias);
   return (
     <span className="font-ui text-[12px] text-ink-muted tabular-nums">
-      {rec.runs} {rec.runs === 1 ? 'sessão' : 'sessões'}
-      {rec.bestSeconds != null && ` · melhor tempo ${rec.bestSeconds} s`}
-      {rec.bestSeconds == null && rec.best != null && ` · melhor ${Math.round(rec.best * 100)}%`}
+      {quando && tx.jogado(quando)}
+      {tx.sessoes(rec.runs)}
+      {rec.bestSeconds != null && tx.melhorTempoCurto(rec.bestSeconds)}
+      {rec.bestSeconds == null && rec.best != null && tx.melhorPct(Math.round(rec.best * 100))}
     </span>
   );
 }
@@ -961,7 +1129,7 @@ function Cronometro({ desde }: { desde: number }) {
     <div className="flex items-center justify-center gap-2.5 rounded-[var(--r-md)]
                     border border-line bg-surface px-4 py-2.5">
       <span aria-hidden className="font-ui text-[15px] text-ink-muted">◷</span>
-      <span className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted">Tempo</span>
+      <span className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted">{tx.tempo}</span>
       {/* `aria-live="off"`: o número muda quatro vezes por segundo, e um
           leitor de tela que o anuncie toda vez cobre a pergunta. Quem precisa
           do tempo o encontra pelo rótulo; quem não precisa não é
@@ -989,7 +1157,7 @@ function GymHeader({
         className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px]
                    text-ink-muted hover:text-ink-body"
       >
-        ← Academia
+        {tx.voltarAcademiaSeta}
       </button>
       <span className="font-ui text-[13px] text-ink-muted ml-auto">{label}</span>
     </header>
@@ -1001,12 +1169,12 @@ function Empty({ children, onBack }: { children: React.ReactNode; onBack: () => 
      títulos não achava nada (VIS-009). */
   return (
     <div className="focus-col grid gap-4">
-      <h1 className="text-[23px] font-bold">Ainda não há material suficiente</h1>
+      <h1 className="text-[23px] font-bold">{tx.semMaterialTitulo}</h1>
       <Card tone="amber" className="p-6">
         <p className="text-[15px] leading-relaxed text-ink-body">{children}</p>
       </Card>
       <Button variant="secondary" onClick={onBack} className="justify-self-start">
-        Voltar
+        {tx.voltar}
       </Button>
     </div>
   );
@@ -1020,7 +1188,7 @@ export function AcademiaLink() {
                  border-line bg-surface px-4 py-3 hover:bg-surface-2 transition-colors"
     >
       <span className="font-ui text-[14px] text-ink">
-        Quer praticar mais? Academia de Leitura
+        {tx.linkAcademia}
       </span>
       <span aria-hidden className="text-ink-muted">→</span>
     </Link>

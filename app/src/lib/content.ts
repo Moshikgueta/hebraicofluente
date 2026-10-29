@@ -63,6 +63,8 @@ export type ConteudoPago = {
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
   missoes: import('./engine/missao').Missao[];
+  /** O Hebraico na rua: as placas aprovadas (lib/engine/rua.ts). Vêm no missoes.json. */
+  rua: import('./engine/rua').PlacaDaRua[];
   textos: import('./engine/textos').Texto[];
   bonus: LeituraBonus[];
   guiaNikud: GuiaNikud | null;
@@ -94,9 +96,9 @@ export function hidratarConteudo(d: ConteudoPago): void {
 
 function naoHidratado(oQue: string): never {
   throw new Error(
-    `conteúdo do curso lido antes de carregar (${oQue}). `
-    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; '
-    + 'se este erro apareceu, alguma coisa renderizou fora dele.'
+    `conteúdo do curso lido antes de carregar (${oQue}). ` // i18n-ok: erro de desenvolvedor
+    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; ' // i18n-ok: erro de desenvolvedor
+    + 'se este erro apareceu, alguma coisa renderizou fora dele.' // i18n-ok: erro de desenvolvedor
   );
 }
 
@@ -133,7 +135,11 @@ export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dado
 
 /** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
 export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
-  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao);
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && !t.n);
+
+/** O segundo texto do módulo `n` (28/10/2026), se houver e estiver revisado. */
+export const segundoTextoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && t.n === 2);
 
 /** A leitura de revisão do módulo `n`: só palavras já acumuladas. */
 export const revisaoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
@@ -148,6 +154,10 @@ export const guiaNikud = (): GuiaNikud | null => {
   const g = dados().guiaNikud;
   return g?.revisado ? g : null;
 };
+
+/** As placas do Hebraico na rua (lib/engine/rua.ts). Estados antigos do
+ *  depósito, sem a chave, valem como nenhuma. */
+export const placasDaRua = (): ConteudoPago['rua'] => dados().rua ?? [];
 
 /** A missão que fecha o módulo `n`, se houver. */
 export const missaoDoModulo = (n: number): ConteudoPago['missoes'][number] | undefined =>
@@ -330,6 +340,7 @@ async function buscarConteudo(): Promise<void> {
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
       culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards,
       missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes,
+      rua: bruto<{ rua?: ConteudoPago['rua'] }>(missoesJson).rua ?? [],
       textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos,
       bonus: bruto<{ leituras: LeituraBonus[] }>(bonusJson).leituras,
       guiaNikud: bruto<{ guia?: GuiaNikud }>(bonusJson).guia ?? null

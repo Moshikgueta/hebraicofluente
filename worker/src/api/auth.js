@@ -28,17 +28,19 @@ import {
   clearSessionCookie, makeSessionCookie, readSession
 } from '../lib/session.js';
 import { isSandbox, tokenFormato, vendedorFormato } from '../lib/mercadopago.js';
+import { ehSandbox, paddlePronto, tokenDoCliente } from '../lib/paddle.js';
 import { nomeSeguro } from '../lib/nome.js';
 import { exigirAdmin, isAdmin } from '../lib/admin.js';
 import { avisarRetirada } from './depoimentos.js';
 import { versaoAtual } from '../lib/versoes.js';
 import { novoAparelho, aparelhoValido, esquecerAparelhos } from '../lib/aparelhos.js';
 import empresa from '../../../data/empresa.json';
+import { mailReady, mensagemDeConvitePendente, sendMail } from '../lib/mail.js';
+import { mensagens } from '../lib/mensagens.js';
+import { lembreteLigado } from './lembrete.js';
+import { idiomaDoWorker } from '../lib/idioma.js';
 import {
-  mailReady, mensagemDeConfirmacao, mensagemDeConvitePendente, mensagemDeRecuperacao, sendMail
-} from '../lib/mail.js';
-import {
-  activeEntitlements, bumpSessionVersion, novidadesQuer, changePassword, createAccount, deleteAccount,
+  activeEntitlements, bumpSessionVersion, lembreteQuer, novidadesQuer, changePassword, createAccount, deleteAccount,
   emailVerified, estourou, findAccountByEmail, findAccountById, invitesPendentes, log,
   normalizeEmail, registrarAcesso, reservarVaga, resetCreate, resetFind, resetUse, setPasswordHash, throttled,
   ultimoEnvioDeSenha, verifyConfirm, verifyCreate, verifyFromReset, ultimoBatimento
@@ -169,6 +171,8 @@ async function sessionBody(env, account) {
       emailVerified: await emailVerified(env, account.id, account.email),
       /* Pediu o e-mail do próximo curso? Ver api/novidades.js. */
       novidades: await novidadesQuer(env, account.id),
+      /* Pediu o lembrete para estudar? Só existe com ele ligado (api/lembrete.js). */
+      ...(lembreteLigado() ? { lembrete: await lembreteQuer(env, account.id) } : {}),
       /* Conta de ADMIN_EMAILS: o app abre todos os módulos de Raízes para
          revisar (moduloAberto em lib/raizes.ts). Não dá acesso a nada: o
          portão continua exigindo o direito do produto no banco. */
@@ -252,7 +256,7 @@ async function registrarAceite(env, accountId) {
   try {
     /* O código da versão do texto (LEGAL-104), com a cópia fixa em
        /termos/v/<versao>/; sem ele, a data, como antes. */
-    const versao = versaoAtual('termos') || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
+    const versao = versaoAtual('termos', env) || String(empresa.politicas?.atualizadoEm || ''), agora = Date.now();
     const inserir = documento => env.DB.prepare(
       'INSERT INTO aceites (account_id, documento, versao, aceito_em) VALUES (?, ?, ?, ?)'
     ).bind(accountId, documento, versao, agora);
@@ -288,7 +292,7 @@ async function enviarConfirmacao(env, ctx, request, account) {
   }
 
   const site = siteOrigin(env, request);
-  const msg = mensagemDeConfirmacao({
+  const msg = mensagens(idiomaDoWorker(env)).confirmacao({
     /* Sem nome, sempre: este e-mail vai a um endereço que ainda não provou
        ser de quem criou a conta, e o nome é escrito por quem a criou
        (SEC-A-003, lib/nome.js). */
@@ -349,7 +353,7 @@ export async function signup({ request, env, ctx }) {
   }
 
   const { hash, salt, iterations } = await hashPassword(password, null, itersFor(env));
-  const account = await createAccount(env, { email, name, hash, salt, iterations });
+  const account = await createAccount(env, { email, name, hash, salt, iterations, idioma: idiomaDoWorker(env) });
   /* O id já identifica a conta. O e-mail não vai para a trilha: a trilha é
      lida por operadores num resumo do Actions, e é o que sobra depois de a
      conta ser apagada. */
@@ -613,7 +617,7 @@ export async function forgot({ request, env, ctx }) {
 
   const link = `${siteOrigin(env, request)}/nova-senha/?token=${encodeURIComponent(token)}`;
   const entregar = async () => {
-    const msg = mensagemDeRecuperacao({
+    const msg = mensagens(idiomaDoWorker(env)).recuperacao({
       /* O nome só com o e-mail já confirmado: antes disso, quem o escreveu
          pode não ser a dona do endereço que recebe (SEC-A-003). A consulta
          fica aqui dentro, fora do caminho da resposta, para o relógio não
@@ -888,6 +892,11 @@ export async function health({ request, env }) {
     return fail('rate-limited', 429);
   }
   const detalhes = await podeVerDetalhes(request, env);
+  /* O site em inglês cobra pelo Paddle (lib/paddle.js): os campos da
+     cobrança respondem por ele, e os que só existem na Mercado Pago (que
+     credencial foi colada, de quem é a conta) ficam `null`. */
+  const emIngles = env.LOCALE === 'en';
+  const paddleLigado = emIngles && paddlePronto(env) && !!tokenDoCliente(env);
 
   const out = {
     /* A ligação com o D1 existe no Worker? `false` = binding ausente ou
@@ -925,19 +934,21 @@ export async function health({ request, env }) {
        caminho", e ninguém recebe nada. Ver ultimoEnvioDeSenha em lib/db.js. */
     emailEntregue: null,
     /* Cobrança ligada? `false` é um estado legítimo - ver o checkout. */
-    payments: !!env.MP_ACCESS_TOKEN,
+    payments: emIngles ? paddleLigado : !!env.MP_ACCESS_TOKEN,
     /* Webhook verificável? `false` faz /api/pay/webhook recusar tudo. */
-    webhook: !!env.MP_WEBHOOK_SECRET,
+    webhook: emIngles ? !!env.PADDLE_WEBHOOK_SECRET : !!env.MP_WEBHOOK_SECRET,
     /* "teste" cobra nada; "producao" cobra de verdade. Deriva do prefixo do
        token, então esta linha é a confirmação de qual credencial está no ar -
        a pergunta que, errada, custa semanas de venda em silêncio. */
-    modo: env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado',
+    modo: emIngles
+      ? (paddleLigado ? (ehSandbox(env) ? 'teste' : 'producao') : 'desligado')
+      : (env.MP_ACCESS_TOKEN ? (isSandbox(env) ? 'teste' : 'producao') : 'desligado'),
     /* Como ESTA publicação cobra: `mercadopago` ou `pix-direto`. É o valor
        que o deploy escreveu em data/empresa.json depois de testar o token -
        `pix-direto` aqui, com o arquivo do repositório dizendo mercadopago,
        quer dizer que a Mercado Pago recusou a credencial e o cartão está
        desligado (auditoria de 28/09, PAY-009). */
-    cobranca: (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago',
+    cobranca: emIngles ? 'paddle' : ((empresa.pagamento && empresa.pagamento.modo) || 'mercadopago'),
     /* QUE credencial foi colada - `access-token`, `chave-publica`,
        `formato-desconhecido` ou `ausente`. Nunca um pedaço do valor.
 
@@ -947,7 +958,7 @@ export async function health({ request, env }) {
        401 dizendo "authorization value not present" - uma frase que manda
        conferir chave PIX, webhook e conta bancária antes de desconfiar do
        campo que foi copiado. Ver tokenFormato em lib/mercadopago.js. */
-    tokenFormato: tokenFormato(env),
+    tokenFormato: emIngles ? null : tokenFormato(env),
     /* DE QUEM é a credencial - `real`, `usuario-de-teste`, `outro-pais`,
        `recusado`, `indisponivel` ou `desligado`. Só o veredicto: nunca o
        apelido, o e-mail ou o id da conta.
@@ -959,7 +970,7 @@ export async function health({ request, env }) {
        "producao", o comprador é mandado ao checkout real, e lá encontra "uma
        das partes é de teste" sem que nada deste lado pareça errado.
        Ver vendedorFormato em lib/mercadopago.js. */
-    vendedor: detalhes ? await vendedorFormato(env) : null,
+    vendedor: detalhes && !emIngles ? await vendedorFormato(env) : null,
     /* Há quantos minutos a varredura de 5 em 5 min rodou (null = nunca).
        Ela confere pagamentos cujo aviso não chegou, refaz estornos e manda
        os alertas ao dono - parada, tudo isso para em silêncio. */

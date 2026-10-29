@@ -22,6 +22,8 @@
  */
 
 import empresaJson from '@content/empresa.json';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-empresa';
 
 export type Endereco = {
   logradouro: string | null;
@@ -58,6 +60,8 @@ export type Empresa = {
     agentePequenoPorte?: boolean;
     /** Prazo de resposta a pedido de titular. A LGPD usa 15 dias no art. 19. */
     prazoLgpdDias: number;
+    /** O lembrete para estudar existe? Ver `lembreteLigado` abaixo. */
+    lembreteDeEstudo?: boolean;
   };
   politicas: {
     /** Art. 49 do CDC: sete dias para compra fora do estabelecimento. */
@@ -76,8 +80,11 @@ export type Empresa = {
      *               aprovação de ninguém - e NÃO CONFIRMA SOZINHO: o acesso
      *               é liberado à mão depois de olhar o extrato.
      * `mercadopago` PIX e cartão, com confirmação automática.
+     * `paddle`      o site em inglês: cartão, PayPal, Apple Pay e Google Pay
+     *               no checkout do Paddle, em dólar, com confirmação
+     *               automática. Escrito pelo exportador na build em inglês.
      */
-    modo: 'pix-direto' | 'mercadopago';
+    modo: 'pix-direto' | 'mercadopago' | 'paddle';
     /**
      * O que DÁ para oferecer nesta build.
      *
@@ -88,7 +95,8 @@ export type Empresa = {
      * "oferece os dois", que era o comportamento de antes.
      */
     formas?: { pix: boolean; cartao: boolean };
-    pix: {
+    /** A chave do PIX direto. A build em inglês (Paddle) sai sem ela. */
+    pix?: {
       /** Só os caracteres da chave: CNPJ vai sem ponto, barra nem traço. */
       chave: string;
       tipoChave: 'cnpj' | 'cpf' | 'email' | 'telefone' | 'aleatoria';
@@ -166,6 +174,11 @@ export function nomeLegalCompleto(): string {
  */
 export const soPix = (): boolean => empresa.pagamento.modo === 'pix-direto';
 
+/** O lembrete para estudar está ligado? A mesma chave liga a caixa do perfil,
+ *  o parágrafo da Política de Privacidade e, no Worker, a rota e o envio
+ *  (worker/src/api/lembrete.js). Ligar é decisão do dono, junto com o texto. */
+export const lembreteLigado = (): boolean => empresa.privacidade.lembreteDeEstudo === true;
+
 /* ── o que esta build consegue cobrar ──────────────────────────────────────
  * Diferente de `soPix()`, que é uma DECISÃO (o trilho escolhido), isto é um
  * FATO: o que a credencial da Mercado Pago respondeu que a conta aceita, na
@@ -198,7 +211,10 @@ export const formasAtivas = (): ('pix' | 'card')[] =>
  * dizer isso - prometer liberação instantânea e entregar em duas horas gera
  * mais suporte do que prometer "em algumas horas" e entregar em dez minutos.
  */
-export const confirmaSozinho = (): boolean => empresa.pagamento.modo === 'mercadopago';
+export const confirmaSozinho = (): boolean => empresa.pagamento.modo !== 'pix-direto';
+
+/** O site em inglês: o pagamento é o checkout do Paddle (lib/paddle-checkout.ts). */
+export const pagaPeloPaddle = (): boolean => empresa.pagamento.modo === 'paddle';
 
 /* ── as frases que se repetem, num lugar só (auditoria de 01/10/2026) ──────
  * Cada uma destas aparecia escrita à mão em três a nove páginas, e cada
@@ -217,20 +233,19 @@ export const confirmaSozinho = (): boolean => empresa.pagamento.modo === 'mercad
  * tela dela antes de confirmar. `check-legal.mjs` falha se o export tiver um
  * "12x" sem "juros" no mesmo trecho.
  */
-export const parcelasTexto = (n: number): string => `em até ${n}x com juros da Mercado Pago`;
+export const parcelasTexto = (n: number): string => fmt(tx.parcelas, { n });
 
 /** A versão curta, para onde não cabe o nome da Mercado Pago (a barra fixa
  *  da capa, o cartão de curso): os juros continuam ditos. */
-export const parcelasCurto = (n: number): string => `em até ${n}x com juros`;
+export const parcelasCurto = (n: number): string => fmt(tx.parcelasCurto, { n });
 
 /** A segunda metade, para onde houver espaço: quem fecha o número é a Mercado Pago. */
-export const PARCELAS_TOTAL =
-  'o valor de cada parcela e o total aparecem na tela da Mercado Pago antes de você confirmar';
+export const PARCELAS_TOTAL = tx.parcelasTotal;
 
 /** "em até 2 dias úteis": o prazo de resposta do atendimento, em todo lugar. */
 export const prazoResposta = (): string => {
   const n = empresa.atendimento.prazoRespostaUteis;
-  return `em até ${n} ${n === 1 ? 'dia útil' : 'dias úteis'}`;
+  return tx.prazoResposta(n);
 };
 
 /**
@@ -243,12 +258,11 @@ export const prazoResposta = (): string => {
  * em que a pessoa escreveu.
  */
 export const confirmacaoDaDesistencia = (): string =>
-  'Pelo site, a confirmação chega no seu e-mail na hora. Por e-mail, respondemos confirmando o ' +
-  `recebimento ${prazoResposta()}, e vale a data em que você escreveu, não a da nossa resposta.`;
+  fmt(tx.confirmacaoDesistencia, { prazo: prazoResposta() });
 
 /** Desde quando contam os meses de acesso e os dias para desistir. O código
  *  conta de `paid_at`, gravado na liberação (worker/src/api/pay.js). */
-export const INICIO_DO_ACESSO = 'contados da liberação do acesso';
+export const INICIO_DO_ACESSO = tx.inicioDoAcesso;
 
 /** Os últimos dias de acesso em que a renovação abre. O mesmo número de
  *  `RENOVACAO_MS` em worker/src/api/pay.js e do checkout. */
@@ -256,9 +270,7 @@ export const JANELA_DE_RENOVACAO_DIAS = 45;
 
 /** Como a renovação funciona, igual ao que `grantAccess` (worker/src/lib/db.js) faz. */
 export const renovacaoTexto = (meses: number): string =>
-  `Nos últimos ${JANELA_DE_RENOVACAO_DIAS} dias de acesso, dá para renovar com uma compra nova, pelo ` +
-  `preço do dia. Os ${meses} meses da renovação são somados ao fim do acesso atual, e não contados ` +
-  'do dia do pagamento: renovar antes não faz perder nenhum dia. Nada é renovado nem cobrado sozinho.';
+  fmt(tx.renovacao, { dias: JANELA_DE_RENOVACAO_DIAS, meses });
 
 /**
  * Se o atendimento responde dúvida sobre o conteúdo do curso.
@@ -268,16 +280,14 @@ export const renovacaoTexto = (meses: number): string =>
  * escrever dúvidas do curso. Esta é a resposta sugerida; trocar aqui troca
  * nas duas páginas.
  */
-export const DUVIDAS_DE_CONTEUDO =
-  'Dúvidas sobre o conteúdo também são bem-vindas por e-mail, no mesmo prazo.';
+export const DUVIDAS_DE_CONTEUDO = tx.duvidasDeConteudo;
 
 /**
  * O que este curso ensina e o que fica para o próximo (UXQA-010).
  *
  * TEXTO PARA APROVAÇÃO DO DONO. Sai na página do curso e na FAQ.
  */
-export const O_QUE_O_CURSO_ENSINA =
-  'Este curso ensina a ler e escrever em hebraico. Conversação começa no Hebraico A1, que é um curso à parte.';
+export const O_QUE_O_CURSO_ENSINA = tx.oQueOCursoEnsina;
 
 /* ── o que ainda falta ──────────────────────────────────────────────────── */
 
@@ -299,37 +309,37 @@ export function pendencias(): Pendencia[] {
 
   if (!e.cnpj) faltando.push({
     campo: 'cnpj',
-    porQue: 'identificação do fornecedor - é o que diz QUEM está vendendo',
+    porQue: 'identificação do fornecedor - é o que diz QUEM está vendendo', // i18n-ok: só para npm run check-legal
     bloqueia: true
   });
   if (!e.razaoSocial) faltando.push({
     campo: 'razaoSocial',
-    porQue: 'o nome jurídico de quem vende, que acompanha o CNPJ',
+    porQue: 'o nome jurídico de quem vende, que acompanha o CNPJ', // i18n-ok: só para npm run check-legal
     bloqueia: true
   });
   if (!e.endereco.cidade) faltando.push({
     campo: 'endereco.cidade',
-    porQue: 'endereço do fornecedor, exigido na identificação',
+    porQue: 'endereço do fornecedor, exigido na identificação', // i18n-ok: só para npm run check-legal
     bloqueia: true
   });
   if (!e.endereco.logradouro) faltando.push({
     campo: 'endereco.logradouro',
-    porQue: 'endereço completo; cidade e estado sozinhos já identificam, mas o logradouro é o que se espera',
+    porQue: 'endereço completo; cidade e estado sozinhos já identificam, mas o logradouro é o que se espera', // i18n-ok: só para npm run check-legal
     bloqueia: false
   });
   if (!e.endereco.cep) faltando.push({
     campo: 'endereco.cep',
-    porQue: 'completa o endereço',
+    porQue: 'completa o endereço', // i18n-ok: só para npm run check-legal
     bloqueia: false
   });
   if (!e.contato.telefone && !e.contato.whatsapp) faltando.push({
-    campo: 'contato.telefone ou contato.whatsapp',
-    porQue: 'um segundo canal de atendimento; o e-mail sozinho já atende, mas dois convertem melhor',
+    campo: 'contato.telefone ou contato.whatsapp', // i18n-ok: só para npm run check-legal
+    porQue: 'um segundo canal de atendimento; o e-mail sozinho já atende, mas dois convertem melhor', // i18n-ok: só para npm run check-legal
     bloqueia: false
   });
   if (!e.privacidade.encarregadoNome && !e.privacidade.agentePequenoPorte) faltando.push({
     campo: 'privacidade.encarregadoNome',
-    porQue: 'o encarregado de dados (LGPD art. 41); o canal de e-mail já atende o titular',
+    porQue: 'o encarregado de dados (LGPD art. 41); o canal de e-mail já atende o titular', // i18n-ok: só para npm run check-legal
     bloqueia: false
   });
 

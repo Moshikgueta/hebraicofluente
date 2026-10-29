@@ -9,6 +9,8 @@
  * texto todo - e a pessoa decide quando pedir.
  */
 
+import { vigiarGravacao } from '@/lib/som-do-acerto';
+import { tx } from '@/i18n/telas/licao-linhas-de-leitura';
 import { useEffect, useRef, useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { He } from '@/components/hebrew/He';
@@ -46,6 +48,7 @@ export function LinhasDeLeitura({ linhas, rotulo, semPontos = false, heClassName
     if (!l?.audioId) { setTocando(null); return; }
     const corte = clipeDoPainel(l.audioId);
     const el = new Audio(urlDoClipe(l.audioId));
+    vigiarGravacao(el);
     player.current?.pause();
     player.current = el;
     setTocando(i);
@@ -80,13 +83,13 @@ export function LinhasDeLeitura({ linhas, rotulo, semPontos = false, heClassName
 
   return (
     <>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Ajudas de leitura">
-        {semPontos && <Chave ativo={pontos} onClick={() => setPontos(v => !v)}>Mostrar os pontos</Chave>}
-        <Chave ativo={translit} onClick={() => setTranslit(v => !v)}>Transliteração</Chave>
-        <Chave ativo={traducao} onClick={() => setTraducao(v => !v)}>Tradução</Chave>
+      <div className="flex flex-wrap gap-2" role="group" aria-label={tx.ajudas}>
+        {semPontos && <Chave ativo={pontos} onClick={() => setPontos(v => !v)}>{tx.mostrarPontos}</Chave>}
+        <Chave ativo={translit} onClick={() => setTranslit(v => !v)}>{tx.transliteracao}</Chave>
+        <Chave ativo={traducao} onClick={() => setTraducao(v => !v)}>{tx.traducao}</Chave>
         {todasGravadas && (
           <Chave ativo={tocando !== null} onClick={ouvirTexto}>
-            {tocando !== null ? '■ Parar' : '▶ Ouvir o texto inteiro'}
+            {tocando !== null ? tx.parar : tx.ouvirTexto}
           </Chave>
         )}
       </div>
@@ -107,12 +110,12 @@ export function LinhasDeLeitura({ linhas, rotulo, semPontos = false, heClassName
                 )}
                 <div className="flex items-center gap-2">
                   <button type="button" onClick={() => alterna(i)} aria-expanded={aberta}
-                          aria-label={`Linha ${i + 1}: ${aberta ? 'esconder' : 'mostrar'} a ajuda`}
+                          aria-label={tx.linha(i + 1, aberta)}
                           className={`flex-1 text-right rounded-[var(--r-md)] px-2 py-1 -mx-2 hover:bg-surface-2
                             ${tocando === i ? 'bg-[var(--accent-wash)]' : ''}`}>
                     <He size="lg" className={heClassName ?? '!text-[28px] sm:!text-[34px] !leading-[1.5]'}>{mostra(l.he)}</He>
                   </button>
-                  {hasAudio(l.audioId) && <AudioButton audioId={l.audioId!} ariaLabel={`Ouvir a linha ${i + 1}`} size="sm" />}
+                  {hasAudio(l.audioId) && <AudioButton audioId={l.audioId!} ariaLabel={tx.ouvirLinha(i + 1)} size="sm" />}
                 </div>
                 {(translit || aberta) && (
                   <p dir="ltr" className="font-ui text-[14.5px] text-ink m-0 px-2 text-left">
@@ -127,7 +130,7 @@ export function LinhasDeLeitura({ linhas, rotulo, semPontos = false, heClassName
           })}
         </ol>
         <p className="font-ui text-[13px] text-ink-muted m-0 mt-3">
-          Toque numa linha para ver só a ajuda dela.
+          {tx.toqueNumaLinha}
         </p>
       </Card>
     </>

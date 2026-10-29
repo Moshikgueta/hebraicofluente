@@ -175,11 +175,16 @@ describe('o que falta para abrir uma leitura', () => {
 
   it('a troca é livre, e a tela diz o número e a lógica de voltar depois', () => {
     const f = readFileSync(join(__dirname, '../src/app/loja/LojaClient.tsx'), 'utf8');
-    expect(f).toContain('Você pode trocar qualquer leitura agora.');
-    expect(f).toContain('Você concluiu <strong>{mastered} de {totalLetras} lições de letras</strong>');
+    /* Os textos moram no dicionário da tela (i18n), lidos como tx.chave. */
+    const d = readFileSync(join(__dirname, '../src/i18n/telas/academia-loja-client.tsx'), 'utf8');
+    expect(f).toContain('{tx.podeTrocar}');
+    expect(d).toContain('Você pode trocar qualquer leitura agora.');
+    expect(f).toContain('{tx.lerSozinho(mastered, totalLetras)}');
+    expect(d).toContain('Você concluiu <strong>{mastered} de {totalLetras} lições de letras</strong>');
     /* A regra sai das constantes (UXQA-005): nada de "6 de 8" escrito à mão. */
     expect(f).toContain('{REGRA_DA_CONCLUSAO}');
     expect(f).not.toContain('6 de 8');
+    expect(d).not.toContain('6 de 8');
     expect(REGRA_DO_DOMINIO).toBe('concluir as 5 etapas da lição e acertar pelo menos 15 de 20 nos exercícios');
     /* O botão só se desliga por saldo, nunca pelas letras. */
     expect(f).toContain('disabled={livre < custo}');

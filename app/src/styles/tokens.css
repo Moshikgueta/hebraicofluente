@@ -178,6 +178,38 @@
   --ease:      cubic-bezier(.2, .7, .3, 1);
   --ease-fill: cubic-bezier(.3, .8, .3, 1);
   --dur:       200ms;
+  /* A escala completa (27/10/2026, rodada de experiência). Três durações,
+     pela frequência do gesto: o toque (o aluno faz centenas por dia), a
+     resposta de interface e a revelação que acontece uma vez por lição.
+     ease-out para o que entra ou responde a um toque; ease-in-out para o
+     que já está na tela e se move. Nada passa de 700 ms. */
+  --dur-toque:  130ms;
+  --dur-revela: 640ms;
+  --ease-out:    cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.645, .045, .355, 1);
+
+  /* ── a ilustração da aventura (28/10/2026, components/aventura) ────────
+     Mediterrâneo de luz quente, puxado para a família da marca: o mar é o
+     teal, a noite é o navy, o sol é o gold. Só desenho: nenhum destes é
+     cor de texto. */
+  --il-ceu: #F6EAD2;        --il-ceu-2: #EED9B3;
+  --il-tarde: #F2C58F;      --il-tarde-2: #D98A66;
+  --il-sol: #E7B65A;        --il-nuvem: #FFF9EE;
+  --il-colina-1: #D9C08F;   --il-colina-2: #A9B784;   --il-colina-noite: #6E5A6A;
+  --il-montanha: #B7A27C;
+  --il-pedra: #E8D5AB;      --il-pedra-2: #DCC393;    --il-pedra-sombra: #C4A873;
+  --il-porta: #5B4632;      --il-janela: #6E8A86;     --il-caminho: #E3CC9E;
+  --il-cipreste: #3E5B3C;   --il-oliva: #6D8A4E;      --il-oliva-2: #7F9C5C;   --il-tronco: #7A5E43;
+  --il-mar: #3F9A9C;        --il-mar-2: #2C7C80;      --il-espuma: #EAF7F3;
+  --il-barco: #8E5A3B;      --il-vela: #FBF4E4;
+  --il-flor: #C9577E;       --il-sombra: rgba(70, 60, 30, .18);
+  --il-toldo: #1F8A7D;      --il-toldo-2: #FBF4E4;    --il-toldo-3: #C9773F;
+  --il-caixa: #B78A5A;      --il-pao: #C98B49;
+  --il-fruta-1: #E07B39;    --il-fruta-2: #C9443A;    --il-fruta-3: #E3B83B;
+  --il-placa: #1F8A7D;      --il-ferro: #3B4A4C;
+  --il-predio: #E5DCCB;     --il-predio-2: #D3C7B1;   --il-janela-predio: #8FB3B0;
+  --il-asfalto: #8B8A84;    --il-faixa: #FFFFFF;      --il-onibus: #1F8A7D;
+  --il-telha: #C46B45;      --il-telhado: #5E4E66;    --il-painel: #2E4C6B;   --il-janela-acesa: #F3CF7A;
 }
 
 /* ── o tema escuro ────────────────────────────────────────────────────────
@@ -292,5 +324,26 @@
     --sh-mock:  0 2px 6px rgba(0, 0, 0, .36), 0 30px 60px -28px rgba(0, 0, 0, .66);
     --shadow-1: var(--sh);
     --shadow-2: var(--sh-mock);
+
+    /* A ilustração no escuro: a mesma cena ao entardecer, mais baixa em
+       luz, para não virar o bloco mais claro da tela. */
+    --il-ceu: #1E3A42;        --il-ceu-2: #2A4A50;
+    --il-tarde: #3E3550;      --il-tarde-2: #6B4A4A;
+    --il-sol: #D9A84E;        --il-nuvem: #4A6268;
+    --il-colina-1: #5B5440;   --il-colina-2: #3F5038;   --il-colina-noite: #2E2838;
+    --il-montanha: #5A5242;
+    --il-pedra: #8C7C5E;      --il-pedra-2: #7A6B50;    --il-pedra-sombra: #66583F;
+    --il-porta: #2A2018;      --il-janela: #2F4542;     --il-caminho: #6E6047;
+    --il-cipreste: #23362A;   --il-oliva: #3F5532;      --il-oliva-2: #4A6239;   --il-tronco: #4E3D2C;
+    --il-mar: #1F5F62;        --il-mar-2: #174A4D;      --il-espuma: #9FC9C2;
+    --il-barco: #5A3A27;      --il-vela: #B9B2A2;
+    --il-flor: #8E3E5A;       --il-sombra: rgba(0, 0, 0, .28);
+    --il-toldo: #1A6D63;      --il-toldo-2: #B9B2A2;    --il-toldo-3: #8A5530;
+    --il-caixa: #6E5236;      --il-pao: #8A6033;
+    --il-fruta-1: #A85A2A;    --il-fruta-2: #8E3329;    --il-fruta-3: #A3842B;
+    --il-placa: #1A6D63;      --il-ferro: #1E2A2C;
+    --il-predio: #4E4A42;     --il-predio-2: #44403A;   --il-janela-predio: #C9A64E;
+    --il-asfalto: #3A3A37;    --il-faixa: #9A9A90;      --il-onibus: #1A6D63;
+    --il-telha: #7E4430;      --il-telhado: #2A2433;    --il-painel: #1C3048;   --il-janela-acesa: #C9A64E;
   }
 }

@@ -128,3 +128,26 @@ describe('o fecho do módulo 6', () => {
     expect(lidas.length).toBeGreaterThan(8);
   });
 });
+
+/* 27/10/2026, pedido do dono: "na parte sem nikud ainda tem nikud". */
+describe('o fecho do módulo 6 é sem nikud', () => {
+  const PONTOS = /[֑-ׇ]/;
+  it('nenhuma pergunta mostra ponto, vogal ou daguesh', () => {
+    for (const seed of ['a', 'b', 'c']) {
+      for (const e of buildDageshQuiz(extras(), 40, seed)) {
+        const x = e as { he?: string; letter?: string; options?: string[] };
+        for (const t of [x.he ?? '', x.letter ?? '', ...(x.options ?? [])]) {
+          expect(PONTOS.test(t), `${e.id}: ${t}`).toBe(false);
+        }
+      }
+    }
+  });
+
+  it('a pergunta do som só usa palavras em que a regra da lição 21 acerta', () => {
+    const q = buildDageshQuiz(extras(), 60, 'regra').filter(e => e.id.startsWith('mod6-dag-'));
+    expect(q.length).toBeGreaterThan(5);
+    /* אַבָּא (o ponto que dobra) sem os pontos não tem resposta: fica de fora. */
+    expect(q.some(e => (e as { he: string }).he === 'אבא')).toBe(false);
+    for (const e of q) expect(e.promptPt).toMatch(/^Sem os pontos/);
+  });
+});

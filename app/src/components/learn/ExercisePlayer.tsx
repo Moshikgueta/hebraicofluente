@@ -21,6 +21,7 @@
  * system can learn that THIS learner trades ד for ר.
  */
 
+import { tx } from '@/i18n/telas/licao-exercise-player';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
@@ -31,6 +32,8 @@ import {
 } from './Answers';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Yael } from '@/components/aventura/Yael';
+import { tocarSom } from '@/lib/som-do-acerto';
 import type { Exercise } from '@/lib/engine/exercises';
 import { isChoice } from '@/lib/engine/exercises';
 import { reenfileirar } from '@/lib/engine/fila-de-revisao';
@@ -77,6 +80,9 @@ export function ExercisePlayer({
   const [settled, setSettled] = useState<Settled | null>(null);
   const [correctCount, setCorrectCount] = useState(inicio?.certas ?? 0);
   const [missed, setMissed] = useState<string[]>(inicio?.erradas ?? []);
+  /* Os acertos em sequência, só para a Yael comemorar (28/10/2026). Não vai
+     para o progresso nem para a nota. */
+  const [seguidas, setSeguidas] = useState(0);
   const sheetRef = useRef<HTMLDivElement>(null);
   const raizRef = useRef<HTMLDivElement>(null);
   const perguntaRef = useRef<HTMLHeadingElement>(null);
@@ -136,6 +142,12 @@ export function ExercisePlayer({
     setSettled({ correct, chosen: opts.chosen ?? null, why: opts.why ?? null, troca });
     if (correct) setCorrectCount(c => c + 1);
     else setMissed(m => [...m, ex.id]);
+    /* O som acompanha a Yael: plim no acerto, a comemoração na sequência.
+       No erro, silêncio (lib/som-do-acerto.ts). Fora do atualizador do
+       estado, que o React pode chamar duas vezes. */
+    const nova = correct ? seguidas + 1 : 0;
+    setSeguidas(nova);
+    if (correct) tocarSom(MARCOS.includes(nova) ? 'comemora' : 'acerto');
 
     /* The moment the course is actually selling.
        Reading a whole word right, correctly, at a point where the course has
@@ -151,7 +163,7 @@ export function ExercisePlayer({
       itemId: ex.id, letterId: ex.letterId, correct, skill: ex.skill,
       expected: opts.expected, chosen: opts.chosenGlyph, kind: ex.kind
     });
-  }, [settled, ex, i, answer]);
+  }, [settled, ex, i, answer, seguidas]);
 
   /* Choice kinds go through here so option feedback and confusion reporting
      happen in one place. */
@@ -283,9 +295,11 @@ export function ExercisePlayer({
         )}
         <div className="flex items-center gap-3">
           <div className="h-1.5 flex-1 rounded-full bg-surface-2 overflow-hidden">
+            {/* `transform`, e não `width` (27/10/2026): a barra anda sem refazer
+                o layout da pergunta a cada resposta. */}
             <div
-              className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300 ease-[var(--ease)]"
-              style={{ width: `${((i + (settled ? 1 : 0)) / fila.length) * 100}%` }}
+              className="h-full w-full origin-left rounded-full bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]"
+              style={{ transform: `scaleX(${(i + (settled ? 1 : 0)) / fila.length})` }}
             />
           </div>
           {/* `data-progresso` é para a varredura de exercícios, do mesmo jeito
@@ -343,27 +357,38 @@ export function ExercisePlayer({
           >
           <Card tone={isRight ? 'mint' : 'amber'}
                 className="p-5 animate-rise shadow-[var(--shadow-2)] lg:shadow-[var(--shadow-1)]">
-            <p
-              className={`flex items-center gap-2 font-ui text-[15px] font-semibold outline-none
-                ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
-            >
-              <span aria-hidden>{isRight ? '✓' : '↻'}</span>
-              {isRight ? 'Boa! É essa mesma.' : settled.troca ? 'Quase!' : 'Quase. Olhe com calma:'}
-            </p>
+            <div className="flex items-center gap-3">
+              {/* A Yael reage: pula no acerto, comemora a sequência, e no erro
+                  inclina a cabeça - nunca fica triste, que errar aqui não custa. */}
+              <Yael key={`${i}:${isRight}`} className="w-[58px] shrink-0 -my-3 -ml-1"
+                    humor={!isRight ? 'quase' : MARCOS.includes(seguidas) ? 'comemora' : 'feliz'} />
+              <div className="grid gap-0.5 min-w-0">
+                <p
+                  className={`m-0 flex items-center gap-2 font-ui text-[15px] font-semibold outline-none
+                    ${isRight ? 'text-[var(--mint-ink)]' : 'text-[var(--amber)]'}`}
+                >
+                  <span aria-hidden>{isRight ? '✓' : '↻'}</span>
+                  {isRight ? tx.boa : settled.troca ? tx.quaseTroca : tx.quase}
+                </p>
+                {isRight && MARCOS.includes(seguidas) && (
+                  <p className="m-0 font-ui text-[13.5px] font-semibold text-[var(--gold-body)] il-entra">{tx.seguidas(seguidas)}</p>
+                )}
+              </div>
+            </div>
             {settled.troca && (
               <div className="mt-3 grid gap-2">
                 <div dir="rtl" className="flex gap-2.5">
                   <span className="grid justify-items-center gap-0.5 rounded-[var(--r-md)] border-2 border-[var(--teal)] bg-[var(--teal-soft)] px-4 py-2">
                     <He size="lg">{settled.troca.certa.glifo}</He>
-                    <span dir="ltr" className="font-ui text-[12.5px] text-[var(--teal-ink)]">a certa: {settled.troca.certa.nome}</span>
+                    <span dir="ltr" className="font-ui text-[12.5px] text-[var(--teal-ink)]">{tx.aCerta(settled.troca.certa.nome)}</span>
                   </span>
                   <span className="grid justify-items-center gap-0.5 rounded-[var(--r-md)] border border-line bg-surface px-4 py-2">
                     <He size="lg">{settled.troca.escolhida.glifo}</He>
-                    <span dir="ltr" className="font-ui text-[12.5px] text-ink-muted">a escolhida: {settled.troca.escolhida.nome}</span>
+                    <span dir="ltr" className="font-ui text-[12.5px] text-ink-muted">{tx.aEscolhida(settled.troca.escolhida.nome)}</span>
                   </span>
                 </div>
                 <p className="text-[15px] leading-relaxed text-ink font-medium m-0">
-                  {settled.troca.textoPt} Observe as duas letras.
+                  {settled.troca.textoPt} {tx.observeAsDuas}
                 </p>
               </div>
             )}
@@ -375,22 +400,21 @@ export function ExercisePlayer({
             <p className="mt-2 text-[15px] leading-relaxed text-ink-body"><Prose text={ex.explainPt} /></p>
             {vaiVoltar && (
               <p className="mt-2 font-ui text-[14px] leading-relaxed text-[var(--gold-body)]">
-                Esta questão volta daqui a pouco, para você acertar.
+                {tx.volta}
               </p>
             )}
             {firstUnaided && (
               <p className="mt-3 pt-3 border-t border-[color:var(--line-soft)]
                             font-ui text-[14px] leading-relaxed text-[var(--mint-ink)]">
-                <strong>Você acabou de ler hebraico sem transliteração.</strong>{' '}
-                Sem o apoio embaixo, sem decorar - você decodificou. É isto que o
-                curso inteiro estava construindo.
+                <strong>{tx.semTranslit}</strong>{' '}
+                {tx.decodificou}
               </p>
             )}
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <Button onClick={next} size="md">
-                {i + 1 >= fila.length && !vaiVoltar ? 'Ver resultado' : 'Continuar'}
+                {i + 1 >= fila.length && !vaiVoltar ? tx.verResultado : tx.continuar}
               </Button>
-              {hasAudio(ex.audioId) && <AudioButton audioId={ex.audioId!} label="Ouvir" size="sm" slow />}
+              {hasAudio(ex.audioId) && <AudioButton audioId={ex.audioId!} label={tx.ouvir} size="sm" slow />}
             </div>
           </Card>
           </div>
@@ -399,6 +423,9 @@ export function ExercisePlayer({
     </div>
   );
 }
+
+/* Quantos acertos seguidos a Yael comemora, com a linha que diz a conta. */
+const MARCOS = [3, 5, 10, 15, 20];
 
 /* The kinds where the wrong OPTION is itself a letter, and so worth recording
    as a confusion. Choosing the wrong meaning of a word is a different kind of
@@ -439,7 +466,7 @@ function Body({
           consonant={ex.consonant} vowels={ex.vowels} answer={ex.answer} sound={ex.sound}
           settled={settled}
           onAnswer={(correct, chosen) => onSettle(correct, {
-            why: correct ? null : `Esse sinal não faz “${ex.sound}”.`,
+            why: correct ? null : tx.sinalNaoFaz(ex.sound),
             expected: ex.vowels[ex.answer], chosenGlyph: chosen
           })}
         />
@@ -451,7 +478,7 @@ function Body({
           tiles={ex.tiles} target={ex.target} hintPt={ex.hintPt}
           settled={settled}
           onAnswer={correct => onSettle(correct, {
-            why: correct ? null : 'A ordem não fecha. Em hebraico a primeira letra fica à direita.'
+            why: correct ? null : tx.ordemNaoFecha
           })}
         />
       );
@@ -464,7 +491,7 @@ function Body({
           settled={settled} seed={ex.id}
           onAnswer={(correct, misses) => onSettle(correct, {
             why: correct ? null
-              : `Você juntou ${misses.length === 1 ? 'um par' : `${misses.length} pares`} que não combinam.`,
+              : tx.paresErrados(misses.length),
             expected: ex.leftKind === 'glyph' ? misses[0]?.[0] : undefined,
             chosenGlyph: ex.leftKind === 'glyph' ? misses[0]?.[1] : undefined
           })}
@@ -478,7 +505,7 @@ function Body({
           cursiva={ex.cursiva} settled={settled}
           onAnswer={(correct, erro) => onSettle(correct, {
             why: correct ? null : erro
-              ? `Na primeira tentativa, a ${erro.posicao + 1}ª letra era ${erro.esperada}, e não ${erro.posta}.`
+              ? tx.primeiraTentativa(erro.posicao + 1, erro.esperada, erro.posta)
               : null,
             /* A troca que conta é a da PRIMEIRA tentativa: é ela que diz o que
                o aluno confunde. Vai para o mesmo monte das outras trocas de
@@ -523,6 +550,19 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'meaning-to-word':
     case 'odd-one-out':
       return null;
+    /* A foto do vocabulário (28/10/2026). Tamanho fixo, para a tela não
+       pular quando ela carrega; o texto alternativo descreve a cena. Se a
+       imagem não carregar, a descrição fica no lugar e a questão continua
+       respondível pelo sentido escrito embaixo. */
+    case 'image-to-word':
+      return (
+        <figure className="grid justify-items-center gap-2 m-0 py-1">
+          <img src={ex.image} alt={ex.imageAlt} width={220} height={220} loading="eager" decoding="async"
+               className="w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] object-cover rounded-[18px]
+                          border border-line bg-surface-2 shadow-[var(--sh)]" />
+          <figcaption className="sr-only">{ex.pt}</figcaption>
+        </figure>
+      );
     /* A palavra à mão, sem vogais - ou, no modo que vai da impressa para a
        cursiva, a palavra impressa, com elas. No modo `letra`, uma letra da
        palavra cursiva vem destacada. */
@@ -621,10 +661,10 @@ function Stimulus({ ex }: { ex: Exercise }) {
         <div className="grid gap-2 justify-items-center py-2">
           <He size="display">{ex.he}</He>
           <p className="font-ui text-[13px] text-ink-muted flex items-center gap-2">
-            <span>procure</span>
+            <span>{tx.procure}</span>
             <He size="inline" className="!text-[20px]">{ex.letter}</He>
             <span aria-hidden className="text-ink-muted">·</span>
-            <span>leitura ←</span>
+            <span>{tx.leitura}</span>
           </p>
         </div>
       );
@@ -634,7 +674,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
           <span className="font-display text-[44px] sm:text-[56px] font-bold text-[var(--accent)]">
             {ex.sound}
           </span>
-          <p className="font-ui text-[13px] text-ink-muted">é assim que soa</p>
+          <p className="font-ui text-[13px] text-ink-muted">{tx.assimQueSoa}</p>
         </div>
       );
     case 'complete-word':
@@ -649,7 +689,7 @@ function Stimulus({ ex }: { ex: Exercise }) {
     case 'listen-syllable':
       return (
         <div className="flex justify-center py-2">
-          <AudioButton audioId={ex.audioId} label="Ouvir de novo" size="lg" slow />
+          <AudioButton audioId={ex.audioId} label={tx.ouvirDeNovo} size="lg" slow />
         </div>
       );
     case 'scene-reading':
@@ -689,9 +729,9 @@ function Options({
               type="button"
               disabled={settled}
               onClick={() => onChoose(idx)}
-              data-resposta={settled && idx === ex.answer ? 'right' : undefined}
-              aria-label={`Posição ${idx + 1}`}
-              className={`min-h-[76px] min-w-[72px] px-3 rounded-[var(--r-md)] border-2
+              data-resposta={settled && idx === ex.answer ? 'right' : settled && idx === chosen ? 'wrong' : undefined}
+              aria-label={tx.posicao(idx + 1)}
+              className={`hf-opcao min-h-[76px] min-w-[72px] px-3 rounded-[var(--r-md)] border-2
                 grid place-items-center transition-colors disabled:cursor-default
                 ${settled && idx === ex.answer ? 'border-[var(--green)] bg-mint'
                   : settled && idx === chosen ? 'border-[var(--amber)] bg-[var(--amber-wash)]'
@@ -734,7 +774,7 @@ function Options({
 /* Which exercises answer in Hebrew. */
 const hebrewOptionsOf = (ex: Exercise): boolean =>
   ex.kind === 'letter-recognition' || ex.kind === 'final-form' ||
-  ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' ||
+  ex.kind === 'print-vs-cursive' || ex.kind === 'meaning-to-word' || ex.kind === 'image-to-word' ||
   ex.kind === 'complete-word' || ex.kind === 'audio-recognition' ||
   ex.kind === 'sound-to-syllable' || ex.kind === 'listen-syllable' ||
   ex.kind === 'odd-one-out' || ex.kind === 'letter-in-word' ||
@@ -783,8 +823,9 @@ function OptionButton({
       onClick={onClick}
       disabled={disabled}
       data-resposta={state}
-      className={`relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
-        flex items-center gap-4 text-left transition-all duration-[var(--dur)] ease-[var(--ease)]
+      className={`hf-opcao relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 px-4 py-3
+        flex items-center gap-4 text-left transition-[border-color,background-color,opacity,scale] duration-[var(--dur)] ease-[var(--ease)]
+        enabled:active:scale-[.98]
         disabled:cursor-default ${TONE[state]}
         ${tile ? 'sm:h-full sm:min-h-[104px] sm:justify-center sm:gap-0 sm:px-3' : ''}`}
     >

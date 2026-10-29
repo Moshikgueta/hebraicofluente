@@ -21,12 +21,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import type { Pergunta } from '@/lib/engine/deck';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-blast';
 
 const ELOGIO: readonly [number, string][] = [
-  [3, '3 acertos seguidos!'],
-  [5, 'Você está pegando o jeito!'],
-  [8, '8 seguidos - isso é leitura automática.'],
-  [12, 'Doze. Pode parar quando quiser, você já provou.']
+  [3, tx.elogio3],
+  [5, tx.elogio5],
+  [8, tx.elogio8],
+  [12, tx.elogio12]
 ];
 
 export function Blast({
@@ -150,18 +151,18 @@ export function Blast({
         <span className="font-ui text-[13px] tabular-nums text-ink-muted">{i + 1} / {perguntas.length}</span>
         <span className={`font-ui text-[13px] font-bold tabular-nums transition-colors
           ${sequencia >= 3 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}`}>
-          {sequencia > 0 ? `${sequencia} seguidos` : `${acertos} acertos`}
+          {sequencia > 0 ? tx.seguidos(sequencia) : tx.acertos(acertos)}
         </span>
       </div>
 
-      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={`Pergunta ${i + 1} de ${perguntas.length}`}
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={tx.perguntaDe(i + 1, perguntas.length)}
            className="grid gap-4 outline-none">
       <div className="rounded-[20px] bg-[var(--sand)] px-5 py-7 text-center relative overflow-hidden">
         <p className="font-ui text-[14.5px] text-ink-muted mb-3">{q.enunciadoPt}</p>
         {emHebraico
           ? <div><He size="plate" tone="navy" className="animate-pop">{q.alvo}</He></div>
           : <p className="font-display text-[34px] sm:text-[40px] font-semibold tracking-[-0.02em]
-                          text-[var(--navy)] animate-pop">{q.alvo}</p>}
+                          text-[var(--accent)] animate-pop">{q.alvo}</p>}
         {elogio && (
           <p role="status"
              className="absolute inset-x-0 bottom-2 font-ui text-[14px] font-bold text-[var(--teal-ink)] animate-rise">
@@ -183,7 +184,7 @@ export function Blast({
                 disabled={escolha !== null}
                 data-resposta={estado === 'certo' ? 'right' : undefined}
                 className={`w-full min-h-[64px] rounded-[16px] border-2 px-3 py-3
-                  grid place-items-center gap-1 transition-all duration-[180ms]
+                  grid place-items-center gap-1 transition-[border-color,background-color,opacity,translate,scale] duration-[180ms] enabled:active:scale-[.98]
                   ${estado === 'certo' ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
                     : estado === 'errado' ? 'border-[#D9B872] bg-[var(--gold-soft)]'
                     : estado === 'apagado' ? 'border-line bg-[var(--card)] opacity-50'
@@ -200,9 +201,9 @@ export function Blast({
 
       <p aria-live="polite" className="min-h-[22px] font-ui text-[14px] text-center">
         {escolha === null ? '' : escolha === q.resposta
-          ? <span className="text-[var(--teal-ink)] font-semibold">Boa!</span>
+          ? <span className="text-[var(--teal-ink)] font-semibold">{tx.boa}</span>
           : <span className="text-[var(--gold-ink)] font-semibold">
-              Quase. A resposta era {q.opcoes[q.resposta]}.
+              {tx.quase(q.opcoes[q.resposta])}
             </span>}
       </p>
       </div>

@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { meta } from '@/lib/seo';
+import { PrivacyEn } from '@/components/legal/en/PrivacyEn';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
-import { empresa, soPix } from '@/lib/empresa';
+import { empresa, lembreteLigado, soPix } from '@/lib/empresa';
 
 export const metadata: Metadata = meta({
   rota: '/privacidade',
-  title: 'Política de Privacidade - Hebraico Fluente',
-  description:
-    'Quais dados são coletados, para quê, com quem são compartilhados, por quanto ' +
+  title: process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'Privacy Policy - Hebraico Fluente' : 'Política de Privacidade - Hebraico Fluente',
+  description: process.env.NEXT_PUBLIC_LOCALE === 'en'
+    ? 'What data is collected, what for, who it is shared with, how long it is kept, and how to use your data protection rights.'
+    : 'Quais dados são coletados, para quê, com quem são compartilhados, por quanto ' +
     'tempo ficam guardados, e como exercer seus direitos de titular pela LGPD.'
 });
 
@@ -24,6 +26,8 @@ export const metadata: Metadata = meta({
  * nenhuma: ela promete o que ninguém conferiu.
  */
 export default function Page() {
+  /* O site em inglês tem o próprio documento (PLANO-INGLES.md, etapa 6). */
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return <PrivacyEn />;
   const { contato, privacidade, nomeFantasia } = empresa;
 
   const DADOS: [string, string, string][] = [
@@ -286,12 +290,15 @@ export default function Page() {
           o navegador não guarda mais qual versão você viu, e o que ficou no servidor são só
           totais por dia, sem nome, e-mail, conta nem endereço de IP.
         </p>
-        {/* 30/09/2026: worker/src/api/estatisticas.js. */}
+        {/* 30/09/2026: worker/src/api/estatisticas.js. A faixa de tempo entrou em 28/10/2026
+            (app/src/lib/tempo-de-etapa.ts). */}
         <p>
           Para melhorar as aulas, quem está conectado ao curso manda também, em lote, só contagens de
           aprendizagem: que tipo de exercício, de qual lição, se a resposta foi certa ou errada, e que etapa de
-          qual lição foi concluída pela primeira vez. O servidor soma esses números por dia e não guarda nome,
-          e-mail, conta, endereço de IP, horário nem o que você digitou. Os totais saem depois de um ano.
+          qual lição foi concluída pela primeira vez, com a faixa de tempo que ela levou (por exemplo, "entre 2
+          e 4 minutos", contando só o tempo em que a página estava à vista e em uso; nunca o tempo exato). O
+          servidor soma esses números por dia e não guarda nome, e-mail, conta, endereço de IP, horário nem o
+          que você digitou. Os totais saem depois de um ano.
         </p>
         {/* 03/10/2026: worker/src/api/estatisticas.js, contarDemo. */}
         <p>
@@ -342,6 +349,21 @@ export default function Page() {
           curso, os e-mails das próximas letras param. O e-mail é entregue pela Resend e não é vendido nem compartilhado com
           mais ninguém.
         </p>
+        {/* 28/10/2026: o lembrete para estudar (worker/src/lembrete.js). Só
+            aparece com a chave ligada em data/empresa.json, que é também o que
+            liga a caixa do perfil e o envio: a política nunca descreve menos
+            do que o site faz, nem mais. TEXTO PARA APROVAÇÃO do dono. */}
+        {lembreteLigado() && (
+          <p>
+            <strong>O lembrete para estudar.</strong> Se você ligar o lembrete em Sua conta, mandamos um e-mail
+            curto, no máximo um por dia e a partir das 19h (horário de Brasília), nos dias em que o seu progresso
+            ainda não mostra estudo. Para isso o servidor lê o seu progresso, que já guardamos para sincronizar os
+            aparelhos, e guarda a data em que você ligou o lembrete, o último dia em que ele foi conferido e quantos
+            lembretes seguidos saíram sem estudo: no terceiro, eles param até você voltar. A base legal é o seu
+            consentimento (LGPD, art. 7º, I). Você desliga em Sua conta ou pelo link de todo lembrete, que funciona
+            sem login; ao desligar, ou ao apagar a conta, esses dados são apagados. O e-mail é entregue pela Resend.
+          </p>
+        )}
       </Artigo>
 
       <Artigo n={5} titulo="Segurança">

@@ -64,6 +64,7 @@ import { useTocador } from './useTocador';
 import { asset } from '@/lib/asset';
 import { origemAtual } from '@/lib/origem';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
+import { tx } from '@/i18n/telas/venda-demo-alef';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
    letra são os mesmos que a lição 1 usa, e um dia em que eles divergirem é um
@@ -78,10 +79,10 @@ const ALEF = course.letters.find(l => l.id === 'alef');
    vez, e por isso elas são o teste. O {{ב}} entra por ser a segunda letra do
    alfabeto e aparecer na palavra da etapa seguinte. */
 const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
-  { he: 'מ', certa: false, porque: 'Este é o Mem. Ele tem uma base reta e uma pequena abertura embaixo, à esquerda.' },
+  { he: 'מ', certa: false, porque: tx.porqueMem },
   { he: 'א', certa: true, porque: '' },
-  { he: 'ש', certa: false, porque: 'Este é o Shin, e ele tem três hastes subindo, como um garfo.' },
-  { he: 'ב', certa: false, porque: 'Este é o Bet, com a base reta apoiada na linha.' }
+  { he: 'ש', certa: false, porque: tx.porqueShin },
+  { he: 'ב', certa: false, porque: tx.porqueBet }
 ];
 
 /* A palavra da leitura.
@@ -92,7 +93,7 @@ const OPCOES: readonly { he: string; certa: boolean; porque: string }[] = [
    sensação, e não a tradução, que faz a pessoa querer a segunda letra.
 
    E ela é uma palavra que um brasileiro reconhece de ouvido. */
-const PALAVRA = { he: 'אַבָּא', translit: 'ába', pt: 'pai' } as const;
+const PALAVRA = { he: 'אַבָּא', translit: tx.palavraTranslit, pt: tx.palavraPt } as const;
 
 /* As etapas que entraram em 03/10/2026, a pedido do dono: o teste era curto
    demais para o que a capa prometia. Cada uma ensina uma coisa que a lição 1
@@ -122,12 +123,12 @@ type Rodada = {
 type Tocador = ReturnType<typeof useTocador>;
 
 const COMPARAR: readonly Rodada[] = [{
-  pergunta: 'E agora: qual das duas é o Álef?',
+  pergunta: tx.compararPergunta,
   opcoes: [
-    { he: 'ע', certa: false, porque: 'Este é o Áyin. O א tem um traço diagonal no meio, ligando os dois cantos. O ע é aberto em cima, com dois braços que descem para um pé só.' },
+    { he: 'ע', certa: false, porque: tx.compararPorque },
     { he: 'א', certa: true, porque: '' }
   ],
-  acerto: 'O traço diagonal no meio é a marca do Álef. O Áyin, aberto em cima, é a letra que mais se confunde com ele.'
+  acerto: tx.compararAcerto
 }];
 
 const SILABAS = [
@@ -137,66 +138,66 @@ const SILABAS = [
 
 const VOGAIS: readonly Rodada[] = [
   {
-    pergunta: 'Como se lê isto?', mostra: 'אִ',
+    pergunta: tx.vogal1Pergunta, mostra: 'אִ',
     opcoes: [
-      { he: 'a', rotulo: '«a»', certa: false, porque: 'O tracinho embaixo é que seria o «a». Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' },
+      { he: 'a', rotulo: '«a»', certa: false, porque: tx.vogal1PorqueA },
       { he: 'i', rotulo: '«i»', certa: true, porque: '' },
-      { he: 'o', rotulo: '«o»', certa: false, porque: 'O «o» é um ponto em cima: em cima de um ו (אוֹ) ou da própria letra (אֹ). Aqui embaixo do Álef há um ponto, e o ponto é a vogal «i».' }
+      { he: 'o', rotulo: '«o»', certa: false, porque: tx.vogal1PorqueO }
     ],
-    acerto: 'O ponto embaixo é a vogal «i». O Álef só segura.'
+    acerto: tx.vogal1Acerto
   },
   {
-    pergunta: 'E isto?', mostra: 'אוֹ',
+    pergunta: tx.vogal2Pergunta, mostra: 'אוֹ',
     opcoes: [
-      { he: 'u', rotulo: '«u»', certa: false, porque: 'No «u» o ponto fica no meio do ו. Aqui o ponto está em cima do ו, e isso é a vogal «o».' },
-      { he: 'a', rotulo: '«a»', certa: false, porque: 'O nome da letra começa com A, e isso engana: o Álef não é a vogal A. O ו com um ponto em cima é a vogal «o».' },
+      { he: 'u', rotulo: '«u»', certa: false, porque: tx.vogal2PorqueU },
+      { he: 'a', rotulo: '«a»', certa: false, porque: tx.vogal2PorqueA },
       { he: 'o', rotulo: '«o»', certa: true, porque: '' }
     ],
-    acerto: 'O ו com um ponto em cima é a vogal «o».'
+    acerto: tx.vogal2Acerto
   },
   {
-    pergunta: 'Última: e esta?', mostra: 'אַ',
+    pergunta: tx.vogal3Pergunta, mostra: 'אַ',
     opcoes: [
       { he: 'a', rotulo: '«a»', certa: true, porque: '' },
-      { he: 'e', rotulo: '«e»', certa: false, porque: 'O «e» são pontinhos embaixo, três (אֶ) ou dois (אֵ). Aqui há um tracinho só, e o tracinho é a vogal «a».' },
-      { he: 'i', rotulo: '«i»', certa: false, porque: 'O «i» é um ponto. Aqui há um tracinho, e o tracinho é a vogal «a».' }
+      { he: 'e', rotulo: '«e»', certa: false, porque: tx.vogal3PorqueE },
+      { he: 'i', rotulo: '«i»', certa: false, porque: tx.vogal3PorqueI }
     ],
-    acerto: 'O tracinho embaixo é a vogal «a». Você acabou de ler três sílabas.'
+    acerto: tx.vogal3Acerto
   },
   /* A rodada de ouvir: o exercício «Ouvir a sílaba» das lições. */
   {
-    pergunta: 'Agora ouça e toque na sílaba que você ouviu.', ouvir: 'alef-u',
+    pergunta: tx.ouvirPergunta, ouvir: 'alef-u',
     opcoes: [
-      { he: 'אַ', certa: false, porque: 'Esta é «a», com o tracinho embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.' },
+      { he: 'אַ', certa: false, porque: tx.ouvirPorqueA },
       { he: 'אוּ', certa: true, porque: '' },
-      { he: 'אִ', certa: false, porque: 'Esta é «i», com o ponto embaixo. O que você ouviu foi «u»: o ו com um ponto no meio.' }
+      { he: 'אִ', certa: false, porque: tx.ouvirPorqueI }
     ],
-    acerto: 'אוּ é «u». Você ouviu o som e achou a forma escrita.'
+    acerto: tx.ouvirAcerto
   }
 ];
 
 const ACHAR: readonly Rodada[] = [
   {
-    pergunta: 'Qual destas palavras começa com Álef?',
+    pergunta: tx.achar1Pergunta,
     opcoes: [
-      { he: 'שָׁלוֹם', certa: false, porque: 'Esta começa com Shin, a letra da direita. Em hebraico a palavra começa à direita.' },
+      { he: 'שָׁלוֹם', certa: false, porque: tx.achar1PorqueShin },
       { he: 'אֶתְמוֹל', certa: true, porque: '' },
-      { he: 'תוֹדָה', certa: false, porque: 'Esta começa com Tav, a letra da direita. Em hebraico a palavra começa à direita.' },
-      { he: 'בַּיִת', certa: false, porque: 'Esta começa com Bet, a letra da direita. Em hebraico a palavra começa à direita.' }
+      { he: 'תוֹדָה', certa: false, porque: tx.achar1PorqueTav },
+      { he: 'בַּיִת', certa: false, porque: tx.achar1PorqueBet }
     ],
-    acerto: 'אֶתְמוֹל se lê «etmól» e quer dizer «ontem». O Álef está à direita, segurando o «e».',
-    ouvirAcerto: { clipe: 'etmol', rotulo: 'Ouvir «etmól»' }
+    acerto: tx.achar1Acerto,
+    ouvirAcerto: { clipe: 'etmol', rotulo: tx.ouvirEtmol }
   },
   {
-    pergunta: 'Mais uma: qual começa com Álef?',
+    pergunta: tx.achar2Pergunta,
     opcoes: [
-      { he: 'מַיִם', certa: false, porque: 'Esta começa com Mem, a letra da direita. Procure o Álef na ponta direita.' },
-      { he: 'לֶחֶם', certa: false, porque: 'Esta começa com Lámed, a letra da direita. Procure o Álef na ponta direita.' },
-      { he: 'יֶלֶד', certa: false, porque: 'Esta começa com Yud, a letra da direita. Procure o Álef na ponta direita.' },
+      { he: 'מַיִם', certa: false, porque: tx.achar2PorqueMem },
+      { he: 'לֶחֶם', certa: false, porque: tx.achar2PorqueLamed },
+      { he: 'יֶלֶד', certa: false, porque: tx.achar2PorqueYud },
       { he: 'אֹכֶל', certa: true, porque: '' }
     ],
-    acerto: 'אֹכֶל se lê «óchel» e quer dizer «comida» (o ch aqui não é o ch de «chave»: é um R raspado na garganta, como o R carioca de «carro»). Duas palavras de verdade, e você achou o Álef nas duas.',
-    ouvirAcerto: { clipe: 'ochel', rotulo: 'Ouvir «óchel»' }
+    acerto: tx.achar2Acerto,
+    ouvirAcerto: { clipe: 'ochel', rotulo: tx.ouvirOchel }
   }
 ];
 
@@ -215,7 +216,10 @@ const ACHAR: readonly Rodada[] = [
    menu de acessibilidade. */
 type Etapa = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 const TOTAL_ETAPAS = 8;
-const ROTULOS = ['Conhecer', 'Reconhecer', 'Comparar', 'Vogais', 'Escrever', 'Achar', 'Ler', 'Pronto'] as const;
+const ROTULOS = [
+  tx.rotuloConhecer, tx.rotuloReconhecer, tx.rotuloComparar, tx.rotuloVogais,
+  tx.rotuloEscrever, tx.rotuloAchar, tx.rotuloLer, tx.rotuloPronto
+] as const;
 /* Onde cada etapa mora, para o resto do arquivo não depender da ordem. */
 const E = { conhecer: 0, reconhecer: 1, comparar: 2, vogais: 3, escrever: 4, achar: 5, ler: 6, pronto: 7 } as const;
 /* O nome que vai para o funil do painel (lib/funil-demo.ts) ao chegar em cada
@@ -308,16 +312,14 @@ export function DemoAlef({
     <section ref={secao} id="experimente" aria-labelledby="experimente-titulo">
       <Container className="pt-20 sm:pt-28">
         <Reveal>
-          <Rubrica letra="ב" className="mb-5">Teste grátis · {EXERCICIOS_DA_DEMO} exercícios</Rubrica>
+          <Rubrica letra="ב" className="mb-5">{tx.rubrica(EXERCICIOS_DA_DEMO)}</Rubrica>
           <H2 id="experimente-titulo" className="mb-3">
-            Experimente aprender sua primeira letra.
+            {tx.titulo}
           </H2>
         </Reveal>
         <Reveal delay={80}>
           <Lead className="mb-8">
-            Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras,
-            descobre como ela segura as vogais, escreve com o dedo e acha ela dentro de
-            palavras de verdade - do mesmo jeito que acontece dentro do curso.
+            {tx.lead}
           </Lead>
         </Reveal>
 
@@ -338,7 +340,7 @@ export function DemoAlef({
               </ol>
               <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em]
                             text-ink-muted tabular-nums shrink-0">
-                {etapa + 1} de {TOTAL_ETAPAS} · {ROTULOS[etapa]}
+                {tx.etapaDe(etapa + 1, TOTAL_ETAPAS, ROTULOS[etapa])}
               </p>
             </div>
 
@@ -355,15 +357,13 @@ export function DemoAlef({
                   <div className="grid gap-4">
                     <p className="font-display text-[21px] sm:text-[23px] leading-[1.4] font-medium
                                   tracking-[-0.015em] text-ink">
-                      O Álef é a primeira letra do alfabeto - e ela não tem som próprio.
+                      {tx.conhecerTitulo}
                     </p>
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[46ch]">
-                      Ele é a letra que carrega a vogal: sozinho não se pronuncia, e o som que
-                      você ouve vem do sinal que aparece embaixo ou ao lado dele. É por isso
-                      que o Álef abre o alfabeto e abre tantas palavras.
+                      {tx.conhecerTexto}
                     </p>
                     <div className="flex flex-wrap items-center gap-2.5">
-                      <BotaoOuvir clipe="alef" rotulo="Ouvir o nome da letra" tocador={tocador} />
+                      <BotaoOuvir clipe="alef" rotulo={tx.ouvirNome} tocador={tocador} />
                       <button
                         type="button"
                         onClick={iniciar}
@@ -375,7 +375,7 @@ export function DemoAlef({
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                    motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                       >
-                        Entendi · testar agora
+                        {tx.entendi}
                       </button>
                     </div>
                   </div>
@@ -387,7 +387,7 @@ export function DemoAlef({
                 <div className="grid gap-5">
                   <p className="font-display text-[22px] sm:text-[25px] font-semibold
                                 tracking-[-0.02em] text-ink">
-                    Qual destas é o Álef?
+                    {tx.qualAlef}
                   </p>
 
                   <ul className="grid grid-cols-2 sm:grid-cols-4 gap-3 list-none p-0 m-0">
@@ -435,7 +435,7 @@ export function DemoAlef({
                   <div className="min-h-[124px]" aria-live="polite">
                     {escolha === null && (
                       <p className="font-ui text-[15px] leading-[1.6] text-ink-muted pt-1">
-                        Toque na letra que você acabou de ver.
+                        {tx.toqueLetra}
                       </p>
                     )}
 
@@ -445,13 +445,13 @@ export function DemoAlef({
                         <p className="flex items-center gap-2.5 m-0">
                           <Check size={18} color="var(--teal-ink)" />
                           <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">
-                            Isso! <He size="inline" tone="teal">א</He> é o Álef.
+                            {tx.issoAlef(<He size="inline" tone="teal">א</He>)}
                           </span>
                         </p>
                         <p className="font-ui text-[15px] leading-[1.6] text-[var(--teal-body)] m-0">
                           {tentativas > 1
-                            ? 'Achou na segunda - que é exatamente como se aprende uma forma nova.'
-                            : 'Primeira tentativa. Você já sabe separar o Álef de três letras parecidas.'}
+                            ? tx.achouSegunda
+                            : tx.primeira}
                         </p>
                         <div>
                           <button
@@ -465,7 +465,7 @@ export function DemoAlef({
                                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                        motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                           >
-                            Continuar →
+                            {tx.continuar}
                           </button>
                         </div>
                       </div>
@@ -477,15 +477,13 @@ export function DemoAlef({
                         <p className="flex items-center gap-2.5 m-0">
                           <span aria-hidden className="font-ui text-[17px] font-bold text-[var(--gold-ink)]">✕</span>
                           <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">
-                            Quase.
+                            {tx.quase}
                           </span>
                         </p>
                         {/* A frase que ENSINA. Um erro que só diz "errado"
                             devolve a pessoa ao mesmo chute. */}
                         <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
-                          {escolhida.porque} O Álef tem esta forma:{' '}
-                          <He size="inline" tone="ink">א</He> - duas hastes inclinadas
-                          apoiadas numa terceira. Toque de novo.
+                          {tx.formaDoAlef(escolhida.porque, <He size="inline" tone="ink">א</He>)}
                         </p>
                       </div>
                     )}
@@ -511,7 +509,7 @@ export function DemoAlef({
               {/* ── 3 · comparar ─────────────────────────────────────── */}
               {etapa === E.comparar && (
                 <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar" tocador={tocador}
-                         seguir="Agora as vogais →" onFim={() => avancar(E.vogais)} />
+                         seguir={tx.seguirVogais} onFim={() => avancar(E.vogais)} />
               )}
 
               {/* ── 4 · vogais ───────────────────────────────────────
@@ -522,20 +520,19 @@ export function DemoAlef({
                   <div className="grid gap-2">
                     <p className="font-display text-[22px] sm:text-[25px] font-semibold
                                   tracking-[-0.02em] text-ink m-0">
-                      Uma letra, cinco sons.
+                      {tx.vogaisTitulo}
                     </p>
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[56ch] m-0">
-                      O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Toque em
-                      cada sílaba para ouvir o professor, e depois responda.
+                      {tx.vogaisTexto}
                     </p>
                   </div>
-                  <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label="As vogais com o Álef" dir="rtl">
+                  <ul className="grid grid-cols-5 gap-1.5 sm:gap-2 list-none p-0 m-0 max-w-[420px]" aria-label={tx.vogaisLista} dir="rtl">
                     {SILABAS.map(x => (
                       <li key={x.som} className="min-w-0">
                         <button
                           type="button"
                           onClick={() => tocador.tocar(x.clipe)}
-                          aria-label={`Ouvir «${x.som}»`}
+                          aria-label={tx.ouvirSom(x.som)}
                           className={`w-full rounded-[14px] py-2.5 grid justify-items-center min-h-[44px]
                                       transition-colors duration-[200ms]
                                       focus-visible:outline focus-visible:outline-2
@@ -551,7 +548,7 @@ export function DemoAlef({
                     ))}
                   </ul>
                   <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais" tocador={tocador}
-                           seguir="Agora escreva você →" onFim={() => avancar(E.escrever)} />
+                           seguir={tx.seguirEscrever} onFim={() => avancar(E.escrever)} />
                 </div>
               )}
 
@@ -571,12 +568,10 @@ export function DemoAlef({
                   <div className="grid gap-3">
                     <p className="font-display text-[22px] sm:text-[25px] font-semibold
                                   tracking-[-0.02em] text-ink m-0">
-                      Agora escreva o Álef com o dedo.
+                      {tx.escreverTitulo}
                     </p>
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[56ch] m-0">
-                      Repare que a letra à mão não tem o mesmo desenho da que você viu: em
-                      hebraico se lê na forma impressa e se escreve na cursiva, que é a que
-                      aparece num bilhete em Israel.
+                      {tx.escreverTexto}
                     </p>
                   </div>
 
@@ -590,7 +585,7 @@ export function DemoAlef({
                         movimentos são. É o mesmo desenho que vai no livro. */}
                     <div className="rounded-[16px] border border-line bg-[var(--sand)] p-4
                                     grid gap-1 justify-items-center max-w-[240px]">
-                      <DiagramaDeTracado letterId="alef" label="Álef" movimentos={2} />
+                      <DiagramaDeTracado letterId="alef" label={tx.alef} movimentos={2} />
                     </div>
                   </div>
 
@@ -600,14 +595,14 @@ export function DemoAlef({
                         ref={quadro}
                         glyph={ALEF.letter}
                         guia={0.22}
-                        label="Álef"
+                        label={tx.alef}
                         onTinta={t => { setTemTinta(t); if (t) setEscreveu(true); }}
                         alturaClass="h-[240px] sm:h-[280px]"
                       />
                     </div>
                     <p className="font-ui text-[13.5px] text-ink-muted m-0">
-                      Passe o dedo por cima do modelo.{' '}
-                      <span className="whitespace-nowrap">← escreva nesta direção ←</span>
+                      {tx.passeODedo}{' '}
+                      <span className="whitespace-nowrap">{tx.direcao}</span>
                     </p>
 
                     {/* Altura reservada, como no resto da demo: o cartão não
@@ -642,7 +637,7 @@ export function DemoAlef({
                                    focus-visible:outline focus-visible:outline-2
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
                       >
-                        Conferir
+                        {tx.conferir}
                       </button>
                       <button
                         type="button"
@@ -655,7 +650,7 @@ export function DemoAlef({
                                    focus-visible:outline focus-visible:outline-2
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
                       >
-                        Limpar
+                        {tx.limpar}
                       </button>
                       <button
                         type="button"
@@ -668,7 +663,7 @@ export function DemoAlef({
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                    motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                       >
-                        Agora ache o Álef →
+                        {tx.seguirAchar}
                       </button>
                     </div>
                   </div>
@@ -679,7 +674,7 @@ export function DemoAlef({
               {/* ── 6 · achar ────────────────────────────────────────── */}
               {etapa === E.achar && (
                 <Rodadas key="achar" rodadas={ACHAR} etapa="achar" tocador={tocador}
-                         seguir="Agora leia uma palavra →" onFim={() => avancar(E.ler)} />
+                         seguir={tx.seguirLer} onFim={() => avancar(E.ler)} />
               )}
 
               {/* ── 7 · ler ──────────────────────────────────────────── */}
@@ -688,16 +683,13 @@ export function DemoAlef({
                   <div className="grid gap-4">
                     <p className="font-display text-[22px] sm:text-[25px] font-semibold
                                   tracking-[-0.02em] text-ink m-0">
-                      Você já consegue achar o Álef aqui dentro.
+                      {tx.lerTitulo}
                     </p>
                     <p className="font-ui text-[16px] leading-[1.65] text-ink-muted max-w-[44ch] m-0">
-                      Esta é uma palavra hebraica de verdade, e o Álef aparece nas duas pontas -
-                      lembrando que em hebraico se lê da direita para a esquerda. A letra do meio
-                      é o Bet, que o curso também ensina.
+                      {tx.lerTexto}
                     </p>
                     <p className="font-ui text-[15px] leading-[1.6] text-ink-muted max-w-[44ch] m-0">
-                      A transliteração ao lado é o apoio do começo. Ela vai diminuindo ao longo
-                      do curso, até você ler direto do hebraico.
+                      {tx.lerApoio}
                     </p>
                     <div>
                       <button
@@ -711,7 +703,7 @@ export function DemoAlef({
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                    motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                       >
-                        Terminei a primeira letra
+                        {tx.terminei}
                       </button>
                     </div>
                   </div>
@@ -725,7 +717,7 @@ export function DemoAlef({
                       {PALAVRA.translit}
                     </p>
                     <p className="font-ui text-[15px] text-ink-muted m-0">«{PALAVRA.pt}»</p>
-                    <BotaoOuvir clipe="aba" rotulo="Ouvir o professor" tocador={tocador} />
+                    <BotaoOuvir clipe="aba" rotulo={tx.ouvirProfessor} tocador={tocador} />
                   </div>
                 </div>
               )}
@@ -740,7 +732,7 @@ export function DemoAlef({
                     </span>
                     <p className="font-ui text-[13px] font-bold uppercase tracking-[.12em]
                                   text-[var(--teal-ink)] tabular-nums m-0">
-                      1 de {course.totalLetters} letras
+                      {tx.umDe(course.totalLetters)}
                     </p>
                   </div>
 
@@ -748,7 +740,7 @@ export function DemoAlef({
                     <p className="font-display font-semibold text-[clamp(24px,3vw,32px)]
                                   leading-[1.15] tracking-[-0.025em] text-ink text-balance m-0
                                   max-w-[22ch]">
-                      Você acabou de aprender sua primeira letra em hebraico.
+                      {tx.aprendeu}
                     </p>
 
                     {/* O resultado (03/10/2026, a pedido do dono): o que a
@@ -757,7 +749,7 @@ export function DemoAlef({
                         para quem escreveu, porque essa etapa se pode pular. */}
                     <div className="rounded-[18px] bg-[var(--teal-soft)] px-5 py-4 text-left w-full max-w-[440px]">
                       <p className="font-ui text-[14px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0 mb-2.5">
-                        O que você fez agora
+                        {tx.oQueFez}
                       </p>
                       <ul className="list-none p-0 m-0 grid gap-2">
                         {feitos(escreveu).map(t => (
@@ -769,8 +761,7 @@ export function DemoAlef({
                       </ul>
                     </div>
                     <p className="font-ui text-[16.5px] leading-[1.6] text-ink-muted max-w-[42ch] m-0">
-                      Faltam {course.totalLetters - 1}. Imagine onde você chega aprendendo
-                      uma de cada vez, do mesmo jeito.
+                      {tx.faltam(course.totalLetters - 1)}
                     </p>
                   </div>
 
@@ -806,17 +797,16 @@ export function DemoAlef({
                                  focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                  motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                     >
-                      {vende ? `Quero aprender as outras ${course.totalLetters - 1}` : label}
+                      {vende ? tx.queroAsOutras(course.totalLetters - 1) : label}
                     </Link>
                     {vende && (
                       <p className="font-ui text-[14.5px] text-ink m-0">
-                        Curso completo de alfabetização por{' '}
-                        <strong className="font-semibold">{brl(flagship().price.brl)}</strong>.
+                        {tx.cursoPor(<strong className="font-semibold">{brl(flagship().price.brl)}</strong>)}
                       </p>
                     )}
                     <p className="font-ui text-[14px] text-ink-muted m-0">{micro}</p>
                     <p className="font-ui text-[14px] text-ink-muted m-0">
-                      Comece do zero, avance no seu ritmo, e o progresso fica salvo.
+                      {tx.comece}
                     </p>
                   </div>
 
@@ -834,7 +824,7 @@ export function DemoAlef({
                                focus-visible:outline focus-visible:outline-2
                                focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]"
                   >
-                    Fazer o teste de novo
+                    {tx.deNovo}
                   </button>
                 </div>
               )}
@@ -878,13 +868,13 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
         <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.02em] text-ink m-0">
           {rodada.pergunta}
         </p>
-        {rodada.ouvir && <BotaoOuvir clipe={rodada.ouvir} rotulo="Ouvir" tocador={tocador} />}
+        {rodada.ouvir && <BotaoOuvir clipe={rodada.ouvir} rotulo={tx.ouvir} tocador={tocador} />}
         {rodada.mostra && (
           <span className="rounded-[16px] bg-[var(--sand)] px-5 py-1.5"><He size="xl" tone="navy">{rodada.mostra}</He></span>
         )}
         {rodadas.length > 1 && (
           <span className="font-ui text-[13px] font-semibold text-ink-muted tabular-nums ml-auto">
-            {n + 1} de {rodadas.length}
+            {tx.deN(n + 1, rodadas.length)}
           </span>
         )}
       </div>
@@ -932,13 +922,13 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
 
       <div className="min-h-[124px]" aria-live="polite">
         {escolha === null && (
-          <p className="font-ui text-[15px] leading-[1.6] text-ink-muted pt-1">Toque na resposta.</p>
+          <p className="font-ui text-[15px] leading-[1.6] text-ink-muted pt-1">{tx.toqueResposta}</p>
         )}
         {escolhida && escolhida.certa && (
           <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 grid gap-3 animate-pop motion-reduce:animate-none">
             <p className="flex items-center gap-2.5 m-0">
               <Check size={18} color="var(--teal-ink)" />
-              <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">Isso!</span>
+              <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">{tx.isso}</span>
             </p>
             <p className="font-ui text-[15px] leading-[1.6] text-[var(--teal-body)] m-0">
               <TextoComHebraico texto={rodada.acerto} />
@@ -958,7 +948,7 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
                            focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                            motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
-                {ultima ? seguir : 'Próxima →'}
+                {ultima ? seguir : tx.proxima}
               </button>
             </div>
           </div>
@@ -967,10 +957,10 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
           <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 grid gap-2 animate-pop motion-reduce:animate-none">
             <p className="flex items-center gap-2.5 m-0">
               <span aria-hidden className="font-ui text-[17px] font-bold text-[var(--gold-ink)]">✕</span>
-              <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">Quase.</span>
+              <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">{tx.quase}</span>
             </p>
             <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
-              <TextoComHebraico texto={escolhida.porque} /> {rodada.ouvir ? 'Ouça de novo e toque outra vez.' : 'Toque de novo.'}
+              <TextoComHebraico texto={escolhida.porque} /> {rodada.ouvir ? tx.ouvirDeNovo : tx.toqueDeNovo}
             </p>
           </div>
         )}
@@ -1010,23 +1000,21 @@ function SegundaLetra() {
     <div className="w-full max-w-[440px] rounded-[18px] border border-line bg-[var(--card)] px-5 py-4 text-left grid gap-3">
       <div className="grid gap-1">
         <p className="font-display text-[18px] font-semibold text-ink m-0">
-          Ainda não quer decidir? Receba a segunda letra por <span className="whitespace-nowrap">e-mail</span>.
+          {tx.segundaTitulo(<span className="whitespace-nowrap">{tx.emailPalavra}</span>)}
         </p>
         <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
-          Mandamos um e-mail com o Mem, a segunda letra do curso. Seu endereço só entra numa lista se você marcar a
-          caixa abaixo.
+          {tx.segundaTexto}
         </p>
       </div>
       {estado === 'ok' ? (
         <p role="status" className="font-ui text-[15px] leading-[1.55] text-[var(--teal-ink)] m-0">
           <span aria-hidden className="font-bold mr-1.5">✓</span>
-          Pronto! A segunda letra está a caminho de <strong className="break-all">{email}</strong>. Se não chegar em
-          alguns minutos, olhe a caixa de spam.
-          {lista && <> Para receber as próximas letras, confirme pelo link que vai no mesmo e-mail.</>}
+          {tx.segundaPronto(<strong className="break-all">{email}</strong>)}
+          {lista && <>{tx.segundaConfirme}</>}
         </p>
       ) : (
         <form onSubmit={enviar} className="grid gap-2">
-          <label htmlFor="segunda-letra-email" className="font-ui text-[14px] font-semibold text-ink">Seu e-mail</label>
+          <label htmlFor="segunda-letra-email" className="font-ui text-[14px] font-semibold text-ink">{tx.seuEmail}</label>
           <div className="flex flex-wrap gap-2">
             <input
               id="segunda-letra-email"
@@ -1045,7 +1033,7 @@ function SegundaLetra() {
                          focus-visible:outline focus-visible:outline-2
                          focus-visible:outline-offset-2 focus-visible:outline-[var(--navy)]"
             >
-              {estado === 'enviando' ? 'Enviando…' : 'Mandar a segunda letra'}
+              {estado === 'enviando' ? tx.enviando : tx.mandar}
             </button>
           </div>
           <label htmlFor="segunda-letra-lista" className="flex items-start gap-2.5 font-ui text-[14px] leading-[1.5] text-ink-body">
@@ -1055,16 +1043,16 @@ function SegundaLetra() {
               className="mt-[3px] h-[18px] w-[18px] shrink-0 accent-[var(--teal)]"
             />
             <span>
-              Quero receber também as próximas letras e as novidades do curso por e-mail. Posso sair quando quiser.{' '}
-              <a href="/privacidade/" target="_blank" rel="noopener" className="underline">Privacidade</a>
+              {tx.querLista}{' '}
+              <a href="/privacidade/" target="_blank" rel="noopener" className="underline">{tx.privacidade}</a>
             </span>
           </label>
           <div aria-live="polite" className="min-h-[20px]">
             {estado === 'invalido' && (
-              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">Confira o e-mail: parece que falta alguma coisa.</p>
+              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">{tx.emailInvalido}</p>
             )}
             {estado === 'erro' && (
-              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">Não consegui mandar agora. Tente de novo daqui a pouco.</p>
+              <p className="font-ui text-[14px] text-[var(--gold-ink)] m-0">{tx.emailErro}</p>
             )}
           </div>
         </form>
@@ -1076,13 +1064,13 @@ function SegundaLetra() {
 /** O resultado do fim, na ordem em que a pessoa fez. */
 function feitos(escreveu: boolean): string[] {
   return [
-    'Reconheceu o Álef entre quatro letras parecidas',
-    'Separou o Álef do Áyin, a letra que mais se confunde com ele',
-    'Leu três sílabas com vogais',
-    'Reconheceu uma sílaba só de ouvir',
-    ...(escreveu ? ['Escreveu o Álef com o dedo'] : []),
-    'Achou o Álef em duas palavras de verdade',
-    'Leu a palavra אַבָּא, «pai»'
+    tx.feito1,
+    tx.feito2,
+    tx.feito3,
+    tx.feito4,
+    ...(escreveu ? [tx.feitoEscreveu] : []),
+    tx.feito5,
+    tx.feito6
   ];
 }
 

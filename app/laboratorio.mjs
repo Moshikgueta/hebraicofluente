@@ -148,7 +148,8 @@ log('\n── uma rodada guiada ────────────────
 log('\n── leitura independente ─────────────────────────────');
 {
   const t = await abrir('/leitura/', estado({ licoes: MOD1, firsts: AULA0 }));
-  await t.p.getByText('Leitura independente', { exact: true }).click();
+  /* Desde 27/10/2026 o seletor é de uma linha, com o rótulo curto. */
+  await t.p.getByText('Independente', { exact: true }).click();
   const s = await t.texto();
   confere(s.includes('A leitura sem nikud será liberada depois da etapa "Sem o ponto", no módulo 6.'),
     'avisa que sem nikud vem no módulo 6', 'sem o aviso do módulo 6');

@@ -26,10 +26,42 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync
 import { join } from 'node:path';
 import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
+import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
+import { translitEn } from './translit-en.mjs';
+import { prepararVideos } from './videos.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
-const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+/* Na build em inglês (NEXT_PUBLIC_LOCALE=en), cada arquivo do curso sai com
+   os textos de data/en/ no lugar do português (tools/i18n.mjs). Na build em
+   português o arquivo é lido como sempre. */
+const FALTAS = new Map();
+const readJson = p => {
+  const json = JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+  const nome = p.match(/^data\/([\w-]+)\.json$/)?.[1];
+  if (LOCALE !== 'en' || !TRADUZIDOS.includes(nome)) return json;
+  const faltas = [];
+  traduzir(nome, json, faltas);
+  for (const f of faltas) FALTAS.set(`${f.arquivo}:${f.caminho}`, f);
+  emIngles(json);
+  return json;
+};
+
+/* A transliteração do site em inglês (tools/translit-en.mjs): todo campo
+   `translit...` sai convertido, na mesma regra para o curso inteiro. */
+function emIngles(no, chave = '') {
+  if (Array.isArray(no)) {
+    no.forEach((x, i) => {
+      if (typeof x === 'string') { if (/^translit/i.test(chave)) no[i] = translitEn(x); }
+      else emIngles(x, chave);
+    });
+  } else if (no && typeof no === 'object') {
+    for (const [k, v] of Object.entries(no)) {
+      if (typeof v === 'string') { if (/^translit/i.test(k)) no[k] = translitEn(v); }
+      else emIngles(v, k);
+    }
+  }
+}
 const NFC = s => String(s ?? '').normalize('NFC');
 
 /* Same id as tools/gen-audio.mjs (tools/audio-id.mjs), so a clip recorded for
@@ -91,7 +123,8 @@ const word = w => {
 function carregarImagens(letters, sons = []) {
   const caminho = join(ROOT, 'data/imagens-vocabulario.json');
   if (!existsSync(caminho)) return;
-  const d = JSON.parse(readFileSync(caminho, 'utf8'));
+  /* Por readJson: na build em inglês o texto alternativo vem de data/en/. */
+  const d = readJson('data/imagens-vocabulario.json');
   ESTILO_IMAGEM = d.estilo ?? '';
   /* As lições de som também ensinam palavras (לֵב, סֵפֶר, מֶלֶךְ saíram das
      lições de Bet, Kaf e Pe para as de Vet, Fe e Chaf em 26/09/2026). */
@@ -322,6 +355,26 @@ function main() {
     const empresa = Object.fromEntries(
       Object.entries(readJson('data/empresa.json')).filter(([k]) => !k.startsWith('_nota'))
     );
+    /* O site em inglês cobra pelo Paddle, em dólar, e dá 14 dias para
+       desistir (PLANO-INGLES.md, etapa 5; o Worker usa os mesmos 14, DIAS_PADDLE
+       em api/pay.js). Sem PIX e sem a chave PIX no pacote do navegador. */
+    if (LOCALE === 'en') {
+      empresa.pagamento = { modo: 'paddle', formas: { pix: false, cartao: true } };
+      /* E as políticas em inglês têm data própria (etapa 6). */
+      const { atualizadoEmEn, ...politicas } = empresa.politicas;
+      empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: atualizadoEmEn || politicas.atualizadoEm };
+      const { horarioEn, ...atendimento } = empresa.atendimento || {};
+      if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
+      /* Sem Brasil no site em inglês (decisão do dono, 29/10/2026): o contato é
+         o e-mail próprio dele, sem o .com.br, e o WhatsApp (+55) não aparece. */
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = emailEn
+        ? { ...contato, email: emailEn, emailSuporte: emailEn, emailPrivacidade: emailEn, whatsapp: null }
+        : { ...contato, whatsapp: null };
+    } else {
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = contato;
+    }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
 
@@ -329,9 +382,32 @@ function main() {
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length
   }));
+  /* Na build em inglês o preço é o `usd` (Paddle, em dólar) e ocupa o lugar
+     do `brl`: as telas leem `price.brl` e formatam com `brl()`, que no inglês
+     escreve "$47" (app/src/lib/catalog.ts). Sem parcelas, sem desconto do
+     PIX, sem preço "depois". Produto sem `usd` não está à venda lá. */
+  const emDolar = c => {
+    if (LOCALE !== 'en') return c;
+    const usd = Number(c.price && c.price.usd);
+    return {
+      ...c,
+      /* Os textos do curso em inglês, quando o catálogo tem (`titleEn`,
+         `taglineEn`...): ocupam o lugar do campo `...Pt` que as telas leem. */
+      ...Object.fromEntries(Object.entries(c).filter(([k]) => k.endsWith('En'))
+        .map(([k, v]) => [k.slice(0, -2) + 'Pt', v])),
+      ...(usd > 0 ? {} : { aVenda: false }),
+      price: { brl: usd > 0 ? usd : 0, listBrl: null, installments: 1, pixDiscountPct: 0 }
+    };
+  };
   writeFileSync(join(OUT, 'courses.json'), JSON.stringify({
-    currency: catalogue.currency,
-    courses: catalogue.courses.map(c => {
+    currency: LOCALE === 'en' ? 'USD' : catalogue.currency,
+    /* O site em inglês só vende o curso de alfabetização: os cursos A1, A2 e
+       B1 existem só em português e não são anunciados lá (etapa 7). Livro e
+       combo ficam, desligados (`aVenda: false`), porque o código os procura
+       pelo slug. */
+    courses: catalogue.courses
+      .filter(c => LOCALE !== 'en' || (c.tipo && c.tipo !== 'curso') || Number(c.price && c.price.usd) > 0)
+      .map(emDolar).map(c => {
       const { modulesFrom, ...rest } = c;
       if (modulesFrom && modulesFrom !== 'alfabetizacao') {
         throw new Error(`courses.json: modulesFrom "${modulesFrom}" não corresponde a nenhum curso construído`);
@@ -495,9 +571,14 @@ function main() {
   /* ── as frases ──────────────────────────────────────────────────────
      Copiadas com o hebraico normalizado e com o id de áudio já calculado,
      como tudo o mais: uma gravação futura encaixa sem renomear nada. O
-     `after` vem do dado e é conferido pela V20 do validate.js. */
+     `after` vem do dado e é conferido pela V20 do validate.js.
+
+     A trava da revisão (28/10/2026): uma frase com `"revisado": false` não
+     sai daqui, então nenhuma tela, exercício ou rota a vê. É a mesma regra
+     dos mini-textos - hebraico escrito para o curso só vai ao ar depois de
+     aprovado pelo dono. Sem o campo, a frase é das que já estavam no curso. */
   writeFileSync(join(OUT, 'sentences.json'), JSON.stringify({
-    sentences: sentences.sentences.map(s2 => ({
+    sentences: sentences.sentences.filter(s2 => s2.revisado !== false).map(s2 => ({
       ...s2,
       he: NFC(s2.he),
       audioId: audioIdFor(s2.he),
@@ -600,6 +681,51 @@ function main() {
       }
     }
   }
+  /* ── as fotos de verdade das missões (28/10/2026) ───────────────────
+     Do Wikimedia Commons, com autor, licença e página de origem, e só as
+     que o dono aprovou (data/fotos-missoes.json). Uma foto aprovada sem
+     arquivo ou sem crédito para a build: o crédito sai SEMPRE junto da
+     imagem, é o que as licenças pedem. tests/fotos-missoes.test.ts. */
+  const LICENCAS_DAS_FOTOS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 2.5', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+  const fotoDaMissao = new Map();
+  for (const f of readJson('data/fotos-missoes.json').fotos) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`fotos-missoes.json: a foto ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`fotos-missoes.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`fotos-missoes.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/missoes', f.arquivo))) throw new Error(`fotos-missoes.json: falta o arquivo app/public/media/missoes/${f.arquivo}`);
+    if (!fotoDaMissao.has(f.missao)) {
+      const { aprovada, ...publica } = f;
+      void aprovada;
+      fotoDaMissao.set(f.missao, publica);
+    }
+  }
+
+  /* ── o Hebraico na rua (28/10/2026) ──────────────────────────────────
+     Fotos reais de placas, do Wikimedia Commons, com as mesmas regras de
+     crédito das fotos das missões. Cada placa cita uma palavra do curso
+     (`palavra`) e lista todas as palavras do curso que aparecem nela
+     (`naPlaca`); só sai a aprovada pelo dono. Vai junto das missões, no
+     missoes.json (conteúdo pago). tests/hebraico-na-rua.test.ts. */
+  const placasDaRua = [];
+  for (const f of readJson('data/hebraico-na-rua.json').placas) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'palavra', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`hebraico-na-rua.json: a placa ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`hebraico-na-rua.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`hebraico-na-rua.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/rua', f.arquivo))) throw new Error(`hebraico-na-rua.json: falta o arquivo app/public/media/rua/${f.arquivo}`);
+    if (!Array.isArray(f.naPlaca) || !f.naPlaca.map(NFC).includes(NFC(f.palavra))) {
+      throw new Error(`hebraico-na-rua.json: ${f.id} precisa listar a própria palavra em naPlaca`);
+    }
+    const { aprovada, ...publica } = f;
+    void aprovada;
+    placasDaRua.push({ ...publica, palavra: NFC(f.palavra), naPlaca: f.naPlaca.map(NFC) });
+  }
+
   /* ── os mini-textos de leitura corrida ─────────────────────────────
      Um texto curto por módulo, do 3 ao 7. São as únicas frases do curso
      escritas para ele, e por isso cada um nasce com `revisado: false`: o
@@ -614,11 +740,21 @@ function main() {
       throw new Error(`textos.json: o texto do módulo ${t.modulo} precisa de linhas e perguntas`);
     }
   }
+  /* Na build em inglês, o rascunho ainda não revisado fica de fora, e a
+     tradução dele não é cobrada: o aluno não o veria, e o português dele
+     ainda pode mudar na revisão. Aprovado, ele volta e passa a ser cobrado. */
+  if (LOCALE === 'en') {
+    textos.forEach((t, i) => {
+      if (t.revisado) return;
+      for (const chave of [...FALTAS.keys()]) if (chave.startsWith(`textos:textos/#${i}/`)) FALTAS.delete(chave);
+    });
+  }
+  const textosNaBuild = LOCALE === 'en' ? textos.filter(t => t.revisado) : textos;
   const pontua = x => ({ ...x, he: NFC(x.he) });
   writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
     /* Cada linha com o id de áudio: a gravação dela (onda 4, gen-audio.mjs)
        é o que o botão da linha e o "ouvir o texto" tocam. */
-    textos: textos.map(t => ({
+    textos: textosNaBuild.map(t => ({
       ...t,
       linhas: t.linhas.map(l => ({ ...pontua(l), audioId: audioIdFor(l.he) })),
       /* As palavras novas também: a gravação de cada uma (gen-audio.mjs,
@@ -682,7 +818,10 @@ function main() {
   {
     /* As escritas e as geradas (abertura de módulo, apresentação e erro
        comum de cada letra); a validação dos ids está lá. */
-    const gravacoes = gravacoesDoProfessor(ROOT);
+    /* No site em inglês, nenhuma: são explicações FALADAS em português (a
+       tela some sozinha sem a gravação, GravacaoDoProfessor.tsx). Voltam
+       quando o professor gravar as versões em inglês (PLANO-INGLES.md). */
+    const gravacoes = LOCALE === 'en' ? [] : gravacoesDoProfessor(ROOT);
     writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
       gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
         tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)
@@ -693,12 +832,14 @@ function main() {
   writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
     missoes: missoes.map(m => ({
       ...m,
+      ...(fotoDaMissao.has(m.modulo) ? { foto: fotoDaMissao.get(m.modulo) } : {}),
       passos: m.passos.map(p => ({
         ...p,
         he: NFC(p.he),
         ...(p.erradas ? { erradas: p.erradas.map(NFC) } : {})
       }))
-    }))
+    })),
+    rua: placasDaRua
   }, null, 2) + '\n');
 
   /* ── o curso Hebraico A1 (06/10/2026) ────────────────────────────────
@@ -933,10 +1074,42 @@ function main() {
     ` * degrades visibly rather than inventing a pronunciation. */\n` +
     `export const AUDIO_MANIFEST: readonly string[] = ${JSON.stringify(clips)};\n`);
 
+  /* Os vídeos do "Me explica, Moshik" (28/10/2026): um por letra, em video/
+     na raiz, com o nome da letra (`alef.mp4`) e, se houver, a legenda
+     (`alef.vtt`). Copiados para public/video/, que fica atrás do portão
+     (gate.js), e listados no manifesto: a folha só mostra o vídeo que existe.
+     Nome que não é letra do curso, formato que não é mp4 ou arquivo acima de
+     25 MiB (o teto de um arquivo no servidor de ativos da Cloudflare) param
+     a build, com o nome do arquivo. */
+  const videos = prepararVideos(join(ROOT, 'video'), join(pub, 'video'), new Set(letters.map(l => l.id)));
+  writeFileSync(join(ROOT, 'app/src/lib/video-manifest.ts'),
+    `/* GERADO por tools/export-content.mjs a partir de video/ na raiz (ver video/README.md).\n` +
+    ` * Uma entrada por letra com vídeo do professor; vazio = nenhum vídeo ainda. */\n` +
+    `export type VideoDaLetra = { letra: string; legenda: boolean };\n` +
+    `export const VIDEO_MANIFEST: readonly VideoDaLetra[] = ${JSON.stringify(videos)};\n`);
+  if (videos.length) console.log(`  vídeo: ${videos.length} letra(s) com vídeo em app/public/video`);
+
   const words = letters.reduce((a, l) => a + l.wordsToRead.length + l.wordsToRecognize.length, 0);
   console.log(`  ${letters.length} letras · ${modules.length} módulos · ${words} palavras → app/content/`);
   console.log(`  áudio: ${clips.length} arquivo(s) em app/public/audio` +
     (clips.length ? '' : ' - os exercícios de audição ficam marcados como indisponíveis'));
+
+  if (LOCALE === 'en') relatarTraducao();
+}
+
+/* O que ficou sem inglês vai para app/content/_traducao.json e para o resumo.
+   Com HF_I18N_ESTRITO=1 (a publicação do site em inglês), qualquer falta
+   para a build: português no site de fora é defeito, não rascunho. */
+function relatarTraducao() {
+  const faltas = [...FALTAS.values()];
+  writeFileSync(join(OUT, '_traducao.json'), JSON.stringify({ faltas }, null, 2) + '\n');
+  const por = {};
+  for (const f of faltas) por[f.motivo] = (por[f.motivo] ?? 0) + 1;
+  const resumo = Object.entries(por).map(([m, n]) => `${n} ${m}`).join(', ');
+  console.log(`  inglês: ${faltas.length ? resumo : 'completo'} (app/content/_traducao.json)`);
+  if (faltas.length && process.env.HF_I18N_ESTRITO === '1') {
+    throw new Error(`build em inglês com ${faltas.length} texto(s) sem tradução válida: ${resumo}`);
+  }
 }
 
 main();

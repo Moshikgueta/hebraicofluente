@@ -31,13 +31,15 @@ const codigo = (rel: string) => fonte(rel).replace(/\/\*[\s\S]*?\*\//g, '').repl
 const PAGINA = '../src/app/comece-aqui/ComeceAquiClient.tsx';
 
 describe('o link da bio', () => {
-  it('leva à Comece aqui com a parceria, e só a bio', async () => {
+  /* 27/10/2026: o site é só o curso de alfabetização, e a bio deixou de ir
+     para a Comece aqui (que agora leva à capa): vai direto ao curso. */
+  it('leva à página do curso com a parceria', async () => {
     const env = envDeTeste();
     const r = await worker.fetch(new Request(`${SITE}/bio`, { redirect: 'manual', headers: { 'user-agent': 'Mozilla/5.0 (iPhone) Instagram' } }), env, ctx) as Response;
     expect(r.status).toBe(302);
-    expect(r.headers.get('location')).toBe(`${SITE}/comece-aqui/?parceria=bio`);
+    expect(r.headers.get('location')).toBe(`${SITE}/curso-de-hebraico/?parceria=bio#experimente`);
     expect(r.headers.get('cache-control')).toBe('no-store');
-    expect([...PARA_O_COMECE_AQUI]).toEqual(['bio']);
+    expect([...PARA_O_COMECE_AQUI]).toEqual([]);
   });
 });
 
@@ -51,7 +53,7 @@ describe('os links curtos levam o nome da campanha junto', () => {
   };
 
   it('a bio e os stories repassam o utm_campaign', async () => {
-    expect(await desvio('/bio?utm_campaign=p01')).toBe(`${SITE}/comece-aqui/?parceria=bio&utm_campaign=p01`);
+    expect(await desvio('/bio?utm_campaign=p01')).toBe(`${SITE}/curso-de-hebraico/?parceria=bio&utm_campaign=p01#experimente`);
     expect(await desvio('/stories?utm_campaign=Reel%20A1')).toBe(`${SITE}/curso-de-hebraico/?parceria=stories&utm_campaign=reel-a1#experimente`);
   });
 

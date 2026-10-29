@@ -27,27 +27,28 @@
  */
 
 import type { LearnerState, SkillStat } from '@/lib/state/types';
+import { tx } from '@/i18n/telas/motor-dominio';
 
 export type HabilidadeDeLeitura = 'forma' | 'som' | 'leitura';
 
 export const HABILIDADES: readonly { id: HabilidadeDeLeitura; tituloPt: string; descricaoPt: string; resumoPt: string }[] = [
-  { id: 'forma', tituloPt: 'Reconhecimento visual', descricaoPt: 'Identificar a forma da letra.',
-    resumoPt: 'identificar a forma da letra' },
-  { id: 'som', tituloPt: 'Reconhecimento sonoro', descricaoPt: 'Associar a letra ao seu som.',
-    resumoPt: 'associar a letra ao som' },
+  { id: 'forma', tituloPt: tx.formaTitulo, descricaoPt: tx.formaDesc,
+    resumoPt: tx.formaResumo },
+  { id: 'som', tituloPt: tx.somTitulo, descricaoPt: tx.somDesc,
+    resumoPt: tx.somResumo },
   /* O id interno continua `leitura`; na tela é "Leitura em palavras". */
-  { id: 'leitura', tituloPt: 'Leitura em palavras', descricaoPt: 'Reconhecer e ler a letra dentro de palavras.',
-    resumoPt: 'reconhecer e ler a letra dentro de palavras' }
+  { id: 'leitura', tituloPt: tx.leituraTitulo, descricaoPt: tx.leituraDesc,
+    resumoPt: tx.leituraResumo }
 ];
 
 export type NivelDeDominio = 'poucos-dados' | 'aprendendo' | 'desenvolvimento' | 'quase' | 'dominada';
 
 export const NIVEL_PT: Record<NivelDeDominio, string> = {
-  'poucos-dados': 'Dados insuficientes',
-  aprendendo: 'Ainda aprendendo',
-  desenvolvimento: 'Em desenvolvimento',
-  quase: 'Quase dominada',
-  dominada: 'Dominada'
+  'poucos-dados': tx.poucosDados,
+  aprendendo: tx.aprendendo,
+  desenvolvimento: tx.desenvolvimento,
+  quase: tx.quase,
+  dominada: tx.dominada
 };
 
 /** Os limites. Mudar aqui muda a tela inteira e os testes dizem o que mudou. */

@@ -37,7 +37,9 @@ describe('o primeiro passo no e-mail de compra', () => {
   });
 
   it('o tempo prometido é o que a página da Aula 0 promete', () => {
-    const pagina = readFileSync(new URL('../src/app/inicio/StartHereClient.tsx', import.meta.url), 'utf8');
+    /* O texto da Aula 0 mora no dicionário da tela (app/src/i18n/telas/). */
+    const pagina = readFileSync(new URL('../src/app/inicio/StartHereClient.tsx', import.meta.url), 'utf8')
+      + readFileSync(new URL('../src/i18n/telas/painel-start-here-client.tsx', import.meta.url), 'utf8');
     expect(pagina).toContain('Dez minutos de leitura');
     expect(mensagemDeCompra(base).text).toContain('uns dez minutos de leitura');
   });

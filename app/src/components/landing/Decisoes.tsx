@@ -32,6 +32,7 @@ import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
+import { tx } from '@/i18n/telas/venda-decisoes';
 
 /** Roda uma vez, quando o bloco entra na tela. Devolve `true` para animar. */
 function useNaTela<T extends HTMLElement>() {
@@ -114,7 +115,7 @@ function UmaDeCadaVez() {
         </ul>
       </div>
       <p className="font-ui text-[14px] text-ink-muted m-0 min-h-[20px]" aria-live="polite">
-        {acesas === 0 ? ' ' : `${acesas} de ${letras.length} · ${nomes}`}
+        {acesas === 0 ? ' ' : tx.acesas(acesas, letras.length, nomes)}
       </p>
     </div>
   );
@@ -126,9 +127,9 @@ function UmaDeCadaVez() {
    depende dela, e ver os três estágios lado a lado mostra que a retirada é
    gradual, não um corte. */
 const APOIO = [
-  { rotulo: 'Início', he: 'שָׁלוֹם', tr: 'shalóm', pt: 'olá, paz', nota: 'Tudo à mostra: a palavra, como se diz e o que quer dizer.' },
-  { rotulo: 'Meio', he: 'שָׁלוֹם', tr: 'sh… …', pt: 'olá, paz', nota: 'O apoio encolhe. Você lê e confere só o que ficou em dúvida.' },
-  { rotulo: 'Depois', he: 'שָׁלוֹם', tr: '', pt: 'olá, paz', nota: 'Você lê direto do hebraico. O apoio saiu porque já não fazia falta.' }
+  { rotulo: tx.inicio, he: 'שָׁלוֹם', tr: tx.shalomTr, pt: tx.shalomPt, nota: tx.notaInicio },
+  { rotulo: tx.meio, he: 'שָׁלוֹם', tr: 'sh… …', pt: tx.shalomPt, nota: tx.notaMeio },
+  { rotulo: tx.depois, he: 'שָׁלוֹם', tr: '', pt: tx.shalomPt, nota: tx.notaDepois }
 ] as const;
 
 function ApoioQueSai() {
@@ -164,7 +165,7 @@ function ApoioQueSai() {
           largura útil do cartão é menor que isso - a linha empurrava o cartão
           e a página passava a rolar de lado. Com a quebra, os rótulos descem
           em vez de arrastar a página. */}
-      <div role="tablist" aria-label="Estágios do apoio"
+      <div role="tablist" aria-label={tx.estagios}
            className="flex flex-wrap gap-1 rounded-[12px] bg-[var(--sand)] border border-line p-1
                       w-fit max-w-full">
         {APOIO.map((x, k) => (
@@ -202,10 +203,10 @@ function RetornoImediato() {
     <div className="grid gap-4">
       <div className="rounded-[16px] border border-line bg-[var(--card)] p-4 grid gap-3">
         <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0">
-          Exercício · escolha
+          {tx.exercicio}
         </p>
         <p className="font-ui text-[16px] font-semibold text-ink m-0">
-          Qual destas é o Bet?
+          {tx.qualBet}
         </p>
         <div className="flex gap-2.5">
           <button
@@ -244,17 +245,17 @@ function RetornoImediato() {
       <div className="min-h-[84px]" aria-live="polite">
         {resp === null && (
           <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
-            Toque numa das duas para ver o que o curso responde.
+            {tx.toque}
           </p>
         )}
         {resp === 'certo' && (
           <div className="rounded-[13px] bg-[var(--teal-soft)] px-4 py-3 grid gap-1
                           animate-pop motion-reduce:animate-none">
             <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--teal-ink)]">
-              <Check size={16} color="var(--teal-ink)" /> Correto
+              <Check size={16} color="var(--teal-ink)" /> {tx.correto}
             </p>
             <p className="font-ui text-[14px] leading-[1.55] text-[var(--teal-body)] m-0">
-              O Bet apoia a base inteira na linha e fecha o canto de cima à direita.
+              {tx.certoTexto}
             </p>
           </div>
         )}
@@ -262,11 +263,10 @@ function RetornoImediato() {
           <div className="rounded-[13px] bg-[var(--gold-soft)] px-4 py-3 grid gap-1
                           animate-pop motion-reduce:animate-none">
             <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--gold-ink)]">
-              <span aria-hidden>✕</span> Quase. Veja por quê.
+              <span aria-hidden>✕</span> {tx.quase}
             </p>
             <p className="font-ui text-[14px] leading-[1.55] text-[var(--gold-body)] m-0">
-              Este é o Kaf: o canto de baixo é arredondado. O Bet tem a base reta e
-              um degrau à direita. Pode tentar de novo.
+              {tx.quaseTexto}
             </p>
           </div>
         )}
@@ -279,23 +279,23 @@ function RetornoImediato() {
 const CARTOES = [
   {
     n: '01',
-    t: 'Uma letra de cada vez',
-    b: 'Você conhece a letra, pratica com ela e só então avança. O alfabeto inteiro na tela no primeiro dia não ensina - assusta.',
-    destaque: `${course.totalLetters} letras parecem difíceis. Uma letra por vez, não.`,
+    t: tx.c1t,
+    b: tx.c1b,
+    destaque: tx.c1destaque(course.totalLetters),
     visual: <UmaDeCadaVez />
   },
   {
     n: '02',
-    t: 'O apoio aparece e depois sai',
-    b: 'A transliteração ajuda no começo, e o objetivo nunca foi você depender dela. Ela vai diminuindo junto com o seu progresso, até você ler direto do hebraico.',
-    destaque: 'O apoio chega quando você precisa e sai quando você já anda sozinho.',
+    t: tx.c2t,
+    b: tx.c2b,
+    destaque: tx.c2destaque,
     visual: <ApoioQueSai />
   },
   {
     n: '03',
-    t: 'Retorno na hora, em cada passo',
-    b: 'Você não precisa esperar por um professor para saber se acertou. Quando erra, o curso diz onde olhar e devolve a tentativa. O exame final corrige cada questão na hora, diz antes de começar a nota que aprova e, no fim, mostra quais partes pedem revisão.',
-    destaque: 'Você nunca termina uma etapa sem saber se entendeu de verdade.',
+    t: tx.c3t,
+    b: tx.c3b,
+    destaque: tx.c3destaque,
     visual: <RetornoImediato />
   }
 ] as const;
@@ -305,15 +305,14 @@ export function Decisoes() {
     <section id="decisoes" aria-labelledby="decisoes-titulo">
       <Container className="pt-20 sm:pt-28">
         <Reveal>
-          <Rubrica letra="ד" className="mb-5">Como o curso foi pensado</Rubrica>
+          <Rubrica letra="ד" className="mb-5">{tx.rubrica}</Rubrica>
           <H2 id="decisoes-titulo" className="mb-3 max-w-[22ch]">
-            Três decisões que tornam o aprendizado mais leve.
+            {tx.titulo}
           </H2>
         </Reveal>
         <Reveal delay={80}>
           <Lead className="mb-9">
-            Cada parte do curso foi organizada para evitar sobrecarga e deixar você
-            avançar com confiança.
+            {tx.lead}
           </Lead>
         </Reveal>
 

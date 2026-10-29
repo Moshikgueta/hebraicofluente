@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { readFileSync } from 'node:fs';
 
 /* The whole course is static: 48 prerendered pages, and the only state is the
    learner's own, in their browser. So it exports to plain files and can be
@@ -8,8 +9,32 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 /** Os módulos do layout raiz que o webpack copiava (ver `webpack` abaixo). */
 export const BASE = /[\\/](content[\\/](course|courses|empresa)\.json|src[\\/]lib[\\/](catalog|content-publico|empresa|hebrew|raizes|state[\\/]raizes-estado|account[\\/](types|store|api))\.tsx?)$/;
 
+/* O site em inglês é outra build do mesmo código (PLANO-INGLES.md), com o
+   export em out-en, que o wrangler.toml deste repositório serve. A build
+   sem a variável sai em português: é a dos testes. */
+const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+
+/* O endereço do site em inglês. A publicação passa NEXT_PUBLIC_SITE_ORIGIN
+   (lido do wrangler.toml); sem ele, a build em inglês lê o mesmo
+   SITE_ORIGIN do wrangler.toml deste repositório, e nunca cai no domínio
+   brasileiro (o padrão de lib/seo.ts), que daria a cada página o endereço
+   canônico e o cartão do link de outro site. */
+function origemDoToml(): string {
+  try {
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    return (toml.match(/^\s*SITE_ORIGIN\s*=\s*"([^"]+)"/m) || [])[1] || '';
+  } catch { return ''; }
+}
+const ORIGEM_EN = EM_INGLES ? (process.env.NEXT_PUBLIC_SITE_ORIGIN || origemDoToml()) : '';
+
 const nextConfig: NextConfig = {
   output: 'export',
+  distDir: EM_INGLES ? 'out-en' : undefined,
+  /* Sempre definida, mesmo na build em português: variável NEXT_PUBLIC_ que
+     não existe na build não é embutida, vira uma consulta no navegador, e aí
+     o pacote leva os dois idiomas de cada tela (medido em 28/10/2026). Com
+     o valor fixo, o minificador apaga o idioma que não vai ao ar. */
+  env: { NEXT_PUBLIC_LOCALE: EM_INGLES ? 'en' : 'pt', ...(ORIGEM_EN ? { NEXT_PUBLIC_SITE_ORIGIN: ORIGEM_EN } : {}) },
   basePath: basePath || undefined,
   reactStrictMode: true,
   /* Static export has no image optimiser. The only images here are the 27

@@ -11,6 +11,7 @@ import type { Letter } from '@/lib/content-publico';
 import type { SomLicao } from '@/lib/engine/extras';
 import type { AlvoFixacao, ComparacaoDaFixacao, PalavraDaFixacao } from '@/components/learn/FixacaoGuiada';
 import { consonantsOf } from '@/lib/hebrew';
+import { glifoDaLicao, soOLadoDoPonto } from '@/lib/sons';
 
 /* Desenhos para a memória visual quando o curso ainda não tem letras
    anteriores suficientes (a primeira lição). A memória visual é sobre FORMA,
@@ -21,9 +22,13 @@ const GLIFOS_RESERVA = ['ב', 'ג', 'ד', 'ע', 'צ', 'ש'];
 const SONS_RESERVA = ['/m/', '/t/', '/n/', '/l/'];
 
 const unicos = <T,>(xs: readonly T[]): T[] => [...new Set(xs)];
+/* Sem os sinais de vogal, daguesh e pontos de shin/sin; o gerech fica. */
+const semPontos = (he: string): string => he.normalize('NFD').replace(/[\u0591-\u05C7]/g, '');
 
 export function alvoDaLetra(letter: Letter, history: readonly Letter[]): AlvoFixacao {
-  const anteriores = history.filter(l => l.order < letter.order);
+  /* As anteriores pelo lado que a lição delas ensinou (27/10/2026): no Kaf, o
+     Bet é "בּ /b/", e não "ב /b/ ou /v/". */
+  const anteriores = history.filter(l => l.order < letter.order).map(l => soOLadoDoPonto(l));
   const ontem = anteriores.find(l => l.order === letter.order - 1) ?? anteriores.at(-1) ?? null;
   /* As parecidas que o aluno já conhece: elas são a revisão que mais vale. */
   const parecidas = anteriores.filter(l => letter.confusableWith.includes(l.letter));
@@ -31,7 +36,7 @@ export function alvoDaLetra(letter: Letter, history: readonly Letter[]): AlvoFix
     letter.contrastes?.[o.letter] ?? o.contrastes?.[letter.letter] ?? null;
   const comparar: ComparacaoDaFixacao[] = unicos([...parecidas, ...(ontem ? [ontem] : [])])
     .slice(0, 2)
-    .map(o => ({ glifo: o.letter, nome: o.namePt, som: o.sound, audioId: o.audioId, notaPt: notaDoPar(o) }));
+    .map(o => ({ glifo: glifoDaLicao(o), nome: o.namePt, som: o.sound, audioId: o.audioId, notaPt: notaDoPar(o) }));
 
   const palavras: PalavraDaFixacao[] = letter.wordsToRead.length
     ? letter.wordsToRead.slice(0, 3).map(w => ({ he: w.he, translit: w.translit, pt: w.pt, audioId: w.audioId }))
@@ -42,7 +47,7 @@ export function alvoDaLetra(letter: Letter, history: readonly Letter[]): AlvoFix
     ...letter.confusableWith,
     ...anteriores.map(l => l.letter).reverse(),
     ...GLIFOS_RESERVA
-  ]).filter(g => g !== letter.letter && g !== letter.finalForm);
+  ]).filter(g => g !== letter.letter && g !== letter.finalForm && g !== letter.finalDoSom);
 
   const outrosSons = unicos([
     ...anteriores.map(l => l.sound).reverse(),
@@ -51,7 +56,9 @@ export function alvoDaLetra(letter: Letter, history: readonly Letter[]): AlvoFix
 
   return {
     id: letter.id,
-    glifo: letter.letter,
+    /* Com o daguesh no Bet, Kaf e Pe: é o desenho que faz o som da lição. */
+    glifo: glifoDaLicao(letter),
+    glifoForma: letter.letter,
     final: letter.finalForm,
     nome: letter.namePt,
     som: letter.sound,
@@ -79,7 +86,11 @@ export function alvoDoSom(S: SomLicao): AlvoFixacao {
     som: S.som,
     audioId: S.audioId,
     lembrePt: S.regraPt,
-    cursiva: false,
+    /* A cursiva também nas lições de som (27/10/2026, pedido do dono: "falta
+       a cursiva aqui", no Vet). À mão não se escrevem os pontos, então o
+       desenho sai sem eles; o gerech (׳) fica, porque é ele que faz o som. */
+    cursiva: true,
+    glifoCursivo: semPontos(S.he),
     palavras,
     destaque: [base, ...(S.finalHe ? [S.finalHe] : [])],
     comparar: [{ glifo: S.parHe, nome: S.parNomePt, som: S.parSom, audioId: null, notaPt: S.irmaoPt }],

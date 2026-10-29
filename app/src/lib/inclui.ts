@@ -11,16 +11,17 @@
 
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { totalLicoes } from '@/lib/content-publico';
+import { tx } from '@/i18n/telas/motor-inclui';
 
 export function oQueOCursoInclui(): string[] {
   return [
-    'Aula 0: como o hebraico funciona, antes da primeira letra',
-    `${totalLicoes()} lições, uma letra por vez`,
-    'Escrita cursiva traçada na tela, com avaliação do traço',
-    audioAvailable() ? 'Áudio gravado pelo professor, um israelense' : 'Explicação de som para cada letra',
-    'Jogos de prática na Academia de Leitura',
-    'Exame final e certificado de conclusão (não oficial)',
-    'Progresso salvo, no celular e no computador'
+    tx.aula0,
+    tx.licoes(totalLicoes()),
+    tx.cursiva,
+    audioAvailable() ? tx.audio : tx.semAudio,
+    tx.jogos,
+    tx.exame,
+    tx.progresso
   ];
 }
 

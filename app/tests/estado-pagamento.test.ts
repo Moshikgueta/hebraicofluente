@@ -70,7 +70,8 @@ describe('a tela de retorno (PAY-B-003)', () => {
   });
 
   it('nenhum texto da tela fala em boleto', () => {
-    const fonte = readFileSync(new URL('../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', import.meta.url), 'utf8');
+    const fonte = readFileSync(new URL('../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', import.meta.url), 'utf8')
+      + readFileSync(new URL('../src/i18n/telas/conta-obrigado.ts', import.meta.url), 'utf8');
     expect(fonte.toLowerCase()).not.toContain('boleto');
     expect(fonte).toContain('Este pagamento foi devolvido.');
     expect(fonte).toContain('O cartão foi recusado.');

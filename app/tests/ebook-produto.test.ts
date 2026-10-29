@@ -203,7 +203,7 @@ describe('o catálogo', () => {
     expect(separados(texto)).toBe(344);
     expect(separados(texto) - preco(texto, PACOTE)).toBe(47);
     const depois = virar(texto).texto;
-    expect([preco(depois, 'alfabetizacao'), preco(depois, LIVRO), preco(depois, PACOTE)]).toEqual([197, 297, 397]);
+    expect([preco(depois, 'alfabetizacao'), preco(depois, LIVRO), preco(depois, PACOTE)]).toEqual([297, 297, 397]);
     for (const t of [texto, depois]) expect(preco(t, PACOTE)).toBeLessThan(separados(t));
   });
 });
@@ -503,7 +503,8 @@ describe('o e-book não tem PDF para baixar', () => {
     for (const rel of ['../src/app/cursos/[slug]/ProdutoClient.tsx', '../src/app/cursos/[slug]/LivroClient.tsx', '../src/app/checkout/[slug]/CheckoutClient.tsx',
                        '../src/app/checkout/[slug]/obrigado/ObrigadoClient.tsx', '../src/app/termos/page.tsx',
                        '../src/app/reembolso/page.tsx', '../src/lib/ecossistema.ts', '../src/app/israel-alem-do-obvio/page.tsx',
-                       '../../worker/src/lib/mail.js']) {
+                       '../../worker/src/lib/mail.js',
+                       '../src/i18n/telas/conta-checkout-client.ts', '../src/i18n/telas/conta-obrigado.ts']) {
       expect(semComentarios(rel), rel).not.toMatch(/PDF/);
     }
     const cat = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8')).courses as { summaryPt: string; taglinePt: string }[];

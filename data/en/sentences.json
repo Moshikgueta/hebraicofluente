@@ -1,0 +1,552 @@
+{
+  "sentences/ani-lomed/pt": {
+    "pt": "eu estudo",
+    "en": "I study"
+  },
+  "sentences/ani-lomed/words/#0/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/ani-lomed/words/#1/pt": {
+    "pt": "estudo",
+    "en": "study"
+  },
+  "sentences/ani-lomed/notePt": {
+    "pt": "A primeira frase inteira do curso. Se você leu isto sozinho, já não está decorando letras. Uma mulher diz {{לוֹמֶדֶת}}, lomédet.",
+    "en": "The first complete sentence of the course. If you read this on your own, you are no longer memorizing letters. A woman says {{לוֹמֶדֶת}}, lomedet."
+  },
+  "sentences/hi-mora/pt": {
+    "pt": "ela é professora",
+    "en": "she is a teacher"
+  },
+  "sentences/hi-mora/words/#0/pt": {
+    "pt": "ela",
+    "en": "she"
+  },
+  "sentences/hi-mora/words/#1/pt": {
+    "pt": "professora",
+    "en": "teacher"
+  },
+  "sentences/hi-mora/notePt": {
+    "pt": "O hebraico não tem o verbo \"é\" no presente. Duas palavras já formam a frase inteira.",
+    "en": "Hebrew has no verb \"is\" in the present. Two words already make the whole sentence.",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/david-ve-sara/pt": {
+    "pt": "David e Sara",
+    "en": "David and Sarah"
+  },
+  "sentences/david-ve-sara/words/#0/pt": {
+    "pt": "David",
+    "en": "David"
+  },
+  "sentences/david-ve-sara/words/#1/pt": {
+    "pt": "e Sara",
+    "en": "and Sarah"
+  },
+  "sentences/david-ve-sara/notePt": {
+    "pt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte.",
+    "en": "The \"and\" is not a separate word: it is the letter {{ו}} attached to the front of the next word.",
+    "comentario": "Nome \"Sara\" virou \"Sarah\", a grafia inglesa; rever."
+  },
+  "sentences/yerushalayim/pt": {
+    "pt": "Jerusalém",
+    "en": "Jerusalem"
+  },
+  "sentences/yerushalayim/words/#0/pt": {
+    "pt": "Jerusalém",
+    "en": "Jerusalem"
+  },
+  "sentences/yerushalayim/notePt": {
+    "pt": "Uma palavra que você já viu a vida inteira em português - agora no desenho original.",
+    "en": "A word you have seen your whole life in English - now in its original shape.",
+    "comentario": "Adaptado: \"em português\" virou \"in English\"."
+  },
+  "sentences/ani-mi-israel/pt": {
+    "pt": "eu sou de Israel",
+    "en": "I am from Israel"
+  },
+  "sentences/ani-mi-israel/words/#0/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/ani-mi-israel/words/#1/pt": {
+    "pt": "de Israel",
+    "en": "from Israel"
+  },
+  "sentences/ani-mi-israel/notePt": {
+    "pt": "O {{מ}} colado na frente faz o \"de\". Hebraico prende partículas na palavra em vez de soltá-las.",
+    "en": "The {{מ}} attached to the front makes \"from\". Hebrew fastens small words onto the word instead of leaving them loose."
+  },
+  "sentences/ha-yam-gadol/pt": {
+    "pt": "o mar é grande",
+    "en": "the sea is big"
+  },
+  "sentences/ha-yam-gadol/words/#0/pt": {
+    "pt": "o mar",
+    "en": "the sea"
+  },
+  "sentences/ha-yam-gadol/words/#1/pt": {
+    "pt": "grande",
+    "en": "big"
+  },
+  "sentences/ha-yam-gadol/notePt": {
+    "pt": "O {{ה}} na frente é o \"o/a\". Também vem colado.",
+    "en": "The {{ה}} in front is \"the\". It comes attached too."
+  },
+  "sentences/ma-hashaa/pt": {
+    "pt": "que horas são",
+    "en": "what time is it"
+  },
+  "sentences/ma-hashaa/words/#0/pt": {
+    "pt": "que",
+    "en": "what"
+  },
+  "sentences/ma-hashaa/words/#1/pt": {
+    "pt": "a hora",
+    "en": "the hour"
+  },
+  "sentences/ma-hashaa/notePt": {
+    "pt": "Literalmente \"que a hora\". É assim que se pergunta as horas em Israel.",
+    "en": "Literally \"what the hour\". That is how you ask the time in Israel."
+  },
+  "sentences/ma-nishma/pt": {
+    "pt": "como vai",
+    "en": "how are you"
+  },
+  "sentences/ma-nishma/words/#0/pt": {
+    "pt": "que",
+    "en": "what"
+  },
+  "sentences/ma-nishma/words/#1/pt": {
+    "pt": "se ouve",
+    "en": "is heard"
+  },
+  "sentences/ma-nishma/notePt": {
+    "pt": "Ao pé da letra é \"o que se ouve?\". É o \"e aí?\" do dia a dia israelense.",
+    "en": "Word for word it is \"what is heard?\". It is the everyday Israeli \"what's up?\".",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/slicha/pt": {
+    "pt": "desculpe",
+    "en": "excuse me"
+  },
+  "sentences/slicha/words/#0/pt": {
+    "pt": "desculpe",
+    "en": "excuse me"
+  },
+  "sentences/slicha/notePt": {
+    "pt": "Serve para pedir desculpa e para chamar a atenção de alguém na rua.",
+    "en": "It is used to apologize and to get someone's attention on the street.",
+    "comentario": "Português \"desculpe\": usei \"excuse me\", que cobre os dois usos da nota; rever se preferir \"sorry\"."
+  },
+  "sentences/shma-israel/pt": {
+    "pt": "ouve, Israel",
+    "en": "hear, O Israel"
+  },
+  "sentences/shma-israel/words/#0/pt": {
+    "pt": "ouve",
+    "en": "hear"
+  },
+  "sentences/shma-israel/words/#1/pt": {
+    "pt": "Israel",
+    "en": "Israel"
+  },
+  "sentences/shma-israel/notePt": {
+    "pt": "Duas palavras escritas há milhares de anos, com as mesmas letras que você acabou de aprender.",
+    "en": "Two words written thousands of years ago, with the same letters you just learned."
+  },
+  "sentences/boker-tov/pt": {
+    "pt": "bom dia",
+    "en": "good morning"
+  },
+  "sentences/boker-tov/words/#0/pt": {
+    "pt": "manhã",
+    "en": "morning"
+  },
+  "sentences/boker-tov/words/#1/pt": {
+    "pt": "bom",
+    "en": "good"
+  },
+  "sentences/boker-tov/notePt": {
+    "pt": "\"Manhã boa\". O adjetivo vem DEPOIS do substantivo, ao contrário do português.",
+    "en": "\"Morning good\". The adjective comes AFTER the noun, the opposite of English.",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/toda-raba/pt": {
+    "pt": "muito obrigado",
+    "en": "thank you very much"
+  },
+  "sentences/toda-raba/words/#0/pt": {
+    "pt": "obrigado",
+    "en": "thanks"
+  },
+  "sentences/toda-raba/words/#1/pt": {
+    "pt": "muita",
+    "en": "much"
+  },
+  "sentences/toda-raba/notePt": {
+    "pt": "\"Agradecimento muito\". De novo o adjetivo atrás.",
+    "en": "\"Thanks much\". Once again the adjective comes after.",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/ken-bevakasha/pt": {
+    "pt": "sim, por favor",
+    "en": "yes, please"
+  },
+  "sentences/ken-bevakasha/words/#0/pt": {
+    "pt": "sim",
+    "en": "yes"
+  },
+  "sentences/ken-bevakasha/words/#1/pt": {
+    "pt": "por favor",
+    "en": "please"
+  },
+  "sentences/ken-bevakasha/notePt": {
+    "pt": "A mesma palavra serve para \"por favor\", \"de nada\" e \"aqui está\".",
+    "en": "The same word works for \"please\", \"you're welcome\" and \"here you go\"."
+  },
+  "sentences/ani-medaber-ivrit/pt": {
+    "pt": "eu falo hebraico",
+    "en": "I speak Hebrew"
+  },
+  "sentences/ani-medaber-ivrit/words/#0/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/ani-medaber-ivrit/words/#1/pt": {
+    "pt": "falo",
+    "en": "speak"
+  },
+  "sentences/ani-medaber-ivrit/words/#2/pt": {
+    "pt": "hebraico",
+    "en": "Hebrew"
+  },
+  "sentences/ani-medaber-ivrit/notePt": {
+    "pt": "Três palavras. A última é o nome da própria língua que você está lendo. Uma mulher diz {{מְדַבֶּרֶת}}, medabéret.",
+    "en": "Three words. The last one is the name of the very language you are reading. A woman says {{מְדַבֶּרֶת}}, medaberet."
+  },
+  "sentences/shalom-ma-shlomcha/pt": {
+    "pt": "olá, como você está",
+    "en": "hello, how are you"
+  },
+  "sentences/shalom-ma-shlomcha/words/#0/pt": {
+    "pt": "olá",
+    "en": "hello"
+  },
+  "sentences/shalom-ma-shlomcha/words/#1/pt": {
+    "pt": "que",
+    "en": "what"
+  },
+  "sentences/shalom-ma-shlomcha/words/#2/pt": {
+    "pt": "a sua paz",
+    "en": "your peace"
+  },
+  "sentences/shalom-ma-shlomcha/notePt": {
+    "pt": "Pergunta-se pela \"paz\" da pessoa. A mesma raiz de {{שָׁלוֹם}} aparece nas duas palavras. Para uma mulher: {{מָה שְׁלוֹמֵךְ}}, ma shloméch.",
+    "en": "You ask about the person's \"peace\". The same root as {{שָׁלוֹם}} appears in both words. To a woman: {{מָה שְׁלוֹמֵךְ}}, ma shlomech."
+  },
+  "sentences/tel-aviv/pt": {
+    "pt": "Tel Aviv",
+    "en": "Tel Aviv"
+  },
+  "sentences/tel-aviv/words/#0/pt": {
+    "pt": "colina",
+    "en": "hill"
+  },
+  "sentences/tel-aviv/words/#1/pt": {
+    "pt": "primavera",
+    "en": "spring"
+  },
+  "sentences/tel-aviv/notePt": {
+    "pt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa.",
+    "en": "The city's name means \"hill of spring\" - ancient and modern on the same sign."
+  },
+  "sentences/ma-ze/pt": {
+    "pt": "o que é isto",
+    "en": "what is this"
+  },
+  "sentences/ma-ze/words/#0/pt": {
+    "pt": "que",
+    "en": "what"
+  },
+  "sentences/ma-ze/words/#1/pt": {
+    "pt": "isto",
+    "en": "this"
+  },
+  "sentences/ma-ze/notePt": {
+    "pt": "A pergunta que resolve qualquer cardápio e qualquer prateleira. Aponte e diga.",
+    "en": "The question that handles any menu and any shelf. Point and say it."
+  },
+  "sentences/chag-sameach/pt": {
+    "pt": "boas festas",
+    "en": "happy holiday"
+  },
+  "sentences/chag-sameach/words/#0/pt": {
+    "pt": "festa",
+    "en": "holiday"
+  },
+  "sentences/chag-sameach/words/#1/pt": {
+    "pt": "alegre",
+    "en": "happy"
+  },
+  "sentences/chag-sameach/notePt": {
+    "pt": "\"Festa alegre\". Serve para as festas alegres do calendário (Pessach, Sucot, Shavuot, Chanucá...), como o nosso \"boas festas\". Em dias de jejum ou de luto não se diz.",
+    "en": "\"Happy holiday\". It is for the joyful holidays of the calendar (Pesach, Sukkot, Shavuot, Chanukah...), like our \"happy holidays\". It is not said on fast days or days of mourning.",
+    "comentario": "Nomes das festas mantidos como no português (transliteração, etapa 3); \"festa alegre\"/\"boas festas\" adaptado para \"happy holiday(s)\". Rever."
+  },
+  "sentences/leat/pt": {
+    "pt": "devagar",
+    "en": "slowly"
+  },
+  "sentences/leat/words/#0/pt": {
+    "pt": "devagar",
+    "en": "slowly"
+  },
+  "sentences/leat/notePt": {
+    "pt": "Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\".",
+    "en": "Doubled, {{לְאַט לְאַט}}, it becomes \"take it easy, one thing at a time\"."
+  },
+  "sentences/ani-rotse-maim/pt": {
+    "pt": "eu quero água",
+    "en": "I want water"
+  },
+  "sentences/ani-rotse-maim/words/#0/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/ani-rotse-maim/words/#1/pt": {
+    "pt": "quero",
+    "en": "want"
+  },
+  "sentences/ani-rotse-maim/words/#2/pt": {
+    "pt": "água",
+    "en": "water"
+  },
+  "sentences/ani-rotse-maim/notePt": {
+    "pt": "Três palavras que já pedem alguma coisa. Uma mulher diz {{רוֹצָה}}, rotsá.",
+    "en": "Three words that already ask for something. A woman says {{רוֹצָה}}, rotsa."
+  },
+  "sentences/rak-rega/pt": {
+    "pt": "só um momento",
+    "en": "just a moment"
+  },
+  "sentences/rak-rega/words/#0/pt": {
+    "pt": "só",
+    "en": "just"
+  },
+  "sentences/rak-rega/words/#1/pt": {
+    "pt": "momento",
+    "en": "moment"
+  },
+  "sentences/rak-rega/notePt": {
+    "pt": "O \"peraí\" israelense. Você vai ouvir isto no telefone, na fila e no caixa.",
+    "en": "The Israeli \"hang on\". You will hear it on the phone, in line and at the checkout.",
+    "comentario": "Adaptado: \"peraí\" virou \"hang on\"."
+  },
+  "sentences/bereshit/pt": {
+    "pt": "no princípio, criou",
+    "en": "in the beginning, created"
+  },
+  "sentences/bereshit/words/#0/pt": {
+    "pt": "no princípio",
+    "en": "in the beginning"
+  },
+  "sentences/bereshit/words/#1/pt": {
+    "pt": "criou",
+    "en": "created"
+  },
+  "sentences/bereshit/notePt": {
+    "pt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohím.",
+    "en": "The first two words of the Hebrew Bible. The sentence continues with {{אֱלֹהִים}}, Elohim."
+  },
+  "sentences/ani-rotse-kafe/pt": {
+    "pt": "eu quero um café",
+    "en": "I want a coffee"
+  },
+  "sentences/ani-rotse-kafe/words/#0/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/ani-rotse-kafe/words/#1/pt": {
+    "pt": "quero",
+    "en": "want"
+  },
+  "sentences/ani-rotse-kafe/words/#2/pt": {
+    "pt": "café",
+    "en": "coffee"
+  },
+  "sentences/ani-rotse-kafe/notePt": {
+    "pt": "A última letra do curso está aqui dentro. Com ela você lê um pedido inteiro.",
+    "en": "The last letter of the course is in here. With it you can read a whole order."
+  },
+  "sentences/mi-ata/pt": {
+    "pt": "Quem é você?",
+    "en": "Who are you?"
+  },
+  "sentences/mi-ata/words/#0/pt": {
+    "pt": "quem",
+    "en": "who"
+  },
+  "sentences/mi-ata/words/#1/pt": {
+    "pt": "você",
+    "en": "you"
+  },
+  "sentences/mi-ata/notePt": {
+    "pt": "Assim se pergunta a um homem. Para uma mulher, o \"você\" é outra palavra, mais curta.",
+    "en": "This is how you ask a man. For a woman, the \"you\" is a different word, a shorter one."
+  },
+  "sentences/hine-haiam/pt": {
+    "pt": "Olha o mar.",
+    "en": "Look, the sea."
+  },
+  "sentences/hine-haiam/words/#0/pt": {
+    "pt": "olha, aqui está",
+    "en": "look, here is"
+  },
+  "sentences/hine-haiam/words/#1/pt": {
+    "pt": "o mar",
+    "en": "the sea"
+  },
+  "sentences/hine-haiam/notePt": {
+    "pt": "{{הִנֵה}} aponta para algo que está à vista: \"olha\", \"aqui está\".",
+    "en": "{{הִנֵה}} points to something in plain sight: \"look\", \"here is\"."
+  },
+  "sentences/hine-dag/pt": {
+    "pt": "Olha um peixe!",
+    "en": "Look, a fish!"
+  },
+  "sentences/hine-dag/words/#0/pt": {
+    "pt": "olha, aqui está",
+    "en": "look, here is"
+  },
+  "sentences/hine-dag/words/#1/pt": {
+    "pt": "peixe",
+    "en": "fish"
+  },
+  "sentences/hine-dag/notePt": {
+    "pt": "A mesma fala do Dani no texto \"O peixe\", do módulo 2.",
+    "en": "The same line Dani says in the text \"The fish\", in module 2.",
+    "comentario": "Conferir o título em inglês do mini-texto do módulo 2."
+  },
+  "sentences/gam-ani/pt": {
+    "pt": "Eu também.",
+    "en": "Me too."
+  },
+  "sentences/gam-ani/words/#0/pt": {
+    "pt": "também",
+    "en": "also, too"
+  },
+  "sentences/gam-ani/words/#1/pt": {
+    "pt": "eu",
+    "en": "I"
+  },
+  "sentences/gam-ani/notePt": {
+    "pt": "Em hebraico o \"também\" vem antes: {{גַם}}, depois {{אֲנִי}}.",
+    "en": "In Hebrew the \"too\" comes first: {{גַם}}, then {{אֲנִי}}.",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/mi-sham/pt": {
+    "pt": "Quem está aí?",
+    "en": "Who is there?"
+  },
+  "sentences/mi-sham/words/#0/pt": {
+    "pt": "quem",
+    "en": "who"
+  },
+  "sentences/mi-sham/words/#1/pt": {
+    "pt": "aí, ali",
+    "en": "there"
+  },
+  "sentences/mi-sham/notePt": {
+    "pt": "Não há verbo \"estar\": {{מִי}} e {{שָׁם}} já fazem a pergunta.",
+    "en": "There is no verb \"to be\": {{מִי}} and {{שָׁם}} already make the question.",
+    "comentario": "etapa 3: comparação com o português, rever"
+  },
+  "sentences/iesh-te/pt": {
+    "pt": "Tem chá?",
+    "en": "Is there tea?"
+  },
+  "sentences/iesh-te/words/#0/pt": {
+    "pt": "tem, há",
+    "en": "there is, have"
+  },
+  "sentences/iesh-te/words/#1/pt": {
+    "pt": "chá",
+    "en": "tea"
+  },
+  "sentences/iesh-te/notePt": {
+    "pt": "{{יֵשׁ}} é o \"tem\" de \"tem chá?\": diz que uma coisa existe ou está ali.",
+    "en": "{{יֵשׁ}} is the \"is there\" of \"is there tea?\": it says that something exists or is there.",
+    "comentario": "Português \"Tem chá?\"; rever se preferir \"Got any tea?\"."
+  },
+  "sentences/ma-iesh/pt": {
+    "pt": "O que foi?",
+    "en": "What's wrong?"
+  },
+  "sentences/ma-iesh/words/#0/pt": {
+    "pt": "o que",
+    "en": "what"
+  },
+  "sentences/ma-iesh/words/#1/pt": {
+    "pt": "tem, há",
+    "en": "there is"
+  },
+  "sentences/ma-iesh/notePt": {
+    "pt": "Ao pé da letra, \"o que tem?\". No dia a dia, é o \"o que foi?\" de quem nota alguma coisa.",
+    "en": "Word for word, \"what is there?\". In daily life, it is the \"what's wrong?\" of someone who notices something."
+  },
+  "sentences/haieled-sham/pt": {
+    "pt": "O menino está ali.",
+    "en": "The boy is over there."
+  },
+  "sentences/haieled-sham/words/#0/pt": {
+    "pt": "o menino",
+    "en": "the boy"
+  },
+  "sentences/haieled-sham/words/#1/pt": {
+    "pt": "ali",
+    "en": "there"
+  },
+  "sentences/haieled-sham/notePt": {
+    "pt": "O {{הַ}} na frente é o \"o\": {{יֶלֶד}}, menino; {{הַיֶלֶד}}, o menino.",
+    "en": "The {{הַ}} in front is \"the\": {{יֶלֶד}}, boy; {{הַיֶלֶד}}, the boy."
+  },
+  "sentences/iesh-glida/pt": {
+    "pt": "Tem sorvete!",
+    "en": "There's ice cream!"
+  },
+  "sentences/iesh-glida/words/#0/pt": {
+    "pt": "tem, há",
+    "en": "there is, have"
+  },
+  "sentences/iesh-glida/words/#1/pt": {
+    "pt": "sorvete",
+    "en": "ice cream"
+  },
+  "sentences/iesh-glida/notePt": {
+    "pt": "A mesma frase de \"tem chá?\", agora com a notícia boa.",
+    "en": "The same sentence as \"is there tea?\", now with the good news."
+  },
+  "sentences/hi-ima-sheli/pt": {
+    "pt": "Ela é a minha mãe.",
+    "en": "She is my mother."
+  },
+  "sentences/hi-ima-sheli/words/#0/pt": {
+    "pt": "ela",
+    "en": "she"
+  },
+  "sentences/hi-ima-sheli/words/#1/pt": {
+    "pt": "mãe",
+    "en": "mother"
+  },
+  "sentences/hi-ima-sheli/words/#2/pt": {
+    "pt": "meu, minha",
+    "en": "my"
+  },
+  "sentences/hi-ima-sheli/notePt": {
+    "pt": "{{שֶׁלִי}} vem depois da coisa: \"mãe minha\". Serve para meu e para minha.",
+    "en": "{{שֶׁלִי}} comes after the thing: \"mother my\". The same word works whether the thing is masculine or feminine.",
+    "comentario": "O português \"serve para meu e para minha\" foi adaptado (em inglês \"my\" já é uma palavra só). etapa 3: comparação com o português, rever"
+  }
+}

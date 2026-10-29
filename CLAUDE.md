@@ -1,5 +1,23 @@
 # Hebraico Fluente - notas do projeto
 
+## Os dois sites iguais (28/10/2026, decisão do dono)
+"Quero que os dois sites sejam iguais, mas com versões adaptadas para cada um." O site brasileiro
+(`Moshikgueta/hebraicofluente`) e o de inglês (`Moshikgueta/fluent-hebrew`) têm o MESMO código; o que
+muda entre eles é só configuração. Toda melhoria entra nos dois, na mesma rodada.
+- **O que é de cada um** (nunca copiar de um para o outro): `wrangler.toml` (Worker, banco, domínio,
+  `LOCALE`), `wrangler.en.toml` (só no brasileiro), `.github/workflows/` (no inglês, todos com a trava
+  `FLUENT_PUBLICAR`), `package.json` e o lockfile, `.env.example`, os scripts com o nome do banco
+  (`scripts/cloudflare-setup.sh`, `backup-d1.sh`, `backup-nuvem.sh`, `conferir-gravacoes.mjs`,
+  `tools/exportar-gravacoes.mjs`, `app/sincronia.mjs`), `CLAUDE.md`, `PLANO-INGLES.md` e
+  `app/tests/isolamento.test.ts` (só no inglês).
+- **Todo o resto é igual.** O código do inglês fica atrás de `NEXT_PUBLIC_LOCALE=en` (build) e de
+  `LOCALE = "en"` (Worker): sem eles, o site sai em português, com Mercado Pago e PIX, como sempre.
+- **Como sincronizar:** no repositório do inglês, `git merge` do brasileiro (o histórico é comum);
+  para o brasileiro, copiar os arquivos que diferem, menos a lista acima, e rodar lá os testes, a
+  build de produção e as conferências (pacote, promessas, números, SEO, check-legal, clique, a11y).
+- Texto novo de tela nasce com o inglês ao lado (dicionário); dado novo do curso pede
+  `node tools/i18n.mjs extrair` e a tradução, senão a build estrita em inglês para.
+
 ## Como trabalhar neste repositório (regras do dono)
 Este projeto é SEPARADO do curso de espanhol (`Moshikgueta/espanolsindolordecabeza`).
 Sessões do Claude para o Hebraico Fluente abrem só este repositório; nada do
@@ -63,6 +81,35 @@ texto do site nem do autor.
   arquivo (`worker/src/lib/catalog.js`): preço nunca vem do corpo da requisição.
 - `worker/` é a API (`/api/*`) e o portão do conteúdo pago. `IMPLEMENTATION` da
   camada de comércio: `DEPLOY-CLOUDFLARE.md` + `worker/schema.sql`.
+
+## O site em inglês (desde 28/10/2026, etapa 1 concluída)
+Plano e decisões do dono em `PLANO-INGLES.md` (domínio próprio, US$ 47, Paddle).
+Um repositório, um banco, dois sites: `NEXT_PUBLIC_LOCALE=en` gera `app/out-en`,
+servido pelo segundo Worker (`wrangler.en.toml`, mesmo D1, ainda sem domínio e
+sem publicação). Sem a variável, o site brasileiro sai igual.
+- **Texto fixo de tela** mora em `app/src/i18n/telas/<tela>.ts`, com o
+  português (o texto de antes, igual) e o inglês lado a lado, lido como
+  `tx.chave` (`fmt` para variáveis). Ver o molde em `app/src/i18n/index.ts`:
+  a linha do `tx` é escrita igual em todo arquivo, senão o pacote do
+  navegador leva os dois idiomas. `Traducao<typeof pt>` recusa chave faltando.
+- `node tools/textos-soltos.mjs` (de app/) lista o português ainda escrito
+  direto no código das telas do escopo do site em inglês.
+  Tem de sair 0: tela nova nasce com dicionário. O que fica fora do escopo
+  (Raízes, A1, painéis, políticas, portal guardado) está em `FORA_DO_ESCOPO`.
+- **E-mail novo ao aluno** precisa da versão em `worker/src/lib/mail-en.js`
+  e de entrar em `lib/mensagens.js`; o idioma vem de `lib/idioma.js` (o do
+  site para o que a pessoa pede agora, o da conta para o agendamento).
+- Datas e números: `LOCALE_INTL` de `@/i18n`, nunca `'pt-BR'` escrito à mão.
+- **Mudou um `data/*.json` do curso?** Rode `node tools/i18n.mjs extrair`: o
+  `data/en/` é a lista de trabalho da tradução e `tests/i18n.test.ts` falha se
+  ele não acompanhar a fonte. Texto já traduzido cujo português mudou fica
+  marcado `revisar`.
+- O inglês nunca mexe no hebraico: os trechos em hebraico e as marcas `{{...}}`
+  têm de ser os mesmos do português (`mesmoHebraico`). A transliteração fica
+  fora do `data/en/` (o inglês terá sistema próprio, etapa 3).
+- `HF_I18N_ESTRITO=1` faz a build em inglês parar com qualquer texto sem
+  tradução; o relatório sai em `app/content/_traducao.json` e em
+  `node tools/i18n.mjs relatorio`.
 
 ## Invariantes que quebram o produto se forem ignorados
 - **Noto Sans Hebrew é obrigatória** para todo hebraico: são 55 sinais de nikud e
@@ -552,6 +599,53 @@ com 70%; cumprida, grava `firsts['missao-N']`. Não tranca nada.
 - É conteúdo pago: vai por `/api/content` (os três lados do contrato e
   `OS_PAGOS` em `tests/conteudo.test.ts`), nunca no pacote público.
 
+## Hebraico na rua (28/10/2026)
+
+`/hebraico-na-rua` (no GATED e no PAGAS), linkado de Leituras: fotos reais de placas
+(Wikimedia Commons, `data/hebraico-na-rua.json`) e a pergunta "esta placa tem uma palavra que
+você já lê; qual?". Nada de hebraico novo: `palavra` e `naPlaca` citam palavras do curso, com a
+grafia do curso, e nenhuma opção errada está na placa (`lib/engine/rua.ts`). A placa só aparece
+com a palavra legível. Só sai do exportador com `aprovada: true`, e vai no `missoes.json` (pago),
+chave `rua`. Imagens em `app/public/media/rua/`. Candidatas: Action "Fotos das missões"
+(`tools/fotos-rua-pedido.json`); revisão em `HEBRAICO-NA-RUA-PARA-REVISAR.md`.
+`tests/hebraico-na-rua.test.ts`.
+
+## Lembrete para estudar (28/10/2026) - LIGADO desde 29/10/2026
+Pedido do dono ("faz tudo", item 6). O dono aprovou o parágrafo da Privacidade em 29/10/2026 (versão das políticas 2026-10-29).
+- **Uma chave só:** `privacidade.lembreteDeEstudo` em `data/empresa.json` (`lembreteLigado` no app e
+  em `worker/src/api/lembrete.js`). Em `false` não existe nada: a caixa do perfil, o parágrafo do
+  art. 4 da Privacidade, `PUT /api/lembrete` (404), o campo `lembrete` do `/api/me` e o envio.
+  **Desligar** = `false`, subir `politicas.atualizadoEm` e publicar. Só `/api/lembrete/sair` funciona
+  sempre: e-mail velho sempre sabe tirar a pessoa.
+- Quem pede: a caixa em Sua conta, desmarcada, só com o curso. Tabela `lembretes_estudo` (a linha é o
+  consentimento). Sai pela caixa, pelo link de todo lembrete (token `l<id>.<hmac 'lembrete:'>`, página
+  /sair-da-lista) ou apagando a conta. Teto de 20 por hora por endereço.
+- O envio (`worker/src/lembrete.js`, na varredura): a partir das 19h de Brasília, uma vez por dia por
+  conta (`ultimo_dia`, UPDATE condicional = reserva), só se o progresso não tem estudo no dia, e no
+  máximo 3 seguidos sem estudo (`seguidos`); estudar zera. Texto sem cobrança nem sequência perdida.
+- `tests/lembrete.test.ts` e `tests/lembrete-desligado.test.ts` (chave forçada em false por mock).
+
+## Instalar no celular (28/10/2026)
+Pedido do dono ("faz tudo", item 7). `app/src/app/manifest.ts` (vira `/manifest.webmanifest`): abre
+`/meu-hebraico/` em tela cheia, ícones `public/icone-192.png`, `icone-512.png` e `icone-mascara-512.png`
+(o ע do `icon.svg`, renderizado no Chromium com a Noto Serif Hebrew 600). `appleWebApp` no layout.
+- **Sem service worker, de propósito:** ele guardaria aula e áudio no aparelho, fora do portão.
+  `tests/instalar.test.ts` falha se alguém registrar um.
+- `InstalarApp` (components/platform): botão do navegador quando há `beforeinstallprompt`
+  (`lib/instalar.ts` o guarda ao carregar), os dois toques do Safari no iPhone, ou a linha do menu.
+  No painel só no celular, depois da primeira letra, e "Agora não" some para sempre
+  (`hf-instalar-dispensado`); em Sua conta, sempre.
+
+## Vídeos do professor no "Me explica, Moshik" (28/10/2026)
+Pedido do dono ("faz tudo", item 8). O dono põe `video/<letra>.mp4` (e, se quiser, `<letra>.vtt`)
+na raiz, como o áudio; instruções em `video/README.md`. `tools/videos.mjs` (chamado pelo exportador)
+copia para `app/public/video/` (gitignored) e gera `app/src/lib/video-manifest.ts`; nome que não é
+letra, formato fora de mp4/vtt, legenda sem vídeo ou arquivo acima de 25 MiB param a build.
+- `/video` está no GATED (gate.js) e no PAGAS (lib/seo.ts); o Worker serve com `comRange` (o Safari
+  não toca vídeo sem 206). Sem YouTube nem serviço de fora: nada muda na Privacidade.
+- `VideoDoMoshik` (components/learn): só com o arquivo, só no site em português, `preload="none"`, e a
+  folha pausa ao fechar. `tests/video.test.ts`.
+
 ## Mini-textos de leitura corrida
 
 Um texto curto por módulo, do 3 ao 7 (bilhete, mensagem de WhatsApp, cartão),
@@ -630,6 +724,10 @@ novo; o painel pula para o próximo item sem áudio. Referência:
   texto, com 2 s de pausa entre os itens. O `cortar-audio` entra sozinho no
   modo frase quando todos os itens são `frase` (pausa mínima 0,9 s, sem abrir
   peça longa) - o `--ensaiar` prova que a régua de palavra partiria a frase.
+- **Frases com trava de revisão** (28/10/2026): frase em `data/sentences.json` com
+  `"revisado": false` não sai do exportador nem entra no roteiro de gravação
+  (`tests/frases-revisao.test.ts`); sem o campo, é das que já estavam no curso. As propostas
+  para o dono aprovar ficam em `FRASES-PARA-REVISAR.md`.
 - **Exercícios**: `exListenSentence` (ouça e ache a frase escrita,
   `audio-recognition`) e `exListenMeaning` (ouça, sem texto, e diga o sentido
   em português, tipo `listen-meaning`). Só com a frase gravada (`gravado`),
@@ -832,6 +930,28 @@ Produto INDIVIDUAL, comprado à parte, no mesmo site e com a mesma conta
   genéricos, nunca rosto, documento legível ou símbolo religioso; a peça que usa uma diz que é
   interpretativa. Cada seção tem a sua vinheta (`VINHETA_DA_SECAO`, ou `vinheta` no dado).
   `tests/raizes-experiencia.test.ts` exige artefatos, um jogo e curiosidades em todo módulo.
+
+## Só o curso de alfabetização no site (27/10/2026, decisão do dono)
+"Por enquanto deixa o site só com o curso de alfabetização." O portal da seção abaixo está
+GUARDADO, não apagado:
+- `/` monta a página do curso (`app/src/app/page.tsx` renderiza a de `/curso-de-hebraico`, que
+  continua respondendo: campanhas, e-mails e portão levam para lá). Microfone liberado nas duas
+  (`naVenda` em worker.js); JSON-LD com Course e FAQPage na capa (`checa-seo.mjs`); cartão do link
+  do curso em todo o site (`ogDaRota`).
+- `/aprender-hebraico`, `/descobrir-israel`, `/israel-alem-do-obvio`, `/raizes-sefarditas` e
+  `/comece-aqui` continuam no build, fora do sitemap (`NAO_LISTADAS` nos dois lados), e o Worker
+  responde 301 para `/` com a consulta junto. `/bio` vai direto ao curso (`PARA_O_COMECE_AQUI`
+  vazio). `/previa`, `/israel/` e `/raizes/` não mudam. `worker/e2e.sh` ("Só o curso no site")
+  confere.
+- Cabeçalho sem o painel "Experiências" e rodapé sem a coluna (o código está no histórico, no
+  commit que os tirou). Conta conectada SEM o curso vê "Minha conta" e "Começar o curso"
+  (`/checkout/alfabetizacao`), e não só "Minha Biblioteca": foi aí que uma aluna travou.
+- `/cursos` sem a vitrine do livro e do combo (`OpcoesDeCompra`). A biblioteca vazia diz a conta, o
+  pagamento pendente, o acesso vencido ou o pago sem acesso, o botão do curso, o "outro e-mail" e o
+  atendimento (`Vazia` em BibliotecaClient.tsx).
+- **Para voltar:** tirar a regex das cinco páginas em worker.js, a linha delas em `NAO_LISTADAS`
+  (seo.ts e seo.mjs), devolver o PortalClient à `page.tsx`, o painel e a coluna ao PublicShell,
+  `bio` ao `PARA_O_COMECE_AQUI`, e a regra antiga da capa em `checa-seo.mjs`.
 
 ## A capa é o portal das três jornadas (23/10/2026, master prompt "Hebraico Fluente 2.0")
 Decisões do dono no mesmo dia: portal na capa; o e-book e o Raízes "Em breve", SEM preço nem
@@ -1064,8 +1184,20 @@ O HTML estático sai com B; o texto do hero nasce invisível, então A não pisc
   manda em lote respostas (tipo, lição, certa/errada) e etapas concluídas pela primeira vez.
   O servidor (api/estatisticas.js) soma em `estatisticas (dia, chave, n)`, sem conta, e-mail,
   IP nem horário; apaga depois de 365 dias. O dono lê em /admin/estatisticas.
+- **Tempo por letra** (28/10/2026, decisão do dono): a lição mede o tempo ATIVO de cada etapa
+  (`useTempoAtivo` em lib/tempo-de-etapa.ts: página à vista e gesto no último minuto) e, na
+  primeira conclusão, o lote leva só a FAIXA (0 a 6, "menos de 1 min" a "20 min ou mais"),
+  nunca os segundos. O servidor soma `t|<lição>|<etapa>|<faixa>`; /admin/estatisticas mostra a
+  faixa mediana por etapa e a estimativa por letra (`tempoPorLetra`). É o que confere o "cerca de
+  dez minutos por letra" do site. Privacidade art. 4 diz isso (versão 2026-10-28).
 - LinkButton para rota paga não pré-carrega (evita 403 para quem não comprou). Conta criada
   há menos de 24 h vê o preço antes do aviso "já pagou com outro e-mail?".
+
+## Etapa 1 da lição em passos (28/10/2026, decisão do dono)
+- `StageConhecer` (LessonClient) mostra um bloco por tela: Descobrir, Ouvir, Entender, Praticar e
+  Conferir (sem `checagem`, quatro passos). Voltar e Próximo sempre andam; o último botão é
+  "Continuar para as palavras". O conteúdo de cada bloco é o mesmo de antes (a etapa enxuta e o
+  "Ver mais sobre esta letra" continuam valendo dentro de "Entender").
 
 ## Etapa 1 da lição mais curta (30/09/2026)
 - Em toda letra, `Ensinamento` mostra à vista só "O que esta letra faz" e "O que você precisa
