@@ -43,7 +43,9 @@
     "agentePequenoPorte": true,
     "prazoLgpdDias": 15,
     "_notaLembrete": "O lembrete para estudar (worker/src/lembrete.js). false = a caixa do perfil, a rota, o envio e o parágrafo da Política de Privacidade não existem. Ligado em 29/10/2026, com o parágrafo da Privacidade aprovado pelo dono. Desligar: false, subir politicas.atualizadoEm e publicar.",
-    "lembreteDeEstudo": true
+    "lembreteDeEstudo": true,
+    "_notaLembreteEn": "O site em inglês tem chave própria: a Política de Privacidade em inglês ainda não tem o parágrafo do lembrete. Ligar lá = true aqui, o parágrafo em PrivacyEn aprovado pelo dono, subir politicas.atualizadoEmEn e publicar.",
+    "lembreteDeEstudoEn": false
   },
 
   "politicas": {

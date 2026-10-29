@@ -172,7 +172,7 @@ async function sessionBody(env, account) {
       /* Pediu o e-mail do próximo curso? Ver api/novidades.js. */
       novidades: await novidadesQuer(env, account.id),
       /* Pediu o lembrete para estudar? Só existe com ele ligado (api/lembrete.js). */
-      ...(lembreteLigado() ? { lembrete: await lembreteQuer(env, account.id) } : {}),
+      ...(lembreteLigado(env) ? { lembrete: await lembreteQuer(env, account.id) } : {}),
       /* Conta de ADMIN_EMAILS: o app abre todos os módulos de Raízes para
          revisar (moduloAberto em lib/raizes.ts). Não dá acesso a nada: o
          portão continua exigindo o direito do produto no banco. */

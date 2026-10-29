@@ -367,6 +367,10 @@ function main() {
       if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
       /* Sem Brasil no site em inglês (decisão do dono, 29/10/2026): o contato é
          o e-mail próprio dele, sem o .com.br, e o WhatsApp (+55) não aparece. */
+      /* O lembrete para estudar tem chave própria no inglês (a Privacidade em
+         inglês ainda não o descreve); o Worker lê a mesma (api/lembrete.js). */
+      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
+      empresa.privacidade = { ...privacidade, lembreteDeEstudo: lembreteDeEstudoEn === true };
       const { emailEn, ...contato } = empresa.contato;
       empresa.contato = emailEn
         ? { ...contato, email: emailEn, emailSuporte: emailEn, emailPrivacidade: emailEn, whatsapp: null }
@@ -374,6 +378,8 @@ function main() {
     } else {
       const { emailEn, ...contato } = empresa.contato;
       empresa.contato = contato;
+      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
+      empresa.privacidade = privacidade;
     }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }

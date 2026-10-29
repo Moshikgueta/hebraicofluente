@@ -24,8 +24,12 @@ import { lembreteMarcar, log, throttled } from '../lib/db.js';
 import { ip, requireAccount } from './auth.js';
 import empresa from '../../../data/empresa.json';
 
-/** A chave única do lembrete. Ver o `_notaLembrete` em data/empresa.json. */
-export const lembreteLigado = () => !!(empresa.privacidade && empresa.privacidade.lembreteDeEstudo === true);
+/** A chave única do lembrete. Ver o `_notaLembrete` em data/empresa.json. O
+ *  site em inglês (LOCALE = "en") lê a chave dele, `lembreteDeEstudoEn`. */
+export const lembreteLigado = (env) => {
+  const p = empresa.privacidade || {};
+  return (env && env.LOCALE === 'en' ? p.lembreteDeEstudoEn : p.lembreteDeEstudo) === true;
+};
 
 const assinatura = (env, id) => hmacB64(env.SESSION_SECRET, `lembrete:${id}`);
 
@@ -42,7 +46,7 @@ const desligado = () => fail('not-found', 404);
 
 /** PUT /api/lembrete {quero: boolean} - a caixa do perfil. */
 export async function marcar({ request, env }) {
-  if (!lembreteLigado()) return desligado();
+  if (!lembreteLigado(env)) return desligado();
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
   const body = await readJson(request);
