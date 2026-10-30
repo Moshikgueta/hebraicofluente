@@ -40,6 +40,7 @@ import { DemoAlef } from '@/components/landing/DemoAlef';
 import { OuvirEFalar } from '@/components/landing/OuvirEFalar';
 import { Decisoes } from '@/components/landing/Decisoes';
 import { Plataforma } from '@/components/landing/Plataforma';
+import { Resultado } from '@/components/landing/Resultado';
 import { BarraFixa } from '@/components/landing/BarraFixa';
 import {
   Professor, Depoimentos, Preco, Faq, CtaFinal
@@ -107,6 +108,8 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
       <OuvirEFalar />
       {/* Telas de verdade da plataforma e a Yael (29/10/2026). */}
       <Plataforma />
+      {/* O que se passa a ler, módulo a módulo, e as placas de verdade (30/10/2026). */}
+      <Resultado />
       <Decisoes />
       <Metodo />
       <Curriculo />
