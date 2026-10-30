@@ -384,6 +384,37 @@ function main() {
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
 
+  /* As placas da vitrine (30/10/2026, "O que você passa a ler" na página de venda): três
+     fotos aprovadas do Hebraico na rua, as de placa mais legível na vitrine. Só a ficha da
+     foto e a palavra; a pergunta e as opções continuam pagas. */
+  {
+    const VITRINE_RUA = ['rua-ani', 'rua-derech', 'rua-israel'];
+    const placas = readJson('data/hebraico-na-rua.json').placas;
+    const vitrine = VITRINE_RUA.map(id => {
+      const p = placas.find(x => x.id === id && x.aprovada === true);
+      if (!p) throw new Error(`vitrine da rua: ${id} não existe ou não está aprovada`);
+      const { arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura } = p;
+      return { id, arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura };
+    });
+    writeFileSync(join(OUT, 'vitrine-rua.json'), JSON.stringify({ placas: LOCALE === 'en' ? [] : vitrine }, null, 2) + '\n');
+  }
+
+  /* O blog (29/10/2026). Só sai o artigo com `revisado: true`: cada um foi
+     escrito para o site e passa pelo dono antes de ir ao ar (BLOG-PARA-REVISAR.md).
+     HF_BLOG_RASCUNHOS=1 mostra os rascunhos numa build LOCAL, para a revisão.
+     O blog é em português: a build em inglês sai sem artigos. */
+  {
+    const blog = readJson('data/blog.json');
+    for (const a of blog.artigos) {
+      if (typeof a.revisado !== 'boolean') throw new Error(`blog.json: ${a.slug} sem "revisado"`);
+    }
+    const rascunhos = process.env.HF_BLOG_RASCUNHOS === '1';
+    const artigos = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
+    writeFileSync(join(OUT, 'blog.json'), JSON.stringify({ artigos }, null, 2) + '\n');
+    /* Só a contagem, para o rodapé (que vai ao navegador) saber se há blog. */
+    writeFileSync(join(OUT, 'blog-resumo.json'), JSON.stringify({ artigos: artigos.length }) + '\n');
+  }
+
   const catalogue = readJson('data/courses.json');
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length
