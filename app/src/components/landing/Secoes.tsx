@@ -25,6 +25,7 @@
  */
 
 import { useState } from 'react';
+import { stripNikud } from '@/lib/hebrew';
 import { He } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
@@ -492,6 +493,10 @@ export function Curriculo() {
                   <Chevron open={open} />
                 </button>
                 <div id={painel} hidden={!open}>
+                  {/* Aonde o módulo leva (30/10/2026): a frase de chegada do curso, a
+                      mesma do mapa, com a palavra dela em destaque. Antes ficava numa
+                      seção à parte, que repetia os sete módulos. */}
+                  {m.milestonePt && <ChegadaDoModulo m={m} anterior={modulos} />}
                   {/* `min(200px,100%)`: com o texto em 150% num telefone, um
                       mínimo fixo de 200px empurrava a página para o lado. */}
                   <div className="sm:pl-14 pb-7 grid gap-x-8 gap-y-3
@@ -510,6 +515,29 @@ export function Curriculo() {
         </div>
       </Container>
     </section>
+  );
+}
+
+/* A chegada de um módulo: a palavra que a frase cita, grande, e a frase. No
+   módulo 6 (sem os pontos) a palavra é o שָׁלוֹם do módulo 3 sem o nikud, que é
+   exatamente o que aquele módulo ensina. */
+const marcaDe = (t: string): string | null => t.match(/\{\{([^}]+)\}\}/)?.[1] ?? null;
+
+function ChegadaDoModulo({ m, anterior }: {
+  m: (typeof course.modules)[number]; anterior: readonly (typeof course.modules)[number][];
+}) {
+  const palavra = marcaDe(m.milestonePt!);
+  const doTres = marcaDe(anterior.find(x => Number(x.n) === 3)?.milestonePt ?? '');
+  const semPontos = !palavra && Number(m.n) === 6 && doTres ? stripNikud(doTres) : null;
+  return (
+    <div className="sm:ml-14 mb-5 flex items-center gap-4 rounded-[14px] bg-[var(--sand)] px-4 py-3.5">
+      {(palavra || semPontos) && (
+        <He size="word" tone="navy" className="shrink-0 !leading-[1.2]">{(palavra ?? semPontos)!}</He>
+      )}
+      <p className="m-0 font-ui text-[15px] leading-[1.5] text-ink-body min-w-0">
+        <Prose text={m.milestonePt!} />
+      </p>
+    </div>
   );
 }
 
