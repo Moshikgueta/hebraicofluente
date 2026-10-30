@@ -34,7 +34,7 @@
  */
 
 import { Hero } from '@/components/landing/Hero';
-import { Metodo, Curriculo } from '@/components/landing/Secoes';
+import { Curriculo } from '@/components/landing/Secoes';
 import { Promessa } from '@/components/landing/Promessa';
 import { DemoAlef } from '@/components/landing/DemoAlef';
 import { OuvirEFalar } from '@/components/landing/OuvirEFalar';
@@ -108,11 +108,12 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
       <OuvirEFalar />
       {/* Telas de verdade da plataforma e a Yael (29/10/2026). */}
       <Plataforma />
-      {/* O que se passa a ler, módulo a módulo, e as placas de verdade (30/10/2026). */}
-      <Resultado />
       <Decisoes />
-      <Metodo />
+      {/* A seção do método (as cinco etapas da lição) saiu da capa em 30/10/2026: a
+          galeria de telas mostra as mesmas etapas, e /metodo continua com o texto. */}
       <Curriculo />
+      {/* As placas de verdade que se lê no fim do curso (30/10/2026). */}
+      <Resultado />
       <Professor />
       <Depoimentos />
       <Preco href={comprar} label={passo.label} owned={account.ready && account.can(FLAGSHIP)} />

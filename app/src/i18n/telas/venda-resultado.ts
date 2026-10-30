@@ -1,12 +1,8 @@
 import type { Traducao } from '..';
 
-/* components/landing/Resultado.tsx - o que se passa a ler, módulo a módulo. */
+/* components/landing/Resultado.tsx - as placas que se lê no fim do curso. */
 const pt = {
-  rubrica: 'O que você passa a ler',
-  titulo: 'Do primeiro módulo à placa na rua.',
-  lead: 'Cada módulo termina com uma palavra de verdade. No fim, você lê o que está escrito nas ruas de Israel.',
-  modulo: (n: number) => `Módulo ${n}`,
-  semPontos: 'sem os sinais de vogal',
+  rubrica: 'Na rua, em Israel',
   naRuaTitulo: 'No fim do curso, você lê isto.',
   naRuaLead: 'Fotos de verdade, de placas em Israel. A palavra destacada é uma que o curso ensina.',
   naPlaca: 'Na placa:',
@@ -16,11 +12,7 @@ const pt = {
 
 // rever: a seção só aparece no site em português
 const en: Traducao<typeof pt> = {
-  rubrica: 'What you will be able to read',
-  titulo: 'From the first module to a street sign.',
-  lead: 'Every module ends with a real word. By the end, you read what is written on the streets of Israel.',
-  modulo: (n: number) => `Module ${n}`,
-  semPontos: 'without the vowel signs',
+  rubrica: 'On the street, in Israel',
   naRuaTitulo: 'By the end of the course, you read this.',
   naRuaLead: 'Real photos of signs in Israel. The highlighted word is one the course teaches.',
   naPlaca: 'On the sign:',
