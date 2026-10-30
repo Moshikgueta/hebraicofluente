@@ -43,7 +43,7 @@ const R = EM_INGLES ? {
   testar: /test me now/i, qualAlef: 'text=/Which of these is Alef/', quase: /Almost/, toqueDeNovo: /Tap again/,
   forma: /Alef has this shape/, isso: /That's it!/, continuar: /^Continue/, qualDasDuas: /which of the two is Alef/,
   ayin: /Ayin/, vogais: /Now the vowels/, ouvirAria: 'button[aria-label^="Hear «"]', proxima: /Next/,
-  ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, escreva: /Now you write it/, conferir: /^Check$/,
+  ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, comparar: /Now compare it with another letter/, conferir: /^Check$/,
   conferirDisse: /(Compare it with the model|stroke|shape|line|Almost|Good|That's it)/i, acheAlef: /Now find Alef/,
   direita: /starts on the right/, leia: /Now read a word/, aquiDentro: /find Alef in here/, terminei: /I finished the first letter/,
   umDe22: /1 of 22 letters/i, primeiraLetra: /just learned your first letter/i, oQueFez: /What you just did/i,
@@ -52,7 +52,7 @@ const R = EM_INGLES ? {
   testar: /testar agora/i, qualAlef: 'text=/Qual destas é o Álef/', quase: /Quase/, toqueDeNovo: /Toque de novo/,
   forma: /O Álef tem esta forma/, isso: /Isso!/, continuar: /^Continuar/, qualDasDuas: /qual das duas é o Álef/,
   ayin: /Áyin/, vogais: /Agora as vogais/, ouvirAria: 'button[aria-label^="Ouvir «"]', proxima: /Próxima/,
-  ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, escreva: /Agora escreva você/, conferir: /^Conferir$/,
+  ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, comparar: /Agora compare com outra letra/, conferir: /^Conferir$/,
   conferirDisse: /(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i, acheAlef: /Agora ache o Álef/,
   direita: /começa à direita/, leia: /Agora leia uma palavra/, aquiDentro: /achar o Álef aqui dentro/, terminei: /Terminei a primeira letra/,
   umDe22: /1 de 22 letras/i, primeiraLetra: /acabou de aprender sua primeira letra/i, oQueFez: /O que você fez agora/i,
@@ -283,24 +283,8 @@ for (const width of LARGURAS) {
       if (!(await b.count())) { erro(`${width}px: não achei o botão ${rotulo}`); return; }
       await b.click(); await p.waitForTimeout(350);
     };
+    /* Escrever vem logo depois do acerto (30/10/2026). */
     await segue(R.continuar);
-    if (!R.qualDasDuas.test(await secao.innerText())) erro(`${width}px: a etapa de comparar não apareceu`);
-    await toca('ע');
-    if (!R.ayin.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
-    await toca('א');
-    await segue(R.vogais);
-    /* A tabela das sílabas toca a voz do professor (03/10/2026). */
-    const silabas = await secao.locator(R.ouvirAria).count();
-    if (silabas !== 5) erro(`${width}px: a tabela das vogais tem ${silabas} botões de ouvir, e não 5`);
-    for (const [som, prox] of [['«i»', R.proxima], ['«o»', R.proxima], ['«a»', R.proxima]]) {
-      await toca(som); await segue(prox);
-    }
-    /* A rodada de ouvir: o botão existe, e o erro manda ouvir de novo. */
-    if (!(await secao.locator('button', { hasText: R.ouvirBotao }).count())) erro(`${width}px: a rodada de ouvir não tem botão`);
-    await toca('אַ');
-    if (!R.ouvirDeNovo.test(await secao.innerText())) erro(`${width}px: o erro da rodada de ouvir não manda ouvir de novo`);
-    await toca('אוּ'); await segue(R.escreva);
-    log(`  ✓ ${String(width).padStart(4)}px  comparar e vogais respondem`);
 
     const canvas = secao.locator('canvas').first();
     if (!(await canvas.count())) {
@@ -360,6 +344,24 @@ for (const width of LARGURAS) {
     /* 4 · ler. O botão de seguir NUNCA depende de ter desenhado: um canvas
        não é alcançável por teclado, e prender a demo ali seria fechá-la para
        quem navega sem ponteiro. */
+    await segue(R.comparar);
+    if (!R.qualDasDuas.test(await secao.innerText())) erro(`${width}px: a etapa de comparar não apareceu`);
+    await toca('ע');
+    if (!R.ayin.test(await secao.innerText())) erro(`${width}px: o erro do comparar não explica o Áyin`);
+    await toca('א');
+    await segue(R.vogais);
+    /* A tabela das sílabas toca a voz do professor (03/10/2026). */
+    const silabas = await secao.locator(R.ouvirAria).count();
+    if (silabas !== 5) erro(`${width}px: a tabela das vogais tem ${silabas} botões de ouvir, e não 5`);
+    for (const [som, prox] of [['«i»', R.proxima], ['«o»', R.proxima], ['«a»', R.proxima]]) {
+      await toca(som); await segue(prox);
+    }
+    /* A rodada de ouvir: o botão existe, e o erro manda ouvir de novo. */
+    if (!(await secao.locator('button', { hasText: R.ouvirBotao }).count())) erro(`${width}px: a rodada de ouvir não tem botão`);
+    await toca('אַ');
+    if (!R.ouvirDeNovo.test(await secao.innerText())) erro(`${width}px: o erro da rodada de ouvir não manda ouvir de novo`);
+    await toca('אוּ');
+    log(`  ✓ ${String(width).padStart(4)}px  comparar e vogais respondem`);
     await segue(R.acheAlef);
     await toca('שָׁלוֹם');
     if (!R.direita.test(await secao.innerText())) erro(`${width}px: o erro do achar não ensina a direção`);

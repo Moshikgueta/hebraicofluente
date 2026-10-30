@@ -65,6 +65,7 @@ import { useTocador } from './useTocador';
 import { asset } from '@/lib/asset';
 import { origemAtual } from '@/lib/origem';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
+import { ComYael } from './ComYael';
 import { tx } from '@/i18n/telas/venda-demo-alef';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -218,15 +219,17 @@ const ACHAR: readonly Rodada[] = [
 type Etapa = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 const TOTAL_ETAPAS = 8;
 const ROTULOS = [
-  tx.rotuloConhecer, tx.rotuloReconhecer, tx.rotuloComparar, tx.rotuloVogais,
-  tx.rotuloEscrever, tx.rotuloAchar, tx.rotuloLer, tx.rotuloPronto
+  tx.rotuloConhecer, tx.rotuloReconhecer, tx.rotuloEscrever, tx.rotuloComparar,
+  tx.rotuloVogais, tx.rotuloAchar, tx.rotuloLer, tx.rotuloPronto
 ] as const;
 /* Onde cada etapa mora, para o resto do arquivo não depender da ordem. */
-const E = { conhecer: 0, reconhecer: 1, comparar: 2, vogais: 3, escrever: 4, achar: 5, ler: 6, pronto: 7 } as const;
+/* Escrever vem logo depois de reconhecer desde 30/10/2026 (pedido do dono): na
+   quinta posição, quem saía no meio da amostra nunca chegava à escrita. */
+const E = { conhecer: 0, reconhecer: 1, escrever: 2, comparar: 3, vogais: 4, achar: 5, ler: 6, pronto: 7 } as const;
 /* O nome que vai para o funil do painel (lib/funil-demo.ts) ao chegar em cada
    etapa. A primeira não vai: quem a vê conta como `visto`, pela rolagem. */
 const NO_FUNIL: readonly (EtapaDaDemo | null)[] =
-  [null, 'reconhecer', 'comparar', 'vogais', 'escrever', 'achar', 'ler', 'pronto'];
+  [null, 'reconhecer', 'escrever', 'comparar', 'vogais', 'achar', 'ler', 'pronto'];
 /* Os exercícios que a capa anuncia: tudo menos a apresentação e o fim. */
 export const EXERCICIOS_DA_DEMO = TOTAL_ETAPAS - 2;
 
@@ -250,6 +253,8 @@ export function DemoAlef({
   /* Para o resultado do fim: escrever é a única etapa que dá para pular. */
   const [escreveu, setEscreveu] = useState(false);
   const [veredito, setVeredito] = useState<Veredito | null>(null);
+  /* Quantas vezes conferiu: reinicia a cara da Yael a cada conferência. */
+  const [vezes, setVezes] = useState(0);
   const secao = useRef<HTMLElement>(null);
   const tocador = useTocador();
 
@@ -302,6 +307,8 @@ export function DemoAlef({
     const v = quadro.current?.conferir();
     if (!v) return;
     setVeredito(v);
+    setVezes(n => n + 1);
+    tocarResposta(v.tone === 'good');
     track('trace_completed', { letterId: 'alef', score: v.score, stage: E.escrever });
   };
 
@@ -442,8 +449,10 @@ export function DemoAlef({
                     )}
 
                     {escolhida && acertou && (
-                      <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 grid gap-3 animate-pop
+                      <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 animate-pop
                                       motion-reduce:animate-none">
+                        <ComYael certo vez={tentativas}>
+                        <div className="grid gap-3">
                         <p className="flex items-center gap-2.5 m-0">
                           <Check size={18} color="var(--teal-ink)" />
                           <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">
@@ -458,7 +467,7 @@ export function DemoAlef({
                         <div>
                           <button
                             type="button"
-                            onClick={() => avancar(E.comparar)}
+                            onClick={() => avancar(E.escrever)}
                             className="inline-flex items-center justify-center min-h-[48px] px-6
                                        rounded-[13px] bg-[var(--navy)] text-white
                                        font-ui text-[16px] font-semibold
@@ -470,12 +479,16 @@ export function DemoAlef({
                             {tx.continuar}
                           </button>
                         </div>
+                        </div>
+                        </ComYael>
                       </div>
                     )}
 
                     {escolhida && !acertou && (
-                      <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 grid gap-2 animate-pop
+                      <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 animate-pop
                                       motion-reduce:animate-none">
+                        <ComYael certo={false} vez={tentativas}>
+                        <div className="grid gap-2">
                         <p className="flex items-center gap-2.5 m-0">
                           <span aria-hidden className="font-ui text-[17px] font-bold text-[var(--gold-ink)]">✕</span>
                           <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">
@@ -487,6 +500,8 @@ export function DemoAlef({
                         <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
                           {tx.formaDoAlef(escolhida.porque, <He size="inline" tone="ink">א</He>)}
                         </p>
+                        </div>
+                        </ComYael>
                       </div>
                     )}
                   </div>
@@ -550,7 +565,7 @@ export function DemoAlef({
                     ))}
                   </ul>
                   <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais" tocador={tocador}
-                           seguir={tx.seguirEscrever} onFim={() => avancar(E.escrever)} />
+                           seguir={tx.seguirAchar} onFim={() => avancar(E.achar)} />
                 </div>
               )}
 
@@ -614,6 +629,7 @@ export function DemoAlef({
                         <div className={`rounded-[13px] px-4 py-3 animate-pop motion-reduce:animate-none
                           ${veredito.tone === 'good'
                             ? 'bg-[var(--teal-soft)]' : 'bg-[var(--gold-soft)]'}`}>
+                          <ComYael certo={veredito.tone === 'good'} vez={vezes}>
                           <p className={`font-ui text-[14.5px] leading-[1.55] m-0
                             ${veredito.tone === 'good'
                               ? 'text-[var(--teal-body)]' : 'text-[var(--gold-body)]'}`}>
@@ -622,6 +638,7 @@ export function DemoAlef({
                             </span>
                             {veredito.message}
                           </p>
+                          </ComYael>
                         </div>
                       )}
                     </div>
@@ -656,7 +673,7 @@ export function DemoAlef({
                       </button>
                       <button
                         type="button"
-                        onClick={() => avancar(E.achar)}
+                        onClick={() => avancar(E.comparar)}
                         className="ml-auto inline-flex items-center justify-center min-h-[48px] px-6
                                    rounded-[13px] bg-[var(--navy)] text-white
                                    font-ui text-[16px] font-semibold
@@ -665,7 +682,7 @@ export function DemoAlef({
                                    focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
                                    motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                       >
-                        {tx.seguirAchar}
+                        {tx.seguirComparar}
                       </button>
                     </div>
                   </div>
@@ -928,7 +945,9 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
           <p className="font-ui text-[15px] leading-[1.6] text-ink-muted pt-1">{tx.toqueResposta}</p>
         )}
         {escolhida && escolhida.certa && (
-          <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 grid gap-3 animate-pop motion-reduce:animate-none">
+          <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 animate-pop motion-reduce:animate-none">
+            <ComYael certo vez={n}>
+            <div className="grid gap-3">
             <p className="flex items-center gap-2.5 m-0">
               <Check size={18} color="var(--teal-ink)" />
               <span className="font-ui font-bold text-[17px] text-[var(--teal-ink)]">{tx.isso}</span>
@@ -954,10 +973,14 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
                 {ultima ? seguir : tx.proxima}
               </button>
             </div>
+            </div>
+            </ComYael>
           </div>
         )}
         {escolhida && !escolhida.certa && (
-          <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 grid gap-2 animate-pop motion-reduce:animate-none">
+          <div className="rounded-[16px] bg-[var(--gold-soft)] px-5 py-4 animate-pop motion-reduce:animate-none">
+            <ComYael certo={false} vez={escolha ?? 0}>
+            <div className="grid gap-2">
             <p className="flex items-center gap-2.5 m-0">
               <span aria-hidden className="font-ui text-[17px] font-bold text-[var(--gold-ink)]">✕</span>
               <span className="font-ui font-bold text-[17px] text-[var(--gold-ink)]">{tx.quase}</span>
@@ -965,6 +988,8 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
             <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0">
               <TextoComHebraico texto={escolhida.porque} /> {rodada.ouvir ? tx.ouvirDeNovo : tx.toqueDeNovo}
             </p>
+            </div>
+            </ComYael>
           </div>
         )}
       </div>

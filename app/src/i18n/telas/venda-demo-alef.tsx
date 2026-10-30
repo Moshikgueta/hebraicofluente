@@ -57,7 +57,7 @@ const pt = {
 
   rubrica: (n: number) => `Teste grátis · ${n} exercícios`,
   titulo: 'Experimente aprender sua primeira letra.',
-  lead: 'Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras, descobre como ela segura as vogais, escreve com o dedo e acha ela dentro de palavras de verdade - do mesmo jeito que acontece dentro do curso.',
+  lead: 'Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras, escreve com o dedo, descobre como ela segura as vogais e acha ela dentro de palavras de verdade - do mesmo jeito que acontece dentro do curso.',
   etapaDe: (n: number, total: number, rotulo: string) => `${n} de ${total} · ${rotulo}`,
 
   conhecerTitulo: 'O Álef é a primeira letra do alfabeto - e ela não tem som próprio.',
@@ -81,7 +81,6 @@ const pt = {
   vogaisTexto: 'O Álef não tem som: quem dá o som é o sinal de vogal que vem com ele. Toque em cada sílaba para ouvir o professor, e depois responda.',
   vogaisLista: 'As vogais com o Álef',
   ouvirSom: (som: string) => `Ouvir «${som}»`,
-  seguirEscrever: 'Agora escreva você →',
 
   escreverTitulo: 'Agora escreva o Álef com o dedo.',
   escreverTexto: 'Repare que a letra à mão não tem o mesmo desenho da que você viu: em hebraico se lê na forma impressa e se escreve na cursiva, que é a que aparece num bilhete em Israel.',
@@ -92,6 +91,7 @@ const pt = {
   conferir: 'Conferir',
   limpar: 'Limpar',
   seguirAchar: 'Agora ache o Álef →',
+  seguirComparar: 'Agora compare com outra letra →',
   seguirLer: 'Agora leia uma palavra →',
 
   lerTitulo: 'Você já consegue achar o Álef aqui dentro.',
@@ -194,7 +194,7 @@ const en: Traducao<typeof pt> = {
 
   rubrica: (n: number) => `Free test · ${n} exercises`,
   titulo: 'Try learning your first letter.',
-  lead: 'No sign-up and no card. You meet the letter, find it among others, discover how it holds the vowels, write it with your finger and find it inside real words - just the way it happens inside the course.',
+  lead: 'No sign-up and no card. You meet the letter, find it among others, write it with your finger, discover how it holds the vowels and find it inside real words - just the way it happens inside the course.',
   etapaDe: (n: number, total: number, rotulo: string) => `${n} of ${total} · ${rotulo}`,
 
   conhecerTitulo: 'Alef is the first letter of the alphabet - and it has no sound of its own.',
@@ -218,7 +218,6 @@ const en: Traducao<typeof pt> = {
   vogaisTexto: 'Alef has no sound: the sound comes from the vowel sign that goes with it. Tap each syllable to hear the teacher, and then answer.',
   vogaisLista: 'The vowels with Alef',
   ouvirSom: (som: string) => `Hear «${som}»`,
-  seguirEscrever: 'Now you write it →',
 
   escreverTitulo: 'Now write Alef with your finger.',
   escreverTexto: 'Notice that the handwritten letter does not look the same as the one you saw: in Hebrew you read the printed form and write in cursive, which is what you see on a handwritten note in Israel.',
@@ -228,6 +227,7 @@ const en: Traducao<typeof pt> = {
   conferir: 'Check',
   limpar: 'Clear',
   seguirAchar: 'Now find Alef →',
+  seguirComparar: 'Now compare it with another letter →',
   seguirLer: 'Now read a word →',
 
   lerTitulo: 'You can already find Alef in here.',
