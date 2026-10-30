@@ -43,7 +43,7 @@ const R = EM_INGLES ? {
   testar: /test me now/i, qualAlef: 'text=/Which of these is Alef/', quase: /Almost/, toqueDeNovo: /Tap again/,
   forma: /Alef has this shape/, isso: /That's it!/, continuar: /^Continue/, qualDasDuas: /which of the two is Alef/,
   ayin: /Ayin/, vogais: /Now the vowels/, ouvirAria: 'button[aria-label^="Hear «"]', proxima: /Next/,
-  ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, comparar: /Now compare it with another letter/, conferir: /^Check$/,
+  ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, comparar: /Now compare it with another letter/, jogo: /Now a game from the Academy/, jogoErro: /This is not Alef/, conferir: /^Check$/,
   conferirDisse: /(Compare it with the model|stroke|shape|line|Almost|Good|That's it)/i, acheAlef: /Now find Alef/,
   direita: /starts on the right/, leia: /Now read a word/, aquiDentro: /find Alef in here/, terminei: /I finished the first letter/,
   umDe22: /1 of 22 letters/i, primeiraLetra: /just learned your first letter/i, oQueFez: /What you just did/i,
@@ -52,7 +52,7 @@ const R = EM_INGLES ? {
   testar: /testar agora/i, qualAlef: 'text=/Qual destas é o Álef/', quase: /Quase/, toqueDeNovo: /Toque de novo/,
   forma: /O Álef tem esta forma/, isso: /Isso!/, continuar: /^Continuar/, qualDasDuas: /qual das duas é o Álef/,
   ayin: /Áyin/, vogais: /Agora as vogais/, ouvirAria: 'button[aria-label^="Ouvir «"]', proxima: /Próxima/,
-  ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, comparar: /Agora compare com outra letra/, conferir: /^Conferir$/,
+  ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, comparar: /Agora compare com outra letra/, jogo: /Agora um jogo da Academia/, jogoErro: /Esta não é o Álef/, conferir: /^Conferir$/,
   conferirDisse: /(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i, acheAlef: /Agora ache o Álef/,
   direita: /começa à direita/, leia: /Agora leia uma palavra/, aquiDentro: /achar o Álef aqui dentro/, terminei: /Terminei a primeira letra/,
   umDe22: /1 de 22 letras/i, primeiraLetra: /acabou de aprender sua primeira letra/i, oQueFez: /O que você fez agora/i,
@@ -368,6 +368,17 @@ for (const width of LARGURAS) {
     await toca('אֶתְמוֹל'); await segue(R.proxima);
     await toca('אֹכֶל');
     log(`  ✓ ${String(width).padStart(4)}px  achar o Álef nas palavras responde`);
+    /* O jogo da Academia (30/10/2026): a Caça à letra. Um erro pisca e volta;
+       achar todos os Álef abre o botão da leitura. */
+    await segue(R.jogo);
+    const celulas = secao.locator('[data-caca] li button');
+    if ((await celulas.count()) !== 15) erro(`${width}px: a grade da caça não tem 15 letras`);
+    await celulas.filter({ hasNotText: 'א' }).first().click(); await p.waitForTimeout(200);
+    if (!R.jogoErro.test(await secao.innerText())) erro(`${width}px: o erro da caça não diz onde olhar`);
+    const alefs = celulas.filter({ hasText: 'א' });
+    for (let i = 0; i < await alefs.count(); i++) { await alefs.nth(i).click(); await p.waitForTimeout(120); }
+    if (!(await secao.locator('button', { hasText: R.leia }).count())) erro(`${width}px: achar todos os Álef não terminou a caça`);
+    else log(`  ✓ ${String(width).padStart(4)}px  a caça à letra responde`);
     await secao.locator('button', { hasText: R.leia }).first().click();
     await p.waitForTimeout(300);
     const leitura = (await secao.innerText()).replace(/\s+/g, ' ');

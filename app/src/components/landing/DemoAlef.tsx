@@ -49,7 +49,7 @@
  * informativo depende delas.
  */
 
-import { tocarResposta } from '@/lib/som-do-acerto';
+import { tocarResposta, tocarSom } from '@/lib/som-do-acerto';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -66,6 +66,8 @@ import { asset } from '@/lib/asset';
 import { origemAtual } from '@/lib/origem';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
 import { ComYael } from './ComYael';
+import { Yael } from '@/components/aventura/Yael';
+import { XP } from '@/lib/state/rules';
 import { tx } from '@/i18n/telas/venda-demo-alef';
 
 /* A letra vem do CATÁLOGO, e não escrita aqui: o glifo e o nome da primeira
@@ -216,20 +218,35 @@ const ACHAR: readonly Rodada[] = [
    O quadro é o MESMO da lição (components/learn/TraceBoard.tsx), não uma
    imitação dele - inclusive a conta de coordenadas que sobrevive ao zoom do
    menu de acessibilidade. */
-type Etapa = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
-const TOTAL_ETAPAS = 8;
+type Etapa = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+const TOTAL_ETAPAS = 9;
 const ROTULOS = [
   tx.rotuloConhecer, tx.rotuloReconhecer, tx.rotuloEscrever, tx.rotuloComparar,
-  tx.rotuloVogais, tx.rotuloAchar, tx.rotuloLer, tx.rotuloPronto
+  tx.rotuloVogais, tx.rotuloAchar, tx.rotuloJogo, tx.rotuloLer, tx.rotuloPronto
 ] as const;
 /* Onde cada etapa mora, para o resto do arquivo não depender da ordem. */
 /* Escrever vem logo depois de reconhecer desde 30/10/2026 (pedido do dono): na
-   quinta posição, quem saía no meio da amostra nunca chegava à escrita. */
-const E = { conhecer: 0, reconhecer: 1, escrever: 2, comparar: 3, vogais: 4, achar: 5, ler: 6, pronto: 7 } as const;
+   quinta posição, quem saía no meio da amostra nunca chegava à escrita.
+   O jogo da Academia entrou no mesmo dia (pedido do dono: o teste tem de
+   refletir a plataforma e os jogos). */
+const E = { conhecer: 0, reconhecer: 1, escrever: 2, comparar: 3, vogais: 4, achar: 5, jogo: 6, ler: 7, pronto: 8 } as const;
 /* O nome que vai para o funil do painel (lib/funil-demo.ts) ao chegar em cada
-   etapa. A primeira não vai: quem a vê conta como `visto`, pela rolagem. */
+   etapa. A primeira não vai: quem a vê conta como `visto`, pela rolagem. O
+   jogo também não: a lista do servidor é fechada (ETAPAS_DA_DEMO), e quem
+   chega a `ler` passou por ele. */
 const NO_FUNIL: readonly (EtapaDaDemo | null)[] =
-  [null, 'reconhecer', 'escrever', 'comparar', 'vogais', 'achar', 'ler', 'pronto'];
+  [null, 'reconhecer', 'escrever', 'comparar', 'vogais', 'achar', null, 'ler', 'pronto'];
+
+/* O XP da amostra: o mesmo valor que o curso paga por acerto (XP.acerto em
+   lib/state/rules.ts). Só existe na tela e some ao sair: a amostra não guarda
+   nada, e o fim diz que no curso ele vale de verdade. */
+const XP_POR_ACERTO = XP.acerto;
+
+/* A grade da Caça à letra: a mesma ideia do jogo da Academia
+   (components/game/CacaLetra.tsx), com as letras que a amostra já mostrou.
+   Fixa, e não sorteada: o HTML estático e o navegador montam a mesma. */
+const GRADE_DA_CACA = ['מ', 'א', 'ש', 'ב', 'ע', 'א', 'ב', 'מ', 'א', 'ש', 'ע', 'מ', 'א', 'ב', 'א'] as const;
+const ALEFS_DA_CACA = GRADE_DA_CACA.filter(l => l === 'א').length;
 /* Os exercícios que a capa anuncia: tudo menos a apresentação e o fim. */
 export const EXERCICIOS_DA_DEMO = TOTAL_ETAPAS - 2;
 
@@ -255,6 +272,9 @@ export function DemoAlef({
   const [veredito, setVeredito] = useState<Veredito | null>(null);
   /* Quantas vezes conferiu: reinicia a cara da Yael a cada conferência. */
   const [vezes, setVezes] = useState(0);
+  /* O XP da amostra, e uma chave que reinicia o "+2" a cada acerto. */
+  const [xp, setXp] = useState(0);
+  const ganhar = () => setXp(n => n + XP_POR_ACERTO);
   const secao = useRef<HTMLElement>(null);
   const tocador = useTocador();
 
@@ -295,6 +315,8 @@ export function DemoAlef({
 
   const responder = (i: number) => {
     const certa = !!OPCOES[i]?.certa;
+    if (certa && OPCOES[escolha ?? -1]?.certa) return;
+    if (certa) ganhar();
     setEscolha(i);
     tocarResposta(certa);
     setTentativas(n => n + 1);
@@ -306,6 +328,7 @@ export function DemoAlef({
   const conferirEscrita = () => {
     const v = quadro.current?.conferir();
     if (!v) return;
+    if (v.tone === 'good' && veredito?.tone !== 'good') ganhar();
     setVeredito(v);
     setVezes(n => n + 1);
     tocarResposta(v.tone === 'good');
@@ -314,6 +337,7 @@ export function DemoAlef({
 
   const concluir = () => {
     track('demo_completed', { letterId: 'alef' });
+    tocarSom('comemora');
     avancar(E.pronto);
   };
 
@@ -351,6 +375,14 @@ export function DemoAlef({
                             text-ink-muted tabular-nums shrink-0">
                 {tx.etapaDe(etapa + 1, TOTAL_ETAPAS, ROTULOS[etapa])}
               </p>
+              {/* O XP, como no cabeçalho do curso. A `key` refaz o pulo a cada acerto. */}
+              {xp > 0 && (
+                <span key={xp} className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[var(--gold-soft)]
+                                 px-2.5 py-1 font-ui text-[12.5px] font-bold text-[var(--gold-ink)] tabular-nums
+                                 animate-pop motion-reduce:animate-none">
+                  <span aria-hidden>★</span>{tx.xp(xp)}
+                </span>
+              )}
             </div>
 
             {/* `tabIndex={-1}`: alvo de foco por programa, nunca por Tab. */}
@@ -525,7 +557,7 @@ export function DemoAlef({
                     quer rabiscar. O botão de seguir está sempre vivo. */}
               {/* ── 3 · comparar ─────────────────────────────────────── */}
               {etapa === E.comparar && (
-                <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar" tocador={tocador}
+                <Rodadas key="comparar" rodadas={COMPARAR} etapa="comparar" tocador={tocador} onAcerto={ganhar}
                          seguir={tx.seguirVogais} onFim={() => avancar(E.vogais)} />
               )}
 
@@ -564,7 +596,7 @@ export function DemoAlef({
                       </li>
                     ))}
                   </ul>
-                  <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais" tocador={tocador}
+                  <Rodadas key="vogais" rodadas={VOGAIS} etapa="vogais" tocador={tocador} onAcerto={ganhar}
                            seguir={tx.seguirAchar} onFim={() => avancar(E.achar)} />
                 </div>
               )}
@@ -692,8 +724,13 @@ export function DemoAlef({
 
               {/* ── 6 · achar ────────────────────────────────────────── */}
               {etapa === E.achar && (
-                <Rodadas key="achar" rodadas={ACHAR} etapa="achar" tocador={tocador}
-                         seguir={tx.seguirLer} onFim={() => avancar(E.ler)} />
+                <Rodadas key="achar" rodadas={ACHAR} etapa="achar" tocador={tocador} onAcerto={ganhar}
+                         seguir={tx.seguirJogo} onFim={() => avancar(E.jogo)} />
+              )}
+
+              {/* ── 7 · o jogo da Academia ───────────────────────────── */}
+              {etapa === E.jogo && (
+                <CacaDoAlef onAcerto={ganhar} onFim={() => avancar(E.ler)} />
               )}
 
               {/* ── 7 · ler ──────────────────────────────────────────── */}
@@ -745,10 +782,13 @@ export function DemoAlef({
               {etapa === E.pronto && (
                 <div className="grid gap-6 justify-items-center text-center">
                   <div className="grid justify-items-center gap-3">
-                    <span className="grid place-items-center w-[84px] h-[84px] rounded-[26px]
-                                     bg-[var(--teal-soft)] animate-pop motion-reduce:animate-none">
-                      <He size="lg" tone="teal">א</He>
-                    </span>
+                    <div className="flex items-end gap-3">
+                      <span className="grid place-items-center w-[84px] h-[84px] rounded-[26px]
+                                       bg-[var(--teal-soft)] animate-pop motion-reduce:animate-none">
+                        <He size="lg" tone="teal">א</He>
+                      </span>
+                      <Yael humor="comemora" className="w-[72px]" />
+                    </div>
                     <p className="font-ui text-[13px] font-bold uppercase tracking-[.12em]
                                   text-[var(--teal-ink)] tabular-nums m-0">
                       {tx.umDe(course.totalLetters)}
@@ -779,6 +819,14 @@ export function DemoAlef({
                         ))}
                       </ul>
                     </div>
+                    {xp > 0 && (
+                      <p className="font-ui text-[15px] leading-[1.55] text-ink-body max-w-[42ch] m-0">
+                        <strong className="inline-flex items-center gap-1 text-[var(--gold-ink)] tabular-nums">
+                          <span aria-hidden>★</span>{tx.xpGanho(xp)}
+                        </strong>{' '}
+                        {tx.xpNoCurso}
+                      </p>
+                    )}
                     <p className="font-ui text-[16.5px] leading-[1.6] text-ink-muted max-w-[42ch] m-0">
                       {tx.faltam(course.totalLetters - 1)}
                     </p>
@@ -834,7 +882,7 @@ export function DemoAlef({
                   <button
                     type="button"
                     onClick={() => {
-                      setEscolha(null); setTentativas(0); setVeredito(null); setEscreveu(false);
+                      setEscolha(null); setTentativas(0); setVeredito(null); setEscreveu(false); setXp(0);
                       quadro.current?.limpar();
                       avancar(E.conhecer);
                     }}
@@ -858,8 +906,9 @@ export function DemoAlef({
 /* Uma sequência de perguntas de escolha, no formato da etapa «Reconhecer»:
    o erro diz onde olhar e deixa tentar de novo; o acerto mostra o que a
    pessoa acabou de aprender e um botão para a próxima rodada. */
-function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
+function Rodadas({ rodadas, etapa, seguir, onFim, onAcerto, tocador }: {
   rodadas: readonly Rodada[];
+  onAcerto: () => void;
   etapa: string;
   tocador: Tocador;
   seguir: string;
@@ -873,8 +922,11 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
   const palavras = rodada.opcoes.every(o => !o.rotulo);
 
   const responder = (i: number) => {
+    const certa = !!rodada.opcoes[i]?.certa;
+    if (certa && escolhida?.certa) return;
+    if (certa) onAcerto();
     setEscolha(i);
-    tocarResposta(!!rodada.opcoes[i]?.certa);
+    tocarResposta(certa);
     track('demo_answered', { letterId: 'alef', correct: !!rodada.opcoes[i]?.certa, chosen: `${etapa}:${rodada.opcoes[i]?.he}` });
   };
   const proxima = () => {
@@ -997,6 +1049,116 @@ function Rodadas({ rodadas, etapa, seguir, onFim, tocador }: {
   );
 }
 
+/* A Caça à letra, um dos jogos da Academia, com o Álef: toque em todos os
+   Álef da grade. As regras são as do jogo do curso: acerto fica marcado em
+   teal com ✓, erro pisca em gold com ✕ e volta sozinho, e errar não tira
+   nada. Acaba quando os Álef foram todos achados, e a Yael comemora. */
+function CacaDoAlef({ onAcerto, onFim }: { onAcerto: () => void; onFim: () => void }) {
+  const [achados, setAchados] = useState<ReadonlySet<number>>(new Set());
+  const [errado, setErrado] = useState<number | null>(null);
+  const espera = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (espera.current) clearTimeout(espera.current); }, []);
+  const fim = achados.size === ALEFS_DA_CACA;
+
+  const tocar = (i: number) => {
+    if (fim || achados.has(i)) return;
+    if (GRADE_DA_CACA[i] === 'א') {
+      const novos = new Set(achados).add(i);
+      setAchados(novos); setErrado(null);
+      onAcerto();
+      tocarSom(novos.size === ALEFS_DA_CACA ? 'comemora' : 'acerto');
+      track('demo_answered', { letterId: 'alef', correct: true, chosen: 'caca:א' });
+    } else {
+      setErrado(i);
+      tocarSom('erro');
+      track('demo_answered', { letterId: 'alef', correct: false, chosen: `caca:${GRADE_DA_CACA[i]}` });
+      if (espera.current) clearTimeout(espera.current);
+      espera.current = setTimeout(() => setErrado(e => (e === i ? null : e)), 900);
+    }
+  };
+
+  return (
+    <div className="grid gap-5">
+      <div className="grid gap-1.5">
+        <p className="font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--teal-ink)] m-0">
+          {tx.jogoRubrica}
+        </p>
+        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+          <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.02em] text-ink m-0">
+            {tx.jogoTitulo}
+          </p>
+          <span className="font-ui text-[13.5px] font-semibold text-ink-muted tabular-nums ml-auto">
+            {tx.jogoAchou(achados.size, ALEFS_DA_CACA)}
+          </span>
+        </div>
+      </div>
+
+      <ul data-caca className="grid grid-cols-5 gap-2 sm:gap-3 list-none p-0 m-0 max-w-[520px]">
+        {GRADE_DA_CACA.map((l, i) => {
+          const bom = achados.has(i);
+          const ruim = errado === i;
+          return (
+            <li key={i}>
+              <button
+                type="button"
+                onClick={() => tocar(i)}
+                aria-pressed={bom}
+                className={`w-full min-h-[60px] sm:min-h-[72px] rounded-[14px] border-2 grid place-items-center relative
+                            transition-[background-color,border-color,transform] duration-[200ms]
+                            active:scale-[.96] focus-visible:outline focus-visible:outline-2
+                            focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                            motion-reduce:transition-none motion-reduce:active:scale-100
+                  ${bom ? 'border-[var(--teal)] bg-[var(--teal-soft)] animate-pop motion-reduce:animate-none'
+                    : ruim ? 'border-[#D9B872] bg-[var(--gold-soft)]'
+                    : 'border-line bg-[var(--card)] hover:bg-[var(--sand)]'}`}
+              >
+                <He size="lg" tone={bom ? 'teal' : 'navy'}>{l}</He>
+                {(bom || ruim) && (
+                  <span aria-hidden className={`absolute top-1 right-1.5 font-ui text-[13px] font-bold
+                    ${bom ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>{bom ? '✓' : '✕'}</span>
+                )}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="min-h-[96px]" aria-live="polite">
+        {fim ? (
+          <div className="rounded-[16px] bg-[var(--teal-soft)] px-5 py-4 animate-pop motion-reduce:animate-none">
+            <div className="flex items-start gap-3">
+              <Yael humor="comemora" className="w-[58px] shrink-0 -mt-1" />
+              <div className="grid gap-3 min-w-0">
+                <p className="font-ui text-[15.5px] leading-[1.6] text-[var(--teal-body)] m-0">{tx.jogoFim}</p>
+                <div>
+                  <button
+                    type="button"
+                    onClick={onFim}
+                    className="inline-flex items-center justify-center min-h-[48px] px-6
+                               rounded-[13px] bg-[var(--navy)] text-white font-ui text-[16px] font-semibold
+                               transition-transform duration-[180ms] hover:-translate-y-[2px]
+                               focus-visible:outline focus-visible:outline-2
+                               focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
+                               motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  >
+                    {tx.seguirLer}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : errado !== null ? (
+          <ComYael certo={false} vez={errado}>
+            <p className="font-ui text-[15px] leading-[1.6] text-[var(--gold-body)] m-0 pt-1">
+              <span aria-hidden className="font-bold mr-1.5">✕</span>{tx.jogoErro}
+            </p>
+          </ComYael>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 /* A segunda letra por e-mail (03/10/2026, a pedido do dono): para quem
    terminou e ainda não quer comprar. Um e-mail só, com o Mem; o endereço não
    entra em lista nenhuma. Ver worker/src/api/segunda-letra.js. */
@@ -1098,6 +1260,7 @@ function feitos(escreveu: boolean): string[] {
     tx.feito4,
     ...(escreveu ? [tx.feitoEscreveu] : []),
     tx.feito5,
+    tx.feitoJogo,
     tx.feito6
   ];
 }

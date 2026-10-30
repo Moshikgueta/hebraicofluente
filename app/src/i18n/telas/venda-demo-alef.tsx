@@ -52,12 +52,13 @@ const pt = {
   rotuloVogais: 'Vogais',
   rotuloEscrever: 'Escrever',
   rotuloAchar: 'Achar',
+  rotuloJogo: 'Jogo',
   rotuloLer: 'Ler',
   rotuloPronto: 'Pronto',
 
   rubrica: (n: number) => `Teste grátis · ${n} exercícios`,
   titulo: 'Experimente aprender sua primeira letra.',
-  lead: 'Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras, escreve com o dedo, descobre como ela segura as vogais e acha ela dentro de palavras de verdade - do mesmo jeito que acontece dentro do curso.',
+  lead: 'Sem cadastro e sem cartão. Você conhece a letra, encontra ela entre outras, escreve com o dedo, descobre como ela segura as vogais, acha ela dentro de palavras de verdade e joga um jogo da Academia - do mesmo jeito que acontece dentro do curso.',
   etapaDe: (n: number, total: number, rotulo: string) => `${n} de ${total} · ${rotulo}`,
 
   conhecerTitulo: 'O Álef é a primeira letra do alfabeto - e ela não tem som próprio.',
@@ -93,6 +94,15 @@ const pt = {
   seguirAchar: 'Agora ache o Álef →',
   seguirComparar: 'Agora compare com outra letra →',
   seguirLer: 'Agora leia uma palavra →',
+  seguirJogo: 'Agora um jogo da Academia →',
+  jogoRubrica: 'Caça à letra · um jogo da Academia',
+  jogoTitulo: 'Toque em todos os Álef da grade.',
+  jogoAchou: (n: number, total: number) => `Achou ${n} de ${total}`,
+  jogoErro: 'Esta não é o Álef. Procure as duas hastes cruzadas.',
+  jogoFim: 'Achou todos! Na Academia do curso tem este e outros jogos, com as letras que você já aprendeu.',
+  xp: (n: number) => `${n} XP`,
+  xpGanho: (n: number) => `+${n} XP nesta amostra`,
+  xpNoCurso: 'No curso, cada acerto vale XP, que você troca por extras na loja de recompensas.',
 
   lerTitulo: 'Você já consegue achar o Álef aqui dentro.',
   lerTexto: 'Esta é uma palavra hebraica de verdade, e o Álef aparece nas duas pontas - lembrando que em hebraico se lê da direita para a esquerda. A letra do meio é o Bet, que o curso também ensina.',
@@ -138,6 +148,7 @@ const pt = {
   feito4: 'Reconheceu uma sílaba só de ouvir',
   feitoEscreveu: 'Escreveu o Álef com o dedo',
   feito5: 'Achou o Álef em duas palavras de verdade',
+  feitoJogo: 'Jogou a Caça à letra, um jogo da Academia',
   feito6: 'Leu a palavra אַבָּא, «pai»'
 } as const;
 
@@ -189,12 +200,13 @@ const en: Traducao<typeof pt> = {
   rotuloVogais: 'Vowels',
   rotuloEscrever: 'Write',
   rotuloAchar: 'Find',
+  rotuloJogo: 'Game',
   rotuloLer: 'Read',
   rotuloPronto: 'Done',
 
   rubrica: (n: number) => `Free test · ${n} exercises`,
   titulo: 'Try learning your first letter.',
-  lead: 'No sign-up and no card. You meet the letter, find it among others, write it with your finger, discover how it holds the vowels and find it inside real words - just the way it happens inside the course.',
+  lead: 'No sign-up and no card. You meet the letter, find it among others, write it with your finger, discover how it holds the vowels, find it inside real words and play a game from the Academy - just the way it happens inside the course.',
   etapaDe: (n: number, total: number, rotulo: string) => `${n} of ${total} · ${rotulo}`,
 
   conhecerTitulo: 'Alef is the first letter of the alphabet - and it has no sound of its own.',
@@ -229,6 +241,15 @@ const en: Traducao<typeof pt> = {
   seguirAchar: 'Now find Alef →',
   seguirComparar: 'Now compare it with another letter →',
   seguirLer: 'Now read a word →',
+  seguirJogo: 'Now a game from the Academy →',
+  jogoRubrica: 'Letter hunt · a game from the Academy',
+  jogoTitulo: 'Tap every Alef in the grid.',
+  jogoAchou: (n: number, total: number) => `Found ${n} of ${total}`,
+  jogoErro: 'This is not Alef. Look for the two crossed strokes.',
+  jogoFim: 'You found them all! The course Academy has this game and others, with the letters you have already learned.',
+  xp: (n: number) => `${n} XP`,
+  xpGanho: (n: number) => `+${n} XP in this sample`,
+  xpNoCurso: 'In the course, every right answer earns XP, which you trade for extras in the rewards shop.',
 
   lerTitulo: 'You can already find Alef in here.',
   lerTexto: 'This is a real Hebrew word, and Alef appears at both ends - remember that Hebrew is read from right to left. The letter in the middle is Bet, which the course also teaches.',
@@ -274,6 +295,7 @@ const en: Traducao<typeof pt> = {
   feito4: 'Recognized a syllable just by hearing it',
   feitoEscreveu: 'Wrote Alef with your finger',
   feito5: 'Found Alef in two real words',
+  feitoJogo: 'Played Letter hunt, a game from the Academy',
   feito6: 'Read the word אַבָּא, «dad»'
 };
 
