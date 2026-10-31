@@ -964,7 +964,8 @@ GUARDADO, não apagado:
   atendimento (`Vazia` em BibliotecaClient.tsx).
 - **Para voltar:** tirar a regex das cinco páginas em worker.js, a linha delas em `NAO_LISTADAS`
   (seo.ts e seo.mjs), devolver o PortalClient à `page.tsx`, o painel e a coluna ao PublicShell,
-  `bio` ao `PARA_O_COMECE_AQUI`, e a regra antiga da capa em `checa-seo.mjs`.
+  `bio` ao `PARA_O_COMECE_AQUI`, a regra antiga da capa em `checa-seo.mjs`, e tirar
+  `/curso-de-hebraico` de `ESPELHOS` (seo.ts e seo.mjs; ver "SEO de 31/10/2026").
 
 ## A capa é o portal das três jornadas (23/10/2026, master prompt "Hebraico Fluente 2.0")
 Decisões do dono no mesmo dia: portal na capa; o e-book e o Raízes "Em breve", SEM preço nem
@@ -1079,6 +1080,17 @@ compra; medição só com o contador próprio.
   ao Worker e não monta no servidor estático. No build local o escuro passa inteiro (menor contraste
   5,33:1). O script agora para e avisa quando a casca não monta. `npm run varrer` e `npm run escuro`
   medem o build LOCAL (`npm run build`, sem a variável).
+
+## SEO de 31/10/2026 (auditoria, `audit/2026-10-31-seo/RELATORIO.md`)
+- **Espelho:** enquanto a capa for a página do curso, `/curso-de-hebraico` repete a capa palavra por
+  palavra. Fica no ar (campanhas, e-mails e portão), fora do sitemap, com o canonical na capa e SEM
+  `noindex` (`ESPELHOS` em lib/seo.ts e seo.mjs; `canonicaDe`). O `Course` do JSON-LD aponta a capa.
+- **O `Course`** leva o que o resultado de curso do Google pede, tudo tirado do que a página já diz:
+  `hasCourseInstance` online com o ritmo da FAQ (10 min por dia, uma lição por vez, `repeatCount` =
+  letras + lições de som), o nível, o "do zero", o que ensina (a Promessa) e um `syllabusSections`
+  por módulo. Nunca `aggregateRating` nem `review` sem avaliações reais (`checa-seo.mjs` recusa).
+- **Description acima de 155 caracteres reprova em toda página anunciável**, não só na capa.
+- O fundo do hero (AtmosferaFundo) saiu de `fetchPriority="low"`: no celular é ele a maior pintura.
 
 ## Antes de commitar
 ```sh

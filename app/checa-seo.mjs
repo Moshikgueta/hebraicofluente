@@ -33,7 +33,7 @@
    node checa-seo.mjs  (de dentro de app/, depois do build e do seo.mjs) */
 
 import { readFileSync, existsSync } from 'node:fs';
-import { classificar, rotas } from './seo.mjs';
+import { classificar, rotas, ESPELHOS } from './seo.mjs';
 
 const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
 const SITE = toml.match(/^\s*SITE_ORIGIN\s*=\s*"([^"]+)"/m)[1].replace(/\/+$/, '');
@@ -70,7 +70,7 @@ for (const [, alvo] of robots.matchAll(/^Disallow:\s*(\S+)/gm)) {
 }
 
 /* ── página por página ──────────────────────────────────────────────── */
-const { listadas, pagas, ocultas } = classificar(rotas());
+const { listadas, pagas, ocultas, espelhos } = classificar(rotas());
 const canonicais = new Map();
 
 for (const rota of listadas) {
@@ -96,6 +96,17 @@ for (const rota of listadas) {
 for (const rota of ocultas) {
   if (noSitemap.has(rota)) nota(`${rota} não responde a busca e está no sitemap`);
   if (!robotsDe(html(rota))?.includes('noindex')) nota(`${rota} não responde a busca e não tem noindex`);
+}
+
+/* ESPELHO (31/10/2026): a mesma página da capa noutro endereço. Fora do
+   sitemap, canonical no principal, e SEM noindex (os dois sinais juntos se
+   contradizem). */
+for (const rota of espelhos) {
+  const h = html(rota);
+  const alvo = `${SITE}${ESPELHOS[rota.replace(/\/+$/, '')]}`.replace(/([^/])$/, '$1/');
+  if (noSitemap.has(rota)) nota(`${rota} repete outra página e está no sitemap`);
+  if (canonicalDe(h) !== alvo) nota(`${rota} repete ${alvo} e tem canonical "${canonicalDe(h)}"`);
+  if (robotsDe(h)?.includes('noindex')) nota(`${rota} tem canonical em outra página E noindex`);
 }
 
 for (const rota of pagas) {
@@ -128,13 +139,12 @@ if (og) {
 
 /* ── a description cabe no resultado da busca ───────────────────────────
    Acima de ~155 caracteres o Google corta (auditoria de 01/10, SEO-003).
-   A capa reprova; nas outras é aviso, por enquanto. */
+   Desde 31/10/2026 reprova em toda página anunciável: as do A1, A2 e B1, as
+   últimas que passavam, saíam cortadas no meio da palavra. */
 for (const rota of listadas) {
   const d = descDe(html(rota));
   const n = d ? [...d.replace(/&[a-z#0-9]+;/gi, 'x')].length : 0;
-  if (n <= 155) continue;
-  if (rota === '/') nota(`a capa tem description com ${n} caracteres (máximo 155)`);
-  else console.log(`  aviso: ${rota} tem description com ${n} caracteres (o resultado corta em ~155)`);
+  if (n > 155) nota(`${rota} tem description com ${n} caracteres (máximo 155)`);
 }
 
 /* ── os dados estruturados da página do curso (lib/jsonld.ts, SEO-001) ──
@@ -171,6 +181,24 @@ for (const rota of listadas) {
       nota(`JSON-LD: priceValidUntil ${curso.offers?.priceValidUntil}, o catálogo diz ${ate}`);
     }
   }
+  /* O que o resultado de curso do Google pede (31/10/2026): a instância
+     online com um ritmo, e o currículo, um módulo por módulo do curso. */
+  if (curso) {
+    const inst = curso.hasCourseInstance;
+    if (!inst || inst.courseMode !== 'Online' || !(inst.courseSchedule || inst.courseWorkload)) {
+      nota('JSON-LD: Course sem hasCourseInstance online com courseSchedule ou courseWorkload');
+    }
+    const estrutura = JSON.parse(readFileSync(new URL('./content/course.json', import.meta.url), 'utf8'));
+    if ((curso.syllabusSections || []).length !== estrutura.modules.length) {
+      nota(`JSON-LD: ${(curso.syllabusSections || []).length} módulos no Course, o curso tem ${estrutura.modules.length}`);
+    }
+    /* O endereço do Course é o canonical da página do curso (a capa, enquanto
+       ela for o espelho de /curso-de-hebraico). */
+    const doCurso = `${SITE}${ESPELHOS['/curso-de-hebraico'] ?? '/curso-de-hebraico/'}`;
+    if (curso.url !== doCurso) nota(`JSON-LD: o Course aponta ${curso.url}, o canonical da página do curso é ${doCurso}`);
+    if (curso.aggregateRating || curso.review) nota('JSON-LD: Course com avaliação - só com avaliações reais e conferíveis');
+  }
+  if (!tipo('WebSite')) nota('JSON-LD da página do curso sem WebSite');
   if (!org) nota('JSON-LD da página do curso sem Organization');
   /* O site em inglês sai sem CNPJ no JSON-LD (decisão do dono, 29/10/2026); lá, ele não pode aparecer. */
   else if (DIR === 'out-en') { if (org.taxID || org.address) nota('JSON-LD em inglês com CNPJ ou endereço da empresa'); }
@@ -202,7 +230,7 @@ for (const rota of listadas) {
 }
 
 console.log(`  site: ${SITE}`);
-console.log(`  anunciáveis: ${listadas.length} · pagas: ${pagas.length} · não listadas: ${ocultas.length}`);
+console.log(`  anunciáveis: ${listadas.length} · pagas: ${pagas.length} · não listadas: ${ocultas.length} · espelhos: ${espelhos.length}`);
 fim();
 
 function fim() {

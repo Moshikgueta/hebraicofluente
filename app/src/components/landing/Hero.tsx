@@ -10,8 +10,8 @@
  * plataforma, não aula particular, e a composição diz isso sem texto a mais.
  *
  * O retrato saiu da seção "Sobre" (Fecho.tsx) e só aparece aqui: a mesma foto
- * duas vezes na página repetia a apresentação. É a maior pintura do hero, e
- * por isso o único `fetchPriority="high"` da página.
+ * duas vezes na página repetia a apresentação. É o único `fetchPriority="high"`
+ * da página. (No celular a maior pintura é o fundo, AtmosferaFundo: ver lá.)
  *
  * No celular a ordem é título, subtítulo, foto, itens e botões; a foto sai em
  * 4:3 (até 1024 px) para os botões ficarem perto da primeira tela. A entrada é CSS (`hero-entra`,
@@ -227,6 +227,13 @@ function AtmosferaFundo({ midia }: { midia: HeroMedia }) {
            tipo de byte que atrasa a primeira tela num 4G. Sem o arquivo
            pequeno o `<source>` não é emitido e todo mundo recebe o grande.
 
+           Sem `fetchPriority="low"` desde 31/10/2026 (auditoria de SEO): no
+           celular esta é a MAIOR pintura da primeira tela (o LCP que o Google
+           mede), e com prioridade baixa ela esperava o retrato de 118 KB
+           chegar. Medido no Chromium com a emulação do Lighthouse móvel
+           (CPU 4x, 150 ms, 1,6 Mbps; mediana de 5): LCP 2,57 -> 1,1 a 1,2 s,
+           e o retrato chega no mesmo tempo de antes (2,3 s). São 4,7 KB.
+
            `object-[68%_50%]`: quando a janela é mais alta que 16:9, o corte
            tem de puxar para a direita, onde estão a cortina e a xícara. No
            centro a foto é parede, e parede cortada é um fundo liso. */
@@ -240,7 +247,6 @@ function AtmosferaFundo({ midia }: { midia: HeroMedia }) {
             height={725}
             className="w-full h-full object-cover object-[68%_50%] opacity-[.55]"
             loading="eager"
-            fetchPriority="low"
             decoding="async"
           />
         </picture>
