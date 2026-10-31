@@ -1,4 +1,10 @@
-# Virar o preço de pré-lançamento para o oficial. SÓ À MÃO.
+# Virar o preço de pré-lançamento para o oficial.
+#
+# Desde 31/10/2026 (decisão do dono) também AGENDADO: em 01/12 às 00:05 de
+# Brasília (03:05 UTC) roda sozinho com --vencidos, que só vira o produto cuja
+# `preLancamentoAte` já passou. Assim o "até 30/11" da página é verdade: no
+# dia seguinte o preço sobe e a faixa da promoção some. O agendamento só roda
+# no ramo padrão (main). O texto abaixo é o de 23/10/2026.
 #
 # Decisão do dono em 23/10/2026: os preços oficiais (data/courses.json,
 # `listBrl`) ficam configurados e não sobem sozinhos. Este workflow não tem
@@ -15,6 +21,8 @@
 name: Virar o preço (pré-lançamento → oficial)
 
 on:
+  schedule:
+    - cron: '5 3 1 12 *'
   workflow_dispatch:
     inputs:
       confirmar:
@@ -50,6 +58,9 @@ jobs:
           CONFIRMAR: ${{ inputs.confirmar }}
           PRODUTOS: ${{ inputs.produtos }}
         run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            node tools/virar-preco.mjs --aplicar --vencidos | tee virada.txt
+          else
           if [ "$CONFIRMAR" != "virar" ]; then
             echo "Confirmação ausente: escreva virar no campo. Nada foi mudado." | tee -a "$GITHUB_STEP_SUMMARY"
             exit 1
@@ -59,6 +70,7 @@ jobs:
             exit 1
           fi
           node tools/virar-preco.mjs --aplicar ${PRODUTOS:+--so=$PRODUTOS} | tee virada.txt
+          fi
           if git diff --quiet -- data/courses.json; then
             echo "mudou=nao" >> "$GITHUB_OUTPUT"
           else

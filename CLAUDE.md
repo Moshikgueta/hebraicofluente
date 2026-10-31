@@ -1602,6 +1602,11 @@ e de o advogado ler os parágrafos dos Termos e do Reembolso**.
   Alfabetização R$ 147 / R$ 197; Israel Além do Óbvio R$ 197 / R$ 297; combo "Descubra Israel + Aprenda
   Hebraico" (`alfabetizacao-e-israel`) R$ 297 / R$ 397. Separados no pré-lançamento, R$ 344: a economia de R$ 47
   é calculada na tela (`economiaDoCombo`), nunca escrita. Não criar outro combo.
+- **SUBSTITUÍDO em 31/10/2026 (decisão do dono): a alfabetização tem pré-lançamento ATÉ 30/11 e o preço sobe
+  sozinho.** `preLancamentoAte: "2026-11-30"` no catálogo; R$ 147 no cartão, R$ 132,30 no PIX (10%). A Action
+  "Virar o preço" roda agendada em 01/12 03:05 UTC com `--vencidos` (só vira o que tem data passada, em
+  Brasília) e publica: o curso vai a R$ 297 e a faixa da promoção (`components/landing/FaixaDaPromocao.tsx`,
+  logo abaixo do hero) some sozinha. O selo é "7 dias para desistir", nunca "garantia". O item abaixo é histórico.
 - **O preço oficial NÃO vira sozinho.** O catálogo não tem `preLancamentoAte` nem `parceriaAte`; as telas dizem
   "Preço de pré-lançamento. Depois, R$ X." sem data (data sem virada seria escassez falsa). Virar é à mão:
   Actions → "Virar o preço" → escrever `virar` (e, se quiser, só alguns slugs). `tools/virar-preco.mjs` sem

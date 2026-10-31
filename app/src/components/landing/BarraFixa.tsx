@@ -28,8 +28,8 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { brl, flagship, parcelasMax } from '@/lib/catalog';
-import { empresa, parcelasCurto, temCartao } from '@/lib/empresa';
+import { brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { empresa, parcelasCurto, soPix, temCartao, temPix } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/venda-barra-fixa';
 
 /* Os alvos que apagam a barra. Ficam aqui, e não espalhados, porque são os
@@ -101,6 +101,12 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
           {temCartao() && (
             <span className="block text-[12.5px] text-ink-muted tabular-nums">
               {tx.parcelas(parcelasCurto(parcelas))}
+            </span>
+          )}
+          {/* O PIX e a data da promoção (31/10/2026, pedido do dono). */}
+          {!soPix() && temPix() && c.price.pixDiscountPct > 0 && (
+            <span className="block text-[12.5px] font-semibold text-[var(--teal-ink)] tabular-nums">
+              {tx.pix(brl(pixPrice(c.price)), fimDoPreLancamento(c.price)?.slice(0, 5) ?? null)}
             </span>
           )}
           {/* A versão curta da linha da caixa de preço (CONV-001): a barra
