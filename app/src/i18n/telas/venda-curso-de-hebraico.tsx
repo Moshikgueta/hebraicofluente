@@ -7,8 +7,11 @@ const pt = {
   metaTitulo: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
   /* Até 155 caracteres (checa-seo.mjs). */
   metaDescricao:
-    'Curso interativo para brasileiros aprenderem a ler hebraico do zero: as 22 letras, os ' +
-    'sinais de vogal e palavras reais, com correção na hora.',
+    /* 31/10/2026 (auditoria de SEO): o professor israelense e o teste grátis,
+       os dois motivos para clicar que a página cumpre (o hero e a aula aberta
+       do Álef, sem conta), entraram; "22 letras" e "do zero" ficaram. */
+    'Aprenda a ler hebraico do zero com um professor israelense: as 22 letras, as vogais e ' +
+    'palavras reais, com correção na hora. Teste grátis da primeira letra.',
   parceria: (preco: ReactNode, ate: string | null): ReactNode => (
     <>Seu link garante um preço especial: o curso sai por {preco} no checkout{ate ? `, até ${ate}` : ''}.</>
   ),
@@ -18,8 +21,8 @@ const pt = {
 const en: Traducao<typeof pt> = {
   metaTitulo: 'Learn to read Hebrew from zero - Hebraico Fluente',
   metaDescricao:
-    'An interactive course for English speakers to learn to read Hebrew from zero: the 22 letters, ' +
-    'the vowel signs and real words, with instant feedback.',
+    'Learn to read Hebrew from zero with an Israeli teacher: the 22 letters, the vowels and ' +
+    'real words, with instant feedback. Free trial of the first letter.',
   parceria: (preco: ReactNode, ate: string | null): ReactNode => (
     <>Your link gets you a special price: the course comes to {preco} at checkout{ate ? `, until ${ate}` : ''}.</>
   ),

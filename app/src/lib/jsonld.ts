@@ -21,7 +21,8 @@
 import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
 import { ancora, currency, flagship, paginaDeVenda } from '@/lib/catalog';
 import { empresa, nomeLegal } from '@/lib/empresa';
-import { ORIGEM, url } from '@/lib/seo';
+import { OG, ORIGEM, canonicaDe, url } from '@/lib/seo';
+import { course as estrutura } from '@/lib/content-publico';
 import { precoDeVitrine } from '@/lib/vitrine';
 import { perguntasDaCapa } from '@/components/landing/faq-capa';
 import { tx } from '@/i18n/telas/motor-jsonld';
@@ -70,6 +71,13 @@ export function organizacao(): Json {
   };
 }
 
+/* As lições que a FAQ conta para dizer "uma por dia termina em cerca de um
+   mês" (tempoDoCursoPt): as letras e as lições de som. O `courseSchedule`
+   abaixo é essa mesma frase - dez minutos por dia, uma lição por vez -, e
+   não um número novo. */
+const licoesDoRitmo = (): number =>
+  estrutura.letters.length + estrutura.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
+
 export function curso(): Json {
   const c = flagship();
   const validade = ancora(c.price) && c.price.preLancamentoAte ? c.price.preLancamentoAte : null;
@@ -78,15 +86,41 @@ export function curso(): Json {
     name: c.titlePt,
     description: c.taglinePt,
     inLanguage: LANG_HTML,
-    url: url(paginaDeVenda(c.slug)),
+    url: url(canonicaDe(paginaDeVenda(c.slug))),
+    image: ORIGEM + OG.src,
     provider: { '@id': ID_ORG },
+    /* 31/10/2026 (auditoria de SEO): o que o Google pede para o resultado de
+       curso (Course info) e o que ajuda a busca por IA a dizer do que se
+       trata. Tudo sai do que a página já mostra: o nível e o pré-requisito
+       são o "do zero" da capa; o que ensina é a lista da Promessa; os módulos
+       são os do currículo. Sem nota, número de alunos nem avaliação. */
+    educationalLevel: tx.nivel,
+    coursePrerequisites: tx.preRequisito,
+    availableLanguage: [LANG_HTML],
+    teaches: [tx.ensinaLetras(estrutura.totalLetters), tx.ensinaNikud, tx.ensinaCursiva, tx.ensinaPalavras],
+    syllabusSections: estrutura.modules.map(m => ({
+      '@type': 'Syllabus',
+      name: m.titlePt,
+      ...(m.subPt ? { description: m.subPt } : {})
+    })),
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Online',
+      instructor: { '@id': ID_PROFESSOR },
+      courseSchedule: {
+        '@type': 'Schedule',
+        duration: 'PT10M',
+        repeatFrequency: 'Daily',
+        repeatCount: licoesDoRitmo()
+      }
+    },
     offers: {
       '@type': 'Offer',
       category: 'Paid',
       price: precoDeVitrine().toFixed(2),
       priceCurrency: currency,
       availability: 'https://schema.org/InStock',
-      url: url(paginaDeVenda(c.slug)),
+      url: url(canonicaDe(paginaDeVenda(c.slug))),
       ...(validade ? { priceValidUntil: validade } : {})
     }
   };
@@ -123,9 +157,16 @@ export function professor(retrato: string | null): Json {
 export function grafoDoCurso(retrato: string | null): Json {
   return {
     '@context': 'https://schema.org',
-    '@graph': [organizacao(), curso(), faq(), professor(retrato)]
+    '@graph': [organizacao(), site(), curso(), faq(), professor(retrato)]
   };
 }
+
+/* O site (WebSite). Desde 27/10/2026 a capa é a página do curso, e era o
+   grafo da capa (abaixo) que o declarava: a capa ficou sem ele. */
+const site = (): Json => ({
+  '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
+  inLanguage: LANG_HTML, publisher: { '@id': ID_ORG }
+});
 
 /** O grafo da capa (o portal, desde 23/10/2026): quem é o site e quem o faz.
  *  Sem Course nem FAQPage: a capa não mostra preço nem aquelas perguntas, e
@@ -135,8 +176,7 @@ export function grafoDaCapa(retrato: string | null): Json {
     '@context': 'https://schema.org',
     '@graph': [
       organizacao(),
-      { '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
-        inLanguage: LANG_HTML, publisher: { '@id': ID_ORG } },
+      site(),
       professor(retrato)
     ]
   };

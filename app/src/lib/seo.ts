@@ -99,6 +99,23 @@ export const NAO_LISTADAS = [
   '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ] as const;
 
+/**
+ * Endereços que mostram a MESMA página de outro (31/10/2026, auditoria de SEO).
+ *
+ * Desde 27/10/2026 a capa É a página do curso (`app/page.tsx` renderiza a de
+ * /curso-de-hebraico), e os dois endereços saíam com 1.573 palavras iguais,
+ * cada um com o canonical em si mesmo, os dois no sitemap. Para o buscador
+ * isso é conteúdo duplicado: ele escolhe um sozinho e divide os sinais entre
+ * os dois. /curso-de-hebraico continua no ar (links de campanha, e-mails e o
+ * portão levam para lá), fora do sitemap e com o canonical na capa. Sem
+ * `noindex`: canonical e noindex juntos são sinais que se contradizem.
+ *
+ * Quando o portal voltar para a capa, esta linha sai e /curso-de-hebraico
+ * volta a ser a página canônica do curso. `checa-seo.mjs` confere; a mesma
+ * lista mora em `seo.mjs` (ESPELHOS), que não importa TypeScript.
+ */
+export const ESPELHOS: Readonly<Record<string, string>> = { '/curso-de-hebraico': '/' };
+
 /** A rota, na forma canônica que o portão também usa para comparar. */
 function limpa(rota: string): string {
   const p = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '').toLowerCase();
@@ -113,8 +130,12 @@ const casa = (rota: string, lista: readonly string[]): boolean => {
 export const ehPaga = (rota: string): boolean => casa(rota, PAGAS);
 export const naoListada = (rota: string): boolean => casa(rota, NAO_LISTADAS);
 
+/** A rota que responde pela busca: a principal, se esta for um espelho. */
+export const canonicaDe = (rota: string): string => ESPELHOS[limpa(rota)] ?? rota;
+
 /** Esta rota pode entrar no sitemap? */
-export const anunciavel = (rota: string): boolean => !ehPaga(rota) && !naoListada(rota);
+export const anunciavel = (rota: string): boolean =>
+  !ehPaga(rota) && !naoListada(rota) && !(limpa(rota) in ESPELHOS);
 
 /** A URL absoluta de uma rota, na forma que o site serve (com barra no fim). */
 export function url(rota: string): string {
@@ -168,14 +189,16 @@ export function meta({
   description: string;
   tipo?: 'website' | 'article';
 }): Metadata {
-  const canonical = url(rota);
+  const canonical = url(canonicaDe(rota));
   const og = ogDaRota(rota);
+  /* O espelho não leva noindex: o canonical já diz qual endereço vale. */
+  const indexavel = anunciavel(rota) || limpa(rota) in ESPELHOS;
 
   return {
     title,
     description,
     alternates: { canonical },
-    ...(anunciavel(rota) ? {} : { robots: { index: false, follow: true } }),
+    ...(indexavel ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       type: tipo,
       url: canonical,

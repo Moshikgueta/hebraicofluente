@@ -9,7 +9,7 @@ const pt = {
     'As 22 letras do alfabeto hebraico com o nome e o som em português, as cinco formas finais e ' +
     'como funcionam as vogais. Teste grátis da primeira letra.',
   alfabeto: 'Alfabeto hebraico',
-  titulo: 'As 22 letras do hebraico, uma por uma.',
+  titulo: 'Alfabeto hebraico: as 22 letras, uma por uma.',
   lead: 'O alfabeto hebraico tem 22 letras, e todas são consoantes. As vogais são sinais pequenos embaixo, em cima ou ao lado das letras: o nikud. E tudo se lê da direita para a esquerda.',
   tabelaEyebrow: 'A tabela',
   tabelaTitulo: 'O nome e o som de cada letra.',
@@ -64,7 +64,7 @@ const en: Traducao<typeof pt> = {
     'The 22 letters of the Hebrew alphabet with their names and sounds, the five final forms and ' +
     'how the vowels work. A free test of the first letter.',
   alfabeto: 'Hebrew alphabet',
-  titulo: 'The 22 Hebrew letters, one by one.',
+  titulo: 'The Hebrew alphabet: the 22 letters, one by one.',
   lead: 'The Hebrew alphabet has 22 letters, and they are all consonants. The vowels are small signs under, above or next to the letters: the nikud. And everything is read from right to left.',
   tabelaEyebrow: 'The chart',
   tabelaTitulo: 'The name and sound of each letter.',

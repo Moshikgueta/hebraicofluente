@@ -64,6 +64,11 @@ const NAO_LISTADAS = [
   '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ];
 
+/* Endereços que mostram a mesma página de outro: no ar, fora do sitemap, com
+   o canonical no principal. Precisa bater com ESPELHOS de src/lib/seo.ts -
+   checa-seo.mjs confere o canonical de cada um no HTML. */
+export const ESPELHOS = { '/curso-de-hebraico': '/' };
+
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,
    e a única distinção honesta aqui é entre a página que muda quando o curso
    muda e o texto jurídico que fica anos parado. */
@@ -97,14 +102,15 @@ const naoListada = (r) =>
 
 /** As rotas que entram no sitemap, e por quê as outras não entram. */
 export function classificar(todas) {
-  const listadas = [], pagas = [], ocultas = [];
+  const listadas = [], pagas = [], ocultas = [], espelhos = [];
   for (const r of todas) {
     if (r.includes('/_next/')) continue;
     if (isGatedPath(semBarra(r))) pagas.push(r);
     else if (naoListada(r)) ocultas.push(r);
+    else if (semBarra(r) in ESPELHOS) espelhos.push(r);
     else listadas.push(r);
   }
-  return { listadas, pagas, ocultas };
+  return { listadas, pagas, ocultas, espelhos };
 }
 
 export function sitemapXml(site, listadas, data) {
@@ -164,7 +170,7 @@ export function llmsTxt(site, paginas) {
 /* ── execução ─────────────────────────────────────────────────────────── */
 if (import.meta.url === `file://${process.argv[1]}`) {
   const site = origem();
-  const { listadas, pagas, ocultas } = classificar(rotas());
+  const { listadas, pagas, ocultas, espelhos } = classificar(rotas());
   const hoje = new Date().toISOString().slice(0, 10);
 
   writeFileSync(`${DIR}/sitemap.xml`, sitemapXml(site, listadas, hoje));
@@ -175,6 +181,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(`  site: ${site}`);
   console.log(`  no sitemap (${listadas.length}): ${listadas.join(' ')}`);
   console.log(`  fora, por serem pagas (${pagas.length})`);
+  console.log(`  fora, por repetirem outra página (${espelhos.length}): ${espelhos.map(r => `${r} -> ${ESPELHOS[semBarra(r)]}`).join(' ')}`);
   console.log(`  fora, por não responderem a busca (${ocultas.length}): ${ocultas.join(' ')}`);
   console.log(`\n✓ ${DIR}/sitemap.xml, ${DIR}/robots.txt e ${DIR}/llms.txt escritos`);
 }
