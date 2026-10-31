@@ -144,27 +144,27 @@ const VOGAIS: readonly Rodada[] = [
   {
     pergunta: tx.vogal1Pergunta, mostra: 'אִ',
     opcoes: [
-      { he: 'a', rotulo: '«a»', certa: false, porque: tx.vogal1PorqueA },
-      { he: 'i', rotulo: '«i»', certa: true, porque: '' },
-      { he: 'o', rotulo: '«o»', certa: false, porque: tx.vogal1PorqueO }
+      { he: 'a', rotulo: 'a', certa: false, porque: tx.vogal1PorqueA },
+      { he: 'i', rotulo: 'i', certa: true, porque: '' },
+      { he: 'o', rotulo: 'o', certa: false, porque: tx.vogal1PorqueO }
     ],
     acerto: tx.vogal1Acerto
   },
   {
     pergunta: tx.vogal2Pergunta, mostra: 'אוֹ',
     opcoes: [
-      { he: 'u', rotulo: '«u»', certa: false, porque: tx.vogal2PorqueU },
-      { he: 'a', rotulo: '«a»', certa: false, porque: tx.vogal2PorqueA },
-      { he: 'o', rotulo: '«o»', certa: true, porque: '' }
+      { he: 'u', rotulo: 'u', certa: false, porque: tx.vogal2PorqueU },
+      { he: 'a', rotulo: 'a', certa: false, porque: tx.vogal2PorqueA },
+      { he: 'o', rotulo: 'o', certa: true, porque: '' }
     ],
     acerto: tx.vogal2Acerto
   },
   {
     pergunta: tx.vogal3Pergunta, mostra: 'אַ',
     opcoes: [
-      { he: 'a', rotulo: '«a»', certa: true, porque: '' },
-      { he: 'e', rotulo: '«e»', certa: false, porque: tx.vogal3PorqueE },
-      { he: 'i', rotulo: '«i»', certa: false, porque: tx.vogal3PorqueI }
+      { he: 'a', rotulo: 'a', certa: true, porque: '' },
+      { he: 'e', rotulo: 'e', certa: false, porque: tx.vogal3PorqueE },
+      { he: 'i', rotulo: 'i', certa: false, porque: tx.vogal3PorqueI }
     ],
     acerto: tx.vogal3Acerto
   },
@@ -590,7 +590,7 @@ export function DemoAlef({
                         >
                           <He size="lg" tone="navy">{x.he}</He>
                           <span dir="ltr" className="font-ui text-[15px] font-semibold text-ink-muted">
-                            <span aria-hidden>🔊 </span>«{x.som}»
+                            <span aria-hidden>🔊 </span>{x.som}
                           </span>
                         </button>
                       </li>
@@ -772,7 +772,7 @@ export function DemoAlef({
                     <p className="font-ui text-[16px] font-semibold text-ink-muted m-0">
                       {PALAVRA.translit}
                     </p>
-                    <p className="font-ui text-[15px] text-ink-muted m-0">«{PALAVRA.pt}»</p>
+                    <p className="font-ui text-[15px] text-ink-muted m-0">“{PALAVRA.pt}”</p>
                     <BotaoOuvir clipe="aba" rotulo={tx.ouvirProfessor} tocador={tocador} />
                   </div>
                 </div>

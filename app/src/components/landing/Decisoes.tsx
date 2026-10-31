@@ -157,7 +157,7 @@ function ApoioQueSai() {
            style={{ opacity: e.tr ? 1 : 0 }}>
           {e.tr || ' '}
         </p>
-        <p className="font-ui text-[14px] text-ink-muted m-0">«{e.pt}»</p>
+        <p className="font-ui text-[14px] text-ink-muted m-0">“{e.pt}”</p>
       </div>
 
       {/* `flex-wrap`, e não `inline-flex` rígido: três rótulos lado a lado
