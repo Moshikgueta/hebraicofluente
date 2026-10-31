@@ -936,24 +936,34 @@ function Rodadas({ rodadas, etapa, seguir, onFim, onAcerto, tocador }: {
 
   return (
     <div className="grid gap-5">
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+      {/* A pergunta e o contador numa linha; o que se pergunta (a sílaba, ou o
+          botão de ouvir) embaixo, sozinho e no centro. Até 31/10/2026 a sílaba
+          ficava espremida entre a pergunta e o contador (pedido do dono). */}
+      <div className="flex items-baseline justify-between gap-4">
         <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.02em] text-ink m-0">
           {rodada.pergunta}
         </p>
-        {rodada.ouvir && <BotaoOuvir clipe={rodada.ouvir} rotulo={tx.ouvir} tocador={tocador} />}
-        {rodada.mostra && (
-          <span className="rounded-[16px] bg-[var(--sand)] px-5 py-1.5"><He size="xl" tone="navy">{rodada.mostra}</He></span>
-        )}
         {rodadas.length > 1 && (
-          <span className="font-ui text-[13px] font-semibold text-ink-muted tabular-nums ml-auto">
+          <span className="shrink-0 font-ui text-[13px] font-semibold text-ink-muted tabular-nums">
             {tx.deN(n + 1, rodadas.length)}
           </span>
         )}
       </div>
+      {rodada.ouvir && (
+        <div className="justify-self-center">
+          <BotaoOuvir clipe={rodada.ouvir} rotulo={tx.ouvir} tocador={tocador} />
+        </div>
+      )}
+      {rodada.mostra && (
+        <div className="justify-self-center grid place-items-center min-w-[148px] rounded-[22px] bg-[var(--sand)]
+                        px-10 py-5 shadow-[inset_0_0_0_1px_var(--line)]">
+          <He size="xl" tone="navy">{rodada.mostra}</He>
+        </div>
+      )}
 
       <ul data-opcoes className={`grid gap-3 list-none p-0 m-0
-                      ${rodada.opcoes.length === 2 ? 'grid-cols-2 max-w-[360px]'
-                        : rodada.opcoes.length === 3 ? 'grid-cols-3 max-w-[480px]' : 'grid-cols-2 sm:grid-cols-4'}`}>
+                      ${rodada.opcoes.length === 2 ? 'grid-cols-2 max-w-[360px] w-full justify-self-center'
+                        : rodada.opcoes.length === 3 ? 'grid-cols-3 max-w-[480px] w-full justify-self-center' : 'grid-cols-2 sm:grid-cols-4'}`}>
         {rodada.opcoes.map((o, i) => {
           const marcada = escolha === i;
           const bom = marcada && o.certa;
