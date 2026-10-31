@@ -25,7 +25,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { audioAvailable } from '@/components/learn/AudioButton';
-import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, inicioDoPrecoCheio, parcelasMax, pixPrice } from '@/lib/catalog';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { DEPOIMENTOS } from '@/lib/testimonials';
 import { confirmaSozinho, empresa, parcelasTexto, soPix, temPix } from '@/lib/empresa';
@@ -455,10 +455,23 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                   {cheio ? tx.precoPreLancamento : tx.acessoCompleto}
                   {cheio && fimDoPreLancamento(c.price) && <> · {tx.ate(fimDoPreLancamento(c.price)!.slice(0, 5))}</>}
                 </p>
+                {/* O desconto em destaque, contra o preço de depois da data e sem
+                    riscar (31/10/2026, decisão do dono; ver FaixaDaPromocao). */}
+                {cheio && inicioDoPrecoCheio(c.price) && (
+                  <p className="inline-flex items-center rounded-full bg-[#F2C14E] px-3.5 py-1 mb-3
+                                font-ui text-[14px] font-bold text-[#3B2A05] tabular-nums">
+                    {tx.aMenos(brl(cheio - c.price.brl))}
+                  </p>
+                )}
                 <p className="font-display text-[48px] sm:text-[54px] font-semibold tracking-[-0.04em]
                               leading-none text-ink tabular-nums mb-2">
                   {brl(precoDeVitrine())}
                 </p>
+                {cheio && inicioDoPrecoCheio(c.price) && (
+                  <p className="font-ui text-[15px] font-semibold text-ink tabular-nums mb-1.5">
+                    {tx.aPartirDe(inicioDoPrecoCheio(c.price)!, brl(cheio))}
+                  </p>
+                )}
                 {/* O custo por dia, logo embaixo do valor cobrado e menor que
                     ele (29/10/2026, pedido do dono): é a mesma conta, dita
                     por dia de acesso. Nunca no lugar do preço. */}
