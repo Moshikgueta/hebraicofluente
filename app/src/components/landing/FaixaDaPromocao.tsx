@@ -14,7 +14,7 @@
  * como ele é: nunca "garantia".
  */
 
-import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, inicioDoPrecoCheio, parcelasMax, pixPrice } from '@/lib/catalog';
 import { empresa, parcelasCurto, soPix, temCartao, temPix } from '@/lib/empresa';
 import { Container } from './base';
 import { tx } from '@/i18n/telas/venda-promocao';
@@ -29,6 +29,11 @@ export function FaixaDaPromocao() {
   const cartao = temCartao() && !soPix();
   const pix = temPix() && c.price.pixDiscountPct > 0;
   const dias = empresa.politicas.arrependimentoDias;
+  /* O desconto é contra o preço que vale DEPOIS da data, nunca riscado: o
+     R$ 297 ainda não foi praticado, e número riscado é preço de referência
+     (CDC art. 37; decisão do dono em 31/10/2026). */
+  const economia = cheio - c.price.brl;
+  const desde = inicioDoPrecoCheio(c.price)!;
 
   return (
     <section aria-label={tx.rotulo(curta)} id="promocao">
@@ -37,10 +42,18 @@ export function FaixaDaPromocao() {
                         shadow-[0_24px_48px_-28px_rgba(14,59,67,.55)]
                         px-5 py-6 sm:px-9 sm:py-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div className="grid gap-3 min-w-0">
-            <p className="m-0 justify-self-start inline-flex items-center gap-2 rounded-full bg-[var(--gold-soft)]
-                          px-3.5 py-1.5 font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--gold-ink)]">
-              <span aria-hidden>★</span>{tx.rotulo(curta)}
-            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="m-0 inline-flex items-center gap-2 rounded-full bg-[var(--gold-soft)]
+                            px-3.5 py-1.5 font-ui text-[12.5px] font-bold uppercase tracking-[.1em] text-[var(--gold-ink)]">
+                <span aria-hidden>★</span>{tx.rotulo(curta)}
+              </p>
+              {economia > 0 && (
+                <p className="m-0 inline-flex items-center rounded-full bg-[#F2C14E] px-3.5 py-1.5
+                              font-ui text-[14px] font-bold text-[#3B2A05] tabular-nums">
+                  {tx.aMenos(brl(economia))}
+                </p>
+              )}
+            </div>
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-end gap-x-5 gap-y-1.5">
               {cartao && (
                 <p className="m-0 grid">
@@ -67,7 +80,7 @@ export function FaixaDaPromocao() {
               )}
             </div>
             <p className="m-0 font-ui text-[15px] leading-[1.5] text-white/85">
-              {tx.depois(curta, brl(cheio))}{' '}
+              <strong className="font-semibold text-white">{tx.aPartirDe(desde)}: {brl(cheio)}.</strong>{' '}
               <a href="#preco" className="font-semibold text-white underline underline-offset-4 whitespace-nowrap">
                 {tx.verPreco} ↓
               </a>

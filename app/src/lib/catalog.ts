@@ -216,6 +216,15 @@ export const ancora = (p: CoursePrice): number | null =>
  * (auditoria, LEGAL-014): um número riscado é preço de referência, e o
  * R$ 297 nunca foi praticado. No lugar dele, a frase com a data de fim.
  */
+/** O dia em que o preço oficial passa a valer ("01/12"): o seguinte ao fim do
+ *  pré-lançamento. O mesmo dia em que a Action "Virar o preço" roda. */
+export function inicioDoPrecoCheio(p: CoursePrice): string | null {
+  const d = ancora(p) && p.preLancamentoAte;
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;
+  const seguinte = new Date(Date.parse(`${d}T12:00:00Z`) + 86_400_000);
+  return `${String(seguinte.getUTCDate()).padStart(2, '0')}/${String(seguinte.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
 export function fimDoPreLancamento(p: CoursePrice): string | null {
   const d = ancora(p) && p.preLancamentoAte;
   if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;

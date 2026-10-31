@@ -28,7 +28,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
 import { empresa, parcelasCurto, soPix, temCartao, temPix } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/venda-barra-fixa';
 
@@ -94,8 +94,13 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
       <div className="flex items-center gap-3 bg-[var(--card)] border-t border-line
                       shadow-[0_-8px_24px_rgba(14,59,67,.10)] px-4 py-3">
         <p className="flex-1 min-w-0 m-0 font-ui leading-[1.25]">
-          <span className="block text-[15px] font-semibold text-ink tabular-nums">
+          <span className="flex items-center gap-2 text-[15px] font-semibold text-ink tabular-nums">
             {brl(c.price.brl)}
+            {ancora(c.price) && fimDoPreLancamento(c.price) && (
+              <span className="rounded-full bg-[#F2C14E] px-2 py-px text-[11.5px] font-bold text-[#3B2A05]">
+                {tx.aMenos(brl(ancora(c.price)! - c.price.brl))}
+              </span>
+            )}
           </span>
           {/* Só com cartão nesta publicação (LEGAL-103). */}
           {temCartao() && (

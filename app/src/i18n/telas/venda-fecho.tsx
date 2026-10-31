@@ -77,6 +77,8 @@ const pt = {
   porDia: (valor: string, meses: number) => `Cerca de ${valor} por dia nos ${meses} meses de acesso.`,
   seloRotulo: 'Direito de arrependimento',
   seloDias: 'dias',
+  aMenos: (valor: string) => `${valor} a menos`,
+  aPartirDe: (data: string, cheio: string) => `A partir de ${data}: ${cheio}`,
   ate: (data: string) => `até ${data}`,
   noPixDesconto: (pct: number) => `no PIX, à vista (${pct}% de desconto)`,
   preLancamentoAte: (data: string, cheio: string) =>
@@ -177,6 +179,8 @@ const en: Traducao<typeof pt> = {
   porDia: (valor: string, meses: number) => `About ${valor} a day over ${meses} months of access.`,
   seloRotulo: 'Right to cancel',
   seloDias: 'days',
+  aMenos: (valor: string) => `${valor} off`,
+  aPartirDe: (data: string, cheio: string) => `From ${data}: ${cheio}`,
   ate: (data: string) => `until ${data}`,
   noPixDesconto: (pct: number) => `by PIX, paid in full (${pct}% off)`,
   preLancamentoAte: (data: string, cheio: string) =>

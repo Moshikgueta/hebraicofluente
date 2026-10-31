@@ -4,6 +4,7 @@ import type { Traducao } from '..';
 const pt = {
   parcelas: (parcelas: string) => `ou ${parcelas} no cartão`,
   desistir: (dias: number) => `${dias} dias para desistir`,
+  aMenos: (valor: string) => `${valor} a menos`,
   pix: (preco: string, ate: string | null) => `ou ${preco} no PIX${ate ? ` · até ${ate}` : ''}`
 } as const;
 
@@ -12,6 +13,7 @@ const en: Traducao<typeof pt> = {
   parcelas: () => 'one-time payment',
   // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
   desistir: (dias: number) => `${dias} days to cancel`,
+  aMenos: (valor: string) => `${valor} off`,
   pix: (preco: string, ate: string | null) => `or ${preco} by PIX${ate ? ` · until ${ate}` : ''}`
 };
 
