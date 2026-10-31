@@ -318,7 +318,7 @@ export default function Page() {
           Na primeira página que você abre, o navegador anota de onde você veio, numa lista fechada de categorias
           (por exemplo, &quot;link da bio&quot;, &quot;busca&quot;, &quot;e-mail&quot; ou &quot;anúncio&quot;), e, se o
           link tiver, o nome da campanha. Essa anotação fica guardada no seu aparelho por 30 dias, sem cookie. Ela vai
-          para o servidor só quando você abre a página de venda ou o checkout, somada por dia como as outras contagens,
+          para o servidor só quando você abre a página de venda, começa ou termina o teste grátis, ou abre o checkout, somada por dia como as outras contagens,
           e no pedido, se você comprar, para sabermos quais canais trazem alunos. Não guardamos de qual site exato você
           veio nem o endereço de IP.
         </p>

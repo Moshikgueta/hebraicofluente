@@ -63,7 +63,8 @@ describe('o blog', () => {
       const existe = alvo === '/alfabeto-hebraico' || (alvo.startsWith('/blog/') && slugsDe(alvo));
       expect(existe, `${a.slug}: ${b.href}`).toBeTruthy();
     }
-    function slugsDe(h: string) { return blog.artigos.some(a => `/blog/${a.slug}` === h); }
+    /* Um texto com `destino` não tem endereço no blog (31/10/2026): o link vai à página. */
+    function slugsDe(h: string) { return blog.artigos.some(a => `/blog/${a.slug}` === h && !(a as { destino?: string }).destino); }
   });
 
   it('só o aprovado sai do exportador, e o rodapé só linka com artigo no ar', () => {
@@ -71,5 +72,27 @@ describe('o blog', () => {
     expect(exp).toMatch(/blog\.artigos\.filter\(a => a\.revisado \|\| rascunhos\)/);
     const rodape = readFileSync(new URL('../src/components/shell/PublicShell.tsx', import.meta.url), 'utf8');
     expect(rodape).toMatch(/blogResumo\.artigos > 0 \?/);
+  });
+});
+
+/* 31/10/2026, plano de SEO aprovado pelo dono: o texto do alfabeto não vira
+   artigo (disputaria a busca com /alfabeto-hebraico), vira seção da página,
+   com a mesma trava de revisão. */
+describe('textos com destino', () => {
+  const comDestino = blog.artigos.filter(a => (a as { destino?: string }).destino);
+  it('só vão para páginas que existem, sem chamada nem link para a própria página', () => {
+    expect(comDestino.map(a => (a as { destino?: string }).destino)).toEqual(['/alfabeto-hebraico']);
+    for (const a of comDestino) {
+      expect(typeof a.revisado, a.slug).toBe('boolean');
+      for (const b of a.blocos) {
+        expect(b.t, a.slug).not.toBe('cta');
+        if (b.t === 'veja') expect(b.href!.replace(/\/$/, ''), a.slug).not.toBe((a as { destino?: string }).destino);
+      }
+    }
+  });
+  it('a página só mostra a seção aprovada, e o blog não lista o texto', () => {
+    const src = readFileSync(new URL('../../tools/export-content.mjs', import.meta.url), 'utf8');
+    expect(src).toMatch(/const artigos = aprovados\.filter\(a => !a\.destino\)/);
+    expect(src).toMatch(/const paginas = aprovados\.filter\(a => a\.destino\)/);
   });
 });

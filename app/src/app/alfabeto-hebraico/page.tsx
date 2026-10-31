@@ -9,6 +9,8 @@ import { somPt } from '@/lib/som-pt';
 import { FORMAS_FINAIS, letraPublica } from '@/lib/alfabeto-publico';
 import { METODO_ORIGINAL } from '@/lib/credito';
 import { jsonLdTexto, migalhas } from '@/lib/jsonld';
+import { secoesDe } from '@/lib/blog';
+import { BlocosDoArtigo } from '@/app/blog/BlocosDoArtigo';
 import { tx } from '@/i18n/telas/venda-alfabeto-hebraico';
 
 export const metadata: Metadata = meta({
@@ -102,6 +104,15 @@ export default function AlfabetoHebraicoPage() {
           </div>
         </div>
       </Section>
+
+      {/* Os sons, as formas finais, as letras parecidas e por onde começar
+          (31/10/2026, plano de SEO): o texto que seria o artigo "alfabeto
+          hebraico" do blog, só depois de aprovado (data/blog.json, destino). */}
+      {secoesDe('/alfabeto-hebraico').length > 0 && (
+        <Section id="sobre-as-letras">
+          <BlocosDoArtigo blocos={secoesDe('/alfabeto-hebraico')} />
+        </Section>
+      )}
 
       <Section labelledBy="cta">
         <FaixaCta

@@ -3,19 +3,18 @@
   "artigos": [
     {
       "slug": "alfabeto-hebraico",
+      "destino": "/alfabeto-hebraico",
+      "_destino": "31/10/2026, plano de SEO aprovado pelo dono: este texto não vira artigo, vira as seções de /alfabeto-hebraico (um artigo do mesmo assunto disputaria a mesma busca com a página). Aprovar = revisado: true, como os artigos.",
       "titulo": "Alfabeto hebraico: as 22 letras, os sons e as formas finais",
       "descricao": "Quantas letras tem o alfabeto hebraico, como elas soam, quais mudam no fim da palavra e por onde começar a ler, explicado para quem fala português.",
       "resumo": "O alfabeto hebraico tem 22 letras, e todas são consoantes. As vogais aparecem como pequenos sinais embaixo, dentro ou em cima das letras. Cinco letras ganham uma forma diferente quando terminam a palavra, e tudo se lê da direita para a esquerda.",
       "atualizadoEm": "2026-10-29",
       "revisado": false,
       "blocos": [
-        { "t": "h2", "x": "22 letras, todas consoantes" },
-        { "t": "p", "x": "Quem olha um texto em hebraico pela primeira vez costuma procurar as vogais e não encontra. É que as 22 letras do alfabeto são consoantes. As vogais vêm como pequenos pontos e traços em volta da letra, um sistema chamado nikud. A letra {{מ}}, por exemplo, é o nosso M. Com um traço embaixo, {{מַ}}, ela se lê «ma»." },
-        { "t": "p", "x": "Isso parece estranho no começo, mas tem uma vantagem: cada letra tem um som só (ou dois, em poucos casos), e esse som não muda conforme a palavra, como acontece com o C ou o G em português." },
         { "t": "h2", "x": "Os sons que o brasileiro já conhece" },
+        { "t": "p", "x": "Uma vantagem do hebraico: cada letra tem um som só (ou dois, em poucos casos), e esse som não muda conforme a palavra, como acontece com o C ou o G em português." },
         { "t": "p", "x": "A maior parte das letras tem um som que existe em português. {{ל}} (Lámed) é o L de «lua». {{ש}} (Shin) é o CH de «chave». {{ב}} (Bet) é o B de «bola». {{ס}} (Sámech) é o S de «sapo». Essas letras se aprendem rápido, porque o som já está na boca." },
         { "t": "p", "x": "Duas letras não têm som próprio: {{א}} (Álef) e {{ע}} (Áyin). Elas seguram uma vogal, e é a vogal que se ouve. E algumas pedem atenção, porque não existem iguais em português: {{ח}} (Het) é um som produzido no fundo da boca, parecido com alguns tipos de R carioca, e {{ר}} (Resh) é um R macio, do fundo da boca, como o francês." },
-        { "t": "veja", "href": "/alfabeto-hebraico/", "x": "A tabela com as 22 letras, o nome e o som de cada uma" },
         { "t": "h2", "x": "As cinco formas finais" },
         { "t": "p", "x": "Cinco letras mudam de desenho quando são a última letra da palavra. O som continua o mesmo; muda só a forma." },
         { "t": "lista", "itens": ["{{מ}} (Mem) vira {{ם}}", "{{נ}} (Nun) vira {{ן}}", "{{צ}} (Tsádi) vira {{ץ}}", "{{כ}} (Kaf) vira {{ך}}", "{{פ}} (Pe) vira {{ף}}"] },
@@ -23,14 +22,14 @@
         { "t": "h2", "x": "Letras parecidas" },
         { "t": "p", "x": "O que mais confunde quem começa não é o som, é o desenho. Algumas letras quase se repetem, com um detalhe de diferença: {{ב}} e {{כ}}, {{ד}} e {{ר}}, {{ה}} e {{ח}}, {{ו}} e {{ז}}. Vale aprender esses pares lado a lado, olhando o canto ou o traço que separa uma da outra." },
         { "t": "h2", "x": "Por onde começar" },
-        { "t": "p", "x": "Decorar as 22 letras de uma vez, em ordem alfabética, é o caminho mais cansativo. Funciona melhor aprender uma letra por vez e já usá-la em palavras de verdade: com {{א}}, {{מ}} e {{ת}} já dá para ler {{אִמָא}} (íma, mãe)." },
-        { "t": "cta" }
+        { "t": "p", "x": "Decorar as 22 letras de uma vez, em ordem alfabética, é o caminho mais cansativo. Funciona melhor aprender uma letra por vez e já usá-la em palavras de verdade: com {{א}}, {{מ}} e {{ת}} já dá para ler {{אִמָא}} (íma, mãe)." }
       ]
     },
     {
-      "slug": "como-aprender-a-ler-hebraico",
-      "titulo": "Como aprender a ler hebraico do zero",
-      "descricao": "Um caminho prático para quem não conhece nenhuma letra: a direção da leitura, as vogais, uma letra por vez e as primeiras palavras de verdade.",
+      "slug": "como-ler-hebraico",
+      "_foco": "31/10/2026, plano de SEO: era como-aprender-a-ler-hebraico, a mesma busca da capa. Agora responde ao passo a passo (como ler), e a capa fica com a busca de quem quer o curso.",
+      "titulo": "Como ler hebraico: sete passos para começar do zero",
+      "descricao": "O passo a passo para ler hebraico do zero: a direção da leitura, as vogais, uma letra por vez, o som, a letra cursiva e as primeiras palavras.",
       "resumo": "Para ler hebraico do zero, comece entendendo três coisas: a leitura vai da direita para a esquerda, as letras são consoantes e as vogais são sinais. Depois, aprenda uma letra por vez, com o som e a escrita, e leia palavras reais desde a primeira semana.",
       "atualizadoEm": "2026-10-29",
       "revisado": false,
@@ -72,7 +71,7 @@
         { "t": "h2", "x": "Onde o nikud aparece" },
         { "t": "p", "x": "Livros para crianças, materiais para quem está aprendendo e as edições impressas da Bíblia trazem o nikud. Já jornais, placas de rua e mensagens de celular quase sempre vêm sem ele: quem lê com fluência reconhece a palavra pelas letras." },
         { "t": "p", "x": "Por isso o caminho natural é aprender a ler com o nikud e, depois, treinar as mesmas palavras sem ele." },
-        { "t": "veja", "href": "/blog/como-aprender-a-ler-hebraico/", "x": "Como aprender a ler hebraico do zero" },
+        { "t": "veja", "href": "/blog/como-ler-hebraico/", "x": "Como ler hebraico: sete passos para começar" },
         { "t": "cta" }
       ]
     },
@@ -92,7 +91,7 @@
         { "t": "lista", "itens": ["Comece por palavras curtas, de duas ou três letras, como {{יָם}} (yam, mar) e {{כֵּן}} (ken, sim).", "Aponte a primeira letra, à direita, antes de começar a ler. O dedo puxa o olho para o lado certo.", "Ao montar uma palavra letra por letra, coloque a primeira à direita e vá acrescentando para a esquerda."] },
         { "t": "h2", "x": "E escrever?" },
         { "t": "p", "x": "Escrever à mão também vai da direita para a esquerda, e cada letra tem a sua ordem de traços. No celular, o teclado hebraico cuida da direção sozinho: você digita a primeira letra e ela fica à direita." },
-        { "t": "veja", "href": "/blog/alfabeto-hebraico/", "x": "Alfabeto hebraico: as 22 letras" },
+        { "t": "veja", "href": "/alfabeto-hebraico/", "x": "Alfabeto hebraico: as 22 letras" },
         { "t": "cta" }
       ]
     },
@@ -149,7 +148,7 @@
         { "t": "p", "x": "Lendo da direita para a esquerda:" },
         { "t": "lista", "itens": ["{{ש}} (Shin), com o ponto em cima à direita, faz SH. Com o sinal embaixo, {{שָׁ}}, lê-se «sha».", "{{ל}} (Lámed) é o L.", "{{ו}} (Vav), com o ponto em cima, faz a vogal O: {{לוֹ}}, «lo».", "{{ם}} é a forma final do Mem: o M do fim da palavra."] },
         { "t": "p", "x": "Juntando: sha + lo + m, shalóm. Com quatro letras você leu sua primeira palavra inteira em hebraico." },
-        { "t": "veja", "href": "/blog/alfabeto-hebraico/", "x": "As 22 letras do alfabeto hebraico" },
+        { "t": "veja", "href": "/alfabeto-hebraico/", "x": "As 22 letras do alfabeto hebraico" },
         { "t": "cta" }
       ]
     }

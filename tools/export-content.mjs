@@ -409,8 +409,18 @@ function main() {
       if (typeof a.revisado !== 'boolean') throw new Error(`blog.json: ${a.slug} sem "revisado"`);
     }
     const rascunhos = process.env.HF_BLOG_RASCUNHOS === '1';
-    const artigos = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
-    writeFileSync(join(OUT, 'blog.json'), JSON.stringify({ artigos }, null, 2) + '\n');
+    const aprovados = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
+    /* Texto com `destino` (31/10/2026, plano de SEO aprovado pelo dono) não é
+       artigo: é uma seção da página de destino (hoje só /alfabeto-hebraico,
+       que disputaria a mesma busca com um artigo do mesmo assunto). Mesma
+       trava de revisão; fora da lista do blog, do sitemap do blog e do rodapé. */
+    const DESTINOS = new Set(['/alfabeto-hebraico']);
+    for (const a of blog.artigos) {
+      if (a.destino !== undefined && !DESTINOS.has(a.destino)) throw new Error(`blog.json: ${a.slug} com destino desconhecido ${a.destino}`);
+    }
+    const artigos = aprovados.filter(a => !a.destino);
+    const paginas = aprovados.filter(a => a.destino);
+    writeFileSync(join(OUT, 'blog.json'), JSON.stringify({ artigos, paginas }, null, 2) + '\n');
     /* Só a contagem, para o rodapé (que vai ao navegador) saber se há blog. */
     writeFileSync(join(OUT, 'blog-resumo.json'), JSON.stringify({ artigos: artigos.length }) + '\n');
   }

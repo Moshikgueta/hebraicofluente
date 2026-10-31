@@ -5,6 +5,7 @@
  * funil é de pessoas, não de cliques. Só o nome da etapa sai do navegador.
  * Falhar não avisa ninguém: estatística perdida não é problema do visitante. */
 import { asset } from '@/lib/asset';
+import { contarComOrigem } from '@/lib/origem';
 
 export type EtapaDaDemo =
   | 'visto' | 'reconhecer' | 'comparar' | 'vogais' | 'escrever' | 'achar' | 'ler' | 'pronto' | 'cta';
@@ -14,6 +15,10 @@ const enviadas = new Set<EtapaDaDemo>();
 export function contarEtapaDaDemo(etapa: EtapaDaDemo): void {
   if (enviadas.has(etapa)) return;
   enviadas.add(etapa);
+  /* Visto e terminado também por origem (31/10/2026): quantos testes vêm da
+     busca, da IA, do Instagram... (`f|teste-*|<fonte>`, lib/origem.ts). */
+  if (etapa === 'visto') contarComOrigem('teste-visto');
+  if (etapa === 'pronto') contarComOrigem('teste-pronto');
   try {
     /* `keepalive`: o clique no botão final navega para o checkout, e um
        fetch comum morreria com a página. */

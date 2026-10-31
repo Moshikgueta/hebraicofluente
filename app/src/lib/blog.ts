@@ -21,10 +21,15 @@ export type Artigo = {
   resumo: string;
   atualizadoEm: string;
   revisado: boolean;
+  /** Texto que não é artigo: vira seção desta página (31/10/2026). */
+  destino?: string;
   blocos: Bloco[];
 };
 
 export const artigos = (): Artigo[] => (dados as { artigos: Artigo[] }).artigos;
+/** As seções aprovadas de uma página do site (tools/export-content.mjs, `destino`). */
+export const secoesDe = (rota: string): Bloco[] =>
+  ((dados as { paginas?: Artigo[] }).paginas ?? []).filter(a => a.destino === rota).flatMap(a => a.blocos);
 export const artigo = (slug: string): Artigo | undefined => artigos().find(a => a.slug === slug);
 
 /** O texto sem as marcas {{...}}, para o <title>, a description e o JSON-LD. */
