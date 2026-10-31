@@ -169,7 +169,7 @@ promessas são cumpridas na própria página (hero com o professor; aula aberta 
 | `node seo.mjs` + `node checa-seo.mjs` (com as regras novas) | ok: 20 anunciáveis, 1 espelho (`/curso-de-hebraico/` → `/`), JSON-LD Organization, WebSite, Course, FAQPage e Person, preço e CNPJ conferidos |
 | Rastreio sem JavaScript das páginas do sitemap | 20 páginas, 0 links internos quebrados, 0 description acima de 155, 0 canonical repetido, `/curso-de-hebraico/` com canonical na capa e fora do sitemap |
 | Performance de laboratório depois da mudança | capa: LCP 1,12 s (era 2,57), FCP 1,12 s, CLS 0, TBT ~270 ms; alfabeto: LCP 0,81 s, CLS 0,04 |
-| Conferências do projeto (pacote, promessas, números, check-legal) | RESULTADO_CONFERENCIAS |
+| Conferências do projeto (pacote, promessas, números, check-legal) | promessas, números e check-legal ok; pacote ok na build de produção (`NEXT_PUBLIC_PLATFORM_API=worker`): nenhum conteúdo pago no pacote público. Na build local ele acusa, como sempre: ali o curso vai ao navegador de propósito (modo de demonstração, `lib/content.ts`) |
 | `npm run validate` (ordem das letras, nikud) | 0 violações, 4 avisos (os de antes) |
 | Verificação de travessão (as duas linhas do CLAUDE.md) | só os dois falsos positivos de antes: um mp3 (binário) e a própria linha do comando no CLAUDE.md |
 | Teste de Resultados Avançados do Google (Rich Results Test) | **não verificado**: precisa da URL pública depois da publicação |
