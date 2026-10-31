@@ -187,7 +187,11 @@ export const EVENTOS_DO_PORTAL = [
    `checkout-conta` (o checkout pediu a conta a quem chegou sem sessão) e
    `checkout-pagar` (mostrou o pagamento) entraram em 23/10/2026: são os dois
    lados do passo que o teste C4 do plano mexe, medidos antes de ele começar. */
-export const EVENTOS_COM_FONTE = ['venda-visto', 'checkout-aberto', 'checkout-conta', 'checkout-pagar'];
+/* `teste-visto` e `teste-pronto` (31/10/2026, plano de SEO aprovado pelo
+   dono): o teste grátis da página do curso visto e terminado, por origem,
+   para saber quantos testes a busca traz. Os totais por etapa continuam em
+   `d|<etapa>` (contarDemo); estes são duas linhas a mais por visita. */
+export const EVENTOS_COM_FONTE = ['venda-visto', 'checkout-aberto', 'checkout-conta', 'checkout-pagar', 'teste-visto', 'teste-pronto'];
 
 /** POST /api/portal {evento, fonte?} - sempre 204. */
 export async function contarPortal({ request, env }) {

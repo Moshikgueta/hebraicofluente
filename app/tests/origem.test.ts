@@ -245,13 +245,14 @@ describe('a tabela de crescimento', () => {
       [
         { evento: 'venda-visto', fonte: 'stories', n: 50 }, { evento: 'checkout-aberto', fonte: 'stories', n: 5 },
         { evento: 'checkout-conta', fonte: 'stories', n: 4 }, { evento: 'checkout-pagar', fonte: 'stories', n: 3 },
-        { evento: 'venda-visto', fonte: 'busca', n: 20 }
+        { evento: 'venda-visto', fonte: 'busca', n: 20 },
+        { evento: 'teste-visto', fonte: 'busca', n: 12 }, { evento: 'teste-pronto', fonte: 'busca', n: 5 }
       ],
       [{ fonte: 'stories', pedidos: 3, compras: 2, receitaCentavos: 26460, estornos: 0 }]
     );
     expect(linhas[0]).toMatchObject({ fonte: 'stories', venda: 50, checkout: 5, conta: 4, pagar: 3, pedidos: 3, compras: 2, conversao: 0.04 });
-    expect(linhas[1]).toMatchObject({ fonte: 'busca', venda: 20, compras: 0, conversao: 0 });
-    expect(total).toMatchObject({ venda: 70, compras: 2, receitaCentavos: 26460 });
+    expect(linhas[1]).toMatchObject({ fonte: 'busca', venda: 20, teste: 12, testeFeito: 5, compras: 0, conversao: 0 });
+    expect(total).toMatchObject({ venda: 70, teste: 12, testeFeito: 5, compras: 2, receitaCentavos: 26460 });
     expect(total.conversao).toBeCloseTo(2 / 70);
   });
 });

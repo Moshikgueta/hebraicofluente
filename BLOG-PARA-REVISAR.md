@@ -1,6 +1,6 @@
 # Blog: artigos para revisar
 
-Seis artigos novos para o blog (`/blog`). Nenhum está no ar: cada um tem `"revisado": false` em `data/blog.json`, e só aparece no site com `true`.
+Cinco artigos novos para o blog (`/blog`) e as seções novas da página `/alfabeto-hebraico` (item 1). Nenhum está no ar: cada um tem `"revisado": false` em `data/blog.json`, e só aparece no site com `true`.
 
 O que conferir em cada um:
 - o português (tom, clareza, se diz o que você diria aos seus alunos);
@@ -9,27 +9,19 @@ O que conferir em cada um:
 
 Para aprovar: me diga quais artigos podem ir ao ar (ou peça mudanças). Eu troco o `revisado` para `true` e publico.
 
-## 1. Alfabeto hebraico: as 22 letras, os sons e as formas finais
+## 1. Alfabeto hebraico: as seções novas da página /alfabeto-hebraico
 
-Endereço: `/blog/alfabeto-hebraico/`
+**Mudou em 31/10/2026 (plano de SEO que você aprovou):** este texto não vai mais ser um artigo do blog. Um artigo "alfabeto hebraico" disputaria a mesma busca com a página `/alfabeto-hebraico`, e o Google mostraria só um dos dois. Ele vira seções da própria página, logo abaixo da tabela e das "Três coisas para saber" (por isso saiu o trecho "22 letras, todas consoantes", que a página já tem, e a caixa do teste grátis, que a página também já tem). A página passa de 436 para cerca de 750 palavras (o plano falava em 1.200: o resto viria de texto novo, que só escrevo se você pedir).
 
-**Descrição (Google):** Quantas letras tem o alfabeto hebraico, como elas soam, quais mudam no fim da palavra e por onde começar a ler, explicado para quem fala português.
-
-**Em resumo:** O alfabeto hebraico tem 22 letras, e todas são consoantes. As vogais aparecem como pequenos sinais embaixo, dentro ou em cima das letras. Cinco letras ganham uma forma diferente quando terminam a palavra, e tudo se lê da direita para a esquerda.
-
-### 22 letras, todas consoantes
-
-Quem olha um texto em hebraico pela primeira vez costuma procurar as vogais e não encontra. É que as 22 letras do alfabeto são consoantes. As vogais vêm como pequenos pontos e traços em volta da letra, um sistema chamado nikud. A letra מ, por exemplo, é o nosso M. Com um traço embaixo, מַ, ela se lê «ma».
-
-Isso parece estranho no começo, mas tem uma vantagem: cada letra tem um som só (ou dois, em poucos casos), e esse som não muda conforme a palavra, como acontece com o C ou o G em português.
+Endereço: `/alfabeto-hebraico/` (a página que já existe; título e descrição não mudam)
 
 ### Os sons que o brasileiro já conhece
+
+Uma vantagem do hebraico: cada letra tem um som só (ou dois, em poucos casos), e esse som não muda conforme a palavra, como acontece com o C ou o G em português.
 
 A maior parte das letras tem um som que existe em português. ל (Lámed) é o L de «lua». ש (Shin) é o CH de «chave». ב (Bet) é o B de «bola». ס (Sámech) é o S de «sapo». Essas letras se aprendem rápido, porque o som já está na boca.
 
 Duas letras não têm som próprio: א (Álef) e ע (Áyin). Elas seguram uma vogal, e é a vogal que se ouve. E algumas pedem atenção, porque não existem iguais em português: ח (Het) é um som produzido no fundo da boca, parecido com alguns tipos de R carioca, e ר (Resh) é um R macio, do fundo da boca, como o francês.
-
-→ link: A tabela com as 22 letras, o nome e o som de cada uma (`/alfabeto-hebraico/`)
 
 ### As cinco formas finais
 
@@ -51,13 +43,13 @@ O que mais confunde quem começa não é o som, é o desenho. Algumas letras qua
 
 Decorar as 22 letras de uma vez, em ordem alfabética, é o caminho mais cansativo. Funciona melhor aprender uma letra por vez e já usá-la em palavras de verdade: com א, מ e ת já dá para ler אִמָא (íma, mãe).
 
-[caixa: Experimente a primeira letra, de graça → teste grátis da capa]
+## 2. Como ler hebraico: sete passos para começar do zero
 
-## 2. Como aprender a ler hebraico do zero
+Endereço: `/blog/como-ler-hebraico/`
 
-Endereço: `/blog/como-aprender-a-ler-hebraico/`
+**Mudou em 31/10/2026 (plano de SEO):** o nome e o endereço eram "Como aprender a ler hebraico do zero", a mesma busca da capa. Agora o artigo responde ao passo a passo ("como ler hebraico"), e a capa fica com a busca de quem quer o curso. O texto dos sete passos não mudou.
 
-**Descrição (Google):** Um caminho prático para quem não conhece nenhuma letra: a direção da leitura, as vogais, uma letra por vez e as primeiras palavras de verdade.
+**Descrição (Google):** O passo a passo para ler hebraico do zero: a direção da leitura, as vogais, uma letra por vez, o som, a letra cursiva e as primeiras palavras.
 
 **Em resumo:** Para ler hebraico do zero, comece entendendo três coisas: a leitura vai da direita para a esquerda, as letras são consoantes e as vogais são sinais. Depois, aprenda uma letra por vez, com o som e a escrita, e leia palavras reais desde a primeira semana.
 
@@ -127,7 +119,7 @@ Livros para crianças, materiais para quem está aprendendo e as edições impre
 
 Por isso o caminho natural é aprender a ler com o nikud e, depois, treinar as mesmas palavras sem ele.
 
-→ link: Como aprender a ler hebraico do zero (`/blog/como-aprender-a-ler-hebraico/`)
+→ link: Como ler hebraico: sete passos para começar (`/blog/como-ler-hebraico/`)
 
 [caixa: Experimente a primeira letra, de graça → teste grátis da capa]
 
@@ -157,7 +149,7 @@ Os números continuam escritos da esquerda para a direita, como os nossos. Num p
 
 Escrever à mão também vai da direita para a esquerda, e cada letra tem a sua ordem de traços. No celular, o teclado hebraico cuida da direção sozinho: você digita a primeira letra e ela fica à direita.
 
-→ link: Alfabeto hebraico: as 22 letras (`/blog/alfabeto-hebraico/`)
+→ link: Alfabeto hebraico: as 22 letras (`/alfabeto-hebraico/`)
 
 [caixa: Experimente a primeira letra, de graça → teste grátis da capa]
 
@@ -228,7 +220,7 @@ Lendo da direita para a esquerda:
 
 Juntando: sha + lo + m, shalóm. Com quatro letras você leu sua primeira palavra inteira em hebraico.
 
-→ link: As 22 letras do alfabeto hebraico (`/blog/alfabeto-hebraico/`)
+→ link: As 22 letras do alfabeto hebraico (`/alfabeto-hebraico/`)
 
 [caixa: Experimente a primeira letra, de graça → teste grátis da capa]
 
