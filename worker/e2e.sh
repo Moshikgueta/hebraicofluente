@@ -193,6 +193,30 @@ for p in $PUBLICAS; do
   [ "$c" = "200" ] || diagnostico "$B$p"
 done
 
+# A busca (31/10/2026, auditoria de SEO): o robots.txt que vai ao ar é o NOSSO
+# (app/seo.mjs), e não o "robots.txt gerenciado" da Cloudflare, que acrescenta
+# Disallow para robôs de IA quando o painel liga "bloquear robôs de IA". Isso
+# é configuração da conta, não defeito da versão: AVISA e não conta como
+# falha, para não desfazer uma publicação boa. Os robôs de BUSCA por IA
+# (OAI-SearchBot, ChatGPT-User, PerplexityBot) bloqueados tiram o site das
+# respostas desses assistentes; os de treino (GPTBot, CCBot) são escolha do dono.
+echo "A busca: robots.txt, sitemap e o espelho da capa"
+ROBOTS="$(G "$B/robots.txt")"
+espera "robots.txt aponta o sitemap" 1 "$(grep -c '^Sitemap: .*/sitemap.xml' <<<"$ROBOTS")"
+espera "sitemap.xml responde" 200 "$(code "$B/sitemap.xml")"
+espera "o espelho da capa fica fora do sitemap" 0 "$(G "$B/sitemap.xml" | grep -c 'curso-de-hebraico')"
+espera "/curso-de-hebraico/ declara a capa como canonical" 1 \
+  "$(G -H 'Sec-Fetch-Dest: document' "$B/curso-de-hebraico/" | grep -c 'rel="canonical" href="https://[^/"]*/"')"
+if grep -qiE '^Disallow: */ *$' <<<"$ROBOTS"; then
+  BLOQUEADOS="$(awk 'tolower($1)=="user-agent:"{ua=$2} tolower($1)=="disallow:" && ($2=="/"||$2=="/ "){print ua}' <<<"$ROBOTS" | sort -u | tr '\n' ' ')"
+  printf '  ! AVISO: o robots.txt no ar bloqueia o site inteiro para: %s\n' "$BLOQUEADOS"
+  printf '    (Cloudflare: Segurança > Bots / AI Crawl Control. Ver audit/2026-10-31-seo/RELATORIO.md, seção 9.)\n'
+  grep -qiE '^User-agent: *(\*|Googlebot|Bingbot) *$' <<<"$(awk 'tolower($1)=="user-agent:"{ua=$0} tolower($1)=="disallow:" && $2=="/"{print ua}' <<<"$ROBOTS")" \
+    && { printf '  ✗ o robots.txt no ar bloqueia o Google ou o Bing\n'; fails=$((fails + 1)); }
+else
+  printf '  ✓ o robots.txt no ar não bloqueia nenhum robô\n'
+fi
+
 # A prévia grátis do e-book (23/10/2026): o link que vai no direct a quem
 # comenta EBOOK. Abre sem conta, fica fora da busca e não vende o livro (que
 # continua aVenda: false). O nome antigo do livro não pode aparecer.

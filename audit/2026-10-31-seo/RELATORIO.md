@@ -260,6 +260,9 @@ Acompanhamento:
   PerplexityBot (os de busca). Bloquear os de treino (GPTBot, CCBot) é escolha sua e não afeta o Google.
 - Conferir abrindo `https://hebraicofluente.com.br/robots.txt` no navegador: deve ter só
   `User-agent: *`, `Allow: /` e o `Sitemap:`.
+- **Automático desde 31/10/2026:** `worker/e2e.sh` ("A busca") lê o robots.txt no ar a cada publicação. Robô de IA
+  bloqueado vira AVISO no log (é configuração da conta, não defeito da versão); Google ou Bing bloqueado
+  vira falha.
 
 **GA4: recomendação de NÃO instalar agora.** O site já mede o funil que o briefing pede, sem
 cookie e sem mandar dado a terceiros (a Política de Privacidade diz isso):
