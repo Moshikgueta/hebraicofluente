@@ -232,7 +232,7 @@ function Citacao({ children }: { children: React.ReactNode }) {
     <blockquote className="m-0 flex gap-3.5 items-stretch">
       <span aria-hidden className="w-[2px] bg-[var(--teal)] shrink-0" />
       <p className="font-display text-[19px] sm:text-[20px] leading-[1.45] font-medium tracking-[-0.015em] text-ink m-0">
-        «{children}»
+        “{children}”
       </p>
     </blockquote>
   );

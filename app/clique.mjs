@@ -42,7 +42,7 @@ import { EM_INGLES, OUT } from './saida.mjs';
 const R = EM_INGLES ? {
   testar: /test me now/i, qualAlef: 'text=/Which of these is Alef/', quase: /Almost/, toqueDeNovo: /Tap again/,
   forma: /Alef has this shape/, isso: /That's it!/, continuar: /^Continue/, qualDasDuas: /which of the two is Alef/,
-  ayin: /Ayin/, vogais: /Now the vowels/, ouvirAria: 'button[aria-label^="Hear «"]', proxima: /Next/,
+  ayin: /Ayin/, vogais: /Now the vowels/, ouvirAria: 'button[aria-label^="Hear “"]', proxima: /Next/,
   ouvirBotao: /^🔊Listen$/, ouvirDeNovo: /Listen again/, comparar: /Now compare it with another letter/, jogo: /Now a game from the Academy/, jogoErro: /This is not Alef/, conferir: /^Check$/,
   conferirDisse: /(Compare it with the model|stroke|shape|line|Almost|Good|That's it)/i, acheAlef: /Now find Alef/,
   direita: /starts on the right/, leia: /Now read a word/, aquiDentro: /find Alef in here/, terminei: /I finished the first letter/,
@@ -51,7 +51,7 @@ const R = EM_INGLES ? {
 } : {
   testar: /testar agora/i, qualAlef: 'text=/Qual destas é o Álef/', quase: /Quase/, toqueDeNovo: /Toque de novo/,
   forma: /O Álef tem esta forma/, isso: /Isso!/, continuar: /^Continuar/, qualDasDuas: /qual das duas é o Álef/,
-  ayin: /Áyin/, vogais: /Agora as vogais/, ouvirAria: 'button[aria-label^="Ouvir «"]', proxima: /Próxima/,
+  ayin: /Áyin/, vogais: /Agora as vogais/, ouvirAria: 'button[aria-label^="Ouvir “"]', proxima: /Próxima/,
   ouvirBotao: /^🔊Ouvir$/, ouvirDeNovo: /Ouça de novo/, comparar: /Agora compare com outra letra/, jogo: /Agora um jogo da Academia/, jogoErro: /Esta não é o Álef/, conferir: /^Conferir$/,
   conferirDisse: /(Compare com o modelo|traço|forma|linha|Quase|Boa|Isso)/i, acheAlef: /Agora ache o Álef/,
   direita: /começa à direita/, leia: /Agora leia uma palavra/, aquiDentro: /achar o Álef aqui dentro/, terminei: /Terminei a primeira letra/,
@@ -353,7 +353,7 @@ for (const width of LARGURAS) {
     /* A tabela das sílabas toca a voz do professor (03/10/2026). */
     const silabas = await secao.locator(R.ouvirAria).count();
     if (silabas !== 5) erro(`${width}px: a tabela das vogais tem ${silabas} botões de ouvir, e não 5`);
-    for (const [som, prox] of [['«i»', R.proxima], ['«o»', R.proxima], ['«a»', R.proxima]]) {
+    for (const [som, prox] of [['i', R.proxima], ['o', R.proxima], ['a', R.proxima]]) {
       await toca(som); await segue(prox);
     }
     /* A rodada de ouvir: o botão existe, e o erro manda ouvir de novo. */

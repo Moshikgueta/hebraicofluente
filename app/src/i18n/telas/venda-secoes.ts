@@ -19,7 +19,7 @@ const pt = {
   escrever: 'Escrever',
   /* Transliteração: fica igual até a etapa 3. */
   shin: 'Shin',
-  aulaSom: 'som /ʃ/ - como o X de «xícara»; no curso, escrito sh',
+  aulaSom: 'som /ʃ/ - como o X de “xícara”; no curso, escrito sh',
   aulaPonto: 'O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma letra vira Sin, com som de S.',
   escritaTexto: 'Este é o diagrama que a lição mostra. Depois de ver o movimento, você traça a letra com o dedo e o curso confere. A forma é a da cursiva que se escreve em Israel - a que você vai ver num bilhete, e não a de imprensa.',
   reproduzir: 'Reproduzir áudio',
@@ -88,7 +88,7 @@ const en: Traducao<typeof pt> = {
   escrever: 'Write',
   shin: 'Shin',
   // etapa 3: pronúncia, rever
-  aulaSom: 'sound /ʃ/ - like the sh in «ship»; in the course, written sh',
+  aulaSom: 'sound /ʃ/ - like the sh in “ship”; in the course, written sh',
   aulaPonto: 'The dot on top, on the right, is what makes the SH sound. On the left side, the same letter becomes Sin, with an S sound.',
   escritaTexto: 'This is the diagram the lesson shows. After you see the movement, you trace the letter with your finger and the course checks it. The shape is the cursive written in Israel - the one you will see on a handwritten note, not the print form.',
   reproduzir: 'Play audio',
