@@ -34,6 +34,7 @@
  */
 
 import { Hero } from '@/components/landing/Hero';
+import { FaixaDaPromocao } from '@/components/landing/FaixaDaPromocao';
 import { Curriculo } from '@/components/landing/Secoes';
 import { Promessa } from '@/components/landing/Promessa';
 import { DemoAlef } from '@/components/landing/DemoAlef';
@@ -90,6 +91,9 @@ export function CursoDeHebraicoClient({ midia, retrato }: { midia: HeroMedia; re
       />
       {/* A explicação que o hero deixou de carregar (28/09/2026): o que se
           aprende e os dois "nada de". Ver Promessa.tsx. */}
+      {/* A promoção do pré-lançamento, logo depois da primeira dobra (31/10/2026,
+          pedido do dono). Some sozinha quando o preço virar. */}
+      {passo.vende && <FaixaDaPromocao />}
       <Promessa />
       {/* A ordem da narrativa, e por que ela é esta.
           ──────────────────────────────────────────────────────────────────

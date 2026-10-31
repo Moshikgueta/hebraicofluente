@@ -380,15 +380,20 @@ const diasDeAcesso = (meses: number) => Math.round(meses * 365 / 12);
    é. Não é "garantia". */
 function SeloDesistencia({ dias }: { dias: number }) {
   return (
-    <div className="mt-4 flex items-start gap-3 rounded-[14px] bg-[var(--card)] px-3.5 py-3 text-left
+    <div className="mt-4 flex items-center gap-3 rounded-[14px] bg-[var(--card)] px-3.5 py-3 text-left
                     shadow-[0_0_0_1px_var(--line)]">
-      <svg aria-hidden viewBox="0 0 24 24" width="30" height="30" fill="none" className="shrink-0 mt-0.5">
-        <path d="M12 2.8 19.5 5.6v5.8c0 4.6-3.1 8.4-7.5 9.8-4.4-1.4-7.5-5.2-7.5-9.8V5.6Z"
-              fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="m8.6 12.1 2.4 2.4 4.6-4.8" stroke="var(--teal)" strokeWidth="1.9"
-              strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <p className="m-0 font-ui text-[13.5px] leading-[1.45] text-ink-body">
+      {/* O selo redondo, o mesmo da faixa da promoção (31/10/2026). */}
+      <span aria-hidden className="relative grid place-items-center w-[56px] h-[56px] shrink-0">
+        <svg viewBox="0 0 64 64" width="56" height="56" className="absolute inset-0">
+          <circle cx="32" cy="32" r="29" fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="2.5" strokeDasharray="4 3" />
+          <circle cx="32" cy="32" r="23" fill="none" stroke="var(--teal)" strokeWidth="1.4" />
+        </svg>
+        <span className="relative grid justify-items-center leading-none">
+          <span className="font-display text-[21px] font-bold text-[var(--teal-ink)] tabular-nums">{dias}</span>
+          <span className="font-ui text-[8.5px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">{tx.seloDias}</span>
+        </span>
+      </span>
+      <p className="m-0 min-w-0 [overflow-wrap:anywhere] font-ui text-[13.5px] leading-[1.45] text-ink-body">
         <span className="block font-ui text-[11.5px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] mb-0.5">
           {tx.seloRotulo}
         </span>
@@ -448,6 +453,7 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em]
                               text-[var(--teal-ink)] mb-1.5">
                   {cheio ? tx.precoPreLancamento : tx.acessoCompleto}
+                  {cheio && fimDoPreLancamento(c.price) && <> · {tx.ate(fimDoPreLancamento(c.price)!.slice(0, 5))}</>}
                 </p>
                 <p className="font-display text-[48px] sm:text-[54px] font-semibold tracking-[-0.04em]
                               leading-none text-ink tabular-nums mb-2">
@@ -467,6 +473,15 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                     ? <>{tx.noPix}</>
                     : <>{tx.noCartao(parcelasTexto(parcelas))}</>}
                 </p>
+                {/* O preço no PIX à vista, com o mesmo peso de leitura do
+                    cartão (31/10/2026, pedido do dono). Só com PIX e desconto. */}
+                {!soPix() && temPix() && c.price.pixDiscountPct > 0 && (
+                  <p className="-mt-3 mb-6 inline-flex flex-wrap justify-center items-baseline gap-x-2 max-w-full rounded-[12px] bg-[var(--teal-soft)] px-4 py-2
+                                font-ui text-[15px] text-[var(--teal-body)] tabular-nums">
+                    <strong className="font-display text-[24px] font-semibold text-[var(--teal-ink)] tracking-[-0.02em]">{brl(pix)}</strong>
+                    {tx.noPixDesconto(c.price.pixDiscountPct)}
+                  </p>
+                )}
               </>
             )}
             <Link href={href}
@@ -491,7 +506,10 @@ export function Preco({ href, label, owned }: { href: string; label: string; own
                 : !temPix()
                   ? <>{tx.liberadoNaHora(c.accessMonths)}</>
                   : confirmaSozinho()
-                    ? <>{tx.pixNaHora(brl(pix), c.price.pixDiscountPct, c.accessMonths)}</>
+                    /* Com a linha do PIX logo acima do botão, aqui fica só o acesso. */
+                    ? <>{!soPix() && c.price.pixDiscountPct > 0
+                        ? tx.liberadoNaHora(c.accessMonths)
+                        : tx.pixNaHora(brl(pix), c.price.pixDiscountPct, c.accessMonths)}</>
                     : <>{tx.pixAMao(brl(pix), c.price.pixDiscountPct, c.accessMonths)}</>}
             </p>
             {/* A desistência (CDC art. 49) é o maior redutor de risco que o

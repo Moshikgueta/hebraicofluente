@@ -64,14 +64,25 @@ describe('tools/virar-preco.mjs', () => {
     expect(preco('alfabetizacao-e-israel')).toMatchObject({ brl: 397, listBrl: null });
   });
 
-  it('nada vira sozinho: a Action não tem agendamento e exige a palavra "virar"', () => {
+  it('a data da tela é verdade: o agendamento de 01/12 vira só o que venceu, e à mão exige "virar"', () => {
     const yml = readFileSync(new URL('../../.github/workflows/virar-preco.yml', import.meta.url), 'utf8');
     const semComentarios = yml.replace(/^\s*#.*$/gm, '');
-    expect(semComentarios).not.toMatch(/schedule:|cron:/);
+    expect(semComentarios).toMatch(/cron: '5 3 1 12 \*'/);
+    expect(semComentarios).toMatch(/--aplicar --vencidos/);
     expect(semComentarios).toMatch(/workflow_dispatch:/);
     expect(semComentarios).toMatch(/"\$CONFIRMAR" != "virar"/);
-    /* O catálogo não tem mais data de fim de pré-lançamento nem de parceria. */
-    const real = readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8');
-    expect(real).not.toMatch(/"preLancamentoAte"|"parceriaAte"/);
+    /* Toda data de pré-lançamento do catálogo cai em 30/11, véspera do agendamento. */
+    const real = JSON.parse(readFileSync(new URL('../../data/courses.json', import.meta.url), 'utf8'));
+    const datas = real.courses.map((c: { price?: { preLancamentoAte?: string } }) => c.price?.preLancamentoAte).filter(Boolean);
+    expect(datas).toEqual(['2026-11-30']);
+    expect(JSON.stringify(real)).not.toMatch(/"parceriaAte"/);
+  });
+
+  it('com `vencidosEm`, só vira o produto cuja data já passou', () => {
+    const comData = CATALOGO.replace('"pixDiscountPct": 10 },\n      "accessMonths"', '"pixDiscountPct": 10, "preLancamentoAte": "2026-11-30" },\n      "accessMonths"');
+    expect(virar(comData, { vencidosEm: '2026-11-30' }).virados).toEqual([]);
+    const r = virar(comData, { vencidosEm: '2026-12-01' });
+    expect(r.virados).toEqual([{ slug: 'alfabetizacao', de: 147, para: 197 }]);
+    expect(r.texto).not.toMatch(/preLancamentoAte/);
   });
 });

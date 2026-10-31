@@ -1,5 +1,11 @@
-/* A virada do pré-lançamento para o preço oficial, SÓ QUANDO MANDADA.
+/* A virada do pré-lançamento para o preço oficial.
  * ─────────────────────────────────────────────────────────────────────────
+ * Desde 31/10/2026 (decisão do dono) o pré-lançamento da alfabetização tem
+ * data outra vez, `preLancamentoAte: "2026-11-30"`, e o preço SOBE SOZINHO:
+ * o workflow roda agendado em 01/12 às 00:05 de Brasília com `--vencidos`,
+ * que só vira os produtos cuja data já passou (em Brasília). O texto abaixo
+ * é o de 23/10/2026, quando a virada era só à mão; ela continua possível.
+ *
  * Decisão do dono em 23/10/2026: os preços oficiais ficam configurados
  * (`listBrl` em data/courses.json) e NÃO sobem sozinhos. Até essa data a
  * virada era agendada por `preLancamentoAte`; a data saiu do catálogo e da
@@ -24,7 +30,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 /** Vira as linhas de preço de um texto de courses.json.
  *  `so`: lista de slugs (vazia = todos os vendáveis). */
-export function virar(texto, { so = [] } = {}) {
+export function virar(texto, { so = [], vencidosEm = null } = {}) {
   const status = new Map(JSON.parse(texto).courses.map(c => [c.slug, c.status]));
   const virados = [];
   const novo = texto.replace(
@@ -34,6 +40,8 @@ export function virar(texto, { so = [] } = {}) {
       if (typeof p.listBrl !== 'number' || p.listBrl <= p.brl) return trecho;
       if (status.get(slug) === 'soon') return trecho;
       if (so.length && !so.includes(slug)) return trecho;
+      /* `vencidosEm` (YYYY-MM-DD, Brasília): só quem tem data e ela já passou. */
+      if (vencidosEm && !(typeof p.preLancamentoAte === 'string' && p.preLancamentoAte < vencidosEm)) return trecho;
       virados.push({ slug, de: p.brl, para: p.listBrl });
       const { preLancamentoAte, ...resto } = p;
       const depois = { ...resto, brl: p.listBrl, listBrl: null };
@@ -51,7 +59,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const arg = process.argv.find(a => a.startsWith('--so='));
   const so = arg ? arg.slice(5).split(',').map(s => s.trim()).filter(Boolean) : [];
   const arquivo = new URL('../data/courses.json', import.meta.url);
-  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), { so });
+  /* O dia de hoje em Brasília: o preço vale até o fim do dia da data. */
+  const hoje = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
+  const vencidosEm = process.argv.includes('--vencidos') ? hoje : null;
+  const { texto, virados } = virar(readFileSync(arquivo, 'utf8'), { so, vencidosEm });
   if (!virados.length) {
     console.log('Nada a virar: nenhum produto com preço oficial acima do atual.');
   } else {

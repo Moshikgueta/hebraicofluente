@@ -76,6 +76,9 @@ const pt = {
   /* Ao lado do preço cobrado, nunca no lugar dele (29/10/2026). */
   porDia: (valor: string, meses: number) => `Cerca de ${valor} por dia nos ${meses} meses de acesso.`,
   seloRotulo: 'Direito de arrependimento',
+  seloDias: 'dias',
+  ate: (data: string) => `até ${data}`,
+  noPixDesconto: (pct: number) => `no PIX, à vista (${pct}% de desconto)`,
   preLancamentoAte: (data: string, cheio: string) =>
     `Preço de pré-lançamento até ${data}. Depois, o curso passa a custar ${cheio}.`,
   depoisDoPreLancamento: (cheio: string) => `Depois do pré-lançamento, o curso passa a custar ${cheio}.`,
@@ -173,6 +176,9 @@ const en: Traducao<typeof pt> = {
   desistir: (dias: number) => `${dias} days to cancel and get 100% back, no reason needed.`,
   porDia: (valor: string, meses: number) => `About ${valor} a day over ${meses} months of access.`,
   seloRotulo: 'Right to cancel',
+  seloDias: 'days',
+  ate: (data: string) => `until ${data}`,
+  noPixDesconto: (pct: number) => `by PIX, paid in full (${pct}% off)`,
   preLancamentoAte: (data: string, cheio: string) =>
     `Pre-launch price until ${data}. After that, the course will cost ${cheio}.`,
   depoisDoPreLancamento: (cheio: string) => `After the pre-launch, the course will cost ${cheio}.`,

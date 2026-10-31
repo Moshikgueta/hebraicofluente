@@ -3,8 +3,8 @@
 /* Três decisões que tornam o aprendizado mais leve.
  * ─────────────────────────────────────────────────────────────────────────
  * As três ideias pedagógicas que sustentam o curso - progressão gradual,
- * transliteração que se retira, retorno imediato - mostradas em vez de
- * afirmadas.
+ * transliteração que se retira, retorno imediato. As duas primeiras com um
+ * desenho; a terceira já se vê na aula aberta e na galeria de telas.
  *
  * ── por que o tom mudou ─────────────────────────────────────────────────
  * Estas mesmas três ideias já estavam na página /sobre, sob o título «Três
@@ -31,7 +31,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
-import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
+import { Container, H2, Lead, Reveal, Rubrica } from './base';
 import { tx } from '@/i18n/telas/venda-decisoes';
 
 /** Roda uma vez, quando o bloco entra na tela. Devolve `true` para animar. */
@@ -192,111 +192,27 @@ function ApoioQueSai() {
   );
 }
 
-/* ── 3 · o retorno imediato ──────────────────────────────────────────────
-   Dois botões e o que o curso responde a cada um. É a única das três em que
-   o visitante precisa agir para ver - e de propósito: a afirmação é sobre o
-   que acontece DEPOIS de responder. */
-function RetornoImediato() {
-  const [resp, setResp] = useState<'certo' | 'quase' | null>(null);
-
-  return (
-    <div className="grid gap-4">
-      <div className="rounded-[16px] border border-line bg-[var(--card)] p-4 grid gap-3">
-        <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0">
-          {tx.exercicio}
-        </p>
-        <p className="font-ui text-[16px] font-semibold text-ink m-0">
-          {tx.qualBet}
-        </p>
-        <div className="flex gap-2.5">
-          <button
-            type="button"
-            onClick={() => setResp('certo')}
-            aria-pressed={resp === 'certo'}
-            className={`flex-1 min-h-[62px] rounded-[13px] border-2 grid place-items-center
-                        transition-colors duration-200 motion-reduce:transition-none
-                        focus-visible:outline focus-visible:outline-2
-                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
-              ${resp === 'certo'
-                ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
-                : 'border-line hover:bg-[var(--sand)]'}`}
-          >
-            <He size="word" tone={resp === 'certo' ? 'teal' : 'navy'}>ב</He>
-          </button>
-          <button
-            type="button"
-            onClick={() => setResp('quase')}
-            aria-pressed={resp === 'quase'}
-            className={`flex-1 min-h-[62px] rounded-[13px] border-2 grid place-items-center
-                        transition-colors duration-200 motion-reduce:transition-none
-                        focus-visible:outline focus-visible:outline-2
-                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
-              ${resp === 'quase'
-                ? 'border-[#D9B872] bg-[var(--gold-soft)]'
-                : 'border-line hover:bg-[var(--sand)]'}`}
-          >
-            <He size="word" tone="navy">כ</He>
-          </button>
-        </div>
-      </div>
-
-      {/* Altura reservada, e cor nunca sozinha: ✓ e ✕ carregam a mesma
-          informação para quem não separa teal de âmbar. */}
-      <div className="min-h-[84px]" aria-live="polite">
-        {resp === null && (
-          <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
-            {tx.toque}
-          </p>
-        )}
-        {resp === 'certo' && (
-          <div className="rounded-[13px] bg-[var(--teal-soft)] px-4 py-3 grid gap-1
-                          animate-pop motion-reduce:animate-none">
-            <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--teal-ink)]">
-              <Check size={16} color="var(--teal-ink)" /> {tx.correto}
-            </p>
-            <p className="font-ui text-[14px] leading-[1.55] text-[var(--teal-body)] m-0">
-              {tx.certoTexto}
-            </p>
-          </div>
-        )}
-        {resp === 'quase' && (
-          <div className="rounded-[13px] bg-[var(--gold-soft)] px-4 py-3 grid gap-1
-                          animate-pop motion-reduce:animate-none">
-            <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--gold-ink)]">
-              <span aria-hidden>✕</span> {tx.quase}
-            </p>
-            <p className="font-ui text-[14px] leading-[1.55] text-[var(--gold-body)] m-0">
-              {tx.quaseTexto}
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 /* ── a seção ─────────────────────────────────────────────────────────── */
 const CARTOES = [
   {
     n: '01',
     t: tx.c1t,
     b: tx.c1b,
-    destaque: tx.c1destaque(course.totalLetters),
     visual: <UmaDeCadaVez />
   },
   {
     n: '02',
     t: tx.c2t,
     b: tx.c2b,
-    destaque: tx.c2destaque,
     visual: <ApoioQueSai />
   },
   {
     n: '03',
     t: tx.c3t,
     b: tx.c3b,
-    destaque: tx.c3destaque,
-    visual: <RetornoImediato />
+    /* Sem desenho desde 30/10/2026: a correção na hora já aparece, de verdade,
+       na aula aberta e na galeria de telas logo acima. */
+    visual: null
   }
 ] as const;
 
@@ -324,24 +240,21 @@ export function Decisoes() {
         <ol className="list-none p-0 m-0 border-t border-line">
           {CARTOES.map(c => (
             <li key={c.n} className="border-b border-line">
-              <article className="grid gap-6 lg:gap-14 py-9 sm:py-11
-                                  lg:grid-cols-[56px_minmax(0,1fr)_minmax(0,400px)] lg:items-start">
-                <p aria-hidden className="font-display text-[15px] font-semibold tracking-[-0.01em]
-                                          text-[var(--teal-ink)] tabular-nums m-0 lg:pt-1.5">
-                  {c.n}
-                </p>
-                <div className="grid gap-3 content-start max-w-[52ch]">
-                  <h3 className="font-display text-[23px] sm:text-[26px] font-semibold leading-[1.15]
+              {/* Mais curto desde 30/10/2026 (pedido do dono): o número na linha do
+                  título, sem a frase de destaque (repetia o texto) e sem o desenho
+                  do terceiro item. */}
+              <article className="grid gap-5 lg:gap-14 py-7 sm:py-10
+                                  lg:grid-cols-[minmax(0,1fr)_minmax(0,400px)] lg:items-start">
+                <div className="grid gap-2.5 content-start max-w-[52ch]">
+                  <h3 className="flex items-baseline gap-3 font-display text-[22px] sm:text-[26px] font-semibold leading-[1.15]
                                  tracking-[-0.022em] text-ink m-0">
+                    <span aria-hidden className="font-display text-[15px] font-semibold tracking-[-0.01em]
+                                                 text-[var(--teal-ink)] tabular-nums">{c.n}</span>
                     {c.t}
                   </h3>
                   <p className="font-ui text-[16px] leading-[1.6] text-ink-muted m-0">{c.b}</p>
-                  <p className="font-display text-[17px] leading-[1.45] font-medium tracking-[-0.01em]
-                                text-ink m-0 mt-2 pl-4 border-l-2 border-[var(--teal)]">
-                    {c.destaque}
-                  </p>
                 </div>
-                <div className="min-w-0">{c.visual}</div>
+                {c.visual && <div className="min-w-0">{c.visual}</div>}
               </article>
             </li>
           ))}

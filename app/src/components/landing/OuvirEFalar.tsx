@@ -35,6 +35,7 @@ import { falaDisponivel } from '@/lib/fala';
 import { type NomeAmostra } from '@/lib/amostra-audio';
 import { useTocador } from './useTocador';
 import { Container, H2, Lead, Reveal, Rubrica, Check } from './base';
+import { ComYael } from './ComYael';
 import { tx } from '@/i18n/telas/venda-ouvir-e-falar';
 
 type Rodada = {
@@ -151,22 +152,24 @@ function Ouvir({ tocar, tocando }: { tocar: (n: NomeAmostra) => void; tocando: N
       </div>
       <div aria-live="polite" className="min-h-[52px]">
         {acertou && (
-          <p className="flex items-start gap-2 font-ui text-[15px] text-[var(--teal-ink)] m-0">
-            <Check size={16} className="mt-[3px]" />
-            <span>
-              {tx.acerto(r.nome, <He size="inline">{r.silaba}</He>, r.som)}
-            </span>
-          </p>
-        )}
-        {acertou && (
-          <div className="mt-3">
-            <BotaoOuvir nome={r.clipe} rotulo={tx.ouvirSom(r.som)} tocar={tocar} tocando={tocando} />
-          </div>
+          <ComYael certo vez={i}>
+            <p className="flex items-start gap-2 font-ui text-[15px] text-[var(--teal-ink)] m-0">
+              <Check size={16} className="mt-[3px]" />
+              <span>
+                {tx.acerto(r.nome, <He size="inline">{r.silaba}</He>, r.som)}
+              </span>
+            </p>
+            <div className="mt-3">
+              <BotaoOuvir nome={r.clipe} rotulo={tx.ouvirSom(r.som)} tocar={tocar} tocando={tocando} />
+            </div>
+          </ComYael>
         )}
         {errada && (
-          <p className="font-ui text-[15px] text-ink-body m-0">
-            <span aria-hidden>✕ </span>{tx.tenteOutra(errada.porque)}
-          </p>
+          <ComYael certo={false} vez={r.opcoes.indexOf(errada)}>
+            <p className="font-ui text-[15px] text-ink-body m-0">
+              <span aria-hidden>✕ </span>{tx.tenteOutra(errada.porque)}
+            </p>
+          </ComYael>
         )}
       </div>
       {acertou && !fim && (
