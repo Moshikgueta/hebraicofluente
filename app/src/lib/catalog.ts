@@ -42,6 +42,12 @@ export type CoursePrice = {
   installments: number;
   /** Desconto no PIX, em pontos percentuais. 0 desliga a linha inteira. */
   pixDiscountPct: number;
+  /** Último dia do preço de pré-lançamento (AAAA-MM-DD), quando há. */
+  preLancamentoAte?: string | null;
+  /** Preço para quem chega pelo link de uma parceria (lib/parceria.ts). */
+  parceriaBrl?: number | null;
+  /** Último dia (AAAA-MM-DD, Brasília) em que o preço da parceria vale. */
+  parceriaAte?: string | null;
 };
 
 export type CatalogModule = {
@@ -61,9 +67,24 @@ export type CatalogCourse = {
   levelPt: string;
   cefr: string | null;
   status: CourseStatus;
-  /** Qual motor de curso abre as aulas. `null` = ainda não existe conteúdo. */
-  engine: 'alfabetizacao' | null;
+  /** Qual motor de curso abre as aulas. `null` = ainda não existe conteúdo.
+   *  `livro` e `pacote` não são cursos: ver `tipo`. */
+  engine: 'alfabetizacao' | 'livro' | 'pacote' | null;
+  /** Sem `tipo`, é curso. `livro` = o e-book; `pacote` = vários produtos num pedido. */
+  tipo?: 'curso' | 'livro' | 'pacote';
+  /** No pacote: os slugs que um pedido dele libera. */
+  componentes?: string[];
+  /** Onde o produto abre depois de comprado. Sem isto, /meu-hebraico. */
+  abre?: string;
+  /** `false` = no ar só para quem tem o acesso liberado à mão: sem página de
+   *  venda, sem checkout, sem link e sem parágrafo nas políticas (22/10/2026,
+   *  o e-book, como o Raízes Sefarditas). Sem o campo, está à venda. */
+  aVenda?: boolean;
   taglinePt: string;
+  /** Uma linha que descreve o produto, abaixo do subtítulo (o livro, 23/10/2026). */
+  descricaoPt?: string;
+  /** O autor, quando o produto é uma obra assinada (o livro). */
+  autorPt?: string;
   summaryPt: string;
   outcomesPt: string[];
   forWhomPt: string[];
@@ -82,15 +103,34 @@ const CATALOG = catalogJson as unknown as {
 
 export const currency = CATALOG.currency;
 
-/** Todos os cursos, na ordem do catálogo. */
+export const tipoDe = (c: CatalogCourse | undefined): 'curso' | 'livro' | 'pacote' => c?.tipo ?? 'curso';
+
+/** Todos os CURSOS, na ordem do catálogo. O e-book e o pacote ficam de fora:
+ *  /cursos, a estante, o "próximo curso" e o rodapé falam de cursos. */
 export const allCourses = (): CatalogCourse[] =>
-  CATALOG.courses.slice().sort((a, b) => a.n - b.n);
+  CATALOG.courses.filter(c => tipoDe(c) === 'curso').sort((a, b) => a.n - b.n);
+
+/** Está à venda? `aVenda: false` tira o produto da vitrine e do checkout. */
+export const estaAVenda = (c: CatalogCourse | undefined): c is CatalogCourse => !!c && c.aVenda !== false;
+
+/** Todos os produtos À VENDA: cursos, o e-book e o pacote. Um produto com
+ *  `aVenda: false` não ganha página de venda nem de checkout. */
+export const allProducts = (): CatalogCourse[] =>
+  CATALOG.courses.filter(estaAVenda).sort((a, b) => a.n - b.n);
 
 export const getCourse = (slug: string): CatalogCourse | undefined =>
   CATALOG.courses.find(c => c.slug === slug);
 
 /** O curso que a plataforma vende hoje. */
 export const FLAGSHIP = 'alfabetizacao';
+
+/** A página de venda de um produto. O curso de alfabetização vende em
+ *  /curso-de-hebraico desde 23/10/2026 (a capa virou o portal), e
+ *  /cursos/alfabetizacao responde 301 para lá (worker.js): uma página de
+ *  venda só, com um texto só. Os outros produtos seguem em /cursos/<slug>. */
+export const PAGINA_DO_CURSO = '/curso-de-hebraico';
+export const paginaDeVenda = (slug: string): string =>
+  slug === FLAGSHIP ? PAGINA_DO_CURSO : `/cursos/${slug}`;
 
 export const flagship = (): CatalogCourse => getCourse(FLAGSHIP)!;
 
@@ -106,7 +146,7 @@ export const isPlayable = (c: CatalogCourse): boolean =>
 
 /** A rota que abre o curso, ou a página de venda se ele ainda não abre. */
 export function courseHref(c: CatalogCourse): string {
-  return isPlayable(c) ? '/meu-hebraico' : `/cursos/${c.slug}`;
+  return isPlayable(c) ? (c.abre ?? '/meu-hebraico') : paginaDeVenda(c.slug);
 }
 
 /* ── dinheiro ───────────────────────────────────────────────────────────
@@ -114,9 +154,15 @@ export function courseHref(c: CatalogCourse): string {
    vai para a tela. Misturar os dois é o bug clássico de cobrança, então as
    duas funções têm nomes diferentes e a de centavos diz "cents". */
 
+/* No site em inglês o catálogo já sai em dólar (tools/export-content.mjs põe
+   o `usd` no lugar do `brl`), e esta função escreve "$47". O nome ficou: são
+   dezenas de telas, e todas leem o preço do mesmo campo. */
 export const brl = (v: number): string =>
-  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL',
-    minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
+  process.env.NEXT_PUBLIC_LOCALE === 'en'
+    ? v.toLocaleString('en-US', { style: 'currency', currency: 'USD',
+        minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
+    : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL',
+        minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
 
 export const cents = (v: number): number => Math.round(v * 100);
 
@@ -163,3 +209,25 @@ export const parcelasMax = (p: CoursePrice): number => Math.max(1, p.installment
  */
 export const ancora = (p: CoursePrice): number | null =>
   p.listBrl !== null && p.listBrl > p.brl ? p.listBrl : null;
+
+/**
+ * Até quando vale o preço de pré-lançamento, como as telas escrevem
+ * ("31/10/2026"), ou null. Sem traço no preço cheio desde 28/09/2026
+ * (auditoria, LEGAL-014): um número riscado é preço de referência, e o
+ * R$ 297 nunca foi praticado. No lugar dele, a frase com a data de fim.
+ */
+/** O dia em que o preço oficial passa a valer ("01/12"): o seguinte ao fim do
+ *  pré-lançamento. O mesmo dia em que a Action "Virar o preço" roda. */
+export function inicioDoPrecoCheio(p: CoursePrice): string | null {
+  const d = ancora(p) && p.preLancamentoAte;
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;
+  const seguinte = new Date(Date.parse(`${d}T12:00:00Z`) + 86_400_000);
+  return `${String(seguinte.getUTCDate()).padStart(2, '0')}/${String(seguinte.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
+export function fimDoPreLancamento(p: CoursePrice): string | null {
+  const d = ancora(p) && p.preLancamentoAte;
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;
+  const [a, m, dia] = d.split('-');
+  return `${dia}/${m}/${a}`;
+}

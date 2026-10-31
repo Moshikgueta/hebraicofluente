@@ -24,6 +24,8 @@
  * sampling it, so "near" already means "within about a finger's width".
  */
 
+import { tx } from '@/i18n/telas/motor-trace-score';
+
 export type TraceVerdict = {
   /** 0-1, for the skill model. */
   score: number;
@@ -49,6 +51,14 @@ export type TraceInput = {
 const ON_MODEL = 24;
 /** The model's core - the part that really has to be covered. */
 const CORE = 90;
+/** Quanto do modelo precisa de tinta para "Muito bem". Era 0,5, e meia letra
+ *  (cobertura 0,64) recebia "A forma está lá" (auditoria de 01/10/2026,
+ *  CONT-014). */
+export const COBERTURA_BOA = 0.7;
+/** O modelo de habilidade conta acerto de `escrever` a partir daqui
+ *  (store.tsx). Todo traço que não é "good" fica abaixo, para o selo
+ *  "forte" e a frase da tela nunca discordarem. */
+export const ACERTO_DO_TRACO = 0.5;
 
 export function scoreTrace(input: TraceInput): TraceVerdict {
   const { alpha, w, h, points, near = 26 } = input;
@@ -85,28 +95,32 @@ export function scoreTrace(input: TraceInput): TraceVerdict {
 
   /* Weighted toward coverage: drawing the whole letter roughly is closer to
      writing it than drawing a small perfect piece of it. */
-  const score = Math.min(1, dentro * 0.4 + cobertura * 0.6);
+  const bruto = Math.min(1, dentro * 0.4 + cobertura * 0.6);
+  const bom = dentro >= 0.5 && cobertura >= COBERTURA_BOA;
+  /* Só o traço "good" passa da régua de acerto; os outros guardam a nota,
+     limitada logo abaixo dela. */
+  const score = bom ? Math.max(bruto, ACERTO_DO_TRACO) : Math.min(bruto, ACERTO_DO_TRACO - 0.01);
 
   /* Each message is a different diagnosis, because "quase" on its own tells
      the learner nothing about what to change. Accurate but short means draw
      more of it; plenty of ink in the wrong places means follow the shape. */
-  if (dentro >= 0.5 && cobertura >= 0.5) {
-    return { score, dentro, cobertura, tone: 'good', message: 'Muito bem! A forma está lá.' };
+  if (bom) {
+    return { score, dentro, cobertura, tone: 'good', message: tx.bom };
   }
   if (dentro >= 0.5) {
     return {
       score, dentro, cobertura, tone: 'try',
-      message: 'Quase! Faltou parte da letra - tente cobrir o modelo inteiro.'
+      message: tx.faltouParte
     };
   }
   if (cobertura >= 0.35 || dentro >= 0.3) {
     return {
       score, dentro, cobertura, tone: 'try',
-      message: 'Quase! Tente seguir um pouco mais a forma do modelo.'
+      message: tx.sigaAForma
     };
   }
   return {
     score, dentro, cobertura, tone: 'try',
-    message: 'Tente de novo olhando o modelo. Toque em “Ver o traçado” para rever a ordem.'
+    message: tx.deNovo
   };
 }

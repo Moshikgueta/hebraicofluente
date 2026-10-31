@@ -23,6 +23,17 @@
 import { createServer } from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
 import { chromium } from 'playwright';
+import { EM_INGLES, OUT } from './saida.mjs';
+/* Os nomes dos controles, nos dois idiomas da build (dicionários
+   conta-botao-acessibilidade.ts e conta-plataforma-pecas.ts). */
+const R = EM_INGLES
+  ? { ajustes: 'Accessibility settings', ajustesRe: /Accessibility settings/, contraste: 'More contrast',
+      espaco: 'More space between lines', movimento: 'Less animation', normal: 'Reset to default',
+      links: 'Underline links', mostrar: 'Show password', ocultar: 'Hide password' }
+  : { ajustes: 'Ajustes de acessibilidade', ajustesRe: /Ajustes de acessibilidade/, contraste: 'Mais contraste',
+      espaco: 'Mais espaço entre linhas', movimento: 'Menos animação', normal: 'Voltar ao normal',
+      links: 'Sublinhar links', mostrar: 'Mostrar senha', ocultar: 'Ocultar senha' };
+
 
 const TIPOS = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css',
@@ -33,7 +44,7 @@ const TIPOS = {
 
 const servidor = createServer((req, res) => {
   const limpo = decodeURIComponent(req.url.split('?')[0]);
-  for (const f of [`out${limpo}`, `out${limpo}/index.html`, `out${limpo}.html`, 'out/404.html']) {
+  for (const f of [`${OUT}${limpo}`, `${OUT}${limpo}/index.html`, `${OUT}${limpo}.html`, `${OUT}/404.html`]) {
     if (!existsSync(f) || f.endsWith('/')) continue;
     try {
       const corpo = readFileSync(f);
@@ -69,8 +80,8 @@ const ctx = await navegador.newContext({ viewport: { width: 1280, height: 900 } 
 const pg = await ctx.newPage();
 
 const abrirPainel = async p => {
-  await p.getByRole('button', { name: /Ajustes de acessibilidade/ }).click();
-  await p.getByRole('dialog', { name: 'Ajustes de acessibilidade' }).waitFor();
+  await p.getByRole('button', { name: R.ajustesRe }).click();
+  await p.getByRole('dialog', { name: R.ajustes }).waitFor();
 };
 const atributo = (p, nome) => p.evaluate(n => document.documentElement.getAttribute(n), nome);
 
@@ -78,9 +89,9 @@ console.log('\n── o botão ────────────────�
 
 /* Em toda página, e não só na capa: quem precisa do recurso precisa dele na
    lição. As duas cascas (site e plataforma) têm de carregá-lo. */
-for (const rota of ['/', '/cursos/alfabetizacao/', '/faq/', '/entrar/', '/meu-hebraico/']) {
+for (const rota of ['/', '/curso-de-hebraico/', '/faq/', '/entrar/', '/meu-hebraico/']) {
   await pg.goto(`${BASE}${rota}`, { waitUntil: 'networkidle' });
-  const n = await pg.getByRole('button', { name: /Ajustes de acessibilidade/ }).count();
+  const n = await pg.getByRole('button', { name: R.ajustesRe }).count();
   conferir(n === 1, `${rota.padEnd(24)} tem o botão (${n})`);
 }
 
@@ -88,17 +99,17 @@ await pg.goto(`${BASE}/`, { waitUntil: 'networkidle' });
 
 /* Alvo de toque: 44px é o mínimo da WCAG 2.5.8, e um botão de acessibilidade
    abaixo disso seria uma piada de mau gosto. */
-const caixa = await pg.getByRole('button', { name: /Ajustes de acessibilidade/ }).boundingBox();
+const caixa = await pg.getByRole('button', { name: R.ajustesRe }).boundingBox();
 conferir(caixa.width >= 44 && caixa.height >= 44,
   `alvo de toque ${Math.round(caixa.width)}x${Math.round(caixa.height)}px`);
 
 /* O atalho que o painel anuncia tem de funcionar - anunciar um atalho morto
    é pior do que não ter atalho. */
 await pg.keyboard.press('Alt+Shift+A');
-conferir(await pg.getByRole('dialog', { name: 'Ajustes de acessibilidade' }).isVisible(),
+conferir(await pg.getByRole('dialog', { name: R.ajustes }).isVisible(),
   'Alt+Shift+A abre o painel');
 await pg.keyboard.press('Escape');
-conferir(await pg.getByRole('dialog', { name: 'Ajustes de acessibilidade' }).count() === 0,
+conferir(await pg.getByRole('dialog', { name: R.ajustes }).count() === 0,
   'Esc fecha');
 
 console.log('\n── tamanho do texto ──────────────────────────');
@@ -114,7 +125,7 @@ conferir(depois > antes * 1.3,
 
 /* E o botão NÃO cresce junto: ele mora fora do contêiner com zoom, senão em
    150% sai da tela e prende a pessoa no ajuste que acabou de fazer. */
-const caixa150 = await pg.getByRole('button', { name: /Ajustes de acessibilidade/ }).boundingBox();
+const caixa150 = await pg.getByRole('button', { name: R.ajustesRe }).boundingBox();
 conferir(Math.abs(caixa150.width - caixa.width) < 2,
   `o botão fica do mesmo tamanho (${Math.round(caixa150.width)}px)`);
 conferir(caixa150.x + caixa150.width <= 1280 && caixa150.y + caixa150.height <= 900,
@@ -128,9 +139,13 @@ conferir(await atributo(pg, 'data-a11y-texto') === '150',
 
 console.log('\n── mais contraste ────────────────────────────');
 
+/* O `domcontentloaded` acima é de propósito (o carimbo vem antes do React),
+   mas o botão só responde depois da hidratação: um clique antes dela se
+   perde, e no runner lento do CI isso derrubou a publicação do PR #41. */
+await pg.waitForLoadState('networkidle');
 await abrirPainel(pg);
 await pg.getByRole('button', { name: '100%', exact: true }).click();
-await pg.getByLabel('Mais contraste').check();
+await pg.getByLabel(R.contraste).check();
 conferir(await atributo(pg, 'data-a11y-contraste') === 'alto', 'o atributo é carimbado');
 
 const corpo = pg.locator('#conteudo p').first();
@@ -149,7 +164,7 @@ const entrelinhaAntes = await pt.evaluate(el => getComputedStyle(el).lineHeight)
 const espacoHeAntes = temHe ? await he.evaluate(el => getComputedStyle(el).letterSpacing) : null;
 
 await abrirPainel(pg);
-await pg.getByLabel('Mais espaço entre linhas').check();
+await pg.getByLabel(R.espaco).check();
 await pg.keyboard.press('Escape');
 
 const entrelinhaDepois = await pt.evaluate(el => getComputedStyle(el).lineHeight);
@@ -170,7 +185,7 @@ if (temHe) {
 console.log('\n── menos animação ────────────────────────────');
 
 await abrirPainel(pg);
-await pg.getByLabel('Menos animação').check();
+await pg.getByLabel(R.movimento).check();
 await pg.keyboard.press('Escape');
 const dur = await pg.evaluate(() => {
   const el = document.querySelector('#conteudo a, #conteudo button');
@@ -181,7 +196,7 @@ conferir(dur !== null && parseFloat(dur) < 0.01, `transição zerada (${dur})`);
 console.log('\n── voltar ao normal ──────────────────────────');
 
 await abrirPainel(pg);
-await pg.getByRole('button', { name: 'Voltar ao normal' }).click();
+await pg.getByRole('button', { name: R.normal }).click();
 const sobrou = await pg.evaluate(() =>
   [...document.documentElement.attributes].map(a => a.name).filter(n => n.startsWith('data-a11y')));
 conferir(sobrou.length === 0, `nenhum atributo sobra (${sobrou.join(', ') || 'limpo'})`);
@@ -193,9 +208,9 @@ await cel.setViewportSize({ width: 390, height: 844 });
 await cel.goto(`${BASE}/`, { waitUntil: 'networkidle' });
 await abrirPainel(cel);
 await cel.getByRole('button', { name: '150%', exact: true }).click();
-await cel.getByLabel('Mais contraste').check();
-await cel.getByLabel('Mais espaço entre linhas').check();
-await cel.getByLabel('Sublinhar links').check();
+await cel.getByLabel(R.contraste).check();
+await cel.getByLabel(R.espaco).check();
+await cel.getByLabel(R.links).check();
 await cel.keyboard.press('Escape');
 await cel.waitForTimeout(400);
 
@@ -203,7 +218,7 @@ const rolaDeLado = await cel.evaluate(() =>
   document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
 conferir(!rolaDeLado, 'a página não rola de lado');
 
-const botaoCel = await cel.getByRole('button', { name: /Ajustes de acessibilidade/ }).boundingBox();
+const botaoCel = await cel.getByRole('button', { name: R.ajustesRe }).boundingBox();
 conferir(botaoCel.x >= 0 && botaoCel.x + botaoCel.width <= 390,
   'o botão continua acessível na tela do telefone');
 
@@ -223,11 +238,11 @@ console.log('\n── o olho da senha ──────────────
 await cel.goto(`${BASE}/entrar/`, { waitUntil: 'networkidle' });
 const senha = cel.locator('#senha');
 conferir(await senha.getAttribute('type') === 'password', 'o campo começa escondido');
-await cel.getByRole('button', { name: 'Mostrar senha' }).click();
+await cel.getByRole('button', { name: R.mostrar }).click();
 conferir(await senha.getAttribute('type') === 'text', 'o botão revela o que foi digitado');
 conferir(await senha.getAttribute('autocomplete') === 'current-password',
   'e o autocomplete não muda junto (o gerenciador de senhas continua vendo o campo)');
-await cel.getByRole('button', { name: 'Ocultar senha' }).click();
+await cel.getByRole('button', { name: R.ocultar }).click();
 conferir(await senha.getAttribute('type') === 'password', 'e esconde de novo');
 
 console.log('\n──────────────────────────────────────────────');

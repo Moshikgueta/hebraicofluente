@@ -7,20 +7,20 @@ import { Badge } from '@/components/ui/Card';
 import { CultureShelf } from '@/components/learn/Culture';
 import { ErasShelf } from '@/components/learn/Eras';
 import { useProgress } from '@/lib/state/store';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-historia-client';
 
 export function HistoriaClient() {
   const p = useProgress();
   return (
     <div className="grid gap-6">
       <header className="grid gap-3 reading">
-        <Badge tone="accent">Bônus</Badge>
+        <Badge tone="accent">{tx.bonus}</Badge>
         <h1 className="text-[27px] sm:text-[33px] font-bold">
-          Viagem pela história do hebraico
+          {tx.titulo}
         </h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-muted">
-          Nada aqui é necessário para ler. É o contrário: são as coisas que ficam
-          interessantes depois que você já consegue. As cartas abrem sozinhas
-          conforme você domina letras - {p.mastered} até agora.
+          {fmt(tx.intro, { n: p.mastered })}
         </p>
       </header>
       {/* Antes das cartas, e não depois: as cartas são texto para ler sobre o

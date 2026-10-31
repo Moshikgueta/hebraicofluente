@@ -1,5 +1,8 @@
 'use client';
 
+import { tx } from '@/i18n/telas/licao-guia-teclado';
+import { Prose } from '@/components/hebrew/Prose';
+
 /* Como pôr o teclado hebraico no aparelho.
  * ─────────────────────────────────────────────────────────────────────────
  * Aparece em dois lugares: na página /teclado-hebraico, para consulta, e como
@@ -23,53 +26,18 @@ import { Button } from '@/components/ui/Button';
 type Sistema = 'ios' | 'android' | 'windows' | 'mac';
 
 const NOME: Record<Sistema, string> = {
-  ios: 'iPhone e iPad', android: 'Android', windows: 'Windows', mac: 'Mac'
+  ios: tx.ios, android: tx.android, windows: tx.windows, mac: tx.mac
 };
 
 /* Os quatro passos do pedido, na mesma ordem para os quatro sistemas: onde
    abrir, como adicionar, como alternar, como saber que está ativo. Os nomes
    dos menus são os da interface em português. */
+const passos = (s: Sistema) => ([1, 2, 3, 4] as const).map(n => ({
+  titulo: tx[`${s}${n}t`],
+  texto: tx[`${s}${n}x`]
+}));
 const PASSOS: Record<Sistema, { titulo: string; texto: string }[]> = {
-  ios: [
-    { titulo: 'Abra os ajustes do teclado',
-      texto: 'Ajustes → Geral → Teclado → Teclados.' },
-    { titulo: 'Adicione o hebraico',
-      texto: 'Toque em “Adicionar Novo Teclado…” e escolha “Hebraico” (עברית).' },
-    { titulo: 'Alterne entre os teclados',
-      texto: 'No teclado, toque no globo 🌐 ao lado da barra de espaço. Segurando o globo, aparece a lista para escolher.' },
-    { titulo: 'Confira que está ativo',
-      texto: 'As teclas mostram letras hebraicas - ק ר א ט na primeira linha - e a barra de espaço diz “עברית”.' }
-  ],
-  android: [
-    { titulo: 'Abra as configurações do teclado',
-      texto: 'Com o teclado aberto, toque na engrenagem ⚙ do Gboard. Ou: Configurações → Sistema → Teclado → Teclado na tela → Gboard (em aparelhos mais antigos, “Idiomas e entrada” no lugar de “Teclado”). Em Samsung, o teclado de fábrica é o Teclado Samsung: Configurações → Gerenciamento geral → Configurações do Teclado Samsung.' },
-    { titulo: 'Adicione o hebraico',
-      texto: 'No Gboard: Idiomas → Adicionar teclado → procure “Hebraico” (עברית) → Concluído. No Teclado Samsung: Idiomas e tipos → Gerenciar idiomas de entrada → ative “עברית”.' },
-    { titulo: 'Alterne entre os teclados',
-      texto: 'Toque no globo 🌐 do teclado, ou toque e segure a barra de espaço e escolha o idioma. No Teclado Samsung, segure a barra de espaço e deslize para o lado.' },
-    { titulo: 'Confira que está ativo',
-      texto: 'A barra de espaço mostra “עברית” e as teclas trazem letras hebraicas.' }
-  ],
-  windows: [
-    { titulo: 'Abra as configurações de idioma',
-      texto: 'Configurações → Hora e idioma → Idioma e região.' },
-    { titulo: 'Adicione o hebraico',
-      texto: 'Em “Idiomas preferenciais”, clique em “Adicionar um idioma”, escolha “Hebraico” e instale. Pode desmarcar os extras - só o teclado é necessário.' },
-    { titulo: 'Alterne entre os teclados',
-      texto: 'Tecla Windows + Barra de espaço. Ou clique na sigla do idioma (POR) na barra de tarefas, perto do relógio.' },
-    { titulo: 'Confira que está ativo',
-      texto: 'A sigla perto do relógio muda para HEB.' }
-  ],
-  mac: [
-    { titulo: 'Abra os ajustes do teclado',
-      texto: 'Menu Apple (a maçã, no canto) → Ajustes do Sistema → Teclado → em “Fontes de Entrada”, clique em “Editar…”.' },
-    { titulo: 'Adicione o hebraico',
-      texto: 'Clique em “+”, escolha “Hebraico” na lista e depois o teclado “Hebraico”. Clique em “Adicionar”.' },
-    { titulo: 'Alterne entre os teclados',
-      texto: 'Control + Barra de espaço, ou a tecla 🌐 (fn) nos Macs mais novos. Também dá para escolher no menu de fontes, no alto da tela.' },
-    { titulo: 'Confira que está ativo',
-      texto: 'O ícone de idioma no alto da tela muda para o hebraico.' }
-  ]
+  ios: passos('ios'), android: passos('android'), windows: passos('windows'), mac: passos('mac')
 };
 
 function sistemaProvavel(): Sistema {
@@ -99,12 +67,12 @@ export function GuiaTeclado({
   const latino = /[A-Za-z]/.test(teste);
 
   return (
-    <div className="grid gap-5">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5">
       <div className="grid gap-2">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">
-          O seu aparelho
+          {tx.seuAparelho}
         </p>
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Escolha o seu aparelho">
+        <div className="flex flex-wrap gap-2" role="group" aria-label={tx.escolha}>
           {(Object.keys(NOME) as Sistema[]).map(s => (
             <button
               key={s}
@@ -124,22 +92,22 @@ export function GuiaTeclado({
 
       <ol className="grid gap-3 list-none p-0 m-0">
         {PASSOS[sistema].map((passo, i) => (
-          <li key={passo.titulo} className="grid grid-cols-[32px_1fr] gap-3 items-start">
+          <li key={passo.titulo} className="grid grid-cols-[32px_minmax(0,1fr)] gap-3 items-start">
             <span aria-hidden className="w-8 h-8 rounded-full bg-surface-2 grid place-items-center
                                          font-ui text-[14px] font-semibold text-ink">
               {i + 1}
             </span>
             <div>
               <p className="font-ui text-[15px] font-semibold text-ink m-0">{passo.titulo}</p>
-              <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0">{passo.texto}</p>
+              <p className="font-ui text-[15px] leading-relaxed text-ink-body m-0"><Prose text={passo.texto} /></p>
             </div>
           </li>
         ))}
       </ol>
 
-      <div className="grid gap-2 rounded-[var(--r-lg)] bg-surface-2 p-4">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-2 rounded-[var(--r-lg)] bg-surface-2 p-4">
         <label htmlFor="teste-teclado" className="font-ui text-[14px] font-semibold text-ink">
-          Teste aqui: troque para o hebraico e digite qualquer letra
+          {tx.teste}
         </label>
         <input
           id="teste-teclado"
@@ -147,29 +115,28 @@ export function GuiaTeclado({
           onChange={e => setTeste(e.target.value)}
           dir="auto"
           autoComplete="off" autoCapitalize="off" autoCorrect="off" spellCheck={false}
-          className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
+          className="w-full min-w-0 min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                      he text-[22px] text-ink"
         />
         <p role="status" className="font-ui text-[14px] m-0 min-h-[20px]">
           {hebraico
-            ? <span className="text-[var(--mint-ink)]">✓ O teclado hebraico está ativo.</span>
+            ? <span className="text-[var(--mint-ink)]">{tx.ativo}</span>
             : latino
-              ? <span className="text-[var(--amber)]">Isso é o teclado em português. Troque de teclado e tente de novo.</span>
+              ? <span className="text-[var(--amber)]">{tx.latino}</span>
               : ' '}
         </p>
       </div>
 
       <p className="font-ui text-[14px] leading-relaxed text-ink-muted m-0">
-        O teclado hebraico só é usado nos exercícios de digitação. Nas lições, nas
-        leituras e nos jogos, tudo se faz tocando - você não precisa trocar de teclado.
+        {tx.soDigitacao}
       </p>
 
       {onConfirmar && (
         <div className="flex flex-wrap items-center gap-3">
-          <Button onClick={onConfirmar} size="md">Já adicionei o teclado hebraico</Button>
+          <Button onClick={onConfirmar} size="md">{tx.jaAdicionei}</Button>
           {!hebraico && !confirmado && (
             <span className="font-ui text-[13px] text-ink-muted">
-              Dica: faça o teste acima antes de confirmar.
+              {tx.dica}
             </span>
           )}
         </div>

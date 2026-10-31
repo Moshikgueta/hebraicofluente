@@ -8,7 +8,9 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { proximoCurso, proximoPasso, type Conta } from '../src/lib/cta';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { cursoSeguinte, proximoCurso, proximoPasso, type Conta } from '../src/lib/cta';
 import { allCourses, FLAGSHIP } from '../src/lib/catalog';
 
 const conta = (donos: string[], ready = true, signedIn = true): Conta => ({
@@ -80,5 +82,17 @@ describe('o curso seguinte', () => {
 
   it('não decide nada antes de a sessão responder', () => {
     expect(proximoCurso(conta([], false, false), FLAGSHIP)).toBeNull();
+  });
+});
+
+/* 27/10/2026, pedido do dono: depois da alfabetização, o cartão é o do A1. */
+describe('o curso seguinte da alfabetização', () => {
+  it('é o A1, tenha a conta o A1 ou não', () => {
+    expect(cursoSeguinte(FLAGSHIP)?.slug).toBe('hebraico-a1');
+  });
+  it('quem já tem o A1 recebe a porta dele, e não a oferta do A2', () => {
+    const fonte = readFileSync(join(__dirname, '..', 'src', 'components', 'platform', 'ProximoPasso.tsx'), 'utf8');
+    expect(fonte).toContain('cursoSeguinte(atual)');
+    expect(fonte).toContain("'hebraico-a1': '/a1/'");
   });
 });

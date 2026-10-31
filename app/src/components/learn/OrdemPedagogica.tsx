@@ -24,6 +24,7 @@
  * cópia do alfabeto para alguém manter em dia, e a primeira a divergir.
  */
 
+import { tx } from '@/i18n/telas/licao-ordem-pedagogica';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
@@ -47,10 +48,10 @@ export function OrdemPedagogica() {
     <Card className="p-6 sm:p-7 grid gap-5">
       <div className="grid gap-2">
         <h2 className="font-display text-[21px] font-semibold">
-          Por que as letras não estão em ordem alfabética?
+          {tx.titulo}
         </h2>
         <p className="text-[15.5px] leading-relaxed text-ink-body max-w-[58ch]">
-          Talvez você estivesse esperando começar assim:
+          {tx.esperando}
         </p>
       </div>
 
@@ -58,7 +59,7 @@ export function OrdemPedagogica() {
       <div className="grid sm:grid-cols-2 gap-3">
         <div className="rounded-[var(--r-md)] bg-surface-2 p-4 grid gap-2">
           <p className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted">
-            A ordem tradicional
+            {tx.tradicional}
           </p>
           <p className="he-seq gap-x-2 justify-start">
             {tradicional.slice(0, 4).map(l => <He key={l.id} size="word">{l.letter}</He>)}
@@ -67,7 +68,7 @@ export function OrdemPedagogica() {
         </div>
         <div className="rounded-[var(--r-md)] bg-[var(--teal-soft)] p-4 grid gap-2">
           <p className="font-ui text-[12px] uppercase tracking-[.08em] text-[var(--teal-ink)]">
-            A ordem deste curso
+            {tx.desteCurso}
           </p>
           <p className="he-seq gap-x-2 justify-start">
             {primeiras.map(l => <He key={l.id} size="word">{l.letter}</He>)}
@@ -78,26 +79,22 @@ export function OrdemPedagogica() {
 
       <p className="text-[16px] leading-relaxed text-ink rounded-[var(--r-md)]
                     border border-[color:var(--edge-teal)] bg-[var(--teal-soft)] px-4 py-3">
-        <strong className="font-semibold">Você não está aprendendo as letras fora de
-        ordem.</strong> Está aprendendo numa ordem pensada para você começar a ler mais
-        cedo.
+        <strong className="font-semibold">{tx.foraDeOrdem}</strong> {tx.pensada}
       </p>
 
       {/* ── como a ordem ajuda: a peça que aumenta o que dá para montar ── */}
       <div className="grid gap-3">
-        <h3 className="font-ui text-[15px] font-semibold text-ink">O que essa ordem compra</h3>
+        <h3 className="font-ui text-[15px] font-semibold text-ink">{tx.compra}</h3>
         <p className="text-[15.5px] leading-relaxed text-ink-body max-w-[58ch]">
-          Cada letra nova é uma peça que aumenta o que você consegue montar com as que
-          já tem. É o mesmo princípio de um jogo de montar: a terceira peça vale mais
-          do que a primeira, porque ela se combina com as duas anteriores.
+          {tx.peca}
         </p>
         <ol className="grid gap-2 list-none p-0 m-0">
           {[
-            ['Uma letra nova', 'você aprende a forma, o som e como escrevê-la'],
-            ['Ela se combina com as anteriores', 'e isso não é enfeite: é o que faz a letra render'],
-            ['Saem sílabas', 'a consoante com cada sinal de vogal'],
-            ['Saem palavras', 'feitas só com o que você já conhece'],
-            ['E a próxima letra rende mais ainda', 'porque agora há mais peças na mesa']
+            [tx.passo1, tx.passo1d],
+            [tx.passo2, tx.passo2d],
+            [tx.passo3, tx.passo3d],
+            [tx.passo4, tx.passo4d],
+            [tx.passo5, tx.passo5d]
           ].map(([t, d], i) => (
             <li key={t} className="flex gap-3 items-baseline">
               <span aria-hidden
@@ -112,22 +109,17 @@ export function OrdemPedagogica() {
           ))}
         </ol>
         <p className="text-[15px] leading-relaxed text-ink-body max-w-[58ch]">
-          Em ordem alfabética isso não acontece tão cedo: {primeiras[0]!.namePt} e{' '}
-          {tradicional[1]!.namePt} não formam palavra nenhuma sozinhas, e o aluno passa
-          várias lições decorando desenhos antes de ler a primeira coisa.
+          {tx.alfabetica(primeiras[0]!.namePt, tradicional[1]!.namePt)}
         </p>
       </div>
 
       {/* ── o objetivo, dito ── */}
       <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
         <h3 className="font-ui text-[15px] font-semibold text-ink">
-          E o objetivo não é decorar 22 símbolos
+          {tx.objetivo}
         </h3>
         <p className="text-[15.5px] leading-relaxed text-ink-body max-w-[58ch]">
-          É reconhecer as letras, ligar forma e som, escrever à mão, combinar,
-          ler sílabas, formar palavras, reconhecer padrões e começar a ler texto de
-          verdade. Decorar a sequência do alfabeto é uma das coisas mais fáceis dessa
-          lista, e a menos útil sozinha.
+          {tx.objetivoTexto}
         </p>
       </div>
 
@@ -138,14 +130,12 @@ export function OrdemPedagogica() {
       <details className="rounded-[var(--r-md)] border border-line bg-surface overflow-hidden">
         <summary className="cursor-pointer list-none p-4 font-ui text-[14.5px] font-semibold
                             text-ink hover:bg-surface-2 flex items-center justify-between gap-3">
-          <span>Ver o alfabeto na ordem tradicional</span>
+          <span>{tx.verTradicional}</span>
           <span aria-hidden className="text-ink-muted">▾</span>
         </summary>
         <div className="px-4 pb-4 grid gap-3 border-t border-[color:var(--line-soft)] pt-4">
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted max-w-[58ch]">
-            Esta ordem continua importante, e você vai precisar dela: é a do dicionário,
-            a da lista telefônica, a das referências, a que os israelenses recitam. Aqui
-            ela está com o número da lição em que cada letra aparece neste curso.
+            {tx.importante}
           </p>
           {/* A grade corre da DIREITA para a esquerda, como o alfabeto que
               ela mostra. Na primeira captura ela vinha da esquerda - o {{א}}
@@ -162,7 +152,7 @@ export function OrdemPedagogica() {
                              bg-surface-2 py-2">
                 <He size="word">{l.letter}</He>
                 <span className="font-ui text-[10.5px] text-ink-muted tabular-nums">
-                  lição {l.lesson}
+                  {tx.licao(l.lesson)}
                 </span>
               </li>
             ))}
@@ -171,10 +161,10 @@ export function OrdemPedagogica() {
       </details>
 
       <p className="font-ui text-[13.5px] text-ink-muted">
-        Ainda não viu como o alfabeto funciona?{' '}
+        {tx.aindaNaoViu}{' '}
         <Link href="/inicio"
               className="font-semibold text-[var(--accent)] underline underline-offset-4">
-          Comece pela aula 0
+          {tx.comece}
         </Link>.
       </p>
     </Card>

@@ -40,6 +40,7 @@
 import { useCallback, useState } from 'react';
 import { track } from '@/lib/analytics';
 import { ORIGEM } from '@/lib/seo';
+import { tx } from '@/i18n/telas/conta-compartilhar-certificado';
 
 type Rede = {
   id: string;
@@ -60,7 +61,7 @@ const REDES: Rede[] = [
     id: 'whatsapp',
     nome: 'WhatsApp',
     destino: (t, l) => `https://wa.me/?text=${encodeURIComponent(`${t}\n${l}`)}`,
-    depois: 'A imagem foi salva e o texto já vai na conversa - é só anexar a imagem.',
+    depois: tx.depoisWhatsapp,
     cor: '#25D366',
     icone: 'M16.8 14.3c-.3-.1-1.6-.8-1.8-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-1.5-.8-2.6-1.4-3.6-3.1-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5 0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.8-1 1.7-.9 2.7.3 1.4 1.1 2.6 1.3 2.9.2.2 2.1 3.2 5.1 4.4 1.9.8 2.6.9 3.5.7.6-.1 1.6-.7 1.9-1.3.2-.7.2-1.2.1-1.3-.1-.2-.3-.2-.6-.3M10 1.7A8.3 8.3 0 0 0 2.9 14.3L1.7 18.3l4.2-1.1A8.3 8.3 0 1 0 10 1.7Z'
   },
@@ -71,7 +72,7 @@ const REDES: Rede[] = [
        texto. Abrir instagram.com daria uma aba de feed e a sensação de que o
        botão não funcionou. Então ele não abre nada, e diz o que fazer. */
     destino: null,
-    depois: 'A imagem foi salva e o texto copiado. Abra o Instagram e publique.',
+    depois: tx.depoisInstagram,
     cor: '#C13584',
     icone: 'M10 2.5c-2 0-2.3 0-3.1.05-.8.03-1.3.2-1.8.4-.5.2-.9.5-1.3.9-.4.4-.7.8-.9 1.3-.2.5-.3 1-.4 1.8C2.5 7.7 2.5 8 2.5 10s0 2.3.05 3.1c.03.8.2 1.3.4 1.8.2.5.5.9.9 1.3.4.4.8.7 1.3.9.5.2 1 .3 1.8.4.8.05 1.1.05 3.1.05s2.3 0 3.1-.05c.8-.03 1.3-.2 1.8-.4.5-.2.9-.5 1.3-.9.4-.4.7-.8.9-1.3.2-.5.3-1 .4-1.8.05-.8.05-1.1.05-3.1s0-2.3-.05-3.1c-.03-.8-.2-1.3-.4-1.8a3.6 3.6 0 0 0-.9-1.3 3.6 3.6 0 0 0-1.3-.9c-.5-.2-1-.3-1.8-.4-.8-.05-1.1-.05-3.1-.05Zm0 3.4a4.1 4.1 0 1 1 0 8.2 4.1 4.1 0 0 1 0-8.2Zm0 1.4a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm4.2-2.5a1 1 0 1 1 0 1.9 1 1 0 0 1 0-1.9Z'
   },
@@ -79,7 +80,7 @@ const REDES: Rede[] = [
     id: 'linkedin',
     nome: 'LinkedIn',
     destino: (_t, l) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(l)}`,
-    depois: 'A imagem foi salva e o texto copiado - cole na publicação e anexe a imagem.',
+    depois: tx.depoisColar,
     cor: '#0A66C2',
     icone: 'M5 3.4a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2ZM3.6 7.8h2.8v8.8H3.6V7.8Zm4.6 0H11v1.2h.04c.4-.7 1.3-1.4 2.6-1.4 2.8 0 3.3 1.8 3.3 4.2v4.8h-2.8v-4.3c0-1 0-2.3-1.4-2.3-1.4 0-1.6 1.1-1.6 2.3v4.3H8.2V7.8Z'
   },
@@ -87,7 +88,7 @@ const REDES: Rede[] = [
     id: 'facebook',
     nome: 'Facebook',
     destino: (_t, l) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(l)}`,
-    depois: 'A imagem foi salva e o texto copiado - cole na publicação e anexe a imagem.',
+    depois: tx.depoisColar,
     cor: '#1877F2',
     icone: 'M17.5 10a7.5 7.5 0 1 0-8.7 7.4v-5.2H6.9V10h1.9V8.4c0-1.9 1.1-2.9 2.8-2.9.8 0 1.7.15 1.7.15v1.8h-1c-.9 0-1.2.6-1.2 1.2V10h2.1l-.3 2.2h-1.8v5.2A7.5 7.5 0 0 0 17.5 10Z'
   }
@@ -119,13 +120,13 @@ export function CompartilharCertificado({
     track('certificate_shared', { mode: formato, id: rede.id });
     setAviso(ok
       ? rede.depois
-      : 'Não consegui salvar a imagem aqui. Use o botão "Baixar PNG" acima.');
+      : tx.naoSalvou);
   }, [texto, baixar, formato]);
 
   return (
     <div className="grid gap-3">
       <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-        Publicar numa rede
+        {tx.publicarNumaRede}
       </p>
 
       <div className="flex flex-wrap gap-2">
@@ -152,12 +153,11 @@ export function CompartilharCertificado({
           sozinha, e saber disso antes de clicar evita a sensação de que o
           botão falhou. */}
       <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-        A imagem é gerada no seu aparelho e não fica guardada em nenhum servidor -
-        por isso ela vai anexada por você, e não pelo link.
+        {tx.imagemNoAparelho}
       </p>
 
       <p aria-live="polite" className="font-ui text-[13px] text-ink-body min-h-[20px]">
-        {ocupado ? 'Salvando a imagem…' : aviso}
+        {ocupado ? tx.salvando : aviso}
       </p>
     </div>
   );

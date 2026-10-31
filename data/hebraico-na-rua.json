@@ -1,0 +1,130 @@
+{
+  "_nota": "Hebraico na rua (28/10/2026): fotos reais do Wikimedia Commons, cada uma com uma palavra do curso que aparece na placa (palavra) e todas as palavras do curso que dá para ver nela (naPlaca, para nenhuma opção errada estar também na placa). Só sai do exportador com aprovada: true, depois de o dono conferir a foto e a palavra. O aluno vê a placa quando já lê a palavra. Revisão: HEBRAICO-NA-RUA-PARA-REVISAR.md.",
+  "placas": [
+    {
+      "id": "rua-derech",
+      "arquivo": "rua-derech.webp",
+      "palavra": "דֶרֶךְ",
+      "naPlaca": [
+        "דֶרֶךְ"
+      ],
+      "mostraPt": "Placa de estrada para a Estrada de Burma, em hebraico, árabe e inglês.",
+      "autor": "י.ש.",
+      "licenca": "CC BY-SA 3.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "data": "2006-03-04",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Trilingual_road_sign_to_the_Burma_road,_Israel_2006.jpg",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    },
+    {
+      "id": "rua-bait",
+      "arquivo": "rua-bait.webp",
+      "palavra": "בַּיִת",
+      "naPlaca": [
+        "בַּיִת",
+        "אַתְ"
+      ],
+      "mostraPt": "Placa de uma farmácia num centro médico em Holon.",
+      "autor": "Chenspec",
+      "licenca": "CC BY-SA 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "data": "2024-02-29",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Signs_in_Edith_Wolfson_Medical_Center,_February_2024_03.jpg",
+      "largura": 1200,
+      "altura": 755,
+      "aprovada": true
+    },
+    {
+      "id": "rua-shalom",
+      "arquivo": "rua-shalom.webp",
+      "palavra": "שָׁלוֹם",
+      "naPlaca": [
+        "שָׁלוֹם",
+        "בַּיִת"
+      ],
+      "mostraPt": "Placa que indica uma sinagoga em Ramat Gan.",
+      "autor": "Chenspec",
+      "licenca": "CC BY-SA 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "data": "2024-05-23",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Chabad_Sukkat_Shalom_Synagogue_in_Ramat_Gan,_May_2024_03.jpg",
+      "largura": 787,
+      "altura": 1400,
+      "aprovada": true
+    },
+    {
+      "id": "rua-lechem",
+      "arquivo": "rua-lechem.webp",
+      "palavra": "לֶחֶם",
+      "naPlaca": [
+        "לֶחֶם",
+        "אַתְ"
+      ],
+      "mostraPt": "Placa da padaria de 1943 no moshav Moledet.",
+      "autor": "Danny Gershoni",
+      "licenca": "CC BY-SA 4.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "data": "2022-12-10",
+      "pagina": "https://commons.wikimedia.org/wiki/File:Bakery_1943_-_Moledet_1.jpg",
+      "largura": 787,
+      "altura": 1400,
+      "aprovada": true
+    },
+    {
+      "id": "rua-maim",
+      "arquivo": "rua-maim.webp",
+      "palavra": "מַיִם",
+      "naPlaca": [
+        "מַיִם",
+        "שֶׁל"
+      ],
+      "mostraPt": "Placa de pedra sobre um canal de água antigo, num jardim de Jerusalém.",
+      "autor": "zeevveez from Jerusalem, Israel",
+      "licenca": "CC BY 2.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by/2.0",
+      "data": "2013-10-04",
+      "pagina": "https://commons.wikimedia.org/wiki/File:%D7%AA%D7%A2%D7%9C%D7%AA_%D7%9E%D7%99%D7%9D_%D7%9E%D7%99%D7%9E%D7%99_%D7%91%D7%99%D7%AA_%D7%A9%D7%A0%D7%99_-_%D7%A9%D7%9C%D7%98_-_%D7%A9%D7%97%D7%95%D7%A8_%D7%9C%D7%91%D7%9F_(10081612773).jpg",
+      "largura": 1200,
+      "altura": 606,
+      "aprovada": true
+    },
+    {
+      "id": "rua-israel",
+      "arquivo": "rua-israel.webp",
+      "palavra": "יִשְׂרָאֵל",
+      "naPlaca": [
+        "יִשְׂרָאֵל",
+        "מַיִם",
+        "שֶׁל"
+      ],
+      "mostraPt": "Placa de um reservatório de água no vale do Jordão.",
+      "autor": "Hanay",
+      "licenca": "CC BY-SA 3.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "data": "2013-11-30",
+      "pagina": "https://commons.wikimedia.org/wiki/File:%D7%A9%D7%9C%D7%98_%D7%9E%D7%A6%D7%A4%D7%94_%D7%A0%D7%97_%D7%9B%D7%A0%D7%A8%D7%AA%D7%99.jpg",
+      "largura": 1200,
+      "altura": 900,
+      "aprovada": true
+    },
+    {
+      "id": "rua-ani",
+      "arquivo": "rua-ani.webp",
+      "palavra": "אֲנִי",
+      "naPlaca": [
+        "אֲנִי"
+      ],
+      "mostraPt": "Faixa de uma escola em Petah Tikva.",
+      "autor": "Ibohr",
+      "licenca": "CC BY-SA 3.0",
+      "licencaUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "data": "2013-09-22",
+      "pagina": "https://commons.wikimedia.org/wiki/File:%D7%A9%D7%9C%D7%98_%D7%91%D7%99%D7%AA_%D7%A1%D7%A4%D7%A8_%D7%A2%22%D7%A9_%D7%A4%D7%90%D7%95%D7%9C_%D7%A7%D7%95%D7%A8_%D7%91%D7%A4%D7%AA%D7%97_%D7%AA%D7%A7%D7%95%D7%95%D7%94.jpg",
+      "largura": 1200,
+      "altura": 389,
+      "aprovada": true
+    }
+  ]
+}

@@ -7,9 +7,12 @@
  * dashboard; they are NOT on every lesson screen, because a counter ticking
  * during a reading exercise competes with the reading. */
 
+import { IconeChama } from '@/components/shell/NavIcons';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Prose } from '@/components/learn/Blocks';
 import { Card } from '@/components/ui/Card';
+import { Yael } from '@/components/aventura/Yael';
+import { tx } from '@/i18n/telas/academia-game';
 
 export function ProgressBar({
   value, label, sublabel
@@ -26,7 +29,7 @@ export function ProgressBar({
       <div
         className="h-2 rounded-full bg-surface-2 overflow-hidden"
         role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}
-        aria-label={label ?? 'Progresso'}
+        aria-label={label ?? tx.progresso}
       >
         <div
           className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500 ease-[var(--ease)]"
@@ -44,21 +47,21 @@ export function StreakCard({ days, goalUnits, goalTarget }: {
   return (
     <Card tone={days > 0 ? 'ember' : 'surface'} className="p-5 grid gap-3">
       <div className="flex items-center gap-2.5">
-        <span aria-hidden className="text-[20px]">{days > 0 ? '🔥' : '○'}</span>
+        <span aria-hidden className={days > 0 ? 'text-[var(--gold-ink)]' : 'text-ink-muted'}><IconeChama size={22} /></span>
         <p className="font-display text-[19px] font-bold text-ink">
-          {days === 0 ? 'Comece hoje'
-            : days === 1 ? '1 dia seguido'
-            : `${days} dias seguidos`}
+          {days === 0 ? tx.comeceHoje
+            : days === 1 ? tx.umDia
+            : tx.dias(days)}
         </p>
       </div>
       <ProgressBar
         value={goalTarget ? goalUnits / goalTarget : 0}
-        label={met ? 'Meta de hoje concluída' : 'Meta de hoje'}
+        label={met ? tx.metaConcluida : tx.meta}
         sublabel={`${Math.round((Math.min(goalUnits, goalTarget) / goalTarget) * 100)}%`}
       />
       {days === 0 && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          Seu progresso continua aqui, sem prazo. Vamos retomar?
+          {tx.retomar}
         </p>
       )}
     </Card>
@@ -69,8 +72,8 @@ export function XPIndicator({ xp }: { xp: number }) {
   return (
     <span className="inline-flex items-center gap-1.5 font-ui text-[13px] font-semibold text-ink-body">
       <span aria-hidden className="text-[var(--accent)]">◆</span>
-      <span className="tabular-nums">{xp.toLocaleString('pt-BR')}</span>
-      <span className="text-ink-muted font-normal">XP</span>
+      <span className="tabular-nums">{xp.toLocaleString(tx.localeNumero)}</span>
+      <span className="text-ink-muted font-normal">{tx.xp}</span>
     </span>
   );
 }
@@ -82,14 +85,26 @@ export function AchievementBadge({
   if (!def) return null;
   return (
     <div
-      className={`rounded-[var(--r-md)] border p-4 grid gap-1 transition-opacity
-        ${unlocked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line bg-surface opacity-55'}`}
+      /* A conquista ainda não feita recua pelo CARTÃO (papel, borda
+         tracejada, cadeado), nunca pela opacidade: o `opacity-55` levava a
+         descrição a 2,28:1 (auditoria de 01/10/2026, VIS-010). O texto é
+         informação - o que falta fazer - e fica em tinta que passa 4,5:1. */
+      className={`rounded-[var(--r-md)] border p-4 grid gap-1
+        ${unlocked ? 'border-[var(--accent-soft)] bg-[var(--accent-wash)]' : 'border-line border-dashed bg-[var(--paper)]'}`}
     >
       <div className="flex items-center gap-2">
-        <span aria-hidden className={unlocked ? 'text-[var(--accent)]' : 'text-ink-muted'}>
-          {unlocked ? '◆' : '◇'}
-        </span>
-        <p className="font-display text-[15px] font-semibold text-ink">{def.titlePt}</p>
+        {unlocked ? (
+          <span aria-hidden className="text-[var(--accent)]">◆</span>
+        ) : (
+          <svg aria-hidden width="14" height="14" viewBox="0 0 18 18" fill="none" className="text-ink-muted shrink-0">
+            <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          </svg>
+        )}
+        <p className={`font-display text-[15px] font-semibold ${unlocked ? 'text-ink' : 'text-ink-body'}`}>
+          {def.titlePt}
+          {!unlocked && <span className="sr-only">{tx.naoConquistada}</span>}
+        </p>
       </div>
       {!compact && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
@@ -103,16 +118,21 @@ export function AchievementBadge({
 /* The one strong celebration. Reserved for a completed letter, a checkpoint
    and the end of the course - nothing smaller earns it. */
 export function Milestone({
-  kicker, title, body, children, tone = 'bom'
+  kicker, title, body, children, tone = 'bom', yael = true
 }: {
   kicker: string; title: string; body: string; children?: React.ReactNode;
   /** `bom` é teal, `parcial` é gold. Um resultado de 0% num cartão verde
    *  diz a coisa errada antes de alguém ler uma palavra. */
   tone?: 'bom' | 'parcial';
+  /** A Yael no alto do cartão (28/10/2026): comemora no `bom` e inclina a
+   *  cabeça no `parcial`. Desligada onde a tela já tem a sua (o fim da letra
+   *  com a carta, o checkpoint) e no A1, que é outro curso. */
+  yael?: boolean;
 }) {
   const parcial = tone === 'parcial';
   return (
     <Card tone={parcial ? 'ember' : 'mint'} className="p-7 sm:p-9 grid gap-4 text-center animate-rise">
+      {yael && <Yael humor={parcial ? 'quase' : 'comemora'} className="justify-self-center w-[84px] -mt-2 -mb-2" />}
       <p className={`font-ui text-[12px] uppercase tracking-[.12em]
         ${parcial ? 'text-[var(--gold-ink)]' : 'text-[var(--mint-ink)]'}`}>{kicker}</p>
       <h2 className="text-[26px] sm:text-[32px] font-bold leading-tight text-ink">{title}</h2>

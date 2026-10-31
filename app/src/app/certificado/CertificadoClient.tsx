@@ -16,13 +16,15 @@
  * making them re-run onboarding to fix it would be absurd.
  */
 
+import { EXAM_PARTS } from '@/lib/engine/exam';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
 import { allLetters, course } from '@/lib/content';
-import { certificateReady } from '@/lib/state/rules';
+import { certificateReady, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
 import { CompartilharCertificado } from '@/components/platform/CompartilharCertificado';
 import { EXAM_PASS } from '@/lib/engine/exam';
 import {
@@ -31,7 +33,10 @@ import {
 } from '@/lib/certificate';
 import { track } from '@/lib/analytics';
 import { EditorDeNome } from '@/components/learn/MeuNome';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import { sugerirNome } from '@/lib/nome-hebraico';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-certificado-client';
 
 export function CertificadoClient() {
   const p = useProgress();
@@ -55,11 +60,16 @@ export function CertificadoClient() {
   const date = passedAt ? new Date(passedAt) : new Date();
   const score = p.state.finalChallenge.best;
 
-  /* Prefill from onboarding once state has loaded, and then stop touching it -
-     a learner who cleared the field means it. */
+  /* Preenchido uma vez, com o nome do onboarding ou, sem ele, o nome da
+     conta (UXQA-008); depois o campo é do aluno - quem apagou quis apagar. */
+  const account = useAccount();
+  const nomeDaConta = account.session?.account.name?.trim() ?? '';
   useEffect(() => {
-    if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() ?? '');
-  }, [p.ready, p.state.onboarding?.name, touched]);
+    if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() || nomeDaConta);
+  }, [p.ready, p.state.onboarding?.name, nomeDaConta, touched]);
+  /* Sem nome, o certificado não sai: baixava "certificado-...-aluno.png"
+     em branco, sem aviso nenhum. */
+  const semNome = !name.trim();
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -77,6 +87,7 @@ export function CertificadoClient() {
   const download = useCallback(async (): Promise<boolean> => {
     const canvas = canvasRef.current;
     if (!canvas) return false;
+    if (!name.trim()) { setSaid(tx.escrevaParaBaixar); return false; }
     setBusy(true);
     const blob = await canvasToBlob(canvas);
     setBusy(false);
@@ -90,13 +101,14 @@ export function CertificadoClient() {
        to cancel the download when the URL dies in the same frame. */
     setTimeout(() => URL.revokeObjectURL(url), 2000);
     track('certificate_downloaded', { mode: format });
-    setSaid('Imagem salva.');
+    setSaid(tx.imagemSalva);
     return true;
   }, [name, format]);
 
   const share = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    if (!name.trim()) { setSaid(tx.escrevaParaCompartilhar); return; }
     setBusy(true);
     const blob = await canvasToBlob(canvas);
     setBusy(false);
@@ -119,9 +131,9 @@ export function CertificadoClient() {
   const copyText = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(SHARE_TEXT);
-      setSaid('Texto copiado.');
+      setSaid(tx.textoCopiado);
     } catch {
-      setSaid('Não deu para copiar - selecione o texto acima.');
+      setSaid(tx.naoCopiou);
     }
   }, []);
 
@@ -132,10 +144,10 @@ export function CertificadoClient() {
     return (
       <div className="focus-col grid gap-5">
         <header className="grid gap-3">
-          <Badge tone="neutral">Certificado</Badge>
-          <h1 className="text-[27px] sm:text-[33px] font-bold">Ainda falta um pouco</h1>
+          <Badge tone="neutral">{tx.certificado}</Badge>
+          <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.faltaTitulo}</h1>
           <p className="font-ui text-[15px] leading-relaxed text-ink-muted">
-            O certificado sai quando as duas coisas estiverem feitas. Elas não têm prazo.
+            {tx.faltaTexto}
           </p>
         </header>
 
@@ -143,28 +155,29 @@ export function CertificadoClient() {
           <ul className="divide-y divide-[color:var(--line-soft)]">
             <Requirement
               done={gate.lettersDone >= course.totalLetters}
-              titlePt="As 22 letras"
-              detailPt={`${gate.lettersDone} de ${course.totalLetters} concluídas`}
+              titlePt={fmt(tx.requisitoLicoes, { total: course.totalLetters })}
+              detailPt={`${fmt(tx.requisitoLicoesDetalhe, { n: gate.lettersDone, total: course.totalLetters })} ${REGRA_DA_CONCLUSAO}`}
               href="/mapa"
-              ctaPt="Ir para o mapa"
+              ctaPt={tx.irParaMapa}
             />
             <Requirement
               done={gate.examPassed}
-              titlePt="O exame final"
+              titlePt={tx.requisitoExame}
               detailPt={
                 p.state.finalChallenge.best != null
-                  ? `Melhor resultado: ${Math.round(p.state.finalChallenge.best * 100)}% - aprovação a partir de ${Math.round(EXAM_PASS * 100)}%`
-                  : `Aprovação a partir de ${Math.round(EXAM_PASS * 100)}%`
+                  ? fmt(tx.melhorResultado, {
+                      nota: Math.round(p.state.finalChallenge.best * 100), minimo: Math.round(EXAM_PASS * 100)
+                    })
+                  : fmt(tx.aprovacaoAPartir, { minimo: Math.round(EXAM_PASS * 100) })
               }
               href="/desafio-final"
-              ctaPt="Fazer o exame"
+              ctaPt={tx.fazerExame}
             />
           </ul>
         </Card>
 
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          Um certificado por participação não vale nada - nem para quem o recebe.
-          Por isso este depende de ler, e não de terminar.
+          {tx.porParticipacao}
         </p>
       </div>
     );
@@ -174,11 +187,10 @@ export function CertificadoClient() {
   return (
     <div className="grid gap-6">
       <header className="grid gap-3 reading">
-        <Badge tone="mint">Aprovado em {formatDate(date)}</Badge>
-        <h1 className="text-[27px] sm:text-[33px] font-bold">Seu certificado</h1>
+        <Badge tone="mint">{fmt(tx.aprovadoEm, { data: formatDate(date) })}</Badge>
+        <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.seuCertificado}</h1>
         <p className="font-ui text-[15px] leading-relaxed text-ink-muted">
-          A imagem é gerada aqui no seu aparelho. Escolha o formato, confira o nome
-          e baixe ou compartilhe.
+          {tx.geradoAqui}
         </p>
       </header>
 
@@ -190,29 +202,34 @@ export function CertificadoClient() {
             ref={canvasRef}
             className="w-full h-auto max-w-[520px] rounded-[var(--r-sm)] shadow-[var(--shadow-1)]"
             role="img"
-            aria-label={
-              `Certificado de conclusão do curso Hebraico Fluente em nome de ` +
-              `${name || 'aluno'}, ${formatDate(date)}.`
-            }
+            aria-label={fmt(tx.imagemAria, { nome: name || tx.alunoReserva, data: formatDate(date) })}
           />
         </div>
 
         <div className="grid gap-2">
           <label htmlFor="cert-name" className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Nome no certificado
+            {tx.nomeNoCertificado}
           </label>
           <input
             id="cert-name"
             value={name}
             onChange={e => { setTouched(true); setName(e.target.value.slice(0, 48)); }}
-            placeholder="Como você quer aparecer"
+            placeholder={tx.comoAparecer}
             autoComplete="name"
+            aria-describedby={semNome ? 'cert-name-falta' : undefined}
+            aria-invalid={semNome || undefined}
             className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                        font-ui text-[17px] text-ink placeholder:text-ink-muted
                        focus:border-[var(--accent-soft)]"
           />
+          {semNome && (
+            <p id="cert-name-falta" className="font-ui text-[13.5px] text-[var(--amber)]">
+              {tx.semNome}
+            </p>
+          )}
         </div>
 
+        {MEU_NOME_EM_HEBRAICO && (
         <div className="grid gap-3 rounded-[var(--r-lg)] border border-line p-4">
           <label className="flex items-center gap-3 min-h-[44px] font-ui text-[15px] text-ink cursor-pointer">
             <input
@@ -227,16 +244,15 @@ export function CertificadoClient() {
               }}
               className="w-5 h-5"
             />
-            Adicionar o meu nome em hebraico ao certificado
+            {tx.nomeEmHebraico}
           </label>
           {comHebraico && (
             <>
               <p className="font-ui text-[14px] leading-relaxed text-ink-body m-0">
-                Nome não tem grafia única em hebraico. Confira como ficou e ajuste se
-                precisar - o certificado usa exatamente o que estiver aqui.
+                {tx.grafiaNota}
               </p>
               {sugerirNome(name).length > 1 && (
-                <div className="flex flex-wrap gap-2" role="group" aria-label="Grafias sugeridas">
+                <div className="flex flex-wrap gap-2" role="group" aria-label={tx.grafiasSugeridas}>
                   {sugerirNome(name).map(g => (
                     <button key={g} type="button" aria-pressed={grafiaHe === g}
                             onClick={() => { setGrafiaHe(g); setConferida(false); }}
@@ -263,15 +279,16 @@ export function CertificadoClient() {
                   }}
                   className="w-5 h-5"
                 />
-                Conferi: é assim que se escreve o meu nome
+                {tx.conferi}
               </label>
             </>
           )}
         </div>
+        )}
 
         <fieldset className="grid gap-2">
           <legend className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted mb-1">
-            Formato
+            {tx.formato}
           </legend>
           <div className="flex flex-wrap gap-2">
             {(Object.keys(FORMATS) as CertificateFormat[]).map(f => (
@@ -298,11 +315,11 @@ export function CertificadoClient() {
         </fieldset>
 
         <div className="flex flex-wrap gap-3 pt-1">
-          <Button size="lg" onClick={share} disabled={busy}>
-            {busy ? 'Gerando…' : 'Compartilhar'}
+          <Button size="lg" onClick={share} disabled={busy || semNome}>
+            {busy ? tx.gerando : tx.compartilhar}
           </Button>
-          <Button variant="secondary" onClick={download} disabled={busy}>
-            Baixar PNG
+          <Button variant="secondary" onClick={download} disabled={busy || semNome}>
+            {tx.baixarPng}
           </Button>
         </div>
         <p aria-live="polite" className="font-ui text-[13px] text-ink-muted min-h-[20px]">
@@ -319,29 +336,38 @@ export function CertificadoClient() {
       </Card>
 
       <Card className="p-5 grid gap-3">
-        <h2 className="font-display text-[16px] font-bold text-ink">Texto para o post</h2>
+        <h2 className="font-display text-[16px] font-bold text-ink">{tx.textoDoPost}</h2>
         <p className="text-[15px] leading-relaxed text-ink-body">{SHARE_TEXT}</p>
         <Button variant="secondary" size="sm" onClick={copyText} className="justify-self-start">
-          Copiar texto
+          {tx.copiarTexto}
         </Button>
       </Card>
 
       <Card tone="wash" className="p-5 grid gap-2 reading">
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-          <strong>O que este certificado é:</strong> o registro de que você concluiu as
-          22 letras e foi aprovado no exame final deste curso, com {' '}
-          {score != null ? `${Math.round(score * 100)}%` : 'nota de aprovação'}.
+          <strong>{tx.oQueERotulo}</strong>{' '}
+          {fmt(tx.oQueETexto, { nota: score != null ? `${Math.round(score * 100)}%` : tx.notaDeAprovacao })}
+        </p>
+        <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+          <strong>{tx.verificouRotulo}</strong>{' '}
+          {/* Só as partes que o exame cobrou (27/10/2026): "Sem os pontos" e
+              "Os sons de fora" só entram para quem fez os módulos 6 e 7, e a
+              lista fixa prometia as duas a todo mundo. `parts` é a última
+              prova; sem ela (registro antigo), as partes de sempre. */}
+          {(p.state.finalChallenge.parts
+            ? EXAM_PARTS.filter(x => x.id in p.state.finalChallenge.parts!)
+            : EXAM_PARTS.filter(x => x.id !== 'sempontos' && x.id !== 'gerech')
+          ).map(x => x.titlePt.toLowerCase()).join(', ')}.
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-          <strong>O que ele não é:</strong> um certificado oficial, um diploma ou uma
-          avaliação de proficiência reconhecida. Isso está escrito na própria imagem -
-          quem recebe merece saber, e você também.
+          <strong>{tx.naoERotulo}</strong>{' '}
+          {tx.naoETexto}
         </p>
       </Card>
 
       <div className="flex flex-wrap gap-3">
-        <LinkButton href="/concluido" variant="secondary">O que você conquistou</LinkButton>
-        <LinkButton href="/academia" variant="ghost">Continuar praticando</LinkButton>
+        <LinkButton href="/concluido" variant="secondary">{tx.oQueConquistou}</LinkButton>
+        <LinkButton href="/academia" variant="ghost">{tx.continuarPraticando}</LinkButton>
       </div>
     </div>
   );
@@ -377,16 +403,15 @@ export function CertificateCallout() {
   if (!gate.ready) return null;
   return (
     <Card tone="mint" className="p-6 grid gap-3">
-      <Badge tone="mint">Certificado</Badge>
+      <Badge tone="mint">{tx.certificado}</Badge>
       <h2 className="font-display text-[20px] font-bold leading-snug">
-        Você tem um certificado para compartilhar.
+        {tx.cartaoTitulo}
       </h2>
       <p className="text-[15px] leading-relaxed text-ink-body">
-        Com o seu nome, a data da aprovação e as 22 letras{' '}
-        <He size="inline">א</He> - em quadrado ou paisagem.
+        {tx.cartaoTexto(<He size="inline">א</He>)}
       </p>
       <LinkButton href="/certificado" className="justify-self-start">
-        Ver o certificado
+        {tx.verCertificado}
       </LinkButton>
     </Card>
   );

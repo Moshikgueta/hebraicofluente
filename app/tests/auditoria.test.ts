@@ -11,7 +11,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
+import { comoAdmin, cookieDe, envDeTeste, pedido } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import worker from '../../worker/src/worker.js';
 // @ts-expect-error - idem
@@ -35,6 +35,8 @@ import { hmacHex } from '../../worker/src/lib/crypto.js';
 import { safeNext } from '../src/lib/safe-next';
 import { mergeStates } from '../src/lib/state/merge';
 import { empresa, formasAtivas, temCartao, temPix } from '../src/lib/empresa';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const SITE = 'https://hebraicofluente.com.br';
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} };
@@ -52,13 +54,15 @@ const envSite = (extra: Record<string, unknown> = {}) => envDeTeste({ ASSETS, ..
 
 async function comConta(env: Record<string, unknown>, email = 'aluna@exemplo.com.br') {
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }),
     env, ctx
   });
   expect(r.status).toBe(200);
   const body = await r.json() as { account: { id: number } };
   return { cookie: cookieDe(r), id: body.account.id, email };
 }
+
+const comContaSemCurso = (env: Record<string, unknown>) => comConta(env);
 
 const linhas = (env: Record<string, unknown>, sql: string) =>
   ((env.DB as { bruto: { prepare(s: string): { all(): unknown[] } } }).bruto.prepare(sql).all());
@@ -87,7 +91,7 @@ describe('o portão não acredita em cabeçalho do cliente', () => {
     const { cookie } = await comConta(env);
     const r = await gate(new Request(alvo, { headers: { Cookie: cookie } }), env);
     expect(r.status).toBe(302);
-    expect(r.headers.get('location')).toContain('/cursos/alfabetizacao/');
+    expect(r.headers.get('location')).toContain('/curso-de-hebraico/');
   });
 
   it('com sessão e curso, passa - inclusive o index.txt que o Next busca', async () => {
@@ -160,6 +164,37 @@ describe('o site sai blindado', () => {
     expect(api.headers.get('referrer-policy')).toBe('strict-origin-when-cross-origin');
     /* JSON não leva CSP - a política é de página. */
     expect(api.headers.get('content-security-policy')).toBeNull();
+  });
+
+  /* 25/09/2026: o aluno grava a própria leitura (GravarLeitura). O
+     microfone abre só para o próprio site, só nas páginas do curso; no site
+     público e na API continua fechado, e nenhum terceiro o recebe. */
+  it('o microfone só abre para o próprio site, e só no curso e na página de venda', async () => {
+    const env = envSite();
+    const publica = await worker.fetch(new Request(`${SITE}/faq/`), env, ctx);
+    expect(publica.headers.get('permissions-policy')).toContain('microphone=()');
+    /* 28/09/2026: a capa abre o microfone para o próprio site - o "Ouça e
+       fale" da landing -, e só para ele. */
+    /* 23/10/2026: a página de venda saiu da capa para /curso-de-hebraico, e
+       o microfone foi junto; a capa (o portal) volta a fechá-lo. */
+    /* 27/10/2026: a capa voltou a ser a página do curso (o site é só o curso
+       de alfabetização), e o microfone abre nas duas. */
+    for (const r of ['/', '/curso-de-hebraico/']) {
+      const venda = await worker.fetch(new Request(`${SITE}${r}`), env, ctx);
+      expect(venda.headers.get('permissions-policy'), r).toContain('microphone=(self)');
+      expect(venda.headers.get('permissions-policy'), r).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
+    }
+
+    const { cookie, id } = await comConta(env);
+    await grantAccess(env, { accountId: id, courseSlug: 'alfabetizacao', orderId: 'M', months: 12 });
+    const aula = await worker.fetch(new Request(`${SITE}/licao/alef/`, { headers: { Cookie: cookie } }), env, ctx);
+    const pp = aula.headers.get('permissions-policy') || '';
+    expect(pp).toContain('microphone=(self)');
+    expect(pp).toContain('camera=()');
+    expect(pp).not.toMatch(/microphone=\([^)]*(https?:|\*)/);
+
+    const api = await worker.fetch(new Request(`${SITE}/api/me`), env, ctx);
+    expect(api.headers.get('permissions-policy')).toContain('microphone=()');
   });
 });
 
@@ -241,7 +276,7 @@ describe('a sessão', () => {
   it('vale o primeiro cookie que CONFERE, não o primeiro que aparece', async () => {
     const env = envSite();
     const { cookie } = await comConta(env);
-    const enxerto = `hf_session=lixo.lixo; ${cookie}; outro=1`;
+    const enxerto = `__Host-hf_session=lixo.lixo; ${cookie}; outro=1`;
     const r = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: enxerto } }), env });
     expect(r.status).toBe(200);
   });
@@ -253,12 +288,45 @@ describe('a sessão', () => {
     const env = envSite();
     const { cookie } = await comConta(env);
     const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
-    const lixo = (n: number) => Array.from({ length: n }, (_, i) => `hf_session=lixo${i}.lixo`).join('; ');
+    const lixo = (n: number) => Array.from({ length: n }, (_, i) => `__Host-hf_session=lixo${i}.lixo`).join('; ');
     expect((await me(`${lixo(5)}; ${cookie}`)).status).toBe(200);
     expect((await me(`${lixo(20)}; ${cookie}`)).status).toBe(200);
-    expect((await me(`hf_session=${'a'.repeat(3000)}.b; ${cookie}`)).status).toBe(200);
+    expect((await me(`__Host-hf_session=${'a'.repeat(3000)}.b; ${cookie}`)).status).toBe(200);
     /* Sem o legítimo, nada disso vira sessão. */
     expect((await me(lixo(20))).status).toBe(401);
+  });
+
+  /* Auditoria de 24/09/2026: sem o prefixo, um subdomínio conseguiria
+     plantar no navegador da vítima um cookie de sessão válido - o de uma
+     conta do atacante -, e ela estudaria e pagaria dentro dela. `__Host-`
+     faz o navegador recusar qualquer cookie com esse nome que não venha
+     deste host, com Secure, Path=/ e sem Domain. */
+  it('o cookie tem o prefixo __Host-, com o que o prefixo exige', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    expect(cookie).toMatch(/^__Host-hf_session=/);
+    const inteiro = await makeSessionCookie(env, { id: 1, session_version: 0 });
+    expect(inteiro).toMatch(/; Path=\/;/);
+    expect(inteiro).toMatch(/; Secure;/);
+    expect(inteiro).not.toMatch(/Domain=/i);
+  });
+
+  it('o nome antigo (hf_session) não abre nada desde 15/10/2026', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antigo = cookie.replace(/^__Host-hf_session=/, 'hf_session=');
+    const me = (c: string) => auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: c } }), env });
+    expect((await me(antigo)).status).toBe(401);
+    expect((await me(cookie)).status).toBe(200);
+  });
+
+  it('sair apaga os dois nomes', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const r = await auth.logout({ request: new Request(`${SITE}/api/auth/logout`, { method: 'POST', headers: { Cookie: cookie } }), env });
+    const sets = r.headers.getSetCookie();
+    expect(sets.some((c: string) => c.startsWith('__Host-hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
+    expect(sets.some((c: string) => c.startsWith('hf_session=;') && c.includes('Max-Age=0'))).toBe(true);
   });
 
   it('não carrega e-mail nem nome', async () => {
@@ -346,6 +414,49 @@ describe('o login', () => {
     expect((await tentar(env, email, 'senha-boa-123', '198.51.100.7')).status).toBe(200);
   });
 
+  /* SEC-A-002 (auditoria de 01/10/2026): o teto de erros decidia por uma
+     LEITURA e só gastava depois da falha, e a verificação da senha leva o
+     tempo do PBKDF2. Quarenta senhas erradas em paralelo, mesmo IP e mesmo
+     e-mail, eram as quarenta avaliadas (40 respostas 401). Agora a vaga é
+     reservada antes: no máximo o teto (5 por minuto por e-mail e IP). */
+  it('quarenta senhas erradas em paralelo: no máximo o teto é avaliado', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, email, 'errada-' + i, '10.99.99.2')))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(5);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(35);
+    /* A dona, de outro lugar, com a senha certa, continua entrando. */
+    expect((await tentar(env, email, 'senha-boa-123', '198.51.100.7')).status).toBe(200);
+  });
+
+  it('a mesma rajada vinda de quarenta endereços: no máximo os 30 por e-mail', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, email, 'errada-' + i, `10.98.0.${i + 1}`)))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(30);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(10);
+  });
+
+  it('por endereço, a rajada de e-mails inventados para nos 20 erros da hora', async () => {
+    const env = envSite();
+    const status = (await Promise.all(Array.from({ length: 40 }, (_, i) =>
+      tentar(env, `ninguem${i}@exemplo.com`, 'errada-123', '10.99.99.3')))).map((r: Response) => r.status);
+    expect(status.filter((s: number) => s === 401)).toHaveLength(20);
+    expect(status.filter((s: number) => s === 429)).toHaveLength(20);
+  });
+
+  it('acertar devolve a vaga: o teto de erros só conta as falhas', async () => {
+    const env = envSite();
+    const { email } = await comConta(env);
+    for (let i = 0; i < 4; i++) expect((await tentar(env, email, 'errada-' + i, '203.0.113.8')).status).toBe(401);
+    for (let i = 0; i < 3; i++) expect((await tentar(env, email, 'senha-boa-123', '203.0.113.8')).status).toBe(200);
+    /* Quatro erros e três acertos: ainda cabe o quinto erro. */
+    expect((await tentar(env, email, 'errada-x', '203.0.113.8')).status).toBe(401);
+    expect((await tentar(env, email, 'errada-y', '203.0.113.8')).status).toBe(429);
+  });
+
   it('a senha certa não gasta o orçamento do e-mail', async () => {
     const env = envSite();
     const { email } = await comConta(env);
@@ -361,12 +472,14 @@ describe('o login', () => {
   /* Quem já estourou o freio por IP não ganha nem a leitura do corpo - nem
      no login, nem no esqueci-a-senha, nem no reset. */
   it.each([
-    ['login', 'login', 20, (env: Record<string, unknown>, r: Request) => auth.login({ request: r, env, ctx })],
-    ['forgot', 'forgot', 6, (env: Record<string, unknown>, r: Request) => auth.forgot({ request: r, env, ctx })],
-    ['reset', 'reset', 12, (env: Record<string, unknown>, r: Request) => auth.reset({ request: r, env, ctx })]
+    /* Por HORA desde 24/09/2026 (a cota de escrita do D1 - ver "a cota de
+       escrita e o tamanho do banco", mais abaixo). */
+    ['login', 'login-h', 60, (env: Record<string, unknown>, r: Request) => auth.login({ request: r, env, ctx })],
+    ['forgot', 'forgot-ip-h', 10, (env: Record<string, unknown>, r: Request) => auth.forgot({ request: r, env, ctx })],
+    ['reset', 'reset-h', 20, (env: Record<string, unknown>, r: Request) => auth.reset({ request: r, env, ctx })]
   ])('%s: o freio por IP vem antes do corpo', async (rota, chave, teto, chamar) => {
     const env = envSite();
-    for (let i = 0; i < teto; i++) await throttled(env, `${chave}:203.0.113.9`, teto);
+    for (let i = 0; i < teto; i++) await throttled(env, `${chave}:203.0.113.9`, teto, 3_600_000);
     const r = new Request(`${SITE}/api/auth/${rota}`, {
       method: 'POST', body: '{"email":"a@b.co","password":"x","token":"t"}',
       headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '203.0.113.9' }
@@ -398,7 +511,7 @@ describe('o cadastro', () => {
   it('recusa e-mail longo demais e com caractere de controle', async () => {
     const env = envSite();
     for (const email of ['a'.repeat(250) + '@x.com', 'a@b\u0000.co', 'a\u0001@b.co', 'ab']) {
-      const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { email, password: 'senha-boa-123' }), env, ctx });
+      const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email, password: 'senha-boa-123' }), env, ctx });
       expect(r.status, email).toBe(400);
     }
   });
@@ -448,6 +561,218 @@ describe('o pedido de senha', () => {
   });
 });
 
+/* ── o e-mail de outra pessoa ──────────────────────────────────────────── */
+
+/* Auditoria de 24/09/2026: qualquer um criava conta com o endereço de
+   outra pessoa. O conserto é o e-mail de confirmação (o ciclo inteiro está em
+   tests/confirmacao.test.ts); o que fica AQUI é a propriedade que impede o
+   conserto de virar um furo novo: o link, clicado sem a sessão da conta, não
+   confirma nada - senão a dona do endereço confirmaria a conta do impostor. */
+describe('a conta com o e-mail de outra pessoa', () => {
+  it('o link de confirmação sem a sessão da conta não confirma nada', async () => {
+    let texto = '';
+    vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
+      texto = JSON.parse(String(init?.body)).text;
+      return new Response('{"id":"m"}', { status: 200 });
+    });
+    try {
+      const env = envSite({
+        RESEND_API_KEY: 're_x', EMAIL_FROM: 'HF <c@hebraicofluente.com.br>',
+        RESEND_BASE: 'https://api.resend.test'
+      });
+      const { cookie } = await comConta(env, 'vitima@exemplo.com.br');
+      const token = decodeURIComponent(texto.match(/\/confirmar-email\/\?token=([^\s]+)/)![1]!);
+
+      const r = await auth.verify({ request: pedido(`${SITE}/api/auth/verify`, { token }), env });
+      expect(r.status).toBe(401);
+      const me = await auth.me({ request: new Request(`${SITE}/api/me`, { headers: { Cookie: cookie } }), env });
+      expect(((await me.json()) as { account: { emailVerified: boolean } }).account.emailVerified).toBe(false);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+});
+
+/* ── liberação e estorno simultâneos ────────────────────────────────────── */
+
+/* Auditoria de 24/09/2026: webhook, tela e varredura liberando o mesmo
+   pagamento ao mesmo tempo davam 24 ou 36 meses por 12, e o estorno
+   simultâneo recuava duas vezes. A prova é worker/concessao.mjs, que roda o
+   pay.js de verdade com as consultas cedendo a vez como numa ida à rede -
+   aqui ela entra na suíte, para não depender de alguém lembrar de rodá-la. */
+describe('liberação e estorno simultâneos', () => {
+  it('worker/concessao.mjs passa inteiro', () => {
+    const script = fileURLToPath(new URL('../../worker/concessao.mjs', import.meta.url));
+    const saida = execFileSync(process.execPath, [script], { encoding: 'utf8', stdio: 'pipe' });
+    expect(saida).toContain('Tudo certo.');
+  });
+});
+
+/* ── a cota de escrita e o tamanho do banco ─────────────────────────────── */
+
+/* Auditoria de 24/09/2026. No plano gratuito o D1 tem 500 MB e 100.000 linhas
+   escritas por dia, e os dois se esgotavam de fora:
+     · qualquer conta, sem comprar nada, gravava 512 KB de "progresso" - umas
+       mil contas descartáveis enchiam o banco;
+     · os freios por minuto deixavam uma máquina só escrever umas 290 linhas
+       por minuto em pedidos anônimos, e a cota do dia acabava em seis horas.
+   Banco cheio ou cota vencida é toda escrita falhando: cadastro, login,
+   pagamento. O que se trava aqui: recusa não escreve nada, e cada rota
+   anônima tem um teto por hora. `total_changes()` conta as linhas que o
+   SQLite de fato mudou. */
+describe('a cota de escrita e o tamanho do banco', () => {
+  const escritas = (env: Record<string, unknown>) =>
+    Number(((env.DB as { bruto: { prepare(s: string): { get(): unknown } } }).bruto
+      .prepare('SELECT total_changes() AS n').get() as { n: number }).n);
+  const deIp = (ip: string, url: string, body: unknown) => new Request(url, {
+    method: 'POST', headers: { 'content-type': 'application/json', 'CF-Connecting-IP': ip },
+    body: JSON.stringify(body)
+  });
+  /* No começo de uma hora cheia, para que o teste não atravesse a virada da
+     janela no meio. */
+  beforeEach(() => { vi.useFakeTimers({ now: Date.UTC(2026, 8, 24, 10, 0, 5), toFake: ['Date'] }); });
+  afterEach(() => { vi.useRealTimers(); });
+  const avancar = (ms: number) => vi.setSystemTime(Date.now() + ms);
+
+  it('conta sem curso não grava progresso, e a recusa não escreve nada', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antes = escritas(env);
+    const r = await progress.write({
+      request: new Request(`${SITE}/api/progress`, {
+        method: 'PUT', headers: { 'content-type': 'application/json', Cookie: cookie },
+        body: JSON.stringify({ state: { version: 2, lixo: 'a'.repeat(400 * 1024) }, rev: 0 })
+      }), env, ctx
+    });
+    expect(r.status).toBe(403);
+    expect(((await r.json()) as { error: string }).error).toBe('sem-curso');
+    expect(escritas(env)).toBe(antes);
+    expect(linhas(env, 'SELECT * FROM progress')).toEqual([]);
+  });
+
+  it('apagar um progresso que não existe não escreve nada', async () => {
+    const env = envSite();
+    const { cookie } = await comConta(env);
+    const antes = escritas(env);
+    const r = await progress.drop({
+      request: new Request(`${SITE}/api/progress`, { method: 'DELETE', headers: { Cookie: cookie } }),
+      env, ctx
+    });
+    expect(r.status).toBe(200);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: vinte erros por hora por endereço, e o vigésimo primeiro não escreve', async () => {
+    const env = envSite();
+    const tentar = (i: number) => auth.login({
+      request: deIp('203.0.113.50', `${SITE}/api/auth/login`, { email: `inventado${i}@exemplo.com`, password: 'errada-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 20; i++) expect((await tentar(i)).status).toBe(401);
+    /* E-mail inventado não vai para a trilha: não é de ninguém. */
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'login-failed'")).toEqual([]);
+
+    avancar(5 * 60_000);                  /* outro minuto, mesma hora */
+    const antes = escritas(env);
+    const r = await tentar(99);
+    expect(r.status).toBe(429);
+    expect(((await r.json()) as { error: string }).error).toBe('rate-limited-hora');
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: a falha contra uma conta que existe continua na trilha', async () => {
+    const env = envSite();
+    await comConta(env);
+    await auth.login({
+      request: deIp('203.0.113.51', `${SITE}/api/auth/login`, { email: 'aluna@exemplo.com.br', password: 'errada-123' }),
+      env, ctx
+    });
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'login-failed'")).toHaveLength(1);
+  });
+
+  it('cadastro: dez por hora por endereço', async () => {
+    const env = envSite();
+    const cadastrar = (i: number) => auth.signup({
+      request: deIp('203.0.113.52', `${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email: `nova${i}@exemplo.com`, password: 'senha-boa-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 10; i++) expect((await cadastrar(i)).status).toBe(200);
+    avancar(61_000);
+    const antes = escritas(env);
+    const r = await cadastrar(99);
+    expect(r.status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('esqueci a senha: dez por hora por endereço', async () => {
+    const env = envSite();
+    const pedir = (i: number) => auth.forgot({
+      request: deIp('203.0.113.53', `${SITE}/api/auth/forgot`, { email: `x${i}@exemplo.com` }),
+      env, ctx
+    });
+    for (let i = 0; i < 10; i++) expect((await pedir(i)).status).toBe(200);
+    avancar(61_000);
+    const antes = escritas(env);
+    expect((await pedir(99)).status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('rotas da conta: vinte por hora por endereço, somando as contas', async () => {
+    /* Conta é de graça, então o freio por conta sozinho não segura nada:
+       três contas, trocando a senha com a senha atual errada, do mesmo
+       endereço. */
+    const env = envSite();
+    const contas = [];
+    for (let i = 0; i < 3; i++) contas.push(await comConta(env, `conta${i}@exemplo.com`));
+    const trocar = (cookie: string) => auth.password({
+      request: new Request(`${SITE}/api/auth/password`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', Cookie: cookie, 'CF-Connecting-IP': '203.0.113.55' },
+        body: JSON.stringify({ current: 'errada-123', password: 'nova-senha-123' })
+      }), env
+    });
+    let recusadas = 0;
+    for (let i = 0; i < 20; i++) {
+      const r = await trocar(contas[i % 3]!.cookie);
+      expect(r.status).toBe(401);
+    }
+    const antes = escritas(env);
+    for (const c of contas) if ((await trocar(c.cookie)).status === 429) recusadas++;
+    expect(recusadas).toBe(3);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('login: sessenta tentativas por hora, mesmo acertando', async () => {
+    const env = envSite();
+    await comConta(env, 'laco@exemplo.com');
+    const entrar = () => auth.login({
+      request: deIp('203.0.113.56', `${SITE}/api/auth/login`, { email: 'laco@exemplo.com', password: 'senha-boa-123' }),
+      env, ctx
+    });
+    for (let i = 0; i < 60; i++) expect((await entrar()).status).toBe(200);
+    const antes = escritas(env);
+    expect((await entrar()).status).toBe(429);
+    expect(escritas(env)).toBe(antes);
+  });
+
+  it('aviso de pagamento com assinatura falsa: uma linha por hora, não por pedido', async () => {
+    const env = envSite({ MP_WEBHOOK_SECRET: 'segredo' });
+    const falso = () => pay.webhook({
+      request: new Request(`${SITE}/api/pay/webhook?data.id=123&type=payment`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '203.0.113.54',
+          'x-signature': `ts=${Math.floor(Date.now() / 1000)},v1=${'0'.repeat(64)}`, 'x-request-id': 'r' },
+        body: '{}'
+      }), env, ctx
+    });
+    expect((await falso()).status).toBe(401);
+    const antes = escritas(env);
+    for (let i = 0; i < 10; i++) expect((await falso()).status).toBe(401);
+    expect(escritas(env)).toBe(antes);
+    expect(linhas(env, "SELECT * FROM access_log WHERE action = 'webhook-bad-signature'")).toHaveLength(1);
+  });
+});
+
 /* ── a saúde ────────────────────────────────────────────────────────────── */
 
 describe('a saúde', () => {
@@ -458,8 +783,49 @@ describe('a saúde', () => {
     const body = await r.json() as Record<string, unknown>;
     expect(body).not.toHaveProperty('iterations');
     expect(body.ok).toBe(true);
-    for (let i = 0; i < 9; i++) await auth.health({ request: req, env });
+    /* Trinta por hora por endereço (era dez por minuto): cada consulta é uma
+       escrita de freio, e a cota diária de escrita do D1 é o que protege. */
+    for (let i = 0; i < 29; i++) await auth.health({ request: req, env });
     expect((await auth.health({ request: req, env })).status).toBe(429);
+  });
+
+  /* SEC-A-007 (auditoria de 01/10/2026): a rota pública dizia o modo da
+     cobrança, de quem era a credencial, se o último e-mail de senha saiu e
+     há quantos minutos a varredura rodou. */
+  it('para o público, só ok e monitor', async () => {
+    const env = envSite({ MP_ACCESS_TOKEN: 'TEST-1234', RESEND_API_KEY: 're_x', EMAIL_FROM: 'a@b.co' });
+    const r = await worker.fetch(new Request(`${SITE}/api/health`, { headers: { 'CF-Connecting-IP': '203.0.113.2' } }), env, ctx);
+    expect(Object.keys(await r.json() as object).sort()).toEqual(['monitor', 'ok']);
+  });
+
+  it('os detalhes só com o ADMIN_TOKEN, e nunca com um token errado ou curto', async () => {
+    const env = envSite();
+    const com = (auth_: string) => worker.fetch(new Request(`${SITE}/api/health`, {
+      headers: { 'CF-Connecting-IP': '203.0.113.3', Authorization: auth_ }
+    }), env, ctx).then((r: Response) => r.json() as Promise<Record<string, unknown>>);
+    const certo = await com(`Bearer ${env.ADMIN_TOKEN}`);
+    for (const k of ['db', 'schema', 'session', 'modo', 'tokenFormato', 'vendedor', 'emailEntregue', 'varredura', 'ok', 'monitor']) {
+      expect(certo).toHaveProperty(k);
+    }
+    expect(Object.keys(await com('Bearer errado')).sort()).toEqual(['monitor', 'ok']);
+    expect(Object.keys(await com(`Bearer ${String(env.ADMIN_TOKEN).slice(0, -1)}x`)).sort()).toEqual(['monitor', 'ok']);
+    /* Configurado curto demais, não abre nem com ele mesmo. */
+    const curto = envSite({ ADMIN_TOKEN: 'curto' });
+    const r = await worker.fetch(new Request(`${SITE}/api/health`, { headers: { Authorization: 'Bearer curto' } }), curto, ctx);
+    expect(Object.keys(await r.json() as object).sort()).toEqual(['monitor', 'ok']);
+  });
+
+  it('a sessão de administrador com o segundo fator também vê os detalhes; aluno não', async () => {
+    const env = envSite({ ADMIN_EMAILS: 'dono@exemplo.com', ADMIN_TOKEN: '' });
+    const { cookie: aluno } = await comConta(env, 'aluno@exemplo.com');
+    const { cookie: dono } = await comConta(env, 'dono@exemplo.com');
+    const ver = async (cookie: string) => Object.keys(await (await worker.fetch(new Request(`${SITE}/api/health`, {
+      headers: { 'CF-Connecting-IP': '203.0.113.4', Cookie: cookie }
+    }), env, ctx)).json() as object);
+    expect((await ver(aluno)).sort()).toEqual(['monitor', 'ok']);
+    /* Sem o código do e-mail, a senha do dono não basta. */
+    expect((await ver(dono)).sort()).toEqual(['monitor', 'ok']);
+    expect(await ver(await comoAdmin(env, dono))).toContain('modo');
   });
 });
 
@@ -559,6 +925,12 @@ describe('o progresso recusa chave que não é dado', () => {
     progress.write({
       request: pedido(`${SITE}/api/progress`, { state, rev: 0 }, { Cookie: cookie }), env, ctx
     });
+  /* Só quem tem curso guarda progresso no servidor (ver o bloco seguinte). */
+  const comConta = async (env: Record<string, unknown>) => {
+    const c = await comContaSemCurso(env);
+    await grantAccess(env, { accountId: c.id, courseSlug: 'alfabetizacao', orderId: 'TESTE', months: 12 });
+    return c;
+  };
 
   it.each([
     ['na raiz', () => JSON.parse('{"version":2,"__proto__":{"admin":true}}')],
@@ -605,7 +977,7 @@ describe('um convite não vira acesso sozinho', () => {
 
   const cadastrar = (env: Record<string, unknown>, email: string, c = ctx) =>
     auth.signup({
-      request: pedido(`${SITE}/api/auth/signup`, { name: 'Quem', email, password: 'senha-boa-123' }),
+      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Quem', email, password: 'senha-boa-123' }),
       env, ctx: c
     });
 
@@ -634,7 +1006,9 @@ describe('um convite não vira acesso sozinho', () => {
 
     const enviados: { to: string[]; subject: string; text: string }[] = [];
     vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
-      enviados.push(JSON.parse(String(init?.body)));
+      const b = JSON.parse(String(init?.body));
+      /* O e-mail de confirmação do cadastro não é o aviso ao dono. */
+      if (!String(b.subject).startsWith('Confirme seu e-mail')) enviados.push(b);
       return new Response('{"id":"m"}', { status: 200 });
     });
     const esperar: Promise<unknown>[] = [];
@@ -660,7 +1034,11 @@ describe('um convite não vira acesso sozinho', () => {
       RESEND_BASE: 'https://api.resend.test', SUPPORT_EMAIL: 'dono@exemplo.com'
     });
     let envios = 0;
-    vi.stubGlobal('fetch', async () => { envios++; return new Response('{"id":"m"}', { status: 200 }); });
+    vi.stubGlobal('fetch', async (_u: string, init?: RequestInit) => {
+      /* Conta só os avisos ao dono, e não a confirmação do cadastro. */
+      if (!String(JSON.parse(String(init?.body)).subject).startsWith('Confirme seu e-mail')) envios++;
+      return new Response('{"id":"m"}', { status: 200 });
+    });
     await convidar(env, 'presenteada@exemplo.com.br');
     await cadastrar(env, 'presenteada@exemplo.com.br');
     for (let i = 0; i < 5; i++) {
@@ -784,4 +1162,60 @@ describe('para onde voltar depois de entrar', () => {
     expect(safeNext('/licao/alef/')).toBe('/licao/alef/');
     expect(safeNext('/perfil?aba=x')).toBe('/perfil?aba=x');
   });
+});
+
+describe('a limpeza das contas de teste acompanha o esquema', () => {
+  /* Uma tabela nova que aponte para `accounts` (ou para `orders`) e fique
+     fora da limpeza faz o DELETE das contas falhar com "FOREIGN KEY
+     constraint failed": a conta de teste fica no banco de produção a cada
+     publicação. Foi o que aconteceu quando `password_resets` nasceu. As duas
+     listas (a etapa do deploy e a receita que o e2e.sh imprime) são
+     conferidas aqui contra o worker/schema.sql. */
+  async function ler(caminho: string) {
+    const { readFileSync } = await import('node:fs');
+    return readFileSync(new URL(caminho, import.meta.url), 'utf8');
+  }
+
+  async function tabelasQueApontam() {
+    const esquema = await ler('../../worker/schema.sql');
+    const tabelas = new Set<string>();
+    for (const bloco of esquema.split(/CREATE TABLE IF NOT EXISTS /).slice(1)) {
+      const nome = bloco.match(/^(\w+)/)![1]!;
+      const corpo = bloco.slice(0, bloco.indexOf(');'));
+      if (/REFERENCES\s+(accounts|orders)\s*\(/.test(corpo)) tabelas.add(nome);
+    }
+    return tabelas;
+  }
+
+  function ordemDosDeletes(texto: string) {
+    return [...texto.matchAll(/DELETE FROM (\w+)/g)].map((m) => m[1]!);
+  }
+
+  it('o esquema tem as tabelas que a limpeza precisa conhecer', async () => {
+    const t = await tabelasQueApontam();
+    for (const nome of ['entitlements', 'orders', 'password_resets', 'email_verifications',
+      'progress', 'registros_acesso', 'arrependimentos']) expect(t).toContain(nome);
+  });
+
+  for (const [rotulo, caminho, corte] of [
+    ['a etapa do deploy', '../../.github/workflows/deploy-worker.yml', 'Limpar as contas de teste'],
+    ['a receita do e2e.sh', '../../worker/e2e.sh', 'LIMPEZA'],
+  ] as const) {
+    it(`${rotulo} apaga toda tabela que aponta para accounts ou orders, antes delas`, async () => {
+      const texto = await ler(caminho);
+      const trecho = texto.slice(texto.indexOf(corte));
+      const ordem = ordemDosDeletes(trecho);
+      const contas = ordem.indexOf('accounts');
+      const pedidos = ordem.indexOf('orders');
+      expect(contas).toBeGreaterThan(-1);
+      for (const nome of await tabelasQueApontam()) {
+        const i = ordem.indexOf(nome);
+        expect(i, `${nome} fora da limpeza`).toBeGreaterThan(-1);
+        expect(i, `${nome} depois de accounts`).toBeLessThan(contas);
+      }
+      expect(ordem.indexOf('arrependimentos')).toBeLessThan(pedidos);
+      expect(ordem, 'access_log fica para trás').toContain('access_log');
+      expect(ordem, 'payment_events fica para trás').toContain('payment_events');
+    });
+  }
 });

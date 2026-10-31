@@ -786,10 +786,14 @@ recusas da rota.
 | | produção | prévia |
 |---|---|---|
 | onde | Cloudflare Workers | GitHub Pages |
-| workflow | `deploy-worker.yml` | `deploy-app.yml` |
+| workflow | `deploy-worker.yml` | nenhum (ver abaixo) |
 | build | `NEXT_PUBLIC_PLATFORM_API=worker` | sem a variável |
 | contas | D1 | navegador do visitante |
 | tarja | não | sim |
 
-A prévia existe para revisar a interface inteira sem Cloudflare, sem banco e
+A prévia existia para revisar a interface inteira sem Cloudflare, sem banco e
 sem chave de pagamento. A mesma base de código, uma variável de diferença.
+Em 01/10/2026 o workflow dela (`deploy-app.yml`) foi apagado (auditoria,
+SEC-A-004): sem a variável, o build importa os JSON pagos para o pacote, e a
+ação publicava o curso inteiro no GitHub Pages sem portão. O modo local
+continua existindo para `npm run dev`; só não há mais um botão que o publique.

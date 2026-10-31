@@ -3,9 +3,10 @@
 # É esta a implantação de produção: o Worker serve o site, responde a /api/*,
 # guarda contas e pedidos no D1 e fala com a Mercado Pago.
 #
-# A outra (deploy-app.yml → GitHub Pages) continua existindo e publica a mesma
-# interface em MODO DEMONSTRAÇÃO, sem servidor. As duas não se atropelam
-# porque a diferença é uma variável de build: NEXT_PUBLIC_PLATFORM_API.
+# É a única desde 01/10/2026: a outra (deploy-app.yml → GitHub Pages)
+# publicava a mesma interface em MODO DEMONSTRAÇÃO, com os JSON pagos dentro
+# do pacote e sem portão, e foi apagada (auditoria, SEC-A-004). Uma prévia
+# sem Cloudflare só volta se o build sair sem o conteúdo pago.
 #
 # ── O QUE PRECISA EXISTIR ─────────────────────────────────────────────────
 #
@@ -30,8 +31,9 @@
 # desligado, dizendo isso na tela.
 #
 # Para RECUPERAR SENHA, falta RESEND_API_KEY, no mesmo lugar. Sem ela o link
-# de "esqueci minha senha" não é entregue a ninguém, e /api/health reporta
-# "email": false. Ver .env.example.
+# de "esqueci minha senha" não é entregue a ninguém, e /api/health (os
+# detalhes, que só a conferência da publicação vê) reporta "email": false.
+# Ver .env.example.
 
 name: Deploy platform to Cloudflare
 
@@ -58,6 +60,12 @@ on:
       - 'worker/**'
       - 'wrangler.toml'
       - 'tools/export-content.mjs'
+      - 'tools/csp-hashes.mjs'
+      # As gravações. Desde 25/09/2026 os .mp3 cortados moram no git e a build
+      # os copia para o site; sem esta linha, uma correção só de áudio (a voz
+      # dobrada do Álef e do He, Moshikgueta/hebraicofluente#16) fundiu verde
+      # e não publicou nada - o som com defeito seguiu no ar.
+      - 'audio/**'
       # A publicação É feita por estes scripts (os passos "Mercado Pago
       # autentica?" e "Publicar e configurar"), então mexer neles tem de
       # disparar uma publicação - senão uma correção no próprio caminho do
@@ -71,9 +79,36 @@ on:
       - 'scripts/**'
       - '.github/workflows/deploy-worker.yml'
   workflow_dispatch:
+    inputs:
+      # Em vez de publicar, trazer as gravações do painel /admin/gravar
+      # (banco D1) para audio/, num ramo novo - ver o job `exportar-gravacoes`.
+      # Mora aqui, e não num workflow próprio, porque um workflow novo não
+      # chegou a ser registrado pelo GitHub (26/09/2026) e este já está.
+      exportar_gravacoes:
+        description: 'Exportar as gravações do painel para audio/ (não publica)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
+
+# A versão do Playwright que as conferências em navegador instalam, fixa.
+# ─────────────────────────────────────────────────────────────────────────
+# Auditoria de 24/09/2026. Era `npm install --no-save playwright`, sem
+# versão e fora do lockfile, em três passos - dois deles ANTES de "Publicar e
+# configurar", que recebe o token da Cloudflare, o da Mercado Pago e a chave
+# da Resend. Um pacote instalado roda código no job: ele pode escrever em
+# $GITHUB_ENV (um NODE_OPTIONS, por exemplo) e esse código passa a rodar em
+# todo passo seguinte, segredos incluídos. Sem versão, a primeira versão
+# maliciosa publicada do Playwright entraria na publicação seguinte sozinha.
+#
+# Fixa, ela não muda mais: a npm não deixa republicar uma versão existente.
+# `--ignore-scripts` fecha o resto - nenhum pacote dessa instalação roda
+# script de instalação; o navegador vem do `playwright install` explícito.
+# Para subir de versão: troque aqui, de preferência para uma que já tenha
+# semanas de publicada, e confira que as três etapas continuam verdes.
+env:
+  PLAYWRIGHT_VERSION: 1.63.0
 
 concurrency:
   group: cloudflare
@@ -81,9 +116,10 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.exportar_gravacoes) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       # Não só "tem ou não tem": DIZ o que está errado.
       #
@@ -151,17 +187,57 @@ jobs:
             echo "ok=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         if: steps.guard.outputs.ok == 'true'
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: app/package-lock.json
+          cache-dependency-path: |
+            app/package-lock.json
+            package-lock.json
+
+      # Raízes Sefarditas (22/10/2026): o CONTEÚDO mora num repositório
+      # PRIVADO (Moshikgueta/hebraicofluente-raizes), como o editorial. O
+      # segredo RAIZES_TOKEN é um token fino, SÓ LEITURA, só daquele
+      # repositório. Antes do Install, porque os testes e o exportador
+      # (tools/export-content.mjs) leem raizes/data/.
+      #
+      # Sem o segredo a publicação NÃO para: Raízes ainda não é vendido, e o
+      # site inteiro builda com um raizes.json vazio (as telas dizem que o
+      # conteúdo não veio). Fica um aviso no resumo.
+      - name: Há o conteúdo de Raízes?
+        id: raizes
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          TEM_TOKEN: ${{ secrets.RAIZES_TOKEN != '' }}
+        run: |
+          if [ "$TEM_TOKEN" = "true" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Sem o segredo RAIZES_TOKEN: Raízes Sefarditas publica sem conteúdo."
+            echo "- ⚠ Raízes Sefarditas: sem o segredo \`RAIZES_TOKEN\`, publicado sem conteúdo." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.guard.outputs.ok == 'true' && steps.raizes.outputs.ok == 'true'
+        with:
+          repository: Moshikgueta/hebraicofluente-raizes
+          token: ${{ secrets.RAIZES_TOKEN }}
+          path: raizes
+          persist-credentials: false
 
       - name: Install
         if: steps.guard.outputs.ok == 'true'
         working-directory: app
         run: npm ci
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo que vai ter os segredos
+      # de produção no ambiente. scripts/cloudflare-setup.sh usa este.
+      - name: Instalar o wrangler do lockfile
+        if: steps.guard.outputs.ok == 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       # ANTES do build, porque é o build que congela esta decisão nas páginas.
       #
@@ -203,10 +279,46 @@ jobs:
         run: npm test
 
       - name: Mercado Pago autentica?
+        id: pagamento
         if: steps.guard.outputs.ok == 'true'
         env:
           MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
         run: node scripts/pagamento-ativo.mjs
+
+      # Rebaixada para PIX direto, a publicação continua verde: o site vende
+      # por PIX e a liberação é à mão. Sem este aviso o dono só descobria
+      # abrindo o resumo da execução (auditoria de 28/09, PAY-009).
+      - name: Avisar o dono do PIX direto
+        if: steps.guard.outputs.ok == 'true' && steps.pagamento.outputs.rebaixado == 'true'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$RESEND_API_KEY" ]; then
+            echo "::warning::Sem RESEND_API_KEY: o aviso do PIX direto não saiu por e-mail."
+            exit 0
+          fi
+          FROM="$(grep -oP '^EMAIL_FROM\s*=\s*"\K[^"]+' wrangler.toml)"
+          TO="$(grep -oP '^SUPPORT_EMAIL\s*=\s*"\K[^"]+' wrangler.toml)"
+          node -e '
+            const fs=require("fs");
+            const [from,to,url]=process.argv.slice(1);
+            const texto=fs.readFileSync("/tmp/rebaixamento.txt","utf8");
+            console.log(JSON.stringify({
+              from, to: [to],
+              subject: "Hebraico Fluente: o site foi publicado em PIX direto (cartão desligado)",
+              text: "A Mercado Pago não aceitou a credencial nesta publicação.\n\n" + texto +
+                    "\n\nEnquanto isso, quem pagar por PIX precisa ser liberado à mão em Actions -> Acesso -> liberar." +
+                    "\n\nDetalhes: " + url
+            }));' "$FROM" "$TO" "$RUN_URL" > /tmp/aviso-pix.json
+          code="$(curl -sS -o /tmp/resend.out -w '%{http_code}' https://api.resend.com/emails \
+            -H "Authorization: Bearer $RESEND_API_KEY" -H 'Content-Type: application/json' \
+            --data @/tmp/aviso-pix.json)"
+          if [ "$code" = "200" ]; then
+            echo "Aviso do PIX direto enviado para o e-mail de suporte." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::A Resend recusou o aviso do PIX direto ($code): $(cat /tmp/resend.out)"
+          fi
 
       # NEXT_PUBLIC_PLATFORM_API=worker é o que faz o app falar com /api/* em
       # vez do adaptador local. Sem isto, a plataforma publicada guardaria
@@ -219,6 +331,70 @@ jobs:
       # domínio é uma edição. `checa-seo.mjs` reprova se os dois divergirem,
       # que é o que aconteceria se este `export` sumisse - o Next cairia no
       # padrão embutido em lib/seo.ts e passaria a anunciar o domínio velho.
+      # O e-book "Israel Além do Óbvio" (21/10/2026): a versão interativa (sem
+      # PDF desde 23/10/2026) sai de editorial/ a cada publicação e vai para app/public/israel/,
+      # que o build copia para o site. O portão (prefixo /israel em
+      # worker/src/gate.js) só abre para quem comprou o e-book ou o pacote.
+      # Nada disso entra no git. ANTES do build, porque é ele que copia.
+      #
+      # O editorial mora num repositório PRIVADO (Moshikgueta/hebraicofluente-editorial)
+      # desde 21/10/2026: o conteúdo é vendido, e este repositório é público.
+      # O segredo EDITORIAL_TOKEN é um token de acesso fino, SÓ LEITURA, só
+      # daquele repositório. Sem ele, a publicação para aqui em vez de pôr no ar
+      # uma página de venda de um e-book que não abre.
+      - name: Buscar o editorial (repositório privado)
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          TEM_TOKEN: ${{ secrets.EDITORIAL_TOKEN != '' }}
+        run: |
+          if [ "$TEM_TOKEN" != "true" ]; then
+            echo "::error::Falta o segredo EDITORIAL_TOKEN (leitura de Moshikgueta/hebraicofluente-editorial). Sem ele o e-book não é montado."
+            exit 1
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          repository: Moshikgueta/hebraicofluente-editorial
+          token: ${{ secrets.EDITORIAL_TOKEN }}
+          path: editorial
+          persist-credentials: false
+
+      # O Chromium do editorial guardado entre publicações (26/10/2026): o
+      # download pendurou de novo em 23/10 e 26/10 e derrubou uma publicação.
+      # Com o navegador no cache, o `install` abaixo acha o que já existe e não
+      # baixa nada; o download só acontece quando a versão do Playwright muda.
+      - name: Versão do Playwright do editorial
+        id: pw
+        if: steps.guard.outputs.ok == 'true'
+        run: echo "v=$(cd editorial && node -p "require('./package.json').dependencies['playwright-core']")" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        if: steps.guard.outputs.ok == 'true'
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
+
+      # Teto do passo (23/10/2026): o download do Chromium pendurou duas vezes no
+      # mesmo dia e a publicação ficou parada até ser cancelada à mão, segurando
+      # a fila das seguintes. Com o teto, ela falha em vez de travar.
+      - name: E-book no site
+        if: steps.guard.outputs.ok == 'true'
+        timeout-minutes: 20
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
+          ( cd editorial && npm ci --ignore-scripts --no-audit --no-fund )
+          # Cada tentativa tem 5 minutos; um download pendurado é morto e tentado de novo.
+          PW="playwright@$(cd editorial && node -p "require('./package.json').dependencies['playwright-core']")"
+          for tentativa in 1 2 3; do
+            if ( cd editorial && timeout 300 npx --yes "$PW" install --with-deps chromium >/dev/null 2>&1 ); then break; fi
+            echo "Chromium: a tentativa $tentativa falhou ou passou de 5 minutos."
+            if [ "$tentativa" = 3 ]; then echo "Chromium não instalou em 3 tentativas." >&2; exit 1; fi
+          done
+          export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
+          bash scripts/ebook-no-site.sh
+          # As imagens da página de venda do livro, tiradas do livro montado
+          # (scripts/vitrine-do-livro.mjs): nunca entram no git.
+          node scripts/vitrine-do-livro.mjs
+
       - name: Build (modo plataforma)
         if: steps.guard.outputs.ok == 'true'
         working-directory: app
@@ -336,8 +512,8 @@ jobs:
         working-directory: app
         run: |
           set -o pipefail
-          npm install --no-save playwright >/dev/null 2>&1
-          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          npm install --no-save --ignore-scripts "playwright@${PLAYWRIGHT_VERSION}" >/dev/null 2>&1
+          npx --yes "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium >/dev/null 2>&1
           echo "## Tamanho do texto, contraste, espaçamento e o olho da senha" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           rc=0
@@ -361,8 +537,8 @@ jobs:
         working-directory: app
         run: |
           set -o pipefail
-          npm install --no-save playwright >/dev/null 2>&1
-          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          npm install --no-save --ignore-scripts "playwright@${PLAYWRIGHT_VERSION}" >/dev/null 2>&1
+          npx --yes "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium >/dev/null 2>&1
           echo "## Todo controle de toda página livre, em desktop e celular" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           rc=0
@@ -415,8 +591,9 @@ jobs:
           MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
           MP_WEBHOOK_SECRET: ${{ secrets.MP_WEBHOOK_SECRET }}
           # A chave da Resend, pela mesma porta. Vazia, o site sobe inteiro e
-          # "esqueci minha senha" não entrega o link - /api/health reporta
-          # "email": false. Onde conseguir está em .env.example.
+          # "esqueci minha senha" não entrega o link - os detalhes de
+          # /api/health reportam "email": false (a conferência os lê com o
+          # ADMIN_TOKEN que o script gera). Onde conseguir está em .env.example.
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           # O build já aconteceu no passo anterior, com o cache do npm, para
           # que uma falha de build apareça como falha de build.
@@ -451,20 +628,27 @@ jobs:
           # para o workers.dev e dizendo "a capa aparece" sobre o site antigo.
           export HF_BASE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml)"
           echo "conferindo $HF_BASE"
-          npm install --no-save playwright >/dev/null 2>&1
-          npx --yes playwright install --with-deps chromium >/dev/null 2>&1
+          npm install --no-save --ignore-scripts "playwright@${PLAYWRIGHT_VERSION}" >/dev/null 2>&1
+          npx --yes "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium >/dev/null 2>&1
           {
             echo "## A capa num navegador de verdade"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+          # O código de saída do CHECK, e não o do `tee`: sem isto uma capa que
+          # não aparecia saía como etapa verde, e o relato ficava escondido no
+          # resumo (29/09/2026). Com `continue-on-error` a publicação segue; a
+          # etapa só fica marcada como falha, para ser vista.
+          set +e
           node worker/browser-check.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+          rc=${PIPESTATUS[0]}
           echo '```' >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
 
       # As capturas encerram a discussão quando o texto não basta.
       - name: Guardar as capturas
         if: always() && steps.guard.outputs.ok == 'true'
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: capturas-da-capa
           path: captura*.png
@@ -494,7 +678,9 @@ jobs:
       # falhar com "FOREIGN KEY constraint failed" e deixa a conta de teste
       # no banco de produção - foi o que aconteceu quando `password_resets`
       # nasceu. A lista de hoje: orders, entitlements, progress,
-      # password_resets. Ver worker/schema.sql.
+      # password_resets, email_verifications, registros_acesso, arrependimentos,
+      # provas_a1, certificados.
+      # Ver worker/schema.sql.
       #
       # `access_log` não tem chave estrangeira e por isso não quebrava nada -
       # e por isso mesmo ficava para trás: cada publicação deixava meia dúzia
@@ -506,7 +692,32 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           ALVO="SELECT id FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'"
-          npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote --command \
+          # O wrangler do lockfile da raiz (SEC-A-009); o npx, na mesma versão,
+          # só se a publicação caiu antes de instalá-lo.
+          W="npx --yes wrangler@4.146.0"
+          [ -x node_modules/.bin/wrangler ] && W="node_modules/.bin/wrangler"
+          # `email_verifications`, `registros_acesso` e `arrependimentos` apontam
+          # para `accounts` (e `arrependimentos` e `estornos` para `orders`) e precisam sair
+          # antes. Ficam num comando À PARTE, com `|| true`: a publicação aplica
+          # o worker/schema.sql (scripts/cloudflare-setup.sh), mas esta etapa
+          # roda com `always()`, também quando a publicação caiu ANTES de
+          # aplicá-lo. Aí uma tabela nova pode ainda não existir, e um DELETE
+          # numa tabela ausente derrubaria o comando inteiro abaixo.
+          $W d1 execute hebraico-fluente --remote --command \
+            "DELETE FROM email_verifications WHERE account_id IN ($ALVO);
+             DELETE FROM registros_acesso    WHERE account_id IN ($ALVO);
+             DELETE FROM arrependimentos     WHERE account_id IN ($ALVO);
+             DELETE FROM novidades           WHERE account_id IN ($ALVO);
+             DELETE FROM lembretes_estudo    WHERE account_id IN ($ALVO);
+             DELETE FROM marcas              WHERE account_id IN ($ALVO);
+             DELETE FROM aparelhos           WHERE account_id IN ($ALVO);
+             DELETE FROM depoimentos         WHERE account_id IN ($ALVO);
+             DELETE FROM aceites             WHERE account_id IN ($ALVO);
+             DELETE FROM admin_codigos       WHERE account_id IN ($ALVO);
+             DELETE FROM provas_a1           WHERE account_id IN ($ALVO);
+             DELETE FROM certificados        WHERE account_id IN ($ALVO);
+             DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));" || true
+          $W d1 execute hebraico-fluente --remote --command \
             "DELETE FROM access_log       WHERE account_id IN ($ALVO);
              DELETE FROM payment_events   WHERE order_id IN (SELECT id FROM orders WHERE account_id IN ($ALVO));
              DELETE FROM orders           WHERE account_id IN ($ALVO);
@@ -515,3 +726,56 @@ jobs:
              DELETE FROM password_resets  WHERE account_id IN ($ALVO);
              DELETE FROM accounts WHERE email LIKE 'hf-e2e-%@example.invalid'" \
             && echo "Contas de teste removidas." >> "$GITHUB_STEP_SUMMARY"
+
+  # ── exportar as gravações do painel ──────────────────────────────────────
+  # Só no disparo manual com "Exportar as gravações do painel" marcado. Lê a
+  # tabela `gravacoes` do D1, trata cada clipe como o cortar-audio e guarda em
+  # audio/ num ramo novo `gravacoes-do-painel-<run>`, para conferir num PR.
+  # Não publica nada: a publicação vem quando o PR entra em main (audio/**
+  # está nos caminhos que disparam o deploy).
+  exportar-gravacoes:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.exportar_gravacoes }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null
+
+      - name: O tratamento funciona? (ensaio, sem banco)
+        run: node tools/exportar-gravacoes.mjs --ensaiar
+
+      - name: Exportar do D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node tools/exportar-gravacoes.mjs 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Guardar num ramo novo
+        run: |
+          RAMO="gravacoes-do-painel-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$RAMO"
+          git add audio/*.mp3
+          if git diff --cached --quiet; then
+            echo "Nada mudou em audio/: as gravações do painel já estão no git." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          N=$(git diff --cached --name-only | wc -l)
+          git commit -q -m "Áudio: $N clipe(s) exportado(s) do painel de gravação"
+          git push -q origin "$RAMO"
+          echo "Ramo **$RAMO** com $N clipe(s). Abra um PR dele para main." >> "$GITHUB_STEP_SUMMARY"

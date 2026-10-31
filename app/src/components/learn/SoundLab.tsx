@@ -19,10 +19,12 @@
  * scored. The testing version of the same content is the generated exercise.
  */
 
+import { tx } from '@/i18n/telas/licao-sound-lab';
+import { IconeSom } from '@/components/shell/NavIcons';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
-import { AudioButton, hasAudio } from './AudioButton';
+import { AudioButton, hasAudio, tocarClipe, useRegistroDeAudio } from './AudioButton';
 import type { Letter, Syllable } from '@/lib/content';
 import { nikud } from '@/lib/content';
 
@@ -34,7 +36,7 @@ const VOWEL_LABEL: Record<Vowel, string> = {
 };
 
 export function SoundLab({
-  letters, title = 'Laboratório de sons', compact = false
+  letters, title = tx.titulo, compact = false
 }: {
   /** Already filtered to what the learner has met. */
   letters: Letter[];
@@ -55,7 +57,7 @@ export function SoundLab({
                       flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="font-display text-[16px] font-bold text-ink">{title}</h3>
         <p className="font-ui text-[12.5px] text-ink-muted">
-          toque numa sílaba para ouvir e ver como se lê
+          {tx.toque}
         </p>
       </div>
 
@@ -65,12 +67,15 @@ export function SoundLab({
           than shrinking the Hebrew, which is the one thing this component must
           never do. */}
       <div className="overflow-x-auto overscroll-x-contain">
-        <table className="w-full min-w-[344px] border-collapse">
+        {/* A tabela inteira em RTL (12/10/2026): a coluna das letras fica à
+            direita e as vogais seguem A, E, I, O, U para a esquerda, que é
+            a ordem em que uma linha de hebraico é lida. */}
+        <table className="w-full min-w-[344px] border-collapse" dir="rtl">
           <thead>
             <tr>
-              <th className="sticky left-0 z-10 bg-surface px-2 sm:px-3 py-2 text-left
+              <th className="sticky right-0 z-10 bg-surface px-2 sm:px-3 py-2 text-right
                              font-ui text-[11px] uppercase tracking-[.07em] text-ink-muted">
-                Letra
+                {tx.letra}
               </th>
               {VOWELS.map(v => (
                 <th key={v} className="px-1 py-2 font-ui text-[13px] font-semibold text-[var(--accent)]">
@@ -82,10 +87,10 @@ export function SoundLab({
           <tbody>
             {rows.map(L => (
               <tr key={L.id} className="border-t border-[color:var(--line-soft)]">
-                <th scope="row" className="sticky left-0 z-10 bg-surface px-2 sm:px-3 py-1.5 text-left">
+                <th scope="row" className="sticky right-0 z-10 bg-surface px-2 sm:px-3 py-1.5 text-right">
                   <span className="flex items-center gap-2">
                     <He size="word">{L.letter}</He>
-                    <span className="hidden sm:inline font-ui text-[11.5px] text-ink-muted">
+                    <span dir="ltr" className="hidden sm:inline font-ui text-[11.5px] text-ink-muted">
                       {L.namePt}
                     </span>
                   </span>
@@ -98,8 +103,13 @@ export function SoundLab({
                     <td key={v} className="p-1">
                       <button
                         type="button"
-                        onClick={() => setPicked(on ? null : { letter: L, syl })}
-                        aria-label={`${L.namePt} com ${VOWEL_LABEL[v]}: ${syl.translit}`}
+                        onClick={() => {
+                          /* Tocar é ouvir (27/09/2026): o som sai no toque, e o
+                             painel embaixo fica para ler a dica e repetir. */
+                          tocarClipe(syl.audioId);
+                          setPicked({ letter: L, syl });
+                        }}
+                        aria-label={tx.silaba(L.namePt, VOWEL_LABEL[v], syl.translit)}
                         aria-pressed={on}
                         className={`w-full min-h-[56px] rounded-[var(--r-md)] border-2 px-1
                           grid place-items-center transition-colors
@@ -131,13 +141,12 @@ export function SoundLab({
               <p className="font-ui text-[13px] text-ink-muted">{picked.syl.ptApprox}</p>
             </div>
             <div className="ml-auto">
-              <AudioButton audioId={picked.syl.audioId} label="Ouvir" slow />
+              <AudioButton audioId={picked.syl.audioId} label={tx.deNovo} slow />
             </div>
           </>
         ) : (
           <p className="font-ui text-[13.5px] text-ink-muted">
-            A consoante muda de linha para linha. O sinal é o mesmo em toda a coluna -
-            é isso que faz a leitura ficar automática.
+            {tx.consoanteMuda}
           </p>
         )}
       </div>
@@ -150,6 +159,7 @@ export function SoundLab({
    they sit, which is the other half - and it is the only place in the course
    where a learner can hear "patach" said out loud. */
 export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
+  useRegistroDeAudio();
   return (
     <div className="grid gap-3">
       {nikud().sounds.map(s => (
@@ -164,18 +174,20 @@ export function VowelSigns({ demoLetter }: { demoLetter?: string }) {
           </div>
           <ul className="grid gap-2 sm:grid-cols-2">
             {s.signs.map(g => (
-              <li key={g.namePt}
-                  className="flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2">
-                <He size="lg">{demoLetter ? demoLetter + g.sign : g.demo}</He>
-                <span className="grid gap-0.5 min-w-0">
-                  <span className="font-ui text-[13.5px] font-medium text-ink">{g.namePt}</span>
-                  <span className="font-ui text-[12px] text-ink-muted truncate">{g.position}</span>
-                </span>
-                {hasAudio(g.nameAudioId) && (
-                  <span className="ml-auto">
-                    <AudioButton audioId={g.nameAudioId} label="Nome" size="sm" />
+              <li key={g.namePt}>
+                {/* O cartão inteiro toca o nome do sinal (27/09/2026). */}
+                <button type="button" onClick={() => tocarClipe(g.nameAudioId)}
+                        disabled={!hasAudio(g.nameAudioId)}
+                        aria-label={`${g.namePt}${hasAudio(g.nameAudioId) ? tx.ouvirNome : ''}`}
+                        className="w-full text-left flex items-center gap-3 rounded-[var(--r-md)] bg-surface-2 px-3 py-2
+                                   min-h-[56px] enabled:hover:bg-[var(--accent-wash)] enabled:active:scale-[.99] transition">
+                  <He size="lg">{demoLetter ? demoLetter + g.sign : g.demo}</He>
+                  <span className="grid gap-0.5 min-w-0">
+                    <span className="font-ui text-[13.5px] font-medium text-ink">{g.namePt}</span>
+                    <span className="font-ui text-[12px] text-ink-muted truncate">{g.position}</span>
                   </span>
-                )}
+                  {hasAudio(g.nameAudioId) && <span aria-hidden className="ml-auto text-[var(--accent)]"><IconeSom size={16} /></span>}
+                </button>
               </li>
             ))}
           </ul>

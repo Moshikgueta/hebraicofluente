@@ -23,6 +23,7 @@
  * que passou a buscar de /api/content.
  */
 
+import type { PlacaDaRua } from '@/lib/engine/rua';
 import lettersJson from '@content/letters.json';
 import nikudJson from '@content/nikud.json';
 import extrasJson from '@content/extras.json';
@@ -31,6 +32,12 @@ import sentencesJson from '@content/sentences.json';
 import erasJson from '@content/eras.json';
 import strokeJson from '@content/stroke-paths.json';
 import cultureJson from '@content/culture.json';
+import missoesJson from '@content/missoes.json';
+import textosJson from '@content/textos.json';
+import bonusJson from '@content/bonus.json';
+import type { Missao } from './engine/missao';
+import type { Texto } from './engine/textos';
+import type { GuiaNikud, LeituraBonus } from './engine/bonus';
 import type {
   CultureCard, EraPair, Letter, NikudIntro, NikudSound, Scene, Sentence, StrokeSet
 } from './content-publico';
@@ -44,6 +51,11 @@ export type ConteudoPago = {
   eras: EraPair[];
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
+  missoes: Missao[];
+  rua: PlacaDaRua[];
+  textos: Texto[];
+  bonus: LeituraBonus[];
+  guiaNikud: GuiaNikud | null;
 };
 
 /**
@@ -61,7 +73,12 @@ export const conteudoPago: ConteudoPago = {
   sentences: (sentencesJson as unknown as { sentences: Sentence[] }).sentences,
   eras: (erasJson as unknown as { pairs: EraPair[] }).pairs,
   strokes: (strokeJson as unknown as { box: number; letters: Record<string, StrokeSet> }).letters,
-  culture: (cultureJson as unknown as { cards: CultureCard[] }).cards
+  culture: (cultureJson as unknown as { cards: CultureCard[] }).cards,
+  missoes: (missoesJson as unknown as { missoes: Missao[] }).missoes,
+  rua: (missoesJson as unknown as { rua?: PlacaDaRua[] }).rua ?? [],
+  textos: (textosJson as unknown as { textos: Texto[] }).textos,
+  bonus: (bonusJson as unknown as { leituras: LeituraBonus[] }).leituras,
+  guiaNikud: (bonusJson as unknown as { guia?: GuiaNikud }).guia ?? null
 };
 
 /* ── as letras, para as rotas ─────────────────────────────────────────────

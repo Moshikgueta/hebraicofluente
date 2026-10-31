@@ -29,7 +29,7 @@
         { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
         { "he": "לוֹמֵד", "translit": "loméd", "pt": "estudo" }
       ],
-      "notePt": "A primeira frase inteira do curso. Se você leu isto sozinho, já não está decorando letras."
+      "notePt": "A primeira frase inteira do curso. Se você leu isto sozinho, já não está decorando letras. Uma mulher diz {{לוֹמֶדֶת}}, lomédet."
     },
     {
       "id": "hi-mora",
@@ -46,14 +46,14 @@
     },
     {
       "id": "david-ve-sara",
-      "he": "דָּוִד וְשָׂרָה",
-      "translit": "David ve-Sará",
+      "he": "דָוִד וְשָׂרָה",
+      "translit": "Dávid veSará",
       "pt": "David e Sara",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "דָּוִד", "translit": "David", "pt": "David" },
-        { "he": "וְשָׂרָה", "translit": "ve-Sará", "pt": "e Sara" }
+        { "he": "דָוִד", "translit": "Dávid", "pt": "David" },
+        { "he": "וְשָׂרָה", "translit": "veSará", "pt": "e Sara" }
       ],
       "notePt": "O \"e\" não é palavra solta: é a letra {{ו}} colada na frente da palavra seguinte."
     },
@@ -71,40 +71,40 @@
     },
     {
       "id": "ani-mi-israel",
-      "he": "אֲנִי מִיִּשְׂרָאֵל",
-      "translit": "aní mi-Yisraél",
+      "he": "אֲנִי מִיִשְׂרָאֵל",
+      "translit": "aní miYisraél",
       "pt": "eu sou de Israel",
       "after": 11,
       "era": "moderno",
       "words": [
         { "he": "אֲנִי", "translit": "aní", "pt": "eu" },
-        { "he": "מִיִּשְׂרָאֵל", "translit": "mi-Yisraél", "pt": "de Israel" }
+        { "he": "מִיִשְׂרָאֵל", "translit": "miYisraél", "pt": "de Israel" }
       ],
       "notePt": "O {{מ}} colado na frente faz o \"de\". Hebraico prende partículas na palavra em vez de soltá-las."
     },
     {
       "id": "ha-yam-gadol",
-      "he": "הַיָּם גָּדוֹל",
-      "translit": "ha-yám gadól",
+      "he": "הַיָם גָדוֹל",
+      "translit": "hayám gadól",
       "pt": "o mar é grande",
       "after": 12,
       "era": "moderno",
       "words": [
-        { "he": "הַיָּם", "translit": "ha-yám", "pt": "o mar" },
-        { "he": "גָּדוֹל", "translit": "gadól", "pt": "grande" }
+        { "he": "הַיָם", "translit": "hayám", "pt": "o mar" },
+        { "he": "גָדוֹל", "translit": "gadól", "pt": "grande" }
       ],
       "notePt": "O {{ה}} na frente é o \"o/a\". Também vem colado."
     },
     {
       "id": "ma-hashaa",
-      "he": "מָה הַשָּׁעָה",
-      "translit": "ma ha-shaá",
+      "he": "מָה הַשָׁעָה",
+      "translit": "ma hashaá",
       "pt": "que horas são",
       "after": 17,
       "era": "moderno",
       "words": [
         { "he": "מָה", "translit": "ma", "pt": "que" },
-        { "he": "הַשָּׁעָה", "translit": "ha-shaá", "pt": "a hora" }
+        { "he": "הַשָׁעָה", "translit": "hashaá", "pt": "a hora" }
       ],
       "notePt": "Literalmente \"que a hora\". É assim que se pergunta as horas em Israel."
     },
@@ -161,27 +161,27 @@
     },
     {
       "id": "toda-raba",
-      "he": "תּוֹדָה רַבָּה",
+      "he": "תוֹדָה רַבָּה",
       "translit": "todá rabá",
       "pt": "muito obrigado",
       "after": 20,
       "era": "moderno",
       "words": [
-        { "he": "תּוֹדָה", "translit": "todá", "pt": "obrigado" },
+        { "he": "תוֹדָה", "translit": "todá", "pt": "obrigado" },
         { "he": "רַבָּה", "translit": "rabá", "pt": "muita" }
       ],
       "notePt": "\"Agradecimento muito\". De novo o adjetivo atrás."
     },
     {
       "id": "ken-bevakasha",
-      "he": "כֵּן, בְּבַקָּשָׁה",
+      "he": "כֵּן, בְּבַקָשָׁה",
       "translit": "ken, bevakashá",
       "pt": "sim, por favor",
       "after": 21,
       "era": "moderno",
       "words": [
         { "he": "כֵּן", "translit": "ken", "pt": "sim" },
-        { "he": "בְּבַקָּשָׁה", "translit": "bevakashá", "pt": "por favor" }
+        { "he": "בְּבַקָשָׁה", "translit": "bevakashá", "pt": "por favor" }
       ],
       "notePt": "A mesma palavra serve para \"por favor\", \"de nada\" e \"aqui está\"."
     },
@@ -197,7 +197,7 @@
         { "he": "מְדַבֵּר", "translit": "medabér", "pt": "falo" },
         { "he": "עִבְרִית", "translit": "ivrít", "pt": "hebraico" }
       ],
-      "notePt": "Três palavras. A última é o nome da própria língua que você está lendo."
+      "notePt": "Três palavras. A última é o nome da própria língua que você está lendo. Uma mulher diz {{מְדַבֶּרֶת}}, medabéret."
     },
     {
       "id": "shalom-ma-shlomcha",
@@ -211,17 +211,17 @@
         { "he": "מָה", "translit": "ma", "pt": "que" },
         { "he": "שְׁלוֹמְךָ", "translit": "shlomchá", "pt": "a sua paz" }
       ],
-      "notePt": "Pergunta-se pela \"paz\" da pessoa. A mesma raiz de {{שָׁלוֹם}} aparece nas duas palavras."
+      "notePt": "Pergunta-se pela \"paz\" da pessoa. A mesma raiz de {{שָׁלוֹם}} aparece nas duas palavras. Para uma mulher: {{מָה שְׁלוֹמֵךְ}}, ma shloméch."
     },
     {
       "id": "tel-aviv",
-      "he": "תֵּל אָבִיב",
+      "he": "תֵל אָבִיב",
       "translit": "Tel Avív",
       "pt": "Tel Aviv",
       "after": 20,
       "era": "moderno",
       "words": [
-        { "he": "תֵּל", "translit": "tel", "pt": "colina" },
+        { "he": "תֵל", "translit": "tel", "pt": "colina" },
         { "he": "אָבִיב", "translit": "avív", "pt": "primavera" }
       ],
       "notePt": "O nome da cidade quer dizer \"colina da primavera\" - antigo e moderno na mesma placa."
@@ -250,19 +250,19 @@
         { "he": "חַג", "translit": "chag", "pt": "festa" },
         { "he": "שָׂמֵחַ", "translit": "saméach", "pt": "alegre" }
       ],
-      "notePt": "\"Festa alegre\". Serve para qualquer feriado judaico, como o nosso \"boas festas\"."
+      "notePt": "\"Festa alegre\". Serve para as festas alegres do calendário (Pessach, Sucot, Shavuot, Chanucá...), como o nosso \"boas festas\". Em dias de jejum ou de luto não se diz."
     },
     {
       "id": "leat",
       "he": "לְאַט",
-      "translit": "le'at",
+      "translit": "leát",
       "pt": "devagar",
       "after": 15,
       "era": "moderno",
       "words": [
-        { "he": "לְאַט", "translit": "le'at", "pt": "devagar" }
+        { "he": "לְאַט", "translit": "leát", "pt": "devagar" }
       ],
-      "notePt": "Está escrito nas placas de trânsito em Israel. Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\"."
+      "notePt": "Dobrada, {{לְאַט לְאַט}}, vira \"calma, uma coisa de cada vez\"."
     },
     {
       "id": "ani-rotse-maim",
@@ -302,7 +302,7 @@
         { "he": "בְּרֵאשִׁית", "translit": "bereshít", "pt": "no princípio" },
         { "he": "בָּרָא", "translit": "bará", "pt": "criou" }
       ],
-      "notePt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohim."
+      "notePt": "As duas primeiras palavras da Bíblia hebraica. A frase continua com {{אֱלֹהִים}}, Elohím."
     },
     {
       "id": "ani-rotse-kafe",
@@ -316,7 +316,138 @@
         { "he": "רוֹצֶה", "translit": "rotsé", "pt": "quero" },
         { "he": "קָפֶה", "translit": "kafé", "pt": "café" }
       ],
-      "notePt": "A última letra do alfabeto está aqui dentro. Com ela você lê um pedido inteiro."
+      "notePt": "A última letra do curso está aqui dentro. Com ela você lê um pedido inteiro."
+    },
+    {
+      "id": "mi-ata",
+      "he": "מִי אַתָה?",
+      "translit": "mi atá?",
+      "pt": "Quem é você?",
+      "after": 6,
+      "era": "moderno",
+      "words": [
+        { "he": "מִי", "translit": "mi", "pt": "quem" },
+        { "he": "אַתָה", "translit": "atá", "pt": "você" }
+      ],
+      "notePt": "Assim se pergunta a um homem. Para uma mulher, o \"você\" é outra palavra, mais curta."
+    },
+    {
+      "id": "hine-haiam",
+      "he": "הִנֵה הַיָם",
+      "translit": "hiné hayám",
+      "pt": "Olha o mar.",
+      "after": 6,
+      "era": "moderno",
+      "words": [
+        { "he": "הִנֵה", "translit": "hiné", "pt": "olha, aqui está" },
+        { "he": "הַיָם", "translit": "hayám", "pt": "o mar" }
+      ],
+      "notePt": "{{הִנֵה}} aponta para algo que está à vista: \"olha\", \"aqui está\"."
+    },
+    {
+      "id": "hine-dag",
+      "he": "הִנֵה דָג!",
+      "translit": "hiné dag!",
+      "pt": "Olha um peixe!",
+      "after": 8,
+      "era": "moderno",
+      "words": [
+        { "he": "הִנֵה", "translit": "hiné", "pt": "olha, aqui está" },
+        { "he": "דָג", "translit": "dag", "pt": "peixe" }
+      ],
+      "notePt": "A mesma fala do Dani no texto \"O peixe\", do módulo 2."
+    },
+    {
+      "id": "gam-ani",
+      "he": "גַם אֲנִי",
+      "translit": "gam aní",
+      "pt": "Eu também.",
+      "after": 7,
+      "era": "moderno",
+      "words": [
+        { "he": "גַם", "translit": "gam", "pt": "também" },
+        { "he": "אֲנִי", "translit": "aní", "pt": "eu" }
+      ],
+      "notePt": "Em hebraico o \"também\" vem antes: {{גַם}}, depois {{אֲנִי}}."
+    },
+    {
+      "id": "mi-sham",
+      "he": "מִי שָׁם?",
+      "translit": "mi sham?",
+      "pt": "Quem está aí?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "מִי", "translit": "mi", "pt": "quem" },
+        { "he": "שָׁם", "translit": "sham", "pt": "aí, ali" }
+      ],
+      "notePt": "Não há verbo \"estar\": {{מִי}} e {{שָׁם}} já fazem a pergunta."
+    },
+    {
+      "id": "iesh-te",
+      "he": "יֵשׁ תֵה?",
+      "translit": "yesh te?",
+      "pt": "Tem chá?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" },
+        { "he": "תֵה", "translit": "te", "pt": "chá" }
+      ],
+      "notePt": "{{יֵשׁ}} é o \"tem\" de \"tem chá?\": diz que uma coisa existe ou está ali."
+    },
+    {
+      "id": "ma-iesh",
+      "he": "מָה יֵשׁ?",
+      "translit": "ma yesh?",
+      "pt": "O que foi?",
+      "after": 9,
+      "era": "moderno",
+      "words": [
+        { "he": "מָה", "translit": "ma", "pt": "o que" },
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" }
+      ],
+      "notePt": "Ao pé da letra, \"o que tem?\". No dia a dia, é o \"o que foi?\" de quem nota alguma coisa."
+    },
+    {
+      "id": "haieled-sham",
+      "he": "הַיֶלֶד שָׁם",
+      "translit": "hayéled sham",
+      "pt": "O menino está ali.",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "הַיֶלֶד", "translit": "hayéled", "pt": "o menino" },
+        { "he": "שָׁם", "translit": "sham", "pt": "ali" }
+      ],
+      "notePt": "O {{הַ}} na frente é o \"o\": {{יֶלֶד}}, menino; {{הַיֶלֶד}}, o menino."
+    },
+    {
+      "id": "iesh-glida",
+      "he": "יֵשׁ גְלִידָה!",
+      "translit": "yesh glidá!",
+      "pt": "Tem sorvete!",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "יֵשׁ", "translit": "yesh", "pt": "tem, há" },
+        { "he": "גְלִידָה", "translit": "glidá", "pt": "sorvete" }
+      ],
+      "notePt": "A mesma frase de \"tem chá?\", agora com a notícia boa."
+    },
+    {
+      "id": "hi-ima-sheli",
+      "he": "הִיא אִמָא שֶׁלִי",
+      "translit": "hi íma shelí",
+      "pt": "Ela é a minha mãe.",
+      "after": 10,
+      "era": "moderno",
+      "words": [
+        { "he": "הִיא", "translit": "hi", "pt": "ela" },
+        { "he": "אִמָא", "translit": "íma", "pt": "mãe" },
+        { "he": "שֶׁלִי", "translit": "shelí", "pt": "meu, minha" }
+      ],
+      "notePt": "{{שֶׁלִי}} vem depois da coisa: \"mãe minha\". Serve para meu e para minha."
     }
   ]
 }

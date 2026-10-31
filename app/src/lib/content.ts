@@ -33,6 +33,8 @@
  */
 
 import { course, getModule, letterIds } from './content-publico';
+import { textosPublicados } from './engine/textos';
+import { leiturasPublicadas, type GuiaNikud, type LeituraBonus } from './engine/bonus';
 import type {
   Checkpoint, Course, CourseModule, CultureCard, EraPair, Letter, LetterSkel,
   NikudIntro, NikudSign, NikudSound, Scene, Sentence, SentenceWord, Stroke, StrokeSet,
@@ -60,6 +62,15 @@ export type ConteudoPago = {
   eras: EraPair[];
   strokes: Record<string, StrokeSet>;
   culture: CultureCard[];
+  missoes: import('./engine/missao').Missao[];
+  /** O Hebraico na rua: as placas aprovadas (lib/engine/rua.ts). Vêm no missoes.json. */
+  rua: import('./engine/rua').PlacaDaRua[];
+  textos: import('./engine/textos').Texto[];
+  bonus: LeituraBonus[];
+  guiaNikud: GuiaNikud | null;
+  /** O aviso de uso pessoal com o número da cópia desta conta
+   *  (worker/src/lib/marca.js). Só no que vem de /api/content. */
+  _licenca?: string;
 };
 
 /* ── o depósito ─────────────────────────────────────────────────────────── */
@@ -67,6 +78,10 @@ export type ConteudoPago = {
 let DADOS: ConteudoPago | null = null;
 let LETTERS: Letter[] = [];
 let BY_ID = new Map<string, Letter>();
+
+/** O número da cópia desta conta, para a marca d'água das aulas. */
+export const numeroDaCopia = (): string | null =>
+  DADOS?._licenca?.match(/Cópia ([0-9A-F]{8})\./)?.[1] ?? null;
 
 /** Já dá para ler? É o que `CourseGate` pergunta antes de renderizar. */
 export const conteudoPronto = (): boolean => DADOS !== null;
@@ -81,9 +96,9 @@ export function hidratarConteudo(d: ConteudoPago): void {
 
 function naoHidratado(oQue: string): never {
   throw new Error(
-    `conteúdo do curso lido antes de carregar (${oQue}). `
-    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; '
-    + 'se este erro apareceu, alguma coisa renderizou fora dele.'
+    `conteúdo do curso lido antes de carregar (${oQue}). ` // i18n-ok: erro de desenvolvedor
+    + 'Toda tela de aluno renderiza dentro de CourseGate, que espera; ' // i18n-ok: erro de desenvolvedor
+    + 'se este erro apareceu, alguma coisa renderizou fora dele.' // i18n-ok: erro de desenvolvedor
   );
 }
 
@@ -115,6 +130,39 @@ export const nikud = (): ConteudoPago['nikud'] => dados().nikud;
 /** Módulos 6 e 7, iguais aos da apostila impressa. */
 export const extras = (): ConteudoPago['extras'] => dados().extras;
 
+/** Todos os mini-textos que o aluno pode ver (os revisados). */
+export const textosDoCurso = (): ConteudoPago['textos'] => textosPublicados(dados().textos);
+
+/** O mini-texto do módulo `n`, só se já foi revisado. Ver lib/engine/textos.ts. */
+export const textoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && !t.n);
+
+/** O segundo texto do módulo `n` (28/10/2026), se houver e estiver revisado. */
+export const segundoTextoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && !t.revisao && t.n === 2);
+
+/** A leitura de revisão do módulo `n`: só palavras já acumuladas. */
+export const revisaoDoModulo = (n: number): ConteudoPago['textos'][number] | undefined =>
+  textosPublicados(dados().textos).find(t => t.modulo === n && t.revisao);
+
+/** As leituras bônus revisadas (textos e versículos bíblicos; ver engine/bonus.ts).
+ *  `?? []`: um Worker publicado antes delas responde sem o campo. */
+export const leiturasBonus = (): LeituraBonus[] => leiturasPublicadas(dados().bonus ?? []);
+
+/** O guia «O nikud da Bíblia», se já revisado. */
+export const guiaNikud = (): GuiaNikud | null => {
+  const g = dados().guiaNikud;
+  return g?.revisado ? g : null;
+};
+
+/** As placas do Hebraico na rua (lib/engine/rua.ts). Estados antigos do
+ *  depósito, sem a chave, valem como nenhuma. */
+export const placasDaRua = (): ConteudoPago['rua'] => dados().rua ?? [];
+
+/** A missão que fecha o módulo `n`, se houver. */
+export const missaoDoModulo = (n: number): ConteudoPago['missoes'][number] | undefined =>
+  dados().missoes.find(m => m.modulo === n);
+
 /** As cenas que o aluno JÁ consegue decifrar, da mais nova para a mais
  *  velha. Uma placa que ele não sabe ler não é recompensa. */
 export const scenesUpTo = (order: number): Scene[] =>
@@ -132,6 +180,29 @@ export const strokesFor = (id: string): StrokeSet | null => dados().strokes[id] 
    diferença é que a frase é o objetivo declarado do curso - "ler hebraico" -
    e mostrá-la cedo demais não frustra um pouco: frustra na coisa pela qual a
    pessoa pagou. */
+
+/* ── o som sem o ponto (Vet, Chaf, Fe) ──────────────────────────────────
+   Cada um é ensinado na lição de som logo DEPOIS da letra (sons.ts). Uma
+   frase ou cena liberada pela ordem das letras pode trazer esse som antes da
+   hora: na lição do Kaf, «מָה שְׁלוֹמְךָ» termina em Chaf (auditoria de
+   28/09, PED-025). As listas abaixo continuam iguais - o exame e a galeria
+   usam tudo -, e é a lição da letra que filtra com `semOSomDe`. */
+
+const SEM_PONTO: Record<string, string> = { 'ב': 'bet', 'כ': 'kaf', 'ך': 'kaf', 'פ': 'pe', 'ף': 'pe' };
+
+/** As letras (bet, kaf, pe) que aparecem SEM daguesh neste hebraico
+ *  pontuado - isto é, com o som de Vet, Chaf ou Fe. */
+export function sonsSemPonto(he: string): Set<string> {
+  const out = new Set<string>();
+  for (const m of he.matchAll(/([\u05D1\u05DB\u05DA\u05E4\u05E3])([\u0591-\u05C7]*)/g)) {
+    if (!m[2]!.includes('\u05BC')) out.add(SEM_PONTO[m[1]!]!);
+  }
+  return out;
+}
+
+/** Filtro da lição da letra: fica fora o que usa o som dela ainda não ensinado. */
+export const semOSomDe = (letterId: string) => (x: { he: string }): boolean =>
+  !sonsSemPonto(x.he).has(letterId);
 
 /** Tudo o que este aluno já consegue ler, da mais simples para a mais tardia. */
 export const sentencesUpTo = (order: number): Sentence[] =>
@@ -221,7 +292,21 @@ export const CONTEUDO_DO_SERVIDOR = process.env.NEXT_PUBLIC_PLATFORM_API === 'wo
  * JSONs fora do pacote de produção e, ao mesmo tempo, deixa a varredura
  * abrir as telas de aluno sem um Worker por perto.
  */
-export async function carregarConteudo(): Promise<void> {
+export function carregarConteudo(): Promise<void> {
+  if (DADOS) return Promise.resolve();
+  /* Um pedido só por vez (auditoria de 01/10/2026, PERF-004): o CourseGate
+     dispara a busca já na montagem, em paralelo com /api/me, e de novo
+     quando a sessão confirma o acesso - a segunda chamada pega a mesma
+     promessa em vez de baixar o curso duas vezes. Falhou, esquece: a
+     próxima chamada tenta de novo. */
+  if (!emAndamento) {
+    emAndamento = buscarConteudo().catch(e => { emAndamento = null; throw e; });
+  }
+  return emAndamento;
+}
+let emAndamento: Promise<void> | null = null;
+
+async function buscarConteudo(): Promise<void> {
   if (DADOS) return;
 
   /* Escrito com o `process.env` inteiro dentro do `if`, e não com a constante
@@ -230,7 +315,7 @@ export async function carregarConteudo(): Promise<void> {
      com os `import()` dentro. A constante exportada é para quem lê; o ramo
      tem de ser podado, e quem poda não segue exportação. */
   if (process.env.NEXT_PUBLIC_PLATFORM_API !== 'worker') {
-    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson] = await Promise.all([
+    const [letters, nikudJson, extrasJson, realWorld, sentencesJson, erasJson, strokeJson, cultureJson, missoesJson, textosJson, bonusJson] = await Promise.all([
       import('@content/letters.json'),
       import('@content/nikud.json'),
       import('@content/extras.json'),
@@ -238,7 +323,10 @@ export async function carregarConteudo(): Promise<void> {
       import('@content/sentences.json'),
       import('@content/eras.json'),
       import('@content/stroke-paths.json'),
-      import('@content/culture.json')
+      import('@content/culture.json'),
+      import('@content/missoes.json'),
+      import('@content/textos.json'),
+      import('@content/bonus.json')
     ]);
     const bruto = <T,>(m: unknown): T =>
       ((m as { default?: unknown }).default ?? m) as T;
@@ -250,7 +338,12 @@ export async function carregarConteudo(): Promise<void> {
       sentences: bruto<{ sentences: Sentence[] }>(sentencesJson).sentences,
       eras: bruto<{ pairs: EraPair[] }>(erasJson).pairs,
       strokes: bruto<{ box: number; letters: Record<string, StrokeSet> }>(strokeJson).letters,
-      culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards
+      culture: bruto<{ cards: CultureCard[] }>(cultureJson).cards,
+      missoes: bruto<{ missoes: ConteudoPago['missoes'] }>(missoesJson).missoes,
+      rua: bruto<{ rua?: ConteudoPago['rua'] }>(missoesJson).rua ?? [],
+      textos: bruto<{ textos: ConteudoPago['textos'] }>(textosJson).textos,
+      bonus: bruto<{ leituras: LeituraBonus[] }>(bonusJson).leituras,
+      guiaNikud: bruto<{ guia?: GuiaNikud }>(bonusJson).guia ?? null
     });
     return;
   }

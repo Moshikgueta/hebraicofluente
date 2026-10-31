@@ -1,0 +1,80 @@
+{
+  "_": [
+    "A trilha da história da língua hebraica: conteúdo bônus do A1, sempre aberto, nunca pré-requisito.",
+    "Cada capítulo sugere um momento do curso (depoisDaUnidade), só como sugestão de leitura.",
+    "Texto curto e verificável: datas aproximadas dizem que são aproximadas."
+  ],
+  "revisado": false,
+  "capitulos": [
+    {
+      "n": 1,
+      "tituloPt": "O hebraico bíblico",
+      "epocaPt": "Primeiro milênio antes da era comum",
+      "depoisDaUnidade": 2,
+      "textoPt": "As inscrições mais antigas em hebraico são de por volta de três mil anos atrás, escritas numa letra parecida com a fenícia, bem diferente da de hoje. É dessa época a língua da maior parte da Bíblia hebraica. Muitas palavras que você aprendeu já estavam lá: שָׁלוֹם, יוֹם, בַּיִת, לֶחֶם, אִישׁ, אִשָׁה."
+    },
+    {
+      "n": 2,
+      "tituloPt": "O tempo do Segundo Templo",
+      "epocaPt": "Do século 6 a.e.c. ao século 1",
+      "depoisDaUnidade": 4,
+      "textoPt": "Depois do exílio na Babilônia, o aramaico virou a língua do dia a dia de muita gente, e a escrita mudou: as letras quadradas que você lê hoje vêm da escrita aramaica. O hebraico continuou vivo, falado e escrito. Os Manuscritos do Mar Morto, achados a partir de 1947, são em boa parte em hebraico dessa época."
+    },
+    {
+      "n": 3,
+      "tituloPt": "O hebraico dos sábios",
+      "epocaPt": "Por volta do ano 200",
+      "depoisDaUnidade": 6,
+      "textoPt": "A Mishná, a primeira grande obra da lei judaica oral, foi escrita em hebraico por volta do ano 200, numa língua diferente da bíblica, mais próxima da fala. Dela vêm muitas coisas do hebraico moderno, como o uso constante do שֶׁ־ (\"que\") no lugar do bíblico אֲשֶׁר, e o jeito de usar o presente."
+    },
+    {
+      "n": 4,
+      "tituloPt": "Na diáspora: uma língua de livros",
+      "epocaPt": "Do século 3 ao século 18",
+      "depoisDaUnidade": 8,
+      "textoPt": "Aos poucos, o hebraico deixou de ser língua de casa. Os judeus falavam a língua do lugar e criaram línguas próprias, como o iídiche e o ladino. Mas o hebraico seguiu vivo nas rezas, no estudo, na poesia e nas cartas entre comunidades distantes. Foi nessa época que os pontos do nikud foram criados, para guardar a pronúncia dos textos sagrados."
+    },
+    {
+      "n": 5,
+      "tituloPt": "A Haskalá",
+      "epocaPt": "Séculos 18 e 19",
+      "depoisDaUnidade": 10,
+      "textoPt": "Na Europa, o movimento judaico do Iluminismo, a Haskalá, passou a usar o hebraico para escrever romances, artigos e jornais, sobre assuntos do mundo moderno. A língua voltava a falar de ciência, de política e da vida comum, e precisava de palavras novas."
+    },
+    {
+      "n": 6,
+      "tituloPt": "O renascimento",
+      "epocaPt": "Fim do século 19",
+      "depoisDaUnidade": 12,
+      "textoPt": "Nas novas comunidades judaicas da terra de Israel, imigrantes de muitos países precisavam de uma língua em comum. Escolas começaram a ensinar tudo em hebraico, até matemática, com professores inventando palavras na hora. Pela primeira vez em séculos, crianças cresciam falando hebraico."
+    },
+    {
+      "n": 7,
+      "tituloPt": "Eliezer Ben-Yehuda",
+      "epocaPt": "1858 a 1922",
+      "depoisDaUnidade": 14,
+      "textoPt": "Ben-Yehuda chegou a Jerusalém em 1881 e decidiu falar só hebraico em casa. O filho dele foi uma das primeiras crianças a crescer com o hebraico como língua materna nos tempos modernos. Ele criou palavras, publicou jornais e começou um grande dicionário, terminado depois da morte dele. Não reviveu a língua sozinho, mas virou o símbolo desse renascimento."
+    },
+    {
+      "n": 8,
+      "tituloPt": "A formação do hebraico moderno",
+      "epocaPt": "De 1890 a 1948",
+      "depoisDaUnidade": 16,
+      "textoPt": "Em 1890 nasceu o Comitê da Língua, para criar palavras novas. Em 1913, professores e alunos fizeram greve para que uma escola técnica de Haifa ensinasse em hebraico e não em alemão, e ganharam. No mandato britânico, o hebraico virou língua oficial, ao lado do inglês e do árabe. O modelo oficial se inspirou fortemente na pronúncia sefaradi, especialmente nas vogais e na posição do acento. Na prática, porém, a pronúncia das consoantes foi muito influenciada pelos falantes de origem europeia."
+    },
+    {
+      "n": 9,
+      "tituloPt": "O hebraico no Estado de Israel",
+      "epocaPt": "Desde 1948",
+      "depoisDaUnidade": 18,
+      "textoPt": "Com o Estado de Israel, chegaram imigrantes do mundo inteiro, e o hebraico foi a língua que os juntou. Os ulpanim, as escolas intensivas, ensinaram hebraico a mais de um milhão de adultos desde a criação do Estado. Em 1953 foi criada a Academia da Língua Hebraica, que até hoje propõe palavras novas."
+    },
+    {
+      "n": 10,
+      "tituloPt": "O hebraico israelense de hoje",
+      "epocaPt": "Agora",
+      "depoisDaUnidade": 20,
+      "textoPt": "O hebraico de hoje é uma língua viva como qualquer outra: tem gíria que veio do árabe (סַבָּבָּה, יַאלְלָה), palavras do inglês (בַּי), sotaques, e muda com o tempo. A pronúncia também mudou: para a maioria, א e ע soam igual, e ח e כ também. É esse hebraico, o da rua, que você aprendeu neste curso."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+/* Os mini-textos de leitura corrida.
+ * ─────────────────────────────────────────────────────────────────────────
+ * O curso levava o aluno até a frase de três palavras e parava. Ninguém
+ * compra "alfabetização em hebraico" para ler palavras soltas: compra para
+ * ler um bilhete, uma mensagem, um cartão. Um texto curto por módulo, do 3
+ * ao 7, fecha essa lacuna - cinco ou seis linhas, uma situação de verdade,
+ * e perguntas de compreensão em português.
+ *
+ * ── por que existe `revisado` ────────────────────────────────────────────
+ * Tudo o mais no curso é vocabulário e frase que vieram do material de
+ * origem. Estes textos foram escritos para o curso, com frases novas, e
+ * frase nova em hebraico só vai para o aluno depois que alguém que fala a
+ * língua a aprovou. Então cada texto nasce com `revisado: false`, e o curso
+ * SÓ mostra os aprovados (`textoDoModulo` em lib/content.ts filtra). Aprovar
+ * é mudar o campo para `true` em `data/textos.json`.
+ *
+ * `novas` lista o que o texto usa e o curso não ensinou: nomes próprios, o
+ * artigo e as preposições grudadas na palavra, e umas poucas palavras. Elas
+ * aparecem num glossário embaixo do texto.
+ */
+
+import type { ItemCompreensao, Word } from '@/lib/content-publico';
+
+export type LinhaDeTexto = {
+  he: string; translit: string; pt: string;
+  /** Quem fala, nas conversas (27/09/2026): "Dana", "Mãe". Em português, porque
+   *  é rótulo da tela e não texto a ler; não entra na gravação. */
+  quem?: string;
+  /** Só nas linhas do texto: a gravação da linha (onda 4 de data/audio.json). */
+  audioId?: string;
+};
+
+export type Texto = {
+  modulo: number;
+  tituloPt: string;
+  /** Que tipo de texto é: "Bilhete", "Mensagem de WhatsApp"... */
+  tipoPt: string;
+  introPt: string;
+  /** Só `true` depois de um falante de hebraico aprovar. */
+  revisado: boolean;
+  /** A "leitura de revisão" do módulo (05/10/2026): só com as palavras que o
+   *  aluno já acumulou nas lições, sem palavra nova. Uma por módulo, do 1 ao 7,
+   *  ao lado do texto do módulo. `novas` traz só os nomes e os prefixos. */
+  revisao?: boolean;
+  /** O segundo texto do módulo (28/10/2026, aprovados pelo dono no mesmo
+   *  dia): /modulo/N/texto-2, com o "lido" próprio (`textoLidoId(n, false, 2)`). */
+  n?: number;
+  /** Mostrar sem nikud, como chega de verdade (módulo 6). */
+  semPontos?: boolean;
+  linhas: LinhaDeTexto[];
+  novas: LinhaDeTexto[];
+  perguntas: ItemCompreensao[];
+};
+
+/** Os textos que o aluno pode ver. */
+export const textosPublicados = (textos: readonly Texto[]): Texto[] =>
+  textos.filter(t => t.revisado);
+
+/** O `firsts` que registra o texto do módulo `n` como lido. */
+export const textoLidoId = (n: number, revisao = false, ordem = 1): string =>
+  revisao ? `revisao-texto-${n}` : ordem > 1 ? `texto-${n}-${ordem}` : `texto-${n}`;
+
+/**
+ * As palavras que um texto acrescenta ao vocabulário do aluno, depois de lido.
+ *
+ * Vêm de `novas`, que já foram revisadas junto com o texto, menos o que não é
+ * palavra de vocabulário: o prefixo solto (הַ־, בַּ־, que termina no traço de
+ * união) e o nome próprio (Dana, Noa). A pontuação de fim sai: "מָה נִשְׁמָע?"
+ * entra como "מָה נִשְׁמָע". O `audioId` vem do export (a gravação da palavra).
+ */
+export function palavrasDoTexto(t: Texto): Word[] {
+  return t.novas
+    .filter(w => !w.he.includes('־') && !/\(nome\)\s*$/.test(w.pt))
+    .map(w => ({
+      he: w.he.replace(/[?!.,:]+$/u, '').trim(),
+      translit: w.translit.replace(/[?!.,:]+$/u, '').trim(),
+      pt: w.pt,
+      use: null,
+      /* A gravação da palavra (27/09/2026, onda 4, "palavras do texto N"). */
+      audioId: w.audioId ?? ''
+    }));
+}

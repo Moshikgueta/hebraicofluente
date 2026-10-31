@@ -1,0 +1,200 @@
+/* Os dados estruturados (JSON-LD) da capa e da página do curso, gerados dos dados.
+ * ─────────────────────────────────────────────────────────────────────────
+ * Até 01/10/2026 o site não tinha nenhum (auditoria, SEO-001). Quatro
+ * blocos, e nenhum valor escrito aqui à mão:
+ *
+ *   Organization  nome, razão social e CNPJ de data/empresa.json;
+ *   Course        o curso do catálogo, com a oferta: o preço é o mesmo da
+ *                 caixa de preço (`precoDeVitrine`), e `priceValidUntil` é o
+ *                 `preLancamentoAte` enquanto houver preço de pré-lançamento
+ *                 - senão o Google mostraria em novembro um preço vencido;
+ *   FAQPage       as perguntas que a FAQ da página do curso MOSTRA (faq-capa.ts);
+ *   Person        o professor, só com o que /sobre já afirma (Trajetoria.tsx).
+ *                 Nada de cargo, número ou credencial que não esteja lá.
+ *
+ * `app/checa-seo.mjs` lê o HTML publicado e confere: JSON válido, preço igual
+ * ao catálogo, validade igual à data do pré-lançamento, CNPJ igual ao
+ * empresa.json. O script `type="application/ld+json"` não executa, então não
+ * precisa de hash na CSP (tools/csp-hashes.mjs já o pula).
+ */
+
+import { INSTAGRAM, PERFIL_LINKEDIN } from './professor';
+import { ancora, currency, flagship, paginaDeVenda } from '@/lib/catalog';
+import { empresa, nomeLegal } from '@/lib/empresa';
+import { OG, ORIGEM, canonicaDe, url } from '@/lib/seo';
+import { course as estrutura } from '@/lib/content-publico';
+import { precoDeVitrine } from '@/lib/vitrine';
+import { perguntasDaCapa } from '@/components/landing/faq-capa';
+import { tx } from '@/i18n/telas/motor-jsonld';
+import { LANG_HTML, LOCALE } from '@/i18n';
+
+type Json = Record<string, unknown>;
+
+const ID_ORG = `${ORIGEM}/#organizacao`;
+const ID_PROFESSOR = `${ORIGEM}/sobre/#moshik`;
+
+export function organizacao(): Json {
+  const e = empresa.endereco;
+  /* O site em inglês não fala do Brasil (decisão do dono, 29/10/2026): sem a
+     razão social, o CNPJ e o endereço, que ficam nos Termos e na Privacidade. */
+  if (LOCALE === 'en') {
+    return {
+      '@type': 'Organization',
+      '@id': ID_ORG,
+      name: empresa.nomeFantasia,
+      url: ORIGEM + '/',
+      logo: `${ORIGEM}/apple-touch-icon.png`,
+      sameAs: [INSTAGRAM],
+      email: empresa.contato.emailSuporte
+    };
+  }
+  return {
+    '@type': 'Organization',
+    '@id': ID_ORG,
+    name: empresa.nomeFantasia,
+    legalName: nomeLegal(),
+    ...(empresa.cnpj ? { taxID: empresa.cnpj } : {}),
+    url: ORIGEM + '/',
+    logo: `${ORIGEM}/apple-touch-icon.png`,
+    sameAs: [INSTAGRAM],
+    email: empresa.contato.emailSuporte,
+    ...(e?.logradouro && e.cidade ? {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: e.logradouro,
+        addressLocality: e.cidade,
+        ...(e.uf ? { addressRegion: e.uf } : {}),
+        ...(e.cep ? { postalCode: e.cep } : {}),
+        addressCountry: 'BR'
+      }
+    } : {})
+  };
+}
+
+/* As lições que a FAQ conta para dizer "uma por dia termina em cerca de um
+   mês" (tempoDoCursoPt): as letras e as lições de som. O `courseSchedule`
+   abaixo é essa mesma frase - dez minutos por dia, uma lição por vez -, e
+   não um número novo. */
+const licoesDoRitmo = (): number =>
+  estrutura.letters.length + estrutura.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
+
+export function curso(): Json {
+  const c = flagship();
+  const validade = ancora(c.price) && c.price.preLancamentoAte ? c.price.preLancamentoAte : null;
+  return {
+    '@type': 'Course',
+    name: c.titlePt,
+    description: c.taglinePt,
+    inLanguage: LANG_HTML,
+    url: url(canonicaDe(paginaDeVenda(c.slug))),
+    image: ORIGEM + OG.src,
+    provider: { '@id': ID_ORG },
+    /* 31/10/2026 (auditoria de SEO): o que o Google pede para o resultado de
+       curso (Course info) e o que ajuda a busca por IA a dizer do que se
+       trata. Tudo sai do que a página já mostra: o nível e o pré-requisito
+       são o "do zero" da capa; o que ensina é a lista da Promessa; os módulos
+       são os do currículo. Sem nota, número de alunos nem avaliação. */
+    educationalLevel: tx.nivel,
+    coursePrerequisites: tx.preRequisito,
+    availableLanguage: [LANG_HTML],
+    teaches: [tx.ensinaLetras(estrutura.totalLetters), tx.ensinaNikud, tx.ensinaCursiva, tx.ensinaPalavras],
+    syllabusSections: estrutura.modules.map(m => ({
+      '@type': 'Syllabus',
+      name: m.titlePt,
+      ...(m.subPt ? { description: m.subPt } : {})
+    })),
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Online',
+      instructor: { '@id': ID_PROFESSOR },
+      courseSchedule: {
+        '@type': 'Schedule',
+        duration: 'PT10M',
+        repeatFrequency: 'Daily',
+        repeatCount: licoesDoRitmo()
+      }
+    },
+    offers: {
+      '@type': 'Offer',
+      category: 'Paid',
+      price: precoDeVitrine().toFixed(2),
+      priceCurrency: currency,
+      availability: 'https://schema.org/InStock',
+      url: url(canonicaDe(paginaDeVenda(c.slug))),
+      ...(validade ? { priceValidUntil: validade } : {})
+    }
+  };
+}
+
+export function faq(): Json {
+  return {
+    '@type': 'FAQPage',
+    mainEntity: perguntasDaCapa().map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a }
+    }))
+  };
+}
+
+export function professor(retrato: string | null): Json {
+  return {
+    '@type': 'Person',
+    '@id': ID_PROFESSOR,
+    name: 'Moshik Gueta',
+    description: tx.professorDescricao,
+    url: url('/sobre'),
+    knowsLanguage: ['he', 'pt', 'en', 'es', 'it'],
+    worksFor: { '@id': ID_ORG },
+    sameAs: [PERFIL_LINKEDIN],
+    ...(retrato ? { image: `${ORIGEM}/${retrato.replace(/^\/+/, '')}` } : {})
+  };
+}
+
+/** O grafo da página de venda do curso (/curso-de-hebraico), num bloco só.
+ *  Foi o da capa até 23/10/2026: o Course e a FAQPage descrevem o que ESSA
+ *  página mostra (a caixa de preço e as perguntas dela). */
+export function grafoDoCurso(retrato: string | null): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [organizacao(), site(), curso(), faq(), professor(retrato)]
+  };
+}
+
+/* O site (WebSite). Desde 27/10/2026 a capa é a página do curso, e era o
+   grafo da capa (abaixo) que o declarava: a capa ficou sem ele. */
+const site = (): Json => ({
+  '@type': 'WebSite', '@id': `${ORIGEM}/#site`, name: empresa.nomeFantasia, url: ORIGEM + '/',
+  inLanguage: LANG_HTML, publisher: { '@id': ID_ORG }
+});
+
+/** O grafo da capa (o portal, desde 23/10/2026): quem é o site e quem o faz.
+ *  Sem Course nem FAQPage: a capa não mostra preço nem aquelas perguntas, e
+ *  dado estruturado que descreve outra página é o que o Google pune. */
+export function grafoDaCapa(retrato: string | null): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      organizacao(),
+      site(),
+      professor(retrato)
+    ]
+  };
+}
+
+/** As migalhas de uma página (BreadcrumbList), da capa até ela (26/10/2026, páginas do
+ *  alfabeto). Só nome e rota: o que a própria página já mostra nas migalhas da tela. */
+export function migalhas(itens: { nome: string; rota: string }[]): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ nome: tx.inicio, rota: '/' }, ...itens].map((it, i) => ({
+      '@type': 'ListItem', position: i + 1, name: it.nome, item: url(it.rota)
+    }))
+  };
+}
+
+/** O texto do <script type="application/ld+json">. `<` vira `<` para
+ *  que nenhum texto de dado feche a tag por engano. */
+export const jsonLdTexto = (dado: Json): string =>
+  JSON.stringify(dado).replace(/</g, '\\u003c');

@@ -22,6 +22,7 @@
  *     curso, e é por isso que ela pode se dar ao luxo de ser interessante.
  */
 
+import { tx } from '@/i18n/telas/licao-eras';
 import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
@@ -52,7 +53,7 @@ export function ErasShelf() {
     <section aria-labelledby="eras" className="grid gap-4">
       <div className="grid gap-2 reading">
         <h2 id="eras" className="font-display text-[21px] sm:text-[24px] font-bold tracking-[-0.022em] text-ink">
-          Hoje e há dois mil anos
+          {tx.titulo}
         </h2>
         {/* Cuidado com o que esta frase afirma. A tentação é escrever "o
             alfabeto não mudou desde que estes textos foram escritos", que soa
@@ -64,12 +65,8 @@ export function ErasShelf() {
         {/* O texto muda quando não há par aberto: «as letras abaixo» com nada
             abaixo é uma frase que aponta para o vazio. */}
         <p className="font-ui text-[15px] leading-relaxed text-ink-muted">
-          Mais de dois mil anos separam as duas linhas de cada par. A escrita
-          quadrada que você está aprendendo foi adotada no tempo do Segundo
-          Templo, e é nela que o texto antigo é copiado e lido desde então:
-          {abertos.length
-            ? ' as letras abaixo são, uma a uma, as que você acabou de aprender.'
-            : ' as letras são, uma a uma, as que você está aprendendo agora.'}
+          {tx.intro}
+          {abertos.length ? tx.comPar : tx.semPar}
         </p>
       </div>
 
@@ -78,21 +75,20 @@ export function ErasShelf() {
       {fechados.length > 0 && (
         <Card className="p-5 grid gap-2">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Ainda fechados
+            {tx.aindaFechados}
           </p>
           <ul className="grid gap-1.5 list-none p-0 m-0">
             {fechados.map(x => (
               <li key={x.par.id}
                   className="flex items-center gap-3 font-ui text-[13.5px] text-ink-muted">
                 <span aria-hidden className="w-6 text-center">◇</span>
-                <span className="flex-1 min-w-0 truncate">A raiz de {x.par.raizPt}</span>
-                <span className="tabular-nums shrink-0">{x.abre} letras</span>
+                <span className="flex-1 min-w-0 truncate">{tx.raizDe(x.par.raizPt)}</span>
+                <span className="tabular-nums shrink-0">{tx.letras(x.abre)}</span>
               </li>
             ))}
           </ul>
           <p className="font-ui text-[13px] leading-relaxed text-ink-body">
-            Um par abre quando você consegue ler as DUAS linhas. Meia comparação
-            não compara nada.
+            {tx.umPar}
           </p>
         </Card>
       )}
@@ -128,8 +124,8 @@ function EraPairView({ par }: { par: EraPair }) {
       </div>
 
       <Linha
-        rotulo="Hoje, na rua"
-        nota="na fila do supermercado"
+        rotulo={tx.hoje}
+        nota={tx.fila}
         frase={moderno}
         raiz={raiz}
         revelado={aberto}
@@ -138,10 +134,10 @@ function EraPairView({ par }: { par: EraPair }) {
       {!aberto ? (
         <div className="grid gap-2 justify-items-center">
           <Button variant="ghost" onClick={() => setAberto(true)}>
-            O que dizem as duas?
+            {tx.oQueDizem}
           </Button>
           <p className="font-ui text-[13px] text-ink-muted text-center">
-            Ache as três letras acesas antes de abrir.
+            {tx.acheAsLetras}
           </p>
         </div>
       ) : (

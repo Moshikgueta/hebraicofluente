@@ -8,6 +8,13 @@
  * stops XP being awarded twice from two different screens. */
 
 import {
+  chaveDoItem, registrarCheckpointA1, registrarExameA1, registrarHabilidade, registrarUnidade, responderRevisao, unidadeConcluida,
+  type GeneroA1, type TranslitA1
+} from './a1-estado';
+import { habilidadeDoItem, type ItemA1 } from '@/lib/a1';
+import { faixaDe } from '@/lib/tempo-de-etapa';
+import { chaveDaAtividade, chaveDaEtapa, descobrir, escolherInteresses, guardarNaColecao, registrarAtividade, visitarEtapa, type Interesse } from './raizes-estado';
+import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode
 } from 'react';
 import {
@@ -23,13 +30,19 @@ import { apiMode } from '@/lib/account/api';
 import { SESSAO_MUDOU } from '@/lib/account/store';
 import {
   ANSWER_UNITS, applyPractice, awardXp, clearConfusion, completeStage, courseProgress,
-  displayStreak, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer,
+  concluirRevisao, displayStreak, pagarAcerto, dueItems, goalTarget, lettersMastered, markFirst, recordAnswer, registrarLeitura,
   recordCheckpoint, recordConfusion, recordExam, recordGym, recordQuiz, recordSkill,
   syncAchievements, today,
   topConfusions, weakLetters, XP
 } from './rules';
 import { track } from '@/lib/analytics';
-import { EXAM_PASS } from '@/lib/engine/exam';
+import { ACERTO_DO_TRACO } from '@/lib/trace-score';
+import { comprar as comprarNaLoja, type ItemDaLoja, type Recusa } from '@/lib/loja';
+import { alternarNoCaderno } from '@/lib/caderno';
+import {
+  fundirRegistro, limparEspelho, registroValido, RODADAS_MUDOU, sincronizarEspelho, type Registro
+} from '@/lib/rodadas';
+import { EXAM_PASS } from '@/lib/engine/nota-do-exame';
 
 /* Onde o progresso mora, nesta build.
  * ─────────────────────────────────────────────────────────────────────────
@@ -41,9 +54,27 @@ import { EXAM_PASS } from '@/lib/engine/exam';
  * O Supabase continua aqui por ser uma porta escrita e nunca ligada; só entra
  * se alguém configurar as duas variáveis, e numa build de Worker isso seria
  * duas fontes de verdade para o mesmo progresso. */
+/* As rodadas de exercício (lib/rodadas.ts) têm um espelho no aparelho,
+   que as telas leem de forma síncrona. Ao carregar o progresso, o espelho e
+   a conta se fundem nos dois sentidos: o que outro aparelho fez desce para
+   este, e o que este lembrava antes de a conta guardar rodadas sobe. Devolve
+   o próprio estado quando nada mudou - para não gravar à toa. */
+function comEspelhoDeRodadas(s: LearnerState): LearnerState {
+  const junto = sincronizarEspelho(s.rodadas ?? {});
+  return JSON.stringify(junto) === JSON.stringify(s.rodadas ?? {}) ? s : { ...s, rodadas: junto };
+}
+
 function createStore(): ProgressStore {
   if (apiMode() === 'worker') return new WorkerProgressStore();
   return supabaseConfigured() ? new SupabaseProgressStore() : new LocalProgressStore();
+}
+
+/* Sair da conta numa página em que o provider não montou
+   (components/shell/ProgressoQuandoPrecisa.tsx): o mesmo esquecer que o
+   provider faz ao ouvir `saiu`, sem o estado na tela. */
+export async function esquecerProgressoDoAparelho(): Promise<void> {
+  limparEspelho();
+  await createStore().esquecerAqui();
 }
 
 type Ctx = {
@@ -76,7 +107,9 @@ type Ctx = {
   /** The confusions this learner actually has, worst first. */
   confusions: Confusion[];
   setOnboarding: (o: Onboarding) => void;
-  finishStage: (letterId: string, stage: number, units?: number) => void;
+  /** `segundos`: o tempo ativo da etapa (lib/tempo-de-etapa.ts). Só a faixa
+   *  sai, e só na primeira vez que a etapa é concluída. */
+  finishStage: (letterId: string, stage: number, units?: number, segundos?: number) => void;
   /**
    * One answer, with everything the adaptive layer needs to learn from it:
    * which skill it tested, and - on a miss - which wrong option was chosen, so
@@ -92,6 +125,8 @@ type Ctx = {
   setNomeHebraico: (texto: string | null) => void;
   /** Record a moment that can only happen once, and say so. */
   markFirst: (id: string) => void;
+  /** Autoavaliação de leitura: não mede domínio (rules.ts, `registrarLeitura`). */
+  registrarLeitura: (atividade: string, consegui: boolean) => void;
   /**
    * A traced or freehand attempt at a letter, scored 0-1 by the canvas.
    *
@@ -105,7 +140,9 @@ type Ctx = {
   finishGym: (modeId: string, score: number, seconds: number) => void;
   finishQuiz: (letterId: string, score: number) => void;
   finishCheckpoint: (id: string, score: number) => void;
-  finishReview: (score: number) => void;
+  /** Fecha a revisão: `porLetra` diz, de cada letra revisada, quantos erros
+   *  houve na primeira tentativa (ver `concluirRevisao`). */
+  finishReview: (score: number, porLetra: Record<string, { erros: number }>) => void;
   finishFinalChallenge: (score: number) => void;
   /** One sitting of the final exam: its overall score and each part's. */
   finishExam: (
@@ -113,17 +150,52 @@ type Ctx = {
   ) => void;
   remember: (route: string) => void;
   reset: () => void;
+  /** Troca XP do saldo por um item da loja (lib/loja.ts). Devolve o motivo da recusa, ou null. */
+  comprar: (item: ItemDaLoja['id'], alvo?: string) => Recusa | null;
+  /* ── o curso Hebraico A1 (06/10/2026) ── */
+  /** Como o aluno quer ser tratado nos exercícios do A1 (decisão 9). */
+  setGeneroA1: (g: GeneroA1) => void;
+  /** Uma rodada de exercícios de uma unidade do A1, com a nota de 0 a 1. */
+  finishUnidadeA1: (n: number, nota: number) => void;
+  /** Uma prova do exame do A1. */
+  finishExameA1: (
+    nota: number, parts: Record<string, { correct: number; total: number }>, aprovacao: number
+  ) => void;
+  /** Um item do A1 respondido pela PRIMEIRA vez numa rodada: revisão
+   *  espaçada, habilidade, e a contagem anônima de acerto por tipo. */
+  responderItemA1: (n: number, item: ItemA1, certo: boolean, daLeitura?: boolean) => void;
+  /** Um checkpoint do A1 terminou, com a nota de 0 a 1. */
+  finishCheckpointA1: (n: number, nota: number) => void;
+  /** Uma sessão de "Minha revisão" terminou, com tantos itens. */
+  revisaoA1Feita: (itens: number) => void;
+  marcarFavoritoA1: (chave: string, on: boolean) => void;
+  /** Põe ou tira uma palavra do caderno (lib/caderno.ts). */
+  alternarCaderno: (he: string) => void;
+  setAutoA1: (n: number, itens: number[]) => void;
+  setTranslitA1: (valor: TranslitA1) => void;
+  /* ── Raízes Sefarditas (21/10/2026) ── */
+  /** Uma tentativa de atividade terminada: nota de 0 a 1 e se o critério foi cumprido. Não dá XP. */
+  registrarAtividadeRaizes: (modulo: number, id: string, nota: number, concluiu: boolean) => void;
+  /** O aluno abriu uma etapa: guarda a primeira visita e o "onde parei". */
+  visitarEtapaRaizes: (modulo: number, etapa: string, rota: string) => void;
+  /** Uma descoberta (artefato, lugar, personagem...): fica a primeira vez. */
+  descobrirRaizes: (chave: string) => void;
+  /** Guardar na coleção pessoal, ou tirar. */
+  colecaoRaizes: (chave: string, ativo: boolean) => void;
+  /** Os interesses escolhidos na entrada (podem mudar a qualquer hora). */
+  interessesRaizes: (interesses: Interesse[]) => void;
 };
 
 const StoreContext = createContext<Ctx | null>(null);
 
 export function ProgressProvider({
-  children, totalLetters, extraModuleIds = []
-}: { children: ReactNode; totalLetters: number; extraModuleIds?: string[] }) {
+  children, totalLetters, extraModuleIds = [], somIds = []
+}: { children: ReactNode; totalLetters: number; extraModuleIds?: string[]; somIds?: string[] }) {
   const store = useMemo(createStore, []);
   /* The caller passes a fresh array literal on every render; keying the memo on
      its contents rather than its identity keeps the context value stable. */
   const extraKey = extraModuleIds.join(',');
+  const somKey = somIds.join(',');
   const [state, setState] = useState<LearnerState>(EMPTY_STATE);
   const [ready, setReady] = useState(false);
   const [persistent, setPersistent] = useState(true);
@@ -182,13 +254,16 @@ export function ProgressProvider({
          ruim cabe uma lição inteira nesse intervalo. `mergeStates` é a mesma
          fusão que concilia dois aparelhos, e ela não desfaz nada. */
       const emMemoria = stateRef.current;
-      const inicial = sameState(emMemoria, EMPTY_STATE) ? s : mergeStates(emMemoria, s);
+      const fundido = sameState(emMemoria, EMPTY_STATE) ? s : mergeStates(emMemoria, s);
+      const inicial = comEspelhoDeRodadas(fundido);
       stateRef.current = inicial;
       setState(inicial);
       setReady(true);
       /* Só agora a gravação é liberada, e nesta ordem: liberar antes de o
          estado estar em mãos é reabrir o defeito que este arquivo conserta. */
       gravador.liberar();
+      /* O espelho trouxe rodadas que a conta não tinha: sobem agora. */
+      if (inicial !== fundido) gravador.agendar(400);
       /* A rota que o AppShell avisou enquanto o estado carregava ficou de
          fora da fusão; se ela não chegou a entrar, entra agora. */
       if (rotaPendente.current && inicial.lastRoute !== rotaPendente.current) {
@@ -219,6 +294,7 @@ export function ProgressProvider({
          e volta no login. */
       if (saiu) {
         gravador.cancelar();
+        limparEspelho();
         void store.esquecerAqui().then(() => {
           if (!alive) return;
           stateRef.current = EMPTY_STATE;
@@ -233,9 +309,11 @@ export function ProgressProvider({
         .then(() => store.load())
         .then(s => {
           if (!alive) return;
-          stateRef.current = s;
-          setState(s);
+          const comRodadas = comEspelhoDeRodadas(s);
+          stateRef.current = comRodadas;
+          setState(comRodadas);
           setSincronizado(store.sincronizado());
+          if (comRodadas !== s) gravador.agendar(400);
         });
     };
     window.addEventListener(SESSAO_MUDOU, aoMudar);
@@ -259,18 +337,40 @@ export function ProgressProvider({
     gravador.agendar(250);
   }, [gravador]);
 
+  /* Uma rodada concluída (lib/rodadas.ts avisa) entra no progresso e sobe
+     para a conta com ele. Sem XP nem conquista: é memória, não mérito. */
+  useEffect(() => {
+    const aoRegistrar = (e: Event) => {
+      const d = (e as CustomEvent<{ categoria?: string; registro?: Registro }>).detail;
+      const novo = registroValido(d?.registro);
+      if (!d?.categoria || !novo) return;
+      const s = agora();
+      const antes = registroValido(s.rodadas?.[d.categoria]);
+      const r = antes ? fundirRegistro(antes, novo) : novo;
+      if (antes && r === antes) return;
+      const next = { ...s, rodadas: { ...(s.rodadas ?? {}), [d.categoria]: r } };
+      stateRef.current = next;
+      setState(next);
+      gravador.agendar(250);
+    };
+    window.addEventListener(RODADAS_MUDOU, aoRegistrar);
+    return () => window.removeEventListener(RODADAS_MUDOU, aoRegistrar);
+  }, [agora, gravador]);
+
   const setOnboarding = useCallback((o: Onboarding) => {
     commit({ ...agora(), onboarding: o });
     track('onboarding_completed', { goalMinutes: o.goalMinutes, reason: o.reason });
   }, [commit, agora]);
 
-  const finishStage = useCallback((letterId: string, stage: number, units?: number) => {
+  const finishStage = useCallback((letterId: string, stage: number, units?: number, segundos?: number) => {
     const d = today();
     const total = units === undefined ? 5 : 3;
     const before = agora().lessons[letterId]?.stagesDone.length ?? 0;
+    const primeira = !(agora().lessons[letterId]?.stagesDone ?? []).includes(stage);
     const next = completeStage(agora(), letterId, stage, d, units);
     commit(next);
-    track('stage_completed', { letterId, stage });
+    const faixa = primeira && segundos !== undefined ? faixaDe(segundos) : null;
+    track('stage_completed', { letterId, stage, primeira, ...(faixa === null ? {} : { faixa }) });
     if (before < total && (next.lessons[letterId]?.stagesDone.length ?? 0) >= total) {
       track('lesson_completed', { letterId });
     }
@@ -303,6 +403,7 @@ export function ProgressProvider({
         [kind]: { h: k.h + (correct ? 1 : 0), m: k.m + (correct ? 0 : 1) } } };
     }
     next = applyPractice(next, d, { answered: 1, units: ANSWER_UNITS });
+    if (correct) next = pagarAcerto(next, d);
     commit(next);
     track('exercise_answered', { letterId, itemId, correct, skill, kind });
     if (!correct) track('exercise_wrong', { letterId, itemId, chosen });
@@ -318,11 +419,12 @@ export function ProgressProvider({
     /* The bar is 0.5, which is low, and that is the decision: a finger on glass
        is not a pen on paper, and a learner told their readable ג is wrong stops
        trusting the whole app. The canvas is generous; this agrees with it. */
-    let next = recordSkill(agora(), letterId, 'escrever', score >= 0.5, d);
+    let next = recordSkill(agora(), letterId, 'escrever', score >= ACERTO_DO_TRACO, d);
     /* Writing is practice even when it comes out badly - more so, in fact. */
     next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (score >= ACERTO_DO_TRACO) next = pagarAcerto(next, d);
     commit(next);
-    track('exercise_answered', { letterId, skill: 'escrever', correct: score >= 0.5 });
+    track('exercise_answered', { letterId, skill: 'escrever', correct: score >= ACERTO_DO_TRACO });
   }, [commit, agora]);
 
   const finishGym = useCallback((modeId: string, score: number, seconds: number) => {
@@ -334,6 +436,10 @@ export function ProgressProvider({
     commit(next);
     track('gym_completed', { mode: modeId, score, seconds });
   }, [commit, agora]);
+
+  const doRegistrarLeitura = useCallback((atividade: string, consegui: boolean) => {
+    commit(registrarLeitura(agora(), atividade, consegui, day));
+  }, [commit, agora, day]);
 
   const doMarkFirst = useCallback((id: string) => {
     if (agora().firsts[id]) return;
@@ -351,8 +457,9 @@ export function ProgressProvider({
     track('checkpoint_completed', { checkpointId: id, score });
   }, [commit, agora]);
 
-  const finishReview = useCallback((score: number) => {
-    commit(awardXp(agora(), today(), XP.review));
+  const finishReview = useCallback((score: number, porLetra: Record<string, { erros: number }>) => {
+    const d = today();
+    commit(awardXp(concluirRevisao(agora(), d, porLetra), d, XP.review));
     track('review_completed', { score });
   }, [commit, agora]);
 
@@ -394,8 +501,136 @@ export function ProgressProvider({
     gravador.agendar(400);
   }, [gravador]);
 
+  const comprar = useCallback((item: ItemDaLoja['id'], alvo?: string): Recusa | null => {
+    const r = comprarNaLoja(agora(), item, new Date().toISOString(), alvo);
+    if (!r.ok) return r.motivo;
+    commit(r.state);
+    track('loja_compra', { itemId: item });
+    return null;
+  }, [commit, agora]);
+
+  /* Raízes Sefarditas: sem XP e sem sequência de dias, de propósito
+     (lib/state/raizes-estado.ts). Só o progresso do próprio produto. */
+  const registrarAtividadeRaizes = useCallback((modulo: number, id: string, nota: number, concluiu: boolean) => {
+    const s = agora();
+    commit({ ...s, raizes: registrarAtividade(s.raizes, chaveDaAtividade(modulo, id), nota, concluiu, new Date().toISOString()) });
+    /* Grava já, sem esperar os 250 ms do agendamento: concluir uma atividade
+       e recarregar logo em seguida perdia a conclusão (visto em raizes.mjs).
+       O gravador não descarrega o que estava agendado quando a página sai. */
+    void gravador.agora();
+  }, [commit, agora, gravador]);
+
+  const visitarEtapaRaizes = useCallback((modulo: number, etapa: string, rota: string) => {
+    const s = agora();
+    const chave = chaveDaEtapa(modulo, etapa);
+    /* Voltar à mesma etapa sem nada novo não grava: o "onde parei" só muda
+       quando o lugar muda, para não escrever no servidor a cada clique. */
+    if (s.raizes?.etapas[chave] && s.raizes.onde?.rota === rota) return;
+    commit({ ...s, raizes: visitarEtapa(s.raizes, chave, rota, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const descobrirRaizes = useCallback((chave: string) => {
+    const s = agora();
+    if (s.raizes?.descobertas?.[chave]) return;
+    commit({ ...s, raizes: descobrir(s.raizes, chave, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const colecaoRaizes = useCallback((chave: string, ativo: boolean) => {
+    const s = agora();
+    commit({ ...s, raizes: guardarNaColecao(s.raizes, chave, ativo, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const interessesRaizes = useCallback((interesses: Interesse[]) => {
+    const s = agora();
+    commit({ ...s, raizes: escolherInteresses(s.raizes, interesses, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const setGeneroA1 = useCallback((g: GeneroA1) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, genero: { valor: g, em: new Date().toISOString() } } });
+  }, [commit, agora]);
+
+  /* Uma rodada do A1 conta como estudo do dia (a sequência de dias é uma só,
+     para os dois cursos), e a PRIMEIRA vez que a unidade passa de 70% vale o
+     XP de uma lição. Refazer não dá XP de novo: a regra do alfabeto. */
+  const finishUnidadeA1 = useCallback((n: number, nota: number) => {
+    const d = today();
+    const s = agora();
+    const antes = unidadeConcluida(s.a1, n);
+    let next: LearnerState = { ...s, a1: registrarUnidade(s.a1, n, nota, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!antes && unidadeConcluida(next.a1, n)) {
+      next = awardXp(next, d, XP.lesson);
+      /* O funil anônimo do painel: em que unidade do A1 as pessoas param. */
+      track('stage_completed', { letterId: `a1-u${n}`, stage: 1, primeira: true });
+    }
+    commit(next);
+  }, [commit, agora]);
+
+  const finishExameA1 = useCallback((
+    nota: number, parts: Record<string, { correct: number; total: number }>, aprovacao: number
+  ) => {
+    const d = today();
+    const s = agora();
+    const jaPassou = !!s.a1.exame.passedAt;
+    let next: LearnerState = { ...s, a1: registrarExameA1(s.a1, nota, parts, aprovacao, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!jaPassou && next.a1.exame.passedAt) next = awardXp(next, d, XP.checkpoint);
+    commit(next);
+  }, [commit, agora]);
+
+  const responderItemA1 = useCallback((n: number, item: ItemA1, certo: boolean, daLeitura = false) => {
+    const d = today();
+    const s = agora();
+    let a1 = responderRevisao(s.a1, chaveDoItem(n, item), certo, d);
+    if (item.t !== 'aberta') a1 = registrarHabilidade(a1, habilidadeDoItem(item, daLeitura), certo);
+    commit({ ...s, a1 });
+    track('exercise_answered', { letterId: `a1-u${n}`, kind: item.t, correct: certo });
+  }, [commit, agora]);
+
+  const finishCheckpointA1 = useCallback((n: number, nota: number) => {
+    const d = today();
+    const s = agora();
+    const antes = !!s.a1.checkpoints[String(n)]?.passedAt;
+    let next: LearnerState = { ...s, a1: registrarCheckpointA1(s.a1, n, nota, new Date().toISOString()) };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    if (!antes && next.a1.checkpoints[String(n)]?.passedAt) next = awardXp(next, d, XP.checkpoint);
+    commit(next);
+    track('checkpoint_completed', { checkpointId: `a1-c${n}`, score: nota });
+  }, [commit, agora]);
+
+  const revisaoA1Feita = useCallback((itens: number) => {
+    const d = today();
+    const s = agora();
+    let next: LearnerState = { ...s, a1: { ...s.a1, dias: { ...s.a1.dias, [d]: (s.a1.dias[d] ?? 0) + itens } } };
+    next = applyPractice(next, d, { units: ANSWER_UNITS });
+    commit(next);
+    track('review_completed', { score: itens });
+  }, [commit, agora]);
+
+  const marcarFavoritoA1 = useCallback((chave: string, on: boolean) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, favoritos: { ...s.a1.favoritos, [chave]: { on, em: new Date().toISOString() } } } });
+  }, [commit, agora]);
+
+  const alternarCaderno = useCallback((he: string) => {
+    const s = agora();
+    commit({ ...s, caderno: alternarNoCaderno(s.caderno, he, new Date().toISOString()) });
+  }, [commit, agora]);
+
+  const setAutoA1 = useCallback((n: number, itens: number[]) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, auto: { ...s.a1.auto, [String(n)]: { itens, em: new Date().toISOString() } } } });
+  }, [commit, agora]);
+
+  const setTranslitA1 = useCallback((valor: TranslitA1) => {
+    const s = agora();
+    commit({ ...s, a1: { ...s.a1, translit: { valor, em: new Date().toISOString() } } });
+  }, [commit, agora]);
+
   const reset = useCallback(() => {
     gravador.cancelar();
+    limparEspelho();
     void store.clear();
     stateRef.current = EMPTY_STATE;
     setState(EMPTY_STATE);
@@ -408,7 +643,8 @@ export function ProgressProvider({
       state, ready, persistent, sincronizado, day,
       streak: displayStreak(state, day),
       mastered: lettersMastered(state),
-      progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : []),
+      progress: courseProgress(state, totalLetters, extraKey ? extraKey.split(',') : [],
+        somKey ? somKey.split(',') : []),
       dueCount: dueItems(state, day).length,
       weak: weakLetters(state, day),
       goalUnits: state.days[day]?.units ?? 0,
@@ -416,15 +652,19 @@ export function ProgressProvider({
       confusions: topConfusions(state),
       pending,
       clearPending: () => setPending([]),
-      setOnboarding, finishStage, answer, markFirst: doMarkFirst, recordWriting, finishGym,
+      setOnboarding, finishStage, answer, markFirst: doMarkFirst, registrarLeitura: doRegistrarLeitura, recordWriting, finishGym,
       finishQuiz, finishCheckpoint, finishReview, finishFinalChallenge, finishExam,
-      remember, reset, setNomeHebraico
+      remember, reset, setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
+      responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, alternarCaderno, setAutoA1, setTranslitA1,
+      registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
     };
   }, [
-    state, ready, persistent, sincronizado, day, totalLetters, extraKey, pending,
-    setOnboarding, finishStage, answer, doMarkFirst, recordWriting, finishGym, finishQuiz,
+    state, ready, persistent, sincronizado, day, totalLetters, extraKey, somKey, pending,
+    setOnboarding, finishStage, answer, doMarkFirst, doRegistrarLeitura, recordWriting, finishGym, finishQuiz,
     finishCheckpoint, finishReview, finishFinalChallenge, finishExam, remember, reset,
-    setNomeHebraico
+    setNomeHebraico, comprar, setGeneroA1, finishUnidadeA1, finishExameA1,
+    responderItemA1, finishCheckpointA1, revisaoA1Feita, marcarFavoritoA1, alternarCaderno, setAutoA1, setTranslitA1,
+    registrarAtividadeRaizes, visitarEtapaRaizes, descobrirRaizes, colecaoRaizes, interessesRaizes
   ]);
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

@@ -13,7 +13,7 @@
 
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { PAGAS, NAO_LISTADAS, ORIGEM, anunciavel, ehPaga, naoListada, url } from '@/lib/seo';
+import { PAGAS, NAO_LISTADAS, ESPELHOS, ORIGEM, anunciavel, canonicaDe, ehPaga, meta, naoListada, url } from '@/lib/seo';
 
 /* Lido como TEXTO, e não importado: gate.js é módulo de Worker. O array é
    uma lista literal de strings, então extraí-lo é honesto. */
@@ -62,9 +62,29 @@ describe('as rotas que não respondem a busca', () => {
 
 describe('a vitrine', () => {
   it('é anunciável inteira', () => {
-    for (const r of ['/', '/metodo', '/cursos', '/cursos/alfabetizacao', '/sobre', '/faq', '/biblia']) {
+    for (const r of ['/', '/metodo', '/cursos', '/sobre', '/faq', '/biblia', '/alfabeto-hebraico']) {
       expect(anunciavel(r), r).toBe(true);
     }
+  });
+
+  /* 31/10/2026: a capa É a página do curso, e /curso-de-hebraico mostrava as
+     mesmas 1.573 palavras com o canonical em si mesmo. Fica no ar, fora do
+     sitemap, com o canonical na capa e sem noindex. */
+  it('/curso-de-hebraico é espelho da capa: fora do sitemap, canonical na capa, sem noindex', () => {
+    expect(anunciavel('/curso-de-hebraico')).toBe(false);
+    expect(anunciavel('/curso-de-hebraico/')).toBe(false);
+    expect(canonicaDe('/curso-de-hebraico')).toBe('/');
+    const m = meta({ rota: '/curso-de-hebraico', title: 't', description: 'd' });
+    expect(m.alternates?.canonical).toBe(`${ORIGEM}/`);
+    expect(m.robots).toBeUndefined();
+    expect((m.openGraph as { url?: string }).url).toBe(`${ORIGEM}/`);
+  });
+
+  it('a lista de espelhos é a mesma no gerador do sitemap', () => {
+    /* Lido como texto, como o gate.js: seo.mjs lê o build ao carregar. */
+    const linha = readFileSync(new URL('../seo.mjs', import.meta.url), 'utf8').match(/export const ESPELHOS = (\{[^}]*\});/);
+    expect(linha, 'ESPELHOS em seo.mjs').toBeTruthy();
+    expect(JSON.parse(linha![1]!.replace(/'/g, '"'))).toEqual(ESPELHOS);
   });
 
   it('monta URLs absolutas com barra no fim, como o site serve', () => {

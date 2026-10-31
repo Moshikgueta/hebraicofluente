@@ -15,7 +15,7 @@
  */
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
-import { envDeTeste, pedido, cookieDe } from './ajuda/d1';
+import { envDeTeste, pedido, cookieDe, saudeDetalhada } from './ajuda/d1';
 // @ts-expect-error - módulo JS do Worker, sem tipos
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
@@ -43,6 +43,11 @@ beforeEach(() => {
   vi.stubGlobal('fetch', async (url: string, init: RequestInit) => {
     const corpo = JSON.parse(String(init.body)) as
       { to: string[]; subject: string; text: string };
+    /* O e-mail de confirmação do cadastro (tests/confirmacao.test.ts) não
+       é assunto deste arquivo, e contá-lo aqui mudaria toda contagem. */
+    if (corpo.subject.startsWith('Confirme seu e-mail')) {
+      return new Response(JSON.stringify({ id: 'msg_teste' }), { status: 200 });
+    }
     enviados.push({ to: corpo.to[0]!, subject: corpo.subject, text: corpo.text });
     return new Response(JSON.stringify({ id: 'msg_teste' }), { status: 200 });
   });
@@ -61,7 +66,7 @@ const envComEmail = (extra: Record<string, unknown> = {}) => envDeTeste({
 async function comConta(env = envComEmail(), senha = 'senha-inicial-1') {
   const email = 'aluno@exemplo.com.br';
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Daniel', email, password: senha }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Daniel', email, password: senha }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -103,7 +108,7 @@ describe('esqueci a senha, e volto para dentro', () => {
     const r2 = await reset(env, tokenDoEmail(), 'senha-nova-12345');
     expect(r2.status).toBe(200);
     /* Redefinir já entra: a resposta traz sessão e cookie. */
-    expect(cookieDe(r2)).toMatch(/^hf_session=/);
+    expect(cookieDe(r2)).toMatch(/^__Host-hf_session=/);
     expect((await r2.json()).account.email).toBe(email);
 
     /* E a senha nova é a que vale, das duas pontas. */
@@ -266,7 +271,7 @@ describe('trocar a senha no perfil', () => {
     const { env, cookie } = await comConta();
     const r = await trocar(env, cookie, 'senha-inicial-1', 'senha-nova-12345');
     const novo = cookieDe(r);
-    expect(novo).toMatch(/^hf_session=/);
+    expect(novo).toMatch(/^__Host-hf_session=/);
     expect(novo).not.toBe(cookie);
 
     /* O novo abre a conta; o antigo, não. */
@@ -332,7 +337,7 @@ describe('quando não há como mandar e-mail', () => {
     expect(r.status).toBe(200);
     expect(enviados).toHaveLength(0);
 
-    const saude = await (await auth.health({ env })).json();
+    const saude = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(saude.email).toBe(false);
     /* E o site continua saudável: não poder recuperar senha é uma degradação,
        não uma queda. */
@@ -348,7 +353,7 @@ describe('quando não há como mandar e-mail', () => {
     const env = envComEmail();
     const { email } = await comConta(env);
 
-    const antes = await (await auth.health({ env })).json();
+    const antes = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(antes.email).toBe(true);
     expect(antes.emailEntregue, 'ninguém pediu link ainda').toBe(null);
 
@@ -358,7 +363,7 @@ describe('quando não há como mandar e-mail', () => {
     await forgot(env, email);
     await assentar();
 
-    const depois = await (await auth.health({ env })).json();
+    const depois = await (await auth.health({ request: saudeDetalhada(), env })).json();
     expect(depois.email, 'a chave continua lá').toBe(true);
     expect(depois.emailEntregue, 'mas nada saiu').toBe(false);
     /* E o site continua saudável: é uma porta fechada, não uma queda. */
@@ -370,7 +375,7 @@ describe('quando não há como mandar e-mail', () => {
     const { email } = await comConta(env);
     await forgot(env, email);
     await assentar();
-    expect((await (await auth.health({ env })).json()).emailEntregue).toBe(true);
+    expect((await (await auth.health({ request: saudeDetalhada(), env })).json()).emailEntregue).toBe(true);
   });
 
   it('mailReady exige a chave E o remetente', () => {
@@ -395,7 +400,9 @@ describe('a mensagem', () => {
     expect(m.text).toContain('https://hebraicofluente.com.br/nova-senha/?token=abc');
     expect(m.text).toContain('60 minutos');
     expect(m.html).not.toContain('<script>');
-    expect(m.html).toContain('&lt;script&gt;');
+    /* Um "nome" com marcação nem chega ao texto: vira "Oi." (SEC-A-003). */
+    expect(m.text.startsWith('Oi.\n')).toBe(true);
+    expect(m.html).not.toContain('script');
   });
 
   it('funciona sem nome - conta criada sem preencher o campo', () => {

@@ -28,6 +28,12 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { isGatedPath } from '../worker/src/gate.js';
+import { FORA_DO_SITE_EN } from '../worker/src/lib/idioma.js';
+
+/* A build em inglês sai em out-en, e o Worker em inglês responde 404 ao que
+   só existe no site brasileiro (FORA_DO_SITE_EN): isso não vai ao sitemap. */
+const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+export const DIR = EM_INGLES ? 'out-en' : 'out';
 
 /* Lido do TOML sem dependência: é uma linha `SITE_ORIGIN = "..."` dentro de
    [vars], e um parser inteiro para isso seria mais coisa para quebrar. */
@@ -41,19 +47,37 @@ function origem() {
 /* Abertas, mas não anunciáveis. Precisa bater com NAO_LISTADAS de
    src/lib/seo.ts - checa-seo.mjs confere as duas contra o HTML. */
 const NAO_LISTADAS = [
-  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/perfil', '/checkout',
-  '/conta-apagada'
+  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha', '/confirmar-email', '/perfil',
+  '/checkout', '/conta-apagada', '/admin', '/sair-da-lista', '/confirmar-lista', '/verificar-certificado',
+  '/termos/v', '/reembolso/v', '/privacidade/v',
+  /* Responde 301 para /curso-de-hebraico (worker.js, 23/10/2026). */
+  '/cursos/alfabetizacao',
+  /* A prévia grátis do e-book, só para quem recebe o link no direct (23/10/2026). */
+  '/previa',
+  /* O destino do link da bio do Instagram (24/10/2026). */
+  '/comece-aqui',
+  /* A Minha Biblioteca, da conta (23/10/2026). */
+  '/minha-biblioteca',
+  /* O desafio com um amigo (28/10/2026). */
+  '/desafio-amigo',
+  /* Só o curso de alfabetização no site (27/10/2026): respondem 301 para a capa. */
+  '/aprender-hebraico', '/descobrir-israel', '/israel-alem-do-obvio', '/raizes-sefarditas'
 ];
+
+/* Endereços que mostram a mesma página de outro: no ar, fora do sitemap, com
+   o canonical no principal. Precisa bater com ESPELHOS de src/lib/seo.ts -
+   checa-seo.mjs confere o canonical de cada um no HTML. */
+export const ESPELHOS = { '/curso-de-hebraico': '/' };
 
 /* Quanto o Google deve voltar. Não é ranking - é só uma dica de frequência,
    e a única distinção honesta aqui é entre a página que muda quando o curso
    muda e o texto jurídico que fica anos parado. */
 const CADENCIA = (rota) =>
   rota === '/' ? 'weekly'
-  : ['/termos/', '/privacidade/', '/reembolso/', '/suporte/'].includes(rota) ? 'yearly'
+  : ['/termos/', '/privacidade/', '/reembolso/', '/suporte/', '/acessibilidade/'].includes(rota) ? 'yearly'
   : 'monthly';
 
-export function rotas(dir = 'out', base = '') {
+export function rotas(dir = DIR, base = '') {
   const achadas = [];
   for (const nome of readdirSync(dir)) {
     const cheio = join(dir, nome);
@@ -65,22 +89,28 @@ export function rotas(dir = 'out', base = '') {
 
 /* O 404 é uma página de verdade no export estático, e por isso aparece na
    varredura. Anunciá-la é pedir ao Google que indexe a tela de erro. */
-const TECNICAS = ['/404', '/500'];
+const TECNICAS = ['/404', '/500',
+  /* O lugar vazio do blog sem artigo aprovado (app/blog/[slug]/page.tsx). */
+  '/blog/_',
+  /* E a lista do blog, enquanto ela não tem artigo (content/blog-resumo.json). */
+  ...(JSON.parse(readFileSync(new URL('./content/blog-resumo.json', import.meta.url), 'utf8')).artigos ? [] : ['/blog'])];
 
 const semBarra = (r) => r.replace(/\/+$/, '') || '/';
 const naoListada = (r) =>
-  [...NAO_LISTADAS, ...TECNICAS].some(x => semBarra(r) === x || semBarra(r).startsWith(x + '/'));
+  [...NAO_LISTADAS, ...TECNICAS].some(x => semBarra(r) === x || semBarra(r).startsWith(x + '/'))
+  || (EM_INGLES && FORA_DO_SITE_EN.test(semBarra(r)));
 
 /** As rotas que entram no sitemap, e por quê as outras não entram. */
 export function classificar(todas) {
-  const listadas = [], pagas = [], ocultas = [];
+  const listadas = [], pagas = [], ocultas = [], espelhos = [];
   for (const r of todas) {
     if (r.includes('/_next/')) continue;
     if (isGatedPath(semBarra(r))) pagas.push(r);
     else if (naoListada(r)) ocultas.push(r);
+    else if (semBarra(r) in ESPELHOS) espelhos.push(r);
     else listadas.push(r);
   }
-  return { listadas, pagas, ocultas };
+  return { listadas, pagas, ocultas, espelhos };
 }
 
 export function sitemapXml(site, listadas, data) {
@@ -108,18 +138,50 @@ export function robotsTxt(site) {
   ].join('\n');
 }
 
+/* ── llms.txt (26/10/2026, plano de marketing) ────────────────────────────
+   O resumo do site para os assistentes de IA (o formato de llmstxt.org): o
+   nome e a descrição da capa, e uma linha por página anunciável, com o
+   título e a descrição que a própria página publica. Nada é escrito aqui à
+   mão: um preço ou uma contagem que mude no catálogo muda na página, e a
+   página é a fonte. Só as rotas do sitemap; nenhuma paga, nenhuma oculta. */
+const desfazer = (t) => t.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'")
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+/** O título e a descrição publicados no HTML de uma página. */
+export function cabecalho(html) {
+  const titulo = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+  const descricao = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  return { titulo: titulo ? desfazer(titulo).trim() : null, descricao: descricao ? desfazer(descricao).trim() : null };
+}
+
+export function llmsTxt(site, paginas) {
+  const capa = paginas.find(p => p.rota === '/');
+  const nome = (capa && capa.titulo ? capa.titulo.split(' | ')[0] : 'Hebraico Fluente');
+  const linhas = [`# ${nome}`, ''];
+  if (capa && capa.descricao) linhas.push(`> ${capa.descricao}`, '');
+  linhas.push(EM_INGLES ? '## Pages' : '## Páginas', '');
+  for (const p of paginas) {
+    if (!p.titulo) continue;
+    linhas.push(`- [${p.titulo}](${site}${p.rota})${p.descricao ? `: ${p.descricao}` : ''}`);
+  }
+  return linhas.join('\n') + '\n';
+}
+
 /* ── execução ─────────────────────────────────────────────────────────── */
 if (import.meta.url === `file://${process.argv[1]}`) {
   const site = origem();
-  const { listadas, pagas, ocultas } = classificar(rotas());
+  const { listadas, pagas, ocultas, espelhos } = classificar(rotas());
   const hoje = new Date().toISOString().slice(0, 10);
 
-  writeFileSync('out/sitemap.xml', sitemapXml(site, listadas, hoje));
-  writeFileSync('out/robots.txt', robotsTxt(site));
+  writeFileSync(`${DIR}/sitemap.xml`, sitemapXml(site, listadas, hoje));
+  writeFileSync(`${DIR}/robots.txt`, robotsTxt(site));
+  const paginas = listadas.map(rota => ({ rota, ...cabecalho(readFileSync(join(DIR, rota, 'index.html'), 'utf8')) }));
+  writeFileSync(`${DIR}/llms.txt`, llmsTxt(site, paginas));
 
   console.log(`  site: ${site}`);
   console.log(`  no sitemap (${listadas.length}): ${listadas.join(' ')}`);
   console.log(`  fora, por serem pagas (${pagas.length})`);
+  console.log(`  fora, por repetirem outra página (${espelhos.length}): ${espelhos.map(r => `${r} -> ${ESPELHOS[semBarra(r)]}`).join(' ')}`);
   console.log(`  fora, por não responderem a busca (${ocultas.length}): ${ocultas.join(' ')}`);
-  console.log('\n✓ out/sitemap.xml e out/robots.txt escritos');
+  console.log(`\n✓ ${DIR}/sitemap.xml, ${DIR}/robots.txt e ${DIR}/llms.txt escritos`);
 }

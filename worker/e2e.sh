@@ -9,7 +9,7 @@
 #
 # Rodar:
 #   npm run build:platform
-#   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --local
+#   npx wrangler d1 execute fluent-hebrew --file=worker/schema.sql --local
 #   npx wrangler dev --local --port 8787 &
 #   bash worker/e2e.sh
 #
@@ -32,6 +32,14 @@ MAIL="hf-e2e-$RANDOM@example.invalid"
 fails=0
 
 G() { curl -s --noproxy '*' "$@"; }
+
+# O site em inglês (LOCALE = "en" no wrangler.toml deste repositório) cobra
+# pelo Paddle, em dólar, e não tem a prévia do e-book nem o curso A1. As
+# conferências que dependem disso escolhem pelo mesmo arquivo que a
+# publicação usou.
+RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
+EM_INGLES=0
+grep -qE '^LOCALE *= *"en"' "$RAIZ/wrangler.toml" 2>/dev/null && EM_INGLES=1
 
 # espera <descrição> <esperado> <obtido>
 espera() {
@@ -95,22 +103,54 @@ echo "Saúde"
 # uma falha que não existe: foi exatamente isso que aconteceu quando `progresso`
 # entrou. Quinze segundos de paciência cobrem a propagação; passado isso, o
 # campo ausente é falha de verdade e é assim que ela aparece.
+#
+# Os detalhes da saúde só saem com o ADMIN_TOKEN (auditoria de 01/10/2026,
+# SEC-A-007): para o público, /api/health responde só `ok` e `monitor`. A
+# publicação gera o token, o põe no Worker e o entrega aqui em
+# HF_ADMIN_TOKEN (scripts/cloudflare-setup.sh, passo 4). Sem ele (uma
+# passagem à mão), as conferências de detalhe ficam de fora e isso é dito.
+SAUDE_AUT=()
+[ -n "${HF_ADMIN_TOKEN:-}" ] && SAUDE_AUT=(-H "Authorization: Bearer $HF_ADMIN_TOKEN")
+saude() { G --max-time 15 ${SAUDE_AUT[@]+"${SAUDE_AUT[@]}"} "$B/api/health"; }
 HEALTH=''
 for _ in 1 2 3 4 5; do
-  HEALTH="$(G --max-time 15 "$B/api/health")"
+  HEALTH="$(saude)"
   # O campo MAIS NOVO é o sinal de que a versão nova já está respondendo.
-  # Trocar quando um campo novo entra faz parte de acrescentá-lo.
-  case "$HEALTH" in *'"recuperacao"'*) break ;; esac
+  # Trocar quando um campo novo entra faz parte de acrescentá-lo. Sem token,
+  # a resposta é a pública, e o sinal é ela ter só os dois campos.
+  if [ -n "${HF_ADMIN_TOKEN:-}" ]; then
+    case "$HEALTH" in *'"verificacao"'*) break ;; esac
+  else
+    case "$HEALTH" in *'"ok"'*'"monitor"'*) case "$HEALTH" in *'"db"'*) ;; *) break ;; esac ;; esac
+  fi
   sleep 3
 done
 campo() { grep -o "\"$1\":[a-z]*" <<<"$HEALTH" | cut -d: -f2; }
+PUBLICA="$(G --max-time 15 "$B/api/health")"
+espera "a saúde pública diz só ok e monitor" nao \
+  "$(grep -qE '"(db|modo|vendedor|tokenFormato|emailEntregue|varredura)"' <<<"$PUBLICA" && echo sim || echo nao)"
+if [ -z "${HF_ADMIN_TOKEN:-}" ]; then
+  echo "  · sem HF_ADMIN_TOKEN: conferindo só o 'ok' público; tabelas, sessão,"
+  echo "    e-mail e cobrança ficam de fora desta passagem."
+  espera "a saúde pública diz ok" true "$(campo ok)"
+else
+espera "o ADMIN_TOKEN abre os detalhes da saúde" true "$(grep -q '"db"' <<<"$HEALTH" && echo true || echo false)"
 espera "ligação com o banco (D1)"      true "$(campo db)"
 espera "tabelas criadas (schema.sql)"  true "$(campo schema)"
 espera "tabela de progresso criada"    true "$(campo progresso)"
 espera "tabela de recuperação criada"  true "$(campo recuperacao)"
+# A de confirmação de e-mail (24/09/2026). Sem ela o site funciona igual e
+# ninguém confirma o e-mail - e a publicação não aplica o schema.sql, então
+# este ✗ é o aviso de que falta rodá-lo (ver o topo de worker/schema.sql).
+espera "tabela de confirmação de e-mail criada" true "$(campo verificacao)"
 espera "SESSION_SECRET definido"       true "$(campo session)"
 if [ "$(campo payments)" != "true" ]; then
-  echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
+  if [ "$EM_INGLES" = 1 ]; then
+    echo "  · pagamento desligado (PADDLE_API_KEY ou PADDLE_CLIENT_TOKEN ausente ou de"
+    echo "    outro ambiente) - o site funciona assim"
+  else
+    echo "  · pagamento desligado (MP_ACCESS_TOKEN ausente) - o site funciona assim"
+  fi
 fi
 # Sem provedor de e-mail o site sobe inteiro e "esqueci minha senha" não
 # entrega o link a ninguém. Não é falha de publicação - é uma peça que falta,
@@ -131,6 +171,7 @@ if [ "$(campo ok)" != "true" ]; then
   echo "  conserte o que está marcado ✗ aqui em cima primeiro."
   echo
 fi
+fi  # fim das conferências que pedem HF_ADMIN_TOKEN
 
 # O site de vendas inteiro, SEM conta nenhuma. É o requisito mais óbvio da
 # plataforma e o mais fácil de quebrar sem perceber: basta um prefixo a mais na
@@ -141,14 +182,69 @@ fi
 # abriu", e um 302 - mesmo que fosse para algum lugar bonito - é exatamente a
 # falha que este bloco existe para pegar.
 echo "Site público, sem conta"
-for p in "/" "/metodo/" "/cursos/" "/cursos/alfabetizacao/" "/cursos/hebraico-a1/" \
-         "/sobre/" "/faq/" "/entrar/" "/criar-conta/" "/checkout/alfabetizacao/"; do
+PUBLICAS="/ /metodo/ /cursos/ /curso-de-hebraico/ /sobre/ /faq/ /entrar/ /criar-conta/ /checkout/alfabetizacao/"
+# O A1 não entra no catálogo em inglês (sem price.usd): a página não existe lá.
+[ "$EM_INGLES" = 1 ] || PUBLICAS="$PUBLICAS /cursos/hebraico-a1/"
+for p in $PUBLICAS; do
   c="$(code -H 'Sec-Fetch-Dest: document' "$B$p")"
   espera "$p abre" 200 "$c"
   # A primeira página que não abre já diz quem respondeu. Sem isto, as dez
   # linhas seguintes repetem o mesmo código sem acrescentar nada.
   [ "$c" = "200" ] || diagnostico "$B$p"
 done
+
+# A busca (31/10/2026, auditoria de SEO): o robots.txt que vai ao ar é o NOSSO
+# (app/seo.mjs), e não o "robots.txt gerenciado" da Cloudflare, que acrescenta
+# Disallow para robôs de IA quando o painel liga "bloquear robôs de IA". Isso
+# é configuração da conta, não defeito da versão: AVISA e não conta como
+# falha, para não desfazer uma publicação boa. Os robôs de BUSCA por IA
+# (OAI-SearchBot, ChatGPT-User, PerplexityBot) bloqueados tiram o site das
+# respostas desses assistentes; os de treino (GPTBot, CCBot) são escolha do dono.
+echo "A busca: robots.txt, sitemap e o espelho da capa"
+ROBOTS="$(G "$B/robots.txt")"
+espera "robots.txt aponta o sitemap" 1 "$(grep -c '^Sitemap: .*/sitemap.xml' <<<"$ROBOTS")"
+espera "sitemap.xml responde" 200 "$(code "$B/sitemap.xml")"
+espera "o espelho da capa fica fora do sitemap" 0 "$(G "$B/sitemap.xml" | grep -c 'curso-de-hebraico')"
+espera "/curso-de-hebraico/ declara a capa como canonical" 1 \
+  "$(G -H 'Sec-Fetch-Dest: document' "$B/curso-de-hebraico/" | grep -c 'rel="canonical" href="https://[^/"]*/"')"
+if grep -qiE '^Disallow: */ *$' <<<"$ROBOTS"; then
+  BLOQUEADOS="$(awk 'tolower($1)=="user-agent:"{ua=$2} tolower($1)=="disallow:" && ($2=="/"||$2=="/ "){print ua}' <<<"$ROBOTS" | sort -u | tr '\n' ' ')"
+  printf '  ! AVISO: o robots.txt no ar bloqueia o site inteiro para: %s\n' "$BLOQUEADOS"
+  printf '    (Cloudflare: Segurança > Bots / AI Crawl Control. Ver audit/2026-10-31-seo/RELATORIO.md, seção 9.)\n'
+  grep -qiE '^User-agent: *(\*|Googlebot|Bingbot) *$' <<<"$(awk 'tolower($1)=="user-agent:"{ua=$0} tolower($1)=="disallow:" && $2=="/"{print ua}' <<<"$ROBOTS")" \
+    && { printf '  ✗ o robots.txt no ar bloqueia o Google ou o Bing\n'; fails=$((fails + 1)); }
+else
+  printf '  ✓ o robots.txt no ar não bloqueia nenhum robô\n'
+fi
+
+# A prévia grátis do e-book (23/10/2026): o link que vai no direct a quem
+# comenta EBOOK. Abre sem conta, fica fora da busca e não vende o livro (que
+# continua aVenda: false). O nome antigo do livro não pode aparecer.
+if [ "$EM_INGLES" = 1 ]; then
+  # O site em inglês não monta a prévia (o livro é só do site brasileiro).
+  echo "A prévia do e-book: fora do site em inglês"
+  espera "/previa/ não existe" 404 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+else
+  echo "A prévia do e-book, sem conta"
+  PREVIA_HTML="$(G -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+  espera "/previa/ abre sem conta" 200 "$(code -H 'Sec-Fetch-Dest: document' "$B/previa/")"
+  espera "/previa/ fora da busca (cabeçalho)" 1 "$(G -o /dev/null -D - "$B/previa/" | grep -ci '^x-robots-tag:.*noindex')"
+  espera "/previa/ fora da busca (meta)" 1 "$(grep -c 'name="robots" content="noindex' <<<"$PREVIA_HTML")"
+  espera "/previa/ tem a mochila, o monte e a roleta" 1 "$(grep -q '"tipo":"mochila"' <<<"$PREVIA_HTML" && grep -q '"tipo":"monte"' <<<"$PREVIA_HTML" && grep -q '"jogo":"roleta"' <<<"$PREVIA_HTML" && echo 1 || echo 0)"
+  espera "/previa/ não vende o livro" 0 "$(grep -cE 'R\$|/checkout|/cursos/israel' <<<"$PREVIA_HTML")"
+  espera "/previa/ sem o nome antigo do livro" 0 "$(grep -ci 'al[eé]m do roteiro' <<<"$PREVIA_HTML")"
+fi
+# Só o curso de alfabetização no site (27/10/2026, decisão do dono): o link da
+# bio vai direto à página do curso, e as páginas das jornadas, das experiências
+# "Em breve" e o "Comece aqui" levam à capa, com a consulta junto. O curl é robô
+# para o contador (estatisticas.js), então esta conferência não soma visita.
+echo "Só o curso no site"
+espera "/bio leva ao curso" "$B/curso-de-hebraico/?parceria=bio#experimente" "$(location "$B/bio")"
+for p in "/comece-aqui/" "/aprender-hebraico/" "/descobrir-israel/" "/israel-alem-do-obvio/" "/raizes-sefarditas/"; do
+  espera "$p leva à capa" "$B/" "$(location "$B$p")"
+done
+espera "/comece-aqui/ leva a parceria" "$B/?parceria=bio" "$(location "$B/comece-aqui/?parceria=bio")"
+espera "a capa é a página do curso" 1 "$(G -H 'Sec-Fetch-Dest: document' "$B/" | grep -c 'id="experimente"')"
 
 # Status 200 não prova que a página aparece. Um HTML vazio, um bundle que
 # some ou uma folha de estilo 404 devolvem 200 e mostram uma tela branca - que
@@ -182,8 +278,12 @@ espera "o HTML tem tamanho de página" true \
 # `<<<` e não `printf | grep -q`: o `-q` sai no primeiro acerto e fecha o
 # cano, e aí o printf do outro lado imprime "write error: Broken pipe" no log
 # de uma verificação que PASSOU. Ruído desse tipo ensina a ignorar log.
+# O texto do <h1> é contado SEM as tags de dentro (28/09/2026): a capa nova
+# quebra o título em linhas (<span>), e o grep antigo, que exigia o texto
+# logo depois de <h1>, caiu com a página certa no ar - exatamente o tipo de
+# vermelho que esta nota acima pede para não existir.
 espera "a capa tem um título com texto" true \
-  "$(grep -qE '<h1[^>]*>[^<]{12,}' <<<"$HOME_HTML" && echo true || echo false)"
+  "$(perl -0ne '$ok = 0; if (/<h1[^>]*>(.*?)<\/h1>/s) { ($t = $1) =~ s/<[^>]+>//g; $t =~ s/\s+/ /g; $ok = length($t) >= 12 } print $ok ? "true" : "false"' <<<"$HOME_HTML")"
 espera "a capa traz a marca" true \
   "$(grep -q 'Hebraico Fluente' <<<"$HOME_HTML" && echo true || echo false)"
 
@@ -204,25 +304,43 @@ if [ -n "$ASSET" ]; then
     ASSET_CODE="$(code "$B$ASSET")"
   fi
   espera "o JavaScript da página carrega" 200 "$ASSET_CODE"
+  # 01/10/2026 (auditoria PERF-001): /_next/static sai SEM Worker e com um
+  # ano de cache, pelo app/public/_headers. Um `max-age=0` aqui quer dizer
+  # que o _headers não foi copiado para app/out ou que a lista do
+  # run_worker_first voltou a `true`.
+  espera "o chunk do Next é imutável (_headers)" true \
+    "$(G -o /dev/null -D - "$B$ASSET" | grep -i '^cache-control:' | grep -q 'immutable' && echo true || echo false)"
 else
   espera "a capa referencia o JavaScript do Next" true false
 fi
 
+# 01/10/2026 (auditoria PERF-002): o Safari só toca áudio de servidor que
+# responde 206 a um Range. Os clipes da capa passam pelo Worker, que fatia
+# a resposta quando o servidor de ativos devolve o arquivo inteiro
+# (worker/src/lib/range.js).
+espera "mp3 da capa responde 206 a um Range (Safari)" 206 \
+  "$(code -H 'Range: bytes=0-1' "$B/amostra-audio/shalom.mp3")"
+
 echo "Sessão e portão"
 espera "/api/me sem sessão recusa"            401 "$(code $B/api/me)"
+# O app de agora pede `X-HF-Sessao: opcional` e recebe 200 sem sessão, para
+# o visitante não ganhar um erro vermelho por página (PERF-007). Sem o
+# cabeçalho, acima, continua o 401 (pacote antigo numa aba aberta).
+espera "/api/me sem sessão, pedido pelo app, é 200 signedIn:false" '{"signedIn":false}' \
+  "$(G -H 'X-HF-Sessao: opcional' $B/api/me)"
 espera "rota paga sem sessão manda ao login"  "$B/entrar/?next=%2Flicao%2Falef%2F" \
        "$(location $B/licao/alef/)"
 
 echo "Conta"
 espera "criar conta" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
   -H 'content-type: application/json' \
-  -d "{\"name\":\"Teste\",\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
+  -d "{\"aceitouTermos\":true,\"declarouIdade\":true,\"name\":\"Teste\",\"email\":\"$MAIL\",\"password\":\"cavalo correto\"}")"
 espera "/api/me com sessão" 200 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' $B/api/me)"
 espera "e-mail repetido" 409 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
   -H 'content-type: application/json' \
-  -d "{\"name\":\"Outro\",\"email\":\"$MAIL\",\"password\":\"outra senha\"}")"
+  -d "{\"aceitouTermos\":true,\"declarouIdade\":true,\"name\":\"Outro\",\"email\":\"$MAIL\",\"password\":\"outra senha\"}")"
 espera "senha curta" 400 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/signup \
-  -H 'content-type: application/json' -d '{"email":"x@exemplo.br","password":"1234"}')"
+  -H 'content-type: application/json' -d '{"aceitouTermos":true,"declarouIdade":true,"email":"x@exemplo.br","password":"1234"}')"
 espera "senha errada" 401 "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/auth/login \
   -H 'content-type: application/json' -d "{\"email\":\"$MAIL\",\"password\":\"errada!!\"}")"
 # O e-mail é normalizado: entrar com outra caixa e espaços tem de funcionar.
@@ -231,13 +349,14 @@ espera "e-mail normalizado" 200 "$(G -c "$JAR" -o /dev/null -w '%{http_code}' -X
   -d "{\"email\":\"  $(echo "$MAIL" | tr '[:lower:]' '[:upper:]') \",\"password\":\"cavalo correto\"}")"
 
 echo "Portão com conta, sem compra"
-espera "vai para a página do curso" "$B/cursos/alfabetizacao/" "$(location -b "$JAR" $B/meu-hebraico/)"
+espera "vai para a página do curso" "$B/curso-de-hebraico/" "$(location -b "$JAR" $B/meu-hebraico/)"
 
 echo "Cobrança"
 # Duas situações legítimas, e a checagem se adapta:
 #
 #   · MP_ACCESS_TOKEN configurado → o pedido nasce, e o valor tem de ser o do
-#     catálogo: R$147 com 10% de desconto no PIX = 13230 centavos. É a prova de
+#     catálogo, no PIX, com o desconto (lido de data/courses.json: o preço
+#     muda sozinho no fim do pré-lançamento). É a prova de
 #     que o preço sai do servidor e não do navegador.
 #   · sem token → 503 `payments-off`, e NENHUM pedido é criado. Também é o
 #     comportamento certo: um pendente que nunca vai compensar é pior do que
@@ -255,16 +374,49 @@ echo "Cobrança"
 # está de pé. Com token de TESTE, que não toca em dinheiro nenhum, o pedido é
 # criado e o preço é conferido - que é onde essa prova vale alguma coisa.
 MODO="$(grep -o '"modo":"[a-z]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+VENDEDOR="$(grep -o '"vendedor":"[a-z-]*"' <<<"$HEALTH" | cut -d'"' -f4)"
+# Sem o token não se sabe o modo. Contra um endereço que não é a máquina
+# local, o seguro é tratar como produção: pular a criação do pedido, que
+# deixaria uma cobrança de verdade pendente no painel.
+if [ -z "$MODO" ] && [ -z "${HF_ADMIN_TOKEN:-}" ]; then
+  case "$B" in
+    http://127.0.0.1*|http://localhost*) ;;
+    *) MODO=producao ;;
+  esac
+fi
+# Contra a PRODUÇÃO, cobrança de teste é defeito, não configuração (auditoria
+# de 28/09, PAY-001): com token de teste o comprador vai a um checkout que não
+# cobra, e nada mais falha. Só barra com prova positiva - `vendedor` vem de
+# /users/me, que a Mercado Pago às vezes recusa com 403 (`recusado`) para um
+# token de produção perfeito, e isso não pode derrubar a publicação.
+case "$B" in
+  http://127.0.0.1*|http://localhost*) ;;
+  *)
+    if [ "$EM_INGLES" = 1 ] && [ "$MODO" = teste ] && [[ "$B" == *.workers.dev* ]]; then
+      # Site em inglês sem domínio: o sandbox do Paddle é permitido
+      # (scripts/pagamento-ativo.mjs, semDominio; TESTE-PADDLE.md).
+      echo "  · Paddle no SANDBOX, num site ainda sem domínio: não cobra nada"
+    elif grep -q '"payments":true' <<<"$HEALTH"; then
+      espera "a cobrança no ar é de produção (não de teste)" producao "$MODO"
+      espera "a conta da Mercado Pago não é um usuário de teste" nao \
+        "$([ "$VENDEDOR" = "usuario-de-teste" ] && echo sim || echo nao)"
+    fi
+    ;;
+esac
+# No site em inglês o meio é um só (o checkout do Paddle), e o preço é o
+# price.usd do catálogo, sem desconto de PIX.
+MEIO=pix
+[ "$EM_INGLES" = 1 ] && MEIO=paddle
 if [ "$MODO" = "producao" ]; then
   echo "  · token de PRODUÇÃO: pulando a criação de pedido para não deixar"
   echo "    uma cobrança pendente no painel a cada publicação."
   espera "a rota de pagamento exige sessão" 401 \
     "$(G -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
-       -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')"
+       -H 'content-type: application/json' -d "{\"courseSlug\":\"alfabetizacao\",\"method\":\"$MEIO\"}")"
   pay_code=pulado
 else
   pay_code=$(G -b "$JAR" -o /dev/null -w '%{http_code}' -X POST $B/api/pay/create \
-    -H 'content-type: application/json' -d '{"courseSlug":"alfabetizacao","method":"pix"}')
+    -H 'content-type: application/json' -d "{\"courseSlug\":\"alfabetizacao\",\"method\":\"$MEIO\"}")
 fi
 case "$pay_code" in
   pulado) ;;
@@ -273,18 +425,34 @@ case "$pay_code" in
     espera "e nenhum pedido órfão foi criado" "" \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
+  502)
+    # O provedor recusou (sem credencial, no wrangler dev): o pedido nasce
+    # `failed` sem provider_ref e, desde 01/10/2026 (PAY-B-010), não aparece
+    # em Compras. O preço gravado é conferido pelos testes de unidade.
+    espera "pagamento recusado pelo provedor não vira compra listada" "" \
+      "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
+    ;;
   *)
-    espera "o pedido ficou registrado com o preço do servidor" 13230 \
+    espera "o pedido ficou registrado com o preço do servidor" \
+      "$(node -e '
+        const c = require(process.argv[1]).courses.find(x => x.slug === "alfabetizacao").price;
+        console.log(process.argv[2] === "1" ? Math.round(c.usd * 100)
+          : Math.round(c.brl * (1 - c.pixDiscountPct / 100) * 100));' \
+        "$RAIZ/data/courses.json" "$EM_INGLES")" \
       "$(G -b "$JAR" $B/api/orders | grep -o '"amountCents":[0-9]*' | head -1 | cut -d: -f2)"
     ;;
 esac
 espera "curso fora de venda é recusado" 404 "$(G -b "$JAR" -o /dev/null -w '%{http_code}' \
   -X POST $B/api/pay/create -H 'content-type: application/json' \
-  -d '{"courseSlug":"hebraico-a1","method":"pix"}')"
+  -d "{\"courseSlug\":\"hebraico-a1\",\"method\":\"$MEIO\"}")"
 espera "pedido de outra pessoa não é lido" 404 "$(code -b "$JAR" "$B/api/pay/verify?order=HFNAOEXISTE")"
 
 echo "Webhook"
 espera "sem assinatura, recusa" 401 "$(code -X POST "$B/api/pay/webhook?type=payment&data.id=1")"
+if [ "$EM_INGLES" = 1 ]; then
+  espera "aviso do Paddle sem assinatura, recusa" 401 \
+    "$(code -X POST "$B/api/pay/paddle" -H 'content-type: application/json' -d '{"event_type":"transaction.completed","data":{}}')"
+fi
 
 # ── senha ────────────────────────────────────────────────────────────────
 # O que dá para provar de FORA, sem ler a caixa de entrada de ninguém.
@@ -350,7 +518,7 @@ espera "a senha antiga não entra mais" 401 "$(G -o /dev/null -w '%{http_code}' 
 # sim, a tela diz "o link está a caminho" - e a Resend recusou. Quase sempre é
 # o domínio de EMAIL_FROM ainda não verificado, e nada na tela denuncia.
 if [ "$(campo email)" = "true" ]; then
-  ENTREGA="$(G --max-time 15 "$B/api/health" | grep -o '"emailEntregue":[a-z]*' | cut -d: -f2)"
+  ENTREGA="$(saude | grep -o '"emailEntregue":[a-z]*' | cut -d: -f2)"
   if [ "$ENTREGA" = "false" ]; then
     espera "o e-mail de recuperação saiu" true false
     echo "    A Resend recusou. O motivo exato está em Actions → Acesso → 'envios'."
@@ -376,16 +544,33 @@ if [ "$B" != "http://127.0.0.1:8787" ]; then
 Esta passagem criou a conta de teste $MAIL.
 Para apagá-la do banco de produção:
 
-  npx wrangler d1 execute hebraico-fluente --remote --command \\
-    "DELETE FROM orders          WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
-     DELETE FROM entitlements    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
-     DELETE FROM progress        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
-     DELETE FROM password_resets WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+  npx wrangler d1 execute fluent-hebrew --remote --command \\
+    "DELETE FROM arrependimentos     WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM novidades           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM lembretes_estudo    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM marcas              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM aparelhos           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM depoimentos         WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM aceites             WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM admin_codigos       WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM provas_a1           WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM certificados        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM estornos            WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
+     DELETE FROM payment_events      WHERE order_id IN (SELECT id FROM orders WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL'));
+     DELETE FROM orders              WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM entitlements        WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM progress            WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM registros_acesso    WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM email_verifications WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM password_resets     WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
+     DELETE FROM access_log          WHERE account_id = (SELECT id FROM accounts WHERE email = '$MAIL');
      DELETE FROM accounts WHERE email = '$MAIL'"
 
 (Toda tabela que aponta para accounts precisa estar aí, antes do DELETE das
 contas - senão o banco recusa tudo com "FOREIGN KEY constraint failed" e a
-conta fica. Ver worker/schema.sql.)
+conta fica. arrependimentos e estornos também apontam para orders e saem antes dela.
+access_log e payment_events não têm chave estrangeira, mas guardam rastro
+da conta de teste. Ver worker/schema.sql.)
 LIMPEZA
 fi
 

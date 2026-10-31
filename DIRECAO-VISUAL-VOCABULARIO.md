@@ -12,13 +12,13 @@ imagens de lugares diferentes.
 | o quê | onde |
 |---|---|
 | a lista das palavras com imagem, e o que cada uma mostra | `data/imagens-vocabulario.json` |
-| os arquivos de imagem | `app/public/vocabulario/<nome>.webp` |
+| os arquivos de imagem | `app/public/media/vocabulario/<nome>-<hash>.webp` (via `node tools/imagem-vocabulario.mjs <arquivo> <número>`) |
 | quem junta as duas coisas às palavras | `tools/export-content.mjs` (`carregarImagens`) |
 | onde elas aparecem hoje | "Meu vocabulário" (`/vocabulario`) |
 
 Cada entrada tem três campos:
 
-- **`image`** - o caminho do arquivo, por exemplo `/vocabulario/casa.webp`.
+- **`image`** - o caminho do arquivo, por exemplo `/media/vocabulario/casa-1a2b3c4d.webp`.
   Fica `null` até o arquivo existir. O exportador **recusa** um caminho para
   arquivo que não existe, então uma imagem quebrada nunca chega ao aluno.
 - **`imageAlt`** - o texto para leitor de tela. Descreve a **cena**, não a
@@ -72,10 +72,17 @@ um bom livro didático moderno, não a de um app infantil.
 
 ## Estado
 
-47 palavras concretas estão estruturadas, com `imageAlt` e `imagePrompt`
-escritos. **Nenhuma imagem foi gerada** - a tela funciona sem elas, e o
-cartão simplesmente não mostra ilustração enquanto `image` é `null`.
+**As 47 imagens estão no curso (01/10/2026).** Geradas pelo dono no
+ChatGPT (são dele, para uso comercial), em montagens 3x3 recortadas e
+completadas até o quadrado. Para trocar uma: gere a nova e rode
+`node tools/imagem-vocabulario.mjs <arquivo> <número>`; o arquivo antigo sai
+e o nome novo leva outro hash. O `imageAlt` descreve a imagem que está no
+ar, não o prompt: ao trocar a imagem, confira o texto.
 
 Palavras abstratas (ontem, também, verdade, obrigado) ficam **sem** imagem de
 propósito: uma ilustração de "verdade" é uma adivinhação, e uma imagem que
 precisa ser explicada não ajuda a lembrar a palavra.
+
+**102 imagens (02/10/2026).** Mais 55 palavras concretas ganharam imagem
+(montagens A a G). As descrições para leitor de tela ajustadas às imagens
+foram aprovadas pelo dono em 02/10/2026.

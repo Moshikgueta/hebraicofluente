@@ -39,7 +39,8 @@
  */
 
 import { readSession } from './lib/session.js';
-import { hasEntitlement, findAccountById } from './lib/db.js';
+import { aparelhoValido } from './lib/aparelhos.js';
+import { hasEntitlement, activeEntitlements, findAccountById } from './lib/db.js';
 
 /* As rotas do curso pago. Uma lista de prefixos, e não uma de rotas livres:
    uma rota nova nasce protegida, e o erro possível é pedir login onde não
@@ -51,18 +52,78 @@ const GATED = [
   /* 23/09/2026: o vocabulário, o nome em hebraico e o guia do teclado - as
      três telas das atividades de produção. */
   '/vocabulario', '/meu-nome', '/teclado-hebraico',
+  /* 11/10/2026: o Laboratório de Leitura e a Minha Primeira Leitura. */
+  '/leitura',
+  /* 28/10/2026: as leituras todas num lugar só (app/leituras). */
+  '/leituras',
+  '/hebraico-na-rua',
   /* Os clipes de áudio ainda não existem; quando chegarem, nascem atrás do
      portão em vez de serem descobertos públicos depois. Atenção: o
      AudioButton também aparece em página livre (a landing, `Fecho.tsx`), e
      um clipe pedido de lá vai receber 403. No dia em que houver clipes, os
      das páginas livres saem por outro prefixo, ou esta linha vira uma
      decisão por lição. */
-  '/audio'
+  '/audio',
+  /* 24/09/2026: os diagramas de ordem dos traços das 27 letras. A lição os
+     carrega daqui como <img>, e o navegador manda o cookie junto; quem não
+     comprou recebe 403. A landing mostra dois (Álef e Shin), e esses dois
+     saem por /tracado-amostra/, que é público - ver
+     tools/export-content.mjs. */
+  '/stroke-order',
+  /* 28/10/2026: os vídeos do professor no "Me explica, Moshik" (video/ na raiz). */
+  '/video',
+  /* 26/09/2026: as lições de som (Vet, Chaf, Fe, Tch, Dj, J). */
+  '/som',
+  /* 27/09/2026: as recompensas (trocar XP) e as leituras bônus que elas abrem. */
+  '/loja', '/bonus',
+  /* O guia opcional «O nikud da Bíblia». */
+  '/nikud-biblico',
+  /* 29/09/2026: o depoimento do aluno. Só quem tem o curso escreve. */
+  '/depoimento',
+  /* 06/10/2026: o curso Hebraico A1. É de OUTRO curso: ver `cursoDaRota`. */
+  '/a1',
+  /* 21/10/2026: o e-book Israel Além do Óbvio (versão interativa e PDF).
+     É de outro PRODUTO: ver `cursoDaRota`. */
+  '/israel',
+  /* 21/10/2026: Raízes Sefarditas, outro produto (ver `cursoDaRota`). */
+  '/raizes'
 ];
 
-/* O curso que essas rotas pertencem. Quando o A1 tiver as próprias rotas,
-   esta constante vira um mapa de prefixo → curso. */
+/* O curso de cada rota (06/10/2026, com o A1). O padrão é o alfabeto; o A1
+   tem o prefixo dele; e os clipes de áudio servem aos dois cursos, porque
+   uma gravação pode estar nos dois (a mesma palavra, o mesmo id) - para
+   eles basta ter algum curso válido. `null` = qualquer curso. */
 const COURSE = 'alfabetizacao';
+const PREFIXO_A1 = '/a1';
+const PREFIXO_RAIZES = '/raizes';
+const QUALQUER_CURSO = ['/audio'];
+/* O e-book: quem comprou só ele lê /israel/ e mais nada. E o "qualquer
+   curso" de /audio conta só CURSOS: o e-book não abre os áudios das lições. */
+const PREFIXO_LIVRO = '/israel';
+export const LIVRO = 'israel-alem-do-roteiro';
+/* Os direitos de acesso que NÃO são de curso. Escrito aqui, e não lido do
+   catálogo, porque app/seo.mjs e app/pacote.mjs importam este arquivo no
+   Node puro, que não importa JSON sem atributo. tests/ebook-produto.test.ts
+   confere esta lista contra data/courses.json. */
+export const NAO_CURSOS = new Set([LIVRO]);
+/* Produtos sem página de venda: fora do catálogo (Raízes) ou com `aVenda:
+   false` em data/courses.json (o e-book, 22/10/2026). Lista fixa porque este
+   arquivo não pode importar o catálogo: o seo.mjs da publicação o carrega no
+   Node puro, que recusa JSON sem atributo de importação. tests/ebook-produto
+   confere a lista contra o catálogo: abrir a venda pede tirar o slug daqui. */
+export const SEM_PAGINA_DE_VENDA = new Set(['raizes-sefarditas', LIVRO]);
+const ehCurso = slug => !NAO_CURSOS.has(slug);
+
+export function cursoDaRota(path) {
+  const p = canonical(path);
+  if (p === null) return COURSE;
+  const em = prefix => p === prefix || p.startsWith(prefix + '/');
+  if (em(PREFIXO_A1)) return 'hebraico-a1';
+  if (em(PREFIXO_LIVRO)) return LIVRO;
+  if (em(PREFIXO_RAIZES)) return 'raizes-sefarditas';
+  if (QUALQUER_CURSO.some(em)) return null;
+  return COURSE;
+}
 
 /**
  * O caminho, canonizado antes de comparar.
@@ -104,9 +165,26 @@ export async function gate(request, env) {
   if (!account || (Number(account.session_version) || 0) !== (Number(sess.sv) || 0)) {
     return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}`);
   }
+  /* O aparelho saiu das três vagas (lib/aparelhos.js): o login diz por quê
+     (auditoria de 01/10/2026, UXQA-006). Sem o motivo, quem foi derrubado
+     caía num "Bem-vindo de volta" e achava que a conta tinha sido invadida. */
+  if (!await aparelhoValido(env, sess)) {
+    return recusa(url, documento, `/entrar/?next=${encodeURIComponent(path)}&motivo=aparelhos`);
+  }
 
-  if (!await hasEntitlement(env, account.id, COURSE)) {
-    return recusa(url, documento, `/cursos/${COURSE}/`);
+  const curso = cursoDaRota(path);
+  const pode = curso === null
+    ? (await activeEntitlements(env, account.id)).some(e => ehCurso(e.courseSlug))
+    : await hasEntitlement(env, account.id, curso);
+  if (!pode) {
+    /* Produto sem página de venda - fora do catálogo (Raízes Sefarditas) ou
+       com `aVenda: false` (o e-book, 22/10/2026): quem não tem o direito vai
+       para a lista de cursos, e não para um 404. */
+    /* O curso de alfabetização vende em /curso-de-hebraico (23/10/2026); ir
+       direto para lá poupa o 301 do endereço antigo. */
+    const pagina = SEM_PAGINA_DE_VENDA.has(curso) ? '/cursos/'
+      : (curso || COURSE) === COURSE ? '/curso-de-hebraico/' : `/cursos/${curso}/`;
+    return recusa(url, documento, pagina);
   }
 
   return null;

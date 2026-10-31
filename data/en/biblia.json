@@ -1,0 +1,38 @@
+{
+  "verses/genesis-1-1/fontePt": {
+    "pt": "Gênesis 1:1",
+    "en": "Genesis 1:1"
+  },
+  "verses/genesis-1-1/pt": {
+    "pt": "No princípio, Deus criou os céus e a terra.",
+    "en": "In the beginning, God created the heavens and the earth."
+  },
+  "verses/genesis-1-1/words/#0/pt": {
+    "pt": "no princípio",
+    "en": "in the beginning"
+  },
+  "verses/genesis-1-1/words/#1/pt": {
+    "pt": "criou",
+    "en": "created"
+  },
+  "verses/genesis-1-1/words/#2/pt": {
+    "pt": "Deus",
+    "en": "God"
+  },
+  "verses/genesis-1-1/words/#3/pt": {
+    "pt": "marca o objeto direto, e não se traduz",
+    "en": "marks the direct object, and isn't translated"
+  },
+  "verses/genesis-1-1/words/#4/pt": {
+    "pt": "os céus",
+    "en": "the heavens"
+  },
+  "verses/genesis-1-1/words/#5/pt": {
+    "pt": "e, com a mesma marca",
+    "en": "and, with the same marker"
+  },
+  "verses/genesis-1-1/words/#6/pt": {
+    "pt": "a terra",
+    "en": "the earth"
+  }
+}

@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import { CursosClient } from './CursosClient';
+import { tx } from '@/i18n/telas/venda-cursos';
 
 export const metadata: Metadata = meta({
   rota: '/cursos',
-  title: 'Cursos de Hebraico - Hebraico Fluente',
-  description:
-    'Alfabetização, A1, A2 e B1. A trilha completa do hebraico para brasileiros, ' +
-    'na mesma conta e com o mesmo progresso.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 export default function CursosPage() { return <CursosClient />; }

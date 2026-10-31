@@ -23,6 +23,7 @@
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { OUT } from './saida.mjs';
 
 const curso = JSON.parse(readFileSync(new URL('./content/course.json', import.meta.url), 'utf8'));
 
@@ -32,10 +33,36 @@ const TOTAL = {
   modulos: curso.modules.length
 };
 
+/* A lição que ensina a letra de ordem `ordem`: a mesma conta de
+   `licaoDaLetra` (lib/content-publico.ts). */
+const licaoDaLetra = ordem => {
+  const letra = curso.letters.find(l => l.order === ordem);
+  if (!letra) return null;
+  for (const md of curso.modules) for (const l of md.lessons) {
+    if ((l.letters || []).includes(letra.id)) return l.n;
+  }
+  return null;
+};
+
+/* As contagens de UM módulo, que a vitrine mostra de propósito ("Módulo 05 ·
+   7 lições"). Uma delas pode coincidir com o total de outra unidade - desde
+   26/09/2026 o módulo 5 tem 7 lições, e o curso tem 7 módulos - sem ser o
+   defeito que a segunda regra procura. O defeito ("22 lições") nunca é a
+   contagem de um módulo. */
+const PARCIAIS = {
+  licoes: new Set(curso.modules.map(m => m.lessons.length)),
+  letras: new Set(curso.modules.map(m => curso.letters.filter(l => l.module === m.n).length)),
+  modulos: new Set()
+};
+
 const UNIDADE = {
   'lições': 'licoes', 'lição': 'licoes',
   'letras': 'letras', 'letra': 'letras',
-  'módulos': 'modulos', 'módulo': 'modulos'
+  'módulos': 'modulos', 'módulo': 'modulos',
+  /* O site em inglês (NEXT_PUBLIC_LOCALE=en): as mesmas grandezas. */
+  'lessons': 'licoes', 'lesson': 'licoes',
+  'letters': 'letras', 'letter': 'letras',
+  'modules': 'modulos', 'module': 'modulos'
 };
 
 /* Duas regras, e as duas foram escolhidas para não gritar à toa.
@@ -55,6 +82,7 @@ function julgar(n, unidade) {
   const total = TOTAL[unidade];
   if (n > total) return `promete mais do que existe (${total})`;
   if (n === total) return null;
+  if (PARCIAIS[unidade].has(n)) return null;
   for (const [outra, valor] of Object.entries(TOTAL)) {
     if (outra !== unidade && n === valor) {
       return `é o total de ${outra} (${valor}), não de ${unidade} (${total})`;
@@ -67,7 +95,8 @@ function julgar(n, unidade) {
    "6 letras" dentro de um módulo), e ali um número menor é correto. A
    verificação é da VITRINE: o que se promete a quem ainda não comprou. */
 const LIVRES = new Set([
-  '/', '/metodo/', '/cursos/', '/cursos/alfabetizacao/', '/sobre/', '/faq/',
+  '/', '/curso-de-hebraico/', '/aprender-hebraico/', '/descobrir-israel/', '/israel-alem-do-obvio/', '/raizes-sefarditas/',
+  '/metodo/', '/cursos/', '/sobre/', '/faq/',
   '/biblia/', '/termos/', '/privacidade/', '/reembolso/', '/suporte/',
   '/checkout/alfabetizacao/'
 ]);
@@ -93,18 +122,44 @@ const texto = html => html
 const problemas = [];
 let conferidas = 0;
 
-for (const [rota, arquivo] of paginas('out').sort()) {
+for (const [rota, arquivo] of paginas(OUT).sort()) {
   if (!LIVRES.has(rota)) continue;
   conferidas++;
-  const t = texto(readFileSync(arquivo, 'utf8'));
+  /* Na vitrine de cursos, cada cartão fala do SEU curso: "11 módulos" no
+     cartão do A1 é do A1. Só o cartão da alfabetização entra na conta (os
+     cartões são marcados com data-curso, e um marcador "fim" fecha a lista). */
+  const html = readFileSync(arquivo, 'utf8').split(/(?=data-curso=")/).filter(p => {
+    const m = p.match(/^data-curso="([^"]*)"/);
+    return !m || m[1] === 'alfabetizacao' || m[1] === 'fim';
+  }).join('');
+  const t = texto(html);
   const vistos = new Map();
 
-  for (const [, n, palavra] of t.matchAll(/(\d+)\s+(lições|lição|letras|letra|módulos|módulo)\b/g)) {
+  for (const [, n, palavra] of t.matchAll(/(\d+)\s+(lições|lição|letras|letra|módulos|módulo|lessons|lesson|letters|letter|modules|module)\b/g)) {
     const chave = `${n} ${palavra}`;
     if (vistos.has(chave)) continue;
     vistos.set(chave, true);
     const queixa = julgar(Number(n), UNIDADE[palavra]);
     if (queixa) problemas.push(`${rota.padEnd(28)} diz "${chave}", que ${queixa}`);
+  }
+
+  /* "letra N das M" e "lição N das M": o M é o total da grandeza, e uma
+     "lição" logo depois de uma "letra" ("letra 20 das 22 (lição 14 das 27)")
+     é a lição que ENSINA aquela letra. Em 01/10/2026 /biblia dizia "lição 20
+     das 22": a ordem da letra lida como lição, e o total de letras como total
+     de lições (auditoria, CONV-006). */
+  for (const [trecho, palavra, n, m] of t.matchAll(/\b(letra|lição|letter|lesson)\s+(\d+)\s+(?:das|of)\s+(\d+)/g)) {
+    const unidade = UNIDADE[palavra];
+    if (Number(m) !== TOTAL[unidade]) {
+      problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}", mas o curso tem ${TOTAL[unidade]} ${unidade}`);
+    }
+    if (Number(n) > Number(m)) problemas.push(`${rota.padEnd(28)} diz "${trecho}"`);
+  }
+  for (const [trecho, ordem, licao] of t.matchAll(/(?:letra|letter)\s+(\d+)\s+(?:das|of)\s+\d+\s*\(\s*(?:lição|lesson)\s+(\d+)/g)) {
+    const certa = licaoDaLetra(Number(ordem));
+    if (certa !== Number(licao)) {
+      problemas.push(`${rota.padEnd(28)} diz "${trecho.replace(/\s+/g, " ")}…", mas a letra ${ordem} entra na lição ${certa}`);
+    }
   }
 
   /* A segunda regra: o valor da parcela.

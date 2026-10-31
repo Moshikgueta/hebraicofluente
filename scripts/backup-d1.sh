@@ -17,7 +17,7 @@
 # ⚠ O ARQUIVO GERADO É SEGREDO. Ele tem e-mail de todo aluno, o hash da senha
 # de cada um, os pedidos e a trilha. Vale o mesmo que o banco: guarde onde
 # você guardaria uma cópia da sua carteira, nunca num repositório, nunca num
-# artefato do Actions (que num repositório público é público), nunca anexado
+# artefato do Actions (que todo colaborador do repositório baixa), nunca anexado
 # a um chamado de suporte.
 
 set -uo pipefail
@@ -26,7 +26,18 @@ cd "$(dirname "$0")/.."
 DB_NAME="hebraico-fluente"
 # Mesma versão fixa do script de publicação, pelo mesmo motivo: este comando
 # roda com o token da Cloudflare no ambiente.
-W="npx --yes wrangler@4.135.0"
+# O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+# SEC-A-009): com `npm ci` na raiz, a versão E todas as dependências dela vêm
+# do lockfile, conferidas pelo hash. O `npx --yes wrangler@VERSÃO` fixava só
+# o pacote de cima e resolvia o resto a cada execução - num passo que tem os
+# segredos de produção no ambiente. Sem `npm ci` (uma máquina nova), cai no
+# npx com a mesma versão do lockfile.
+if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
+  WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
+else
+  WRANGLER_LOCAL="npx --yes wrangler@4.146.0"
+fi
+W="$WRANGLER_LOCAL"
 
 DESTINO="${HF_BACKUP_DIR:-backups}"
 CARIMBO="$(date +%Y%m%d-%H%M%S)"

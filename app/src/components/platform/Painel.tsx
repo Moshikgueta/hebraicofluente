@@ -18,13 +18,23 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card } from '@/components/ui/Card';
 import { useProgress } from '@/lib/state/store';
-import { getLetter } from '@/lib/content';
+import { allLetters, getLetter } from '@/lib/content';
+import { desafioFeitoHoje } from '@/lib/desafio-feito';
+import { tx } from '@/i18n/telas/conta-painel';
+import { Cenario, LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { Yael, YaelDiz } from '@/components/aventura/Yael';
+import { falaDaSemana, resumoDaSemana } from '@/lib/resumo-da-semana';
 
 /* ── o cartão do curso ──────────────────────────────────────────────────── */
 export function CartaoCurso({
-  kicker, titulo, sub, pct, href, cta
+  kicker, titulo, sub, pct, href, cta, modulo, letra
 }: {
   kicker: string; titulo: string; sub: string; pct: number; href: string; cta: string;
+  /** O lugar do módulo em que o aluno está (28/10/2026): o cartão abre com
+   *  o desenho dele, vivo, e a Yael. Sem ele, o cartão de sempre. */
+  modulo?: number;
+  /** A letra da vez, grande, ao lado do título. */
+  letra?: string;
 }) {
   /* A barra começa em zero e cresce depois de montada: o movimento é o que
      diz "você avançou até aqui". Pintada já no lugar final, ela é só uma
@@ -39,19 +49,36 @@ export function CartaoCurso({
     <div className="relative overflow-hidden rounded-[20px] bg-[var(--navy)] px-6 py-7 sm:px-[30px] sm:pb-[26px] sm:pt-[30px]">
       <span aria-hidden className="absolute inset-0 pointer-events-none"
             style={{ background: 'radial-gradient(70% 140% at 92% 0%, rgba(143,214,200,.18), transparent 60%)' }} />
+      {modulo != null && modulo >= 1 && modulo <= 7 && (
+        <div aria-hidden className="relative -mx-6 -mt-7 sm:-mx-[30px] sm:-mt-[30px] mb-5 h-[112px] sm:h-[150px] overflow-hidden">
+          <Cenario n={modulo as IdDoCenario} vivo />
+          <span className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[var(--navy)] to-transparent" />
+          <span className="absolute left-4 top-3 rounded-full bg-[var(--card)]/92 px-3 py-0.5 font-ui text-[12.5px] font-semibold text-ink shadow-[var(--sh)]">
+            {tx.moduloELugar(modulo, LUGAR[modulo as IdDoCenario].pt.split(',')[0]!)}
+          </span>
+          <span className="absolute right-3 bottom-1 w-[58px] sm:w-[70px]"><Yael /></span>
+        </div>
+      )}
       <div className="relative grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
         <div className="min-w-0">
           <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal-lite)] mb-2.5">
             {kicker}
           </p>
-          <p className="font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.025em] text-white mb-1.5">
-            {titulo}
-          </p>
+          <div className="flex items-center gap-3.5 mb-1.5">
+            {letra && (
+              <span aria-hidden className="shrink-0 grid place-items-center w-[60px] h-[60px] rounded-[16px] bg-white/10 border border-white/15">
+                <He size="lg" tone="lite">{letra}</He>
+              </span>
+            )}
+            <p className="m-0 font-display text-[22px] sm:text-[25px] font-semibold tracking-[-0.025em] text-white">
+              {titulo}
+            </p>
+          </div>
           <p className="font-ui text-[15.5px] text-white/[.66] mb-5">{sub}</p>
           <div className="flex items-center gap-3.5 max-w-[420px]">
             <span className="flex-1 h-2 rounded-full bg-white/15 overflow-hidden"
                   role="progressbar" aria-valuenow={Math.round(pct * 100)}
-                  aria-valuemin={0} aria-valuemax={100} aria-label="Progresso no curso">
+                  aria-valuemin={0} aria-valuemax={100} aria-label={tx.progressoNoCurso}>
               <span className="block h-full rounded-full transition-[width] duration-[1200ms] ease-[var(--ease-fill)]"
                     style={{ width: `${Math.round(largura * 100)}%`,
                              background: 'linear-gradient(90deg,var(--teal),var(--teal-lite))' }} />
@@ -78,7 +105,7 @@ export function CartaoNumero({
   n, rotulo, tom = 'teal', icone
 }: { n: ReactNode; rotulo: string; tom?: 'teal' | 'gold' | 'neutro'; icone: ReactNode }) {
   const FUNDO = {
-    teal: 'bg-[var(--teal-soft)] text-[var(--teal)]',
+    teal: 'bg-[var(--teal-soft)] text-[var(--teal-ink)]',
     gold: 'bg-[var(--gold-soft)] text-[var(--gold)]',
     neutro: 'bg-[var(--sand)] text-ink-muted'
   } as const;
@@ -111,14 +138,16 @@ export function CartaoRevisao() {
           <path d="M17 3.2V7h-3.8" stroke="var(--gold)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-[var(--gold-ink)]">
-          Hora de revisar
+          {tx.horaDeRevisar}
         </span>
       </p>
       <p className="font-ui text-[15.5px] leading-[1.55] text-[var(--gold-body)] mb-4">
+        {/* `dueCount` conta ITENS da fila, não letras (VIS-004): "2 letras"
+            com uma letra só na lista era a contagem errada com a palavra errada. */}
         {p.dueCount === 1
-          ? 'Uma letra precisa de uma revisão rápida.'
-          : `${p.dueCount} letras precisam de uma revisão rápida.`}{' '}
-        Leva cerca de {minutos} minutos.
+          ? tx.umItem
+          : tx.nItens(p.dueCount)}{' '}
+        {tx.levaCerca(minutos)}
       </p>
       {letras.length > 0 && (
         <div className="flex flex-wrap gap-[7px] mb-[18px]">
@@ -131,47 +160,59 @@ export function CartaoRevisao() {
         </div>
       )}
       <Link href="/revisao"
-            className="inline-flex items-center rounded-[12px] bg-[var(--gold)] text-white
+            className="inline-flex items-center rounded-[12px] bg-[var(--gold-solid)] text-white
                        font-ui font-semibold text-[15.5px] px-[22px] py-3
                        transition-transform duration-[180ms] hover:-translate-y-[2px]">
-        Começar revisão
+        {tx.comecarRevisao}
       </Link>
     </Card>
   );
 }
 
 /* ── a semana ───────────────────────────────────────────────────────────── */
-const DIA = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+const DIA = tx.diasDaSemana;
 
 export function CartaoSemana() {
   const p = useProgress();
-
-  /* Sete dias terminando hoje. A data é montada em UTC a partir da chave
-     YYYY-MM-DD do próprio estado, e não com `new Date()` local: o dia do
-     estudo é o que o app gravou, e não o fuso de quem está olhando. */
+  /* O resumo dos sete dias terminando hoje (lib/resumo-da-semana.ts): o
+     tempo por dia, os dias com estudo, as letras e as palavras novas, e o
+     comentário da Yael. Só lê o progresso. */
   const hoje = p.day;
-  const dias = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(`${hoje}T12:00:00Z`);
-    d.setUTCDate(d.getUTCDate() - (6 - i));
-    const chave = d.toISOString().slice(0, 10);
-    return { chave, dow: d.getUTCDay(), units: p.state.days[chave]?.units ?? 0 };
-  });
-
-  const total = dias.reduce((n, d) => n + d.units, 0);
-  const teto = Math.max(...dias.map(d => d.units), 1);
-  const minutos = Math.round(total / 3);
-  const h = Math.floor(minutos / 60);
+  const r = resumoDaSemana(p.state, hoje, allLetters());
+  const { fala, humor } = falaDaSemana(r);
+  const teto = Math.max(...r.dias.map(d => d.units), 1);
+  const h = Math.floor(r.minutos / 60);
 
   return (
-    <Card className="p-6">
-      <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">Sua semana</p>
-      <p className="font-ui text-[14px] text-ink-muted mb-5">
-        {total === 0
-          ? 'Nada estudado ainda esta semana.'
-          : `${h > 0 ? `${h}h ` : ''}${minutos % 60}min estudados`}
-      </p>
+    <Card className="p-6 grid gap-5">
+      <div>
+        <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mb-1">{tx.suaSemana}</p>
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          {r.minutos === 0 ? tx.nadaEstudado : tx.estudados(h, r.minutos % 60)}
+        </p>
+      </div>
+      <YaelDiz humor={humor} tamanho={60}>
+        {fala === 'palavras' ? tx.falaPalavras(r.palavrasNovas) : fala === 'ritmo' ? tx.falaRitmo : fala === 'quieta' ? tx.falaQuieta : tx.falaContinua}
+      </YaelDiz>
+      <dl className="grid grid-cols-3 gap-2 m-0">
+        {([[r.diasEstudados, tx.diasDeEstudo], [r.letras.length, tx.letrasNovas], [r.palavrasNovas, tx.palavrasNovas]] as const).map(([n, rotulo]) => (
+          <div key={rotulo} className="grid gap-0.5 rounded-[var(--r-md)] bg-[var(--sand)] px-3 py-2.5 text-center">
+            <dd className="m-0 font-display text-[24px] font-bold tabular-nums text-ink">{n}</dd>
+            <dt className="font-ui text-[12px] leading-tight text-ink-muted">{rotulo}</dt>
+          </div>
+        ))}
+      </dl>
+      {r.letras.length > 0 && (
+        <p className="m-0 flex flex-wrap items-center gap-2" aria-label={r.letras.map(l => l.namePt).join(', ')}>
+          {r.letras.map(l => (
+            <span key={l.id} aria-hidden className="grid place-items-center w-10 h-10 rounded-[12px] bg-[var(--teal-soft)]">
+              <He size="inline">{l.letter}</He>
+            </span>
+          ))}
+        </p>
+      )}
       <div className="flex items-end gap-[9px] h-[92px]">
-        {dias.map((d, i) => {
+        {r.dias.map((d, i) => {
           const eHoje = d.chave === hoje;
           const altura = d.units === 0 ? 4 : Math.max(8, Math.round((d.units / teto) * 100));
           return (
@@ -220,3 +261,124 @@ export const IconeTempo = () => (
     <path d="M10 6.2V10l2.6 1.8" stroke="currentColor" />
   </svg>
 );
+
+/* ── o plano de hoje (28/10/2026, pedido do dono) ──────────────────────────
+   "A boas-vindas está feia e sem informação que oriente." O painel dizia
+   "Boa noite, Ana. Continue de onde você parou." e mais nada: o aluno não
+   sabia quanto estudar, se a revisão estava em dia, nem se a sequência
+   estava garantida. Agora são três linhas, cada uma com um estado que se vê
+   de longe (o círculo cheio é feito), e as três leem o progresso real:
+
+     · a meta do dia, em minutos (os mesmos `units` da meta e da sequência);
+     · a lição: concluída hoje, ou a próxima;
+     · a revisão: em dia, ou quantos itens esperam.
+
+   Nada aqui é ação principal: o botão grande continua sendo o do cartão
+   navy, logo acima. */
+export function PlanoDeHoje({ licao, semDesafio = false }: {
+  licao: { nome: string; href: string } | null;
+  /** O painel mostra o desafio nos atalhos; aqui ele sairia repetido. */
+  semDesafio?: boolean;
+}) {
+  const p = useProgress();
+  const minutos = Math.floor(p.goalUnits / 3);
+  const alvo = Math.max(1, Math.round(p.goalTargetToday / 3));
+  const metaFeita = p.goalUnits >= p.goalTargetToday;
+  const licaoHoje = Object.values(p.state.lessons)
+    .some(l => l?.completedAt?.slice(0, 10) === p.day);
+  const revisaoEmDia = p.dueCount === 0;
+
+  const linhas: { feito: boolean; titulo: string; detalhe: string; href?: string; acao?: string }[] = [
+    {
+      feito: metaFeita,
+      titulo: metaFeita ? tx.metaCumprida : tx.metaDoDia(alvo),
+      detalhe: metaFeita
+        ? (p.streak > 0 ? tx.sequenciaGarantida(p.streak) : tx.amanhaContinua)
+        : tx.minutosHoje(minutos, alvo) + (p.streak > 0 ? tx.cumpraParaManter(p.streak) : '')
+    },
+    licaoHoje
+      ? { feito: true, titulo: tx.licaoFeita, detalhe: licao ? tx.aProxima(licao.nome) : tx.bomTrabalho }
+      : { feito: false, titulo: licao ? tx.licao(licao.nome) : tx.licaoDeHoje,
+          detalhe: tx.umaLicaoLeva, href: licao?.href, acao: tx.abrir },
+    revisaoEmDia
+      ? { feito: true, titulo: tx.revisaoEmDia, detalhe: tx.nadaEsperando }
+      : { feito: false, titulo: tx.revisaoItens(p.dueCount),
+          detalhe: tx.tresMinutos, href: '/revisao', acao: tx.revisar }
+  ];
+  const feitos = linhas.filter(l => l.feito).length;
+
+  return (
+    <Card className="p-5 sm:p-6 grid gap-4">
+      <div className="flex items-center gap-4">
+        <AnelDaMeta fracao={Math.min(1, p.goalUnits / Math.max(1, p.goalTargetToday))} minutos={minutos} />
+        <div className="grid gap-0.5 min-w-0">
+          <h2 className="m-0 font-display text-[19px] font-semibold tracking-[-0.018em] text-ink">{tx.seuPlano}</h2>
+          <p className="m-0 font-ui text-[14px] text-ink-muted tabular-nums">
+            {feitos === linhas.length ? tx.tudoFeito : tx.feitosDe(feitos, linhas.length)}
+          </p>
+        </div>
+      </div>
+      <ul className="grid gap-1 list-none p-0 m-0">
+        {linhas.map(l => (
+          <li key={l.titulo} className="flex items-center gap-3 rounded-[12px] py-2">
+            <span aria-hidden
+                  className={`shrink-0 grid place-items-center w-7 h-7 rounded-full border-2 text-[14px] font-bold
+                              ${l.feito ? 'bg-[var(--teal)] border-[var(--teal)] text-white' : 'border-[var(--line)] text-transparent'}`}>
+              ✓
+            </span>
+            <span className="grid min-w-0 flex-1">
+              <span className={`font-ui text-[15px] font-semibold ${l.feito ? 'text-ink-muted' : 'text-ink'}`}>
+                <span className="sr-only">{l.feito ? tx.feito : tx.aFazer}</span>{l.titulo}
+              </span>
+              <span className="font-ui text-[13.5px] leading-snug text-ink-muted">{l.detalhe}</span>
+            </span>
+            {l.href && l.acao && (
+              <Link href={l.href}
+                    className="shrink-0 inline-flex items-center min-h-[44px] px-3 rounded-[10px] font-ui text-[14px]
+                               font-semibold text-[var(--teal-ink)] hover:bg-[var(--teal-soft)]">
+                {l.acao} →
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+      {/* O desafio do dia fica FORA da conta "N de 3": é opcional, e não
+          fazê-lo não deixa nada por fazer (28/10/2026). */}
+      {!semDesafio && p.state.lessons && Object.keys(p.state.lessons).length > 0 && (
+        desafioFeitoHoje(p.state, p.day)
+          ? <p className="m-0 font-ui text-[13.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">{tx.desafioFeito}</p>
+          : <Link href="/academia?treino=desafio"
+                  className="flex items-center justify-between gap-3 border-t border-[color:var(--line-soft)] pt-3 min-h-[44px]
+                             font-ui text-[14px] text-[var(--teal-ink)] font-semibold hover:underline">
+              <span>{tx.desafioOpcional}</span>
+              <span aria-hidden>→</span>
+            </Link>
+      )}
+    </Card>
+  );
+}
+
+/* O anel da meta: começa vazio e enche depois de montado, como a barra do
+   cartão navy. Só `stroke-dashoffset`, que não mexe no layout. */
+function AnelDaMeta({ fracao, minutos }: { fracao: number; minutos: number }) {
+  const [f, setF] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setF(fracao), 260);
+    return () => clearTimeout(t);
+  }, [fracao]);
+  const r = 24, c = 2 * Math.PI * r;
+  return (
+    <span className="relative shrink-0 grid place-items-center w-[60px] h-[60px]">
+      <svg width="60" height="60" viewBox="0 0 60 60" aria-hidden className="-rotate-90">
+        <circle cx="30" cy="30" r={r} fill="none" stroke="var(--line)" strokeWidth="6" />
+        <circle cx="30" cy="30" r={r} fill="none" stroke="var(--teal)" strokeWidth="6" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={c * (1 - f)}
+                style={{ transition: 'stroke-dashoffset 1100ms var(--ease-fill, ease-out)' }} />
+      </svg>
+      <span className="absolute grid justify-items-center leading-none font-ui text-ink tabular-nums">
+        <span className="text-[15px] font-bold">{minutos}</span>
+        <span className="text-[10px] text-ink-muted">{tx.min}</span>
+      </span>
+    </span>
+  );
+}

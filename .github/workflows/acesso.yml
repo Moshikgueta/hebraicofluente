@@ -22,14 +22,14 @@
 # Toda execução fica registrada no histórico do Actions, com quem disparou e
 # quando. Isso é de propósito: mexer no acesso de alguém tem de deixar rastro.
 #
-# ⚠ O REPOSITÓRIO É PÚBLICO, E O RESUMO DE CADA EXECUÇÃO TAMBÉM.
-# Qualquer pessoa, sem login no GitHub, abre o resumo de uma execução desta
-# ação. Por isso NADA aqui imprime um endereço de e-mail inteiro: toda saída
-# passa por `mascara`, que reduz `ana.silva@gmail.com` a `a***@gmail.com`.
-# O operador reconhece a conta; um estranho não ganha a lista de clientes.
-# O e-mail digitado no campo de entrada aparece nos metadados da execução, o
-# que não há como esconder num repositório público - a única forma de fechar
-# isso é o repositório deixar de ser público.
+# O repositório é PRIVADO (conferido em 05/10/2026): o resumo e o log de
+# cada execução só aparecem para quem tem acesso a ele. Mesmo assim, NADA
+# aqui imprime um endereço de e-mail inteiro: toda saída passa por
+# `mascara`, que reduz `ana.silva@gmail.com` a `a***@gmail.com`. O operador
+# reconhece a conta, e um colaborador futuro, um print do resumo ou o
+# repositório voltando a ser público não entregam a lista de clientes. O
+# e-mail digitado no campo de entrada fica nos metadados da execução, que
+# só quem tem acesso ao repositório vê.
 #
 # `environment: producao` deixa o dono exigir aprovação para rodar isto
 # (Settings → Environments → producao → Required reviewers). Sem configurar
@@ -45,9 +45,9 @@ on:
         required: true
         default: liberar
         type: choice
-        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido]
+        options: [liberar, revogar, consultar, listar, envios, pagamento, pedido, trocar-email, mover-compra, csp]
       email:
-        description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento" nem "pedido")'
+        description: 'E-mail da conta (não precisa em "listar", "envios", "pagamento", "pedido" nem "csp")'
         required: false
         type: string
       curso:
@@ -55,14 +55,20 @@ on:
         required: true
         default: alfabetizacao
         type: choice
-        options: [alfabetizacao, hebraico-a1, hebraico-a2, hebraico-b1]
+        # raizes-sefarditas (22/10/2026): o produto de história, comprado à
+        # parte. Ainda não está à venda; liberar à mão é como o dono revisa.
+        options: [alfabetizacao, israel-alem-do-roteiro, hebraico-a1, hebraico-a2, hebraico-b1, raizes-sefarditas]
       meses:
         description: 'Meses de acesso (só em "liberar"; de 1 a 120)'
         required: false
         default: '12'
         type: string
       pedido:
-        description: 'Id do pedido, ou o começo dele (só em "pedido")'
+        description: 'Id do pedido, ou o começo dele, em "pedido"; em "liberar", o id exato do pedido pago (opcional)'
+        required: false
+        type: string
+      novo_email:
+        description: 'O e-mail CERTO: em "trocar-email", o novo endereço da mesma conta; em "mover-compra", a conta que passa a ter o curso'
         required: false
         type: string
 
@@ -78,7 +84,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: producao
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Executar
         env:
@@ -88,6 +100,7 @@ jobs:
           CURSO: ${{ inputs.curso }}
           MESES: ${{ inputs.meses }}
           PEDIDO: ${{ inputs.pedido }}
+          NOVO_EMAIL: ${{ inputs.novo_email }}
         run: |
           set -euo pipefail
           # A máscara abaixo usa classes de caracteres, e classes dependem do
@@ -100,10 +113,11 @@ jobs:
             exit 1
           fi
 
-          # Versão fixa. `wrangler@4` resolvia para a mais nova a cada execução,
-          # com o token da Cloudflare no ambiente - um pacote comprometido
-          # rodaria com acesso de escrita ao banco inteiro.
-          W="npx --yes wrangler@4.135.0 d1 execute hebraico-fluente --remote"
+          # Versão fixa, e com as dependências do lockfile da raiz (o passo
+          # acima). `wrangler@4` resolvia para a mais nova a cada execução, com
+          # o token da Cloudflare no ambiente - um pacote comprometido rodaria
+          # com acesso de escrita ao banco inteiro.
+          W="node_modules/.bin/wrangler d1 execute hebraico-fluente --remote"
           say() { echo "$*" >> "$GITHUB_STEP_SUMMARY"; }
 
           # Primeiro caractere, três asteriscos, domínio. Vale para tudo que
@@ -117,9 +131,9 @@ jobs:
           }
           # Roda a consulta e mostra o resultado, mascarado, no resumo.
           mostra() { $W --command "$1" | mascara | tee -a "$GITHUB_STEP_SUMMARY"; }
-          # Roda uma escrita. A saída vai só para o log da execução - que num
-          # repositório público também é público - e vai mascarada, porque
-          # um erro de SQL ecoa o comando, e o comando tem o e-mail dentro.
+          # Roda uma escrita. A saída vai só para o log da execução, e vai
+          # mascarada como o resumo, porque um erro de SQL ecoa o comando, e o
+          # comando tem o e-mail dentro.
           grava() { $W --command "$1" | mascara; }
 
           # O e-mail é normalizado do mesmo jeito que na entrada da plataforma
@@ -137,7 +151,7 @@ jobs:
 
           case "$ACAO" in
             listar)
-              say "**Últimas contas** (e-mails mascarados: o resumo é público)"
+              say "**Últimas contas** (e-mails mascarados)"
               say '```'
               mostra "SELECT id, email, datetime(created_at/1000,'unixepoch') AS criada
                         FROM accounts ORDER BY created_at DESC LIMIT 25"
@@ -182,6 +196,24 @@ jobs:
             # trilha, e é ela que diz o que consertar: "The domain is not
             # verified" pede o passo de DNS, "Invalid from field" pede outro
             # EMAIL_FROM, um 429 pede esperar.
+            # O que a regra estrita de scripts, ainda em observação, TERIA
+            # bloqueado (auditoria, SEC-003; worker/src/api/csp.js). Semanas
+            # com esta tabela vazia são o que autoriza a regra valer.
+            csp)
+              say "**Relatos da CSP estrita (últimos 30 dias)**"
+              say '```'
+              mostra "SELECT detail AS relato, COUNT(*) AS vezes,
+                             datetime(MAX(created_at)/1000,'unixepoch') AS ultimo
+                        FROM access_log
+                       WHERE action = 'csp-violacao'
+                         AND created_at > (unixepoch() - 30*86400) * 1000
+                       GROUP BY detail ORDER BY vezes DESC LIMIT 25"
+              say '```'
+              say ""
+              say "Tabela vazia = nenhum navegador relatou script fora da lista."
+              say "Formato: página | diretiva | o que foi bloqueado | começo do trecho."
+              ;;
+
             envios)
               say "**Últimas tentativas de e-mail de senha**"
               say '```'
@@ -298,6 +330,20 @@ jobs:
               say '```'
               say ""
               say "Nada nas duas tabelas = ninguém com esse e-mail, e nenhum convite."
+              # Aparelhos conectados e o rastro de login dividido (29/09/2026,
+              # worker/src/lib/aparelhos.js): no máximo três por conta.
+              say ""
+              say "**Aparelhos conectados** (no máximo 3) **e dias com sinal de login dividido**"
+              say '```'
+              mostra "SELECT 'aparelho' AS tipo, datetime(p.criado_em/1000,'unixepoch') AS quando
+                        FROM aparelhos p JOIN accounts a ON a.id = p.account_id
+                       WHERE a.email = '$SQLMAIL'
+                      UNION ALL
+                      SELECT 'mais de 6 entradas em 24 h', datetime(l.created_at/1000,'unixepoch')
+                        FROM access_log l JOIN accounts a ON a.id = l.account_id
+                       WHERE a.email = '$SQLMAIL' AND l.action = 'aparelhos-rodizio'
+                       ORDER BY 2 DESC LIMIT 20"
+              say '```'
               ;;
 
             liberar)
@@ -317,6 +363,44 @@ jobs:
                 echo "::error::meses fora de 1..120 (recebi '$M')."; exit 1
               fi
 
+              # Liberar UM PEDIDO pago (PIX direto, ou um pagamento que o site
+              # não viu): o pedido vira pago, o acesso sai com o id dele e o
+              # recibo vai por e-mail na varredura seguinte (auditoria de
+              # 01/10/2026, PAY-B-005). Antes `liberar` só gravava um acesso
+              # 'MANUAL-ACTIONS': o pedido ficava "Aguardando" para sempre em
+              # /perfil, a desistência pelo site respondia "não pago" e o
+              # aluno não recebia recibo. Sem `pedido`, segue como sempre.
+              P="$(printf '%s' "${PEDIDO:-}" | tr -cd 'A-Za-z0-9_-')"
+              if [ -n "$P" ]; then
+                # O pedido existe, é desta conta, e em que estado está?
+                ESTADO="$($W --json --command "SELECT o.status AS s, o.course_slug AS c FROM orders o
+                            JOIN accounts a ON a.id = o.account_id
+                           WHERE o.id = '$P' AND a.email = '$SQLMAIL'" 2>&1 | mascara)"
+                ST="$(printf '%s' "$ESTADO" | grep -o '"s": *"[a-z]*"' | head -1 | sed 's/.*"\([a-z]*\)"$/\1/')"
+                PC="$(printf '%s' "$ESTADO" | grep -o '"c": *"[a-z0-9-]*"' | head -1 | sed 's/.*"\([a-z0-9-]*\)"$/\1/')"
+                [ -n "$ST" ] || { echo "::error::Não existe pedido $P nesta conta. Confira com 'pedido' (id) e 'consultar' (e-mail)."; exit 1; }
+                case "$ST" in
+                  paid) say "O pedido \`$P\` **já estava pago**. Nada mudou."; exit 0 ;;
+                  refunded) echo "::error::O pedido $P foi estornado. Não dá para liberar um pedido devolvido."; exit 1 ;;
+                esac
+                [ "$PC" = "$CURSO" ] || say "O pedido é do curso **$PC** (o campo Curso dizia $CURSO): vale o do pedido."
+                # O que o pedido abre: no pacote, cada produto de `componentes`.
+                ITENS="$(node -e "const c=require('./data/courses.json').courses.find(x=>x.slug===process.argv[1]);console.log(((c&&c.componentes)||[process.argv[1]]).join(' '))" "$PC")"
+                grava "$(bash scripts/sql-liberar-pedido.sh "$P" "$SQLMAIL" "$M" "$ITENS")"
+                say "Pedido \`$P\` marcado como **pago** e **$ITENS** liberado por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
+                say "Se a conta já tinha acesso valendo, os meses foram somados ao prazo que restava."
+                say "O recibo sai por e-mail na varredura seguinte (até 5 minutos)."
+                say ""
+                say '```'
+                mostra "SELECT o.id, o.status, o.provider, a.email, e.course_slug,
+                               datetime(e.expires_at/1000,'unixepoch') AS vence_em
+                          FROM orders o JOIN accounts a ON a.id = o.account_id
+                          LEFT JOIN entitlements e ON e.account_id = a.id AND e.course_slug = o.course_slug
+                         WHERE o.id = '$P'"
+                say '```'
+                exit 0
+              fi
+
               # A conta existe? Decide o caminho abaixo.
               #
               # Antes, o convite era gravado SEMPRE, mesmo para quem já tinha
@@ -332,13 +416,21 @@ jobs:
               if [ "$EXISTE" != "0" ]; then
                 # ON CONFLICT porque a chave é (conta, curso): liberar duas
                 # vezes ESTENDE o prazo em vez de criar uma segunda linha.
+                # Estende A PARTIR DO VENCIMENTO quando o acesso ainda vale:
+                # antes era "agora + M", e um aluno pagante com 10 meses pela
+                # frente que ganhava 1 mês de cortesia ficava com 1 (auditoria
+                # de 28/09, PAY-007). Vencido, conta a partir de agora. Acesso
+                # sem vencimento (NULL) continua sem vencimento.
                 grava \
                   "INSERT INTO entitlements (account_id, course_slug, granted_at, expires_at, order_id)
                    SELECT id, '$CURSO', unixepoch()*1000,
                           unixepoch()*1000 + $M * 2629800000, 'MANUAL-ACTIONS'
                      FROM accounts WHERE email = '$SQLMAIL'
                    ON CONFLICT(account_id, course_slug) DO UPDATE SET
-                     expires_at = excluded.expires_at;
+                     expires_at = CASE
+                       WHEN entitlements.expires_at IS NULL THEN NULL
+                       ELSE MAX(entitlements.expires_at, unixepoch()*1000) + $M * 2629800000
+                     END;
                    INSERT INTO access_log (account_id, action, detail, created_at)
                    SELECT id, 'grant-manual', '$CURSO via GitHub Actions', unixepoch()*1000
                      FROM accounts WHERE email = '$SQLMAIL';
@@ -364,6 +456,7 @@ jobs:
               fi
 
               say "Liberado **$CURSO** por **$M meses** para \`$(printf '%s' "$MAIL" | mascara)\`."
+              say "Se a conta já tinha acesso valendo, os meses foram somados ao prazo que restava."
               say ""
               say '```'
               mostra "SELECT a.email, e.course_slug,
@@ -380,6 +473,100 @@ jobs:
               say "roda este \`liberar\` outra vez - aí sim o curso é concedido."
               say "O convite não vira curso sozinho de propósito: bastaria alguém"
               say "saber o endereço presenteado para chegar na frente e levá-lo."
+              ;;
+
+            # Corrigir o e-mail de uma conta (auditoria de 28/09, OPS-001).
+            #
+            # Quem digita o e-mail errado no cadastro e paga fica sem recibo,
+            # sem link de senha e sem como corrigir sozinho: o site não troca
+            # e-mail, de propósito (trocar e-mail sem prova de posse é como se
+            # rouba conta). Aqui a troca é feita pelo dono, DEPOIS de confirmar
+            # com o aluno por outro canal (WhatsApp, o e-mail certo) que a
+            # conta é dele. Compras, acesso e progresso ficam na mesma conta;
+            # só o endereço muda. O e-mail novo entra NÃO confirmado: o aviso
+            # de confirmação aparece para o aluno no próximo acesso.
+            trocar-email)
+              [ -n "$MAIL" ] || { echo "::error::Informe no campo E-mail o endereço de HOJE (o errado)."; exit 1; }
+              NOVO="$(printf '%s' "${NOVO_EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
+              [ -n "$NOVO" ] || { echo "::error::Informe o e-mail certo no campo novo_email."; exit 1; }
+              # A mesma forma que o cadastro aceita: algo@algo.algo, sem espaço
+              # nem caractere de controle, até 254 caracteres.
+              if ! printf '%s' "$NOVO" | grep -qE '^[^@[:space:][:cntrl:]]+@[^@[:space:][:cntrl:]]+\.[^@[:space:][:cntrl:]]+$' \
+                 || [ "${#NOVO}" -gt 254 ]; then
+                echo "::error::O e-mail novo não tem a forma de um endereço (recebi '$(printf '%s' "$NOVO" | mascara)')."; exit 1
+              fi
+              [ "$NOVO" != "$MAIL" ] || { echo "::error::Os dois e-mails são iguais."; exit 1; }
+              SQLNOVO="$(printf '%s' "$NOVO" | sed "s/'/''/g")"
+              conta() {
+                $W --json --command "SELECT COUNT(*) AS n FROM accounts WHERE email = '$1'" 2>&1 \
+                  | mascara | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9'
+              }
+              ANTIGA="$(conta "$SQLMAIL")"; JA_USADO="$(conta "$SQLNOVO")"
+              [ -n "$ANTIGA" ] && [ -n "$JA_USADO" ] || { echo "::error::Não consegui consultar as contas."; exit 1; }
+              [ "$ANTIGA" = "1" ] || { echo "::error::Não existe conta com o e-mail de hoje. Confira com 'consultar'."; exit 1; }
+              if [ "$JA_USADO" != "0" ]; then
+                echo "::error::Já existe uma conta com o e-mail novo. Duas contas não podem ter o mesmo e-mail;"
+                echo "::error::confira com 'consultar' qual delas tem a compra antes de decidir."
+                exit 1
+              fi
+              grava \
+                "UPDATE accounts SET email = '$SQLNOVO' WHERE email = '$SQLMAIL';
+                 -- Links de senha pedidos para o endereço errado deixam de valer.
+                 UPDATE password_resets SET used_at = unixepoch()*1000
+                  WHERE used_at IS NULL
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO');
+                 INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'email-trocado', 'via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLNOVO'"
+              say "E-mail trocado: \`$(printf '%s' "$MAIL" | mascara)\` → \`$(printf '%s' "$NOVO" | mascara)\`."
+              say ""
+              say "Compras, acesso e progresso continuam na mesma conta. A senha não muda."
+              say "Diga ao aluno para entrar com o e-mail novo; se não lembrar a senha,"
+              say "\"Esqueci minha senha\" agora manda o link para o endereço certo."
+              ;;
+
+            # Comprou numa conta e estuda noutra (auditoria de 01/10/2026,
+            # PAY-B-013): o acesso, o pedido e a desistência, se houver,
+            # passam de "E-mail" para "novo_email". As duas contas têm de
+            # existir, e a de destino não pode já ter o curso.
+            mover-compra)
+              [ -n "$MAIL" ] || { echo "::error::Informe no campo E-mail a conta que COMPROU."; exit 1; }
+              NOVO="$(printf '%s' "${NOVO_EMAIL:-}" | tr '[:upper:]' '[:lower:]' | xargs || true)"
+              [ -n "$NOVO" ] || { echo "::error::Informe em novo_email a conta que vai ficar com o curso."; exit 1; }
+              [ "$NOVO" != "$MAIL" ] || { echo "::error::Os dois e-mails são iguais."; exit 1; }
+              SQLNOVO="$(printf '%s' "$NOVO" | sed "s/'/''/g")"
+              n() {
+                $W --json --command "$1" 2>&1 | mascara | grep -o '"n": *[0-9]*' | head -1 | tr -cd '0-9'
+              }
+              ORIGEM="$(n "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLMAIL'")"
+              DESTINO="$(n "SELECT COUNT(*) AS n FROM accounts WHERE email = '$SQLNOVO'")"
+              TEM="$(n "SELECT COUNT(*) AS n FROM entitlements WHERE course_slug = '$CURSO' AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL')")"
+              JA="$(n "SELECT COUNT(*) AS n FROM entitlements WHERE course_slug = '$CURSO' AND account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')")"
+              [ -n "$ORIGEM" ] && [ -n "$DESTINO" ] && [ -n "$TEM" ] && [ -n "$JA" ] || { echo "::error::Não consegui consultar as contas."; exit 1; }
+              [ "$ORIGEM" = "1" ] || { echo "::error::Não existe conta com o e-mail de origem."; exit 1; }
+              [ "$DESTINO" = "1" ] || { echo "::error::Não existe conta com o e-mail de destino. Peça à pessoa para se cadastrar primeiro."; exit 1; }
+              [ "$TEM" = "1" ] || { echo "::error::A conta de origem não tem o curso $CURSO."; exit 1; }
+              [ "$JA" = "0" ] || { echo "::error::A conta de destino já tem o curso $CURSO. Nada foi movido."; exit 1; }
+              grava \
+                "INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'compra-movida-saida', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLMAIL';
+                 UPDATE orders SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE id IN (SELECT order_id FROM entitlements WHERE course_slug = '$CURSO'
+                                 AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL'));
+                 UPDATE arrependimentos SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE order_id IN (SELECT order_id FROM entitlements WHERE course_slug = '$CURSO'
+                                       AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL'));
+                 UPDATE entitlements SET account_id = (SELECT id FROM accounts WHERE email = '$SQLNOVO')
+                  WHERE course_slug = '$CURSO'
+                    AND account_id = (SELECT id FROM accounts WHERE email = '$SQLMAIL');
+                 INSERT INTO access_log (account_id, action, detail, created_at)
+                 SELECT id, 'compra-movida-entrada', '$CURSO via GitHub Actions', unixepoch()*1000
+                   FROM accounts WHERE email = '$SQLNOVO'"
+              say "Compra de \`$CURSO\` movida: \`$(printf '%s' "$MAIL" | mascara)\` → \`$(printf '%s' "$NOVO" | mascara)\`."
+              say ""
+              say "O acesso (com a mesma data de fim) e o pedido agora são da conta de destino."
+              say "O progresso NÃO muda de conta: ele é de quem estudou."
               ;;
 
             revogar)

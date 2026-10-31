@@ -1,25 +1,51 @@
-node_modules/
+node_modules
 dist/
 pdf/
+# a skill de PDF do Claude Code tem o mesmo nome de pasta
+!.claude/skills/pdf/
 .DS_Store
-app/node_modules/
+app/node_modules
 app/.next/
 app/content/
 app/public/fonts/
 app/public/stroke-order/
+app/public/tracado-amostra/
+app/public/amostra-audio/
 app/public/audio/
+app/public/raizes/fotos/
 app/next-env.d.ts
 
-audio/*.mp3
+# Os .mp3 CORTADOS entram no git (25/09/2026): o site é montado a partir do
+# git, e sem eles nenhuma gravação chegava ao ar. São pequenos (~10 KB cada,
+# ~3 MB os 318). As gravações brutas e o material de conferência, não.
 audio/*.wav
+audio/*.m4a
+audio/*.mp4
 audio/room-tone.*
+audio/conferir/
 
 # Segredos locais do Worker (wrangler dev). Ver .env.example.
 .dev.vars
 .wrangler/
 app/out/
+app/out-en/
+# As cópias de trabalho dos agentes do Claude Code (git worktree).
+.claude/worktrees/
 app/.shots/
 
 # Cópias do banco (scripts/backup-d1.sh). Cada arquivo tem e-mail de todo
 # aluno e o hash da senha de cada um: vale o mesmo que o banco.
 backups/
+
+# O editorial dos e-books mora no repositório PRIVADO Moshikgueta/hebraicofluente-editorial
+# (21/10/2026): o conteúdo é vendido. Clone-o aqui, em editorial/.
+editorial/
+# Raízes Sefarditas: o CONTEÚDO mora no repositório privado
+# Moshikgueta/hebraicofluente-raizes, clonado aqui (ver tools/export-content.mjs).
+/raizes/
+
+# Growth OS: relatórios e planilhas de marketing (vendas, parceiros, contatos)
+# ficam fora do git porque o repositório é público. Modelos em growth/modelos/.
+growth/reports/
+growth/data/
+app/public/video/

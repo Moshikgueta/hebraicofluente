@@ -72,21 +72,26 @@ describe('o www redireciona para o endereço sem www', () => {
  * relatada como falha. São baratas de conferir aqui e caras de descobrir lá.
  */
 describe('o wrangler.toml declara o endereço por inteiro', () => {
-  const toml = readFileSync(new URL('../../wrangler.toml', import.meta.url), 'utf8');
+  /* Sem as linhas comentadas: o formato das routes fica de exemplo lá. */
+  const toml = readFileSync(new URL('../../wrangler.toml', import.meta.url), 'utf8')
+    .split('\n').filter(l => !/^\s*#/.test(l)).join('\n');
 
   const dominios = [...toml.matchAll(/pattern\s*=\s*"([^"]+)"\s*,\s*custom_domain\s*=\s*true/g)]
     .map(m => m[1]!);
   const apex = dominios.find(d => !d.startsWith('www.'));
 
-  it('tem um domínio próprio, e o www ao lado dele', () => {
+  /* O site em inglês ainda não tem domínio (decisão do dono): sem `routes`,
+     estas duas regras esperam. Com o domínio, voltam a valer como no site
+     brasileiro. tests/isolamento.test.ts confere que nada aponta para lá. */
+  it.skipIf(!apex)('tem um domínio próprio, e o www ao lado dele', () => {
     expect(apex).toBeTruthy();
     expect(dominios).toContain(`www.${apex}`);
   });
 
-  it('o SITE_ORIGIN é esse mesmo domínio', () => {
+  it.skipIf(!apex)('o SITE_ORIGIN é esse mesmo domínio', () => {
     /* Trocar o domínio em `routes` e esquecer o SITE_ORIGIN não quebra nada
        na hora: o site sobe e responde. Só quebra depois do pagamento, quando
-       a Mercado Pago devolve o comprador para o endereço antigo. */
+       o provedor devolve o comprador para o endereço antigo. */
     const origem = toml.match(/SITE_ORIGIN\s*=\s*"([^"]+)"/)?.[1];
     expect(origem).toBe(`https://${apex}`);
   });
@@ -101,5 +106,16 @@ describe('o wrangler.toml declara o endereço por inteiro', () => {
        site, com o mesmo banco e o mesmo login, fora dela. Volta a `true` num
        aperto de DNS ou de certificado, que é para o que ele serve. */
     expect(toml).toMatch(/^\s*workers_dev\s*=\s*(true|false)\s*$/m);
+  });
+});
+
+describe('a publicação só lê domínio de linha de verdade', () => {
+  /* 29/10/2026: o exemplo comentado do toml do site em inglês
+     (`# { pattern = "<dominio>", ... }`) virou SITE_ORIGIN, e o link de
+     confirmação do e-mail saiu para https://<dominio>/. */
+  const setup = readFileSync(new URL('../../scripts/cloudflare-setup.sh', import.meta.url), 'utf8');
+
+  it('tira os comentários do wrangler.toml antes de procurar o domínio', () => {
+    expect(setup).toMatch(/DOMINIO="\$\(grep -vE '\^\\s\*#' wrangler\.toml \\\n\s*\| grep -oP 'pattern/);
   });
 });

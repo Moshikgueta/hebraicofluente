@@ -10,13 +10,15 @@
  *    QUANTAS letras faltam, nunca quais.
  *
  * 2. O editor é por TOQUE, e não pelo teclado. O aluno edita a sugestão
- *    tocando nas letras que já conhece (e o ׳ do gerech, para o J e o G de
+ *    tocando nas letras que já conhece (e o ׳ do guéresh, para o J e o G de
  *    "Gisele"); nada de trocar de teclado para uma atividade de celebração.
  *
  * 3. Nada é gravado sem o aluno CONFIRMAR a grafia. Nome tem mais de uma
  *    transliteração possível, e só ele sabe qual é a dele.
  */
 
+import { tx } from '@/i18n/telas/licao-meu-nome';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { He } from '@/components/hebrew/He';
@@ -25,10 +27,18 @@ import { useProgress } from '@/lib/state/store';
 import { letrasConcluidas } from '@/lib/leitura';
 import { GERESH, disponibilidade } from '@/lib/nome-hebraico';
 
-/** O nome do aluno como ele o deu - onboarding, se houver. */
-export function nomeDoAluno(onboardingName?: string | null): string {
-  return (onboardingName ?? '').trim();
+/** O nome do aluno como ele o deu: o do onboarding, se houver; senão, o
+ *  primeiro nome da conta (o cadastro já pediu). Pedir de novo, em branco,
+ *  era o terceiro pedido do mesmo dado (auditoria de 01/10/2026, UXQA-008). */
+export function nomeDoAluno(onboardingName?: string | null, nomeDaConta?: string | null): string {
+  const dado = (onboardingName ?? '').trim();
+  if (dado) return dado;
+  return primeiroNome(nomeDaConta);
 }
+
+/** A primeira palavra do nome da conta: "Maria Souza" → "Maria". */
+export const primeiroNome = (nome?: string | null): string =>
+  (nome ?? '').trim().split(/\s+/)[0] ?? '';
 
 export { disponibilidade, type Disponibilidade } from '@/lib/nome-hebraico';
 
@@ -62,25 +72,25 @@ export function EditorDeNome({
       <div
         className="he-seq min-h-[80px] rounded-[var(--r-lg)] border-2 border-dashed border-line
                    bg-surface-2 px-3 py-3 justify-center"
-        aria-label="O seu nome em hebraico. Toque numa letra para tirá-la."
+        aria-label={tx.montagem}
       >
         {pecas.length === 0 ? (
-          <span className="font-ui text-[13px] text-ink-muted" dir="ltr">toque nas letras abaixo</span>
+          <span className="font-ui text-[13px] text-ink-muted" dir="ltr">{tx.toqueNasLetras}</span>
         ) : pecas.map((g, i) => g === ' ' ? (
-          <button key={i} type="button" onClick={() => tirar(i)} aria-label="Tirar o espaço"
+          <button key={i} type="button" onClick={() => tirar(i)} aria-label={tx.tirarEspaco}
                   className="min-h-[52px] min-w-[44px] rounded-md border border-dashed border-line" />
         ) : (
-          <button key={i} type="button" onClick={() => tirar(i)} aria-label={`Tirar a letra ${g}`}
+          <button key={i} type="button" onClick={() => tirar(i)} aria-label={tx.tirarLetra(g)}
                   className="min-h-[52px] min-w-[44px] px-1.5 rounded-[var(--r-md)] bg-surface
                              border border-line grid place-items-center">
             <He size="word">{g}</He>
           </button>
         ))}
       </div>
-      <ul className="flex flex-wrap gap-2 justify-center list-none p-0 m-0" dir="rtl" aria-label="Letras disponíveis">
+      <ul className="flex flex-wrap gap-2 justify-center list-none p-0 m-0" dir="rtl" aria-label={tx.disponiveis}>
         {letras.flatMap(l => [l.letter, ...(l.finalForm ? [l.finalForm] : [])]).map(g => (
           <li key={g}>
-            <button type="button" onClick={() => por(g)} aria-label={`Pôr a letra ${g}`}
+            <button type="button" onClick={() => por(g)} aria-label={tx.porLetra(g)}
                     className="min-h-[48px] min-w-[46px] rounded-[var(--r-md)] border-2 border-line bg-surface
                                hover:border-[var(--accent-soft)] grid place-items-center">
               <He size="lg">{g}</He>
@@ -89,7 +99,7 @@ export function EditorDeNome({
         ))}
         <li>
           <button type="button" onClick={() => por(GERESH)} disabled={!podeGeresh}
-                  aria-label="Pôr o gerech, o sinal do J" title="O ׳ transforma ז em J, ג em DJ e צ em TCH"
+                  aria-label={tx.porGeresh} title={tx.gereshDica}
                   className="min-h-[48px] min-w-[46px] rounded-[var(--r-md)] border-2 border-line bg-surface
                              grid place-items-center disabled:opacity-35">
             <He size="lg">{GERESH}</He>
@@ -99,7 +109,7 @@ export function EditorDeNome({
           <button type="button" onClick={() => por(' ')} disabled={!pecas.length || pecas[pecas.length - 1] === ' '}
                   className="min-h-[48px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
                              font-ui text-[14px] disabled:opacity-35">
-            espaço
+            {tx.espaco}
           </button>
         </li>
       </ul>
@@ -117,7 +127,13 @@ export function EditorDeNome({
  *     "agora você já consegue escrever o seu nome", no fim da letra que o
  *     tornou possível.
  */
-export function CartaoMeuNome({ contexto = 'painel' }: { contexto?: 'painel' | 'licao' }) {
+export function CartaoMeuNome(props: { contexto?: 'painel' | 'licao' }) {
+  /* Desligado no site em inglês (lib/recursos.ts). */
+  if (!MEU_NOME_EM_HEBRAICO) return null;
+  return <CartaoDoNome {...props} />;
+}
+
+function CartaoDoNome({ contexto = 'painel' }: { contexto?: 'painel' | 'licao' }) {
   const p = useProgress();
   const nome = nomeDoAluno(p.state.onboarding?.name);
   const aprendidas = useMemo(() => letrasConcluidas(p.state).map(l => l.letter), [p.state]);
@@ -128,17 +144,17 @@ export function CartaoMeuNome({ contexto = 'painel' }: { contexto?: 'painel' | '
 
   if (feito && contexto === 'painel') {
     return (
-      <section aria-label="O seu nome em hebraico"
+      <section aria-label={tx.seuNomeEmHebraico}
                className="rounded-[var(--r-lg)] border border-line bg-surface px-5 py-4
                           flex flex-wrap items-center justify-between gap-4">
         <div className="grid gap-1">
-          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">O seu nome</p>
+          <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted m-0">{tx.seuNome}</p>
           <div className="flex flex-wrap items-center gap-4">
             <He size="xl">{feito.texto}</He>
             <He size="xl" cursive>{feito.texto}</He>
           </div>
         </div>
-        <Link href="/meu-nome" className="font-ui text-[14px] underline">Praticar ou mudar</Link>
+        <Link href="/meu-nome" className="font-ui text-[14px] underline">{tx.praticarOuMudar}</Link>
       </section>
     );
   }
@@ -146,15 +162,15 @@ export function CartaoMeuNome({ contexto = 'painel' }: { contexto?: 'painel' | '
 
   if (disp.escrevivel) {
     return (
-      <section aria-label="Escreva o seu nome em hebraico"
+      <section aria-label={tx.escreva}
                className="rounded-[var(--r-lg)] bg-[var(--gold-soft)] px-5 py-4 grid gap-2">
         <p className="font-ui text-[17px] font-semibold text-ink m-0">
-          Agora você já consegue escrever o seu nome em hebraico.
+          {tx.jaConsegue}
         </p>
         <p className="font-ui text-[14px] text-ink-body m-0">
-          Todas as letras de “{nome}” já passaram pelas suas lições.
+          {tx.todasAsLetras(nome)}
         </p>
-        <LinkButton href="/meu-nome" size="md" className="w-fit">Escrever o meu nome</LinkButton>
+        <LinkButton href="/meu-nome" size="md" className="w-fit">{tx.escrever}</LinkButton>
       </section>
     );
   }
@@ -162,9 +178,7 @@ export function CartaoMeuNome({ contexto = 'painel' }: { contexto?: 'painel' | '
   if (contexto === 'licao' || !Number.isFinite(disp.faltam) || aprendidas.length < 3) return null;
   return (
     <p className="font-ui text-[14px] text-ink-muted m-0">
-      {disp.faltam === 1
-        ? `Falta 1 letra para você escrever “${nome}” em hebraico.`
-        : `Faltam ${disp.faltam} letras para você escrever “${nome}” em hebraico.`}
+      {tx.faltam(disp.faltam, nome)}
     </p>
   );
 }

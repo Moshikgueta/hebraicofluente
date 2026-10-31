@@ -17,7 +17,7 @@ fechado, testado (378 testes) e no ar.
 
 ## Bloco 1 - sem isto não dá para vender
 
-### 1. Despublicar a cópia do GitHub Pages - PELO JEITO JÁ FOI
+### 1. Despublicar a cópia do GitHub Pages - FEITO em 01/10/2026 (o dono conferiu: 404)
 
 Em 20/09/2026 a API do GitHub passou a responder `has_pages: false` para este
 repositório, e a última publicação bem-sucedida no Pages foi em 19/09 às
@@ -26,9 +26,12 @@ provável é o repositório ter virado privado (item 2) - no plano gratuito o
 Pages não serve repositório privado, então torná-lo privado derruba o site
 junto.
 
-**Confirme você**, numa janela anônima: `moshikgueta.github.io/hebraicofluente`
-tem de dar 404. E vale apagar o `.github/workflows/deploy-app.yml`, que era o
-único jeito de a cópia de demonstração voltar (ele só roda à mão, mas existe).
+**Confirme você**, numa janela anônima: abra
+https://moshikgueta.github.io/hebraicofluente/licao/alef/ e tem de dar 404.
+Se abrir a lição, é o curso inteiro no ar de graça: vá em **Settings → Pages →
+Unpublish site** na hora. O `.github/workflows/deploy-app.yml`, que era o único
+jeito de a cópia de demonstração voltar, foi apagado em 01/10/2026 (auditoria,
+SEC-A-004): o build dele saía sem portão e com os JSON pagos dentro do pacote.
 
 O que era o problema:
 
@@ -49,12 +52,93 @@ está de pé. São dois cliques:
 Se não aparecer o botão, a fonte do site está em "GitHub Actions": troque
 **Source** para **Deploy from a branch** → **None**, salve, e o botão aparece.
 
-A publicação automática já foi desligada (o `deploy-app.yml` só roda à mão,
-e o `nextjs.yml` duplicado foi removido), então nada vai republicar sozinho.
-O que resta é o site que ficou de pé.
+A publicação automática já foi desligada (o `deploy-app.yml` foi apagado em
+01/10/2026, e o `nextjs.yml` duplicado tinha sido removido antes), então nada
+vai republicar sozinho. O que resta é o site que ficou de pé.
 
-**Pronto quando.** `moshikgueta.github.io/hebraicofluente` responde 404. Me
-avise quando fizer e eu confiro o que dá para conferir daqui.
+**Pronto quando.** `moshikgueta.github.io/hebraicofluente/licao/alef/`
+responde 404 numa janela anônima. Me avise quando fizer e eu confiro o que dá
+para conferir daqui.
+
+### 1b. Áudio no iPhone: conferir o 206 em produção (auditoria de 01/10/2026, PERF-002) - FEITO em 01/10/2026 (o dono tocou os áudios num iPhone: funcionam)
+
+**O que é.** O Safari (todo iPhone e iPad) só toca um áudio se o servidor
+responder a um pedido parcial (`Range: bytes=0-1`) com `206` e `Content-Range`.
+Localmente o servidor de ativos devolve `200` inteiro e ignora o pedido; em
+produção a Cloudflare costuma responder 206 sozinha, mas daqui não dá para
+provar (o proxy barra o site).
+
+**Por que importa.** O áudio é o centro do curso e a capa vende com "Ouça e
+fale". Se a produção fizer como o local, quem usa iPhone aperta "Ouvir" e não
+ouve nada; a onda seguinte é de reembolso.
+
+**O que já está feito.** Os clipes das lições (`/audio/*.mp3`, atrás do
+portão) passam pelo Worker, que fatia a resposta em 206 quando o servidor de
+ativos devolve 200 (`worker/src/lib/range.js`, com teste). Os sete clipes da
+capa (`/amostra-audio/*`) também, de propósito: ficaram fora da lista de
+exceções do `run_worker_first` para que o 206 não dependa do servidor de
+ativos. A publicação confere o 206 sozinha (`worker/e2e.sh`).
+
+**Como conferir.** No seu computador:
+
+```
+curl -sI -H 'Range: bytes=0-1' https://hebraicofluente.com.br/amostra-audio/shalom.mp3
+```
+
+Espera-se `HTTP/2 206` e uma linha `content-range: bytes 0-1/11956`. Depois,
+num iPhone de verdade, toque 3 clipes: um na capa ("Ouça e descubra a letra")
+e dois dentro de uma lição, com a conta que comprou.
+
+**Se vier 200.** Me avise: é defeito, e a publicação já deveria ter falhado.
+
+**Pronto quando.** O curl devolve 206 e os três clipes tocam no iPhone.
+
+### 1c. Web Analytics da Cloudflare: desligar na zona (auditoria de 28/09, LEGAL-001; reconferido em 01/10/2026) - FEITO em 01/10/2026
+
+**Conferido pelo dono em 01/10/2026:** em Analytics → Web Analytics,
+`hebraicofluente.com.br` aparece como **Disabled** (print na conversa). A CSP
+estrita, em vigor desde a mesma data, bloquearia o beacon de qualquer forma.
+
+**O que é.** A Política de Privacidade (art. 4) diz que o site não usa
+"script de terceiros para medir audiência". No repositório isso é verdade:
+nenhum arquivo carrega `static.cloudflareinsights.com` nem o beacon do
+Cloudflare Web Analytics (procurado em 01/10/2026; o único `sendBeacon` do
+código é o envio das estatísticas do curso para o próprio site). Mas a
+auditoria de 28/09 viu a ZONA injetar esse beacon nas páginas, e quem liga
+isso é uma chave no painel da Cloudflare, não o código. Hoje a CSP do site
+(`script-src 'self'`) bloqueia o script, então ele não coleta nada; no dia
+em que a CSP mudar, a frase da Política fica falsa.
+
+**O que fazer (é com você, no painel; daqui não há acesso).**
+1. dash.cloudflare.com → a conta → **Analytics & Logs → Web Analytics**.
+2. Se `hebraicofluente.com.br` aparecer na lista, abra-o e desligue a
+   medição (Disable, ou "Manage site" → desligar a instalação automática).
+   Se ele não aparecer, nada a fazer aqui.
+3. Confira também em Websites → `hebraicofluente.com.br` → **Speed →
+   Observatory / RUM** (o nome muda de tempos em tempos): o "Real User
+   Monitoring" deve estar desligado.
+4. Prova: abra a capa numa janela anônima, F12 → aba Rede, recarregue e
+   procure `cloudflareinsights`. Não pode aparecer nenhum pedido.
+
+**Se você quiser MANTER a medição.** Aí a Política precisa dizer isso. O
+texto para trocar a última frase do segundo parágrafo do art. 4 (no código,
+`app/src/app/privacidade/page.tsx`; me peça e eu troco, junto com a CSP, que
+hoje bloqueia o script):
+
+> Não usamos cookies de publicidade nem rede de anúncio. Para medir o
+> desempenho e o número de visitas das páginas, usamos o Cloudflare Web
+> Analytics, da Cloudflare, Inc., o mesmo fornecedor que hospeda o site: ele
+> não usa cookie nem guarda dado que identifique você, e conta as visitas de
+> forma agregada (página, país, navegador e tempo de carregamento). A
+> Cloudflare trata esses dados fora do Brasil, nas mesmas condições
+> descritas no item sobre transferência internacional.
+
+A frase sobre "fora do Brasil" deve conferir com o item de transferência
+internacional da própria Política; vale passar pelo advogado junto com o
+resto.
+
+**Pronto quando.** O passo 4 não mostra nenhum `cloudflareinsights`, ou a
+Política foi trocada pelo texto acima (e a CSP liberada para o script).
 
 ### 2. Fechar o que os logs públicos já mostraram - FEITO em 20/09/2026
 
@@ -200,7 +284,25 @@ que ela sugere). Leva de minutos a algumas horas para propagar.
 **Pronto quando.** Pedir "esqueci minha senha" com um e-mail seu e o link
 chegar na caixa de entrada, não no spam.
 
-### 6. Uma compra de verdade, ponta a ponta
+### 6. Uma compra de verdade, ponta a ponta - FEITO em 01/10/2026
+
+**Conferido pelo dono em 01/10/2026, pelos extratos da Mercado Pago:**
+- **Cartão:** venda real de 21/09/2026, R$ 139,68 líquidos (R$ 147 menos a
+  tarifa do cartão), liberada na hora. Não foi estornada.
+- **PIX:** venda de R$ 130,99 líquidos (R$ 132,30 menos a tarifa do PIX),
+  cancelada em 28/09/2026 com o dinheiro devolvido: compra e devolução no
+  PIX funcionam.
+- **Cartão PARCELADO em 2x com desistência pelo site (01/10/2026):** compra
+  de R$ 147 no cartão, em 2x, "Desistir da compra" em /perfil, e o estorno saiu sozinho: o pedido
+  ficou `refunded` no banco (conferido em Actions → Acesso → pedido) e a
+  Mercado Pago mostra "Venda cancelada" no mesmo minuto. O fluxo inteiro
+  funciona sem ninguém tocar em nada.
+- A venda de cartão de 21/09 que segue `paid` é de outra conta: é aluno de
+  verdade, não teste. Não estornar.
+- **Juros do parcelamento (LEGAL-110): voltam.** O dono conferiu que o
+  estorno devolveu tudo o que foi cobrado na compra em 2x. O "100% de volta"
+  vale também no parcelado.
+
 
 **O que é.** Comprar o curso você mesmo, com dinheiro de verdade, e depois
 estornar.
@@ -227,7 +329,7 @@ O aviso que sobrou é `privacidade.encarregadoNome`, e **é opcional para
 você**: a LGPD pede um encarregado (art. 41), mas a Resolução CD/ANPD nº
 2/2022 dispensa agentes de tratamento de pequeno porte, desde que exista um
 canal de comunicação com o titular - que existe, é o
-`languageswithmoshik@gmail.com` na página de privacidade. Se um dia quiser
+`contato@hebraicofluente.com.br` na página de privacidade (encaminhado ao Gmail pelo Email Routing da Cloudflare desde 01/10/2026). Se um dia quiser
 pôr um nome ali, é uma linha no JSON.
 
 O que era o problema:
@@ -371,6 +473,104 @@ pagou nada.
 
 ---
 
+### 9. Houve venda real antes de 29/09/2026? (auditoria de 01/10/2026, LEGAL-105)
+
+**O que é.** Em 29 e 30/09 entraram, para todas as contas, o limite de 3
+aparelhos, a marca invisível no conteúdo, a marca d'água com o começo do
+e-mail e as estatísticas de aprendizagem. Os Termos (art. 9) dizem que
+mudança que afete um acesso já comprado não retroage, e a Política de
+Privacidade promete avisar por e-mail antes de mudar o tratamento de dados.
+
+**FEITO em 01/10/2026: o dono mandou o e-mail aos compradores de antes de
+29/09.** Guarde a cópia enviada (data, destinatários, texto) junto com a
+documentação do advogado: ela é a prova do aviso. Pedidos que chegarem em
+resposta (mais aparelhos, desistência) seguem RUNBOOK-ATENDIMENTO.md.
+
+**RESPOSTA DO DONO (01/10/2026): houve venda real antes de 29/09.** O e-mail
+único a esses compradores (texto sugerido na conversa de
+01/10, com a frase final ajustada: mais aparelhos se pedirem, a marca d'água
+fica para todos, devolução opcional), depois de ver a lista em Actions ->
+Acesso -> listar. Decisão do dono: **a marca d'água fica, inclusive para
+quem comprou antes** (VIS-011 encerrado).
+
+**SÓ VOCÊ SABE.** Confirme se alguém comprou de verdade (não teste seu)
+antes de 29/09/2026.
+
+- **Não houve:** me diga, e isso fica registrado aqui. A regra continua para
+  as próximas mudanças (INCIDENTES.md, seção 9).
+- **Houve:** um e-mail único a esses compradores, dizendo o que mudou e
+  oferecendo a desistência ou as condições antigas, com o texto revisado pelo
+  advogado. O procedimento está em INCIDENTES.md, seção 9.
+
+**Pronto quando.** A resposta está escrita aqui.
+
+### 10. O depoimento da Natália (auditoria de 01/10/2026, LEGAL-107)
+
+**O que foi feito.** O corte na fala dela agora aparece marcado com "[...]"
+na capa, e a página /depoimento diz a regra que se pratica: o texto sai como
+o aluno escreveu, e todo corte aparece marcado.
+
+**Confirmado pelo dono em 01/10/2026:** nome e cidade (Búzios, Rio de
+Janeiro) conferem com o que está na capa. O nome completo fica com o dono,
+fora do repositório; a capa mostra só o primeiro nome. **A autorização por
+escrito dela está guardada com o dono** (confirmado em 01/10/2026): o passo 1
+abaixo está feito.
+
+**O que é seu.**
+1. **Autorização por escrito**, guardada FORA do repositório: nome, cidade,
+   que o texto pode ir para o site e para divulgação, e que ela concorda com
+   o corte (o trecho "corrigindo e acompanhando até que você realmente
+   compreenda"). Hoje ela existe só como comentário no código. O caminho mais
+   simples é pedir que ela mesma registre o depoimento em /depoimento, que
+   grava a autorização.
+2. **"Imagens".** A citação diz que a plataforma tem "áudio, texto, imagens e
+   exercícios". A fala dela não foi alterada (é citação). Confirme com ela, e
+   para você mesmo, a que imagens ela se refere: o curso tem os diagramas de
+   traçado das letras; se ela pensava em outra coisa, combine com ela um
+   corte marcado ou um texto novo.
+3. ~~Se ela teve acesso gratuito ou foi aluna particular~~ **Respondido
+   (01/10/2026): aluna particular.** O cartão do depoimento diz "aluna
+   particular do professor". O advogado confirma se basta (item 16).
+
+O título da seção na capa é "Quem já está lendo.", que serve para um
+depoimento ou vários; não precisou mudar.
+
+**Pronto quando.** A autorização está guardada e a dúvida das imagens,
+resolvida.
+
+### 11. Textos para você aprovar (auditoria de 01/10/2026) - APROVADOS em 01/10/2026
+
+**O dono aprovou todos os textos novos dos PRs #87 a #118** (97 itens, lista
+entregue na conversa de 01/10/2026: capa, FAQ, checkout, curso, conta,
+atendimento, textos legais, e-mails e descrições das imagens). Os textos
+legais seguem para o advogado mesmo aprovados.
+
+Estão no ar e foram escritos por mim; troque se não concordar:
+
+- **Dúvidas de conteúdo (UXQA-016):** "Dúvidas sobre o conteúdo também são
+  bem-vindas por e-mail, no mesmo prazo." Em /suporte e na FAQ
+  (`DUVIDAS_DE_CONTEUDO`, app/src/lib/empresa.ts), e nos Termos, art. 1:
+  "o atendimento por e-mail e WhatsApp é para problemas de acesso, pagamento
+  e conta, e para dúvidas pontuais sobre o conteúdo". Se preferir NÃO
+  responder dúvida de conteúdo, me diga e eu tiro dos três lugares.
+- **O que o curso ensina (UXQA-010):** "Este curso ensina a ler e escrever
+  em hebraico. Conversação começa no Hebraico A1, que é um curso à parte."
+  Na página do curso e na FAQ (`O_QUE_O_CURSO_ENSINA`).
+
+### 12. A versão do contrato em publicação rebaixada (LEGAL-104)
+
+Cada versão dos Termos, do Reembolso e da Privacidade tem uma cópia fixa em
+`data/politicas-versoes/`, publicada em `/<documento>/v/<código>/`, e o
+recibo de cada compra linka a versão daquela compra. Quando a Mercado Pago
+responde formas de pagamento diferentes das de `data/empresa.json` (por
+exemplo, sem PIX), o texto dos Termos muda naquela publicação e nasce uma
+versão que não está no git: ela fica no ar só até a próxima publicação. O
+resumo do Actions avisa, e o conserto está em RUNBOOK-ATENDIMENTO.md. O mais
+simples é deixar `pagamento.formas` em `data/empresa.json` igual ao que a
+Mercado Pago de fato aceita.
+
+---
+
 ## Bloco 3 - FEITO
 
 Os cinco saíram numa tacada, com testes, e estão no ar. Ficam registrados
@@ -405,6 +605,15 @@ aqui porque dois deles mudam o que você vê acontecer.
     hash da senha de cada um. Guarde-o como guardaria a carteira, e nunca num
     repositório ou num artefato do Actions.
     Rode uma vez agora, com o `--ensaiar`, para saber que funciona.
+    **Desde 28/09/2026 há também o backup automático diário no R2** (Action
+    "Backup do banco", ver `.github/workflows/backup.yml`): a cópia manual
+    passa a ser um extra, não a única.
+    **A tabela `gravacoes` fica fora dessa cópia** (desde 01/10/2026): os
+    áudios do painel não cabem num comando do SQLite e são conteúdo do curso,
+    não dado de aluno; a casa deles é o git (`audio/<id>.mp3`). O resumo de
+    cada execução diz quais gravações ainda não foram exportadas para lá:
+    quando aparecer alguma, rode o deploy-worker.yml com "exportar_gravacoes"
+    e aceite o PR. Depois de gravar, exporte; é a regra.
 
 **De brinde**, um defeito que apareceu ao fazer o item 13: o freio de
 requisições apagava sozinho a própria contagem em toda janela maior que duas
@@ -421,9 +630,13 @@ com teste.
   disse de cada um.
 - `Actions → Acesso → senha`: os e-mails de recuperação que saíram, e o motivo
   dos que não saíram.
-- Um pedido parado em `pending` por mais de uma hora é a única coisa que
-  merece susto: confira no painel da Mercado Pago se foi pago e, se foi,
-  libere por `Actions → Acesso → liberar`.
+- Um pedido parado em `pending` ou `failed` por mais de uma hora é a única
+  coisa que merece susto: confira no painel da Mercado Pago se foi pago e, se
+  foi, libere por `Actions → Acesso → liberar`. (`failed` é o cartão recusado
+  numa primeira tentativa; a segunda pode ter sido aprovada. Desde 27/09/2026
+  a varredura pergunta por eles também, mas vale olhar.)
+- Uma linha `pagamento-duplicado` na trilha é um comprador que pagou duas
+  vezes: estorne o segundo pagamento. O acesso continua pelo primeiro.
 
 ---
 
@@ -448,3 +661,45 @@ proteger o `main` e confirmar o 404 do Pages.
 consegue cobrar, e o cartão funciona ponta a ponta. Dá para fazer a compra
 de verdade (item 6) hoje, no cartão, e vender. O PIX entra quando eles
 liberarem, sozinho.
+
+### Quando assinar os planos pagos (decisão do dono em 01/10/2026: só quando precisar)
+
+Hoje os planos gratuitos dão conta. Estimativa, não medição: até uns 2.000 alunos
+matriculados (700 a 1.000 estudando no mesmo dia) cabem nos 100 mil acessos
+diários do Worker.
+
+- **Cloudflare Workers Paid (US$ 5/mês):** um dia ANTES de qualquer anúncio pago;
+  ou quando Workers & Pages → o Worker → Metrics passar de ~50 mil requests/dia;
+  ou se o UptimeRobot avisar queda perto das 21h de Brasília (meia-noite UTC,
+  quando o limite diário estoura). Depois: avisar para subir o PBKDF2 para 600k e
+  ligar o limite de CPU no wrangler.toml.
+- **Resend pago (US$ 20/mês, 50 mil e-mails/mês):** quando houver dias com mais de
+  ~50 compras e cadastros. O gratuito manda 100 e-mails/dia e 3.000/mês; passando
+  disso, o acesso continua sendo liberado, mas o recibo e o "esqueci a senha" não
+  chegam. Conferir no painel da Resend qual é o plano atual.
+
+### 13. Teste com leitor de tela - FEITO em 01/10/2026 (VoiceOver)
+
+O dono testou com o VoiceOver no iPhone, pelo Safari: entrar, abrir uma
+lição, ouvir o áudio, responder (certo e errado) e seguir funcionaram, sem o
+foco voltar ao topo. No Chrome do iPhone o VoiceOver não funcionou bem; a
+Declaração de Acessibilidade recomenda o Safari. Faltam NVDA (computador) e
+TalkBack (Android), e o teste num iPhone com iOS 15 ou 16.
+
+O texto novo da Declaração (art. 4, sobre este teste) foi aprovado pelo dono
+em 01/10/2026.
+
+### 14. Cópia do backup fora da Cloudflare (Google Drive) - FEITO em 02/10/2026
+
+**Ligada e testada em 02/10/2026:** os dois segredos foram criados pelo dono, e o
+backup manual mandou `hebraico-fluente-20261002-012434.sql.gz.enc` (cifrado) para
+o Drive, depois de restaurar a cópia num banco local com todas as tabelas batendo.
+
+O sistema já faz a cópia diária CIFRADA no Google Drive pessoal do dono (só
+ele acessa), assim que existirem os segredos `RCLONE_DRIVE_TOKEN` e
+`BACKUP_SENHA` no GitHub (passo a passo em RUNBOOK-ATENDIMENTO.md). O texto
+novo da Política de Privacidade sobre essa cópia foi aprovado pelo dono em
+01/10/2026; segue para o advogado com o resto.
+
+**Pronto quando.** O primeiro arquivo `.sql.gz.enc` aparece na pasta
+`hebraico-fluente-backups` do Drive.

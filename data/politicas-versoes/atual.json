@@ -1,0 +1,12 @@
+{
+  "_nota": [
+    "GERADO por app/versoes.mjs a cada build. Não editar à mão.",
+    "A versão de cada política é o começo do sha256 do texto publicado; a cópia",
+    "fixa de cada versão mora ao lado, em <documento>-<versao>.html, e é",
+    "publicada em /<documento>/v/<versao>/. O Worker grava a de termos em",
+    "aceites.versao e em orders.termos_versao."
+  ],
+  "termos": "9a80103cbb",
+  "reembolso": "fa473a7774",
+  "privacidade": "3a1fdf1944"
+}

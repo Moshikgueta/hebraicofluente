@@ -24,7 +24,8 @@ import {
   type ReactNode
 } from 'react';
 import { api, apiMode, isDemo, type ApiMode } from './api';
-import { hasAccess, type Order, type PaymentMethod, type Session } from './types';
+import { hasAccess, type CreatedOrder, type Order, type PaymentMethod, type Session } from './types';
+import type { Origem } from '@/lib/origem';
 
 type AccountValue = {
   /** A sessão já foi consultada? Antes disso, nada de decidir nada. */
@@ -35,7 +36,7 @@ type AccountValue = {
   /** Nenhuma cobrança desta build é real. */
   demo: boolean;
 
-  signUp(i: { name: string; email: string; password: string }): Promise<void>;
+  signUp(i: { name: string; email: string; password: string; aceitouTermos: boolean; declarouIdade: boolean }): Promise<void>;
   signIn(i: { email: string; password: string }): Promise<void>;
   signOut(): Promise<void>;
   /** Recarrega a sessão do servidor - depois de um pagamento, por exemplo. */
@@ -51,9 +52,17 @@ type AccountValue = {
   /** Apaga a conta do próprio titular, e sai. Exige a senha atual. */
   deleteAccount(i: { password: string }): Promise<void>;
 
-  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number }):
-    Promise<Order & { redirectUrl?: string }>;
+  requestEmailVerification(): Promise<{ demoLink?: string }>;
+  confirmEmail(token: string): Promise<void>;
+  /** A caixa do perfil do aviso do próximo curso. */
+  setNovidades(quero: boolean): Promise<void>;
+  /** A caixa do perfil do lembrete para estudar. */
+  setLembrete(quero: boolean): Promise<void>;
+
+  startOrder(i: { courseSlug: string; method: PaymentMethod; installments?: number; parceria?: string; origem?: Origem }):
+    Promise<CreatedOrder>;
   orderStatus(id: string): Promise<Order>;
+  requestWithdrawal(orderId: string, motivo?: string | null): Promise<{ pedidoEm: string }>;
 
   /** Este aluno pode abrir este curso agora? */
   can(courseSlug: string): boolean;
@@ -135,8 +144,22 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       avisar(true);
     },
 
+    requestEmailVerification: async () => (await api()).requestEmailVerification(),
+    /* A mesma conta, só com o e-mail confirmado: sem `avisar()`, pelo mesmo
+       motivo da troca de senha. */
+    async confirmEmail(token) { setSession(await (await api()).confirmEmail(token)); },
+    async setNovidades(quero) {
+      await (await api()).setNovidades(quero);
+      setSession(s => s && { ...s, account: { ...s.account, novidades: quero } });
+    },
+    async setLembrete(quero) {
+      await (await api()).setLembrete(quero);
+      setSession(s => s && { ...s, account: { ...s.account, lembrete: quero } });
+    },
+
     startOrder: async i => (await api()).startOrder(i),
     orderStatus: async id => (await api()).orderStatus(id),
+    requestWithdrawal: async (id, motivo) => (await api()).requestWithdrawal(id, motivo),
 
     can: slug => hasAccess(session, slug)
   }), [ready, session, refresh]);
@@ -146,6 +169,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
 export function useAccount(): AccountValue {
   const v = useContext(Ctx);
-  if (!v) throw new Error('useAccount fora de <AccountProvider>');
+  if (!v) throw new Error('useAccount fora de <AccountProvider>'); // i18n-ok: erro de desenvolvedor
   return v;
 }

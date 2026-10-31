@@ -6,7 +6,7 @@
   "scripts": {
     "export-content": "node ../tools/export-content.mjs",
     "dev": "npm run export-content && next dev",
-    "build": "npm run export-content && next build",
+    "build": "npm run export-content && next build && node versoes.mjs && node ../tools/csp-hashes.mjs",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -19,6 +19,7 @@
     "sincronia": "node sincronia.mjs",
     "exame": "node exame.mjs",
     "check-legal": "node check-legal.mjs",
+    "versoes": "node versoes.mjs",
     "senha": "node senha.mjs",
     "pagamento": "node pagamento.mjs",
     "csp": "node csp.mjs",
@@ -35,13 +36,20 @@
     "exercicios": "node exercicios.mjs",
     "rodada2": "node rodada2.mjs",
     "pacote": "node pacote.mjs",
+    "alcance": "node alcance.mjs",
     "promessas": "node promessas.mjs",
+    "raizes": "node raizes.mjs",
     "test": "npm run export-content && vitest run"
   },
   "dependencies": {
-    "next": "15.5.25",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "15.5.26",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.28"
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.3",

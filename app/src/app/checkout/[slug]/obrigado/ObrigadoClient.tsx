@@ -25,22 +25,22 @@ import { Card, Badge, Skeleton } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { He } from '@/components/hebrew/He';
 import { useAccount } from '@/lib/account/store';
-import { getCourse } from '@/lib/catalog';
-import type { OrderStatus } from '@/lib/account/types';
+import { getCourse, tipoDe } from '@/lib/catalog';
 import { empresa } from '@/lib/empresa';
+import { decidirFase, DESISTE_MS, FINAL, type Fase } from './fase';
+import { tx } from '@/i18n/telas/conta-obrigado';
 
 const POLL_MS = 3_000;
-const GIVE_UP_MS = 3 * 60_000;
-
-type Phase = 'checking' | 'paid' | 'pending' | 'failed' | 'unknown';
 
 export function ObrigadoClient({ slug }: { slug: string }) {
   const account = useAccount();
   const params = useSearchParams();
   const c = getCourse(slug)!;
   const orderId = params.get('order');
+  /* O que a Mercado Pago escreveu na volta. Só TEXTO (ver ./fase.ts). */
+  const dica = params.get('collection_status') ?? params.get('status');
 
-  const [phase, setPhase] = useState<Phase>('checking');
+  const [phase, setPhase] = useState<Fase>('conferindo');
   const started = useRef(Date.now());
 
   useEffect(() => {
@@ -50,120 +50,196 @@ export function ObrigadoClient({ slug }: { slug: string }) {
        o webhook pode já ter liberado o acesso enquanto o navegador voltava. */
     if (!orderId) {
       void account.refresh().then(() => {
-        setPhase(account.can(slug) ? 'paid' : 'unknown');
+        setPhase(account.can(slug) ? 'pago' : 'desconhecido');
       });
       return;
     }
 
     let stop = false;
-    const check = async () => {
-      if (stop) return;
+    /* Devolve true quando não adianta mais perguntar. */
+    const check = async (): Promise<boolean> => {
+      if (stop) return true;
+      const passou = Date.now() - started.current;
       try {
         const order = await account.orderStatus(orderId);
-        if (stop) return;
-        const map: Record<OrderStatus, Phase> = {
-          paid: 'paid', pending: 'pending',
-          failed: 'failed', expired: 'failed', refunded: 'failed'
-        };
-        if (order.status === 'paid') {
+        if (stop) return true;
+        const fase = decidirFase({
+          status: order.status, ultimoPagamento: order.ultimoPagamento,
+          metodo: order.method, passouMs: passou, dica
+        });
+        if (fase === 'pago') {
           await account.refresh();
-          if (!stop) setPhase('paid');
-          return true;
         }
-        setPhase(Date.now() - started.current > GIVE_UP_MS ? map[order.status] : 'checking');
+        if (!stop) setPhase(fase);
+        return FINAL.has(fase);
       } catch {
-        if (Date.now() - started.current > GIVE_UP_MS) setPhase('unknown');
+        if (passou > DESISTE_MS) setPhase('desconhecido');
       }
       return false;
     };
 
     void check();
+    /* Continua perguntando nas fases que ainda podem mudar (em análise, sem
+       pagamento): um cartão aprovado depois troca a tela sozinho. */
     const timer = setInterval(async () => {
-      if (await check() || Date.now() - started.current > GIVE_UP_MS) clearInterval(timer);
+      if (await check() || Date.now() - started.current > DESISTE_MS) clearInterval(timer);
     }, POLL_MS);
     return () => { stop = true; clearInterval(timer); };
-  }, [account, account.ready, orderId, slug]);
+  }, [account, account.ready, orderId, slug, dica]);
 
-  if (!account.ready || phase === 'checking') {
+  const suporte = (
+    <a href={`mailto:${empresa.contato.emailSuporte}`}
+       className="text-[var(--accent)] hover:underline">
+      {empresa.contato.emailSuporte}
+    </a>
+  );
+
+  if (!account.ready || phase === 'conferindo') {
     return (
       <Wrap>
         <Card className="p-8 grid gap-4 justify-items-center text-center" aria-busy="true">
           <Skeleton className="h-[52px] w-[52px] rounded-full" />
           <p className="font-display text-[19px] font-bold text-ink">
-            Confirmando seu pagamento…
+            {tx.confirmando}
           </p>
           <p className="font-ui text-[14px] leading-relaxed text-ink-muted max-w-[40ch]">
-            Isso costuma levar alguns segundos. Não feche esta página.
+            {tx.naoFeche}
           </p>
         </Card>
       </Wrap>
     );
   }
 
-  if (phase === 'paid') {
+  if (phase === 'pago') {
     return (
       <Wrap>
         <Card tone="mint" className="p-8 grid gap-4 justify-items-center text-center">
           <He size="lg" dim>ע</He>
-          <Badge tone="mint">Pagamento confirmado</Badge>
+          <Badge tone="mint">{tx.pagamentoConfirmado}</Badge>
           <h1 className="font-display text-[26px] sm:text-[30px] font-bold text-ink max-w-[20ch]">
-            Pronto. O curso é seu.
+            {tipoDe(c) === 'livro' ? tx.prontoLivro : tipoDe(c) === 'pacote' ? tx.prontoCombo : tx.prontoCurso}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[44ch]">
-            {c.titlePt}, liberado por {c.accessMonths} meses. A primeira lição
-            leva dez minutos.
+            {tipoDe(c) === 'livro'
+              ? tx.livroLiberado(c.titlePt, c.accessMonths)
+              : tipoDe(c) === 'pacote'
+                ? tx.comboLiberado
+                : tx.cursoLiberado(c.titlePt, c.accessMonths)}
           </p>
-          <LinkButton href="/meu-hebraico" size="lg">Começar agora</LinkButton>
+          {tipoDe(c) === 'livro'
+            /* /israel/ é uma página estática fora do app: link comum, sem o roteador. */
+            ? <a href={c.abre ?? '/israel/'} className="inline-flex items-center min-h-[48px] px-5 rounded-full bg-[var(--accent-bg)] text-white font-ui font-semibold">{tx.abrirLivro}</a>
+            : tipoDe(c) === 'pacote'
+              ? <LinkButton href="/minha-biblioteca" size="lg">{tx.abrirBiblioteca}</LinkButton>
+              : <LinkButton href="/meu-hebraico" size="lg">{tx.comecarAgora}</LinkButton>}
         </Card>
       </Wrap>
     );
   }
 
-  if (phase === 'pending') {
+  /* Um cartão em análise pela operadora (antifraude). Só aparece quando o
+     servidor SABE que existe um pagamento esperando - nunca para um pedido
+     sem pagamento nenhum. Continua perguntando por trás. */
+  if (phase === 'em-analise') {
     return (
       <Wrap>
         <Card tone="amber" className="p-8 grid gap-4">
           <h1 className="font-display text-[23px] font-bold text-ink">
-            O pagamento ainda está em análise.
+            {tx.emAnalise}
           </h1>
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Acontece com alguns cartões e com boleto: o banco leva um tempo para
-            responder. Você não precisa fazer nada - assim que a confirmação
-            chegar, o acesso entra sozinho e o curso aparece em Meu Hebraico.
+            {tx.emAnaliseTexto}
           </p>
           <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">
-            Se em algumas horas nada acontecer, escreva para{' '}
-            <a href={`mailto:${empresa.contato.emailSuporte}`}
-               className="text-[var(--accent)] hover:underline">
-              {empresa.contato.emailSuporte}
-            </a>{' '}
-            com o e-mail da compra.
+            {tx.emAnalisePrazoAntes}{suporte}{tx.emAnalisePrazoDepois}
           </p>
           <LinkButton href="/meu-hebraico" variant="secondary" className="justify-self-start">
-            Ir para Meu Hebraico
+            {tx.irParaMeuHebraico}
           </LinkButton>
         </Card>
       </Wrap>
     );
   }
 
-  /* failed e unknown caem aqui. A diferença entre "recusado" e "não consegui
-     descobrir" importa para o texto, mas a saída é a mesma: tentar de novo,
-     sem acusar o comprador de nada. */
+  /* Houve pagamento, e ele foi devolvido. "Nada foi cobrado" seria falso. */
+  if (phase === 'devolvido') {
+    return (
+      <Wrap>
+        <Card className="p-8 grid gap-4">
+          <h1 className="font-display text-[23px] font-bold text-ink">
+            {tx.devolvido}
+          </h1>
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            {tx.devolvidoTextoAntes}{suporte}{tx.devolvidoTextoDepois}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <LinkButton href="/perfil" variant="secondary">{tx.verMinhasCompras}</LinkButton>
+          </div>
+        </Card>
+      </Wrap>
+    );
+  }
+
+  if (phase === 'recusado') {
+    return (
+      <Wrap>
+        <Card className="p-8 grid gap-4">
+          <h1 className="font-display text-[23px] font-bold text-ink">
+            {tx.recusado}
+          </h1>
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            {tx.recusadoTexto}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
+          </div>
+        </Card>
+      </Wrap>
+    );
+  }
+
+  /* O pedido existe e nenhum pagamento apareceu: quem saiu da tela da
+     Mercado Pago sem concluir. Sem "em análise" - não há nada
+     sendo analisado. */
+  if (phase === 'sem-pagamento' || phase === 'expirado') {
+    return (
+      <Wrap>
+        <Card className="p-8 grid gap-4">
+          <h1 className="font-display text-[23px] font-bold text-ink">
+            {phase === 'expirado'
+              ? tx.expirado
+              : tx.semPagamento}
+          </h1>
+          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
+            {phase === 'expirado'
+              ? tx.expiradoTexto
+              : tx.semPagamentoTexto}
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
+            <LinkButton href="/meu-hebraico" variant="secondary">{tx.meuHebraico}</LinkButton>
+          </div>
+        </Card>
+      </Wrap>
+    );
+  }
+
+  /* nao-concluido e desconhecido. A saída é a mesma: tentar de novo, sem
+     acusar o comprador de nada. */
   return (
     <Wrap>
       <Card className="p-8 grid gap-4">
         <h1 className="font-display text-[23px] font-bold text-ink">
-          {phase === 'failed' ? 'O pagamento não foi concluído.' : 'Não consegui confirmar por aqui.'}
+          {phase === 'nao-concluido' ? tx.naoConcluido : tx.naoConsegui}
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-          {phase === 'failed'
-            ? 'Nada foi cobrado. Pode ter sido o limite, um dado digitado errado ou uma recusa do banco - dá para tentar de novo com outro cartão ou por PIX.'
-            : 'Se você já pagou, o acesso entra sozinho assim que a confirmação chegar: abra Meu Hebraico daqui a alguns minutos. Se não pagou, é só refazer.'}
+          {phase === 'nao-concluido'
+            ? tx.naoConcluidoTexto
+            : tx.naoConseguiTexto}
         </p>
         <div className="flex flex-wrap gap-3">
-          <LinkButton href={`/checkout/${slug}`}>Tentar de novo</LinkButton>
-          <LinkButton href="/meu-hebraico" variant="secondary">Meu Hebraico</LinkButton>
+          <LinkButton href={`/checkout/${slug}`}>{tx.tentarDeNovo}</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="secondary">{tx.meuHebraico}</LinkButton>
         </div>
       </Card>
     </Wrap>

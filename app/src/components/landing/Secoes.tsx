@@ -25,21 +25,24 @@
  */
 
 import { useState } from 'react';
+import { stripNikud } from '@/lib/hebrew';
 import { He } from '@/components/hebrew/He';
-import { Prose } from '@/components/learn/Blocks';
+import { Prose } from '@/components/hebrew/Prose';
 import { DiagramaDeTracado } from './DiagramaDeTracado';
 import { course, totalLicoes } from '@/lib/content-publico';
 import { allCourses, isPlayable } from '@/lib/catalog';
-import { Container, H2, Lead, Reveal, Check, CheckList, Chevron } from './base';
+import { Container, H2, Lead, Reveal, Rubrica, Check, CheckList, Chevron } from './base';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from './copy';
+import { quantasEtapasPt } from '@/lib/etapas-da-licao';
+import { tx } from '@/i18n/telas/venda-secoes';
 
 
 /* ── 3 · o problema ─────────────────────────────────────────────────────── */
 const PROBLEMAS = [
-  'As letras parecem todas iguais.',
-  'Você não sabe por onde começar.',
-  'Os materiais explicam hebraico, mas não pensando em brasileiros.',
-  'Você assiste vídeos, mas sente que não existe uma sequência.'
+  tx.problema1,
+  tx.problema2,
+  tx.problema3,
+  tx.problema4
 ];
 
 export function Problema() {
@@ -47,7 +50,7 @@ export function Problema() {
     <section id="como" className="bg-[var(--sand)] border-y border-line">
       <Container className="py-16 sm:py-[88px]">
         <Reveal>
-          <H2 className="max-w-[20ch] mb-10">Aprender hebraico não deveria parecer um quebra-cabeça.</H2>
+          <H2 className="max-w-[20ch] mb-10">{tx.problemaTitulo}</H2>
         </Reveal>
         <ul className="grid gap-4 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(235px,1fr))]">
           {PROBLEMAS.map((t, i) => (
@@ -65,7 +68,7 @@ export function Problema() {
         <Reveal delay={200} className="mt-10 flex gap-3.5 items-stretch max-w-[62ch]">
           <span aria-hidden className="w-[3px] rounded-full bg-[var(--teal)] shrink-0" />
           <p className="font-display text-[20px] sm:text-[22px] leading-[1.4] font-medium tracking-[-0.015em] text-ink">
-            Por isso criamos um caminho claro, progressivo e pensado para quem fala português.
+            {tx.problemaFecho}
           </p>
         </Reveal>
       </Container>
@@ -82,12 +85,12 @@ export function Demonstracao() {
   return (
     <section id="curso">
       <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="mb-3">Veja como você vai aprender.</H2></Reveal>
+        <Reveal><H2 className="mb-3">{tx.demoTitulo}</H2></Reveal>
         <Reveal delay={80}><Lead className="mb-8">
-          Cinco momentos que se repetem em toda lição. Um de cada vez, sempre na mesma ordem.
+          {tx.demoLead}
         </Lead></Reveal>
 
-        <div role="tablist" aria-label="Momentos de uma lição"
+        <div role="tablist" aria-label={tx.demoAbas}
              className="inline-flex flex-wrap gap-1 rounded-[14px] bg-[var(--sand)] border border-line p-1 mb-6">
           {ABAS.map((t, i) => (
             <button
@@ -97,7 +100,7 @@ export function Demonstracao() {
               aria-selected={aba === i}
               onClick={() => setAba(i)}
               className={`rounded-[10px] px-[18px] py-[9px] font-ui text-[15px] font-semibold
-                          transition-all duration-[220ms]
+                          transition-[background-color,color,box-shadow] duration-[220ms]
                           ${aba === i
                             ? 'bg-[var(--card)] text-[var(--navy)] shadow-[var(--sh-tab)]'
                             : 'text-ink-muted hover:text-ink'}`}
@@ -147,15 +150,14 @@ function Rotulo({ children }: { children: React.ReactNode }) {
 function PainelAula() {
   return (
     <>
-      <Rotulo>Lição 4 · Aprender</Rotulo>
+      <Rotulo>{tx.rotuloLicao(tx.aprender)}</Rotulo>
       <div className="rounded-[16px] bg-[var(--sand)] px-4 py-[22px] text-center mb-4">
         <He size="plate" tone="navy">שׁ</He>
-        <p className="font-ui text-[17px] font-semibold text-ink mt-1.5">Shin</p>
-        <p className="font-ui text-[14.5px] text-[var(--teal)]">som /ʃ/ - como o CH de «chave»</p>
+        <p className="font-ui text-[17px] font-semibold text-ink mt-1.5">{tx.shin}</p>
+        <p className="font-ui text-[14.5px] text-[var(--teal-ink)]">{tx.aulaSom}</p>
       </div>
       <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted">
-        O ponto em cima, à direita, é o que faz o som SH. Do lado esquerdo, a mesma
-        letra vira Sin, com som de S.
+        {tx.aulaPonto}
       </p>
     </>
   );
@@ -186,13 +188,10 @@ function PainelAula() {
 function PainelEscrita() {
   return (
     <>
-      <Rotulo>Lição 4 · Escrever</Rotulo>
-      <DiagramaDeTracado letterId="shin" label="Shin" movimentos={1} className="mb-3" />
+      <Rotulo>{tx.rotuloLicao(tx.escrever)}</Rotulo>
+      <DiagramaDeTracado letterId="shin" label={tx.shin} movimentos={1} className="mb-3" />
       <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">
-        Este é o diagrama que a lição mostra. Depois de ver o movimento, você
-        traça a letra com o dedo e o curso confere. A forma é a da cursiva que
-        se escreve em Israel - a que você vai ver num bilhete, e não a de
-        imprensa.
+        {tx.escritaTexto}
       </p>
     </>
   );
@@ -211,7 +210,7 @@ function PainelPratica() {
   ];
   return (
     <>
-      <Rotulo>Lição 4 · {MAQUETE.praticaRotulo}</Rotulo>
+      <Rotulo>{tx.rotuloLicao(MAQUETE.praticaRotulo)}</Rotulo>
       <p className="font-ui text-[18px] font-semibold text-ink mb-4">
         {MAQUETE.praticaPergunta}
       </p>
@@ -219,7 +218,7 @@ function PainelPratica() {
         <span className="self-start inline-flex items-center gap-2 rounded-full bg-[var(--teal-soft)]
                          px-[18px] py-2.5 font-ui text-[14.5px] font-semibold text-[var(--teal-ink)] mb-4">
           <span aria-hidden className="w-[9px] h-[9px] rounded-full bg-[var(--teal)] animate-pulse-dot" />
-          Reproduzir áudio
+          {tx.reproduzir}
         </span>
       )}
       <div className="grid grid-cols-2 gap-2.5">
@@ -241,17 +240,17 @@ function PainelPratica() {
 
 function PainelRevisao() {
   const fila: readonly [string, string, string][] = [
-    ['ס', 'Sámech', 'Confundida com ם'],
-    ['ע', 'Áyin', 'Confundida com א'],
-    ['ט', 'Tet', '3 erros seguidos'],
-    ['ח', 'Het', 'Som gutural']
+    ['ס', tx.samech, tx.confundidaMem],
+    ['ע', tx.ayin, tx.confundidaAlef],
+    ['ט', tx.tet, tx.tresErros],
+    ['ח', tx.het, tx.somGutural]
   ];
   return (
     <>
       <p className="font-ui text-[13px] font-semibold uppercase tracking-[.08em] text-ink-muted mb-1.5">
-        Revisão de hoje
+        {tx.revisaoHoje}
       </p>
-      <p className="font-ui text-[18px] font-semibold text-ink mb-4">4 letras precisam voltar</p>
+      <p className="font-ui text-[18px] font-semibold text-ink mb-4">{tx.revisaoQuantas}</p>
       <ul className="grid gap-2.5 list-none p-0 m-0">
         {fila.map(([he, nome, motivo]) => (
           <li key={nome} className="flex items-center gap-3.5 rounded-[14px] border border-line px-3.5 py-[11px]">
@@ -261,7 +260,7 @@ function PainelRevisao() {
               <span className="block font-ui text-[13.5px] text-ink-muted">{motivo}</span>
             </span>
             <span className="rounded-full bg-[var(--gold-soft)] px-[9px] py-1
-                             font-ui text-[12px] font-bold text-[var(--gold)]">Revisar</span>
+                             font-ui text-[12px] font-bold text-[var(--gold)]">{tx.revisar}</span>
           </li>
         ))}
       </ul>
@@ -275,16 +274,16 @@ function PainelProgresso() {
   const letras = course.modules.flatMap(m => m.letterIds).map(id => course.letters.find(l => l.id === id)?.letter ?? '');
   return (
     <>
-      <Rotulo>Seu progresso</Rotulo>
+      <Rotulo>{tx.seuProgresso}</Rotulo>
       <div className="flex gap-2.5 mb-4">
-        {([['42%', 'do curso'], ['9', 'letras firmes'], ['7', 'dias seguidos']] as const).map(([n, l]) => (
+        {([['42%', tx.doCurso], ['9', tx.letrasFirmes], ['7', tx.diasSeguidos]] as const).map(([n, l]) => (
           <div key={l} className="flex-1 rounded-[14px] bg-[var(--sand)] px-3 py-3.5">
             <p className="font-display text-[25px] font-semibold tracking-[-0.025em] leading-[1.1] text-ink">{n}</p>
             <p className="font-ui text-[13px] text-ink-muted mt-0.5">{l}</p>
           </div>
         ))}
       </div>
-      <p className="font-ui text-[14px] text-ink-muted mb-2.5">Domínio das 22 letras</p>
+      <p className="font-ui text-[14px] text-ink-muted mb-2.5">{tx.dominio22}</p>
       <div className="flex flex-wrap gap-1.5">
         {letras.map((c, i) => (
           <span key={i}
@@ -304,65 +303,41 @@ function PainelProgresso() {
 /* ── 5 · o método ───────────────────────────────────────────────────────── */
 
 export function Metodo() {
-  const { ref, cls } = useLinha();
   return (
     <section id="metodo">
-      <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="max-w-[20ch] mb-3">Um método simples para transformar símbolos em leitura.</H2></Reveal>
+      <Container className="pt-20 sm:pt-28">
+        <Rubrica letra="ה" className="mb-5">{tx.metodoRubrica}</Rubrica>
+        <H2 className="max-w-[20ch] mb-3">{tx.metodoTitulo}</H2>
         {/* O número vem do ARRAY, nunca escrito à mão. Ele estava: a página
             dizia "Seis passos" e renderizava cinco, porque `PASSOS` perde o
             "Ouça" enquanto não há gravação e ninguém voltou na frase. Um
             número errado na página que explica o método é pequeno e caro -
             é a seção que existe para dizer "aqui a gente é exato". */}
-        <Reveal delay={80}><Lead className="mb-10 sm:mb-[46px]">
-          {PASSOS.length === 6 ? 'Seis passos' : 'Cinco passos'}, sempre nesta sequência.
-          Nenhuma letra avança sem passar por todos.
-        </Lead></Reveal>
+        <Lead className="mb-10 sm:mb-12">
+          {tx.metodoLead(quantasEtapasPt())}
+        </Lead>
 
-        <div className="relative">
-          {/* A linha que liga os seis passos, crescendo da esquerda. Escondida
-              abaixo de sm, onde os passos empilham e ela ligaria o nada. */}
-          <span
-            ref={ref}
-            aria-hidden
-            className={`hidden sm:block absolute left-0 right-0 top-[27px] h-[2px] origin-left
-                        transition-transform duration-[1100ms] ease-[var(--ease-fill)] ${cls}`}
-            style={{ background: 'linear-gradient(90deg,var(--teal),var(--teal-lite))' }}
-          />
-          <ol className="relative grid gap-[18px] list-none p-0 m-0
-                         [grid-template-columns:repeat(auto-fit,minmax(150px,1fr))]">
-            {PASSOS.map(([t, d], i) => (
-              <Reveal as="li" key={t} delay={i * 70}>
-                <span aria-hidden className="mb-4 w-14 h-14 rounded-[16px] bg-[var(--card)]
-                                             border-[1.5px] border-[var(--teal)] grid place-items-center
-                                             font-ui font-bold text-[18px] text-[var(--teal)]">
-                  {i + 1}
-                </span>
-                <p className="font-display text-[19px] font-semibold tracking-[-0.015em] text-ink mb-1.5">{t}</p>
-                <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">{d}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
+        {/* As etapas como colunas sob um fio, e não círculos numerados ligados
+            por uma linha que crescia na rolagem: a sequência já está na ordem
+            de leitura, e o traço teal no topo de cada coluna marca o começo
+            de cada etapa sem desenhar uma linha do tempo de modelo pronto. */}
+        <ol className="grid gap-x-7 gap-y-9 list-none p-0 m-0 border-t border-line
+                       sm:grid-cols-2 lg:grid-cols-5">
+          {PASSOS.map(([t, d], i) => (
+            <li key={t} className="relative pt-6">
+              <span aria-hidden className="absolute -top-px left-0 h-[2px] w-10 bg-[var(--teal)]" />
+              <span aria-hidden className="block font-display text-[15px] font-semibold tracking-[-0.01em]
+                                           text-[var(--teal-ink)] tabular-nums mb-3">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p className="font-display text-[20px] font-semibold tracking-[-0.018em] text-ink mb-2">{t}</p>
+              <p className="font-ui text-[15px] leading-[1.55] text-ink-muted">{d}</p>
+            </li>
+          ))}
+        </ol>
       </Container>
     </section>
   );
-}
-
-/** A linha do método anima `scaleX`, e não opacidade - por isso não usa o
- *  `Reveal` comum. */
-function useLinha() {
-  const [visivel, setVisivel] = useState(false);
-  const ref = (el: HTMLSpanElement | null) => {
-    if (!el || visivel) return;
-    const reduz = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduz || !('IntersectionObserver' in window)) { setVisivel(true); return; }
-    const io = new IntersectionObserver(es => {
-      for (const e of es) if (e.isIntersecting) { setVisivel(true); io.disconnect(); }
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.1 });
-    io.observe(el);
-  };
-  return { ref, cls: visivel ? 'scale-x-100' : 'scale-x-0' };
 }
 
 /* ── 6 · o currículo ────────────────────────────────────────────────────── */
@@ -395,19 +370,19 @@ function Percurso() {
   const faixa = (lista: typeof mods) => {
     const ns = lista.map(m => m.n);
     const a = Math.min(...ns), b = Math.max(...ns);
-    return a === b ? `Módulo ${a}` : `Módulos ${a}-${b}`;
+    return a === b ? tx.modulo(a) : tx.modulos(a, b);
   };
 
   if (comLetras.length === 0 || depois.length === 0) return null;
 
   return (
-    <Reveal delay={120}>
-      <div className="mb-9 sm:mb-11 rounded-[22px] bg-[var(--card)] border border-line p-6 sm:p-7">
+    <Reveal>
+      <div className="mb-10 sm:mb-12 rounded-[16px] bg-[var(--sand)] p-6 sm:p-7">
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1.5 mb-5">
           {([
-            [mods.length, 'módulos'],
-            [licoes, 'lições'],
-            [course.letters.length, 'letras']
+            [mods.length, tx.contaModulos],
+            [licoes, tx.contaLicoes],
+            [course.letters.length, tx.contaLetras]
           ] as const).map(([n, r]) => (
             <p key={r} className="font-ui text-[15px] text-ink-muted m-0">
               <b className="font-display text-[22px] font-semibold tracking-[-0.02em] text-ink
@@ -417,12 +392,12 @@ function Percurso() {
           ))}
         </div>
 
-        <div className="flex gap-1 h-[10px] mb-4" aria-hidden>
+        <div className="flex gap-[3px] h-2 mb-5" aria-hidden>
           {mods.map(m => (
             <span
               key={m.id}
               style={{ flexGrow: m.lessons.length || 1 }}
-              className={`rounded-full ${m.letterIds.length > 0
+              className={`rounded-[2px] ${m.letterIds.length > 0
                 ? 'bg-[var(--teal)]' : 'bg-[var(--gold)]'}`}
             />
           ))}
@@ -433,11 +408,10 @@ function Percurso() {
             <span aria-hidden className="mt-[5px] w-2.5 h-2.5 rounded-full bg-[var(--teal)] shrink-0" />
             <span className="min-w-0">
               <span className="block font-ui text-[15px] font-semibold text-ink">
-                {faixa(comLetras)} · as {course.letters.length} letras
+                {tx.faixaLetras(faixa(comLetras), course.letters.length)}
               </span>
               <span className="block font-ui text-[14.5px] leading-[1.5] text-ink-muted">
-                Uma de cada vez, na ordem em que aparecem nas palavras - e cada uma
-                já entra numa palavra de verdade.
+                {tx.faixaLetrasTexto}
               </span>
             </span>
           </li>
@@ -445,11 +419,10 @@ function Percurso() {
             <span aria-hidden className="mt-[5px] w-2.5 h-2.5 rounded-full bg-[var(--gold)] shrink-0" />
             <span className="min-w-0">
               <span className="block font-ui text-[15px] font-semibold text-ink">
-                {faixa(depois)} · ler sem apoio
+                {tx.faixaSemApoio(faixa(depois))}
               </span>
               <span className="block font-ui text-[14.5px] leading-[1.5] text-ink-muted">
-                O alfabeto já está completo. Aqui o texto perde as marcas que
-                facilitavam, do jeito que ele aparece numa placa ou num cardápio.
+                {tx.faixaSemApoioTexto}
               </span>
             </span>
           </li>
@@ -465,66 +438,71 @@ export function Curriculo() {
 
   return (
     <section>
-      <Container className="pt-16 sm:pt-24">
-        <Reveal><H2 className="mb-3">O que você estuda, módulo a módulo.</H2></Reveal>
-        <Reveal delay={80}><Lead className="mb-8">
-          {modulos.length} módulos. As letras aparecem por utilidade, não por ordem
-          alfabética - você lê palavras reais já na primeira semana.
-        </Lead></Reveal>
+      <Container className="pt-20 sm:pt-28">
+        <Rubrica letra="ו" className="mb-5">{tx.curriculoRubrica}</Rubrica>
+        <H2 className="mb-3">{tx.curriculoTitulo}</H2>
+        <Lead className="mb-9">
+          {tx.curriculoLead(modulos.length)}
+        </Lead>
 
         <Percurso />
 
-        <div className="grid gap-2.5">
+        {/* Um índice, não sete cartões: linhas separadas por fio, como o
+            sumário de um livro. O conteúdo fechado fica no HTML (`hidden`),
+            para quem busca e para o leitor de tela; abrir não anima a altura,
+            só troca o estado. */}
+        <div className="border-t border-line">
           {modulos.map((m, i) => {
             const open = aberto === i;
             const letras = m.letterIds
               .map(id => course.letters.find(l => l.id === id)?.letter)
               .filter((x): x is string => !!x);
+            const painel = `modulo-${m.id}`;
             return (
-              <div
-                key={m.id}
-                className={`rounded-[18px] bg-[var(--card)] border overflow-hidden
-                            transition-[border-color,box-shadow] duration-[250ms]
-                            ${open ? 'border-[var(--teal)] shadow-[var(--sh)]' : 'border-line'}`}
-              >
+              <div key={m.id} className="border-b border-line">
                 <button
                   type="button"
                   onClick={() => setAberto(open ? -1 : i)}
                   aria-expanded={open}
-                  className="w-full flex items-center gap-4 sm:gap-[18px] px-5 sm:px-6 py-[22px] text-left"
+                  aria-controls={painel}
+                  className="group w-full flex items-center gap-4 sm:gap-6 py-5 sm:py-6 text-left"
                 >
                   <span aria-hidden
-                        className={`w-11 h-11 rounded-[13px] grid place-items-center shrink-0
-                                    font-ui font-bold text-[16px]
-                                    ${open ? 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'
-                                           : 'bg-[var(--sand)] text-ink-muted'}`}>
+                        className={`w-8 shrink-0 font-display text-[15px] font-semibold tabular-nums
+                                    transition-colors duration-150
+                                    ${open ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
                     {String(m.n).padStart(2, '0')}
                   </span>
                   <span className="flex-1 min-w-0">
-                    <span className="block font-display text-[17px] sm:text-[19px] font-semibold
-                                     tracking-[-0.018em] text-ink">
+                    <span className="block font-display text-[18px] sm:text-[21px] font-semibold
+                                     tracking-[-0.02em] text-ink">
                       {m.titlePt}
                     </span>
-                    <span className="block font-ui text-[14px] sm:text-[14.5px] text-ink-muted mt-0.5">
-                      {m.lessons.length} {m.lessons.length === 1 ? 'lição' : 'lições'}
-                      {letras.length > 0 && ` · ${letras.length} ${letras.length === 1 ? 'letra' : 'letras'}`}
+                    <span className="block font-ui text-[14px] sm:text-[14.5px] text-ink-muted mt-0.5 tabular-nums">
+                      {tx.nLicoes(m.lessons.length)}
+                      {letras.length > 0 && ` · ${tx.nLetras(letras.length)}`}
                     </span>
                   </span>
                   {letras.length > 0 && (
-                    <span className="hidden sm:flex gap-[7px] shrink-0">
+                    <span className="hidden sm:flex gap-[9px] shrink-0">
                       {letras.map(l => (
-                        <He key={l} size="inline" className="!text-[21px] !leading-[1.1]" dim>{l}</He>
+                        <He key={l} size="inline" className="!text-[22px] !leading-[1.1]" dim>{l}</He>
                       ))}
                     </span>
                   )}
                   <Chevron open={open} />
                 </button>
-                <div className="overflow-hidden transition-[max-height] duration-[340ms] ease-[var(--ease)]"
-                     style={{ maxHeight: open ? 320 : 0 }}>
-                  <div className="px-5 sm:pl-[86px] sm:pr-6 pb-6 grid gap-[18px]
-                                  [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+                <div id={painel} hidden={!open}>
+                  {/* Aonde o módulo leva (30/10/2026): a frase de chegada do curso, a
+                      mesma do mapa, com a palavra dela em destaque. Antes ficava numa
+                      seção à parte, que repetia os sete módulos. */}
+                  {m.milestonePt && <ChegadaDoModulo m={m} anterior={modulos} />}
+                  {/* `min(200px,100%)`: com o texto em 150% num telefone, um
+                      mínimo fixo de 200px empurrava a página para o lado. */}
+                  <div className="sm:pl-14 pb-7 grid gap-x-8 gap-y-3
+                                  [grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))]">
                     {m.goalsPt.map((g, k) => (
-                      <p key={k} className="flex gap-2.5 items-start font-ui text-[15px] leading-[1.5] text-ink-muted">
+                      <p key={k} className="flex gap-2.5 items-start font-ui text-[15px] leading-[1.5] text-ink-body">
                         <span className="mt-1"><Check size={14} /></span>
                         <span className="min-w-0"><Prose text={g} /></span>
                       </p>
@@ -540,16 +518,38 @@ export function Curriculo() {
   );
 }
 
+/* A chegada de um módulo: a palavra que a frase cita, grande, e a frase. No
+   módulo 6 (sem os pontos) a palavra é o שָׁלוֹם do módulo 3 sem o nikud, que é
+   exatamente o que aquele módulo ensina. */
+const marcaDe = (t: string): string | null => t.match(/\{\{([^}]+)\}\}/)?.[1] ?? null;
+
+function ChegadaDoModulo({ m, anterior }: {
+  m: (typeof course.modules)[number]; anterior: readonly (typeof course.modules)[number][];
+}) {
+  const palavra = marcaDe(m.milestonePt!);
+  const doTres = marcaDe(anterior.find(x => Number(x.n) === 3)?.milestonePt ?? '');
+  const semPontos = !palavra && Number(m.n) === 6 && doTres ? stripNikud(doTres) : null;
+  return (
+    <div className="sm:ml-14 mb-5 flex items-center gap-4 rounded-[14px] bg-[var(--sand)] px-4 py-3.5">
+      {(palavra || semPontos) && (
+        <He size="word" tone="navy" className="shrink-0 !leading-[1.2]">{(palavra ?? semPontos)!}</He>
+      )}
+      <p className="m-0 font-ui text-[15px] leading-[1.5] text-ink-body min-w-0">
+        <Prose text={m.milestonePt!} />
+      </p>
+    </div>
+  );
+}
+
 /* ── 7 · a jornada ──────────────────────────────────────────────────────── */
 export function Jornada() {
   const cursos = allCourses();
   return (
     <section className="mt-16 sm:mt-24 bg-[var(--sand)] border-y border-line">
       <Container className="py-16 sm:py-[88px]">
-        <Reveal><H2 className="mb-3">Seu hebraico começa aqui. Não termina aqui.</H2></Reveal>
+        <Reveal><H2 className="mb-3">{tx.jornadaTitulo}</H2></Reveal>
         <Reveal delay={80}><Lead className="mb-10">
-          A Alfabetização é o primeiro degrau de uma trilha que continua. Quem entra
-          agora acompanha os próximos níveis conforme saem.
+          {tx.jornadaLead}
         </Lead></Reveal>
         <ul className="grid gap-3.5 list-none p-0 m-0 [grid-template-columns:repeat(auto-fit,minmax(176px,1fr))]">
           {cursos.map((c, i) => {
@@ -561,8 +561,8 @@ export function Jornada() {
                                            : 'bg-[var(--card)] border-line'}`}>
                 <span className="flex items-center justify-between mb-3.5">
                   <span className={`font-ui text-[12.5px] font-bold uppercase tracking-[.09em]
-                                    ${aberto ? 'text-[var(--teal-lite)]' : 'text-[#9AA29E]'}`}>
-                    {aberto ? 'Disponível' : 'Em breve'}
+                                    ${aberto ? 'text-[var(--teal-lite)]' : 'text-ink-muted'}`}>
+                    {aberto ? tx.disponivel : tx.emBreve}
                   </span>
                   {aberto
                     ? <Check size={17} color="var(--teal-lite)" />

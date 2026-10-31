@@ -28,7 +28,9 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { brl, flagship, parcelasMax } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, flagship, parcelasMax, pixPrice } from '@/lib/catalog';
+import { empresa, parcelasCurto, soPix, temCartao, temPix } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/venda-barra-fixa';
 
 /* Os alvos que apagam a barra. Ficam aqui, e não espalhados, porque são os
    ids que as seções de Fecho.tsx já expõem - se um sumir, o efeito abaixo
@@ -92,16 +94,37 @@ export function BarraFixa({ href, label }: { href: string; label: string }) {
       <div className="flex items-center gap-3 bg-[var(--card)] border-t border-line
                       shadow-[0_-8px_24px_rgba(14,59,67,.10)] px-4 py-3">
         <p className="flex-1 min-w-0 m-0 font-ui leading-[1.25]">
-          <span className="block text-[15px] font-semibold text-ink tabular-nums">
+          <span className="flex items-center gap-2 text-[15px] font-semibold text-ink tabular-nums">
             {brl(c.price.brl)}
+            {ancora(c.price) && fimDoPreLancamento(c.price) && (
+              <span className="rounded-full bg-[#F2C14E] px-2 py-px text-[11.5px] font-bold text-[#3B2A05]">
+                {tx.aMenos(brl(ancora(c.price)! - c.price.brl))}
+              </span>
+            )}
           </span>
+          {/* Só com cartão nesta publicação (LEGAL-103). */}
+          {temCartao() && (
+            <span className="block text-[12.5px] text-ink-muted tabular-nums">
+              {tx.parcelas(parcelasCurto(parcelas))}
+            </span>
+          )}
+          {/* O PIX e a data da promoção (31/10/2026, pedido do dono). */}
+          {!soPix() && temPix() && c.price.pixDiscountPct > 0 && (
+            <span className="block text-[12.5px] font-semibold text-[var(--teal-ink)] tabular-nums">
+              {tx.pix(brl(pixPrice(c.price)), fimDoPreLancamento(c.price)?.slice(0, 5) ?? null)}
+            </span>
+          )}
+          {/* A versão curta da linha da caixa de preço (CONV-001): a barra
+              é o único botão visível num trecho longo da capa, e a pessoa
+              decide aqui sem saber que pode desistir. Uma linha a mais no
+              bloco de texto; a barra continua na altura do botão. */}
           <span className="block text-[12.5px] text-ink-muted tabular-nums">
-            ou em até {parcelas}x no cartão
+            {tx.desistir(empresa.politicas.arrependimentoDias)}
           </span>
         </p>
         <Link
           href={href}
-          className="shrink-0 inline-flex items-center rounded-[12px] bg-[var(--teal)] text-white
+          className="shrink-0 inline-flex items-center rounded-[12px] bg-[var(--teal-solid)] text-white
                      font-ui font-semibold text-[15.5px] px-5 min-h-[46px]
                      transition-transform duration-[180ms] active:scale-[.98]"
         >

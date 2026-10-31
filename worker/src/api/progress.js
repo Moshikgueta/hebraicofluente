@@ -22,12 +22,33 @@
 
 import { json, fail, notSignedIn, readJson } from '../lib/http.js';
 import { requireAccount } from './auth.js';
-import { clearProgress, getProgress, putProgress, throttled } from '../lib/db.js';
+import { ehCurso } from '../lib/catalog.js';
+import {
+  activeEntitlements, clearProgress, getProgress, hasProgress, putProgress, throttled
+} from '../lib/db.js';
 
 /* Em bytes de verdade, agora que `readJson` mede bytes. O limite antigo media
    unidades UTF-16 e deixava passar até o triplo em hebraico; 512 KB cobre o
    que passava antes sem reabrir a torneira. */
 const MAX_BYTES = 512 * 1024;
+
+/* ── só quem tem curso guarda progresso no servidor ────────────────────────
+ * Auditoria de 24/09/2026. Qualquer conta - e criar conta é de graça - podia
+ * gravar 512 KB aqui. O D1 do plano gratuito tem 500 MB: umas mil contas
+ * descartáveis, criadas de uma máquina só em menos de duas horas, enchiam o
+ * banco, e banco cheio é TODA escrita falhando (cadastro, login, pagamento)
+ * até alguém apagar à mão. Medido contra o D1 local.
+ *
+ * Quem não comprou não tem lição para fazer progresso, então não perde nada:
+ * o estado continua no aparelho (lib/state/worker.ts trata o 403 como "sem
+ * sincronização", igual a estar deslogado) e sobe inteiro na primeira
+ * abertura depois da compra, pela fusão de sempre. Ler continua aberto -
+ * quem teve curso e deixou vencer continua vendo o que fez.
+ *
+ * A conferência vem ANTES do freio: o freio grava uma linha, e quem vai ser
+ * recusado não pode custar escrita nenhuma. Ler o direito é uma leitura.
+ */
+const temCurso = async (env, accountId) => (await activeEntitlements(env, accountId)).some(e => ehCurso(e.courseSlug));
 
 /* ── o que não é progresso ─────────────────────────────────────────────────
  * Três nomes que, como CHAVE de um objeto, mexem no protótipo de quem os
@@ -87,6 +108,8 @@ export async function write({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
 
+  if (!await temCurso(env, account.id)) return fail('sem-curso', 403);
+
   /* Um aparelho com um laço maluco não pode consumir a cota de escrita do
      D1 da plataforma inteira. O app grava no máximo a cada 250 ms e só
      quando algo mudou, então 60 por minuto é folgado para o uso real. */
@@ -118,6 +141,10 @@ export async function write({ request, env }) {
 export async function drop({ request, env }) {
   const account = await requireAccount(request, env);
   if (!account) return notSignedIn();
+  /* Sem linha, não há o que apagar - e responder sem gravar nada é o que
+     impede este DELETE de virar uma escrita de freio por pedido para quem
+     nunca teve progresso aqui. */
+  if (!await hasProgress(env, account.id)) return json({ ok: true, rev: 0 });
   if (await throttled(env, `prog:${account.id}`, 60)) return fail('devagar', 429);
   await clearProgress(env, account.id);
   return json({ ok: true, rev: 0 });

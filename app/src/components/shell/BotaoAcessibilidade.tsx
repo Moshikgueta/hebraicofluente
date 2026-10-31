@@ -22,10 +22,12 @@
  * painel é um `dialog` rotulado. Nada aqui rouba o foco de quem não abriu.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { IconeSom } from '@/components/shell/NavIcons';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   PADRAO, TAMANHOS, TEMAS, aplicar, carregar, guardar, type Prefs
 } from '@/lib/acessibilidade';
+import { tx } from '@/i18n/telas/conta-botao-acessibilidade';
 
 export function BotaoAcessibilidade() {
   const [prefs, setPrefs] = useState<Prefs>(PADRAO);
@@ -33,8 +35,18 @@ export function BotaoAcessibilidade() {
   /* Até ler o localStorage, o componente não sabe o estado real. Marcar as
      opções antes disso mostraria "desligado" a quem tem tudo ligado. */
   const [pronto, setPronto] = useState(false);
+  /* A voz do aparelho existe? Só se sabe no navegador. */
+  const [vozDisponivel, setVozDisponivel] = useState(true);
+  useEffect(() => { setVozDisponivel(typeof window !== 'undefined' && 'speechSynthesis' in window); }, []);
   const botao = useRef<HTMLButtonElement>(null);
   const painel = useRef<HTMLDivElement>(null);
+  const caixa = useRef<HTMLDivElement>(null);
+
+  /* Sair da frente do que a pessoa está usando (auditoria de 01/10, VIS-016,
+     UXQA-014, CONV-021). O botão cobria o mockup do hero, o cartão de
+     pagamento do checkout, a folha de retorno dos exercícios e as teclas da
+     direita do teclado hebraico da tela. */
+  useDesvio(caixa, botao, aberto);
 
   useEffect(() => {
     const p = carregar();
@@ -99,34 +111,58 @@ export function BotaoAcessibilidade() {
     return () => document.removeEventListener('pointerdown', fora);
   }, [aberto]);
 
+  /* Ao abrir, o foco entra no painel; o Tab circula dentro dele até fechar
+     (Escape, o botão ou clique fora). Antes o painel abria sem foco e ficava
+     ANTES do botão no DOM: o primeiro Tab saía dele para o "Pular para o
+     conteúdo", e os controles só eram alcançados por Shift+Tab (auditoria de
+     28/09, UX-003). */
+  useEffect(() => {
+    if (!aberto) return;
+    const el = painel.current;
+    if (!el) return;
+    const focaveis = () => Array.from(el.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href], input:not([disabled]), select, [tabindex]:not([tabindex="-1"])'));
+    const id = requestAnimationFrame(() => focaveis()[0]?.focus());
+    const circular = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const lista = focaveis();
+      if (!lista.length) return;
+      const primeiro = lista[0]!, ultimo = lista[lista.length - 1]!;
+      if (e.shiftKey && document.activeElement === primeiro) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primeiro.focus(); }
+    };
+    el.addEventListener('keydown', circular);
+    return () => { cancelAnimationFrame(id); el.removeEventListener('keydown', circular); };
+  }, [aberto]);
+
   const ligadas = pronto
     ? Number(prefs.texto !== 100) + Number(prefs.tema !== 'auto') + Number(prefs.contraste)
-      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco)
+      + Number(prefs.movimento) + Number(prefs.links) + Number(prefs.espaco) + Number(prefs.voz) + Number(prefs.semSons)
     : 0;
 
   return (
     /* `print:hidden`: numa folha impressa o botão é uma bolha preta sobre o
        texto. Tudo desta camada sai do papel - ver globals.css. */
-    <div className="hf-a11y print:hidden">
+    <div ref={caixa} className="hf-a11y print:hidden">
       {aberto && (
         <div
           ref={painel}
           role="dialog"
           aria-modal="false"
-          aria-label="Ajustes de acessibilidade"
+          aria-label={tx.ajustes}
           className="hf-a11y-painel w-[min(300px,calc(100vw-32px))] rounded-[var(--r-lg)]
                      bg-surface border border-line shadow-[var(--sh)] p-4 grid gap-4"
         >
           <div className="grid gap-1">
-            <p className="font-display text-[15px] font-bold text-ink">Acessibilidade</p>
+            <p className="font-display text-[15px] font-bold text-ink">{tx.titulo}</p>
             <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-              Fica guardado neste aparelho, e vale em todas as páginas.
+              {tx.guardado}
             </p>
           </div>
 
           <fieldset className="grid gap-2 m-0 p-0 border-0">
             <legend className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted p-0 mb-1">
-              Tamanho do texto
+              {tx.tamanhoDoTexto}
             </legend>
             <div className="grid grid-cols-4 gap-1.5">
               {TAMANHOS.map(t => {
@@ -168,12 +204,12 @@ export function BotaoAcessibilidade() {
               achar que quebrou: a vitrine é clara de propósito. */}
           <fieldset className="grid gap-2 m-0 p-0 border-0">
             <legend className="font-ui text-[12px] uppercase tracking-[.08em] text-ink-muted p-0 mb-1">
-              Tema
+              {tx.tema}
             </legend>
             <div className="grid grid-cols-3 gap-1.5">
               {TEMAS.map(t => {
                 const ativo = prefs.tema === t;
-                const rotulo = { auto: 'Automático', claro: 'Claro', escuro: 'Escuro' }[t];
+                const rotulo = { auto: tx.temaAuto, claro: tx.temaClaro, escuro: tx.temaEscuro }[t];
                 return (
                   <button
                     key={t}
@@ -192,36 +228,52 @@ export function BotaoAcessibilidade() {
               })}
             </div>
             <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted">
-              Vale nas telas do curso. As páginas de venda são claras sempre.
+              {tx.temaNota}
             </p>
           </fieldset>
 
           <div className="grid gap-1.5">
             <Opcao
               id="a11y-contraste"
-              rotulo="Mais contraste"
-              nota="Tinta mais escura e bordas visíveis."
+              rotulo={tx.contraste}
+              nota={tx.contrasteNota}
               ligada={prefs.contraste}
               aoMudar={v => mudar({ contraste: v })}
             />
             <Opcao
               id="a11y-espaco"
-              rotulo="Mais espaço entre linhas"
-              nota="Entrelinha e espaço entre palavras maiores."
+              rotulo={tx.espaco}
+              nota={tx.espacoNota}
               ligada={prefs.espaco}
               aoMudar={v => mudar({ espaco: v })}
             />
             <Opcao
               id="a11y-links"
-              rotulo="Sublinhar links"
-              nota="Todo link do texto fica sublinhado."
+              rotulo={tx.links}
+              nota={tx.linksNota}
               ligada={prefs.links}
               aoMudar={v => mudar({ links: v })}
             />
             <Opcao
+              id="a11y-voz"
+              rotulo={<><IconeSom size={16} className="inline -mt-0.5 mr-1.5" />{tx.voz}</>}
+              nota={vozDisponivel
+                ? tx.vozNota
+                : tx.vozIndisponivel}
+              ligada={prefs.voz}
+              aoMudar={v => mudar({ voz: v })}
+            />
+            <Opcao
+              id="a11y-sons"
+              rotulo={tx.sons}
+              nota={tx.sonsNota}
+              ligada={!prefs.semSons}
+              aoMudar={v => mudar({ semSons: !v })}
+            />
+            <Opcao
               id="a11y-movimento"
-              rotulo="Menos animação"
-              nota="Nada entra deslizando nem fica pulsando."
+              rotulo={tx.movimento}
+              nota={tx.movimentoNota}
               ligada={prefs.movimento}
               aoMudar={v => mudar({ movimento: v })}
             />
@@ -234,7 +286,7 @@ export function BotaoAcessibilidade() {
               className="min-h-[40px] font-ui text-[13px] font-semibold text-ink-body
                          hover:text-[var(--accent)] underline underline-offset-2"
             >
-              Voltar ao normal
+              {tx.voltarAoNormal}
             </button>
             <button
               type="button"
@@ -242,12 +294,12 @@ export function BotaoAcessibilidade() {
               className="min-h-[40px] px-4 rounded-[var(--r-md)] bg-[var(--navy)] text-white
                          font-ui text-[13.5px] font-semibold hover:bg-[var(--navy-2)]"
             >
-              Fechar
+              {tx.fechar}
             </button>
           </div>
 
           <p className="font-ui text-[11.5px] leading-relaxed text-ink-muted">
-            Atalho: Alt + Shift + A.
+            {tx.atalho}
           </p>
         </div>
       )}
@@ -259,11 +311,11 @@ export function BotaoAcessibilidade() {
         aria-expanded={aberto}
         aria-label={
           ligadas > 0
-            ? `Ajustes de acessibilidade (${ligadas} ativo${ligadas > 1 ? 's' : ''})`
-            : 'Ajustes de acessibilidade'
+            ? tx.ajustesAtivos(ligadas)
+            : tx.ajustes
         }
-        title="Acessibilidade (Alt + Shift + A)"
-        className="hf-a11y-botao relative w-[52px] h-[52px] rounded-full bg-[var(--navy)] text-white
+        title={tx.tituloDoBotao}
+        className="hf-a11y-botao relative w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-full bg-[var(--navy)] text-white
                    border-2 border-[var(--cream)] shadow-[var(--sh)] grid place-items-center
                    transition-[background-color,transform] duration-[180ms]
                    hover:bg-[var(--navy-2)] hover:scale-[1.04] active:scale-100"
@@ -282,11 +334,110 @@ export function BotaoAcessibilidade() {
   );
 }
 
+/* ── o desvio ─────────────────────────────────────────────────────────────
+ * O que conta como "coisa que a pessoa está usando" embaixo do botão:
+ *
+ *   · o que se marca com `data-a11y-desvia` (o mockup do hero, o cartão de
+ *     pagamento do checkout) e o teclado hebraico da tela (#teclado-hebraico);
+ *   · qualquer coisa PRESA à tela (position: fixed) - a folha de retorno dos
+ *     exercícios, a barra de preço da capa, um aviso.
+ *
+ * Um link qualquer do texto passando por baixo NÃO conta: o botão pularia a
+ * cada rolagem. Para o que conta, três tentativas, nesta ordem: subir acima
+ * do obstáculo; ir para o canto esquerdo; e, se nada couber (um obstáculo
+ * maior que a tela), ficar onde está. O tamanho não muda (44 px no telefone,
+ * 52 px a partir de sm) e Alt+Shift+A continua abrindo de qualquer lugar.
+ * Com o painel aberto nada se move. */
+const MARCADOS = '[data-a11y-desvia], #teclado-hebraico';
+const TOPO_LIVRE = 72; // o cabeçalho fixo: o botão nunca sobe para baixo dele
+
+function obstaculo(el: Element | null, caixa: HTMLElement): HTMLElement | null {
+  for (let n = el as HTMLElement | null; n && n !== document.body; n = n.parentElement) {
+    if (caixa.contains(n)) return null;
+    if (n.matches(MARCADOS)) return n;
+    if (getComputedStyle(n).position === 'fixed') return n;
+  }
+  return null;
+}
+
+/** Os obstáculos debaixo de um retângulo: cantos e centro. */
+function debaixo(r: DOMRect, caixa: HTMLElement): HTMLElement[] {
+  const pontos: [number, number][] = [
+    [r.left + 4, r.top + 4], [r.right - 4, r.top + 4], [r.left + 4, r.bottom - 4],
+    [r.right - 4, r.bottom - 4], [(r.left + r.right) / 2, (r.top + r.bottom) / 2]
+  ];
+  const achados = new Set<HTMLElement>();
+  for (const [x, y] of pontos) {
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (caixa.contains(el)) continue;
+      const o = obstaculo(el, caixa);
+      if (o) achados.add(o);
+      break; // só o que está por cima, logo abaixo do botão
+    }
+  }
+  return [...achados];
+}
+
+function useDesvio(
+  caixaRef: React.RefObject<HTMLDivElement | null>,
+  botaoRef: React.RefObject<HTMLButtonElement | null>,
+  aberto: boolean
+) {
+  useEffect(() => {
+    const caixa = caixaRef.current, btn = botaoRef.current;
+    if (!caixa || !btn || aberto) return;
+    let quadro = 0;
+    const limpar = () => { caixa.style.removeProperty('bottom'); caixa.style.removeProperty('left'); caixa.style.removeProperty('right'); };
+    const medir = () => {
+      quadro = 0;
+      limpar();
+      const r0 = btn.getBoundingClientRect();
+      const obst = debaixo(r0, caixa);
+      if (!obst.length) return;
+      const vh = window.innerHeight;
+      /* 1 · acima do obstáculo, subindo de novo se cair sobre outro (o selo
+         flutuante em cima do mockup), enquanto couber abaixo do cabeçalho. */
+      let sobre = obst;
+      for (let i = 0; i < 4 && sobre.length; i++) {
+        const topo = Math.min(...sobre.map(o => o.getBoundingClientRect().top));
+        if (topo - r0.height - 10 < TOPO_LIVRE) break;
+        caixa.style.bottom = `${vh - topo + 10}px`;
+        sobre = debaixo(btn.getBoundingClientRect(), caixa);
+      }
+      if (!sobre.length) return;
+      limpar();
+      /* 2 · o canto esquerdo, na mesma altura. */
+      caixa.style.left = getComputedStyle(caixa).right;
+      caixa.style.right = 'auto';
+      if (!debaixo(btn.getBoundingClientRect(), caixa).length) return;
+      /* 3 · nada coube: fica onde estava. */
+      limpar();
+    };
+    const agendar = () => { if (!quadro) quadro = requestAnimationFrame(medir); };
+    agendar();
+    window.addEventListener('scroll', agendar, { passive: true });
+    window.addEventListener('resize', agendar);
+    const mo = new MutationObserver(agendar);
+    mo.observe(document.body, { childList: true, subtree: true });
+    /* O que entra animado (o mockup e os selos do hero sobem 26 px ao
+       aparecer) não muda o DOM: uma conferida a cada segundo pega o fim. */
+    const relogio = window.setInterval(agendar, 1000);
+    return () => {
+      window.clearInterval(relogio);
+      cancelAnimationFrame(quadro);
+      window.removeEventListener('scroll', agendar);
+      window.removeEventListener('resize', agendar);
+      mo.disconnect();
+      limpar();
+    };
+  }, [caixaRef, botaoRef, aberto]);
+}
+
 /* Um interruptor que é um checkbox de verdade por baixo: leitor de tela lê
    "caixa de seleção, marcada", o rótulo é clicável e o teclado já funciona
    sem nenhuma tecla tratada à mão. */
 function Opcao({ id, rotulo, nota, ligada, aoMudar }: {
-  id: string; rotulo: string; nota: string;
+  id: string; rotulo: ReactNode; nota: string;
   ligada: boolean; aoMudar: (v: boolean) => void;
 }) {
   return (

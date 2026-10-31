@@ -1,0 +1,176 @@
+{
+  "_": [
+    "O curso Hebraico A1 (aprovado pelo dono em 06/10/2026; ver A1-RASCUNHO.md).",
+    "Segue a ordem e a lógica do livro \"עברית מן ההתחלה\", com palavras, nomes, diálogos e exercícios próprios.",
+    "Instruções em português; respostas e opções em hebraico. Respostas escritas são conferidas sem nikud e sem finais.",
+    "O A1 só aparece para quem comprou o curso hebraico-a1 (rotas /a1, GET /api/content/a1).",
+    "Um arquivo por unidade em data/a1/unidades/uNN.json; os módulos e a ordem moram aqui. Para acrescentar uma unidade: criar o arquivo e pôr o número no módulo."
+  ],
+  "genero": {
+    "perguntaPt": "Como você quer ser tratado nos exercícios: no masculino ou no feminino?"
+  },
+  "modulos": [
+    {
+      "n": 0,
+      "tituloPt": "Começando no hebraico",
+      "objetivoPt": "Os sons que mais confundem brasileiros e as expressões do primeiro dia. As letras e o nikud estão no curso de alfabetização.",
+      "unidades": [
+        0
+      ]
+    },
+    {
+      "n": 1,
+      "tituloPt": "Eu e você",
+      "objetivoPt": "Se apresentar, perguntar quem é e o que é.",
+      "unidades": [
+        1,
+        2
+      ]
+    },
+    {
+      "n": 2,
+      "tituloPt": "Minha vida",
+      "objetivoPt": "Descrever pessoas e coisas, dizer o que você faz e onde mora.",
+      "unidades": [
+        3,
+        4
+      ]
+    },
+    {
+      "n": 3,
+      "tituloPt": "Comer, querer e ter",
+      "objetivoPt": "Dizer o que você come e quer, falar da família e do que você tem.",
+      "unidades": [
+        5,
+        6
+      ]
+    },
+    {
+      "n": 4,
+      "tituloPt": "Números e conversa",
+      "objetivoPt": "Preço, hora e dias da semana, e uma conversa inteira com alguém novo.",
+      "unidades": [
+        7,
+        8
+      ]
+    },
+    {
+      "n": 5,
+      "tituloPt": "Minha rotina",
+      "objetivoPt": "Contar o seu dia, dizer do que gosta e o que quer, precisa ou pode fazer.",
+      "unidades": [
+        9,
+        10
+      ]
+    },
+    {
+      "n": 6,
+      "tituloPt": "Casa e cidade",
+      "objetivoPt": "Dizer onde as coisas estão, descrever a casa, andar pela cidade e perguntar o caminho.",
+      "unidades": [
+        11,
+        12
+      ]
+    },
+    {
+      "n": 7,
+      "tituloPt": "Comida e compras",
+      "objetivoPt": "Pedir num café ou restaurante, comprar roupas e coisas, entender preços e pagar.",
+      "unidades": [
+        13,
+        14
+      ]
+    },
+    {
+      "n": 8,
+      "tituloPt": "Tempo e compromissos",
+      "objetivoPt": "Datas, meses e o tempo; marcar, aceitar, recusar e remarcar um compromisso.",
+      "unidades": [
+        15,
+        16
+      ]
+    },
+    {
+      "n": 9,
+      "tituloPt": "Israel na vida real",
+      "objetivoPt": "Aeroporto e hotel, corpo e saúde, e os números e as expressões que ainda faltavam.",
+      "unidades": [
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "n": 10,
+      "tituloPt": "Consolidação A1",
+      "objetivoPt": "Se virar quando não entende, juntar tudo numa situação de verdade, e o exame final.",
+      "unidades": [
+        20
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "n": 1,
+      "depoisDoModulo": 2,
+      "tituloPt": "Checkpoint 1: o começo",
+      "unidades": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "n": 2,
+      "depoisDoModulo": 4,
+      "tituloPt": "Checkpoint 2: a primeira metade",
+      "unidades": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "n": 3,
+      "depoisDoModulo": 6,
+      "tituloPt": "Checkpoint 3: rotina, casa e cidade",
+      "unidades": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "n": 4,
+      "depoisDoModulo": 8,
+      "tituloPt": "Checkpoint 4: comida, compras e compromissos",
+      "unidades": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    }
+  ],
+  "certificado": {
+    "tituloPt": "Hebraico A1 - curso concluído",
+    "linhaPt": "{nome} concluiu o curso Hebraico A1 do Hebraico Fluente, com aprovação no exame final.",
+    "avisoPt": "Este certificado mostra que você concluiu o curso. Não é uma certificação oficial de nível."
+  }
+}

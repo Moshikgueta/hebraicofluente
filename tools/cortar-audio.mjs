@@ -59,7 +59,7 @@ const CONF = join(DROP, 'conferir');
    speaker is told to leave a second; half of that is the floor, which leaves
    room for someone who rushes without turning a breath inside a word into a
    cut. */
-const GAP_MIN_S = 0.45;
+let GAP_MIN_S = 0.45;
 
 /* A segment shorter than this is a cough, a page turn or a chair. Hebrew
    letter names are the longest thing in wave 1 and none is near this short. */
@@ -86,6 +86,7 @@ const PEAK_CEIL_DB = -1.5;
 const MP3_KBPS = 96;
 
 const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+const SEM_LIMPEZA = process.argv.includes('--sem-limpeza');
 
 function ff(args) {
   return execFileSync('ffmpeg', ['-hide_banner', '-nostdin', ...args],
@@ -111,17 +112,21 @@ const duracao = file => Number(execFileSync('ffprobe',
 
 /* ── noise floor ─────────────────────────────────────────────────────────
    Measured from room-tone.wav when the speaker recorded one, which is why
-   the brief asks for it. Without it, the first two seconds of the take are
-   used: the speaker has not started, so it is room tone by another name. */
+   the brief asks for it. Without it, the FIRST SECOND of the take is used:
+   the roteiro asks for three seconds of silence before the first word, so
+   the first one is room tone by another name. It was two seconds, and the
+   ensaio caught what that costs: a take whose first word comes at 1.5 s
+   gets a "floor" that includes speech, the cut is set above half of the
+   words, and nothing is found. One second leaves a wide margin. */
 function pisoDeRuido(wav) {
   const tone = join(DROP, 'room-tone.wav');
   const fonte = existsSync(tone) ? tone : wav;
-  const recorte = existsSync(tone) ? [] : ['-t', '2'];
+  const recorte = existsSync(tone) ? [] : ['-t', '1'];
   const saida = ffMeasure(['-i', fonte, ...recorte, '-af', 'volumedetect']);
   const m = saida.match(/mean_volume:\s*(-?\d+(?:\.\d+)?) dB/);
   return {
     db: m ? Number(m[1]) : -60,
-    fonte: existsSync(tone) ? 'room-tone.wav' : 'os 2 primeiros segundos'
+    fonte: existsSync(tone) ? 'room-tone.wav' : 'o primeiro segundo'
   };
 }
 
@@ -197,7 +202,16 @@ function medir(wav, seg, pisoDb) {
    0.30 and 0.90 s, and the median was 0.56. Anything past this is not one
    syllable being said slowly - it is two items with no usable gap between
    them, and it has to be opened rather than counted as one. */
-const PALAVRA_MAX_S = 1.1;
+let PALAVRA_MAX_S = 1.1;
+
+/* ── frases (onda 4) ─────────────────────────────────────────────────────
+   Uma frase dura de 1 a 4 segundos e tem pausa DENTRO dela: a vírgula, o
+   fôlego entre duas palavras. Com as réguas de palavra solta, cada frase
+   sairia partida em pedaços. Para um arquivo só de frases, quem grava deixa
+   2 segundos entre uma e outra; a pausa mínima sobe para 0,9 s e nada é
+   "aberto" por ser longo. */
+const FRASE_GAP_MIN_S = 0.9;
+const FRASE_MAX_S = 10;
 
 /* ── opening a glued piece ───────────────────────────────────────────────
    A single global setting cannot serve a real recording. The first take of
@@ -346,14 +360,23 @@ function extrair(wav, seg, destino, pisoDb) {
      -30. O teto existe para a sala barulhenta, onde o piso sobe e quinze
      acima dele começaria a comer consoante. */
   const nf = Math.max(-45, Math.min(-30, Math.round(pisoDb + 15)));
+  /* `--sem-limpeza` (25/09/2026): quem grava com microfone de verdade, numa
+     sala quieta, não precisa do filtro de graves nem do redutor de ruído - e
+     o redutor, mesmo gentil, é o que mais poderia mudar o timbre. O acabamento
+     (bordas, fades, volume igual) continua: sem ele cada clipe começa com um
+     atraso diferente e toca num volume diferente. */
+  /* Mono PRIMEIRO (25/09/2026). O gravador do iPhone entrega estéreo, dois
+     canais iguais, e o `adelay` com um valor só atrasa apenas o PRIMEIRO
+     canal: com o mono no fim da cadeia, a voz atrasada 80 ms era somada à voz
+     no tempo certo e o clipe saía dobrado, com som de robô. Juntando os
+     canais antes de tudo, não há segundo canal para ficar para trás. */
   const limpeza = [
-    'highpass=f=80',
-    `afftdn=nr=20:nf=${nf}`,
+    'aresample=44100', 'aformat=channel_layouts=mono',
+    ...(SEM_LIMPEZA ? [] : ['highpass=f=80', `afftdn=nr=20:nf=${nf}`]),
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     'areverse', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0',
     `adelay=${Math.round(PAD_HEAD_S * 1000)}`,
-    `apad=pad_dur=${PAD_TAIL_S}`,
-    'aresample=44100', 'aformat=channel_layouts=mono'
+    `apad=pad_dur=${PAD_TAIL_S}`
   ].join(',');
 
   const bruto = destino + '.tmp.wav';
@@ -482,6 +505,25 @@ function ensaiar() {
     }
   }
 
+  /* 1b. Estéreo: o gravador do celular entrega dois canais iguais, e o clipe
+     tem de sair IGUAL ao de uma gravação mono. Uma cadeia que atrasa só um
+     canal soma a voz com ela mesma deslocada - o som de robô que os
+     primeiros clipes do iPhone tiveram. A diferença entre os dois tem de ser
+     silêncio. */
+  if (corte.bateu) {
+    const estereo = join(tmp, 'estereo.wav');
+    ff(['-y', '-i', falso, '-af', 'pan=stereo|c0=c0|c1=c0', estereo]);
+    const deEstereo = join(tmp, 'de-estereo.mp3');
+    extrair(estereo, corte.segs[3], deEstereo, piso.db);
+    /* O respiro do início tem de ser silêncio: na voz dobrada, o canal que
+       não foi atrasado já soa ali. (A folga de 20 ms cobre o atraso do MP3.) */
+    const inicio = ffMeasure(['-i', deEstereo, '-af',
+      `atrim=0:${(PAD_HEAD_S - 0.02).toFixed(3)},volumedetect`, '-f', 'null', '-']);
+    const pico = Number((inicio.match(/max_volume:\s*(-?\d+(?:\.\d+)?)/) ?? [])[1] ?? 0);
+    if (pico > -50) erro(`de uma gravação estéreo, o clipe já soa no respiro (${pico} dB): voz dobrada`);
+    else console.log(`    estéreo          respiro limpo (${pico} dB), voz sem eco`);
+  }
+
   /* 2. O caso que decide se esta ferramenta é segura: uma gravação com um
      trecho A MENOS do que o roteiro pede. A escada NÃO pode "achar" um jeito
      de chegar ao número - se ela chegasse, os nomes seriam atribuídos todos
@@ -502,6 +544,33 @@ function ensaiar() {
   console.log(`    trechos achados  ${corteRapido.segs.length} de ${N}  (pausa ${corteRapido.gap}s)`);
   if (!corteRapido.bateu) erro('a escada não alcançou uma gravação de pausas curtas');
 
+  /* 4. Frases (onda 4): três "palavras" de 0,4 s com pausas de 0,35 s dentro
+     de cada frase - a vírgula, o fôlego - e 2 s entre uma frase e outra. Com
+     as réguas de frase, cada frase sai INTEIRA; com as de palavra solta, ela
+     seria partida, e isso também é conferido, para a régua não afrouxar à toa. */
+  console.log(`\n  frases com pausas de vírgula dentro`);
+  const F = 6;
+  const partes = ['anoisesrc=amplitude=0.001:duration=1.5'];
+  for (let i = 0; i < F; i++) {
+    for (let p = 0; p < 3; p++) {
+      partes.push(`sine=frequency=${200 + i * 30 + p * 10}:duration=0.4`);
+      partes.push(`anoisesrc=amplitude=0.001:duration=${p < 2 ? 0.35 : 2.0}`);
+    }
+  }
+  const filtro = partes.map((p, i) => `${p}[a${i}]`).join(';') +
+    ';' + partes.map((_, i) => `[a${i}]`).join('') + `concat=n=${partes.length}:v=0:a=1[out]`;
+  const frases = join(tmp, 'frases.wav');
+  ff(['-y', '-filter_complex', filtro, '-map', '[out]', '-ac', '1', '-ar', '44100', frases]);
+  const [gap0, max0] = [GAP_MIN_S, PALAVRA_MAX_S];
+  const comoPalavra = acharCorte(frases, pisoDeRuido(frases).db, F);
+  GAP_MIN_S = FRASE_GAP_MIN_S; PALAVRA_MAX_S = FRASE_MAX_S;
+  const comoFrase = acharCorte(frases, pisoDeRuido(frases).db, F);
+  GAP_MIN_S = gap0; PALAVRA_MAX_S = max0;
+  console.log(`    régua de frase   ${comoFrase.segs.length} de ${F}`);
+  console.log(`    régua de palavra ${comoPalavra.segs.length} (partiria as frases)`);
+  if (!comoFrase.bateu) erro('o modo frase partiu ou juntou frases');
+  if (comoPalavra.bateu) erro('a régua de palavra deixou frase inteira - o modo frase não seria preciso');
+
   rmSync(tmp, { recursive: true, force: true });
   console.log(falhas ? `\n  ${falhas} falha(s)\n` : '\n  ✓ o corte, a limpeza e a recusa funcionam\n');
   process.exitCode = falhas ? 1 : 0;
@@ -516,7 +585,7 @@ function main() {
     const i = argv.indexOf(nome);
     return i >= 0 ? argv[i + 1] : null;
   };
-  const comValor = new Set(['--onda', '--de', '--ate', '--letra']);
+  const comValor = new Set(['--onda', '--de', '--ate', '--letra', '--grupo']);
   const wav = argv.find((a, i) => !a.startsWith('--') && !comValor.has(argv[i - 1]));
   /* `--onda todas` existe por causa da página de gravação guiada: ela pede um
      arquivo por LETRA com tudo o que aquela letra tem - o nome e as sílabas da
@@ -529,12 +598,16 @@ function main() {
   const ate = arg('--ate') ? Number(arg('--ate')) : null;
   const letra = arg('--letra') ? Number(arg('--letra')) : null;
   const vogais = argv.includes('--vogais');
+  /* Um grupo qualquer do roteiro por letra, pelo nome impresso na coluna
+     "Onde aparece": "módulo 7", "no mundo real". */
+  const grupo = arg('--grupo');
 
   if (!wav || !existsSync(wav)) {
     console.log(`
   uso:  npm run cortar-audio -- --letra 1 --onda todas letra-01.m4a
         npm run cortar-audio -- --letra 1 alef.m4a
-        npm run cortar-audio -- --vogais sinais.m4a
+        npm run cortar-audio -- --vogais --onda todas vogais.m4a
+        npm run cortar-audio -- --grupo "módulo 7" --onda todas modulo-7.m4a
         npm run cortar-audio -- --onda 1 gravacao-inteira.wav
         npm run cortar-audio -- --onda 1 --de 40 --ate 80 parte2.wav
         npm run cortar-audio -- --ensaiar
@@ -542,6 +615,12 @@ function main() {
   --letra  um arquivo com os itens de UMA letra. É o jeito recomendado de
            gravar no celular - se uma letra sair errada, só ela é refeita.
   --vogais o arquivo com os 14 nomes de sinais de vogal
+  --sem-limpeza  sem filtro de graves nem redutor de ruído (microfone bom);
+                 o corte, as bordas e o volume igual continuam
+  --faltantes  só os itens do grupo que ainda não têm arquivo em audio/
+           (o que o estúdio lista quando um grupo ganha itens novos)
+  --grupo  um arquivo com os itens de um grupo do roteiro por letra
+           ("módulo 7", "no mundo real", "frases", "texto do módulo 3")
   --onda   1, 2, 3 ou "todas". "todas" é o que a página de gravação guiada
            pede: um arquivo por letra com tudo o que aquela letra tem.
   --de     primeiro número do roteiro neste arquivo
@@ -555,7 +634,14 @@ function main() {
   /* Quem manda no agrupamento é o `where` do manifesto, o mesmo texto que sai
      impresso na coluna "Onde aparece" do roteiro - assim o que a ferramenta
      chama de "letra 7" é exatamente o que a pessoa leu na página. */
-  const grupoDe = c => (c.where || []).find(w => /^letra \d+$/.test(w)) || (c.where || [])[0] || '';
+  /* O mesmo agrupamento do roteiro (tools/audio-script.mjs): o A1 por unidade. */
+  const grupoDe = c => {
+    const ws = c.where || [];
+    const letra = ws.find(w => /^letra \d+$/.test(w));
+    if (letra) return letra;
+    const a1 = ws.map(w => (w.match(/^a1 unidade \d+/) || [])[0]).find(Boolean);
+    return a1 || ws[0] || '';
+  };
 
   /* A onda filtra SEMPRE, inclusive quando se pede uma letra. Uma letra
      aparece nas três ondas - o nome e as sílabas na 1, as palavras de
@@ -569,6 +655,9 @@ function main() {
   if (letra !== null) {
     alvo = alvo.filter(c => grupoDe(c) === `letra ${letra}`);
     rotulo = `letra ${letra} · ${daOnda}`;
+  } else if (grupo) {
+    alvo = alvo.filter(c => grupoDe(c) === grupo);
+    rotulo = `${grupo} · ${daOnda}`;
   } else if (vogais) {
     alvo = alvo.filter(c => grupoDe(c) === 'sinais de vogal');
     rotulo = `sinais de vogal · ${daOnda}`;
@@ -577,7 +666,40 @@ function main() {
     if (ate !== null) alvo = alvo.filter(c => c.num <= ate);
     if (de !== null) rotulo += ` (nº ${de} a ${ate ?? '∞'})`;
   }
+  /* `--faltantes` (26/09/2026): só os clipes do grupo que ainda não têm
+     arquivo em audio/. É o que o estúdio pede quando um grupo já gravado
+     ganha itens novos (as três palavras novas do Pe) ou quando uma lição
+     nova reaproveita um clipe que já existe (לָלֶכֶת, na lição do Chaf): a
+     pessoa grava só o que falta, e o corte casa com exatamente isso. */
+  if (argv.includes('--faltantes')) {
+    alvo = alvo.filter(c => !existsSync(join(DROP, c.file)));
+    rotulo += ' · só os que faltam';
+  }
   alvo.sort((a, b) => a.num - b.num);
+  /* Um texto se lê na ordem da CONVERSA, não na dos números (27/09/2026).
+     Quando um texto é reescrito, as falas que já existiam guardam o número
+     antigo e as novas ganham números no fim - a ordem por número pularia
+     de fala em fala. O estúdio lista na ordem do texto, e o corte casa com
+     ela: posição da linha em data/textos.json, e o número só desempata. */
+  const linhaDoTexto = new Map();
+  for (const t of readJson('data/textos.json').textos) {
+    t.linhas.forEach((l, i) => linhaDoTexto.set(`${t.revisao ? 'leitura de revisão' : 'texto'} do módulo ${t.modulo}|${l.he}`, i));
+  }
+  const posTexto = c => linhaDoTexto.get(`${grupoDe(c)}|${c.he}`);
+  if (alvo.length && alvo.every(c => posTexto(c) !== undefined)) {
+    alvo.sort((a, b) => posTexto(a) - posTexto(b) || a.num - b.num);
+  }
+  /* As leituras bônus e o guia do nikud (onda 5): a ordem da leitura é a
+     de inserção no manifesto (`seq`), que é a do estúdio. Um exemplo trocado
+     depois ganha número no fim e, por número, sairia fora do lugar. */
+  if (alvo.length && alvo.every(c => c.wave === 5)) {
+    alvo.sort((a, b) => a.seq - b.seq);
+  }
+  if (alvo.length && alvo.every(c => c.kind === 'frase')) {
+    GAP_MIN_S = FRASE_GAP_MIN_S;
+    PALAVRA_MAX_S = FRASE_MAX_S;
+    rotulo += ' · modo frase (pausa de 2 s entre as frases)';
+  }
 
   if (!alvo.length) {
     console.log(`\n  ✗ nenhum clipe em "${rotulo}"\n`);

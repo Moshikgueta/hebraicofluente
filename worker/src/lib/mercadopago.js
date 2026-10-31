@@ -256,6 +256,9 @@ export async function createPix(env, { order, course, account, origin }) {
 
 /* ── cartão (Checkout Pro) ──────────────────────────────────────────────── */
 
+/** Um instante em ISO 8601 no horário de Brasília: 2026-09-29T21:30:00.000-03:00. */
+export const comFusoBR = ms => new Date(ms - 3 * 3_600_000).toISOString().replace('Z', '-03:00');
+
 export async function createCardPreference(env, { order, course, account, origin }) {
   const pref = await call(env, '/checkout/preferences', {
     method: 'POST',
@@ -289,7 +292,14 @@ export async function createCardPreference(env, { order, course, account, origin
         excluded_payment_types: [{ id: 'ticket' }, { id: 'bank_transfer' }],
         installments: Number(order.installments) || 1
       },
-      statement_descriptor: 'HEBRAICOFLUENTE'
+      statement_descriptor: 'HEBRAICOFLUENTE',
+      /* O link morre uma hora ANTES de o pedido expirar aqui (24 h, ver
+         reconcile.js). Sem prazo, dava para pagar o link de ontem num pedido
+         que a varredura e a tela já não consultavam mais (auditoria de 28/09,
+         PAY-005). Horário de Brasília com o fuso escrito, como na
+         documentação da Mercado Pago. */
+      expires: true,
+      expiration_date_to: comFusoBR(Number(order.created_at || Date.now()) + 23 * 3_600_000)
     }
   });
 
@@ -314,6 +324,64 @@ export const getPayment = (env, paymentId) => {
   return call(env, `/v1/payments/${encodeURIComponent(id)}`);
 };
 
+/* ── avisos que não são de pagamento ─────────────────────────────────────
+   Uma contestação (chargeback) ou um pedido do Checkout Pro chegam com o id
+   DELES, não o do pagamento. Estas duas consultas levam do aviso aos
+   pagamentos, e daí tudo segue pelo caminho de sempre (settleFromPaymentId). */
+
+const idNumerico = id => {
+  const s = String(id);
+  if (!/^\d{1,24}$/.test(s)) throw new Error('id fora do formato');
+  return encodeURIComponent(s);
+};
+
+/** Os ids de pagamento de uma contestação. */
+export async function paymentsOfChargeback(env, chargebackId) {
+  const c = await call(env, `/v1/chargebacks/${idNumerico(chargebackId)}`);
+  return (c && Array.isArray(c.payments) ? c.payments : []).map(p => String(p && p.id || p));
+}
+
+/** Os ids de pagamento de um pedido (merchant order) do Checkout Pro. */
+export async function paymentsOfMerchantOrder(env, merchantOrderId) {
+  const m = await call(env, `/merchant_orders/${idNumerico(merchantOrderId)}`);
+  return (m && Array.isArray(m.payments) ? m.payments : []).map(p => String(p && p.id));
+}
+
+/* ── estorno ────────────────────────────────────────────────────────────── */
+
+/**
+ * Pede o estorno TOTAL de um pagamento (desistência em sete dias).
+ *
+ * Corpo vazio = devolve tudo. A chave de idempotência é fixa por pedido de
+ * compra (`estorno-<pedido>`): se a varredura repetir a chamada depois de uma
+ * resposta perdida, a Mercado Pago devolve o mesmo estorno em vez de fazer
+ * outro. Quem fecha o acesso não é esta função: é `applyPayment`, quando o
+ * pagamento aparece `refunded`.
+ */
+export const refundPayment = (env, paymentId, idempotencyKey) => {
+  const id = String(paymentId);
+  if (!/^\d{1,24}$/.test(id)) throw new Error('id de pagamento fora do formato');
+  return call(env, `/v1/payments/${encodeURIComponent(id)}/refunds`, {
+    method: 'POST', body: {}, idempotencyKey
+  });
+};
+
+/**
+ * Cancela um PIX ainda pendente (auditoria de 01/10/2026, PAY-B-002). É o
+ * que "Gerar outro código" faz com o código anterior: sem isto, o aluno
+ * ficava com dois PIX pagáveis do mesmo curso, e pagar os dois era um
+ * estorno manual. Um pagamento já aprovado não pode ser cancelado: a Mercado
+ * Pago recusa, quem chama ignora a recusa, e o aviso de pagamento libera o
+ * acesso normalmente.
+ */
+export const cancelPayment = (env, paymentId) => {
+  const id = String(paymentId);
+  if (!/^\d{1,24}$/.test(id)) throw new Error('id de pagamento fora do formato');
+  return call(env, `/v1/payments/${encodeURIComponent(id)}`, {
+    method: 'PUT', body: { status: 'cancelled' }
+  });
+};
+
 /** Todos os pagamentos ligados a um pedido nosso. É como a varredura encontra
  *  um pagamento cujo aviso nunca chegou. */
 export async function paymentsFor(env, orderId) {
@@ -335,7 +403,7 @@ export async function paymentsFor(env, orderId) {
  * Sem MP_WEBHOOK_SECRET configurado a resposta é `false`, e não "deixa
  * passar". Um webhook não verificado é uma rota pública que concede acesso.
  */
-export async function verifyWebhookSignature(env, request, dataId) {
+export async function verifyWebhookSignature(env, request, dataId, out = {}) {
   /* Aparado, pela mesma razão do Access Token lá em cima: este valor é
      COLADO de um painel para outro, e colar traz espaço na ponta e às vezes
      quebra de linha. Nenhum dos dois é visível para quem colou, e o efeito
@@ -344,7 +412,10 @@ export async function verifyWebhookSignature(env, request, dataId) {
      é "paguei e não liberou" dias depois - com o segredo certo, à vista, nos
      dois lados. */
   const segredo = String((env && env.MP_WEBHOOK_SECRET) || '').trim();
-  if (!segredo) return false;
+  /* `out.motivo` diz POR QUE recusou, para a trilha: "assinatura errada"
+     sozinho não separa um segredo trocado de um relógio fora da janela, e os
+     dois pedem consertos diferentes (28/09/2026). */
+  if (!segredo) { out.motivo = 'sem-segredo'; return false; }
 
   const sig = request.headers.get('x-signature') || '';
   const requestId = request.headers.get('x-request-id') || '';
@@ -352,14 +423,20 @@ export async function verifyWebhookSignature(env, request, dataId) {
     sig.split(',').map(p => p.split('=').map(s => s.trim())).filter(p => p.length === 2)
   );
   const ts = parts.ts, v1 = parts.v1;
-  if (!ts || !v1) return false;
+  if (!ts || !v1) { out.motivo = 'sem-assinatura'; return false; }
 
   /* Cinco minutos. Um relógio desencontrado de dez segundos passa; uma
      entrega gravada ontem, não. */
-  const age = Math.abs(Date.now() - Number(ts) * 1000);
-  if (!Number.isFinite(age) || age > 5 * 60_000) return false;
+  /* Em segundos, como na documentação, ou em milissegundos, como a Mercado
+     Pago também manda: lido em segundos, um `ts` de 13 dígitos parecia vir
+     de milhares de anos no futuro e todo aviso era recusado. */
+  const tsMs = /^\d{13,}$/.test(ts) ? Number(ts) : Number(ts) * 1000;
+  const age = Math.abs(Date.now() - tsMs);
+  if (!Number.isFinite(age) || age > 5 * 60_000) { out.motivo = `fora-da-janela ts=${ts}`; return false; }
 
   const manifest = `id:${String(dataId).toLowerCase()};request-id:${requestId};ts:${ts};`;
   const { hmacHex, timingSafeEqual } = await import('./crypto.js');
-  return timingSafeEqual(await hmacHex(segredo, manifest), v1.toLowerCase());
+  const ok = timingSafeEqual(await hmacHex(segredo, manifest), v1.toLowerCase());
+  if (!ok) out.motivo = 'hmac-diferente';
+  return ok;
 }

@@ -42,6 +42,9 @@ const querido = (empresa.pagamento && empresa.pagamento.modo) || 'mercadopago';
 
 const linhas = [];
 const diga = t => { linhas.push(t); console.log(t); };
+/** Se esta publicação foi rebaixada para PIX direto. O passo seguinte do
+ *  deploy lê isto (GITHUB_OUTPUT) e avisa o dono por e-mail. */
+let rebaixado = false;
 
 /**
  * Escreve, no arquivo DESTA execução, o que a conta realmente aceita.
@@ -79,6 +82,7 @@ function rebaixar(porque) {
     process.exit(1);
   }
   writeFileSync(ARQUIVO, novo);
+  rebaixado = true;
   diga(`⚠ ${porque}`);
   diga('  Esta publicação vai ao ar em PIX DIRETO: o site vende por PIX e o');
   diga('  acesso é liberado à mão em Actions → Acesso → liberar.');
@@ -86,7 +90,56 @@ function rebaixar(porque) {
   diga('  Mercado Pago sozinha - nada de código a mexer.');
 }
 
-if (querido !== 'mercadopago') {
+/* O site em inglês (wrangler.toml com LOCALE = "en") cobra pelo Paddle, e
+   nunca é rebaixado para PIX direto: no Worker em inglês um modo `pix-direto`
+   desligaria a consulta ao Paddle na tela de volta e na varredura (api/pay.js,
+   reconcile.js). Aqui só se confere se a chave do Paddle autentica, e o
+   resumo diz. Sem a chave o site sobe e o checkout diz que o pagamento não
+   está ligado. PLANO-INGLES.md, etapa 5. */
+const TOML = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+const ehSiteEmIngles = /^\s*LOCALE\s*=\s*"en"/m.test(TOML);
+/* Sem domínio próprio (SITE_ORIGIN no workers.dev) o site em inglês ainda não
+   vende a ninguém, e o teste do Paddle no sandbox roda nele, aviso assinado
+   incluído (decisão do dono, 29/10/2026; TESTE-PADDLE.md). Com o domínio, a
+   mesma regra volta a parar a publicação com chave de sandbox. */
+const semDominio = /^\s*SITE_ORIGIN\s*=\s*"https:\/\/[^"]+\.workers\.dev\/?"/m.test(TOML);
+
+if (ehSiteEmIngles) {
+  const chave = String(process.env.PADDLE_API_KEY || '').trim();
+  if (!chave) {
+    diga('⚠ Site em inglês sem PADDLE_API_KEY: o checkout vai dizer que o pagamento não está ligado.');
+  } else {
+    const sandbox = chave.startsWith('pdl_sdbx_');
+    /* Chave de SANDBOX na publicação: a mesma regra do token TEST- da
+       Mercado Pago, logo abaixo. O checkout abriria e não cobraria nada, e o
+       e2e de produção reprovaria no fim, duas vezes, com a volta automática
+       à versão anterior: melhor parar aqui, dizendo por quê. O teste no
+       sandbox é feito antes, fora do site publicado (TESTE-PADDLE.md). */
+    if (sandbox && semDominio) {
+      diga('⚠ Chave de SANDBOX do Paddle num site ainda sem domínio (workers.dev):');
+      diga('  o checkout é o de teste e não cobra nada. Com o domínio, troque pela');
+      diga('  chave de produção (pdl_live_...) e o token live_ (TESTE-PADDLE.md).');
+    } else if (sandbox) {
+      diga('✗ O segredo PADDLE_API_KEY é uma chave de SANDBOX (começa com pdl_sdbx_).');
+      diga('  Com ela o comprador iria para um checkout que não cobra nada.');
+      diga('  Publicação PARADA; o site continua com a versão anterior.');
+      diga('  Cole a chave de PRODUÇÃO (pdl_live_...) em Settings → Secrets and');
+      diga('  variables → Actions → PADDLE_API_KEY, o token live_ em');
+      diga('  PADDLE_CLIENT_TOKEN no wrangler.toml, e publique de novo.');
+      process.exit(1);
+    }
+    try {
+      const r = await fetch(`https://${sandbox ? 'sandbox-' : ''}api.paddle.com/event-types`, {
+        headers: { Authorization: `Bearer ${chave}` }
+      });
+      diga(r.ok
+        ? `Paddle autentica (${sandbox ? 'SANDBOX: não cobra de verdade' : 'produção'}).`
+        : `⚠ O Paddle recusou a chave (HTTP ${r.status}). Confira o segredo PADDLE_API_KEY.`);
+    } catch (e) {
+      diga(`⚠ Não consegui falar com o Paddle: ${e && e.message || e}.`);
+    }
+  }
+} else if (querido !== 'mercadopago') {
   diga(`Modo de pagamento: ${querido}. Nada a resolver.`);
 } else {
   /* `trim()` porque um segredo colado chega com espaço na ponta e às vezes
@@ -96,6 +149,19 @@ if (querido !== 'mercadopago') {
 
   if (!token) {
     rebaixar('O segredo MP_ACCESS_TOKEN está vazio.');
+  } else if (/^TEST-/i.test(token)) {
+    /* Token de TESTE na publicação de produção: a Mercado Pago autentica,
+       o checkout abre, o comprador vai para uma tela que NÃO COBRA e nada
+       falha - semanas de venda perdida sem sintoma (auditoria de 28/09,
+       PAY-001). Rebaixar para PIX direto esconderia o engano; parar a
+       publicação não: o site continua no ar com a versão anterior, que tem
+       o segredo de antes, e esta execução fica vermelha dizendo por quê. */
+    diga('✗ O segredo MP_ACCESS_TOKEN é um token de TESTE (começa com TEST-).');
+    diga('  Com ele o comprador iria para um checkout que não cobra nada.');
+    diga('  Publicação PARADA; o site continua com a versão anterior.');
+    diga('  Cole o Access Token de PRODUÇÃO (começa com APP_USR-) em');
+    diga('  Settings → Secrets and variables → Actions → MP_ACCESS_TOKEN e publique de novo.');
+    process.exit(1);
   } else {
     /* A pergunta certa é a que o checkout vai fazer.
        ──────────────────────────────────────────────────────────────────────
@@ -227,4 +293,12 @@ if (querido !== 'mercadopago') {
 if (process.env.GITHUB_STEP_SUMMARY) {
   writeFileSync(process.env.GITHUB_STEP_SUMMARY,
     `## Meio de pagamento\n\n\`\`\`\n${linhas.join('\n')}\n\`\`\`\n\n`, { flag: 'a' });
+}
+
+/* O rebaixamento só aparecia no resumo da publicação, que ninguém abre
+   quando a publicação fica verde (auditoria de 28/09, PAY-009). O passo
+   seguinte do deploy-worker.yml manda o texto por e-mail ao dono. */
+if (rebaixado && process.env.GITHUB_OUTPUT) {
+  writeFileSync('/tmp/rebaixamento.txt', linhas.join('\n'));
+  writeFileSync(process.env.GITHUB_OUTPUT, 'rebaixado=true\n', { flag: 'a' });
 }

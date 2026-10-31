@@ -27,6 +27,7 @@ import { Campo, Aviso, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
 import { empresa } from '@/lib/empresa';
 import { AuthError, emailLooksValid, MESSAGES } from '@/lib/account/types';
+import { tx } from '@/i18n/telas/conta-esqueci-senha';
 
 export function EsqueciSenha() {
   const account = useAccount();
@@ -65,12 +66,12 @@ export function EsqueciSenha() {
       <header className="grid gap-3 justify-items-center text-center">
         <He size="lg" dim>ע</He>
         <h1 className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
-          Recuperar a senha
+          {tx.titulo}
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[38ch]">
           {enviado
-            ? 'Olhe sua caixa de entrada - e a pasta de spam, que é onde esse tipo de mensagem costuma cair.'
-            : 'Diga seu e-mail e mandamos um link para você escolher uma senha nova.'}
+            ? tx.olheCaixa
+            : tx.digaEmail}
         </p>
       </header>
 
@@ -78,8 +79,7 @@ export function EsqueciSenha() {
         {enviado ? (
           <>
             <Aviso>
-              Se existir uma conta com <strong>{email}</strong>, o link já está
-              a caminho. Ele vale por uma hora e funciona uma vez só.
+              {tx.seExistirAntes}<strong>{email}</strong>{tx.seExistirDepois}
             </Aviso>
 
             {/* Só no modo demonstração, onde não há e-mail para mandar. A
@@ -89,7 +89,7 @@ export function EsqueciSenha() {
               <div className="grid gap-2 rounded-[var(--r-md)] border-2 border-dashed
                               border-[color:var(--line-soft)] p-4">
                 <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-                  Esta versão não manda e-mail de verdade. O link seria este:
+                  {tx.demoSemEmail}
                 </p>
                 <Link href={demoLink}
                       className="font-ui text-[14px] text-[var(--accent)] hover:underline break-all">
@@ -100,39 +100,39 @@ export function EsqueciSenha() {
 
             <div className="grid gap-2">
               <Button variant="secondary" onClick={() => { setEnviado(false); setDemoLink(null); }}>
-                Mandar de novo
+                {tx.mandarDeNovo}
               </Button>
               <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted">
-                Não chegou em alguns minutos? Escreva para{' '}
+                {tx.naoChegou}{' '}
                 <a href={`mailto:${empresa.contato.emailSuporte}`}
                    className="text-[var(--accent)] hover:underline break-all">
                   {empresa.contato.emailSuporte}
                 </a>{' '}
-                que a gente resolve na mão.
+                {tx.resolveNaMao}
               </p>
             </div>
           </>
         ) : (
           <form onSubmit={submit} className="grid gap-4" noValidate>
             <Campo
-              id="email" label="E-mail" value={email} onChange={setEmail}
-              type="email" autoComplete="email" placeholder="voce@exemplo.com.br"
+              id="email" label={tx.email} value={email} onChange={setEmail}
+              type="email" autoComplete="email" placeholder={tx.exemploEmail}
               required autoFocus={!email}
             />
 
             {error && <Erro>{error}</Erro>}
 
             <Button type="submit" size="lg" full disabled={busy}>
-              {busy ? 'Enviando…' : 'Mandar o link'}
+              {busy ? tx.enviando : tx.mandarOLink}
             </Button>
           </form>
         )}
       </Card>
 
       <p className="font-ui text-[14px] text-center text-ink-muted">
-        Lembrou?{' '}
+        {tx.lembrou}{' '}
         <Link href="/entrar" className="text-[var(--accent)] font-medium hover:underline">
-          Entrar
+          {tx.entrar}
         </Link>
       </p>
     </div>

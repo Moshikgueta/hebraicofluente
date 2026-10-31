@@ -1,19 +1,25 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
 import Link from 'next/link';
-import { Card } from '@/components/ui/Card';
-import { Section, SectionHead } from '@/components/platform/Section';
-import { confirmaSozinho, empresa, soPix } from '@/lib/empresa';
+import { PageHead, Section } from '@/components/platform/Section';
+import {
+  confirmaSozinho, confirmacaoDaDesistencia, DUVIDAS_DE_CONTEUDO, empresa, INICIO_DO_ACESSO,
+  O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, renovacaoTexto, soPix, temCartao, temPix
+} from '@/lib/empresa';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
-import { ancora, flagship, brl, parcelasMax, pixPrice } from '@/lib/catalog';
-import { course, totalLicoes } from '@/lib/content-publico';
+import { ancora, flagship, brl, fimDoPreLancamento, getCourse, parcelasMax, pixPrice } from '@/lib/catalog';
+import { tempoDoCursoPt } from '@/lib/content-publico';
+import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+import { tx } from '@/i18n/telas/venda-faq';
+
+/* O mesmo critério da capa (components/landing/copy.ts): é o manifesto de
+   gravações que decide o que se diz sobre áudio, nunca um texto fixo. */
+const TEM_AUDIO = AUDIO_MANIFEST.length > 0;
 
 export const metadata: Metadata = meta({
   rota: '/faq',
-  title: 'Dúvidas frequentes - Hebraico Fluente',
-  description:
-    'Pagamento, acesso, prazo, celular, áudio, certificado e reembolso - as perguntas ' +
-    'que aparecem antes da compra, respondidas sem enrolação.'
+  title: tx.metaTitulo,
+  description: tx.metaDescricao
 });
 
 /* As dúvidas.
@@ -23,9 +29,12 @@ export const metadata: Metadata = meta({
  *   1. Toda resposta responde. "Depende", "entre em contato" e "em breve" são
  *      respostas que empurram o problema para o suporte e para a avaliação
  *      ruim depois da compra.
- *   2. O que ainda não existe é dito. Hoje o áudio do curso é sintetizado
- *      pelo próprio navegador, e isso está escrito aqui - porque um aluno que
- *      descobre sozinho acha que foi enganado, e com razão.
+ *   2. O que ainda não existe é dito, e o que já existe também. A resposta
+ *      sobre áudio dizia que a pronúncia era a voz artificial do navegador,
+ *      texto fixo herdado do curso de espanhol, e continuou no ar depois que
+ *      o curso ganhou as gravações do professor (auditoria de 28/09/2026,
+ *      COM-003). Agora ela sai do manifesto, como na capa, e
+ *      tests/vitrine.test.ts impede as frases antigas de voltarem.
  *
  * Preço e prazo vêm do catálogo. Uma FAQ com o preço digitado à mão é a
  * primeira coisa a ficar desatualizada num aumento.
@@ -38,9 +47,9 @@ const c = flagship();
    então a resposta curta fica, e o resto mora numa página própria. */
 const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] = [
   {
-    q: 'Preciso saber alguma coisa de hebraico para começar?',
+    q: tx.saberQ,
     a: [
-      'Não. O curso começa assumindo que você nunca viu o alfabeto e não sabe nem por onde o texto começa. A primeira lição ensina uma letra só.'
+      tx.saberA
     ]
   },
   {
@@ -48,10 +57,11 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
        grandezas diferentes, e por azar parecidas, então o erro passou: a capa
        anunciava "21 lições" e esta página, "São 22 lições". Dois números para
        a mesma coisa, na página que se lê logo antes de comprar. A soma agora
-       é `totalLicoes()`, uma função só para o site inteiro. */
-    q: 'Quanto tempo leva?',
+       é `totalLicoes()`, uma função só para o site inteiro, e a frase do
+       tempo é `tempoDoCursoPt()`, derivada das letras. */
+    q: tx.tempoQ,
     a: [
-      `São ${totalLicoes()} lições de cerca de dez minutos, que ensinam as ${course.totalLetters} letras. Quem faz uma por dia termina em menos de um mês; quem faz três por semana leva uns dois. Não há prazo interno nem turma: o curso espera por você.`
+      tx.tempoA(tempoDoCursoPt())
     ]
   },
   /* As duas respostas abaixo mudam com `pagamento.modo` em data/empresa.json,
@@ -60,65 +70,104 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
      ela mais atrapalha - a pessoa decide pelo parcelamento e descobre no
      checkout que ele não existe. */
   {
-    q: 'Como eu pago?',
+    q: tx.pagoQ,
     a: soPix()
       ? [
-          'Por PIX, pelo aplicativo do seu banco. O checkout mostra o código copia e cola.',
-          `O curso sai por ${brl(pixPrice(c.price))}${c.price.pixDiscountPct > 0 ? ` no PIX (${c.price.pixDiscountPct}% de desconto sobre os ${brl(c.price.brl)})` : ''}.`,
-          'Cartão de crédito ainda não. Quando entrar, aparece no checkout.'
+          tx.pagoPix,
+          tx.pagoPixPreco(brl(pixPrice(c.price)), c.price.pixDiscountPct, brl(c.price.brl)),
+          tx.pagoSemCartao
         ]
+      /* E com as formas que a Mercado Pago aceita NESTA publicação
+         (`temPix`/`temCartao`, auditoria de 01/10/2026, LEGAL-103): a FAQ
+         não pode prometer o desconto do PIX quando o checkout não tem PIX. */
       : [
-          `PIX, cartão de crédito à vista ou parcelado em até ${parcelasMax(c.price)}x.`,
-          `À vista o curso sai por ${brl(c.price.brl)}${c.price.pixDiscountPct > 0 ? `, ou ${brl(pixPrice(c.price))} no PIX` : ''}.`,
+          temPix() && temCartao()
+            ? tx.pagoPixCartao(parcelasTexto(parcelasMax(c.price)))
+            : temCartao()
+              ? tx.pagoCartao(parcelasTexto(parcelasMax(c.price)))
+              : tx.pagoPix,
+          tx.pagoAVista(brl(c.price.brl), c.price.pixDiscountPct > 0 && temPix() ? brl(pixPrice(c.price)) : null),
           /* A frase só existe enquanto o preço for promocional: quando o
              listBrl virar null, ela some sozinha. Ver `ancora()`. */
           ...(ancora(c.price)
-            ? [`Esse é o preço de pré-lançamento. Depois dele, o curso passa a custar ${brl(ancora(c.price)!)}. Quem compra agora paga uma vez e fica com os ${c.accessMonths} meses de acesso.`]
+            ? [tx.pagoPreLancamento(fimDoPreLancamento(c.price), brl(ancora(c.price)!), c.accessMonths)]
             : []),
           /* O valor da parcela não é anunciado aqui de propósito: os juros do
              cartão são repassados, então quem fecha esse número é a operadora.
              Ver `parcelasMax` em lib/catalog.ts. */
-          `No parcelamento, os juros são os da operadora do seu cartão. O valor de cada parcela aparece na tela de pagamento antes de você confirmar.`
+          ...(temCartao()
+            ? [tx.pagoJuros]
+            : [])
         ]
   },
   {
-    q: 'Quando o acesso é liberado?',
+    q: tx.liberadoQ,
     a: confirmaSozinho()
       ? [
-          'No cartão, na hora - a confirmação vem em segundos. No PIX, assim que o pagamento compensa, que costuma levar menos de um minuto.',
-          'A liberação é automática. Não existe aprovação manual, e você não precisa mandar comprovante para ninguém.'
+          [
+            temCartao() ? tx.liberadoCartao : '',
+            temPix() ? tx.liberadoPix : ''
+          ].filter(Boolean).join(' '),
+          tx.liberadoAutomatico
         ]
       : [
-          'Assim que o pagamento cai, normalmente em alguns minutos. Você não precisa deixar nenhuma página aberta nem mandar comprovante: é só entrar com o mesmo e-mail e a mesma senha que você usou para comprar.',
-          `Se passar disso, escreva para ${empresa.contato.emailSuporte} com o e-mail da compra. É falha nossa e se resolve na hora.`
+          tx.liberadoAMao(empresa.atendimento.prazoRespostaUteis),
+          tx.liberadoPrazo(empresa.contato.emailSuporte)
         ]
   },
   {
-    q: 'Por quanto tempo eu tenho acesso?',
+    q: tx.acessoQ,
     a: [
-      `${c.accessMonths} meses a partir da compra, com tudo que for acrescentado ao curso nesse período.`,
-      'Perto do fim, a plataforma avisa - com trinta dias de antecedência, e de novo na última semana.'
+      tx.acessoMeses(c.accessMonths, INICIO_DO_ACESSO),
+      tx.acessoAviso,
+      /* LEGAL-121 / PAY-B-011: a renovação soma ao fim do acesso atual. */
+      renovacaoTexto(c.accessMonths)
+    ]
+  },
+  /* 28/09/2026 (auditoria, COM-007): o que NÃO vem junto só estava nos
+     Termos. É o tipo de expectativa que, frustrada, vira pedido de reembolso -
+     então é dito aqui, com as mesmas palavras do art. 1 dos Termos. */
+  {
+    q: tx.incluidoQ,
+    a: [
+      /* TEXTO PARA APROVAÇÃO (UXQA-016): DUVIDAS_DE_CONTEUDO em lib/empresa.ts. */
+      tx.incluidoA1(DUVIDAS_DE_CONTEUDO),
+      tx.incluidoA2
+    ]
+  },
+  /* 01/10/2026 (auditoria, UXQA-010): quem chega pela capa querendo
+     conversar na viagem precisa saber antes. TEXTO PARA APROVAÇÃO. */
+  {
+    q: tx.falarQ,
+    a: [
+      O_QUE_O_CURSO_ENSINA,
+      tx.falarA
     ]
   },
   {
-    q: 'Funciona no celular?',
+    q: tx.celularQ,
     a: [
-      'Foi feito para o celular primeiro. Os exercícios cabem numa mão, os botões são grandes o suficiente para o polegar, e a tela não sai do lugar quando você escreve uma letra com o dedo.',
-      'No computador ele vira um painel maior, com o alfabeto inteiro e o progresso à vista de uma vez.'
+      tx.celularA1,
+      tx.celularA2
     ]
   },
   {
-    q: 'O curso tem áudio com voz de verdade?',
-    a: [
-      'Ainda não. Hoje a pronúncia é falada pelo sintetizador do próprio navegador, com voz de espanhol latino quando existe - serve para conferir a sílaba, mas não é uma gravação.',
-      'As gravações com falante nativo estão planejadas e entram sem que você precise fazer nada: os mesmos botões passam a tocar o arquivo quando ele existir. Os exercícios que dependem só de escutar ficam marcados como indisponíveis até lá, em vez de te fazerem adivinhar.'
-    ]
+    q: tx.audioQ,
+    a: TEM_AUDIO
+      ? [
+          tx.audioSim1,
+          tx.audioSim2
+        ]
+      : [
+          tx.audioNao1,
+          tx.audioNao2
+        ]
   },
   {
-    q: 'Preciso saber escrever à mão?',
+    q: tx.maoQ,
     a: [
-      'Não precisa, mas o curso ensina. Você traça a letra com o dedo na tela, na ordem certa dos traços, e recebe uma avaliação do traço - não uma nota, um comentário.',
-      'Quem não quiser escrever pode pular essa etapa: ela não bloqueia o resto da lição.'
+      tx.maoA1,
+      tx.maoA2
     ]
   },
   {
@@ -128,53 +177,52 @@ const FAQ: { q: string; a: string[]; link?: { href: string; label: string } }[] 
        rotas de /api/progress - e o texto ficou para trás, inventando uma
        desvantagem na pergunta que se faz ANTES de comprar. O caso em
        tests/vitrine.test.ts quebra se a frase voltar. */
-    q: 'Meu progresso fica salvo?',
+    q: tx.progressoQ,
     a: [
-      'Fica, e a plataforma volta exatamente na lição e na questão em que você parou.',
-      'Ele é da sua conta, e não do aparelho: estude no celular, abra no computador e continue de onde estava. O que você fizer sem internet fica guardado no aparelho e sobe sozinho quando a conexão voltar - o curso funciona no ônibus.',
-      'E se você já tinha estudado neste aparelho antes de entrar na conta, nada se perde: as duas coisas são juntadas no login.'
+      tx.progressoA1,
+      tx.progressoA2,
+      tx.progressoA3,
+      tx.progressoA4
     ]
   },
   {
-    q: 'Vou conseguir ler a Bíblia em hebraico?',
+    q: tx.bibliaQ,
     a: [
-      'Ler em voz alta, sim. O texto hebraico da Bíblia vem com os sinais de vogal, que são exatamente os que este curso ensina - com as 22 letras você decodifica qualquer versículo, sem transliteração.',
-      'Entender o que leu, não. Isso pede vocabulário e gramática, e é outro curso. Vale dizer que as duas coisas são diferentes antes da compra, e não depois.'
+      tx.bibliaA1,
+      tx.bibliaA2
     ],
-    link: { href: '/biblia', label: 'Gênesis 1:1, palavra por palavra' }
+    link: { href: '/biblia', label: tx.bibliaLink }
   },
   {
-    q: 'Tem certificado?',
+    q: tx.certificadoQ,
     a: [
-      'Tem, e ele não é por participação. Sai quando duas coisas estiverem feitas: todas as letras concluídas e o exame final aprovado, com pelo menos 70%.',
-      'É uma imagem com o seu nome e a data, pronta para postar. Ela diz, na própria imagem, que não é um certificado oficial nem uma avaliação de proficiência reconhecida - porque não é, e quem recebe merece saber.'
+      tx.certificadoA1,
+      tx.certificadoA2
     ]
   },
   {
-    q: 'E se eu não gostar?',
+    q: tx.gostarQ,
     a: [
-      'O Código de Defesa do Consumidor te dá sete dias para desistir de uma compra feita pela internet, contados a partir do acesso. Dentro desse prazo, basta pedir: o valor volta integral, sem pergunta e sem etapa.',
-      `Escreva para ${empresa.contato.emailSuporte} com o e-mail da compra.`
+      tx.gostarA1(empresa.politicas.arrependimentoDias, INICIO_DO_ACESSO),
+      /* "O estorno é pedido na hora, sozinho" só é verdade com a Mercado
+         Pago: no PIX direto a devolução é feita por nós (pay.js, `manual`). */
+      tx.gostarA2(confirmaSozinho(), empresa.contato.emailSuporte, confirmacaoDaDesistencia())
     ]
   },
-  {
-    q: 'Vocês vão lançar os outros níveis mesmo?',
+  /* Só onde os outros níveis estão no catálogo: o site em inglês não os tem. */
+  ...(getCourse('hebraico-a1') ? [{
+    q: tx.niveisQ,
     a: [
-      'O A1 está em produção e é o próximo. O A2 e o B1 vêm depois, nessa ordem.',
-      'Quando saírem, entram na mesma conta e na mesma plataforma - você não recomeça em outro lugar, e o que já fez continua onde está.'
+      tx.niveisA1,
+      tx.niveisA2
     ]
-  }
+  }] : [])
 ];
 
 export default function FaqPage() {
   return (
     <>
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-14 sm:py-18 grid gap-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.14em] text-[var(--accent)]">
-            Dúvidas frequentes
-          </p>
-          {/* O cabeçalho NÃO antecipa objeção.
+      {/* O cabeçalho NÃO antecipa objeção.
               ──────────────────────────────────────────────────────────────
               Aqui se lia «Perguntado antes de comprar» e, abaixo, «inclusive
               o que ainda não está pronto - preferimos perder uma venda aqui a
@@ -188,67 +236,67 @@ export default function FaqPage() {
               dentro da pergunta que o pede, e não no título da seção. Uma
               limitação respondida com clareza tranquiliza; a mesma limitação
               anunciada em corpo 44 assusta. */}
-          <h1 className="font-display text-[32px] sm:text-[44px] font-bold leading-[1.12] text-ink max-w-[20ch]">
-            Tudo o que vale saber antes de começar.
-          </h1>
-          <p className="text-[17px] leading-relaxed text-ink-body max-w-[54ch]">
-            Respostas diretas sobre o curso, o acesso, o conteúdo e o que esperar da
-            experiência dentro da plataforma.
-          </p>
-        </div>
-      </div>
+      <PageHead
+        trilha={[{ nome: tx.trilha }]}
+        eyebrowPt={tx.eyebrow}
+        titlePt={tx.titulo}
+        leadPt={tx.lead}
+      />
 
       <Section labelledBy="perguntas">
-        <SectionHead id="perguntas" titlePt="Dúvidas frequentes" />
-        <div className="grid gap-3 max-w-[820px]">
+        {/* O título visível já é o da página; o h2 fica para o leitor de tela. */}
+        <h2 id="perguntas" className="sr-only">{tx.perguntas}</h2>
+        {/* Perguntas sob fios, como na capa: um índice que se lê de cima a
+            baixo, e não quinze caixas. `details` continua sendo o mecanismo
+            (funciona sem JavaScript e a busca do navegador abre a resposta). */}
+        <div className="max-w-[820px] border-t border-line">
           {FAQ.map(item => (
-            <Card key={item.q} as="article" className="overflow-hidden">
+            <article key={item.q} className="border-b border-line">
               <details className="group">
                 <summary
-                  className="cursor-pointer list-none px-5 py-4 min-h-[56px] flex items-center gap-4
-                             font-display text-[16.5px] font-semibold text-ink
-                             hover:bg-surface-2 transition-colors"
+                  className="cursor-pointer list-none py-5 min-h-[56px] flex items-center gap-4
+                             font-ui text-[17px] font-semibold text-ink [&::-webkit-details-marker]:hidden"
                 >
                   <span className="flex-1">{item.q}</span>
-                  <span aria-hidden
-                        className="shrink-0 text-ink-muted text-[15px] transition-transform
-                                   group-open:rotate-45">
-                    +
-                  </span>
+                  <svg aria-hidden width="14" height="14" viewBox="0 0 14 14" fill="none"
+                       className="shrink-0 text-ink-muted transition-transform duration-200 ease-[var(--ease)] group-open:rotate-180">
+                    <path d="M3 5.25 7 9.25l4-4" stroke="currentColor" strokeWidth="1.6"
+                          strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </summary>
-                <div className="px-5 pb-5 grid gap-2.5 border-t border-[color:var(--line-soft)] pt-4">
+                <div className="pb-6 pr-8 grid gap-3">
                   {item.a.map(p => (
-                    <p key={p} className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[64ch]">
+                    <p key={p} className="font-ui text-[16px] leading-[1.65] text-ink-body max-w-[64ch]">
                       {p}
                     </p>
                   ))}
                   {item.link && (
                     <Link href={item.link.href}
                           className="inline-flex items-center min-h-[44px] font-ui text-[14px]
-                                     font-semibold text-[var(--teal)] hover:underline">
+                                     font-semibold text-[var(--teal-ink)] hover:underline">
                       {item.link.label} →
                     </Link>
                   )}
                 </div>
               </details>
-            </Card>
+            </article>
           ))}
         </div>
       </Section>
 
-      <Section tone="wash">
+      <Section>
         <FaixaCta
           onde="faq"
-          titulo="Ficou alguma pergunta de fora?"
+          titulo={tx.ctaTitulo}
           linha={
-            <>
-              Escreva para{' '}
+            tx.ctaLinha(
               <a href={`mailto:${empresa.contato.emailSuporte}`}
-                 className="text-[var(--accent)] hover:underline">
+                 className="text-white underline underline-offset-[3px] decoration-white/50">
                 {empresa.contato.emailSuporte}
-              </a>
-              . Costumamos responder no mesmo dia útil.
-            </>
+              </a>,
+              prazoResposta(),
+              DUVIDAS_DE_CONTEUDO
+            )
           }
         />
       </Section>

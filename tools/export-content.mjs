@@ -22,18 +22,68 @@
  * Run: npm run export-content (from app/), or node tools/export-content.mjs
  */
 
-import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync, existsSync, cpSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
+import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
+import { audioIdFor } from './audio-id.mjs';
+import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
+import { translitEn } from './translit-en.mjs';
+import { prepararVideos } from './videos.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const OUT = join(ROOT, 'app/content');
-const readJson = p => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+/* Na build em inglês (NEXT_PUBLIC_LOCALE=en), cada arquivo do curso sai com
+   os textos de data/en/ no lugar do português (tools/i18n.mjs). Na build em
+   português o arquivo é lido como sempre. */
+const FALTAS = new Map();
+const readJson = p => {
+  const json = JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
+  const nome = p.match(/^data\/([\w-]+)\.json$/)?.[1];
+  if (LOCALE !== 'en' || !TRADUZIDOS.includes(nome)) return json;
+  const faltas = [];
+  traduzir(nome, json, faltas);
+  for (const f of faltas) FALTAS.set(`${f.arquivo}:${f.caminho}`, f);
+  emIngles(json);
+  return json;
+};
+
+/* A transliteração do site em inglês (tools/translit-en.mjs): todo campo
+   `translit...` sai convertido, na mesma regra para o curso inteiro. */
+function emIngles(no, chave = '') {
+  if (Array.isArray(no)) {
+    no.forEach((x, i) => {
+      if (typeof x === 'string') { if (/^translit/i.test(chave)) no[i] = translitEn(x); }
+      else emIngles(x, chave);
+    });
+  } else if (no && typeof no === 'object') {
+    for (const [k, v] of Object.entries(no)) {
+      if (typeof v === 'string') { if (/^translit/i.test(k)) no[k] = translitEn(v); }
+      else emIngles(v, k);
+    }
+  }
+}
 const NFC = s => String(s ?? '').normalize('NFC');
 
-/* Same hash as tools/gen-audio.mjs, so a clip recorded for the book plays in
-   the app without a second naming scheme. Content-derived, never positional. */
-const audioIdFor = he => 'he-' + createHash('sha256').update(NFC(he)).digest('hex').slice(0, 8);
+/* Same id as tools/gen-audio.mjs (tools/audio-id.mjs), so a clip recorded for
+   the book plays in the app without a second naming scheme. Content-derived,
+   never positional. */
+
+/* O exemplo que se ouve numa leitura da letra (ver `variantes` abaixo). Uma
+   forma final não leva vogal depois de si: o exemplo é a primeira palavra da
+   letra que termina nela. As outras: a sílaba com patach, que toda lição de
+   letra e toda lição de som gravaram. */
+const FINAIS = new Set(['ך', 'ם', 'ן', 'ף', 'ץ']);
+const semPontos = he => NFC(he).replace(/[\u0591-\u05C7]/g, '');
+function exemploDaVariante(L, he) {
+  const base = semPontos(he);
+  if (FINAIS.has(base)) {
+    const palavra = [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])]
+      .find(w => semPontos(w.he).endsWith(base));
+    if (!palavra) throw new Error(`letters.json: ${L.id} não tem palavra terminada em ${base} para a leitura final`);
+    return NFC(palavra.he);
+  }
+  return NFC(he + '\u05B7');
+}
 
 /* As imagens do vocabulário moram num arquivo próprio (data/imagens-
    vocabulario.json) e entram aqui, na palavra. Só as palavras concretas têm
@@ -49,6 +99,9 @@ const word = w => {
     translit: w.translit,
     pt: w.pt,
     use: w.use ?? null,
+    /* A lição de som que ensina esta palavra (טוֹב → Vet). A lição da letra a
+       pula; o resto do curso - missões, cenas, jogos - a conta como sabida. */
+    som: w.som ?? null,
     audioId: audioIdFor(w.he),
     ...(img ? {
       image: img.image ?? null,
@@ -67,13 +120,18 @@ const word = w => {
  *   · `image` apontando para arquivo que não existe - a tela mostraria um
  *     ícone quebrado no lugar da ilustração.
  */
-function carregarImagens(letters) {
+function carregarImagens(letters, sons = []) {
   const caminho = join(ROOT, 'data/imagens-vocabulario.json');
   if (!existsSync(caminho)) return;
-  const d = JSON.parse(readFileSync(caminho, 'utf8'));
+  /* Por readJson: na build em inglês o texto alternativo vem de data/en/. */
+  const d = readJson('data/imagens-vocabulario.json');
   ESTILO_IMAGEM = d.estilo ?? '';
-  const doCurso = new Set(letters.flatMap(L =>
-    [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].map(w => NFC(w.he))));
+  /* As lições de som também ensinam palavras (לֵב, סֵפֶר, מֶלֶךְ saíram das
+     lições de Bet, Kaf e Pe para as de Vet, Fe e Chaf em 26/09/2026). */
+  const doCurso = new Set([
+    ...letters.flatMap(L => [...(L.wordsToRead || []), ...(L.wordsToRecognize || [])].map(w => NFC(w.he))),
+    ...sons.flatMap(S => S.palavras.map(w => NFC(w.he)))
+  ]);
   for (const [he, img] of Object.entries(d.palavras ?? {})) {
     const k = NFC(he);
     if (!doCurso.has(k)) throw new Error(`imagens-vocabulario: "${he}" não é palavra do curso`);
@@ -114,7 +172,7 @@ function lookupWord(letters, phrase, scene) {
 
 function main() {
   const letters = readJson('data/letters.json').sort((a, b) => a.order - b.order);
-  carregarImagens(letters);
+  carregarImagens(letters, readJson('data/extras.json').sons?.licoes);
   const modules = readJson('data/modules.json').modules;
   const nikud = readJson('data/nikud.json');
   const extras = readJson('data/extras.json');
@@ -122,20 +180,6 @@ function main() {
   const sentences = readJson('data/sentences.json');
   const eras = readJson('data/eras.json');
   const biblia = readJson('data/biblia.json');
-
-  /* Where each letter's pages start in the printed workbook, so the app can
-     say "quer praticar à mão? páginas X-Y". Absent before the first `npm run
-     pdf`; the link is then simply not shown. */
-  let pageMap = {};
-  try { pageMap = readJson('data/page-map.json').sections || {}; } catch { /* no pdf yet */ }
-  const sectionOrder = Object.keys(pageMap).sort((a, b) => pageMap[a] - pageMap[b]);
-  const pagesFor = id => {
-    const at = sectionOrder.indexOf(id);
-    if (at < 0) return null;
-    const from = pageMap[id];
-    const next = sectionOrder[at + 1];
-    return { from, to: next ? pageMap[next] - 1 : from };
-  };
 
   rmSync(OUT, { recursive: true, force: true });
   mkdirSync(join(OUT, 'letters'), { recursive: true });
@@ -170,19 +214,43 @@ function main() {
       translit: L.translit,
       sound: L.sound,
       /* As leituras de uma letra que tem mais de uma, cada uma com o SEU
-         audioId - e são ids diferentes porque o id sai do próprio texto
-         hebraico. É o que permite as gravações de Shin e Sin entrarem
-         separadas, sem um botão tocar o som da outra. */
-      variantes: (L.variantes || []).map(v => ({
-        he: NFC(v.he), nomePt: v.nomePt, som: v.som, translit: v.translit,
-        comoPt: v.comoPt, ondePt: v.ondePt, audioId: audioIdFor(v.he)
-      })),
+         áudio - Shin e Sin, Pe e Fe, cada botão toca o som da sua leitura.
+
+         O áudio é de um EXEMPLO, e não da letra sozinha (29/09/2026). O id
+         saía do próprio `v.he` - "פּ", "פ", "ף" -, e uma consoante sem vogal
+         nunca foi gravada (não se pronuncia sozinha): o id não tinha
+         arquivo, o botão sumia, e o quadro "As leituras desta letra" do Pe,
+         do Bet, do Kaf e do Shin ficava mudo justo onde se ensina a
+         diferença entre /p/ e /f/. Agora cada leitura toca a sílaba dela
+         com patach (פַּ = "pa", פַ = "fa"), e a forma final toca a primeira
+         palavra do curso que termina nela (ף → כֶּסֶף). A letra desenhada no
+         quadro continua a mesma. */
+      variantes: (L.variantes || []).map(v => {
+        const exemplo = exemploDaVariante(L, v.he);
+        return {
+          he: NFC(v.he), nomePt: v.nomePt, som: v.som, translit: v.translit,
+          comoPt: v.comoPt, ondePt: v.ondePt, exemploHe: exemplo, audioId: audioIdFor(exemplo)
+        };
+      }),
       soundNotePt: L.soundNotePt,
+      /* De onde sai o som, em todas as letras: o desenho da lição
+         (components/learn/OndeNasceOSom.tsx). */
+      articulacao: {
+        ...L.articulacao,
+        pontos: L.articulacao.pontos.map(p => (p.rotulo ? { ...p, rotulo: NFC(p.rotulo) } : p))
+      },
       /* A camada pedagógica, inteira. Passa como está: o que ela tem de
          obrigatório é cobrado pela V23 do validate.js, na FONTE - um
          exportador que conserta dado ruim esconde dado ruim. */
       ensino: L.ensino,
       didYouKnow: L.didYouKnow,
+      /* O som de cada letra é a sílaba gravada em estúdio por um falante
+         nativo (19/10/2026): o id sai do texto, como em todo o curso. */
+      compararSons: L.compararSons
+        ? { ...L.compararSons, itens: L.compararSons.itens.map(it => ({ ...it, som: NFC(it.som), audioId: audioIdFor(it.som) })) }
+        : null,
+      didYouKnowTitle: L.didYouKnowTitle ?? null,
+      maisCuriosidades: L.maisCuriosidades ?? [],
       brazilianMistake: L.brazilianMistake,
       confusableWith: (L.confusableWith || []).map(NFC),
       /* O traço visual que separa esta letra de uma parecida, por glifo.
@@ -198,10 +266,14 @@ function main() {
       })),
       wordsToRead: (L.wordsToRead || []).map(word),
       wordsToRecognize: (L.wordsToRecognize || []).map(word),
-      bridgeWords: (L.bridgeWords || []).map(b => ({ he: NFC(b.he), pt: b.pt })),
+      /* A sílaba da letra vem com nikud, o resto da palavra sem (19/10/2026):
+         `marca` é o trecho destacado. O áudio é o da palavra sem pontos - a
+         marcação é só de tela, e trocar a sílaba não pode trocar a gravação. */
+      bridgeWords: (L.bridgeWords || []).map(b => ({
+        he: NFC(b.he), pt: b.pt, marca: b.marca ? NFC(b.marca) : null, audioId: audioIdFor(semPontos(b.he))
+      })),
       alphabetSoFar: alphabetUpTo(L.order),
       strokeOrder: { base: strokeSvg(L.id), final: L.finalForm ? strokeSvg(`${L.id}-final`) : null },
-      workbookPages: pagesFor(L.id),
       audioId: audioIdFor(L.nameHe)
     };
     exported.push(out);
@@ -251,11 +323,9 @@ function main() {
             id: `cp${M.n}`, module: M.n,
             upTo: escopo[escopo.length - 1].order,
             letterIds: escopo.map(l => l.id),
-            cumulativo: !own.length,
-            workbookPages: pagesFor(`rev${M.n}`)
+            cumulativo: !own.length
           };
-        })(),
-        workbookPages: pagesFor(M.id)
+        })()
       };
     }),
     letters: letters.map(l => ({
@@ -285,16 +355,106 @@ function main() {
     const empresa = Object.fromEntries(
       Object.entries(readJson('data/empresa.json')).filter(([k]) => !k.startsWith('_nota'))
     );
+    /* O site em inglês cobra pelo Paddle, em dólar, e dá 14 dias para
+       desistir (PLANO-INGLES.md, etapa 5; o Worker usa os mesmos 14, DIAS_PADDLE
+       em api/pay.js). Sem PIX e sem a chave PIX no pacote do navegador. */
+    if (LOCALE === 'en') {
+      empresa.pagamento = { modo: 'paddle', formas: { pix: false, cartao: true } };
+      /* E as políticas em inglês têm data própria (etapa 6). */
+      const { atualizadoEmEn, ...politicas } = empresa.politicas;
+      empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: atualizadoEmEn || politicas.atualizadoEm };
+      const { horarioEn, ...atendimento } = empresa.atendimento || {};
+      if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
+      /* Sem Brasil no site em inglês (decisão do dono, 29/10/2026): o contato é
+         o e-mail próprio dele, sem o .com.br, e o WhatsApp (+55) não aparece. */
+      /* O lembrete para estudar tem chave própria no inglês (a Privacidade em
+         inglês ainda não o descreve); o Worker lê a mesma (api/lembrete.js). */
+      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
+      empresa.privacidade = { ...privacidade, lembreteDeEstudo: lembreteDeEstudoEn === true };
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = emailEn
+        ? { ...contato, email: emailEn, emailSuporte: emailEn, emailPrivacidade: emailEn, whatsapp: null }
+        : { ...contato, whatsapp: null };
+    } else {
+      const { emailEn, ...contato } = empresa.contato;
+      empresa.contato = contato;
+      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
+      empresa.privacidade = privacidade;
+    }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
+  }
+
+  /* As placas da vitrine (30/10/2026, "O que você passa a ler" na página de venda): três
+     fotos aprovadas do Hebraico na rua, as de placa mais legível na vitrine. Só a ficha da
+     foto e a palavra; a pergunta e as opções continuam pagas. */
+  {
+    const VITRINE_RUA = ['rua-ani', 'rua-derech', 'rua-israel'];
+    const placas = readJson('data/hebraico-na-rua.json').placas;
+    const vitrine = VITRINE_RUA.map(id => {
+      const p = placas.find(x => x.id === id && x.aprovada === true);
+      if (!p) throw new Error(`vitrine da rua: ${id} não existe ou não está aprovada`);
+      const { arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura } = p;
+      return { id, arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura };
+    });
+    writeFileSync(join(OUT, 'vitrine-rua.json'), JSON.stringify({ placas: LOCALE === 'en' ? [] : vitrine }, null, 2) + '\n');
+  }
+
+  /* O blog (29/10/2026). Só sai o artigo com `revisado: true`: cada um foi
+     escrito para o site e passa pelo dono antes de ir ao ar (BLOG-PARA-REVISAR.md).
+     HF_BLOG_RASCUNHOS=1 mostra os rascunhos numa build LOCAL, para a revisão.
+     O blog é em português: a build em inglês sai sem artigos. */
+  {
+    const blog = readJson('data/blog.json');
+    for (const a of blog.artigos) {
+      if (typeof a.revisado !== 'boolean') throw new Error(`blog.json: ${a.slug} sem "revisado"`);
+    }
+    const rascunhos = process.env.HF_BLOG_RASCUNHOS === '1';
+    const aprovados = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
+    /* Texto com `destino` (31/10/2026, plano de SEO aprovado pelo dono) não é
+       artigo: é uma seção da página de destino (hoje só /alfabeto-hebraico,
+       que disputaria a mesma busca com um artigo do mesmo assunto). Mesma
+       trava de revisão; fora da lista do blog, do sitemap do blog e do rodapé. */
+    const DESTINOS = new Set(['/alfabeto-hebraico']);
+    for (const a of blog.artigos) {
+      if (a.destino !== undefined && !DESTINOS.has(a.destino)) throw new Error(`blog.json: ${a.slug} com destino desconhecido ${a.destino}`);
+    }
+    const artigos = aprovados.filter(a => !a.destino);
+    const paginas = aprovados.filter(a => a.destino);
+    writeFileSync(join(OUT, 'blog.json'), JSON.stringify({ artigos, paginas }, null, 2) + '\n');
+    /* Só a contagem, para o rodapé (que vai ao navegador) saber se há blog. */
+    writeFileSync(join(OUT, 'blog-resumo.json'), JSON.stringify({ artigos: artigos.length }) + '\n');
   }
 
   const catalogue = readJson('data/courses.json');
   const builtModules = course.modules.map(m => ({
     n: m.n, titlePt: m.titlePt, subPt: m.subPt, letters: m.letterIds.length
   }));
+  /* Na build em inglês o preço é o `usd` (Paddle, em dólar) e ocupa o lugar
+     do `brl`: as telas leem `price.brl` e formatam com `brl()`, que no inglês
+     escreve "$47" (app/src/lib/catalog.ts). Sem parcelas, sem desconto do
+     PIX, sem preço "depois". Produto sem `usd` não está à venda lá. */
+  const emDolar = c => {
+    if (LOCALE !== 'en') return c;
+    const usd = Number(c.price && c.price.usd);
+    return {
+      ...c,
+      /* Os textos do curso em inglês, quando o catálogo tem (`titleEn`,
+         `taglineEn`...): ocupam o lugar do campo `...Pt` que as telas leem. */
+      ...Object.fromEntries(Object.entries(c).filter(([k]) => k.endsWith('En'))
+        .map(([k, v]) => [k.slice(0, -2) + 'Pt', v])),
+      ...(usd > 0 ? {} : { aVenda: false }),
+      price: { brl: usd > 0 ? usd : 0, listBrl: null, installments: 1, pixDiscountPct: 0 }
+    };
+  };
   writeFileSync(join(OUT, 'courses.json'), JSON.stringify({
-    currency: catalogue.currency,
-    courses: catalogue.courses.map(c => {
+    currency: LOCALE === 'en' ? 'USD' : catalogue.currency,
+    /* O site em inglês só vende o curso de alfabetização: os cursos A1, A2 e
+       B1 existem só em português e não são anunciados lá (etapa 7). Livro e
+       combo ficam, desligados (`aVenda: false`), porque o código os procura
+       pelo slug. */
+    courses: catalogue.courses
+      .filter(c => LOCALE !== 'en' || (c.tipo && c.tipo !== 'curso') || Number(c.price && c.price.usd) > 0)
+      .map(emDolar).map(c => {
       const { modulesFrom, ...rest } = c;
       if (modulesFrom && modulesFrom !== 'alfabetizacao') {
         throw new Error(`courses.json: modulesFrom "${modulesFrom}" não corresponde a nenhum curso construído`);
@@ -378,6 +538,9 @@ function main() {
       for (const L of letters) {
         for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(NFC(w.he), w);
       }
+      /* E as das lições de som (Vet, Chaf, Fe...), onde {{טוֹב}}, {{סֵפֶר}} e
+         {{מֶלֶךְ}} passaram a ser ensinadas. */
+      for (const S of extras.sons.licoes) for (const w of S.palavras) if (!vocab.has(NFC(w.he))) vocab.set(NFC(w.he), w);
       const resolver = pointed => {
         const p = NFC(pointed);
         const w = vocab.get(p);
@@ -409,15 +572,60 @@ function main() {
         audioId: audioIdFor(g.he),
         words: g.words.map(w => ({ ...w, he: NFC(w.he), audioId: audioIdFor(w.he) }))
       }))
-    }
+    },
+    /* ── as lições de som (Vet, Chaf, Fe, Tch, Dj, J) ──────────────────
+       O par de cada som - o lado com daguesh, ou a letra sem o guéresh - sai
+       de letters.json e do quadro do daguesh, e não é reescrito na fonte: o
+       contraste que a lição mostra é, letra por letra, o que a lição da
+       letra ensinou. */
+    sons: extras.sons.licoes.map(S => {
+      /* O par: Vet/Chaf/Fe dividem a letra da lição anterior; o Sin e os sons
+         modernos dizem de qual letra são o outro lado (`parId`). */
+      const parId = S.tipo === 'daguesh' ? S.depoisDe : S.parId;
+      const L = letters.find(l => l.id === parId);
+      if (!L) throw new Error(`extras.sons: "${S.id}" aponta para a letra "${parId}", que não existe`);
+      const D = extras.dagesh.letters.find(d => d.id === parId);
+      const parPalavras = S.tipo === 'daguesh' ? (D?.hardWords ?? [])
+        /* Do Shin, só as palavras que têm MESMO o ponto à direita. Pelo ponto
+           sozinho: na ordem Unicode a vogal vem antes dele (שָׁ = ש + qamats
+           + ponto), e "שׁ" colado não aparece na palavra. */
+        : S.tipo === 'ponto' ? L.wordsToRead.filter(w => {
+            const ponto = [...NFC(S.parHe)].slice(1).join('');
+            return NFC(w.he).includes(ponto) && !NFC(w.he).includes([...NFC(S.he)].slice(1).join(''));
+          }).slice(0, 4)
+        : L.wordsToRead.slice(0, 4);
+      return {
+        ...S,
+        he: NFC(S.he), parHe: NFC(S.parHe),
+        finalHe: S.finalHe ? NFC(S.finalHe) : null,
+        parId,
+        /* O som sozinho: a letra com guéresh, ou a primeira sílaba sem ponto. */
+        audioId: audioIdFor(S.tipo === 'gerech' ? S.he : S.silabas[0].he),
+        silabas: S.silabas.map(withAudio),
+        /* As mesmas vogais, com o ponto: o par exato de cada sílaba. */
+        parSilabas: S.tipo !== 'gerech'
+          ? L.syllables.slice(0, S.silabas.length)
+              .map(s => ({ he: NFC(s.he), translit: s.translit, audioId: audioIdFor(s.he) }))
+          : [],
+        /* Com a ilustração, quando a palavra tem uma (o coração de לֵב). */
+        palavras: S.palavras.map(w => ({ ...word(w), audioId: audioIdFor(w.he) })),
+        parPalavras: parPalavras
+          .map(w => ({ he: NFC(w.he), translit: w.translit, pt: w.pt, audioId: audioIdFor(w.he) }))
+      };
+    })
   }, null, 2) + '\n');
 
   /* ── as frases ──────────────────────────────────────────────────────
      Copiadas com o hebraico normalizado e com o id de áudio já calculado,
      como tudo o mais: uma gravação futura encaixa sem renomear nada. O
-     `after` vem do dado e é conferido pela V20 do validate.js. */
+     `after` vem do dado e é conferido pela V20 do validate.js.
+
+     A trava da revisão (28/10/2026): uma frase com `"revisado": false` não
+     sai daqui, então nenhuma tela, exercício ou rota a vê. É a mesma regra
+     dos mini-textos - hebraico escrito para o curso só vai ao ar depois de
+     aprovado pelo dono. Sem o campo, a frase é das que já estavam no curso. */
   writeFileSync(join(OUT, 'sentences.json'), JSON.stringify({
-    sentences: sentences.sentences.map(s2 => ({
+    sentences: sentences.sentences.filter(s2 => s2.revisado !== false).map(s2 => ({
       ...s2,
       he: NFC(s2.he),
       audioId: audioIdFor(s2.he),
@@ -497,6 +705,329 @@ function main() {
     writeFileSync(join(OUT, 'culture.json'), JSON.stringify({ cards: [] }, null, 2) + '\n');
   }
 
+  /* ── as missões de módulo ───────────────────────────────────────────
+     Uma situação de verdade por módulo, que fecha o módulo com "eu usei
+     isto" em vez de itens soltos. O arquivo só CITA palavras do curso; o
+     significado e a transliteração vêm do próprio curso na hora de montar
+     (lib/engine/missao.ts), e `tests/missoes.test.ts` confere que cada
+     palavra existe e é legível com as letras daquele módulo. Aqui só a
+     forma, para que um arquivo torto pare a build e não a lição. */
+  const missoes = readJson('data/missoes.json').missoes;
+  const modulosVistos = new Set();
+  for (const m of missoes) {
+    if (!Number.isInteger(m.modulo) || modulosVistos.has(m.modulo)) {
+      throw new Error(`missoes.json: módulo ${m.modulo} inválido ou repetido`);
+    }
+    modulosVistos.add(m.modulo);
+    if (!Array.isArray(m.passos) || m.passos.length < 3) {
+      throw new Error(`missoes.json: a missão do módulo ${m.modulo} precisa de pelo menos 3 passos`);
+    }
+    for (const p of m.passos) {
+      if (!['ler', 'achar', 'transliterar'].includes(p.tipo)) {
+        throw new Error(`missoes.json: tipo de passo desconhecido "${p.tipo}" no módulo ${m.modulo}`);
+      }
+    }
+  }
+  /* ── as fotos de verdade das missões (28/10/2026) ───────────────────
+     Do Wikimedia Commons, com autor, licença e página de origem, e só as
+     que o dono aprovou (data/fotos-missoes.json). Uma foto aprovada sem
+     arquivo ou sem crédito para a build: o crédito sai SEMPRE junto da
+     imagem, é o que as licenças pedem. tests/fotos-missoes.test.ts. */
+  const LICENCAS_DAS_FOTOS = ['Public domain', 'CC0', 'CC BY 2.0', 'CC BY 2.5', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 2.5', 'CC BY-SA 3.0', 'CC BY-SA 4.0'];
+  const fotoDaMissao = new Map();
+  for (const f of readJson('data/fotos-missoes.json').fotos) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`fotos-missoes.json: a foto ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`fotos-missoes.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`fotos-missoes.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/missoes', f.arquivo))) throw new Error(`fotos-missoes.json: falta o arquivo app/public/media/missoes/${f.arquivo}`);
+    if (!fotoDaMissao.has(f.missao)) {
+      const { aprovada, ...publica } = f;
+      void aprovada;
+      fotoDaMissao.set(f.missao, publica);
+    }
+  }
+
+  /* ── o Hebraico na rua (28/10/2026) ──────────────────────────────────
+     Fotos reais de placas, do Wikimedia Commons, com as mesmas regras de
+     crédito das fotos das missões. Cada placa cita uma palavra do curso
+     (`palavra`) e lista todas as palavras do curso que aparecem nela
+     (`naPlaca`); só sai a aprovada pelo dono. Vai junto das missões, no
+     missoes.json (conteúdo pago). tests/hebraico-na-rua.test.ts. */
+  const placasDaRua = [];
+  for (const f of readJson('data/hebraico-na-rua.json').placas) {
+    if (f.aprovada !== true) continue;
+    for (const campo of ['id', 'arquivo', 'palavra', 'pagina', 'autor', 'licenca', 'mostraPt', 'largura', 'altura']) {
+      if (!f[campo]) throw new Error(`hebraico-na-rua.json: a placa ${f.id ?? '?'} não tem ${campo}`);
+    }
+    if (!LICENCAS_DAS_FOTOS.includes(f.licenca)) throw new Error(`hebraico-na-rua.json: licença não aceita em ${f.id}: ${f.licenca}`);
+    if (!/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/.test(f.pagina)) throw new Error(`hebraico-na-rua.json: ${f.id} precisa da página do Wikimedia Commons`);
+    if (!existsSync(join(ROOT, 'app/public/media/rua', f.arquivo))) throw new Error(`hebraico-na-rua.json: falta o arquivo app/public/media/rua/${f.arquivo}`);
+    if (!Array.isArray(f.naPlaca) || !f.naPlaca.map(NFC).includes(NFC(f.palavra))) {
+      throw new Error(`hebraico-na-rua.json: ${f.id} precisa listar a própria palavra em naPlaca`);
+    }
+    const { aprovada, ...publica } = f;
+    void aprovada;
+    placasDaRua.push({ ...publica, palavra: NFC(f.palavra), naPlaca: f.naPlaca.map(NFC) });
+  }
+
+  /* ── os mini-textos de leitura corrida ─────────────────────────────
+     Um texto curto por módulo, do 3 ao 7. São as únicas frases do curso
+     escritas para ele, e por isso cada um nasce com `revisado: false`: o
+     curso só mostra o texto depois que alguém que fala hebraico o aprovou
+     (lib/engine/textos.ts). Aqui, como nas missões, só a forma. */
+  const textos = readJson('data/textos.json').textos;
+  for (const t of textos) {
+    if (!Number.isInteger(t.modulo) || typeof t.revisado !== 'boolean') {
+      throw new Error(`textos.json: texto do módulo ${t.modulo} sem módulo ou sem "revisado"`);
+    }
+    if (!Array.isArray(t.linhas) || !t.linhas.length || !Array.isArray(t.perguntas) || !t.perguntas.length) {
+      throw new Error(`textos.json: o texto do módulo ${t.modulo} precisa de linhas e perguntas`);
+    }
+  }
+  /* Na build em inglês, o rascunho ainda não revisado fica de fora, e a
+     tradução dele não é cobrada: o aluno não o veria, e o português dele
+     ainda pode mudar na revisão. Aprovado, ele volta e passa a ser cobrado. */
+  if (LOCALE === 'en') {
+    textos.forEach((t, i) => {
+      if (t.revisado) return;
+      for (const chave of [...FALTAS.keys()]) if (chave.startsWith(`textos:textos/#${i}/`)) FALTAS.delete(chave);
+    });
+  }
+  const textosNaBuild = LOCALE === 'en' ? textos.filter(t => t.revisado) : textos;
+  const pontua = x => ({ ...x, he: NFC(x.he) });
+  writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
+    /* Cada linha com o id de áudio: a gravação dela (onda 4, gen-audio.mjs)
+       é o que o botão da linha e o "ouvir o texto" tocam. */
+    textos: textosNaBuild.map(t => ({
+      ...t,
+      linhas: t.linhas.map(l => ({ ...pontua(l), audioId: audioIdFor(l.he) })),
+      /* As palavras novas também: a gravação de cada uma (gen-audio.mjs,
+         "palavras do texto N") toca na lista embaixo do texto e, depois de
+         lido, no vocabulário e no treino. O prefixo solto e o nome próprio
+         não têm gravação e ficam sem id. */
+      novas: (t.novas || []).map(w => {
+        const x = pontua(w);
+        if (x.he.includes('־') || /\(nome\)\s*$/.test(x.pt)) return x;
+        return { ...x, audioId: audioIdFor(x.he.replace(/[?!.,:]+$/u, '').trim()) };
+      })
+    }))
+  }, null, 2) + '\n');
+
+  /* ── as leituras bônus (27/09/2026) ─────────────────────────────────
+     Textos bíblicos e bênçãos, trocados por XP em Recompensas. Pagos como
+     o resto: vão por /api/content, nunca no pacote. `after` é a letra mais
+     tardia da leitura - a loja só oferece o que o aluno já consegue ler. */
+  {
+    const { leituras: bonus, guia } = readJson('data/bonus.json');
+    const ordem = new Map();
+    for (const L of letters) {
+      ordem.set(NFC(L.letter), L.order);
+      if (L.finalForm) ordem.set(NFC(L.finalForm), L.order);
+    }
+    const ids = new Set();
+    for (const b of bonus) {
+      if (!/^[a-z0-9-]+$/.test(b.id || '') || ids.has(b.id)) throw new Error(`bonus.json: id inválido ou repetido "${b.id}"`);
+      ids.add(b.id);
+      if (!['texto', 'curto'].includes(b.tipo)) throw new Error(`bonus.json: ${b.id} com tipo "${b.tipo}"`);
+      if (typeof b.revisado !== 'boolean') throw new Error(`bonus.json: ${b.id} sem "revisado"`);
+      if (!Array.isArray(b.linhas) || !b.linhas.length) throw new Error(`bonus.json: ${b.id} sem linhas`);
+      for (const l of b.linhas) {
+        for (const c of NFC(l.he)) {
+          if (/[א-ת]/.test(c) && !ordem.has(c)) throw new Error(`bonus.json: ${b.id} usa "${c}", que o curso não ensina`);
+        }
+        if (!l.translit || !l.pt) throw new Error(`bonus.json: ${b.id} tem linha sem transliteração ou tradução`);
+      }
+    }
+    writeFileSync(join(OUT, 'bonus.json'), JSON.stringify({
+      leituras: bonus.map(b => ({
+        ...b,
+        after: Math.max(...b.linhas.flatMap(l => [...NFC(l.he)].map(c => ordem.get(c) ?? 0))),
+        linhas: b.linhas.map(l => ({ ...l, he: NFC(l.he), audioId: audioIdFor(l.he) }))
+      })),
+      /* O guia «O nikud da Bíblia»: cada exemplo com a gravação dele (a do
+         texto sem te'amim, quando `ouvir` existe). */
+      guia: guia && {
+        ...guia,
+        secoes: guia.secoes.map(s => ({
+          ...s,
+          exemplos: s.exemplos.map(e => ({ ...e, he: NFC(e.he), audioId: audioIdFor(e.ouvir ?? e.he) }))
+        }))
+      }
+    }, null, 2) + '\n');
+  }
+
+  /* As explicações do professor (data/gravacoes-professor.json): o id com
+     significado, o título que a tela mostra e o clipe do catálogo. O roteiro
+     fica de fora: é só para quem grava. */
+  {
+    /* As escritas e as geradas (abertura de módulo, apresentação e erro
+       comum de cada letra); a validação dos ids está lá. */
+    /* No site em inglês, nenhuma: são explicações FALADAS em português (a
+       tela some sozinha sem a gravação, GravacaoDoProfessor.tsx). Voltam
+       quando o professor gravar as versões em inglês (PLANO-INGLES.md). */
+    const gravacoes = LOCALE === 'en' ? [] : gravacoesDoProfessor(ROOT);
+    writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
+      gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
+        tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)
+      }]))
+    }, null, 2) + '\n');
+  }
+
+  writeFileSync(join(OUT, 'missoes.json'), JSON.stringify({
+    missoes: missoes.map(m => ({
+      ...m,
+      ...(fotoDaMissao.has(m.modulo) ? { foto: fotoDaMissao.get(m.modulo) } : {}),
+      passos: m.passos.map(p => ({
+        ...p,
+        he: NFC(p.he),
+        ...(p.erradas ? { erradas: p.erradas.map(NFC) } : {})
+      }))
+    })),
+    rua: placasDaRua
+  }, null, 2) + '\n');
+
+  /* ── o curso Hebraico A1 (06/10/2026) ────────────────────────────────
+     Pago, como o resto, mas de OUTRO curso: sai por /api/content/a1, que só
+     responde a quem comprou o hebraico-a1 (worker/src/api/content-a1.js).
+     Nada daqui entra no molde do alfabeto. Cada hebraico que se ouve (as
+     palavras, as linhas do diálogo e os itens de escuta e de ditado) ganha o
+     id da sua gravação, pela mesma conta de sempre (audioIdFor).
+
+     A fonte é data/a1/: curso.json (módulos, ordem, certificado) e um
+     arquivo por unidade. Saem DOIS arquivos:
+       · a1.json, o que o navegador recebe: o curso, as unidades e, do exame,
+         só as regras e os nomes das partes;
+       · a1-exame.json, as perguntas do exame COM o gabarito, que só o Worker
+         lê (api/exame-a1.js) - o exame é corrigido no servidor. */
+  const a1Curso = readJson('data/a1/curso.json');
+  const a1Nums = a1Curso.modulos.flatMap(m => m.unidades);
+  const a1Unidades = a1Nums.map(n => readJson(`data/a1/unidades/u${String(n).padStart(2, '0')}.json`));
+  const a1Exame = readJson('data/a1/exame.json');
+  const { _: _a1HistNota, ...a1Historia } = readJson('data/a1/historia.json');
+  void _a1HistNota;
+  const comAudio = x => ({ ...x, he: NFC(x.he), audioId: audioIdFor(x.he) });
+  const itemA1 = it => (it.t === 'ouvir' || it.t === 'ditado' ? { ...it, he: NFC(it.he), audioId: audioIdFor(it.he) }
+    : it.t === 'falar' ? { ...it, exemplo: NFC(it.exemplo), audioId: audioIdFor(it.exemplo) } : it);
+  const unidadeA1 = u => ({
+    ...u,
+    palavras: u.palavras.map(w => (w.formas ? { ...w, formas: w.formas.map(NFC) } : comAudio(w))),
+    dialogo: {
+      ...u.dialogo,
+      linhas: u.dialogo.linhas.map(comAudio),
+      glossario: (u.dialogo.glossario || []).map(comAudio)
+    },
+    ...(u.leitura ? { leitura: { ...u.leitura, linhas: u.leitura.linhas.map(comAudio), perguntas: u.leitura.perguntas.map(itemA1) } } : {}),
+    exercicios: u.exercicios.map(itemA1)
+  });
+  const { _: _a1Nota, ...a1Publico } = a1Curso;
+  void _a1Nota;
+  writeFileSync(join(OUT, 'a1.json'), JSON.stringify({
+    ...a1Publico,
+    unidades: a1Unidades.map(unidadeA1),
+    historia: a1Historia,
+    exame: {
+      sorteio: a1Exame.sorteio,
+      aprovacao: a1Exame.aprovacao,
+      partes: a1Exame.partes.map(p => ({ id: p.id, tituloPt: p.tituloPt, unidades: p.unidades }))
+    }
+  }) + '\n');
+  writeFileSync(join(OUT, 'a1-exame.json'), JSON.stringify({
+    sorteio: a1Exame.sorteio,
+    aprovacao: a1Exame.aprovacao,
+    partes: a1Exame.partes.map(p => ({ ...p, itens: p.itens.map(itemA1) }))
+  }) + '\n');
+
+  /* ── Raízes Sefarditas (21/10/2026) ────────────────────────────────
+     Outro produto, outro direito (raizes-sefarditas): sai por
+     /api/content/raizes (worker/src/api/content-raizes.js), nunca no pacote.
+     Desde 22/10/2026 o CONTEÚDO mora num repositório privado,
+     Moshikgueta/hebraicofluente-raizes, clonado em raizes/ (ignorado pelo
+     git daqui), como o editorial; HF_RAIZES aponta para outro lugar.
+     Só vão ao aluno as afirmações que podem aparecer no texto (VERIFICADO
+     ou CONTESTADO) e as fontes que elas citam.
+     Sem o clone (publicação sem RAIZES_TOKEN, ou quem só trabalha no curso
+     de hebraico), sai um raizes.json VAZIO, com a mesma forma: o site
+     inteiro builda, e as telas de Raízes dizem que o conteúdo não veio. */
+  const RAIZES = process.env.HF_RAIZES || join(ROOT, 'raizes');
+  const lerRaizes = p => JSON.parse(readFileSync(join(RAIZES, p), 'utf8'));
+  let raizesJson;
+  if (existsSync(join(RAIZES, 'data/curso.json'))) {
+    const raizesCurso = lerRaizes('data/curso.json');
+    const raizesModulos = raizesCurso.modulos
+      .filter(m => existsSync(join(RAIZES, `data/modulos/m${String(m.n).padStart(2, '0')}.json`)))
+      .map(m => {
+        const { _: _nota, ...modulo } = lerRaizes(`data/modulos/m${String(m.n).padStart(2, '0')}.json`);
+        void _nota;
+        return modulo;
+      });
+    const NO_TEXTO = new Set(['VERIFICADO', 'CONTESTADO']);
+    const raizesAfirmacoes = lerRaizes('data/afirmacoes.json').afirmacoes
+      .filter(a => NO_TEXTO.has(a.status))
+      .map(({ id, modulo, afirmacao, fontes, evidencia, limitacoes, interpretacoes_concorrentes, status, pagina_ou_secao, acesso, data_consulta }) =>
+        ({ id, modulo, afirmacao, fontes, evidencia, limitacoes, interpretacoes: interpretacoes_concorrentes, status, pagina: pagina_ou_secao, acesso, consulta: data_consulta }));
+    const citadas = new Set(raizesAfirmacoes.flatMap(a => a.fontes));
+    const { _: _mapaNota, ...raizesMapa } = lerRaizes('data/mapa-peninsula.json');
+    void _mapaNota;
+    citadas.add(raizesMapa.fonte);
+    /* Os outros desenhos (data/mapa-<nome>.json), que uma atividade pede pelo
+       campo `desenho`. A península continua em `mapa`. */
+    const raizesMapas = {};
+    for (const arq of readdirSync(join(RAIZES, 'data')).filter(n => /^mapa-.+\.json$/.test(n) && n !== 'mapa-peninsula.json')) {
+      const { _: _n, ...d } = lerRaizes(`data/${arq}`);
+      void _n;
+      raizesMapas[arq.slice(5, -5)] = d;
+      citadas.add(d.fonte);
+    }
+    const raizesFontes = lerRaizes('data/fontes.json').fontes
+      .filter(f => citadas.has(f.id))
+      .map(({ id, nivel, tipo, autor, titulo, ano, editora_ou_periodico, url, acesso, data_consulta, abnt }) =>
+        ({ id, nivel, tipo, autor, titulo, ano, publicacao: editora_ou_periodico, url, acesso, consulta: data_consulta, abnt }));
+    const { _: _cursoNota, ...raizesPublico } = raizesCurso;
+    void _cursoNota;
+    /* O Atlas (data/atlas.json) e as páginas de lugar (data/lugares/*.json),
+       atrás do mesmo portão. As notas `_` ficam no repositório. */
+    const semNota = d => { const { _: _n, ...resto } = d; void _n; return resto; };
+    const raizesAtlas = existsSync(join(RAIZES, 'data/atlas.json')) ? semNota(lerRaizes('data/atlas.json')) : undefined;
+    const raizesLugares = {};
+    if (existsSync(join(RAIZES, 'data/lugares'))) {
+      for (const arq of readdirSync(join(RAIZES, 'data/lugares')).filter(n => n.endsWith('.json'))) {
+        raizesLugares[arq.slice(0, -5)] = semNota(lerRaizes(`data/lugares/${arq}`));
+      }
+    }
+    /* Os personagens históricos (data/personagens.json, 22/10/2026). */
+    const raizesPersonagens = existsSync(join(RAIZES, 'data/personagens.json')) ? lerRaizes('data/personagens.json').personagens : undefined;
+    /* As fotos escolhidas (data/fotos.json, 22/10/2026): cada uma com autor, licença e
+       página de origem. O arquivo vai para app/public/raizes/fotos/, atrás do portão
+       de /raizes (o mesmo direito do conteúdo). Sem ficha, não vai. */
+    let raizesFotos;
+    if (existsSync(join(RAIZES, 'data/fotos.json'))) {
+      raizesFotos = lerRaizes('data/fotos.json').fotos;
+      const destino = join(ROOT, 'app/public/raizes/fotos');
+      rmSync(destino, { recursive: true, force: true });
+      mkdirSync(destino, { recursive: true });
+      for (const f of raizesFotos) {
+        if (!f.autor || !f.licenca || !f.pagina) throw new Error(`foto ${f.id}: falta autor, licença ou página`);
+        copyFileSync(join(RAIZES, 'fotos/escolhidas', f.arquivo), join(destino, f.arquivo));
+      }
+    }
+    raizesJson = { ...raizesPublico, conteudo: raizesModulos, afirmacoes: raizesAfirmacoes, fontes: raizesFontes, mapa: raizesMapa, mapas: raizesMapas, atlas: raizesAtlas, lugares: raizesLugares, personagens: raizesPersonagens, fotos: raizesFotos };
+  } else {
+    console.warn(`  ! Raízes Sefarditas: ${RAIZES}/data não existe; raizes.json sai vazio.`);
+    raizesJson = {
+      slug: 'raizes-sefarditas', titulo: 'Raízes Sefarditas', subtitulo: '', aviso: '', semConteudo: true,
+      edicao: { numero: 0, rotulo: '', atualizadoEm: '', revisaoHumana: false },
+      regras: { desbloqueio: '', conclusaoDoModulo: '' },
+      modulos: [], conquistas: [],
+      certificado: { titulo: '', curso: '', subtitulo: '', texto: '', naoCertifica: [], nota: '' },
+      conteudo: [], afirmacoes: [], fontes: [],
+      mapa: { quadro: { oeste: 0, leste: 1, sul: 0, norte: 1 }, largura: 1, altura: 1, projecao: { latitudePadrao: 0, escala: 1 }, terra: '', fonte: '' }
+    };
+  }
+  writeFileSync(join(OUT, 'raizes.json'), JSON.stringify(raizesJson) + '\n');
+
   /* ── stroke geometry ────────────────────────────────────────────────
      The SVG in assets/stroke-order/ is the printed diagram: the whole letter,
      with numbered start dots. This is the same run's machine-readable half -
@@ -519,6 +1050,44 @@ function main() {
   mkdirSync(pub, { recursive: true });
   cpSync(join(ROOT, 'assets/fonts'), join(pub, 'fonts'), { recursive: true });
   cpSync(join(ROOT, 'assets/stroke-order'), join(pub, 'stroke-order'), { recursive: true });
+
+  /* A amostra pública do traçado. `/stroke-order/` inteiro fica atrás do
+     portão (worker/src/gate.js) desde 24/09/2026: são 27 diagramas, material
+     do curso, e a landing usa DOIS. Só esses dois são copiados para cá, e a
+     pasta é recriada do zero a cada exportação, para que uma letra tirada da
+     lista não continue publicada por esquecimento. Uma letra nova na landing
+     entra nesta lista - tests/conteudo.test.ts reprova se faltar. */
+  const AMOSTRA_TRACADO = ['alef', 'shin'];
+  const amostra = join(pub, 'tracado-amostra');
+  rmSync(amostra, { recursive: true, force: true });
+  mkdirSync(amostra, { recursive: true });
+  for (const id of AMOSTRA_TRACADO) {
+    cpSync(join(ROOT, 'assets/stroke-order', `${id}.svg`), join(amostra, `${id}.svg`));
+  }
+
+  /* A amostra pública do ÁUDIO (28/09/2026), pelo mesmo motivo da do
+     traçado: /audio/ inteiro fica atrás do portão, e o "Ouça e fale" da
+     landing (components/landing/OuvirEFalar.tsx) toca quatro gravações.
+     Copiadas com nome legível e recriadas do zero a cada exportação.
+     A lista é a mesma de lib/amostra-audio.ts - tests/amostra-audio.test.ts
+     confere as duas. Uma gravação que falte derruba a exportação: a capa não
+     pode ir ao ar com um botão "Ouvir" mudo. */
+  const AMOSTRA_AUDIO = {
+    sha: 'שַׁ', ma: 'מַ', la: 'לַ', shalom: 'שָׁלוֹם',
+    shin: 'שִׁין', mem: 'מֵם', lamed: 'לָמֶד',
+    alef: 'אָלֶף', 'alef-a': 'אַ', 'alef-e': 'אֶ', 'alef-i': 'אִ', 'alef-o': 'אוֹ', 'alef-u': 'אוּ',
+    aba: 'אַבָּא', etmol: 'אֶתְמוֹל', ochel: 'אֹכֶל',
+    /* As páginas do alfabeto (23/10/2026, app/src/lib/alfabeto-publico.ts). */
+    tav: 'תָו', ima: 'אִמָא', emet: 'אֶמֶת', laila: 'לַיְלָה'
+  };
+  const amostraAudio = join(pub, 'amostra-audio');
+  rmSync(amostraAudio, { recursive: true, force: true });
+  mkdirSync(amostraAudio, { recursive: true });
+  for (const [slug, he] of Object.entries(AMOSTRA_AUDIO)) {
+    const f = join(ROOT, 'audio', `${audioIdFor(he)}.mp3`);
+    if (!existsSync(f)) throw new Error(`amostra de áudio: falta a gravação de ${he} (${audioIdFor(he)}.mp3)`);
+    cpSync(f, join(amostraAudio, `${slug}.mp3`));
+  }
 
   /* The recordings land in audio/ at the repo root - one obvious place for a
      speaker to drop files - and are copied in from there. The app serves
@@ -552,10 +1121,42 @@ function main() {
     ` * degrades visibly rather than inventing a pronunciation. */\n` +
     `export const AUDIO_MANIFEST: readonly string[] = ${JSON.stringify(clips)};\n`);
 
+  /* Os vídeos do "Me explica, Moshik" (28/10/2026): um por letra, em video/
+     na raiz, com o nome da letra (`alef.mp4`) e, se houver, a legenda
+     (`alef.vtt`). Copiados para public/video/, que fica atrás do portão
+     (gate.js), e listados no manifesto: a folha só mostra o vídeo que existe.
+     Nome que não é letra do curso, formato que não é mp4 ou arquivo acima de
+     25 MiB (o teto de um arquivo no servidor de ativos da Cloudflare) param
+     a build, com o nome do arquivo. */
+  const videos = prepararVideos(join(ROOT, 'video'), join(pub, 'video'), new Set(letters.map(l => l.id)));
+  writeFileSync(join(ROOT, 'app/src/lib/video-manifest.ts'),
+    `/* GERADO por tools/export-content.mjs a partir de video/ na raiz (ver video/README.md).\n` +
+    ` * Uma entrada por letra com vídeo do professor; vazio = nenhum vídeo ainda. */\n` +
+    `export type VideoDaLetra = { letra: string; legenda: boolean };\n` +
+    `export const VIDEO_MANIFEST: readonly VideoDaLetra[] = ${JSON.stringify(videos)};\n`);
+  if (videos.length) console.log(`  vídeo: ${videos.length} letra(s) com vídeo em app/public/video`);
+
   const words = letters.reduce((a, l) => a + l.wordsToRead.length + l.wordsToRecognize.length, 0);
   console.log(`  ${letters.length} letras · ${modules.length} módulos · ${words} palavras → app/content/`);
   console.log(`  áudio: ${clips.length} arquivo(s) em app/public/audio` +
     (clips.length ? '' : ' - os exercícios de audição ficam marcados como indisponíveis'));
+
+  if (LOCALE === 'en') relatarTraducao();
+}
+
+/* O que ficou sem inglês vai para app/content/_traducao.json e para o resumo.
+   Com HF_I18N_ESTRITO=1 (a publicação do site em inglês), qualquer falta
+   para a build: português no site de fora é defeito, não rascunho. */
+function relatarTraducao() {
+  const faltas = [...FALTAS.values()];
+  writeFileSync(join(OUT, '_traducao.json'), JSON.stringify({ faltas }, null, 2) + '\n');
+  const por = {};
+  for (const f of faltas) por[f.motivo] = (por[f.motivo] ?? 0) + 1;
+  const resumo = Object.entries(por).map(([m, n]) => `${n} ${m}`).join(', ');
+  console.log(`  inglês: ${faltas.length ? resumo : 'completo'} (app/content/_traducao.json)`);
+  if (faltas.length && process.env.HF_I18N_ESTRITO === '1') {
+    throw new Error(`build em inglês com ${faltas.length} texto(s) sem tradução válida: ${resumo}`);
+  }
 }
 
 main();

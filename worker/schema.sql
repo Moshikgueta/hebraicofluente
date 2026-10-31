@@ -123,6 +123,40 @@ CREATE TABLE IF NOT EXISTS password_resets (
 CREATE INDEX IF NOT EXISTS password_resets_abertos
   ON password_resets(account_id) WHERE used_at IS NULL;
 
+-- ── confirmação de e-mail ─────────────────────────────────────────────────
+-- Prova de que quem criou a conta recebe o e-mail dela.
+--
+-- Sem isto qualquer pessoa cria uma conta com o endereço de outra, e a dona
+-- do endereço só descobre quando tenta se cadastrar e ouve "já existe uma
+-- conta com esse e-mail". O e-mail de confirmação chega a ela - e é ele que
+-- avisa, se não foi ela quem criou, como tomar a conta de volta.
+--
+-- Uma linha por link enviado. `confirmed_at` preenchido é a prova, e ela vale
+-- para o par (conta, endereço): o dia em que o e-mail da conta mudar, a prova
+-- antiga não confirma o endereço novo.
+--
+-- Como em `password_resets`, o que está gravado é o sha256 do token, e o hash
+-- é a chave primária. Uma recuperação de senha concluída também prova a caixa
+-- de entrada, e grava aqui uma linha já confirmada, com `reset:` na frente do
+-- hash para não colidir com um link de confirmação.
+--
+-- Tabela nova (24/09/2026): aplicar com
+--   npx wrangler d1 execute hebraico-fluente --file=worker/schema.sql --remote
+-- Enquanto ela não existe, o site funciona igual e só não confirma ninguém -
+-- `/api/health` reporta `verificacao: false`.
+CREATE TABLE IF NOT EXISTS email_verifications (
+  token_hash   TEXT    PRIMARY KEY,
+  account_id   INTEGER NOT NULL REFERENCES accounts(id),
+  email        TEXT    NOT NULL,
+  created_at   INTEGER NOT NULL,
+  expires_at   INTEGER NOT NULL,
+  confirmed_at INTEGER
+);
+
+-- "Esta conta tem o e-mail confirmado?" é perguntado a cada /api/me.
+CREATE INDEX IF NOT EXISTS email_verifications_conta
+  ON email_verifications(account_id, email);
+
 -- Trilha do que mexeu em acesso. É o que responde "por que essa pessoa perdeu
 -- o curso?" três meses depois, quando ninguém lembra.
 CREATE TABLE IF NOT EXISTS access_log (
@@ -187,3 +221,378 @@ CREATE TABLE IF NOT EXISTS progress (
   rev        INTEGER NOT NULL DEFAULT 1,    -- sobe a cada escrita aceita
   updated_at INTEGER NOT NULL
 );
+
+-- ── registros de acesso (Marco Civil da Internet, art. 15) ────────────────
+-- O provedor de aplicação constituído como pessoa jurídica, com fins
+-- econômicos, tem de guardar os registros de acesso à aplicação - data e
+-- hora de uso a partir de um endereço IP - por SEIS MESES, em sigilo. É o
+-- que uma ordem judicial pede quando alguém usa a conta de outra pessoa.
+--
+-- Uma linha por entrada na conta: cadastro, login e senha redefinida (que
+-- também entra). O IP é o inteiro, como a Cloudflare o entrega - não o /64
+-- dos freios. Fica 190 dias (seis meses mais uma folga) e a varredura de 5
+-- em 5 min apaga o resto: guardar além do exigido seria dado pessoal sem
+-- finalidade (LGPD, art. 6º, III).
+--
+-- NÃO é apagado quando a conta é apagada: é obrigação legal (LGPD, art. 16,
+-- I), e a conta apagada é esvaziada, não removida, então a referência vale.
+--
+-- Sem AUTOINCREMENT de propósito: ele custa uma escrita a mais por linha
+-- (a tabela sqlite_sequence), e aqui nada depende de ids nunca reusados.
+CREATE TABLE IF NOT EXISTS registros_acesso (
+  id         INTEGER PRIMARY KEY,
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  evento     TEXT    NOT NULL,              -- 'cadastro' | 'entrada' | 'senha-redefinida'
+  ip         TEXT    NOT NULL,
+  criado_em  INTEGER NOT NULL
+);
+
+-- Para a faxina, que apaga por idade.
+CREATE INDEX IF NOT EXISTS registros_acesso_idade ON registros_acesso(criado_em);
+
+-- ── desistência da compra (CDC, art. 49; Decreto 7.962/2013, art. 5º) ─────
+-- O pedido de desistência feito pelo próprio site - "pela mesma ferramenta
+-- utilizada para a contratação", como o decreto exige. Uma linha por pedido
+-- de compra: pedir de novo não cria outra, e o momento do primeiro pedido é
+-- o que conta para o prazo.
+--
+-- Desde 28/09/2026 o estorno é pedido à Mercado Pago pelo próprio site, na
+-- hora (ver a tabela `estornos`, no fim deste arquivo); quando ela confirma,
+-- `applyPayment` fecha o acesso sozinho. Esta tabela é a prova de QUANDO a
+-- pessoa pediu - que é o que decide se estava dentro dos sete dias.
+CREATE TABLE IF NOT EXISTS arrependimentos (
+  order_id   TEXT    PRIMARY KEY REFERENCES orders(id),
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  pedido_em  INTEGER NOT NULL,
+  ip         TEXT    NOT NULL DEFAULT ''
+);
+
+-- ── gravações do painel (/admin/gravar) ───────────────────────────────────
+-- O áudio que o dono do curso grava pelo navegador. Uma linha por clipe, com
+-- o id do catálogo (`he-xxxxxxxx`, data/audio.json) como chave: gravar de
+-- novo SUBSTITUI. O Worker serve daqui antes do arquivo do git, no mesmo
+-- endereço /audio/<id>.mp3 - ver worker/src/api/audio.js.
+--
+-- `dados` é o arquivo como o navegador gravou (audio/mp4 no Safari; WAV no
+-- navegador que só grava WebM). `inicio_ms`/`fim_ms` é onde a voz começa e
+-- termina dentro dele, medido pelo painel; o curso toca só esse trecho.
+--
+-- `autor` é o e-mail, e não uma chave para `accounts`, de propósito: a
+-- gravação é conteúdo do curso, e não pode travar nem sumir quando uma conta
+-- é apagada.
+CREATE TABLE IF NOT EXISTS gravacoes (
+  audio_id      TEXT    PRIMARY KEY,
+  tipo          TEXT    NOT NULL,
+  dados         BLOB    NOT NULL,
+  tamanho       INTEGER NOT NULL,
+  inicio_ms     INTEGER,
+  fim_ms        INTEGER,
+  duracao_ms    INTEGER,
+  autor         TEXT    NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
+
+-- ── relatos de erro (o botão "Achei um erro" dos exercícios) ─────────────
+-- DESLIGADO em 27/09/2026, a pedido do dono do curso: o botão, a rota que
+-- recebia (/api/relatos) e o painel saíram. A tabela fica só para não
+-- apagar em silêncio o que já estava no banco de produção; nada mais lê
+-- nem grava aqui. Apagá-la é um `DROP TABLE relatos` de propósito.
+-- Uma linha por relato. `foto` é o exercício como o aluno o viu (JSON:
+-- enunciado, hebraico, alternativas, a certa e a escolhida) - os exercícios
+-- são sorteados, e sem a foto o relato não aponta para nada.
+--
+-- SEM conta, de propósito: o relato exige sessão, mas não guarda quem mandou.
+-- Não é dado pessoal, não trava a exclusão de conta e não entra na limpeza
+-- das contas de teste.
+CREATE TABLE IF NOT EXISTS relatos (
+  id           INTEGER PRIMARY KEY,
+  exercicio    TEXT    NOT NULL,
+  tipo         TEXT    NOT NULL DEFAULT '',
+  letra        TEXT    NOT NULL DEFAULT '',
+  rota         TEXT    NOT NULL DEFAULT '',
+  motivo       TEXT    NOT NULL,              -- resposta | hebraico | audio | confuso | outro
+  comentario   TEXT    NOT NULL DEFAULT '',
+  foto         TEXT    NOT NULL,
+  criado_em    INTEGER NOT NULL,
+  resolvido_em INTEGER
+);
+CREATE INDEX IF NOT EXISTS relatos_abertos ON relatos (resolvido_em, criado_em);
+
+-- O teste A/B da capa (28/09/2026). Só TOTAIS por dia e versão: quantos viram
+-- o hero, clicaram no botão, chegaram ao checkout e compraram. Nenhuma coluna
+-- identifica pessoa. Ver worker/src/api/ab.js.
+CREATE TABLE IF NOT EXISTS ab_contagens (
+  exp      TEXT    NOT NULL,
+  variante TEXT    NOT NULL,
+  evento   TEXT    NOT NULL,
+  dia      TEXT    NOT NULL,
+  n        INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (exp, variante, evento, dia)
+);
+
+-- `ab_compras` (01/10/2026, SEC-A-008): os pedidos pagos que já viraram uma
+-- `compra` no teste. Só o id do pedido, para contar cada um uma vez; a
+-- versão vai só para o total em `ab_contagens`. Uma `compra` sem pedido pago
+-- da própria sessão não conta (api/ab.js). 60 dias de guarda (alertas.js).
+CREATE TABLE IF NOT EXISTS ab_compras (
+  order_id TEXT    PRIMARY KEY,
+  em       INTEGER NOT NULL
+);
+
+-- ── estorno automático da desistência (28/09/2026) ────────────────────────
+-- Quando o aluno desiste pelo site dentro dos sete dias, o próprio site pede o
+-- estorno à Mercado Pago (POST /v1/payments/{id}/refunds). Esta tabela é o
+-- estado desse pedido de estorno, uma linha por pedido de compra:
+--
+--   pendente   ainda não conseguimos pedir; a varredura tenta de novo em
+--              `proxima_em` (intervalo crescente)
+--   pedido     a Mercado Pago aceitou o estorno; falta ela confirmar, e aí
+--              `applyPayment` fecha o acesso como sempre
+--   concluido  o pedido de compra está `refunded`
+--   manual     não há como estornar sozinho (PIX direto, liberação à mão,
+--              sem credencial): o dono estorna, e recebe alerta diário
+--   erro       oito tentativas falharam: vira manual, com alerta diário
+--
+-- Tabela nova, e não colunas novas em `arrependimentos`: a publicação aplica
+-- este arquivo com CREATE IF NOT EXISTS, e um ALTER TABLE nunca chegaria à
+-- produção (auditoria de 28/09, INFRA-005).
+CREATE TABLE IF NOT EXISTS estornos (
+  order_id      TEXT    PRIMARY KEY REFERENCES orders(id),
+  payment_id    TEXT    NOT NULL DEFAULT '',
+  estado        TEXT    NOT NULL,
+  tentativas    INTEGER NOT NULL DEFAULT 0,
+  proxima_em    INTEGER NOT NULL DEFAULT 0,
+  refund_id     TEXT    NOT NULL DEFAULT '',
+  erro          TEXT    NOT NULL DEFAULT '',
+  criado_em     INTEGER NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS estornos_estado ON estornos (estado, proxima_em);
+
+-- ── monitoramento (28/09/2026) ────────────────────────────────────────────
+-- `batimentos`: quando a varredura de 5 em 5 minutos rodou pela última vez.
+-- /api/health responde `monitor: false` se ela parou, e o monitor externo de
+-- disponibilidade avisa o dono. Um cron que parou era indistinguível de um
+-- cron sem trabalho (auditoria, INFRA-002/INFRA-013).
+CREATE TABLE IF NOT EXISTS batimentos (
+  nome TEXT    PRIMARY KEY,
+  em   INTEGER NOT NULL
+);
+-- Desde 01/10/2026 (SEC-A-005) a linha `backup` é o carimbo do backup
+-- diário: scripts/backup-nuvem.sh a grava depois de guardar a cópia no R2, e
+-- o alerta diário avisa quando ela passa de 36 h.
+
+-- `respostas_5xx`: quantas respostas 5xx o Worker deu, por hora (01/10/2026,
+-- SEC-A-005). Uma linha por hora, não por erro, então uma rajada de erros
+-- não enche o banco; 7 dias de guarda (alertas.js). Conta o que o Worker
+-- respondeu: um erro do próprio D1 não consegue se contar aqui, e o número
+-- completo (com os erros da plataforma) fica no painel da Cloudflare.
+CREATE TABLE IF NOT EXISTS respostas_5xx (
+  hora INTEGER PRIMARY KEY,   -- início da hora, em ms
+  n    INTEGER NOT NULL
+);
+
+-- `avisos`: cada alerta mandado ao dono, pela chave que o deduplica (por
+-- exemplo `desistencias:2026-09-28`, `operacao:2026-09-28T14`). Garante um
+-- lembrete por dia e um alerta de erro por hora, e não um a cada 5 minutos.
+CREATE TABLE IF NOT EXISTS avisos (
+  chave      TEXT    PRIMARY KEY,
+  enviado_em INTEGER NOT NULL
+);
+
+-- Os avisos de fim de acesso ao aluno (01/10/2026, auditoria PAY-B-004):
+-- 30 dias antes, 7 dias antes e no dia do fim (`marco` = d30 | d7 | fim).
+-- Uma linha por aviso mandado; a chave inclui o vencimento, então uma
+-- renovação muda a data e os marcos recomeçam, e a varredura que roda de
+-- novo não repete o mesmo aviso. Ver worker/src/vencimento.js.
+CREATE TABLE IF NOT EXISTS avisos_vencimento (
+  account_id  INTEGER NOT NULL,
+  course_slug TEXT    NOT NULL,
+  expires_at  INTEGER NOT NULL,
+  marco       TEXT    NOT NULL,
+  enviado_em  INTEGER NOT NULL,
+  PRIMARY KEY (account_id, course_slug, expires_at, marco)
+);
+
+-- Quem pediu, no perfil, um e-mail quando o próximo curso abrir (28/09/2026,
+-- auditoria LEGAL-019). A linha existir É o consentimento; sair apaga a
+-- linha. Ver worker/src/api/novidades.js.
+CREATE TABLE IF NOT EXISTS novidades (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  criado_em  INTEGER NOT NULL
+);
+
+-- Quem pediu, no perfil, o lembrete para estudar (28/10/2026). A linha
+-- existir É o consentimento; sair apaga a linha. `ultimo_dia` é o último dia
+-- (Brasília, YYYY-MM-DD) em que a varredura cuidou da conta; `seguidos`,
+-- quantos lembretes saíram desde a última vez que a pessoa estudou (no
+-- terceiro, param até ela voltar). Ver worker/src/lembrete.js.
+CREATE TABLE IF NOT EXISTS lembretes_estudo (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  criado_em  INTEGER NOT NULL,
+  ultimo_dia TEXT,
+  seguidos   INTEGER NOT NULL DEFAULT 0
+);
+
+-- Uma execução por vez da varredura de 5 em 5 minutos (28/09/2026,
+-- auditoria INFRA-013). `ate` = até quando a trava vale; ver pegarTrava em
+-- worker/src/lib/db.js.
+CREATE TABLE IF NOT EXISTS travas (
+  nome TEXT    PRIMARY KEY,
+  ate  INTEGER NOT NULL
+);
+
+-- As migrações que já rodaram (28/09/2026, auditoria INFRA-005). Este
+-- arquivo só CRIA o que não existe; uma coluna nova numa tabela que já está
+-- no ar é um arquivo em worker/migrations/, aplicado uma vez só pela
+-- publicação. Ver worker/migrations/README.md.
+CREATE TABLE IF NOT EXISTS migracoes (
+  nome       TEXT    PRIMARY KEY,
+  aplicado_em INTEGER NOT NULL
+);
+
+-- A marca invisível de cada conta no conteúdo do curso (29/09/2026, a
+-- pedido do dono: rastrear uma cópia pirata até a conta de onde saiu). Um
+-- número aleatório, sem relação com o id nem com o e-mail; sai apagado com
+-- a conta. Ver worker/src/lib/marca.js.
+CREATE TABLE IF NOT EXISTS marcas (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  marca      TEXT    NOT NULL UNIQUE,
+  criado_em  INTEGER NOT NULL
+);
+
+-- Os aparelhos com sessão aberta em cada conta (29/09/2026). No máximo
+-- três: um login num quarto encerra o mais antigo. O id vai no cookie
+-- (`ap`); apagar a linha desconecta aquele aparelho. Nada do aparelho em
+-- si é guardado - nem modelo, nem IP. Ver worker/src/lib/aparelhos.js.
+CREATE TABLE IF NOT EXISTS aparelhos (
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  aparelho   TEXT    NOT NULL,
+  criado_em  INTEGER NOT NULL,
+  PRIMARY KEY (account_id, aparelho)
+);
+
+-- Os depoimentos dos alunos (29/09/2026). Um por conta, escrito pelo próprio
+-- aluno em /depoimento. Só vai ao ar com `publicar` = 1 (a autorização do
+-- aluno) E `estado` = 'aprovado' (a leitura do dono). Retirar a autorização
+-- apaga a linha. Ver worker/src/api/depoimentos.js.
+CREATE TABLE IF NOT EXISTS depoimentos (
+  account_id    INTEGER PRIMARY KEY REFERENCES accounts(id),
+  texto         TEXT    NOT NULL,
+  -- como a pessoa quer aparecer: 'nome' (nome e cidade), 'iniciais', 'anonimo'
+  forma         TEXT    NOT NULL,
+  nome_publico  TEXT    NOT NULL DEFAULT '',
+  cidade        TEXT    NOT NULL DEFAULT '',
+  publicar      INTEGER NOT NULL DEFAULT 0,
+  contato       INTEGER NOT NULL DEFAULT 0,
+  -- 'novo' (o dono ainda não leu), 'aprovado', 'recusado'
+  estado        TEXT    NOT NULL DEFAULT 'novo',
+  criado_em     INTEGER NOT NULL,
+  atualizado_em INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS depoimentos_estado ON depoimentos(estado, atualizado_em);
+
+-- O aceite dos Termos de Uso no cadastro (30/09/2026): quando e qual versão
+-- (a data de `politicas.atualizadoEm` em data/empresa.json). Nada além disso:
+-- nem IP, nem aparelho. Sai com a conta (deleteAccount).
+CREATE TABLE IF NOT EXISTS aceites (
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  documento  TEXT    NOT NULL,
+  versao     TEXT    NOT NULL,
+  aceito_em  INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS aceites_conta ON aceites(account_id);
+
+-- Onde os alunos erram e onde param (30/09/2026): só contadores por dia,
+-- sem conta, e-mail, IP ou horário. Chaves `r|tipo|lição|1` (resposta
+-- certa), `r|tipo|lição|0` (errada) e `e|lição|etapa` (etapa concluída pela
+-- primeira vez). Saem depois de um ano. Ver worker/src/api/estatisticas.js.
+CREATE TABLE IF NOT EXISTS estatisticas (
+  dia   TEXT    NOT NULL,
+  chave TEXT    NOT NULL,
+  n     INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (dia, chave)
+);
+
+-- O código de seis dígitos do segundo fator do administrador (30/09/2026):
+-- só o hash, 10 minutos, 5 tentativas; um por conta, o novo substitui o
+-- anterior. Ver worker/src/api/admin-codigo.js e lib/admin.js.
+CREATE TABLE IF NOT EXISTS admin_codigos (
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  hash       TEXT    NOT NULL,
+  expira     INTEGER NOT NULL,
+  tentativas INTEGER NOT NULL DEFAULT 0
+);
+
+-- "Como foi esta lição?" (05/10/2026). Uma linha por avaliação, ANÔNIMA: a
+-- lição (id da letra), a nota (facil | ok | dificil), o comentário opcional e
+-- a data, sem a conta - como os relatos. Ver worker/src/api/avaliacoes.js.
+CREATE TABLE IF NOT EXISTS avaliacoes_licao (
+  id         INTEGER PRIMARY KEY,
+  licao      TEXT    NOT NULL,
+  nota       TEXT    NOT NULL,
+  comentario TEXT    NOT NULL DEFAULT '',
+  criado_em  INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS avaliacoes_licao_data ON avaliacoes_licao (criado_em);
+
+-- O exame final do A1, corrigido no servidor (06/10/2026). Uma linha por
+-- prova sorteada: o sorteio (que itens e em que ordem saíram as opções), e,
+-- depois de entregue, a nota e as partes. É desta tabela, e não do progresso
+-- que o navegador guarda, que sai a aprovação. Ver worker/src/api/exame-a1.js.
+CREATE TABLE IF NOT EXISTS provas_a1 (
+  id          TEXT    PRIMARY KEY,
+  account_id  INTEGER NOT NULL REFERENCES accounts(id),
+  sorteio     TEXT    NOT NULL,
+  criada_em   INTEGER NOT NULL,
+  entregue_em INTEGER,
+  nota        REAL,
+  partes      TEXT
+);
+CREATE INDEX IF NOT EXISTS provas_a1_conta ON provas_a1 (account_id, criada_em);
+
+-- O certificado: um por conta e por curso, emitido só com uma prova
+-- aprovada em provas_a1. O id é o código que se confere na página pública
+-- /verificar-certificado/, que mostra o nome, o curso e a data, e só se
+-- `publico` = 1 (o aluno pode desligar). Ver worker/src/api/exame-a1.js.
+CREATE TABLE IF NOT EXISTS certificados (
+  id          TEXT    PRIMARY KEY,
+  account_id  INTEGER NOT NULL REFERENCES accounts(id),
+  curso       TEXT    NOT NULL,
+  nome        TEXT    NOT NULL,
+  nota        REAL    NOT NULL,
+  aprovado_em INTEGER NOT NULL,
+  emitido_em  INTEGER NOT NULL,
+  publico     INTEGER NOT NULL DEFAULT 1,
+  UNIQUE (account_id, curso)
+);
+
+-- Os lembretes dos primeiros dias depois da compra (23/10/2026, plano de
+-- marketing): um marco (d1, d3, d7) por pedido, uma vez. Ver
+-- worker/src/ativacao.js.
+CREATE TABLE IF NOT EXISTS avisos_ativacao (
+  order_id    TEXT    NOT NULL,
+  marco       TEXT    NOT NULL,
+  enviado_em  INTEGER NOT NULL,
+  PRIMARY KEY (order_id, marco)
+);
+
+-- A lista de interessados (23/10/2026, plano de marketing, decisão 1): quem
+-- pediu, com consentimento, as próximas letras por e-mail ou o aviso de um
+-- produto "Em breve". Só vale depois de confirmar pelo link do e-mail
+-- (`confirmado_em`); sem confirmar, a linha some em 7 dias. `interesses` é a
+-- lista separada por vírgula (curso, israel, raizes, a1). `passo` é a
+-- posição na sequência de e-mails das letras (0 = fora dela). Sair grava
+-- `saiu_em` e não manda mais nada. Ver worker/src/api/interessados.js.
+CREATE TABLE IF NOT EXISTS interessados (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  email         TEXT    NOT NULL UNIQUE,
+  interesses    TEXT    NOT NULL DEFAULT '',
+  origem        TEXT,
+  criado_em     INTEGER NOT NULL,
+  confirmado_em INTEGER,
+  saiu_em       INTEGER,
+  passo         INTEGER NOT NULL DEFAULT 0,
+  proximo_em    INTEGER
+);
+CREATE INDEX IF NOT EXISTS interessados_proximo ON interessados(passo, proximo_em);

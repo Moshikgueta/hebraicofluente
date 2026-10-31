@@ -17,7 +17,8 @@
  * pass is never overwritten by a later, worse attempt.
  */
 
-import { useCallback, useMemo, useState } from 'react';
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
@@ -26,11 +27,13 @@ import { Milestone, ProgressBar } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
 import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
-import { allLetters, course, scenesUpTo, sentencesUpTo } from '@/lib/content';
-import { buildExam, examReport, partsFor, EXAM_PASS, type Exam, type PartResult }
+import { allLetters, course, extras, scenesUpTo, sentencesUpTo } from '@/lib/content';
+import { buildExam, examReport, EXAM_PASS, type Exam, type PartResult }
   from '@/lib/engine/exam';
-import { alphabetComplete, lettersLeft, isLessonComplete } from '@/lib/state/rules';
+import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered, lettersLeft, REGRA_DA_CONCLUSAO } from '@/lib/state/rules';
+import { idDoSom } from '@/lib/sons';
 import { track } from '@/lib/analytics';
+import { tx } from '@/i18n/telas/academia-final-challenge-client';
 
 type Phase =
   | { kind: 'intro' }
@@ -38,14 +41,73 @@ type Phase =
   | { kind: 'running'; index: number }
   | { kind: 'done' };
 
+/* ── o exame sobrevive a recarregar a página ─────────────────────────────
+   Recarregar no meio do exame jogava fora as 40 questões e voltava à
+   abertura (auditoria de 28/09/2026, QA-003). O exame é gerado de forma
+   determinística pelo número da tentativa, então basta guardar a tentativa,
+   a parte em que a pessoa está e o resultado das partes feitas: ao voltar,
+   ela recomeça a parte em que estava, com as anteriores já contadas. Fica
+   no aparelho (localStorage) e vale por 24 horas; um exame esquecido não
+   reaparece uma semana depois. */
+const CHAVE_EXAME = 'hf-exame-em-andamento-v2';   // v2: o exame ganhou duas partes (28/09); um salvo da v1 apontaria para outras perguntas
+const VALIDADE_EXAME_MS = 24 * 3_600_000;
+type ExameSalvo = { attempt: number; index: number; results: PartResult[]; em: number };
+
+function lerExame(): ExameSalvo | null {
+  try {
+    const s = JSON.parse(window.localStorage.getItem(CHAVE_EXAME) || 'null') as ExameSalvo | null;
+    if (!s || typeof s.attempt !== 'number' || typeof s.index !== 'number' || !Array.isArray(s.results)) return null;
+    if (Date.now() - Number(s.em) > VALIDADE_EXAME_MS) return null;
+    return s;
+  } catch { return null; }
+}
+function gravarExame(s: ExameSalvo | null) {
+  try {
+    if (s) window.localStorage.setItem(CHAVE_EXAME, JSON.stringify(s));
+    else window.localStorage.removeItem(CHAVE_EXAME);
+  } catch { /* sem armazenamento: o exame só não sobrevive a recarregar */ }
+}
+
 export function FinalChallengeClient() {
   const p = useProgress();
   const [phase, setPhase] = useState<Phase>({ kind: 'intro' });
   const [results, setResults] = useState<PartResult[]>([]);
   const [attempt, setAttempt] = useState(() => (p.state.finalChallenge.attempts ?? 0) + 1);
+  const [retomado, setRetomado] = useState(false);
+
+  /* Volta ao exame em andamento, se houver. No efeito, e não no estado
+     inicial: a página é gerada estática, e o localStorage só existe no
+     navegador. */
+  useEffect(() => {
+    const s = lerExame();
+    if (!s) return;
+    setAttempt(s.attempt);
+    setResults(s.results);
+    setPhase({ kind: 'brief', index: s.index });
+    setRetomado(true);
+  }, []);
+
+  /* Guarda a cada mudança de parte; apaga quando o exame termina ou quando
+     ainda não começou. */
+  useEffect(() => {
+    if (phase.kind === 'brief' || phase.kind === 'running') {
+      gravarExame({ attempt, index: phase.index, results, em: Date.now() });
+    } else {
+      gravarExame(null);
+    }
+  }, [phase, attempt, results]);
 
   const letters = allLetters();
-  const ready = letters.filter(l => isLessonComplete(p.state, l.id));
+  /* A régua do exame e do certificado: dominadas, não só concluídas. */
+  const ready = letters.filter(l => isLessonMastered(p.state, l.id));
+  /* Módulos 6 e 7 (CONT-010): o exame abre com as 22 letras dominadas, que é
+     a regra do certificado, e as duas partes que cobram esses módulos ("Sem
+     os pontos" e "Os sons de fora") só entram para quem os fez. */
+  const mod6 = course.modules.find(m => m.n === 6);
+  const mod7 = course.modules.find(m => m.n === 7);
+  const fezMod6 = !mod6 || isExtraModuleDone(p.state, mod6.id);
+  const fezMod7 = !mod7 || (isExtraModuleDone(p.state, mod7.id)
+    && mod7.lessons.every(ls => !ls.som || isLessonComplete(p.state, idDoSom(ls.som))));
   const audio = audioAvailable();
   const scenes = useMemo(() => scenesUpTo(course.totalLetters), []);
   /* Todas as frases do curso: quem chega aqui fechou o alfabeto, então
@@ -55,8 +117,11 @@ export function FinalChallengeClient() {
   /* One exam per attempt. Rebuilt only when the attempt number changes, so
      leaving a part and coming back does not reshuffle the questions. */
   const exam = useMemo(
-    () => buildExam(letters, scenes, { audioAvailable: audio, attempt, sentences }),
-    [letters, scenes, sentences, audio, attempt]
+    () => buildExam(letters, scenes, {
+      audioAvailable: audio, attempt, sentences,
+      extras: fezMod7 ? extras() : undefined, semPontos: fezMod6
+    }),
+    [letters, scenes, sentences, audio, attempt, fezMod6, fezMod7]
   );
 
   const finishPart = useCallback((r: PlayerResult, index: number) => {
@@ -102,17 +167,14 @@ export function FinalChallengeClient() {
             </svg>
           </span>
           <h1 className="text-[24px] sm:text-[28px] font-bold leading-tight">
-            O teste final ainda está trancado.
+            {tx.trancadoTitulo}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[48ch] mx-auto">
-            Complete todas as letras para desbloquear o teste final.{' '}
-            {faltam === 1 ? 'Falta 1 letra.' : `Faltam ${faltam} letras.`} Ele mede o
-            alfabeto inteiro - feito antes da hora, ele pergunta sobre letras que você
-            ainda não viu e o número não diz nada.
+            {tx.trancadoTexto(course.totalLetters, faltam, REGRA_DA_CONCLUSAO)}
           </p>
           <div className="flex flex-wrap gap-3 justify-center pt-1">
-            <LinkButton href="/meu-hebraico">Continuar de onde parei</LinkButton>
-            <LinkButton href="/mapa" variant="secondary">Ver o mapa</LinkButton>
+            <LinkButton href="/meu-hebraico">{tx.continuarDeOnde}</LinkButton>
+            <LinkButton href="/mapa" variant="secondary">{tx.verMapa}</LinkButton>
           </div>
         </Card>
       </div>
@@ -128,7 +190,7 @@ export function FinalChallengeClient() {
         <ExercisePlayer
           key={`${attempt}-${section.part.id}`}
           exercises={section.exercises}
-          title={`Parte ${phase.index + 1} · ${section.part.titlePt}`}
+          title={tx.parteTitulo(phase.index + 1, section.part.titlePt)}
           onDone={r => finishPart(r, phase.index)}
         />
       </div>
@@ -142,7 +204,12 @@ export function FinalChallengeClient() {
       <div className="focus-col grid gap-5">
         <ExamProgress exam={exam} index={phase.index} results={results} />
         <Card className="p-6 sm:p-8 grid gap-4">
-          <Badge tone="accent">Parte {phase.index + 1} de {exam.sections.length}</Badge>
+          <Badge tone="accent">{tx.parteDe(phase.index + 1, exam.sections.length)}</Badge>
+          {retomado && results.length > 0 && (
+            <p className="font-ui text-[13.5px] leading-relaxed text-ink-body m-0" role="status">
+              {tx.retomado(results.length)}
+            </p>
+          )}
           <h1 className="text-[26px] sm:text-[32px] font-bold leading-tight">
             {section.part.titlePt}
           </h1>
@@ -150,10 +217,10 @@ export function FinalChallengeClient() {
             {section.part.descPt}
           </p>
           <p className="font-ui text-[13.5px] text-ink-muted">
-            {section.exercises.length} questões. Sem tempo, sem penalidade por errar.
+            {tx.questoesSemTempo(section.exercises.length)}
           </p>
           <Button size="lg" full onClick={() => setPhase({ kind: 'running', index: phase.index })}>
-            {results.length === 0 ? 'Começar' : 'Continuar'}
+            {results.length === 0 ? tx.comecar : tx.continuar}
           </Button>
         </Card>
       </div>
@@ -167,14 +234,14 @@ export function FinalChallengeClient() {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`${report.correct} de ${report.total} · ${pct}%`}
+          kicker={tx.kicker(report.correct, report.total, pct)}
           title={report.bandPt.titlePt}
           body={report.bandPt.bodyPt}
         />
 
         <Card className="overflow-hidden">
           <div className="px-5 py-3 border-b border-[color:var(--line-soft)]">
-            <h2 className="font-display text-[16px] font-bold text-ink">Parte por parte</h2>
+            <h2 className="font-display text-[16px] font-bold text-ink">{tx.partePorParte}</h2>
           </div>
           <ul className="divide-y divide-[color:var(--line-soft)]">
             {results.map(r => {
@@ -203,7 +270,7 @@ export function FinalChallengeClient() {
                       className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                                  text-[var(--accent)] hover:underline"
                     >
-                      Treinar {part.titlePt.toLowerCase()} na Academia →
+                      {tx.treinarNaAcademia(part.titlePt.toLowerCase())}
                     </Link>
                   )}
                 </li>
@@ -214,32 +281,31 @@ export function FinalChallengeClient() {
 
         {report.passed ? (
           <Card tone="mint" className="p-6 grid gap-3">
-            <Badge tone="mint">Aprovado</Badge>
+            <Badge tone="mint">{tx.aprovado}</Badge>
             <h2 className="font-display text-[20px] font-bold leading-snug">
-              Seu certificado está pronto.
+              {tx.certificadoPronto}
             </h2>
             <p className="text-[15px] leading-relaxed text-ink-body">
-              Com o seu nome, a data e as 22 letras - para baixar ou postar.
+              {tx.certificadoTexto}
             </p>
+            <GravacaoDoProfessor id="final-exam-congrats" />
             <div className="flex flex-wrap gap-3 pt-1">
-              <LinkButton href="/certificado" size="lg">Ver o certificado</LinkButton>
-              <LinkButton href="/concluido" variant="secondary">O que você conquistou</LinkButton>
+              <LinkButton href="/certificado" size="lg">{tx.verCertificado}</LinkButton>
+              <LinkButton href="/concluido" variant="secondary">{tx.oQueConquistou}</LinkButton>
             </div>
           </Card>
         ) : (
           <Card className="p-6 grid gap-3">
             <p className="text-[15px] leading-relaxed text-ink-body">
-              O certificado sai a partir de {Math.round(EXAM_PASS * 100)}%. Faltaram{' '}
-              {Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct)} questões -
-              e a próxima tentativa é um exame novo, não o mesmo.
+              {tx.faltaram(Math.round(EXAM_PASS * 100), Math.max(1, Math.ceil(report.total * EXAM_PASS) - report.correct))}
             </p>
-            <Button onClick={restart} className="justify-self-start">Refazer o exame</Button>
+            <Button onClick={restart} className="justify-self-start">{tx.refazer}</Button>
           </Card>
         )}
 
         {report.passed && (
           <Button variant="ghost" onClick={restart} className="justify-self-center">
-            Refazer mesmo assim
+            {tx.refazerMesmoAssim}
           </Button>
         )}
       </div>
@@ -248,26 +314,25 @@ export function FinalChallengeClient() {
 
   /* ── the door ─────────────────────────────────────────────────────────── */
   const enough = ready.length >= course.totalLetters;
-  const parts = partsFor(audio);
+  /* O que cai é o que este exame vai cobrar de fato (as partes montadas). */
+  const parts = exam.sections.map(sec => ({ ...sec.part, count: sec.exercises.length }));
   const best = p.state.finalChallenge.best;
 
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-3">
-        <Badge tone="accent">Exame final</Badge>
+        <Badge tone="accent">{tx.exameFinal}</Badge>
         <h1 className="text-[28px] sm:text-[36px] font-bold leading-tight">
-          Hebraico de verdade, sem apoio
+          {tx.portaTitulo}
         </h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[52ch]">
-          {parts.reduce((n, x) => n + x.count, 0)} questões em {parts.length} partes, com as
-          22 letras e sem transliteração. Cada parte tem a sua própria nota - no fim
-          você vê exatamente o que está firme e o que não está.
+          {tx.portaTexto(parts.reduce((n, x) => n + x.count, 0), parts.length)}
         </p>
       </header>
 
       <Card className="overflow-hidden">
         <div className="px-5 py-3 border-b border-[color:var(--line-soft)]">
-          <h2 className="font-display text-[16px] font-bold text-ink">O que cai</h2>
+          <h2 className="font-display text-[16px] font-bold text-ink">{tx.oQueCai}</h2>
         </div>
         <ol className="divide-y divide-[color:var(--line-soft)]">
           {parts.map((part, i) => (
@@ -291,30 +356,40 @@ export function FinalChallengeClient() {
 
       {!audio && (
         <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
-          A parte de escuta entra quando as gravações chegarem. Até lá o exame não
-          cobra o que o curso ainda não pôde ensinar.
+          {tx.semEscuta}
+        </p>
+      )}
+
+      {(!fezMod6 || !fezMod7) && (
+        <p className="font-ui text-[13px] leading-relaxed text-ink-muted">
+          {!fezMod6 && !fezMod7
+            ? tx.semMod6e7
+            : !fezMod6
+              ? tx.semMod6
+              : tx.semMod7}
+          {tx.ateLa}
         </p>
       )}
 
       <Card className="p-6 grid gap-4">
         <ProgressBar
           value={course.totalLetters ? ready.length / course.totalLetters : 0}
-          label="Letras concluídas"
+          label={tx.licoesConcluidas}
           sublabel={`${ready.length} / ${course.totalLetters}`}
         />
         <div className="flex flex-wrap gap-2">
           {letters.map(l => (
-            <span key={l.id} className={isLessonComplete(p.state, l.id) ? '' : 'opacity-30'}>
+            <span key={l.id} className={isLessonMastered(p.state, l.id) ? '' : 'opacity-30'}>
               <He size="word">{l.letter}</He>
             </span>
           ))}
         </div>
         {best != null && (
           <p className="font-ui text-[13px] text-ink-muted">
-            Melhor resultado até agora: {Math.round(best * 100)}%
-            {p.state.finalChallenge.passedAt ? ' · aprovado' : ''}
+            {tx.melhorResultado(Math.round(best * 100))}
+            {p.state.finalChallenge.passedAt ? tx.aprovadoCurto : ''}
             {p.state.finalChallenge.attempts
-              ? ` · ${p.state.finalChallenge.attempts} ${p.state.finalChallenge.attempts === 1 ? 'tentativa' : 'tentativas'}`
+              ? tx.tentativas(p.state.finalChallenge.attempts)
               : ''}
           </p>
         )}
@@ -323,26 +398,24 @@ export function FinalChallengeClient() {
       {enough ? (
         <>
           <Button size="lg" full onClick={() => setPhase({ kind: 'brief', index: 0 })}>
-            Começar o exame
+            {tx.comecarExame}
           </Button>
           <p className="font-ui text-[13px] text-ink-muted text-center">
-            Aprovação a partir de {Math.round(EXAM_PASS * 100)}%. Sem limite de tentativas,
-            e cada tentativa é um exame diferente.
+            {tx.aprovacao(Math.round(EXAM_PASS * 100))}
           </p>
           {p.state.finalChallenge.passedAt && (
             <LinkButton href="/certificado" variant="secondary" className="justify-self-center">
-              Ver o meu certificado
+              {tx.verMeuCertificado}
             </LinkButton>
           )}
         </>
       ) : (
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Faltam {course.totalLetters - ready.length} letras. O exame só faz sentido
-            com o alfabeto inteiro - e ele fica aqui esperando, sem prazo.
+            {tx.faltamLetras(course.totalLetters - ready.length)}
           </p>
           <LinkButton href="/mapa" variant="secondary" className="justify-self-start">
-            Voltar ao mapa
+            {tx.voltarMapa}
           </LinkButton>
         </Card>
       )}
@@ -356,7 +429,7 @@ function ExamProgress({
   exam, index, results
 }: { exam: Exam; index: number; results: PartResult[] }) {
   return (
-    <ol className="flex items-center gap-1.5" aria-label="Partes do exame">
+    <ol className="flex items-center gap-1.5" aria-label={tx.partesDoExame}>
       {exam.sections.map((s, i) => {
         const done = results.some(r => r.partId === s.part.id);
         const now = i === index;

@@ -1,0 +1,470 @@
+{
+  "n": 2,
+  "revisado": true,
+  "tituloPt": "O que é isto? Quem é?",
+  "objetivoPt": "Perguntar e dizer o que é uma coisa e quem é uma pessoa, e negar.",
+  "situacaoPt": "Antes da aula, o Tom pergunta à Maya o que são as coisas na mesa dela, e quem são as pessoas nas fotos do telefone.",
+  "palavras": [
+    {
+      "he": "מָה זֶה?",
+      "translit": "ma ze?",
+      "pt": "o que é isto?"
+    },
+    {
+      "he": "מִי זֶה?",
+      "translit": "mi ze?",
+      "pt": "quem é este?"
+    },
+    {
+      "he": "מִי זֹאת?",
+      "translit": "mi zot?",
+      "pt": "quem é esta?"
+    },
+    {
+      "he": "זֶה",
+      "translit": "ze",
+      "pt": "isto é, este é (m)"
+    },
+    {
+      "he": "זֹאת",
+      "translit": "zot",
+      "pt": "esta é (f)"
+    },
+    {
+      "he": "כֵּן",
+      "translit": "ken",
+      "pt": "sim"
+    },
+    {
+      "he": "לֹא",
+      "translit": "lo",
+      "pt": "não"
+    },
+    {
+      "he": "זֶה לֹא…",
+      "translit": "ze lo…",
+      "pt": "não é…"
+    },
+    {
+      "he": "סֵפֶר",
+      "translit": "séfer",
+      "pt": "livro"
+    },
+    {
+      "he": "טֶלֶפוֹן",
+      "translit": "télefon",
+      "pt": "telefone"
+    },
+    {
+      "he": "מַפְתֵחַ",
+      "translit": "maftéach",
+      "pt": "chave"
+    },
+    {
+      "he": "שֻׁלְחָן",
+      "translit": "shulchán",
+      "pt": "mesa"
+    },
+    {
+      "he": "כִּסֵא",
+      "translit": "kissé",
+      "pt": "cadeira"
+    },
+    {
+      "he": "תִיק",
+      "translit": "tik",
+      "pt": "mochila / bolsa"
+    },
+    {
+      "he": "מַחְבֶּרֶת",
+      "translit": "machbéret",
+      "pt": "caderno"
+    },
+    {
+      "he": "דֶלֶת",
+      "translit": "délet",
+      "pt": "porta"
+    },
+    {
+      "he": "כּוֹס",
+      "translit": "kos",
+      "pt": "copo (feminina)"
+    },
+    {
+      "he": "מְנוֹרָה",
+      "translit": "menorá",
+      "pt": "luminária"
+    },
+    {
+      "he": "מַתָנָה",
+      "translit": "mataná",
+      "pt": "presente"
+    },
+    {
+      "he": "אִישׁ",
+      "translit": "ish",
+      "pt": "homem"
+    },
+    {
+      "he": "אִשָׁה",
+      "translit": "ishá",
+      "pt": "mulher"
+    },
+    {
+      "he": "יֶלֶד",
+      "translit": "yéled",
+      "pt": "menino"
+    },
+    {
+      "he": "יַלְדָה",
+      "translit": "yaldá",
+      "pt": "menina"
+    },
+    {
+      "he": "חָבֵר",
+      "translit": "chavér",
+      "pt": "amigo"
+    },
+    {
+      "he": "חֲבֵרָה",
+      "translit": "chaverá",
+      "pt": "amiga"
+    },
+    {
+      "he": "אַבָּא",
+      "translit": "ába",
+      "pt": "pai"
+    },
+    {
+      "he": "אִמָא",
+      "translit": "íma",
+      "pt": "mãe"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "זֶה para masculino, זֹאת para feminino",
+      "textoPt": "O que manda é o gênero da palavra, não da coisa: זֶה שֻׁלְחָן (mesa é masculina), זֹאת דֶלֶת (porta é feminina).",
+      "erroPt": "O português diz \"isto é\" para tudo. Em hebraico o \"isto\" acompanha o gênero da palavra, e nem sempre bate com o português: \"mesa\" é feminina no português e masculina no hebraico."
+    },
+    {
+      "tituloPt": "Como saber o gênero?",
+      "textoPt": "A maioria das femininas termina em ־ָה (מְנוֹרָה) ou ־ֶת (מַחְבֶּרֶת), e também em ־ִית (עִבְרִית). As outras, em geral, são masculinas. Há exceções, como כּוֹס (feminina). E atenção: לַיְלָה é masculino."
+    },
+    {
+      "tituloPt": "Não existe \"um/uma\"",
+      "textoPt": "זֶה סֵפֶר = \"isto é um livro\". Para negar, לֹא antes: זֶה לֹא סֵפֶר. E מָה זֶה? serve para qualquer coisa; a resposta é que escolhe: זֹאת מַחְבֶּרֶת.",
+      "erroPt": "Procurar uma palavra para \"um/uma\". Não há: סֵפֶר sozinho já é \"um livro\"."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Tom e Maya, antes da aula",
+    "linhas": [
+      {
+        "quem": "Tom",
+        "he": "מַיָה, מָה זֶה?",
+        "translit": "Máya, ma ze?",
+        "pt": "Maya, o que é isto?"
+      },
+      {
+        "quem": "Maya",
+        "he": "זֶה מַפְתֵחַ.",
+        "translit": "ze maftéach.",
+        "pt": "É uma chave."
+      },
+      {
+        "quem": "Tom",
+        "he": "וּמָה זֶה?",
+        "translit": "umá ze?",
+        "pt": "E o que é isto?"
+      },
+      {
+        "quem": "Maya",
+        "he": "זֹאת מַחְבֶּרֶת.",
+        "translit": "zot machbéret.",
+        "pt": "É um caderno."
+      },
+      {
+        "quem": "Tom",
+        "he": "וּמִי זֹאת?",
+        "translit": "umí zot?",
+        "pt": "E quem é esta?"
+      },
+      {
+        "quem": "Maya",
+        "he": "זֹאת אִמָא. וְזֶה אַבָּא.",
+        "translit": "zot íma. vezé ába.",
+        "pt": "Esta é a minha mãe. E este é o meu pai."
+      },
+      {
+        "quem": "Tom",
+        "he": "וּמִי זֶה?",
+        "translit": "umí ze?",
+        "pt": "E quem é este?"
+      },
+      {
+        "quem": "Maya",
+        "he": "זֶה לֹא אַבָּא, זֶה דָנִי!",
+        "translit": "ze lo ába, ze Dáni!",
+        "pt": "Este não é o meu pai, é o Dani!"
+      }
+    ],
+    "glossario": [],
+    "notaPt": "אִמָא e אַבָּא sem possessivo já soam como \"a mamãe\" e \"o papai\" de quem fala. O possessivo de verdade (שֶׁלִי) chega na Unidade 6."
+  },
+  "cultura": [
+    {
+      "tituloPt": "Uma sala de aula do mundo inteiro",
+      "textoPt": "Israel é um país de imigrantes. Numa turma de hebraico você ouve russo, inglês, francês, espanhol, amárico e português, e muitas famílias israelenses chegaram há uma ou duas gerações. Por isso o israelense está acostumado a ouvir hebraico com sotaque, e não estranha o seu."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "אַבָּא e אִמָא vêm do aramaico",
+      "textoPt": "As palavras de todo dia para \"pai\" e \"mãe\" são aramaicas, a língua que os judeus falaram por séculos ao lado do hebraico. Em hebraico antigo se dizia אָב e אֵם, que continuam existindo em textos formais e em palavras compostas."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu pergunto o que é uma coisa e quem é uma pessoa.",
+    "Eu uso זֶה para masculino e זֹאת para feminino.",
+    "Eu digo que uma coisa NÃO é outra, com לֹא."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue cada palavra ao que ela quer dizer.",
+      "pares": [
+        [
+          "סֵפֶר",
+          "livro"
+        ],
+        [
+          "שֻׁלְחָן",
+          "mesa"
+        ],
+        [
+          "דֶלֶת",
+          "porta"
+        ],
+        [
+          "מַפְתֵחַ",
+          "chave"
+        ],
+        [
+          "כִּסֵא",
+          "cadeira"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "O que quer dizer מַחְבֶּרֶת?",
+      "opcoes": [
+        "caderno",
+        "cadeira",
+        "chave"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "intruso",
+      "q": "Qual não combina com as outras?",
+      "opcoes": [
+        "יֶלֶד",
+        "אִישׁ",
+        "שֻׁלְחָן",
+        "חָבֵר"
+      ],
+      "certa": 2,
+      "porque": "שֻׁלְחָן não é pessoa."
+    },
+    {
+      "t": "escolha",
+      "q": "___ סֵפֶר",
+      "opcoes": [
+        "זֶה",
+        "זֹאת"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "___ מַחְבֶּרֶת",
+      "opcoes": [
+        "זֹאת",
+        "זֶה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "___ דֶלֶת",
+      "opcoes": [
+        "זֹאת",
+        "זֶה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "___ כִּסֵא",
+      "opcoes": [
+        "זֶה",
+        "זֹאת"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "separar",
+      "q": "Masculina ou feminina?",
+      "baldes": [
+        "masculina",
+        "feminina"
+      ],
+      "itens": [
+        [
+          "טֶלֶפוֹן",
+          0
+        ],
+        [
+          "מְנוֹרָה",
+          1
+        ],
+        [
+          "תִיק",
+          0
+        ],
+        [
+          "מַתָנָה",
+          1
+        ],
+        [
+          "שֻׁלְחָן",
+          0
+        ],
+        [
+          "דֶלֶת",
+          1
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "___ כּוֹס",
+      "opcoes": [
+        "זֹאת",
+        "זֶה"
+      ],
+      "certa": 0,
+      "porque": "כּוֹס é feminina, mesmo sem ־ָה."
+    },
+    {
+      "t": "escolha",
+      "q": "___ חֲבֵרָה",
+      "opcoes": [
+        "זֹאת",
+        "זֶה"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Você aponta uma mulher e pergunta quem é:",
+      "opcoes": [
+        "מִי זֹאת?",
+        "מָה זֶה?",
+        "מִי זֶה?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "montar",
+      "pt": "Isto não é um livro",
+      "palavras": [
+        "זֶה",
+        "לֹא",
+        "סֵפֶר"
+      ]
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "זֹאת שֻׁלְחָן",
+      "respostas": [
+        "זה שולחן",
+        "זה שלחן"
+      ],
+      "porque": "שֻׁלְחָן é masculino."
+    },
+    {
+      "t": "vf",
+      "q": "Em hebraico, \"um livro\" precisa de uma palavra para \"um\".",
+      "certa": false,
+      "porque": "סֵפֶר sozinho já é \"um livro\"."
+    },
+    {
+      "t": "ouvir",
+      "he": "זֹאת מַתָנָה",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "É um presente",
+        "É uma mesa"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "מִי זֶה?",
+      "q": "A pergunta é sobre quem?",
+      "opcoes": [
+        "um homem ou menino",
+        "uma mulher ou menina"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: o que a Maya mostra primeiro?",
+      "opcoes": [
+        "uma chave",
+        "um caderno"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, o homem da foto é o pai da Maya.",
+      "certa": false,
+      "porque": "זֶה לֹא אַבָּא, זֶה דָנִי!"
+    },
+    {
+      "t": "escrever",
+      "pt": "mochila / bolsa",
+      "respostas": [
+        "תיק"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "mulher",
+      "respostas": [
+        "אישה",
+        "אשה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Esta é a minha mãe. E este é o meu pai.\"",
+      "antes": "",
+      "depois": "אִמָא. וְזֶה אַבָּא.",
+      "respostas": [
+        "זאת"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Esta é a minha mãe. E este é o meu pai.\"",
+      "exemplo": "זֹאת אִמָא. וְזֶה אַבָּא."
+    }
+  ]
+}

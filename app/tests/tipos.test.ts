@@ -161,7 +161,7 @@ describe('cada tipo, no que só ele tem', () => {
       expect(new Set(ex.vowels).size, `${ex.id}: vogal repetida`).toBe(ex.vowels.length);
       expect(ex.answer, ex.id).toBeGreaterThanOrEqual(0);
       expect(ex.answer, ex.id).toBeLessThan(ex.vowels.length);
-      /* Pela CONSOANTE DE BASE, e não pela string: o alvo é "תַּ" e a
+      /* Pela CONSOANTE DE BASE, e não pela string: o alvo é "תַ" e a
          consoante é "תּ" - os mesmos caracteres, em ordem canônica
          diferente, porque o patah (classe 17) vem antes do daguesh (21)
          na forma NFC. Comparar as strings acusaria um dado que está certo. */

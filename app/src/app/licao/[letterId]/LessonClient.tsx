@@ -7,13 +7,17 @@
  *   1 conhecer   - the letter, its sound, its syllables
  *   2 palavras   - vocabulary, discovered rather than listed
  *   3 escrever   - model, stroke order, tracing
- *   4 praticar   - mixed recognition and reading
- *   5 fixação    - the quiz that closes the letter
+ *   4 fixação    - guided reinforcement, no score (FixacaoGuiada)
+ *   5 exercícios - the graded quiz that closes the letter
  *
  * A stage is marked done when the learner reaches its end, and XP is awarded
  * there - never on navigation. */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { tx } from '@/i18n/telas/licao-lesson-client';
+import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
+import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
+import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
+import { useTempoAtivo } from '@/lib/tempo-de-etapa';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { He, HeSeq } from '@/components/hebrew/He';
@@ -21,70 +25,84 @@ import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
+import { gravarLicao, lerLicao, type LicaoEmAndamento } from '@/lib/licao-em-andamento';
 import { WritingCanvas } from '@/components/learn/WritingCanvas';
+import { OndeNasceOSom } from '@/components/learn/OndeNasceOSom';
+import { CompararPronuncia } from '@/components/learn/CompararPronuncia';
 import { SoundLab } from '@/components/learn/SoundLab';
 import { CultureUnlock } from '@/components/learn/Culture';
 import { AudioButton, audioAvailable, hasAudio } from '@/components/learn/AudioButton';
 import { ANALOGIA_CURSIVA, MESMA_LETRA } from '@/lib/cursiva';
 import {
-  BrazilianTip, BridgeWords, HebrewLetterCard, Prose, ReadAloudRow,
+  BrazilianTip, BridgeWords, HebrewLetterCard, Prose,
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
 import { Compreensao } from '@/components/learn/Compreensao';
+import { MeExplica } from '@/components/learn/MeExplica';
+import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
+import { CelebracaoDaLetra } from '@/components/aventura/CartaDaLetra';
+import { FixacaoGuiada } from '@/components/learn/FixacaoGuiada';
+import { CompararSons } from '@/components/learn/CompararSons';
+import { GravacaoDoProfessor } from '@/components/learn/GravacaoDoProfessor';
+import { alvoDaLetra } from '@/lib/fixacao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
-import { letraAtual, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
-import { allLetters, course, cultureAt, nextLetter, scenesForOrder, type Letter } from '@/lib/content';
+import { acertosPara, FIXACAO_ITENS, letraAtual, letraLiberada, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
+import { allLetters, course, cultureAt, nextLetter, scenesForOrder, semOSomDe, type Letter } from '@/lib/content';
 import {
-  buildLetterPractice, buildMiniTest, buildRemedial, type Exercise
+  buildMiniTest, buildRemedial, type Exercise
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
+import { somPt } from '@/lib/som-pt';
+import { glifoDaLicao, nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
-  { n: 1, label: 'Conhecer' },
-  { n: 2, label: 'Palavras' },
-  { n: 3, label: 'Escrever' },
-  { n: 4, label: 'Praticar' },
-  { n: 5, label: 'Fixação' }
+  { n: 1, label: tx.conhecer },
+  { n: 2, label: tx.palavras },
+  { n: 3, label: tx.escrever },
+  { n: 4, label: tx.fixacao },
+  { n: 5, label: tx.exercicios }
 ] as const;
 
-export function LessonClient({ letter }: { letter: Letter }) {
+export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
+  /* Bet, Kaf e Pe: as palavras do outro som (טוֹב, מֶלֶךְ, סֵפֶר) ficam para a
+     lição de som logo depois - nem a tela nem os exercícios desta as usam.
+     E a lição mostra só o lado com o ponto: sem o quadro B/V, K/Ch, P/F e
+     sem os exercícios de variante, que viraram a lição 20 (29/09/2026). */
+  const letter = useMemo(() => soOLadoDoPonto(semPalavrasDeSom(letraInteira)), [letraInteira]);
   const p = useProgress();
   const router = useRouter();
-  const [stage, setStage] = useState(1);
+  /* A etapa e a Prática voltam de onde estavam depois de recarregar
+     (lib/licao-em-andamento.ts). No estado inicial, e não num efeito: esta
+     tela só monta no navegador, depois de o CourseGate trazer o conteúdo. */
+  const [salvo] = useState<LicaoEmAndamento | null>(() => lerLicao(letraInteira.id));
+  const [stage, setStageCru] = useState(() => salvo?.etapa ?? 1);
   const [trancada, setTrancada] = useState<ReturnType<typeof porQueTrancada>>(null);
   const [quizResult, setQuizResult] = useState<PlayerResult | null>(null);
   const [quizRun, setQuizRun] = useState(0);
 
   const history = useMemo(
-    () => allLetters().filter(l => l.order <= letter.order),
-    [letter.order]
+    () => allLetters().filter(l => l.order <= letter.order).map(l => (l.id === letter.id ? letter : l)),
+    [letter]
   );
 
-  /* Dois conjuntos diferentes: a etapa 4 pratica, a 5 mede. Reaproveitar um
-     só deixaria a pessoa decorar as respostas em vez das letras.
-
-     A prática é montada em CAMADAS - reconhecer, som, discriminar, dentro da
-     palavra, forma final, outra fonte, ler - e reserva ~30% para letras
-     anteriores. O motor faz essa composição; aqui só se diz quantas e quais
-     letras andaram custando. */
-  const practice = useMemo(
-    () => buildLetterPractice(letter, history, {
-      audioAvailable: audioAvailable(),
-      seed: `pratica-${letter.id}`, weak: p.weak
-    }),
-    [letter, history, p.weak]
-  );
+  /* A etapa 4 é a Fixação guiada (sem nota) e a 5 são os Exercícios (com
+     nota). Até 11/10/2026 a 4 era um segundo bloco de perguntas dos mesmos
+     geradores da 5: o aluno fazia o teste duas vezes seguidas. Ver
+     components/learn/FixacaoGuiada.tsx. */
+  const alvo = useMemo(() => alvoDaLetra(letter, history), [letter, history]);
   /* O mini-teste: dez itens, um de cada coisa que "saber a letra" quer dizer
      - reconhecer, o som ou a variante, dentro de uma palavra, a forma que
      confunde, a CURSIVA, montar, ler, o significado, um DIGITADO - o único
      que não mostra a resposta na tela - e um de uma letra anterior. Outra
      semente a cada tentativa. */
   const quiz = useMemo(
-    () => buildMiniTest(letter, history, {
-      audioAvailable: audioAvailable(), seed: `mini-${letter.id}-${quizRun}`
-    }),
+    () => escolherRodada(`licao-fixacao-${letter.id}`, seed => buildMiniTest(letter, history, {
+      audioAvailable: audioAvailable(), seed
+    })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [letter, history, quizRun]
   );
 
@@ -106,22 +124,86 @@ export function LessonClient({ letter }: { letter: Letter }) {
    * pagamento, no Worker. Esta trava protege o CAMINHO de aprendizagem. */
   useEffect(() => {
     if (!p.ready) return;
-    const ordem = allLetters().map(l => l.id);
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
     setTrancada(porQueTrancada(p.state, ordem, letter.id));
   }, [p.ready, p.state, letter.id]);
 
+  /* Trocar de etapa desmonta o botão que tinha o foco, e ele caía no
+     <body>, com a página parada no meio (auditoria de 28/09, UX-002). Se o
+     foco se perdeu, ele vai para a etapa atual na barra de etapas, que fica
+     no topo: quem usa teclado ou leitor de tela sabe onde está e segue com
+     Tab para o conteúdo novo. */
+  const primeiraEtapa = useRef(true);
+  useEffect(() => {
+    if (primeiraEtapa.current) { primeiraEtapa.current = false; return; }
+    const id = requestAnimationFrame(() => {
+      const a = document.activeElement;
+      if (a && a !== document.body && document.body.contains(a)) return;
+      document.querySelector<HTMLElement>(`[aria-label="${tx.etapas}"] [aria-current="step"]`)?.focus();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [stage]);
+
+  /* ── o Voltar do navegador volta uma etapa ─────────────────────────────
+     As etapas não eram entradas do histórico, e o Voltar no meio da Prática
+     saía da lição (auditoria de 01/10/2026, UXQA-003). Cada etapa nova vira
+     uma entrada com a MESMA URL (`pushState` nativo, que o roteador do Next
+     acompanha); o Voltar desfaz uma etapa, e só da primeira entrada é que
+     sai da lição. */
+  const etapaAtual = useRef(stage);
+  etapaAtual.current = stage;
+  const setStage = useCallback((n: number) => {
+    if (n !== etapaAtual.current && typeof window !== 'undefined') {
+      window.history.pushState({ ...window.history.state, hfEtapa: n }, '', window.location.href);
+    }
+    setStageCru(n);
+  }, []);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    /* A entrada em que a lição abriu guarda a etapa de abertura. */
+    if (typeof window.history.state?.hfEtapa !== 'number') {
+      window.history.replaceState({ ...window.history.state, hfEtapa: stage }, '', window.location.href);
+    }
+    const aoVoltar = (e: PopStateEvent) => {
+      const n = (e.state as { hfEtapa?: unknown } | null)?.hfEtapa;
+      if (typeof n !== 'number' || n < 1 || n > 5) return;
+      setStageCru(n);
+    };
+    window.addEventListener('popstate', aoVoltar);
+    return () => window.removeEventListener('popstate', aoVoltar);
+    // só na montagem: a entrada inicial é marcada uma vez
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    gravarLicao(letter.id, { etapa: stage });
+  }, [letter.id, stage]);
+
+  /* O tempo ativo da etapa aberta: só a faixa sai, nas estatísticas, na
+     primeira vez que a etapa é concluída (lib/tempo-de-etapa.ts). */
+  const tempoDaEtapa = useTempoAtivo(`${letter.id}:${stage}`);
   const done = useCallback((n: number) => {
-    p.finishStage(letter.id, n);
+    p.finishStage(letter.id, n, undefined, tempoDaEtapa());
     if (n < 5) setStage(n + 1);
-  }, [p, letter.id]);
+  }, [p, letter.id, setStage, tempoDaEtapa]);
 
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
   const unlockedCard = cultureAt(p.mastered);
   const after = nextLetter(letter.id);
+  /* Resh, Bet, Kaf e Pe têm uma lição de som logo depois (Sin, Vet, Chaf,
+     Fe): ela vem antes da letra seguinte e antes do checkpoint. */
+  const ordemToda = ordemDeEnsino(allLetters(), course.modules);
+  const seguinte = ordemToda[ordemToda.indexOf(letter.id) + 1];
+  const somSeguinte = seguinte?.startsWith('som-') ? seguinte : null;
   const mod = course.modules.find(m => m.n === letter.module);
   const moduleFinished = !!mod && mod.letterIds.every(
     id => id === letter.id || (p.state.lessons[id]?.stagesDone.length ?? 0) >= 5
   );
+
+  /* A lição seguinte abre com esta nota? Abaixo de LIBERA_MARK o botão
+     principal não pode mandar para uma porta trancada (UXQA-002): ele vira
+     "Refazer os exercícios". */
+  const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);
 
   if (trancada) return <PortaTrancada letter={letter} porque={trancada} />;
 
@@ -133,10 +215,7 @@ export function LessonClient({ letter }: { letter: Letter }) {
       {stage === 2 && <StagePalavras letter={letter} onDone={() => done(2)} />}
       {stage === 3 && <StageEscrever letter={letter} onDone={() => done(3)} />}
       {stage === 4 && (
-        <StagePraticar
-          key={`p-${letter.id}`}
-          exercises={practice} letter={letter} onDone={() => done(4)}
-        />
+        <FixacaoGuiada key={`f-${letter.id}`} alvo={alvo} onDone={() => done(4)} />
       )}
       {/* A card earned by the letter just finished, shown where it was earned.
           `cultureAt` fires on the exact count, so it appears once and then
@@ -158,10 +237,15 @@ export function LessonClient({ letter }: { letter: Letter }) {
           letter={letter}
           history={history}
           result={quizResult}
-          onResult={r => { setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5); }}
+          onResult={r => {
+            registrarRodada(`licao-fixacao-${letter.id}`, quiz);
+            setQuizResult(r); p.finishQuiz(letter.id, r.score); p.finishStage(letter.id, 5, undefined, tempoDaEtapa());
+          }}
           onRetry={() => { setQuizResult(null); setQuizRun(n => n + 1); }}
           onNext={() => {
-            if (moduleFinished && mod?.checkpoint) router.push(`/checkpoint/${mod.n}`);
+            gravarLicao(letter.id, null);
+            if (somSeguinte) router.push(rotaDaLicao(somSeguinte));
+            else if (moduleFinished && mod?.checkpoint) router.push(`/checkpoint/${mod.n}`);
             else if (after) router.push(`/licao/${after.id}`);
             else router.push('/mapa');
           }}
@@ -169,13 +253,18 @@ export function LessonClient({ letter }: { letter: Letter }) {
              botão dizia só o destino ("Próxima letra - Bet"), e a lição
              terminava sem nunca dizer que tinha terminado: o fim de uma
              etapa precisa soar como fim, senão ele é só mais um clique. */
-          nextLabel="Concluir e continuar"
+          nextLabel={tx.concluirEContinuar}
+          proximaTrancada={proximaTrancada}
           nextHint={
-            moduleFinished && mod?.checkpoint ? `Em seguida: Checkpoint ${mod.n}`
-              : after ? `Em seguida: letra ${after.namePt}` : 'De volta ao mapa do curso'
+            somSeguinte ? tx.emSeguidaSom(nomeDaLicao(somSeguinte, allLetters(), course.modules))
+              : moduleFinished && mod?.checkpoint ? tx.emSeguidaCheckpoint(mod.n)
+              : after ? tx.emSeguidaLetra(after.namePt) : tx.deVolta
           }
         />
       )}
+      {/* "Como foi esta lição?": depois da nota, uma vez por lição neste
+          aparelho, anônima. Ver components/learn/AvaliarLicao.tsx. */}
+      {stage === 5 && quizResult && <AvaliarLicao licao={letter.id} />}
     </div>
   );
 }
@@ -189,13 +278,15 @@ function LessonHeader({
         <Link href="/mapa"
               className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[13px]
                          text-ink-muted hover:text-ink-body">
-          ← Mapa
+          {tx.mapa}
         </Link>
         <Badge tone="accent">
-          Módulo {letter.module} · lição {letter.lesson} · letra {letter.order}/22
+          {tx.badge(letter.module, letter.lesson, letter.order)}
         </Badge>
       </div>
-      <ol className="flex items-center gap-1.5" aria-label="Etapas da lição">
+      {/* A ajuda curta, em toda etapa, sem sair da lição (28/10/2026). */}
+      <div className="-mt-2"><MeExplica letter={letter} /></div>
+      <ol className="flex items-center gap-1.5" aria-label={tx.etapas}>
         {STAGES.map(s => {
           const isDone = stagesDone.includes(s.n);
           const isNow = stage === s.n;
@@ -205,7 +296,7 @@ function LessonHeader({
                 type="button"
                 onClick={() => onStage(s.n)}
                 aria-current={isNow ? 'step' : undefined}
-                aria-label={`Etapa ${s.n} de 5 - ${s.label}`}
+                aria-label={tx.etapaDe(s.n, s.label)}
                 className="w-full min-h-[44px] grid content-center gap-1.5 group"
               >
                 <span
@@ -226,93 +317,206 @@ function LessonHeader({
 }
 
 /* ── 1 · conhecer ───────────────────────────────────────────────────────── */
+/* A etapa 1 enxuta, a partir da letra 12.
+   ─────────────────────────────────────────────────────────────────────────
+   Quem chegou à letra 12 já fez onze vezes o mesmo ritual: objetivos, o que a
+   letra faz, detalhe, dica para brasileiro, padrão, dica de leitura, erro
+   típico, comparação com as outras letras. Repetir tudo por extenso no mesmo
+   formato ensina a rolar a tela sem ler. Daqui em diante, o que fica à vista
+   é o que muda de letra para letra - a forma, o som (com o desenho da boca),
+   as leituras, o resumo e as sílabas - e a explicação completa fica a um
+   toque, inteira, para quem quiser. As perguntas rápidas continuam: são elas
+   que dizem se o resumo bastou. */
+export const ENXUTA_DESDE = 12;
+
 function StageConhecer({
   letter, history, onDone
 }: { letter: Letter; history: Letter[]; onDone: () => void }) {
-  return (
-    <div className="grid gap-5">
-      <Card className="p-6 sm:p-8 grid gap-6">
-        <HebrewLetterCard letter={letter} />
-        <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
-          <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Quando terminar esta aula
-          </p>
-          <p className="text-[16px] leading-relaxed text-ink-body">
-            Você vai conseguir reconhecer, pronunciar, ler e escrever{' '}
-            <He size="inline">{letter.letter}</He>
-            {letter.finalForm && <> - e a sua forma final, <He size="inline">{letter.finalForm}</He></>}.
-          </p>
-        </div>
-      </Card>
+  const enxuta = letter.order >= ENXUTA_DESDE;
+  const [completa, setCompleta] = useState(false);
+  const [comparar, setComparar] = useState(false);
+  const mostraTudo = !enxuta || completa;
+  const [passo, setPasso] = useState(0);
+  const topo = useRef<HTMLDivElement>(null);
+  const temChecagem = (letter.ensino?.checagem?.length ?? 0) > 0;
+  const ensinadas = useMemo(() => new Set([...history, letter].map(l => l.letter)), [history, letter]);
 
-      <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">Como pronunciar</h2>
-        <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <Prose text={letter.soundNotePt} />
-        </p>
-      </Card>
-
-      {/* As duas (ou três) leituras, com um botão de som para cada uma.
-          ──────────────────────────────────────────────────────────────
-          O curso explicava em prosa que {{ש}} tem duas leituras e dava ao
-          aluno UM botão de áudio - o da letra. Quem precisa ouvir a
-          diferença entre "ch" e "s" não tinha onde ouvir a diferença.
-          Cada variante tem `audioId` próprio; enquanto não há gravação,
-          o botão simplesmente não aparece, e o quadro continua ensinando
-          pelo desenho e pelo texto. */}
-      <Leituras letter={letter} />
-
-      {/* O que a letra FAZ, e não só que som ela tem.
-          ──────────────────────────────────────────────────────────────
-          Era o buraco da lição: o curso dizia "esta letra faz /m/" e
-          seguia para as sílabas. As perguntas que o adulto brasileiro
-          realmente tem - "por que essa letra está aí se eu não a escuto?",
-          "por que ela mudou de formato?", "isso é vogal ou consoante?" -
-          não eram respondidas em lugar nenhum, e a conclusão que sobrava
-          era a de que o hebraico é arbitrário. */}
-      <Ensinamento letter={letter} />
-
-      <BrazilianTip mistake={letter.brazilianMistake} />
-
-      <Card className="p-6 grid gap-4">
-        <div className="grid gap-1">
-          <h2 className="text-[19px] font-semibold">A letra com cada vogal</h2>
-          <p className="font-ui text-[13.5px] text-ink-muted">
-            Toque numa sílaba para ver a dica de pronúncia.
-          </p>
-        </div>
-        <SyllableTrainer letter={letter} />
-      </Card>
-
-      {/* The same five vowels on the letters already learned. Seeing the column
-          is what turns "מַ se lê ma" into "o patach faz a" - the generalisation
-          the course depends on and used to leave the learner to make alone. */}
-      {history.length > 1 && (
-        <SoundLab
-          letters={history}
-          compact
-          title="Compare com as letras que você já sabe"
-        />
-      )}
-
-      {/* Explicação → exemplo → PERGUNTAS → prática. A checagem fecha a
-          etapa: duas a quatro perguntas sobre o que foi EXPLICADO, e não
-          sobre o desenho da letra - reconhecer a forma o resto da lição já
-          cobra. Ver components/learn/Compreensao.tsx. */}
-      {letter.ensino?.checagem?.length > 0 && (
+  /* Os passos da etapa (28/10/2026, decisão do dono: "em telas curtas").
+     ─────────────────────────────────────────────────────────────────────
+     Era uma página só, de 4.000 a 5.000 px no celular: a letra, a pronúncia,
+     a explicação, as sílabas e as perguntas, tudo de uma vez. O conteúdo é o
+     mesmo; ele chega um bloco por vez, na ordem em que se aprende: ver a
+     letra, ouvir, entender, praticar com as vogais, conferir. Voltar é
+     livre, e nenhum passo é cobrado: "Próximo" sempre anda. */
+  const passos: { nome: string; corpo: ReactNode }[] = [
+    {
+      nome: tx.descobrir,
+      corpo: (
+        <>
+          <Card className="p-6 sm:p-8 grid gap-6 overflow-hidden">
+            {/* A letra chega no lugar do módulo dela (a aventura ilustrada). */}
+            <AberturaDoLugar modulo={letter.module} ensinadas={ensinadas} />
+            <HebrewLetterCard letter={letter} />
+            {mostraTudo && <div className="grid gap-2 border-t border-[color:var(--line-soft)] pt-5">
+              <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
+                {tx.oQueVamos}
+              </p>
+              <p className="text-[16px] leading-relaxed text-ink-body">
+                {tx.voceVai(<He size="inline">{glifoDaLicao(letter)}</He>,
+                  letter.finalForm ? <He size="inline">{letter.finalForm}</He> : null)}
+              </p>
+            </div>}
+          </Card>
+          <GravacaoDoProfessor id={`letter-${letter.id}-intro`}
+            textoPt={tx.gravacaoIntro(letter.namePt)} />
+        </>
+      )
+    },
+    {
+      nome: tx.ouvir,
+      corpo: (
+        <>
+          <Card className="p-6 grid gap-3">
+            <h2 className="text-[19px] font-semibold">{tx.comoPronunciar}</h2>
+            <p className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={letter.soundNotePt} />
+            </p>
+            {/* O lugar de onde o som sai, desenhado - em toda letra. */}
+            <OndeNasceOSom articulacao={letter.articulacao} letra={letter.namePt} />
+            {letter.id === 'het' && (
+              <GravacaoDoProfessor id="letter-het-pronunciation"
+                textoPt={tx.gravacaoHet} />
+            )}
+          </Card>
+          {/* As duas (ou três) leituras, com um botão de som para cada uma:
+              quem precisa ouvir a diferença entre "ch" e "s" tem onde ouvir. */}
+          <Leituras letter={letter} />
+        </>
+      )
+    },
+    {
+      nome: tx.entender,
+      /* O que a letra FAZ, e não só que som ela tem: "por que essa letra está
+         aí se eu não a escuto?", "por que ela mudou de formato?". */
+      corpo: mostraTudo ? (
+        <>
+          <Ensinamento letter={letter} />
+          <BrazilianTip mistake={letter.brazilianMistake} />
+          <GravacaoDoProfessor id={`letter-${letter.id}-common-mistake`} />
+        </>
+      ) : (
+        <>
+          {letter.ensino && <Lembre texto={letter.ensino.lembrePt} />}
+          <button type="button" onClick={() => setCompleta(true)} aria-expanded={false}
+                  className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                             text-[var(--accent)] underline underline-offset-2">
+            {tx.explicacaoCompleta}
+          </button>
+        </>
+      )
+    },
+    {
+      nome: tx.praticar,
+      corpo: (
+        <>
+          <Card className="p-6 grid gap-4">
+            <div className="grid gap-1">
+              <h2 className="text-[19px] font-semibold">{tx.comCadaVogal}</h2>
+              <p className="font-ui text-[13.5px] text-ink-muted">
+                {letter.syllables.some(s => hasAudio(s.audioId))
+                  ? tx.toqueParaOuvir
+                  : tx.toqueParaDica}
+              </p>
+            </div>
+            {/* Tocar na sílaba toca o som dela, e o gravar-e-comparar fica logo
+                abaixo, para a sílaba escolhida. Sem nenhuma sílaba gravada, volta
+                a grade de dicas. */}
+            {letter.syllables.some(s => hasAudio(s.audioId)) ? (
+              <>
+                <CompararPronuncia itens={letter.syllables} grade />
+                <div className="flex flex-wrap items-center gap-3">
+                  <AudioButton audioId={letter.audioId} label={tx.ouvirNome(letter.namePt)} slow />
+                </div>
+              </>
+            ) : <SyllableTrainer letter={letter} />}
+          </Card>
+          {/* As mesmas vogais nas letras já aprendidas, a um toque: ver a coluna
+              é o que transforma "מַ se lê ma" em "o patach faz a". */}
+          {mostraTudo && history.length > 1 && (comparar ? (
+            <SoundLab letters={history} compact title={tx.compareComAsQueSabe} />
+          ) : (
+            <button type="button" onClick={() => setComparar(true)} aria-expanded={false}
+                    className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                               text-[var(--accent)] underline underline-offset-2">
+              {tx.compararComAsQueSabe}
+            </button>
+          ))}
+        </>
+      )
+    },
+    ...(temChecagem ? [{
+      nome: tx.conferir,
+      /* Explicação → exemplo → PERGUNTAS → prática: duas a quatro perguntas
+         sobre o que foi EXPLICADO. Ver components/learn/Compreensao.tsx. */
+      corpo: (
         <Compreensao
           id={`checagem-${letter.id}`}
-          titulo="Entendeu? Perguntas rápidas"
-          intro="Não vale nota e não tranca nada. Se errar, a explicação aparece na hora."
+          titulo={tx.entendeu}
+          intro={tx.naoVaiNota}
           perguntas={letter.ensino.checagem}
           fecho={{
-            bom: 'Boa. Agora as palavras que esta letra abre.',
-            parcial: 'Vale reler os quadros acima - são duas ou três ideias, e elas voltam nas próximas letras.'
+            bom: tx.fechoBom,
+            parcial: tx.fechoParcial
           }}
         />
-      )}
+      )
+    }] : [])
+  ];
 
-      <Button size="lg" onClick={onDone} full>Continuar para as palavras</Button>
+  const ultimo = passo === passos.length - 1;
+  const ir = (n: number) => {
+    setPasso(n);
+    /* O passo novo começa do alto, e o foco vai junto: quem usa leitor de
+       tela ouve o nome do passo, e não o fim do anterior. */
+    requestAnimationFrame(() => {
+      topo.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
+      topo.current?.focus({ preventScroll: true });
+    });
+  };
+
+  return (
+    <div className="grid gap-5">
+      {/* Pontos, e não uma barra: logo acima ficam as abas das etapas, e uma
+          segunda barra cheia ali parecia outra fileira de abas. */}
+      <div ref={topo} tabIndex={-1}
+           className="flex items-center justify-between gap-3 outline-none scroll-mt-[76px]">
+        <p className="m-0 font-ui text-[14px] font-semibold text-ink">{passos[passo]!.nome}</p>
+        <p className="m-0 flex items-center gap-2.5 font-ui text-[13px] text-ink-muted">
+          <span aria-hidden className="flex gap-1.5">
+            {passos.map((x, k) => (
+              <span key={x.nome}
+                    className={`w-2 h-2 rounded-full transition-colors duration-[var(--dur-toque)]
+                      ${k <= passo ? 'bg-[var(--accent)]' : 'bg-[var(--line)]'}`} />
+            ))}
+          </span>
+          <span className="tabular-nums">{tx.passoDe(passo + 1, passos.length)}</span>
+        </p>
+      </div>
+
+      <div key={passo} className="grid gap-5 hf-passo">
+        {passos[passo]!.corpo}
+      </div>
+
+      <div className="grid grid-cols-[auto_1fr] gap-2">
+        {passo > 0 ? (
+          <Button variant="secondary" size="lg" onClick={() => ir(passo - 1)}>{tx.voltar}</Button>
+        ) : <span />}
+        {ultimo
+          ? <Button size="lg" onClick={onDone} full>{tx.continuarPalavras}</Button>
+          : <Button size="lg" onClick={() => ir(passo + 1)} full>
+              {tx.proximo(passos[passo + 1]!.nome.toLowerCase())}
+            </Button>}
+      </div>
     </div>
   );
 }
@@ -337,7 +541,7 @@ function StageConhecer({
    A `notaPt` existe para impedir a leitura literal da dica. Uma pista de
    leitura vira superstição no instante em que o aluno a trata como lei -
    "{{ה}} no fim é sempre A" é falso, e um aluno que acredita nisso lê
-   {{גָּבוֹהַּ}} errado e não entende por quê. */
+   {{גָבוֹהַ}} errado e não entende por quê. */
 function DicaDeLeitura({ dica }: { dica: NonNullable<Letter['ensino']['dicaLeitura']> }) {
   return (
     <Card tone="wash" className="p-6 grid gap-4">
@@ -386,20 +590,22 @@ function DicaDeLeitura({ dica }: { dica: NonNullable<Letter['ensino']['dicaLeitu
 
 function Ensinamento({ letter }: { letter: Letter }) {
   const e = letter.ensino;
+  /* O aprofundamento recolhido (30/09/2026). A etapa 1 do Álef tinha seis
+     telas de celular antes da primeira sílaba, e o maior bloco era este. À
+     vista fica o que a letra faz e o que lembrar; o detalhe, a nota para
+     brasileiro, o padrão e a dica de leitura ficam a um toque, inteiros. O
+     detalhe de letra com forma final continua à vista: é ele que mostra o
+     desenho do fim da palavra. */
+  const [aberto, setAberto] = useState(false);
   if (!e) return null;
+  const detalheAVista = !!(e.detalhePt && letter.finalForm);
+  const recolhidos = [
+    e.detalhePt && !detalheAVista, e.paraBrasileiroPt, e.padraoPt, e.dicaLeitura
+  ].filter(Boolean).length;
 
-  return (
-    <div className="grid gap-4">
-      <Card className="p-6 grid gap-3">
-        <h2 className="text-[19px] font-semibold">O que esta letra faz</h2>
-        <p className="text-[15.5px] leading-relaxed text-ink-body">
-          <Prose text={e.funcaoPt} />
-        </p>
-      </Card>
-
-      {e.detalhePt && (
+  const detalhe = e.detalhePt && (
         <Card className="p-6 grid gap-3">
-          <h2 className="text-[19px] font-semibold">Detalhe importante</h2>
+          <h2 className="text-[19px] font-semibold">{tx.detalhe}</h2>
           {/* A forma final MOSTRADA, e não só descrita: o par lado a lado
               diz em dois segundos o que um parágrafo não diz. */}
           {letter.finalForm && (
@@ -407,12 +613,12 @@ function Ensinamento({ letter }: { letter: Letter }) {
                             bg-surface-2 px-4 py-4">
               <span className="grid justify-items-center gap-1">
                 <He size="lg">{letter.letter}</He>
-                <span className="font-ui text-[12px] text-ink-muted">no meio</span>
+                <span className="font-ui text-[12px] text-ink-muted">{tx.noMeio}</span>
               </span>
               <span aria-hidden className="text-ink-muted text-[20px]">→</span>
               <span className="grid justify-items-center gap-1">
                 <He size="lg">{letter.finalForm}</He>
-                <span className="font-ui text-[12px] text-ink-muted">no fim</span>
+                <span className="font-ui text-[12px] text-ink-muted">{tx.noFim}</span>
               </span>
             </div>
           )}
@@ -420,44 +626,76 @@ function Ensinamento({ letter }: { letter: Letter }) {
             <Prose text={e.detalhePt} />
           </p>
         </Card>
-      )}
+  );
 
-      {e.paraBrasileiroPt && (
-        <Card tone="wash" className="p-6 grid gap-2">
-          <TituloComSelo selo="brasileiro" className="text-[var(--teal-ink)]" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={e.paraBrasileiroPt} />
-          </p>
-        </Card>
-      )}
-
-      {/* 🧠 - o padrão que volta o curso inteiro. Opcional de propósito: a
-          maioria das letras não tem um, e inventar um para preencher o
-          quadro ensina o aluno a pular o quadro. */}
-      {e.padraoPt && (
-        <Card className="p-6 grid gap-2">
-          <TituloComSelo selo="padrao" className="text-ink-muted" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={e.padraoPt} />
-          </p>
-        </Card>
-      )}
-
-      {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
-
-      {/* Sem selo, e isto é decisão: este quadro é o FECHO da explicação, e
-          não um dos cinco tipos. Ele carregava 💡, que agora pertence à
-          dica de leitura - um símbolo, um dono. O destaque continua o
-          mesmo, que é o que fazia ele funcionar. */}
-      <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
-        <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
-          O que você precisa lembrar
-        </h2>
-        <p className="text-[16px] leading-relaxed text-ink">
-          <Prose text={e.lembrePt} />
+  return (
+    <div className="grid gap-4">
+      <Card className="p-6 grid gap-3">
+        <h2 className="text-[19px] font-semibold">{tx.oQueFaz}</h2>
+        <p className="text-[15.5px] leading-relaxed text-ink-body">
+          <Prose text={e.funcaoPt} />
         </p>
       </Card>
+
+      {detalheAVista && detalhe}
+
+      <Lembre texto={e.lembrePt} />
+
+      {recolhidos > 0 && !aberto && (
+        <button type="button" onClick={() => setAberto(true)} aria-expanded={false}
+                className="justify-self-start min-h-[44px] px-1 font-ui text-[14.5px] font-semibold
+                           text-[var(--accent)] underline underline-offset-2">
+          {tx.verMais(recolhidos)}
+        </button>
+      )}
+
+      {aberto && (
+        <>
+          {!detalheAVista && detalhe}
+
+          {e.paraBrasileiroPt && (
+            <Card tone="wash" className="p-6 grid gap-2">
+              <TituloComSelo selo="brasileiro" className="text-[var(--teal-ink)]" />
+              <p className="text-[15.5px] leading-relaxed text-ink-body">
+                <Prose text={e.paraBrasileiroPt} />
+              </p>
+            </Card>
+          )}
+
+          {/* 🧠 - o padrão que volta o curso inteiro. Opcional de propósito: a
+              maioria das letras não tem um, e inventar um para preencher o
+              quadro ensina o aluno a pular o quadro. */}
+          {e.padraoPt && (
+            <Card className="p-6 grid gap-2">
+              <TituloComSelo selo="padrao" className="text-ink-muted" />
+              <p className="text-[15.5px] leading-relaxed text-ink-body">
+                <Prose text={e.padraoPt} />
+              </p>
+            </Card>
+          )}
+
+          {e.dicaLeitura && <DicaDeLeitura dica={e.dicaLeitura} />}
+        </>
+      )}
     </div>
+  );
+}
+
+/* Sem selo, e isto é decisão: este quadro é o FECHO da explicação, e não um
+   dos cinco tipos. Ele carregava 💡, que agora pertence à dica de leitura -
+   um símbolo, um dono. O destaque continua o mesmo, que é o que fazia ele
+   funcionar. Na etapa 1 enxuta (letra 12 em diante) é o único quadro da
+   explicação que fica à vista. */
+function Lembre({ texto }: { texto: string }) {
+  return (
+    <Card className="p-5 grid gap-1.5 border-[color:var(--teal)]">
+      <h2 className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)]">
+        {tx.lembrar}
+      </h2>
+      <p className="text-[16px] leading-relaxed text-ink">
+        <Prose text={texto} />
+      </p>
+    </Card>
   );
 }
 
@@ -471,20 +709,23 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       {canRead ? (
         <section className="grid gap-4">
           <div className="grid gap-1">
-            <h2 className="text-[21px] font-bold">Palavras que você já consegue ler</h2>
+            <h2 className="text-[21px] font-bold">{tx.jaConsegueLer}</h2>
             <p className="font-ui text-[14px] text-ink-muted">
-              Tente decifrar antes de revelar. Todas usam só letras que você já aprendeu.
+              {tx.tenteDecifrar}
             </p>
           </div>
           <WordList letter={letter} />
+          {letter.id === 'tav' && (
+            <GravacaoDoProfessor id="letter-alef-tav-example"
+              textoPt={tx.gravacaoTav} />
+          )}
+          <CompararPronuncia itens={letter.wordsToRead} titulo={tx.compareLeitura} />
         </section>
       ) : (
         <Card tone="amber" className="p-6 grid gap-2">
-          <h2 className="text-[18px] font-semibold">Ainda não dá para formar uma palavra</h2>
+          <h2 className="text-[18px] font-semibold">{tx.semPalavra}</h2>
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Com {letter.alphabetSoFar.filter(c => c.length === 1).length === 2 ? 'uma consoante só' : 'as poucas letras que você tem até aqui'},
-            nenhuma combinação fecha uma palavra de verdade. Isso muda já na próxima
-            letra - e não volta a acontecer. Por enquanto, leia as sílabas.
+            {tx.semPalavraTexto(letter.alphabetSoFar.filter(c => c.length === 1).length === 2)}
           </p>
           <div className="pt-2">
             <HeSeq items={letter.syllables.map(s => s.he)} size="word" />
@@ -499,11 +740,32 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
       {letter.wordsToRecognize.length > 0 && (
         <Card tone="wash" className="p-6 grid gap-2">
           <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
-          <p className="text-[15.5px] leading-relaxed text-ink-body">
-            <Prose text={letter.didYouKnow} />
-          </p>
+          {letter.didYouKnowTitle && (
+            <p className="font-ui text-[17px] font-semibold text-ink">{letter.didYouKnowTitle}</p>
+          )}
+          {/* Um parágrafo por linha em branco no texto (19/10/2026). */}
+          {letter.didYouKnow.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
         </Card>
       )}
+      {letter.wordsToRecognize.length > 0 && letter.maisCuriosidades.map(c => (
+        <Card key={c.tituloPt} tone="wash" className="p-6 grid gap-2">
+          <TituloComSelo selo="curiosidade" className="text-[var(--teal-ink)]" />
+          <p className="font-ui text-[17px] font-semibold text-ink">{c.tituloPt}</p>
+          {c.textoPt.split(/\n\n+/).map((par, i) => (
+            <p key={i} className="text-[15.5px] leading-relaxed text-ink-body">
+              <Prose text={par} />
+            </p>
+          ))}
+        </Card>
+      ))}
+
+      {/* Ouça a diferença (19/10/2026): só nas letras que trazem a
+          comparação em letters.json - hoje, o ר com o ח. */}
+      {letter.compararSons && <CompararSons comparacao={letter.compararSons} />}
 
       {/* Only the scenes this letter unlocks, and only ones the learner can
           decode - a sign you cannot read is not a reward. Most letters have
@@ -514,13 +776,14 @@ function StagePalavras({ letter, onDone }: { letter: Letter; onDone: () => void 
           The first is the reward; the rest are there for whoever wants them. */}
       <Scenes letter={letter} />
 
-      <Button size="lg" onClick={onDone} full>Continuar para a escrita</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarEscrita}</Button>
     </div>
   );
 }
 
 function Scenes({ letter }: { letter: Letter }) {
-  const scenes = scenesForOrder(letter.order);
+  /* Sem as placas que usam o som que a lição seguinte ensina (PED-025). */
+  const scenes = scenesForOrder(letter.order).filter(semOSomDe(letter.id));
   const [shown, setShown] = useState(1);
   if (!scenes.length) return null;
   const rest = scenes.length - shown;
@@ -531,7 +794,7 @@ function Scenes({ letter }: { letter: Letter }) {
       ))}
       {rest > 0 && (
         <Button variant="secondary" onClick={() => setShown(scenes.length)} full>
-          Mais {rest} {rest === 1 ? 'lugar' : 'lugares'} onde você já consegue ler
+          {tx.maisLugares(rest)}
         </Button>
       )}
     </div>
@@ -555,8 +818,8 @@ function WordList({ letter }: { letter: Letter }) {
       ))}
       {rest > 0 && (
         <Button variant="secondary" onClick={() => setShown(n => n + 3)} full>
-          Ver mais {Math.min(3, rest)} {rest === 1 ? 'palavra' : 'palavras'}
-          <span className="text-ink-muted"> · {rest} restantes</span>
+          {tx.verMaisPalavras(Math.min(3, rest), rest)}
+          <span className="text-ink-muted">{tx.restantes(rest)}</span>
         </Button>
       )}
     </div>
@@ -569,20 +832,22 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
-        <h2 className="text-[21px] font-bold">Aprendendo a escrever</h2>
+        <h2 className="text-[21px] font-bold">{tx.aprendendoAEscrever}</h2>
         <p className="font-ui text-[14px] text-ink-muted">
-          A mesma letra, no desenho que se usa à mão.
+          {tx.mesmaLetra}
         </p>
       </div>
 
       <Card className="p-6 grid gap-5">
         <div className="grid sm:grid-cols-2 gap-6">
           <div className="grid gap-2 justify-items-center">
-            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Impressa</p>
-            <He size="display">{letter.letter}</He>
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.impressa}</p>
+            {/* Com o daguesh no Bet, Kaf e Pe (27/10/2026): a impressa da lição
+                é a que tem o som dela. À mão, o ponto não se escreve. */}
+            <He size="display">{glifoDaLicao(letter)}</He>
           </div>
           <div className="grid gap-2 justify-items-center">
-            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">Cursiva</p>
+            <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">{tx.cursiva}</p>
             <He size="display" cursive>{letter.letter}</He>
           </div>
         </div>
@@ -613,55 +878,23 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         <WritingCanvas
           glyph={letter.finalForm}
           letterId={`${letter.id}-final`}
-          label={`${letter.namePt} - forma final`}
+          label={tx.formaFinal(letter.namePt)}
           onScored={score => p.recordWriting(letter.id, score)}
         />
       )}
 
-      <Button size="lg" onClick={onDone} full>Continuar para a prática</Button>
+      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
     </div>
   );
 }
 
-/* ── 4 · praticar ───────────────────────────────────────────────────────── */
-function StagePraticar({
-  exercises, letter, onDone
-}: { exercises: Exercise[]; letter: Letter; onDone: () => void }) {
-  const [finished, setFinished] = useState(false);
-
-  if (!exercises.length) {
-    return (
-      <div className="grid gap-5">
-        <ReadAloudRow items={letter.syllables.map(s => s.he)} label="Leia em voz alta" />
-        <Button size="lg" onClick={onDone} full>Continuar</Button>
-      </div>
-    );
-  }
-
-  return finished ? (
-    <div className="grid gap-5">
-      <Milestone
-        kicker="Prática concluída"
-        title="Agora o teste de verdade"
-        body="A próxima etapa vale nota, e você pode repetir quantas vezes quiser."
-      />
-      <Button size="lg" onClick={onDone} full>Ir para a fixação</Button>
-    </div>
-  ) : (
-    <ExercisePlayer
-      exercises={exercises}
-      title="Prática - sem nota"
-      onDone={() => setFinished(true)}
-    />
-  );
-}
-
-/* ── 5 · fixação: o mini-teste, com portão de domínio ───────────────────
+/* ── 5 · exercícios: o mini-teste, com portão de domínio ────────────────
  *
  * Aqui a lição deixa de ser "rolei até o fim" e passa a ser "mostrei que
- * sei". Seis questões, e 80% delas - cinco - para a letra contar como
- * dominada. (Dizia "oito questões" aqui, e eram cinco: um comentário que
- * envelheceu sozinho porque não havia nada medindo se ele era verdade.)
+ * sei". FIXACAO_ITENS questões (20), e 75% delas (MASTERY_MARK, 15 de 20)
+ * para a lição contar como concluída; a seguinte abre com LIBERA_MARK (80%,
+ * 16 de 20). Os números moram em lib/state/rules.ts e a tela os lê de
+ * lá: este comentário já disse "seis" e "oito" quando eram outros.
  *
  * O portão NÃO tranca. Quem fica abaixo recebe "vamos praticar mais um pouco"
  * e quatro questões montadas a partir dos PRÓPRIOS erros - não um sorteio
@@ -683,7 +916,7 @@ function StagePraticar({
 const PASSA = MASTERY_MARK;
 
 function StageFixacao({
-  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint
+  exercises, letter, history, result, onResult, onRetry, onNext, nextLabel, nextHint, proximaTrancada = false
 }: {
   exercises: Exercise[];
   letter: Letter;
@@ -695,6 +928,8 @@ function StageFixacao({
   nextLabel: string;
   /** Para onde o botão leva, em uma linha, embaixo dele. */
   nextHint: string;
+  /** A lição seguinte ainda não abre com a melhor nota desta. */
+  proximaTrancada?: boolean;
 }) {
   /* 'teste' → 'reforco' → 'fechado'. O reforço só existe quando a nota
      ficou abaixo do portão. */
@@ -714,17 +949,17 @@ function StageFixacao({
       <div className="grid gap-5">
         <Card tone="ember" className="p-5 grid gap-1.5">
           <p className="font-display text-[17px] font-semibold text-[var(--gold-ink)]">
-            Vamos praticar mais um pouco.
+            {tx.praticarMais}
           </p>
           <p className="font-ui text-[14.5px] leading-relaxed text-[var(--gold-body)]">
-            Estas {reforco.length} questões saem do que escapou agora há pouco.
-            Nada aqui vale nota.
+            {tx.reforcoTexto(reforco.length)}
           </p>
         </Card>
         <ExercisePlayer
           key={`ref-${letter.id}-${result.correct}`}
           exercises={reforco}
-          title="Reforço"
+          title={tx.reforco}
+          repetirErros
           onDone={() => setFase('fechado')}
         />
       </div>
@@ -737,36 +972,62 @@ function StageFixacao({
     const fezReforco = fase === 'fechado';
     return (
       <div className="grid gap-5">
+        {/* A carta da letra entra na coleção (28/10/2026, a aventura
+            ilustrada). Só com a nota que passa; o resultado de sempre vem
+            logo abaixo, igual. */}
+        {strong && <CelebracaoDaLetra letter={letter} />}
         <Milestone
+          yael={!strong}
           tone={strong || fezReforco ? 'bom' : 'parcial'}
-          kicker={`${result.correct} de ${result.total} · ${pct}%`}
-          title={strong ? 'Mais uma letra dominada.'
-            : fezReforco ? 'Reforço feito.'
-            : result.score >= 0.6 ? 'Quase lá.'
-            : `Vamos firmar ${letter.namePt}.`}
+          kicker={tx.placar(result.correct, result.total, pct)}
+          title={strong ? tx.maisUma
+            : fezReforco ? tx.reforcoFeito
+            : result.score >= 0.6 ? tx.quaseLa
+            : tx.vamosFirmar(letter.namePt)}
           /* A mensagem acompanha a nota de verdade. "Faltou pouco" num
              resultado de zero é a plataforma fingindo que não viu. */
-          body={strong
-            ? `Você reconhece ${letter.namePt} sozinha, dentro de uma palavra e entre as parecidas. Pode seguir com segurança.`
+          body={strong && !proximaTrancada
+            ? tx.reconhece(letter.namePt)
+            : proximaTrancada && (strong || fezReforco)
+              ? tx.filaTrancada(letter.namePt, Math.round(LIBERA_MARK * 100))
             : fezReforco
-              ? `${letter.namePt} entrou na fila de revisão e volta amanhã, no dia certo. `
-                + 'Ela ainda não conta como dominada - refaça o teste quando quiser, '
-                + 'com outras perguntas, e ela passa a contar. Pode seguir.'
+              ? tx.filaReforco(letter.namePt)
               : result.score >= 0.6
-                ? 'Faltou pouco. Quatro questões rápidas, montadas a partir do que escapou, e seguimos.'
-                : 'Esta letra ainda não está firme, e tudo bem - é para isso que existe a prática. Quatro questões montadas a partir do que escapou.'}
+                ? tx.faltouPouco
+                : tx.naoFirme}
         >
           {!strong && !fezReforco && reforco.length > 0 && (
-            <Button onClick={() => setFase('reforco')}>Praticar mais um pouco</Button>
+            <Button variant={proximaTrancada ? 'secondary' : 'primary'} onClick={() => setFase('reforco')}>
+              {tx.praticarMaisUmPouco}
+            </Button>
           )}
-          <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
-            Refazer o teste
-          </Button>
-          <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
-            {nextLabel}
-          </Button>
-          <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{nextHint}</p>
+          {proximaTrancada ? (
+            /* A próxima lição ainda não abre: o caminho principal é refazer,
+               e "Em seguida" some, porque ele apontaria para uma porta
+               trancada (UXQA-002). */
+            <>
+              <Button variant={!strong && !fezReforco && reforco.length > 0 ? 'secondary' : 'primary'}
+                      onClick={() => { setFase('teste'); onRetry(); }}>
+                {tx.refazerPrecisa(Math.round(LIBERA_MARK * 100))}
+              </Button>
+              <p className="basis-full font-ui text-[13px] text-ink-muted m-0">
+                {tx.proximaAbre(Math.round(LIBERA_MARK * 100), acertosPara(LIBERA_MARK), FIXACAO_ITENS)}
+              </p>
+            </>
+          ) : (
+            <>
+              <Button variant={strong ? 'secondary' : 'ghost'} onClick={() => { setFase('teste'); onRetry(); }}>
+                {tx.refazerTeste}
+              </Button>
+              <Button variant={strong || fezReforco ? 'primary' : 'secondary'} onClick={onNext}>
+                {nextLabel}
+              </Button>
+              <p className="basis-full font-ui text-[13px] text-ink-muted m-0">{nextHint}</p>
+            </>
+          )}
         </Milestone>
+        {strong && <MinhaConquista letter={letter} />}
+        <SugestaoDePar />
       </div>
     );
   }
@@ -774,9 +1035,42 @@ function StageFixacao({
   return (
     <ExercisePlayer
       exercises={exercises}
-      title={`Mini-teste - letra ${letter.namePt}`}
+      title={tx.exerciciosLetra(letter.namePt)}
       onDone={r => { track('quiz_completed', { letterId: letter.id, score: r.score }); onResult(r); }}
     />
+  );
+}
+
+/* ── Minha conquista ──────────────────────────────────────────────────────
+   O fim de uma letra dito como CAPACIDADE, e não como etapa cumprida
+   (11/10/2026): o que o aluno consegue fazer agora que não conseguia antes
+   da lição. Só aparece com a nota de domínio: dizer "você reconhece" para
+   quem ficou abaixo dela seria a tela fingindo. O número de palavras novas
+   já está logo abaixo, no contador de leitura. */
+function MinhaConquista({ letter }: { letter: Letter }) {
+  /* O segundo som de cada letra vem de um sinal diferente, e a frase diz
+     qual: o daguesh em ב, כ, פ. O ש tem as suas duas leituras em lições
+     separadas (Shin e Sin), e por isso aqui tem um som só. */
+  const doisSons = letter.sound.includes(' ou ');
+  const semSom = letter.sound.startsWith('(');
+  return (
+    <Card tone="mint" className="p-5 grid gap-2.5">
+      <p className="font-ui text-[13px] font-bold uppercase tracking-[.08em] text-[var(--teal-ink)] m-0">{tx.minhaConquista}</p>
+      <ul className="grid gap-1.5 text-[15px] leading-relaxed text-ink list-disc pl-5 m-0">
+        {/* A etapa Escrever da lição traça a cursiva, e a etapa Conhecer mostra
+            a impressa: quem chega aqui com a nota viu e praticou as duas. */}
+        <li>{tx.conquista1(letter.namePt)}</li>
+        <li>{semSom
+          ? tx.conquistaSemSom(letter.namePt)
+          : doisSons
+            ? tx.conquistaDoisSons(letter.namePt, somPt(letter.sound))
+            : tx.conquistaSom(letter.namePt, somPt(letter.sound))}</li>
+        <li>{tx.conquista3(letter.namePt)}</li>
+      </ul>
+      <Link href="/leitura" className="inline-flex items-center min-h-[44px] w-fit font-ui text-[14px] font-medium text-[var(--teal-ink)] underline">
+        {tx.laboratorio}
+      </Link>
+    </Card>
   );
 }
 
@@ -793,10 +1087,32 @@ function PortaTrancada({ letter, porque }: {
   porque: NonNullable<ReturnType<typeof porQueTrancada>>;
 }) {
   const p = useProgress();
-  const anterior = allLetters().find(l => l.id === porque.anterior);
-  const ordem = allLetters().map(l => l.id);
+  const ordem = ordemDeEnsino(allLetters(), course.modules);
+  /* A anterior pode ser uma lição de som: Kaf vem depois de Vet. */
+  const anterior = { namePt: nomeDaLicao(porque.anterior, allLetters(), course.modules) };
   const atual = letraAtual(p.state, ordem);
-  const atualL = allLetters().find(l => l.id === atual);
+  const atualL = { namePt: nomeDaLicao(atual, allLetters(), course.modules) };
+
+  /* A primeira letra antes da Aula 0 (11/10/2026): o que falta não é uma
+     lição, é a aula de antes das letras. */
+  if (porque.falta === 'aula0') {
+    return (
+      <div className="grid gap-5 focus-col">
+        <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
+            {tx.antesDaPrimeira}
+          </h1>
+          <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
+            {tx.abreComAula0(<He size="inline">{letter.letter}</He>)}
+          </p>
+          <div className="grid gap-2 w-full max-w-[320px] pt-1">
+            <LinkButton href="/inicio" size="lg" full>{tx.irAula0}</LinkButton>
+            <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="grid gap-5 focus-col">
@@ -811,33 +1127,29 @@ function PortaTrancada({ letter, porque }: {
         </span>
         <div className="grid gap-2">
           <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
-            A letra <He size="inline">{letter.letter}</He> ainda não abriu
+            {tx.naoAbriu(<He size="inline">{letter.letter}</He>)}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
             {porque.falta === 'licao' ? (
-              <>Ela vem depois de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
-              e essa lição ainda não foi concluída. Cada letra usa as anteriores nas
-              palavras - é por isso que a ordem importa.</>
+              tx.vemDepois(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>)
             ) : (
-              <>Falta a fixação de <strong className="font-semibold text-ink">{anterior?.namePt}</strong>.
-              Sua melhor nota lá foi {Math.round((porque.nota ?? 0) * 100)}%, e esta letra abre
-              a partir de {Math.round(LIBERA_MARK * 100)}%. Dá para refazer quantas vezes quiser -
-              as perguntas mudam a cada tentativa.</>
+              tx.faltamExercicios(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
+                Math.round((porque.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))
             )}
           </p>
         </div>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          <LinkButton href={`/licao/${porque.anterior}`} size="lg" full>
+          <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
             {porque.falta === 'licao'
-              ? `Ir para ${anterior?.namePt}`
-              : `Refazer a fixação de ${anterior?.namePt}`}
+              ? tx.irPara(anterior?.namePt)
+              : tx.refazerDe(anterior?.namePt)}
           </LinkButton>
           {atual !== porque.anterior && atualL && (
-            <LinkButton href={`/licao/${atual}`} variant="secondary" full>
-              Continuar de onde parei ({atualL.namePt})
+            <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>
+              {tx.continuarDeOnde(atualL.namePt)}
             </LinkButton>
           )}
-          <LinkButton href="/mapa" variant="ghost" full>Ver o mapa</LinkButton>
+          <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
         </div>
       </Card>
     </div>
@@ -849,17 +1161,19 @@ function PortaTrancada({ letter, porque }: {
    distingue, e o som. A coluna "onde olhar" é a que ensina - "ponto no alto
    à direita" é acionável, "/ʃ/" não é. */
 function Leituras({ letter }: { letter: Letter }) {
-  if (!letter.variantes?.length) return null;
+  /* Uma leitura só não é quadro: é o som da letra, que o cartão já mostra.
+     É o caso de Bet, Kaf e Pe desde que o lado sem ponto tem lição própria
+     (soOLadoDoPonto em lib/sons.ts). */
+  if ((letter.variantes?.length ?? 0) < 2) return null;
 
   return (
     <Card className="p-6 grid gap-4">
       <div className="grid gap-1">
         <h2 className="text-[19px] font-semibold">
-          {letter.variantes.length === 2 ? 'As duas leituras' : 'As leituras desta letra'}
+          {letter.variantes.length === 2 ? tx.duasLeituras : tx.leiturasDestaLetra}
         </h2>
         <p className="font-ui text-[13.5px] text-ink-muted">
-          Mesmo desenho de letra. O que muda é o sinal - e é nele que você olha
-          antes de pronunciar.
+          {tx.mesmoDesenho}
         </p>
       </div>
       <ul className="grid gap-2.5 list-none p-0 m-0">
@@ -878,8 +1192,12 @@ function Leituras({ letter }: { letter: Letter }) {
               </span>
             </span>
             {hasAudio(v.audioId) && (
-              <span className="ml-auto shrink-0">
-                <AudioButton audioId={v.audioId} label="" size="sm" />
+              <span className="ml-auto shrink-0 grid justify-items-center gap-0.5">
+                <AudioButton audioId={v.audioId} label="" size="sm"
+                             ariaLabel={tx.ouvirExemplo(v.nomePt, v.exemploHe)} />
+                {/* O que toca é um exemplo: uma consoante sozinha não se
+                    pronuncia. Mostrado, para o som não parecer da letra solta. */}
+                <He size="inline">{v.exemploHe}</He>
               </span>
             )}
           </li>

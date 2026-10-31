@@ -10,6 +10,10 @@ import type {
   LessonProgress, LetterSkills, Skill, SkillStat, SrsItem
 } from './types';
 import { SKILLS } from './types';
+import { folgasLivres, usarFolgas } from '@/lib/loja';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-rules';
+import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 
 export const today = (d: Date = new Date()): string => {
   /* Local date, not UTC: a learner practising at 22h in São Paulo must get
@@ -44,8 +48,30 @@ export const XP = {
   perfectQuiz: 10,
   checkpoint: 50,
   review: 15,
-  dailyGoal: 5
+  dailyGoal: 5,
+  /** Cada acerto praticando letras (lição, revisão, academia, traçado). */
+  acerto: 2
 } as const;
+
+/**
+ * Teto do XP de acertos num dia (pedido do dono em 01/10/2026: mais XP por
+ * praticar as letras). 50 acertos por dia pagam; dali em diante a prática
+ * continua contando para a meta e para a revisão, mas não paga mais XP.
+ * Sem teto, repetir o exercício mais fácil viraria o jeito de comprar as
+ * leituras bônus da loja.
+ */
+export const XP_ACERTOS_POR_DIA = 100;
+
+/** Paga o XP de um acerto, respeitando o teto do dia. */
+export function pagarAcerto(state: LearnerState, day: string): LearnerState {
+  const prev: DayRecord = state.days[day] ?? emptyDay();
+  const ja = prev.xpAcertos ?? 0;
+  const valor = Math.min(XP.acerto, XP_ACERTOS_POR_DIA - ja);
+  if (valor <= 0) return state;
+  const next = awardXp(state, day, valor);
+  const dia = next.days[day]!;
+  return { ...next, days: { ...next.days, [day]: { ...dia, xpAcertos: ja + valor } } };
+}
 
 /** Practice units in a daily goal. One unit is about twenty seconds. */
 export const goalTarget = (minutes: number): number => Math.max(3, Math.round(minutes * 3));
@@ -96,7 +122,21 @@ export function applyPractice(
     xp += XP.dailyGoal;
 
     const last = streak.lastDay;
-    const current = last == null ? 1 : daysBetween(last, day) === 1 ? streak.current + 1 : 1;
+    const gap = last == null ? 0 : daysBetween(last, day);
+    let current = last == null ? 1 : gap === 1 ? streak.current + 1 : 1;
+
+    /* As folgas (27/09/2026, lib/loja.ts): se a lacuna foi de um ou dois
+       dias e há folga para cada dia perdido, elas são gastas agora e a
+       sequência continua como se não tivesse parado. Tudo ou nada. */
+    if (last != null && gap > 1 && streak.current > 0) {
+      const perdidos = Array.from({ length: gap - 1 }, (_, i) => addDays(last, i + 1));
+      const coberto = usarFolgas({ ...state, xp }, perdidos);
+      if (coberto) {
+        current = streak.current + 1;
+        streak = { current, longest: Math.max(streak.longest, current), lastDay: day };
+        return { ...coberto, xp, days: { ...state.days, [day]: next }, streak };
+      }
+    }
     streak = { current, longest: Math.max(streak.longest, current), lastDay: day };
   }
 
@@ -109,7 +149,10 @@ export function displayStreak(state: LearnerState, day: string): number {
   const { current, lastDay } = state.streak;
   if (!lastDay || current === 0) return 0;
   const gap = daysBetween(lastDay, day);
-  return gap <= 1 ? current : 0;
+  if (gap <= 1) return current;
+  /* Com folga bastante para os dias perdidos, a sequência continua viva:
+     ela será gasta quando a meta de hoje for cumprida. */
+  return gap - 1 <= folgasLivres(state).length ? current : 0;
 }
 
 export function awardXp(state: LearnerState, day: string, amount: number): LearnerState {
@@ -200,13 +243,38 @@ export function recordQuiz(
  * muda é o que CONTA:
  *
  *   · concluir  - as cinco etapas, sem nota. Libera a próxima letra.
- *   · dominar   - as cinco etapas E 6 de 8 na fixação, em QUALQUER tentativa.
+ *   · dominar   - as cinco etapas E 75% na fixação (8 de 10), em QUALQUER tentativa.
  *                 É isto que alimenta a barra, as conquistas e o exame final.
  *
  * "Qualquer tentativa" importa: refazer gera outras perguntas (outra semente),
  * então melhorar é aprender, não decorar o gabarito.
  */
 export const MASTERY_MARK = 0.75;
+
+/** Quantas perguntas a fixação tem (buildMiniTest). Um número, num lugar só:
+ *  toda frase que diz "N de M" sai daqui (auditoria de 01/10/2026, UXQA-005). */
+export const FIXACAO_ITENS = 20;
+
+/** Quantos acertos de `FIXACAO_ITENS` uma nota pede: 75% de 10 são 8. */
+export const acertosPara = (marca: number, total: number = FIXACAO_ITENS): number =>
+  Math.ceil(marca * total - 1e-9);
+
+/** "8 de 10", derivado das constantes. */
+export const REGRA_DO_DOMINIO_CURTA = fmt(tx.regraCurta, { certos: acertosPara(MASTERY_MARK), total: FIXACAO_ITENS });
+
+/** A regra inteira, para a tela dizer o que "dominar" quer dizer. */
+export const REGRA_DO_DOMINIO =
+  fmt(tx.regraDominio, { etapas: STAGE_COUNT, regra: REGRA_DO_DOMINIO_CURTA });
+
+/**
+ * A mesma regra, dita como o que ela é desde 12/10/2026: uma lição
+ * CONCLUÍDA. "Dominar" passou a ser outra medida, mais exigente, a do
+ * domínio por habilidade ao longo dos dias (lib/dominio.ts). As duas nunca
+ * aparecem com o mesmo nome: "lições concluídas" é esta; "letras dominadas"
+ * é a de lib/dominio.ts.
+ */
+export const REGRA_DA_CONCLUSAO =
+  fmt(tx.regraConclusao, { etapas: STAGE_COUNT, regra: REGRA_DO_DOMINIO_CURTA });
 
 export const isLessonComplete = (state: LearnerState, letterId: string): boolean =>
   (state.lessons[letterId]?.stagesDone.length ?? 0) >= STAGE_COUNT;
@@ -217,8 +285,21 @@ export function isLessonMastered(state: LearnerState, letterId: string): boolean
   return l.stagesDone.length >= STAGE_COUNT && (l.quizBest ?? 0) >= MASTERY_MARK;
 }
 
+/* As lições de som (Vet, Chaf, Fe, Tch, Dj, J) gravam em `lessons` com o
+   prefixo `som-`, com as mesmas cinco etapas e a mesma fixação de uma letra -
+   é o que deixa a trava de progressão tratá-las igual. Mas não são letras:
+   "22 letras dominadas" continua contando só as 22. */
+export const SOM_PREFIXO = 'som-';
+export const ehLicaoDeSom = (id: string) => id.startsWith(SOM_PREFIXO);
+
 export const lettersMastered = (state: LearnerState): number =>
-  Object.keys(state.lessons).filter(id => isLessonMastered(state, id)).length;
+  Object.keys(state.lessons).filter(id => !ehLicaoDeSom(id) && isLessonMastered(state, id)).length;
+
+/** As letras concluídas que ainda não chegaram ao domínio na fixação: o que
+ *  falta a quem "já fez tudo" e mesmo assim não vê a leitura bônus abrir. */
+export const concluidasSemDominio = (state: LearnerState): number =>
+  Object.keys(state.lessons)
+    .filter(id => !ehLicaoDeSom(id) && isLessonComplete(state, id) && !isLessonMastered(state, id)).length;
 
 /**
  * O alfabeto inteiro fechado - a condição do teste final.
@@ -276,11 +357,11 @@ export function recordCheckpoint(
 export type MasteryLevel = 'novo' | 'aprendendo' | 'praticando' | 'forte' | 'revisar';
 
 export const MASTERY_LABEL: Record<MasteryLevel, string> = {
-  novo: 'ainda não visto',
-  aprendendo: 'aprendendo',
-  praticando: 'praticando',
-  forte: 'forte',
-  revisar: 'precisa de revisão'
+  novo: tx.nivelNovo,
+  aprendendo: tx.nivelAprendendo,
+  praticando: tx.nivelPraticando,
+  forte: tx.nivelForte,
+  revisar: tx.nivelRevisar
 };
 
 export const emptySkill = (): SkillStat => ({ hits: 0, misses: 0, streak: 0, lastOn: null });
@@ -342,6 +423,14 @@ export function recordSkill(
     streak: correct ? prev.streak + 1 : 0,
     lastOn: day
   };
+  /* Os dias de acerto só são contados em registros que nasceram com eles:
+     um registro antigo, com respostas e sem o campo, fica sem (ver types.ts). */
+  const legado = prev.diasDeAcerto === undefined && prev.hits + prev.misses > 0;
+  if (!legado) {
+    const novoDia = correct && prev.ultimoAcerto !== day;
+    stat.diasDeAcerto = (prev.diasDeAcerto ?? 0) + (novoDia ? 1 : 0);
+    stat.ultimoAcerto = correct ? day : (prev.ultimoAcerto ?? null);
+  }
   return { ...state, skills: { ...state.skills, [letterId]: { ...letter, [skill]: stat } } };
 }
 
@@ -477,6 +566,23 @@ export function markFirst(state: LearnerState, id: string): LearnerState {
 
 export const hasFirst = (state: LearnerState, id: string): boolean => !!state.firsts[id];
 
+/**
+ * Uma resposta de autoavaliação de leitura (12/10/2026). Grava só em
+ * `leituraAutoavaliada`: nada de `skills`, de revisão ou de XP, porque
+ * "eu li certo" é o que o aluno acha, e não o que o curso mediu.
+ */
+export function registrarLeitura(state: LearnerState, atividade: string, consegui: boolean, day: string): LearnerState {
+  const todas = state.leituraAutoavaliada ?? {};
+  const prev = todas[atividade] ?? { tentadas: 0, consegui: 0, ultima: day };
+  return {
+    ...state,
+    leituraAutoavaliada: {
+      ...todas,
+      [atividade]: { tentadas: prev.tentadas + 1, consegui: prev.consegui + (consegui ? 1 : 0), ultima: day }
+    }
+  };
+}
+
 /* ── spaced review (Leitner) ────────────────────────────────────────────── */
 
 const INTERVALS = [1, 2, 4, 8, 16] as const;
@@ -511,6 +617,43 @@ export function recordAnswer(
     return { ...state, srs };
   }
   return { ...state, srs: { ...state.srs, [itemId]: item } };
+}
+
+/**
+ * Fecha uma revisão rápida (28/09/2026).
+ * ─────────────────────────────────────────────────────────────────────────
+ * O defeito que isto resolve: a fila de revisão guarda a PERGUNTA exata que
+ * o aluno errou na lição (o id do exercício), e a revisão rápida gera
+ * perguntas NOVAS para as mesmas letras, com outros ids. Acertar tudo na
+ * revisão não tocava nos itens pendentes: "a revisar" nunca baixava, e o
+ * aluno que refazia e consertava os erros via a revisão como não feita.
+ *
+ * Agora quem conta é a LETRA revisada. Para cada letra que entrou na rodada,
+ * os itens dela que estão para hoje andam:
+ *   · a letra saiu sem erro na primeira tentativa → o item sobe uma caixa e
+ *     volta mais tarde, como um acerto;
+ *   · houve erro e o aluno consertou → o item sai de hoje e volta amanhã,
+ *     sem subir de caixa. É o que a tela de fim promete ("o que você errar
+ *     hoje volta daqui a um dia").
+ * As letras que não couberam nesta rodada continuam para hoje.
+ */
+export function concluirRevisao(
+  state: LearnerState, day: string, porLetra: Record<string, { erros: number }>
+): LearnerState {
+  let next = state;
+  for (const item of dueItems(state, day)) {
+    const letra = porLetra[item.letterId];
+    if (!letra) continue;
+    if (letra.erros === 0) {
+      next = recordAnswer(next, item.itemId, item.letterId, true, day);
+    } else {
+      const atual = next.srs[item.itemId];
+      if (atual) {
+        next = { ...next, srs: { ...next.srs, [item.itemId]: { ...atual, lastSeen: day, dueOn: addDays(day, 1) } } };
+      }
+    }
+  }
+  return next;
 }
 
 export const dueItems = (state: LearnerState, day: string): SrsItem[] =>
@@ -641,45 +784,46 @@ export type AchievementDef = {
 };
 
 export const ACHIEVEMENTS: AchievementDef[] = [
-  { id: 'primeira-letra', titlePt: 'Primeira letra', descPt: 'Você concluiu a sua primeira lição.',
+  { id: 'primeira-letra', titlePt: tx.primeiraLetraTitulo, descPt: tx.primeiraLetraDesc,
     test: s => lettersMastered(s) >= 1 },
-  { id: 'primeira-palavra', titlePt: 'Primeira palavra lida', descPt: 'Você leu uma palavra inteira em hebraico.',
+  { id: 'primeira-palavra', titlePt: tx.primeiraPalavraTitulo, descPt: tx.primeiraPalavraDesc,
     test: s => lettersMastered(s) >= 3 },
-  { id: 'modulo-1', titlePt: 'Módulo 1', descPt: 'Seis letras e o primeiro checkpoint.',
+  { id: 'modulo-1', titlePt: tx.modulo1Titulo, descPt: tx.modulo1Desc,
     test: s => !!s.checkpoints['cp1']?.passedAt },
-  { id: 'tres-dias', titlePt: 'Três dias seguidos', descPt: 'A constância é o que faz a leitura virar automática.',
+  { id: 'tres-dias', titlePt: tx.tresDiasTitulo, descPt: tx.tresDiasDesc,
     test: (s, d) => displayStreak(s, d) >= 3 },
-  { id: 'dez-letras', titlePt: 'Dez letras', descPt: 'Quase metade do alfabeto.',
+  { id: 'dez-letras', titlePt: tx.dezLetrasTitulo, descPt: tx.dezLetrasDesc,
     test: s => lettersMastered(s) >= 10 },
-  { id: 'metade', titlePt: 'Metade do alfabeto', descPt: 'Onze das 22 letras.',
+  { id: 'metade', titlePt: tx.metadeTitulo, descPt: tx.metadeDesc,
     test: s => lettersMastered(s) >= 11 },
-  { id: 'checkpoint-perfeito', titlePt: 'Checkpoint perfeito', descPt: 'Um checkpoint sem nenhum erro.',
+  { id: 'checkpoint-perfeito', titlePt: tx.checkpointPerfeitoTitulo, descPt: tx.checkpointPerfeitoDesc,
     test: s => Object.values(s.checkpoints).some(c => (c.best ?? 0) >= 1) },
-  { id: 'vinte-e-duas', titlePt: '22 letras', descPt: 'O alfabeto inteiro.',
+  { id: 'vinte-e-duas', titlePt: tx.vinteEDuasTitulo, descPt: tx.vinteEDuasDesc,
     test: s => lettersMastered(s) >= 22 },
-  { id: 'sem-o-ponto', titlePt: 'Sem o ponto', descPt: 'Você lê {{בּ}}, {{כּ}} e {{פּ}} sem o daguesh - como elas aparecem na rua.',
+  { id: 'sem-o-ponto', titlePt: tx.semOPontoTitulo, descPt: tx.semOPontoDesc,
     test: s => !!s.checkpoints['cp6']?.passedAt },
-  { id: 'sons-modernos', titlePt: 'Os sons modernos', descPt: 'O gerech e as três letras que o hebraico moderno inventou sem inventar letra.',
+  { id: 'sons-modernos', titlePt: tx.sonsModernosTitulo, descPt: tx.sonsModernosDesc,
     test: s => !!s.checkpoints['cp7']?.passedAt },
   /* Not a count of anything. The one moment the course is actually selling:
      a whole word decoded with no transliteration on the screen. */
-  { id: 'sem-apoio', titlePt: 'Sem apoio', descPt: 'Você leu uma palavra inteira sem transliteração.',
+  { id: 'sem-apoio', titlePt: tx.semApoioTitulo, descPt: tx.semApoioDesc,
     test: s => !!s.firsts['leitura-sem-translit'] },
-  { id: 'leitor', titlePt: 'Leitor de hebraico', descPt: 'Você concluiu o desafio final.',
+  { id: 'leitor', titlePt: tx.leitorTitulo, descPt: tx.leitorDesc,
     test: s => !!s.finalChallenge.completedAt },
   /* As palavras que ele consegue ler. A CONTA é feita em lib/vocabulario.ts,
      nas telas do curso, porque precisa do vocabulário - que não pode ser lido
      numa página pública. Aqui só se lê o marco que ela gravou. */
-  { id: 'le-10', titlePt: '10 palavras', descPt: 'Você já consegue ler 10 palavras em hebraico.',
+  { id: 'le-10', titlePt: tx.lePalavrasTitulo(10), descPt: tx.lePalavrasDesc(10),
     test: s => !!s.firsts['le-10'] },
-  { id: 'le-25', titlePt: '25 palavras', descPt: 'Você já consegue ler 25 palavras em hebraico.',
+  { id: 'le-25', titlePt: tx.lePalavrasTitulo(25), descPt: tx.lePalavrasDesc(25),
     test: s => !!s.firsts['le-25'] },
-  { id: 'le-50', titlePt: '50 palavras', descPt: 'Você já consegue ler 50 palavras em hebraico.',
+  { id: 'le-50', titlePt: tx.lePalavrasTitulo(50), descPt: tx.lePalavrasDesc(50),
     test: s => !!s.firsts['le-50'] },
-  { id: 'le-100', titlePt: '100 palavras', descPt: 'Você já consegue ler 100 palavras em hebraico.',
+  { id: 'le-100', titlePt: tx.lePalavrasTitulo(100), descPt: tx.lePalavrasDesc(100),
     test: s => !!s.firsts['le-100'] },
-  { id: 'meu-nome', titlePt: 'Meu nome em hebraico', descPt: 'Você escreveu o seu nome com as letras que aprendeu.',
-    test: s => !!s.firsts['meu-nome'] }
+  /* Só onde a "Meu nome em hebraico" existe (lib/recursos.ts). */
+  ...(MEU_NOME_EM_HEBRAICO ? [{ id: 'meu-nome', titlePt: tx.meuNomeTitulo, descPt: tx.meuNomeDesc,
+    test: (s: LearnerState) => !!s.firsts['meu-nome'] }] : [])
 ];
 
 /** Returns the state plus the achievements unlocked by this change. */
@@ -712,7 +856,7 @@ export function supportLevel(mastered: number): SupportLevel {
 }
 
 export const supportLabel = (level: SupportLevel): string =>
-  level === 'on-request' ? 'Precisa de ajuda?' : 'Mostrar leitura';
+  level === 'on-request' ? tx.precisaAjuda : tx.mostrarLeitura;
 
 /* ── overall progress ───────────────────────────────────────────────────── */
 
@@ -725,11 +869,13 @@ export const supportLabel = (level: SupportLevel): string =>
  * its dots, which is most words.
  */
 export function courseProgress(
-  state: LearnerState, totalLetters: number, extraModuleIds: readonly string[] = []
+  state: LearnerState, totalLetters: number, extraModuleIds: readonly string[] = [],
+  /** As lições de som (`som-vet`...): cinco etapas cada, como uma letra. */
+  somIds: readonly string[] = []
 ): number {
   if (totalLetters <= 0) return 0;
   const letterIds = new Set(
-    Object.keys(state.lessons).filter(id => !extraModuleIds.includes(id))
+    Object.keys(state.lessons).filter(id => !extraModuleIds.includes(id) && !ehLicaoDeSom(id))
   );
   const letters = [...letterIds].reduce((a, id) => {
     const l = state.lessons[id];
@@ -739,7 +885,11 @@ export function courseProgress(
     const l = state.lessons[id];
     return a + (l ? Math.min(EXTRA_STAGE_COUNT, l.stagesDone.length) / EXTRA_STAGE_COUNT : 0);
   }, 0);
-  return Math.min(1, (letters + extras) / (totalLetters + extraModuleIds.length));
+  const sons = somIds.reduce((a, id) => {
+    const l = state.lessons[id];
+    return a + (l ? Math.min(STAGE_COUNT, l.stagesDone.length) / STAGE_COUNT : 0);
+  }, 0);
+  return Math.min(1, (letters + extras + sons) / (totalLetters + extraModuleIds.length + somIds.length));
 }
 
 /** Modules 6 and 7 have three lessons, not five stages. */
@@ -777,6 +927,18 @@ export const isExtraModuleDone = (state: LearnerState, id: string): boolean =>
  *    nela - terminar as etapas ou melhorar a nota.
  */
 
+/* ── a Aula 0 ─────────────────────────────────────────────────────────────
+ * Concluída quando a checagem final (17 perguntas) é feita com pelo menos
+ * AULA0_MINIMO acertos. Quem já tem progresso em alguma lição conta como
+ * tendo feito: a Aula 0 virou obrigatória em 11/10/2026, e ninguém que já
+ * estava estudando perde o acesso que tinha. */
+export const AULA0_ID = 'aula-0';
+export const AULA0_CONCLUIDA = 'aula-0-concluida';
+export const AULA0_PERGUNTAS = 17;
+export const AULA0_MINIMO = 12;
+export const aula0Feita = (state: LearnerState): boolean =>
+  !!state.firsts?.[AULA0_CONCLUIDA] || Object.keys(state.lessons ?? {}).length > 0;
+
 /** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
 export const LIBERA_MARK = 0.8;
 
@@ -796,21 +958,17 @@ export function letraLiberada(
   state: LearnerState, ordem: readonly string[], letterId: string
 ): boolean {
   const i = ordem.indexOf(letterId);
-  /* A primeira letra abre sempre, e NÃO depende da aula 0.
+  /* A primeira letra abre quando a Aula 0 foi concluída (11/10/2026).
      ──────────────────────────────────────────────────────────────────────
-     Esta é a linha que mudaria se a aula 0 passasse a trancar o alef, e ela
-     fica como está por decisão do dono do curso, em 22/09/2026. Não é
-     esquecimento, e quem vier depois não precisa reabrir a pergunta: a
-     razão inteira está em AUDITORIA-FINAL.md, na Parte 19.
+     Até aqui o álef abria sempre, por decisão do dono em 22/09/2026. Em
+     11/10/2026 o dono decidiu o contrário: ninguém começa as letras sem
+     antes entender a direção da leitura e o que é o nikud. A Aula 0 conta
+     como concluída quando a checagem final dela passa (`aula0Feita`).
 
-     Em resumo: a trava de progressão existe para o aluno não cair numa tela
-     onde metade dos símbolos é ruído, e a lição do alef não tem esse
-     problema para quem pulou a introdução. O que a trava compraria - que a
-     pessoa saiba que a aula 0 existe e saiba voltar a ela - já vem da
-     navegação, onde ela é um destino fixo em toda tela e nas duas larguras.
-     Sobraria só uma porta a mais na primeira visita, que é o momento em que
-     se perde gente. */
-  if (i <= 0) return i === 0;
+     NUNCA TIRA O QUE JÁ FOI DADO (decisão 1, acima): quem já tem progresso
+     em qualquer lição continua com tudo aberto, com ou sem a Aula 0. */
+  if (i < 0) return false;
+  if (i === 0) return aula0Feita(state);
 
   /* Já entrou alguma vez, aqui ou mais adiante: a porta continua aberta.
      Ver a decisão 1 acima - e note que basta UMA letra posterior com
@@ -821,12 +979,14 @@ export function letraLiberada(
   return liberaSeguinte(state, ordem[i - 1]!);
 }
 
-/** O que falta para abrir. `null` quando já está aberta. */
+/** O que falta para abrir. `null` quando já está aberta. `falta: 'aula0'`
+ *  é a primeira letra antes da Aula 0: `anterior` vem como AULA0_ID. */
 export function porQueTrancada(
   state: LearnerState, ordem: readonly string[], letterId: string
-): { anterior: string; falta: 'licao' | 'nota'; nota: number | null } | null {
+): { anterior: string; falta: 'licao' | 'nota' | 'aula0'; nota: number | null } | null {
   if (letraLiberada(state, ordem, letterId)) return null;
   const i = ordem.indexOf(letterId);
+  if (i <= 0) return { anterior: AULA0_ID, falta: 'aula0', nota: null };
   const anterior = ordem[i - 1]!;
   const l = state.lessons[anterior];
   const completa = (l?.stagesDone.length ?? 0) >= STAGE_COUNT;

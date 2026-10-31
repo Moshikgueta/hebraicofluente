@@ -20,6 +20,8 @@ import {
   BASE_TO_FINAL, FINAL_TO_BASE, clean, consonantsOf, isReadableWith, stripNikud
 } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-palavras';
 import type { Ctx, Gen } from './generators';
 import type { Exercise } from './types';
 
@@ -144,7 +146,7 @@ function distratoresDaConstrucao(
 /**
  * Monte a palavra, letra por letra, da direita para a esquerda.
  * ─────────────────────────────────────────────────────────────────────────
- * O que a tela mostra é a TRANSLITERAÇÃO - "imá" -, e na mesa estão as letras
+ * O que a tela mostra é a TRANSLITERAÇÃO - "íma" -, e na mesa estão as letras
  * soltas da grafia, sem sinal: א, מ, א. O aluno as põe na ordem de leitura, e
  * a primeira fica à direita. É o gesto mais próximo de escrever que existe sem
  * uma caneta: lembrar quais letras formam o som, e em que ordem.
@@ -191,8 +193,8 @@ export function itemConstruir(
     id: `${L.id}-${cursiva ? 'bcur' : 'blet'}-${i}`,
     kind: 'build-letters', letterId: L.id, skill: 'ler',
     promptPt: cursiva
-      ? `Monte em cursiva a palavra “${alvo.translit}”.`
-      : `Monte a palavra “${alvo.translit}”, letra por letra.`,
+      ? fmt(tx.monteCursiva, { leitura: alvo.translit })
+      : fmt(tx.monteLetras, { leitura: alvo.translit }),
     target: stripNikud(alvo.he), letras, tiles: pecas,
     translit: alvo.translit,
     /* No avançado o significado sai de cena: sobra só o som. */
@@ -200,12 +202,12 @@ export function itemConstruir(
     cursiva, nivel,
     audioId: alvo.audioId,
     hintsPt: [
-      'A primeira letra fica à DIREITA.',
-      `Começa com ${letras[0]}.`
+      tx.primeiraADireita,
+      fmt(tx.comecaCom, { letra: String(letras[0]) })
     ],
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. `
-      + (cursiva ? 'À mão, sem os sinais de vogal: é assim que se escreve de verdade.'
-                 : 'Sem os sinais de vogal, é assim que a palavra aparece numa placa.')
+      + (cursiva ? tx.monteExplicaCursiva
+                 : tx.monteExplicaPlaca)
   };
 }
 
@@ -266,8 +268,7 @@ export function itemCursiva(
     id: `${L.id}-curw-${modo}-${i}`,
     kind: 'cursive-word' as const, letterId: L.id,
     modo, he: alvo.he, escrita, audioId: alvo.audioId,
-    explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}. À mão ela se escreve sem os `
-      + 'sinais de vogal, e é assim que você vai encontrá-la num bilhete.'
+    explainPt: fmt(tx.cursivaExplica, { he: alvo.he, leitura: alvo.translit, sentido: alvo.pt })
   };
 
   if (modo === 'letra') {
@@ -285,10 +286,10 @@ export function itemCursiva(
     const options = shuffled([marca, ...erradas], rand);
     return {
       ...base, skill: 'rec',
-      promptPt: 'Na palavra escrita à mão, que letra é esta, a destacada?',
+      promptPt: tx.cursivaLetra,
       marca, options, answer: options.indexOf(marca),
       whyPt: options.map(o => o === marca ? null
-        : dono?.contrastes?.[o] ?? 'Essa é outra letra. Compare o traço destacado com ela.')
+        : dono?.contrastes?.[o] ?? tx.cursivaLetraOutra)
     };
   }
 
@@ -298,7 +299,7 @@ export function itemCursiva(
     const options = shuffled([alvo.pt, ...erradas], rand);
     return {
       ...base, skill: 'ler',
-      promptPt: 'Esta palavra está escrita à mão. O que ela quer dizer?',
+      promptPt: tx.cursivaSentido,
       options, answer: options.indexOf(alvo.pt)
     };
   }
@@ -317,8 +318,8 @@ export function itemCursiva(
   return {
     ...base, skill: 'ler',
     promptPt: modo === 'para-cursiva'
-      ? 'Qual destas é a mesma palavra, escrita à mão?'
-      : 'Qual destas palavras está escrita à mão aqui?',
+      ? tx.paraCursiva
+      : tx.qualPalavra,
     options, answer: options.indexOf(certa)
   };
 }
@@ -360,11 +361,11 @@ export function itemDigitar(alvo: Word, L: Letter, i: number): Exercise {
   return {
     id: `${L.id}-typhe-${i}`,
     kind: 'type-hebrew', letterId: L.id, skill: 'escrever',
-    promptPt: `Digite em hebraico: “${alvo.translit}” (${alvo.pt}).`,
+    promptPt: fmt(tx.digite, { leitura: alvo.translit, sentido: alvo.pt }),
     accept: [stripNikud(alvo.he)],
     translit: alvo.translit,
     audioId: alvo.audioId,
-    hintsPt: ['A primeira letra que você digita aparece à direita.', `Começa com ${letrasDaGrafia(alvo.he)[0]}.`],
+    hintsPt: [tx.digiteDica, fmt(tx.comecaCom, { letra: String(letrasDaGrafia(alvo.he)[0]) })],
     explainPt: `${alvo.he} - ${alvo.translit} - ${alvo.pt}.`
   };
 }
@@ -380,3 +381,74 @@ export function hebraicoDigitadoCerto(digitado: string, aceitas: readonly string
 export const pareceTecladoLatino = (s: string): boolean => /[A-Za-z]/.test(s);
 
 export { BASE_TO_FINAL };
+
+/* ── palavras à mão ──────────────────────────────────────────────────────
+   O treino de escrita da academia era de letra solta. Escrever uma palavra
+   inteira é outra habilidade: as letras vizinhas mudam de tamanho uma perto
+   da outra, a final entra no lugar da base, e a mão vai da direita para a
+   esquerda sem voltar. Este é o sorteio das palavras daquele treino. */
+
+/** Quantas palavras numa rodada de escrita à mão. */
+export const RODADA_A_MAO = 5;
+
+/**
+ * As palavras que o aluno pode escrever à mão: as do vocabulário ACUMULADO
+ * (toda letra da grafia já ensinada - à mão não há vogal, e o ו vogal vira
+ * letra na tela) e de até sete letras, que é o que cabe num telefone em
+ * corpo legível. Sorteadas pela semente, sem repetir.
+ */
+export function palavrasParaEscrever(
+  letras: readonly Letter[], rand: Rand, n: number = RODADA_A_MAO,
+  /** As palavras dos mini-textos já lidos: passam pelas mesmas réguas. */
+  extras: readonly PalavraDoCurso[] = []
+): PalavraDoCurso[] {
+  const alfabeto = alfabetoDe(letras);
+  const visto = new Set<string>();
+  const cabem = [...palavrasAcumuladas(letras), ...extras.filter(w =>
+    letrasDaGrafia(w.he).length >= 2 && consegueLer(w.he, alfabeto) && todasAsLetrasEnsinadas(w.he, alfabeto))]
+    .filter(w => letrasDaGrafia(w.he).length <= 7)
+    .filter(w => { const k = clean(w.he); if (visto.has(k)) return false; visto.add(k); return true; });
+  return shuffled(cabem, rand).slice(0, n);
+}
+
+/* ── a rampa para o hebraico sem pontos ───────────────────────────────────
+   O módulo 6 ensina a ler sem nikud, e até lá o aluno nunca viu uma palavra
+   sem os pontinhos: o salto era de uma vez. Os checkpoints dos módulos 3, 4
+   e 5 terminam com três palavras que ele JÁ conhece, mostradas como
+   aparecem na rua, com a forma pontuada a um toque (a dica). Viram rampa. */
+
+/** Os módulos cujo checkpoint termina com palavras sem pontos. */
+export const MODULOS_COM_RAMPA: readonly number[] = [3, 4, 5];
+
+/**
+ * Três palavras conhecidas, sem nikud, para dizer o que querem dizer.
+ *
+ * Do vocabulário acumulado (toda letra da grafia já ensinada, porque sem
+ * ponto o ו e o י vogais aparecem como letra), com três letras ou mais, e só
+ * as que ficam SEM AMBIGUIDADE sem os pontos dentro desse vocabulário:
+ * {{שֵׁם}} e {{שָׁם}} viram a mesma grafia, e aí a pergunta não tem resposta.
+ */
+export function buildSemPontos(letras: readonly Letter[], rand: Rand, n = 3): Exercise[] {
+  const vocab = palavrasAcumuladas(letras).filter(w => letrasDaGrafia(w.he).length >= 3);
+  const porGrafia = new Map<string, number>();
+  for (const w of vocab) porGrafia.set(stripNikud(w.he), (porGrafia.get(stripNikud(w.he)) ?? 0) + 1);
+  const claras = vocab.filter(w => porGrafia.get(stripNikud(w.he)) === 1);
+
+  return shuffled(claras, rand).slice(0, n).map((w, i) => {
+    const outras = shuffled(vocab.filter(x => x.pt !== w.pt), rand).map(x => x.pt);
+    const options = shuffled([...new Set([w.pt, ...outras])].slice(0, 4), rand);
+    return {
+      id: `sempontos-${i}-${stripNikud(w.he)}`,
+      kind: 'word-meaning' as const,
+      letterId: 'final',
+      skill: 'ler' as const,
+      promptPt: tx.semPontos,
+      he: stripNikud(w.he),
+      options,
+      answer: options.indexOf(w.pt),
+      hintsPt: [fmt(tx.comOsPontos, { he: w.he }), fmt(tx.leSe, { leitura: w.translit })],
+      audioId: w.audioId,
+      explainPt: `${w.he} - ${w.translit} - ${w.pt}.`
+    };
+  });
+}

@@ -25,7 +25,7 @@
       "id": "genesis-1-1",
       "fontePt": "Gênesis 1:1",
       "he": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
-      "translit": "bereshít bará Elohím et ha-shamáyim ve-et ha-árets",
+      "translit": "bereshít bará Elohím et ha-shamáyim ve-ét ha-árets",
       "pt": "No princípio, Deus criou os céus e a terra.",
       "words": [
         { "he": "בְּרֵאשִׁית", "translit": "bereshít", "pt": "no princípio" },
@@ -33,7 +33,7 @@
         { "he": "אֱלֹהִים", "translit": "Elohím", "pt": "Deus" },
         { "he": "אֵת", "translit": "et", "pt": "marca o objeto direto, e não se traduz" },
         { "he": "הַשָּׁמַיִם", "translit": "ha-shamáyim", "pt": "os céus" },
-        { "he": "וְאֵת", "translit": "ve-et", "pt": "e, com a mesma marca" },
+        { "he": "וְאֵת", "translit": "ve-ét", "pt": "e, com a mesma marca" },
         { "he": "הָאָרֶץ", "translit": "ha-árets", "pt": "a terra" }
       ]
     }

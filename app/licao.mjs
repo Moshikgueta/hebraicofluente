@@ -1,12 +1,12 @@
 /* O que sobra gravado quando a lição termina.
    ─────────────────────────────────────────────────────────────────────────
-   O aluno fecha a fixação, volta ao painel, e a letra que ele acabou de
+   O aluno fecha os exercícios, volta ao painel, e a letra que ele acabou de
    terminar não entrou na conta de "letras dominadas". Nada na tela explica
    por quê: as cinco etapas estão marcadas, a nota apareceu no fim do bloco,
    e mesmo assim a barra não andou.
 
    ── a causa, que nenhum teste de unidade alcançava ──────────────────────
-   O fim da fixação chama DOIS mutadores no mesmo manipulador:
+   O fim dos exercícios chama DOIS mutadores no mesmo manipulador:
 
        p.finishQuiz(letra, nota);   // grava a nota
        p.finishStage(letra, 5);     // marca a quinta etapa
@@ -86,10 +86,10 @@ async function pagina(estado) {
   return { ctx, p: await ctx.newPage() };
 }
 
-/* ── 1 · terminar a fixação de verdade ──────────────────────────────────
+/* ── 1 · terminar os exercícios de verdade ──────────────────────────────────
    A letra chega com as quatro primeiras etapas feitas e SEM nota, que é
-   exatamente o estado de quem abre a fixação pela primeira vez. */
-log('\n── a fixação grava a nota ─────────────────────────');
+   exatamente o estado de quem abre os exercícios pela primeira vez. */
+log('\n── os exercícios gravam a nota ───────────────────────');
 {
   const { ctx, p } = await pagina(base({ alef: licao('alef', [1, 2, 3, 4], null) }));
 
@@ -109,9 +109,10 @@ log('\n── a fixação grava a nota ─────────────�
          que ela foi gravada, não que foi boa. */
       const estado = () => p.evaluate(() => {
         const main = document.querySelector('main');
-        const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
+        const botoes = [...main.querySelectorAll('button:not([aria-haspopup]):not(dialog *)')].map((el, i) => ({
           i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
-          off: el.disabled, etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa')
+          off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
+          rotulo: el.getAttribute('aria-label') || ''
         }));
         return {
           txt: (main?.innerText || '').replace(/\s+/g, ' '),
@@ -126,24 +127,32 @@ log('\n── a fixação grava a nota ─────────────�
         const e = await estado();
         /* O fim do bloco: o player sai e o resultado entra, com o botão que
            a lição chama de "Concluir e continuar". */
-        if (/Concluir e continuar/.test(e.txt)) { acabou = true; break; }
+        /* Abaixo de 80% o botão é "Refazer os exercícios" (UXQA-002): também é o
+           fim, e a nota já foi gravada. */
+        if (/Concluir e continuar|Refazer os exercícios/.test(e.txt)) { acabou = true; break; }
 
         const seguir = e.botoes.find(x => !x.off
           && /^Continuar|^Próxim|^Ver resultado|^Concluir/.test(x.txt));
-        if (seguir) { await p.locator('main button').nth(seguir.i).click().catch(() => {}); }
+        if (seguir) { await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(seguir.i).click().catch(() => {}); }
         else if (e.temCampo) {
           await p.locator('main input').first().fill('x');
           await p.keyboard.press('Enter');
         } else {
           const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
-            && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt));
+            && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+            /* "0,7×" é o "Ouvir devagar": o nome está só no rótulo acessível. */
+            && !/Ouvir|Tocar/i.test(x.rotulo));
           if (!alvos.length) { await p.waitForTimeout(300); continue; }
-          await p.locator('main button').nth(alvos[0].i).click().catch(() => {});
+          /* Uma alternativa sorteada, e não sempre a primeira: o erro volta
+             até ser acertado (a prática de revisão), e um robô que toca
+             sempre a primeira nunca acerta quando a certa não é ela. */
+          const alvo = alvos[Math.floor(Math.random() * alvos.length)];
+          await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvo.i).click().catch(() => {});
         }
         await p.waitForTimeout(260);
       }
 
-      if (!acabou) erro('não cheguei ao fim da fixação em 140 toques');
+      if (!acabou) erro('não cheguei ao fim dos exercícios em 140 toques');
       else {
         /* A gravação tem debounce de 250 ms. */
         await p.waitForTimeout(900);
@@ -157,9 +166,9 @@ log('\n── a fixação grava a nota ─────────────�
           else erro(`a quinta etapa não ficou marcada (stagesDone: ${JSON.stringify(l.stagesDone)})`);
 
           if (typeof l.quizBest === 'number') {
-            ok(`a nota da fixação ficou gravada (${l.quizBest.toFixed(2)})`);
+            ok(`a nota dos exercícios ficou gravada (${l.quizBest.toFixed(2)})`);
           } else {
-            erro('a NOTA da fixação não ficou gravada (quizBest: '
+            erro('a NOTA dos exercícios não ficou gravada (quizBest: '
                + `${JSON.stringify(l.quizBest)}) - a letra nunca vai contar como dominada`);
           }
         }
@@ -173,13 +182,13 @@ log('\n── a fixação grava a nota ─────────────�
    A regra acima prova que a nota é gravada. Esta prova que gravá-la muda o
    número que o aluno lê - e que NÃO gravá-la o deixa parado, que é o outro
    lado da mesma frase e o controle desta verificação. */
-log('\n── a conta de letras dominadas ────────────────────');
+log('\n── a conta de lições concluídas ────────────────────');
 {
   const casos = [
     { nome: 'cinco etapas e nota cheia', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 1) }, conta: 1 },
     { nome: 'cinco etapas sem nota', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], null) }, conta: 0 },
     { nome: 'cinco etapas com nota fraca', licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 0.5) }, conta: 0 },
-    { nome: 'duas letras dominadas', conta: 2,
+    { nome: 'duas lições concluídas', conta: 2,
       licoes: { alef: licao('alef', [1, 2, 3, 4, 5], 1), bet: licao('bet', [1, 2, 3, 4, 5], 0.875) } }
   ];
 
@@ -190,12 +199,14 @@ log('\n── a conta de letras dominadas ────────────�
 
     const texto = await p.evaluate(() => (document.querySelector('main')?.innerText || '')
       .replace(/\s+/g, ' '));
-    const m = texto.match(/(\d+)\s+de\s+(\d+)\s+letras\s+dominadas/);
-    if (!m) erro(`${caso.nome}: não achei a frase "N de M letras dominadas" no painel`);
+    /* Desde 28/10/2026 (painel mais curto) a conta mora na faixa de números
+       do painel, "N lições concluídas", sem o "de 22" da grade antiga. */
+    const m = texto.match(/(\d+)\s+(?:de\s+(\d+)\s+)?liç(?:ão|ões)\s+concluídas?/);
+    if (!m) erro(`${caso.nome}: não achei a frase "N lições concluídas" no painel`);
     else if (Number(m[1]) !== caso.conta) {
       erro(`${caso.nome}: o painel diz ${m[1]} e deveria dizer ${caso.conta}`);
     } else {
-      ok(`${caso.nome}: ${m[1]} de ${m[2]}`);
+      ok(`${caso.nome}: ${m[1]} ${m[1] === '1' ? 'concluída' : 'concluídas'}`);
     }
     await ctx.close();
   }
@@ -208,4 +219,4 @@ if (falhas) {
   log(`${falhas} problema(s) no que a lição grava.\n`);
   process.exit(1);
 }
-log('a lição grava a nota, e a conta de letras dominadas a enxerga.\n');
+log('a lição grava a nota, e a conta de lições concluídas a enxerga.\n');

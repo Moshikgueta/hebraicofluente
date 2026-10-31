@@ -4,6 +4,8 @@
    generic drill - which is the whole reason the SRS pool stores misses rather
    than a log of everything seen. */
 
+import { tx } from '@/i18n/telas/licao-review-client';
+import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { He } from '@/components/hebrew/He';
@@ -15,9 +17,11 @@ import { audioAvailable } from '@/components/learn/AudioButton';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, getLetter } from '@/lib/content';
 import { buildReview } from '@/lib/engine/exercises';
-import { dueItems, weakestSkill, weakLetters } from '@/lib/state/rules';
+import { dueItems, skillLevel, weakestSkill, weakLetters } from '@/lib/state/rules';
+import { WritingCanvas } from '@/components/learn/WritingCanvas';
 import type { Skill } from '@/lib/state/types';
 import { track } from '@/lib/analytics';
+import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 export function ReviewClient() {
   const p = useProgress();
@@ -27,9 +31,15 @@ export function ReviewClient() {
 
   /* Only letters whose lesson is done can be reviewed: reviewing a letter the
      learner has not met yet is a test, not a review. */
+  /* Também entra a letra que já tem item na fila da revisão, mesmo com a
+     primeira etapa por fechar: o painel conta esses itens (`dueCount`) e o
+     selo dourado leva até aqui; sem elas, a página dizia "Ainda não há o que
+     revisar" com "5 a revisar" no painel (auditoria de 01/10/2026, VIS-004). */
   const learned = useMemo(
-    () => allLetters().filter(l => (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0),
-    [p.state.lessons]
+    () => allLetters().filter(l =>
+      (p.state.lessons[l.id]?.stagesDone.length ?? 0) > 0
+      || Object.values(p.state.srs).some(i => i.letterId === l.id)),
+    [p.state.lessons, p.state.srs]
   );
   const due = useMemo(() => dueItems(p.state, p.day), [p.state, p.day]);
 
@@ -52,6 +62,13 @@ export function ReviewClient() {
     return w.length ? w : learned.slice(-3).map(l => l.id);
   }, [p.state, p.day, byGlyph, learned]);
 
+  /* As letras cujo TRAÇADO está para refazer: a revisão de questões não
+     alcança essa habilidade (ver EscreverDeNovo, no fim do arquivo). */
+  const paraEscrever = useMemo(
+    () => learned.filter(l => skillLevel(p.state.skills[l.id]?.escrever) === 'revisar').map(l => l.id).slice(0, 3),
+    [learned, p.state.skills]
+  );
+
   /* Aim at the failing skill where there is one: a learner who reads ק and
      cannot hear it should get listening, not more reading. */
   const skills = useMemo(() => {
@@ -68,10 +85,13 @@ export function ReviewClient() {
     return wanted.size && wanted.size < 4 ? [...wanted] : undefined;
   }, [weak, p.state.skills]);
 
+  /* Cada revisão concluída é uma rodada: a seguinte, no mesmo dia ou em
+     outro, evita as perguntas das últimas (lib/rodadas.ts). */
   const exercises = useMemo(
-    () => buildReview(weak, learned, {
-      audioAvailable: audioAvailable(), count: 5, seed: `rev-${p.day}-${run}`, skills
-    }),
+    () => escolherRodada('revisao', seed => buildReview(weak, learned, {
+      audioAvailable: audioAvailable(), count: 5, seed, skills
+    })).itens,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [weak, learned, p.day, run, skills]
   );
 
@@ -80,12 +100,11 @@ export function ReviewClient() {
   if (!learned.length) {
     return (
       <Card className="p-7 grid gap-3">
-        <h1 className="text-[23px] font-bold">Ainda não há o que revisar</h1>
+        <h1 className="text-[23px] font-bold">{tx.nadaARevisar}</h1>
         <p className="text-[15px] leading-relaxed text-ink-body max-w-[48ch]">
-          A revisão rápida se alimenta do que você erra. Faça a primeira lição e
-          ela começa a aparecer aqui, no dia certo.
+          {tx.seAlimenta}
         </p>
-        <LinkButton href="/meu-hebraico" className="justify-self-start">Ir para a primeira lição</LinkButton>
+        <LinkButton href="/meu-hebraico" className="justify-self-start">{tx.irPrimeira}</LinkButton>
       </Card>
     );
   }
@@ -94,15 +113,18 @@ export function ReviewClient() {
     return (
       <div className="focus-col grid gap-5">
         <Milestone
-          kicker={`${result.correct} de ${result.total}`}
-          title="Revisão feita."
-          body="O que você errar hoje volta daqui a um dia. O que acertar volta mais tarde, e some quando estiver firme."
+          kicker={tx.placar(result.correct, result.total)}
+          title={tx.feita}
+          body={p.dueCount > 0
+            ? tx.aindaFaltam(p.dueCount)
+            : tx.tudoRevisado}
         >
           <Button variant="secondary" onClick={() => { setRun(n => n + 1); setResult(null); setPhase('running'); }}>
-            Mais cinco
+            {tx.maisCinco}
           </Button>
-          <LinkButton href="/meu-hebraico" variant="primary">Voltar ao início</LinkButton>
+          <LinkButton href="/meu-hebraico" variant="primary">{tx.voltarInicio}</LinkButton>
         </Milestone>
+        <EscreverDeNovo ids={paraEscrever} />
       </div>
     );
   }
@@ -112,8 +134,22 @@ export function ReviewClient() {
       <ExercisePlayer
         key={run}
         exercises={exercises}
-        title="Revisão rápida"
-        onDone={r => { setResult(r); p.finishReview(r.score); setPhase('done'); }}
+        title={tx.revisaoRapida}
+        onDone={r => {
+          registrarRodada('revisao', exercises);
+          setResult(r);
+          /* De cada letra da rodada, os erros na primeira tentativa. É por
+             LETRA que a revisão fecha os itens pendentes (concluirRevisao em
+             lib/state/rules.ts): as perguntas daqui são outras que as da
+             lição, e por id elas nunca encontravam o item pendente. */
+          const porLetra: Record<string, { erros: number }> = {};
+          for (const ex of exercises) {
+            const l = (porLetra[ex.letterId] ??= { erros: 0 });
+            if (r.missed.includes(ex.id)) l.erros += 1;
+          }
+          p.finishReview(r.score, porLetra);
+          setPhase('done');
+        }}
       />
     );
   }
@@ -121,10 +157,10 @@ export function ReviewClient() {
   return (
     <div className="focus-col grid gap-6">
       <header className="grid gap-2">
-        <Badge tone="neutral">3 minutos</Badge>
-        <h1 className="text-[27px] sm:text-[33px] font-bold">Revisão rápida</h1>
+        <Badge tone="neutral">{tx.tresMinutos}</Badge>
+        <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.revisaoRapida}</h1>
         <p className="font-ui text-[15px] text-ink-muted max-w-[50ch]">
-          Cinco questões tiradas do que deu mais trabalho até aqui.
+          {tx.cincoQuestoes}
         </p>
       </header>
 
@@ -132,23 +168,11 @@ export function ReviewClient() {
           confundindo você" is a fact about the work, not about the learner -
           and it is the thing that makes the review feel like it is paying
           attention rather than shuffling. */}
-      {p.confusions.length > 0 && (
-        <Card tone="wash" className="p-5 grid gap-2">
-          <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-            Percebemos que <He size="inline">{p.confusions[0]!.correct}</He> e{' '}
-            <He size="inline">{p.confusions[0]!.chosen}</He> ainda estão se
-            misturando. Vamos praticar um pouco mais as duas.
-          </p>
-          <Link href="/academia"
-                className="font-ui text-[13px] text-[var(--accent)] hover:underline min-h-[44px] flex items-center">
-            Treinar só esse par na Academia →
-          </Link>
-        </Card>
-      )}
+      <SugestaoDePar />
 
       <Card className="p-6 grid gap-4">
         <p className="font-ui text-[13px] uppercase tracking-[.07em] text-ink-muted">
-          {due.length ? 'Hoje vale revisar' : 'Nada pendente - vamos reforçar as últimas'}
+          {due.length ? tx.hojeVale : tx.nadaPendente}
         </p>
         <ul className="grid gap-2">
           {weak.map(id => {
@@ -161,7 +185,7 @@ export function ReviewClient() {
                 <span className="font-ui text-[15px] text-ink">{l.namePt}</span>
                 {misses > 0 && (
                   <span className="ml-auto font-ui text-[13px] text-ink-muted">
-                    {misses} {misses === 1 ? 'escorregada' : 'escorregadas'}
+                    {tx.escorregadas(misses)}
                   </span>
                 )}
               </li>
@@ -170,25 +194,55 @@ export function ReviewClient() {
         </ul>
       </Card>
 
+      <EscreverDeNovo ids={paraEscrever} />
+
       {!exercises.length ? (
         <Card tone="amber" className="p-5">
           <p className="text-[15px] leading-relaxed text-ink-body">
-            Ainda não dá para montar uma revisão: com as letras de agora não há
-            alternativas suficientes para uma questão honesta. Siga mais uma lição
-            e volte.
+            {tx.naoDa}
           </p>
         </Card>
       ) : (
         <Button size="lg" full onClick={() => { track('review_started'); setPhase('running'); }}>
-          Começar
+          {tx.comecar}
         </Button>
       )}
 
       <Link href="/mapa"
             className="inline-flex items-center min-h-[44px] font-ui text-[13.5px]
                        text-ink-muted hover:text-ink-body justify-self-center">
-        Ver o mapa do curso
+        {tx.verMapa}
       </Link>
     </div>
+  );
+}
+
+/* ── escrever de novo (05/10/2026) ────────────────────────────────────────
+   Um erro de TRAÇADO deixava a letra marcada "revisar" para sempre: as cinco
+   questões daqui não têm pergunta de escrever (o traçado é um quadro, não uma
+   alternativa), então acertar a revisão inteira não apagava nada - o dono do
+   curso viu isso no Lámed. Aqui ficam os quadros das letras cujo traçado
+   ainda está por refazer, com a mesma régua da lição (recordWriting). Um
+   traçado bom limpa a marca; a letra some desta lista sozinha. */
+function EscreverDeNovo({ ids }: { ids: string[] }) {
+  const p = useProgress();
+  if (!ids.length) return null;
+  return (
+    <Card className="p-6 grid gap-4">
+      <div className="grid gap-1">
+        <h2 className="text-[19px] font-bold m-0">{tx.escreverDeNovo}</h2>
+        <p className="font-ui text-[14px] text-ink-muted m-0">
+          {tx.pedemTracado(ids.length)}
+        </p>
+      </div>
+      {ids.map(id => {
+        const l = getLetter(id);
+        if (!l) return null;
+        return (
+          <WritingCanvas key={id} glyph={l.letter} letterId={l.id} label={l.namePt}
+                         onScored={score => p.recordWriting(l.id, score)} />
+        );
+      })}
+    </Card>
   );
 }

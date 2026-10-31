@@ -30,11 +30,15 @@
  * verdade registrado. Inventá-la para todo mundo a esvaziaria.
  */
 
+import { tocarResposta } from '@/lib/som-do-acerto';
+import { useFocoDaRodada } from './foco-da-rodada';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
+import { AudioButton } from '@/components/learn/AudioButton';
 import type { Batalha as Dados, RodadaBatalha } from '@/lib/engine/jogos';
 import { porQueErrou } from '@/lib/engine/jogos';
 import type { ResultadoJogo } from './Match';
+import { tx } from '@/i18n/telas/academia-batalha';
 
 type Marca = { ok: boolean; texto: string | null } | null;
 
@@ -54,6 +58,7 @@ export function Batalha({
   const [tocadas, setTocadas] = useState<string[]>([]);
   const travado = useRef(false);
   const inicio = useRef(Date.now());
+  const foco = useFocoDaRodada(i);
 
   const rodada = dados.rodadas[i];
   const total = dados.rodadas.length;
@@ -90,14 +95,16 @@ export function Batalha({
                               id: string, escolhida?: string) => {
     if (travado.current) return;
     travado.current = true;
+    foco.segurar();
     onResposta?.({ id, letterId, certo, escolhida });
+    tocarResposta(certo);
     if (certo) setAcertos(n => n + 1);
     else { setErros(n => n + 1); setLetrasErradas(l => [...l, letterId]); }
     setMarca({ ok: certo, texto });
     /* O erro segura mais tempo na tela, porque ele traz a frase que ensina -
        e uma explicação que some em meio segundo não foi lida. */
     setTimeout(avancar, certo ? 560 : 1900);
-  }, [avancar, onResposta]);
+  }, [avancar, onResposta, foco.segurar]);
 
   if (!rodada) return null;
 
@@ -106,7 +113,11 @@ export function Batalha({
       {/* O par exibido é o da RODADA, e não o da partida: agora a partida
           percorre até quatro pares, e um cabeçalho fixo mentiria em três
           quartos dela. */}
-      <Placar i={i} total={total} acertos={acertos} par={parDaRodada} />
+      <Placar i={i} total={total} acertos={acertos} par={parDaRodada}
+              meta={rodada.tipo === 'som' ? 'som' : 'desenho'} />
+
+      <div ref={foco.ref} tabIndex={-1} role="group" aria-label={tx.rodadaDe(i + 1, total)}
+           className="grid gap-5 outline-none">
 
       {rodada.tipo === 'qual' && (
         <Qual r={rodada} marca={marca} fechar={fechar} idx={i} />
@@ -121,20 +132,32 @@ export function Batalha({
       {rodada.tipo === 'relampago' && (
         <Relampago r={rodada} marca={marca} fechar={fechar} idx={i} />
       )}
+      {rodada.tipo === 'som' && (
+        <Som key={i} r={rodada} marca={marca} fechar={fechar} idx={i} />
+      )}
 
       <Retorno marca={marca} />
+      </div>
     </div>
   );
 }
 
 /* ── o cabeçalho: quem são as inimigas, e como vai a luta ──────────────── */
 function Placar({
-  i, total, acertos, par
-}: { i: number; total: number; acertos: number; par: [{ letter: string }, { letter: string }] }) {
+  i, total, acertos, par, meta
+}: {
+  i: number; total: number; acertos: number; par: [{ letter: string }, { letter: string }];
+  /** Parecidas no desenho ou no som: duas metas diferentes, e a tela diz qual. */
+  meta: 'desenho' | 'som';
+}) {
   return (
     <div className="flex items-center gap-3 flex-wrap">
+      <span className={`rounded-full px-2.5 py-1 font-ui text-[12px] font-semibold
+        ${meta === 'som' ? 'bg-[var(--gold-soft)] text-[var(--gold-ink)]' : 'bg-[var(--teal-soft)] text-[var(--teal-ink)]'}`}>
+        {meta === 'som' ? tx.parecidasSom : tx.parecidasDesenho}
+      </span>
       <p className="font-ui text-[13px] uppercase tracking-[.08em] text-ink-muted flex-1 min-w-[160px]">
-        Inimigas de hoje{' '}
+        {tx.inimigasDeHoje}{' '}
         <span className="inline-flex items-center gap-1.5 align-middle">
           <He size="inline" tone="teal" className="font-bold">{par[0].letter}</He>
           <span aria-hidden className="text-ink-muted">·</span>
@@ -142,7 +165,7 @@ function Placar({
         </span>
       </p>
       <p className="font-ui text-[13px] text-ink-muted tabular-nums shrink-0" aria-live="polite">
-        {Math.min(i + 1, total)} / {total} · {acertos} {acertos === 1 ? 'acerto' : 'acertos'}
+        {tx.placar(Math.min(i + 1, total), total, acertos)}
       </p>
     </div>
   );
@@ -199,8 +222,8 @@ function Relampago({
     <div className="grid gap-4 justify-items-center">
       <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
         {fase === 'espera'
-          ? 'A letra vai aparecer por um instante. Toque quando estiver pronto.'
-          : 'Qual letra passou?'}
+          ? tx.relampagoEspera
+          : tx.relampagoPergunta}
       </p>
 
       <div className="grid place-items-center min-h-[128px] w-full max-w-[420px]
@@ -215,10 +238,10 @@ function Relampago({
                        font-ui text-[16px] font-semibold text-ink hover:bg-surface-2
                        active:scale-[.98] transition-[background-color,transform]"
           >
-            Mostrar a letra
+            {tx.mostrarLetra}
           </button>
         ) : (
-          <span aria-hidden className="font-ui text-[15px] text-ink-muted">passou</span>
+          <span aria-hidden className="font-ui text-[15px] text-ink-muted">{tx.passou}</span>
         )}
       </div>
 
@@ -235,7 +258,7 @@ function Relampago({
               disabled={mostra || fase === 'espera'}
               onClick={() => fechar(
                 certa,
-                certa ? null : porQueErrou(r.alvo, o) ?? `Era a ${r.alvo.namePt}.`,
+                certa ? null : porQueErrou(r.alvo, o) ?? tx.eraA(r.alvo.namePt),
                 r.alvo.id, `batalha:${r.alvo.id}:l${idx}`,
                 certa ? undefined : o.letter
               )}
@@ -247,12 +270,64 @@ function Relampago({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {tx.nomeDaOpcao(o.namePt, !!r.final)}
               {mostra && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
         })}
       </div>
+    </div>
+  );
+}
+
+/* ── formato 5: o ouvido (12/10/2026) ───────────────────────────────────
+   Toca a sílaba com A de uma das duas, e o aluno escolhe a letra. É a outra
+   metade da confusão: {{ה}} e {{ח}} se parecem no desenho E no som, mas
+   {{ז}} e {{ס}} só no som. O áudio toca quando ele pedir, quantas vezes
+   quiser; a rodada só existe com gravação (rodadasDeSom). A resposta errada
+   não vira "troca de letra" na lista que a Batalha lê para o DESENHO. */
+function Som({
+  r, marca, fechar, idx
+}: {
+  r: Extract<RodadaBatalha, { tipo: 'som' }>;
+  marca: Marca; idx: number;
+  fechar: (certo: boolean, texto: string | null, letterId: string, id: string, escolhida?: string) => void;
+}) {
+  const [ouviu, setOuviu] = useState(false);
+  return (
+    <div className="grid gap-4 justify-items-center">
+      <p className="font-ui text-[14px] text-ink-muted text-center max-w-[36ch]">
+        {tx.somInstrucao}
+      </p>
+      <div className="grid place-items-center min-h-[96px]" onClickCapture={() => setOuviu(true)}>
+        <AudioButton audioId={r.audioId} label={tx.ouvir} ariaLabel={tx.ouvirSilaba} size="lg" slow />
+      </div>
+      <div className="grid grid-cols-2 gap-2.5 w-full max-w-[420px]" dir="rtl">
+        {r.opcoes.map(o => {
+          const certa = o.id === r.alvo.id;
+          const mostrar = !!marca;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              disabled={mostrar || !ouviu}
+              onClick={() => fechar(certa, certa ? null : r.notaPt, r.alvo.id, `som:batalha:${r.alvo.id}:${idx}`)}
+              className={`min-h-[72px] rounded-[var(--r-md)] border px-4 grid place-items-center gap-0.5
+                transition-colors disabled:opacity-60
+                ${mostrar && certa
+                  ? 'border-[var(--teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)]'
+                  : mostrar ? 'border-line bg-surface text-ink-muted'
+                  : 'border-line bg-surface text-ink enabled:hover:bg-surface-2 enabled:active:scale-[.98]'}`}
+            >
+              <He size="lg">{o.letter}</He>
+              <span dir="ltr" className="font-ui text-[13px]">{o.namePt}</span>
+            </button>
+          );
+        })}
+      </div>
+      {!ouviu && !marca && (
+        <p className="font-ui text-[13px] text-ink-muted m-0">{tx.ouvirPrimeiro}</p>
+      )}
     </div>
   );
 }
@@ -267,7 +342,7 @@ function Qual({
 }) {
   return (
     <div className="grid gap-4 justify-items-center">
-      <p className="font-ui text-[14px] text-ink-muted">Qual letra é esta?</p>
+      <p className="font-ui text-[14px] text-ink-muted">{tx.qualLetra}</p>
       <div className="grid place-items-center min-h-[128px]">
         <He size="display" tone={marca ? (marca.ok ? 'teal' : 'ink') : 'ink'}>{r.glifo}</He>
       </div>
@@ -282,7 +357,7 @@ function Qual({
               disabled={mostrar}
               onClick={() => fechar(
                 certa,
-                certa ? null : porQueErrou(r.alvo, o) ?? `Esta é a ${r.alvo.namePt}.`,
+                certa ? null : porQueErrou(r.alvo, o) ?? tx.estaEA(r.alvo.namePt),
                 r.alvo.id, `batalha:${r.alvo.id}:q${idx}`,
                 certa ? undefined : o.letter
               )}
@@ -294,7 +369,7 @@ function Qual({
                     ? 'border-line bg-surface text-ink-muted'
                     : 'border-line bg-surface text-ink hover:bg-surface-2 active:scale-[.98]'}`}
             >
-              {o.namePt}
+              {tx.nomeDaOpcao(o.namePt, !!r.final)}
               {mostrar && certa && <span aria-hidden className="ml-1.5">✓</span>}
             </button>
           );
@@ -323,8 +398,14 @@ function Todas({
       /* Tocar na errada encerra a rodada: aqui a pergunta é "você distingue",
          e continuar depois de um engano transformaria o jogo em tentativa e
          erro, que é exatamente o que ele existe para desfazer. */
-      fechar(false, porQueErrou(r.alvo, r.outra), r.alvo.id,
-             `batalha:${r.alvo.id}:t${idx}`, cel.glifo);
+      /* A outra forma da MESMA letra: o retorno diz qual forma é qual, e não
+         a diferença entre as duas letras do par. */
+      const mesma = cel.letterId === r.alvo.id;
+      const texto = !mesma ? porQueErrou(r.alvo, r.outra)
+        : r.glifo === r.alvo.finalForm
+          ? tx.pediaFinal(r.alvo.namePt)
+          : tx.pediaComeco(r.alvo.namePt);
+      fechar(false, texto, r.alvo.id, `batalha:${r.alvo.id}:t${idx}`, mesma ? undefined : cel.glifo);
       return;
     }
     setTocadas(t => [...t, id]);
@@ -336,8 +417,7 @@ function Todas({
   return (
     <div className="grid gap-4">
       <p className="font-ui text-[15px] text-ink-body text-center">
-        Toque em todas as letras{' '}
-        <He size="inline" tone="teal" className="font-bold">{r.glifo}</He>
+        {tx.toqueEmTodas(<He size="inline" tone="teal" className="font-bold">{r.glifo}</He>)}
       </p>
       <ul className="grid gap-2 list-none p-0 m-0
                      [grid-template-columns:repeat(auto-fit,minmax(58px,1fr))]">
@@ -382,7 +462,7 @@ function Intruso({
 }) {
   return (
     <div className="grid gap-4">
-      <p className="font-ui text-[15px] text-ink-body text-center">Qual é diferente?</p>
+      <p className="font-ui text-[15px] text-ink-body text-center">{tx.qualDiferente}</p>
       <ul className="grid gap-2 list-none p-0 m-0
                      [grid-template-columns:repeat(auto-fit,minmax(58px,1fr))]">
         {r.fila.map(c => (
@@ -427,7 +507,7 @@ function Retorno({ marca }: { marca: Marca }) {
              ${marca.ok
                ? 'border-[color:var(--edge-teal)] bg-[var(--teal-soft)] text-[var(--teal-ink)] font-semibold'
                : 'border-[color:var(--edge-gold)] bg-[var(--gold-soft)] text-[var(--gold-body)]'}`}>
-          {marca.ok ? 'Isso!' : marca.texto ?? 'Olhe o desenho com calma e tente a próxima.'}
+          {marca.ok ? tx.isso : marca.texto ?? tx.olheComCalma}
         </p>
       )}
     </div>

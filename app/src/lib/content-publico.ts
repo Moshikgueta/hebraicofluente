@@ -29,12 +29,16 @@
 
 import courseJson from '@content/course.json';
 import bibliaJson from '@content/biblia.json';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-content-publico';
 
 export type Word = {
   he: string;
   translit: string;
   pt: string;
   use: string | null;
+  /** A lição de som que ensina a palavra ("vet"): a lição da letra a pula. */
+  som?: string | null;
   audioId: string;
   /* A ilustração, quando a palavra é concreta e tem entrada em
      data/imagens-vocabulario.json. `image` é null até o arquivo existir;
@@ -156,6 +160,10 @@ export type VarianteLetra = {
   comoPt: string;
   /** Onde está o sinal que a distingue - é nisto que o aluno olha. */
   ondePt: string;
+  /** O que o botão toca: a sílaba desta leitura (פַּ, פַ) ou, na forma
+   *  final, uma palavra que termina nela (כֶּסֶף). Uma consoante sozinha não
+   *  tem gravação. */
+  exemploHe: string;
   audioId: string;
 };
 
@@ -166,6 +174,13 @@ export type Letter = {
   lesson: number;
   letter: string;
   finalForm: string | null;
+  /** Só na lição de Bet, Kaf e Pe (soOLadoDoPonto em lib/sons.ts): a letra
+   *  com o daguesh, o desenho que tem o som que a lição ensina (כּ = K). */
+  letraComPonto?: string;
+  /** Só na lição de Kaf e Pe: a forma final, que soa como o lado SEM o ponto
+   *  e por isso é ensinada na lição do som (ך no Chaf, ף no Fe). Continua
+   *  sendo a mesma letra: nunca é alternativa errada de "qual é o Kaf". */
+  finalDoSom?: string | null;
   nameHe: string;
   namePt: string;
   translit: string;
@@ -173,9 +188,21 @@ export type Letter = {
   /** As leituras, quando há mais de uma. Vazio na maioria das letras. */
   variantes: VarianteLetra[];
   soundNotePt: string;
+  /** De onde sai o som, em todas as letras: o desenho da lição. */
+  articulacao: Articulacao;
   /** A camada pedagógica: o que a letra FAZ, e a checagem. Ver `Ensino`. */
   ensino: Ensino;
   didYouKnow: string;
+  /** Duas (ou mais) letras de som parecido, para ouvir lado a lado na
+   *  gravação do professor (19/10/2026). Ver components/learn/CompararSons. */
+  compararSons: {
+    textoPt: string;
+    itens: { glifo: string; nomePt: string; som: string; audioId: string; previaPt?: string }[];
+  } | null;
+  /** Um título próprio para a curiosidade, quando a letra tem um (19/10/2026). */
+  didYouKnowTitle: string | null;
+  /** Outras curiosidades da mesma letra, cada uma no seu quadro (19/10/2026). */
+  maisCuriosidades: { tituloPt: string; textoPt: string }[];
   brazilianMistake: { wrong: string; right: string; why: string };
   confusableWith: string[];
   /** O traço visual que separa esta letra de uma parecida, por glifo do outro.
@@ -184,12 +211,26 @@ export type Letter = {
   syllables: Syllable[];
   wordsToRead: Word[];
   wordsToRecognize: Word[];
-  bridgeWords: { he: string; pt: string }[];
+  bridgeWords: { he: string; pt: string; marca: string | null; audioId: string }[];
   /** Every glyph the learner may legally be shown at this point. */
   alphabetSoFar: string[];
   strokeOrder: { base: string | null; final: string | null };
-  workbookPages: { from: number; to: number } | null;
   audioId: string;
+};
+
+/** Os lugares da boca de onde um som pode sair, da frente para o fundo. */
+export type PontoDoSom = 'labios' | 'labio-dentes' | 'dentes' | 'palato' | 'veu' | 'uvula' | 'glote';
+
+/** De onde sai o som de uma letra, para o desenho da lição.
+ *  `pontos`: um por som - vazio nas letras mudas (א, ע), dois nas letras de
+ *  duas leituras (בּ/ב, כּ/כ, פּ/פ, שׁ/שׂ), com a forma no `rotulo`.
+ *  `voz`: se a garganta vibra (é o que separa ר de ח, ד de ת); `null` na muda.
+ *  `nariz`: o ar sai pelo nariz (מ, נ). */
+export type Articulacao = {
+  pontos: { ponto: PontoDoSom; rotulo?: string }[];
+  voz: boolean | null;
+  nariz?: boolean;
+  comoPt: string;
 };
 
 export type Checkpoint = {
@@ -200,7 +241,6 @@ export type Checkpoint = {
   /** Verdadeiro nos módulos que consolidam em vez de ensinar letra nova: o
    *  escopo passa a ser tudo o que veio antes, e não o que o módulo trouxe. */
   cumulativo?: boolean;
-  workbookPages: { from: number; to: number } | null;
 };
 
 export type CourseModule = {
@@ -212,11 +252,10 @@ export type CourseModule = {
   introPt: string;
   goalsPt: string[];
   milestonePt: string;
-  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string }[];
+  lessons: { n: number; kind?: string; letters?: string[]; topicPt?: string; som?: string; nomePt?: string; he?: string; parHe?: string }[];
   letterIds: string[];
   upTo: number | null;
   checkpoint: Checkpoint | null;
-  workbookPages: { from: number; to: number } | null;
 };
 
 /** O esqueleto de uma letra que a vitrine mostra: o glifo e o nome. */
@@ -367,3 +406,39 @@ export const letterIds = (): string[] =>
  */
 export const totalLicoes = (): number =>
   course.modules.reduce((n, m) => n + m.lessons.length, 0);
+
+/**
+ * A lição que ensina a letra de ordem `ordem` (a 1ª lição em que ela entra),
+ * ou null. "Letra 20" e "lição 20" são grandezas diferentes: a Bet é a 20ª
+ * letra e entra na lição 14 (auditoria de 01/10/2026, CONV-006, em /biblia).
+ */
+export function licaoDaLetra(ordem: number): number | null {
+  const letra = course.letters.find(l => l.order === ordem);
+  if (!letra) return null;
+  for (const m of course.modules) {
+    for (const l of m.lessons) if ((l.letters ?? []).includes(letra.id)) return l.n;
+  }
+  return null;
+}
+
+/**
+ * Quanto tempo leva, numa frase só, derivada do número de letras.
+ *
+ * Havia três estimativas diferentes no site ("vinte minutos por dia, a
+ * maioria termina em seis a oito semanas", "três semanas ou três meses" e
+ * "menos de um mês") e um "a maioria" sem nenhum aluno para sustentar
+ * (auditoria de 28/09/2026, COM-005). Agora é esta, e a conta está à vista.
+ *
+ * A unidade é a LETRA, e não a lição (28/10/2026, decisão do dono): dizia
+ * "27 lições de cerca de dez minutos", mas a lição 1 tem três letras, e só a
+ * fixação de cada uma são 20 questões. Dez minutos é a estimativa de uma
+ * letra; as lições de som contam como mais uma letra cada.
+ */
+export function tempoDoCursoPt(): string {
+  const letras = course.letters.length;
+  const sons = course.modules.reduce((n, m) => n + m.lessons.filter(l => l.som).length, 0);
+  const unidades = letras + sons;
+  const umPorDia = unidades <= 31 ? tx.umMes : tx.meses(Math.round(unidades / 30));
+  const tresPorSemana = Math.max(1, Math.round(unidades / 3 / 4.3));
+  return fmt(tx.tempo, { letras, sons, umPorDia, tresPorSemana: tx.tresPorSemana(tresPorSemana) });
+}

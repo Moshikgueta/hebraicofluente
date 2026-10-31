@@ -21,44 +21,107 @@
  * a recording made for the printed workbook plays here with no second naming
  * scheme and no renaming when a lesson is reordered. */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { asset } from '@/lib/asset';
+import { vigiarGravacao } from '@/lib/som-do-acerto';
+import { tx } from '@/i18n/telas/licao-audio-button';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { track } from '@/lib/analytics';
 
-/* Which clips exist. Populated at build time from public/audio/; empty today,
-   and the UI is built to look right that way rather than to look broken. */
-import { AUDIO_MANIFEST } from '@/lib/audio-manifest';
+/* Which clips exist: the studio files the build found in public/audio/, plus
+   the ones recorded from the admin panel after the build (lib/audio-registro).
+   The UI is built to look right with none of either. */
+import {
+  algumClipe, assinar, clipeDoPainel, temClipe, urlDoClipe, versaoDoRegistro
+} from '@/lib/audio-registro';
 
-export const hasAudio = (audioId: string | null | undefined): boolean =>
-  !!audioId && AUDIO_MANIFEST.includes(audioId);
+export const hasAudio = (audioId: string | null | undefined): boolean => temClipe(audioId);
 
-export const audioAvailable = (): boolean => AUDIO_MANIFEST.length > 0;
+export const audioAvailable = (): boolean => algumClipe();
+
+/** Re-render when the panel's list arrives. The server snapshot is 0, so the
+    first client render matches the static HTML and only then picks up clips. */
+export const useRegistroDeAudio = (): number =>
+  useSyncExternalStore(assinar, versaoDoRegistro, () => 0);
+
+/**
+ * Tocar um clipe direto, sem botão (27/09/2026): o toque NA sílaba ou NA
+ * vogal toca o som - o dono do curso pediu para não precisar de um segundo
+ * botão. Um elemento só para a página inteira: tocar outra sílaba corta a
+ * anterior, em vez de sobrepor as duas. Respeita o corte do painel igual
+ * ao botão. Sem clipe, não faz nada (nunca voz sintética - ver o topo).
+ */
+let tocador: HTMLAudioElement | null = null;
+export function tocarClipe(audioId: string | null | undefined, rate = 1): void {
+  if (!audioId || !temClipe(audioId) || typeof Audio === 'undefined') return;
+  const src = urlDoClipe(audioId);
+  if (!tocador || tocador.dataset.src !== src) {
+    tocador?.pause();
+    tocador = new Audio(src);
+    tocador.dataset.src = src;
+    vigiarGravacao(tocador);
+  }
+  const el = tocador;
+  const corte = clipeDoPainel(audioId);
+  const fim = corte?.fim != null ? corte.fim / 1000 : null;
+  el.playbackRate = rate;
+  el.currentTime = corte?.inicio != null ? corte.inicio / 1000 : 0;
+  el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) el.pause(); };
+  void el.play().catch(() => { /* bloqueado ou sem rede: fica o botão */ });
+  track('audio_played', { audioId });
+}
 
 export function AudioButton({
-  audioId, label = 'Ouvir', size = 'md', slow = false
+  audioId, label = tx.ouvir, ariaLabel, size = 'md', slow = false
 }: {
   audioId: string | null;
   label?: string;
+  /** O nome para o leitor de tela, quando vários botões "Ouvir" dividem a tela. */
+  ariaLabel?: string;
   size?: 'sm' | 'md' | 'lg';
   /** Offer a 0.7× pass as well - useful on syllables and long words. */
   slow?: boolean;
 }) {
   const ref = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
+  /* A falha era engolida: sem rede, o toque não fazia nada e ninguém sabia
+     por quê (auditoria de 28/09, UX-012). Agora vira uma linha discreta,
+     anunciada pelo leitor de tela, que some no próximo toque. */
+  const [falhou, setFalhou] = useState(false);
+  useRegistroDeAudio();
   const available = hasAudio(audioId);
 
   useEffect(() => () => { ref.current?.pause(); }, []);
 
   const play = useCallback((rate: number) => {
     if (!audioId || !available) return;
-    const el = ref.current ?? new Audio(asset(`/audio/${audioId}.mp3`));
-    ref.current = el;
+    /* A gravação do painel pode ter sido substituída desde o último toque:
+       o endereço muda com ela, e o elemento velho é trocado. */
+    const src = urlDoClipe(audioId);
+    if (!ref.current || ref.current.dataset.src !== src) {
+      ref.current?.pause();
+      ref.current = new Audio(src);
+      ref.current.dataset.src = src;
+      vigiarGravacao(ref.current);
+    }
+    const el = ref.current;
+    /* O trecho da voz, quando o painel mediu um: o arquivo gravado no
+       celular tem silêncio antes e depois. O fragmento `#t=` do endereço
+       vale para o primeiro toque; a partir do segundo, quem corta é isto. */
+    const corte = clipeDoPainel(audioId);
+    const inicio = corte?.inicio != null ? corte.inicio / 1000 : 0;
+    const fim = corte?.fim != null ? corte.fim / 1000 : null;
     el.playbackRate = rate;
-    el.currentTime = 0;
+    el.currentTime = inicio;
     setPlaying(true);
+    setFalhou(false);
     el.onended = () => setPlaying(false);
-    el.onerror = () => { setPlaying(false); track('audio_unavailable', { audioId }); };
-    void el.play().catch(() => setPlaying(false));
+    el.onpause = () => setPlaying(false);
+    el.ontimeupdate = fim === null ? null : () => { if (el.currentTime >= fim) el.pause(); };
+    el.onerror = () => { setPlaying(false); setFalhou(true); track('audio_unavailable', { audioId }); };
+    void el.play().catch((e: unknown) => {
+      setPlaying(false);
+      /* AbortError é outro toque cortando este: não é falha. */
+      if (!(e instanceof DOMException && e.name === 'AbortError')) setFalhou(true);
+    });
     track('audio_played', { audioId });
   }, [audioId, available]);
 
@@ -91,11 +154,11 @@ export function AudioButton({
   if (!available) return null;
 
   return (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex flex-wrap items-center gap-2">
       <button
         type="button"
         onClick={() => play(1)}
-        aria-label={label}
+        aria-label={ariaLabel ?? label}
         className={`inline-flex items-center justify-center gap-2 rounded-[var(--r-md)]
           bg-[var(--accent-wash)] text-[var(--accent)] font-ui font-medium
           transition-transform duration-[var(--dur)] ease-[var(--ease)]
@@ -109,13 +172,16 @@ export function AudioButton({
         <button
           type="button"
           onClick={() => play(0.7)}
-          aria-label="Ouvir devagar"
+          aria-label={tx.ouvirDevagar}
           className={`inline-flex items-center justify-center rounded-[var(--r-md)]
             border border-line text-ink-muted font-ui text-[13px] ${SIZE.sm}`}
         >
-          0,7×
+          {tx.devagar}
         </button>
       )}
+      <span role="status" className="font-ui text-[13px] text-ink-muted empty:-ml-2">
+        {falhou ? tx.falhou : ''}
+      </span>
     </span>
   );
 }

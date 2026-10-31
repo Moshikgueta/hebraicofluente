@@ -12,6 +12,20 @@
 import { createServer } from 'node:http';
 import { readFileSync, existsSync } from 'node:fs';
 import { chromium } from 'playwright';
+import { rotaDoArquivo } from '../tools/csp-hashes.mjs';
+
+/* `CSP_ESTRITA=1 node csp.mjs` testa a regra ESTRITA - scripts só por hash,
+   a que hoje vai em observação (auditoria, SEC-003) - como se já valesse:
+   aplicada de verdade, com a lista que tools/csp-hashes.mjs gerou no build.
+   É a prova de que ela pode sair da observação sem apagar página nenhuma. */
+const ESTRITA = process.env.CSP_ESTRITA === '1';
+const HASHES = ESTRITA ? JSON.parse(readFileSync('out/_csp-hashes.json', 'utf8')) : {};
+const politica = f => {
+  if (!ESTRITA) return CSP;
+  const hs = HASHES[rotaDoArquivo(f.slice('out/'.length).replace(/\/+/g, '/'))] || [];
+  return CSP.replace("script-src 'self' 'unsafe-inline'",
+    `script-src 'self' ${hs.map(h => `'${h}'`).join(' ')}`);
+};
 
 const CSP = [
   "default-src 'self'",
@@ -44,7 +58,7 @@ const s = createServer((q, r) => {
       const b = readFileSync(f);
       const tipo = T[f.slice(f.lastIndexOf('.'))] || 'application/octet-stream';
       const h = { 'Content-Type': tipo, 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin' };
-      if (tipo.startsWith('text/html')) { h['Content-Security-Policy'] = CSP; h['X-Frame-Options'] = 'DENY'; }
+      if (tipo.startsWith('text/html')) { h['Content-Security-Policy'] = politica(f); h['X-Frame-Options'] = 'DENY'; }
       r.writeHead(200, h); return r.end(b);
     } catch { /* próximo candidato */ }
   }
@@ -56,7 +70,7 @@ await new Promise(r => s.listen(4409, r));
    As páginas pagas com conteúdo de verdade só existem para uma sessão com
    o curso, e não há sessão aqui - o que este script prova sobre elas é que a
    casca e o roteador não violam a política, não a aula inteira. */
-const ROTAS = ['/', '/cursos/alfabetizacao/', '/entrar/', '/criar-conta/', '/checkout/alfabetizacao/',
+const ROTAS = ['/', '/curso-de-hebraico/', '/entrar/', '/criar-conta/', '/checkout/alfabetizacao/',
                '/checkout/alfabetizacao/obrigado/', '/nova-senha/', '/perfil/', '/faq/',
                '/licao/alef/', '/meu-hebraico/', '/desafio-final/'];
 const b = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
@@ -83,5 +97,5 @@ for (const w of [390, 1280]) {
   await p.close();
 }
 await b.close(); s.close();
-console.log(ruim === 0 ? '\nA CSP do Worker não quebra nenhuma página.\n' : `\n${ruim} página(s) com problema sob a CSP.\n`);
+console.log(ruim === 0 ? `\nA CSP ${ESTRITA ? 'ESTRITA' : 'do Worker'} não quebra nenhuma página.\n` : `\n${ruim} página(s) com problema sob a CSP.\n`);
 process.exit(ruim === 0 ? 0 : 1);

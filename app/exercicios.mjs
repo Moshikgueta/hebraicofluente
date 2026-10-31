@@ -63,6 +63,13 @@ const erro = m => { console.log(`  ✗ ${m}`); falhas++; };
 const b = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
 const ctx = await b.newContext({ viewport: { width: 390, height: 1100 } });
 await ctx.addInitScript(([a, s]) => {
+  /* A prática em andamento mora no sessionStorage desde 01/10/2026 (UXQA-003):
+     sem limpar, a segunda passada retomava a primeira, com outros itens, e
+     nenhum gabarito aprendido servia. */
+  sessionStorage.clear();
+  /* E as rodadas (lib/rodadas.ts): cada rodada concluída faz a próxima ser
+     outra, de propósito. A segunda passada precisa da MESMA rodada. */
+  localStorage.removeItem('hf-rodadas-v1');
   localStorage.setItem('hf-platform-local-v1', a);
   localStorage.setItem('hebraico-fluente-v1', s);
 }, [JSON.stringify(ACC), JSON.stringify(ST)]);
@@ -84,9 +91,11 @@ const estado = () => p.evaluate(() => {
   const txt = (main?.innerText || '').replace(/\s+/g, ' ');
   const marca = main?.querySelector('[data-progresso]')?.getAttribute('data-progresso') || '';
   const [feito, total] = marca.split('/').map(Number);
-  const botoes = [...main.querySelectorAll('button')].map((el, i) => ({
+  const botoes = [...main.querySelectorAll('button:not([aria-haspopup]):not(dialog *)')].map((el, i) => ({
     i, txt: (el.innerText || '').replace(/\s+/g, ' ').trim(),
-    off: el.disabled, etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
+    /* aria-disabled conta como desligado: o ligar da lição e as perguntas
+       da etapa 1 mantêm o botão focável depois de respondido (VIS-005/008). */
+    off: el.disabled || el.getAttribute('aria-disabled') === 'true', etapa: !!el.getAttribute('aria-label')?.startsWith('Etapa'),
     resposta: el.getAttribute('data-resposta'),
     /* O rótulo acessível, e ele é necessário por causa de um laço infinito.
        ────────────────────────────────────────────────────────────────────
@@ -103,7 +112,11 @@ const estado = () => p.evaluate(() => {
     rotulo: el.getAttribute('aria-label') || ''
   }));
   return {
-    txt: txt.slice(0, 400),
+    /* 2000, e não 400: com o som da letra em português (CONT-003) e o anúncio
+       do ligar para o leitor de tela (VIS-005), o retorno do item passou do
+       corte, e a varredura acusava "sem explicação" e "tela travada" numa
+       lição que funcionava. */
+    txt: txt.slice(0, 2000),
     feito: feito || 0, total: total || 0,
     /* O item desta tela já foi corrigido?
        ──────────────────────────────────────────────────────────────────
@@ -181,7 +194,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       if (e.julgado && !/Isso|Boa|resposta certa|Quase|Não é|Errou|certa é/.test(e.txt)) {
         erro(`${letraId}/${rotulo}: item julgado e nenhuma explicação na tela`);
       }
-      await p.locator('main button').nth(seguir.i).click();
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(seguir.i).click();
       await p.waitForTimeout(300);
       continue;
     }
@@ -198,7 +211,17 @@ async function percorre(letraId, etapa, rotulo, abrir) {
           mesmo bloco traz o mesmo item - e aí ele digita o gabarito e cobra o
           acerto. */
     if (e.temCampo) {
-      const chave = `${letraId}/${rotulo}/${e.feito}`;
+      /* A chave é a TELA do item (enunciado e hebraico, sem o contador), e
+         não a posição: um digitado errado volta depois de outros itens (a
+         prática de revisão, 30/09/2026), e pela posição o robô digitava a
+         resposta de um item no outro e acusava "certa recusada". */
+      const tela = await p.evaluate(() => {
+        const main = document.querySelector('main');
+        const h2 = main?.querySelector('h2')?.textContent?.trim() ?? '';
+        const he = [...(main?.querySelectorAll('[lang="he"]') ?? [])].map(x => x.textContent?.trim()).filter(Boolean).join(' ');
+        return `${h2}|${he}`;
+      });
+      const chave = `${letraId}/${rotulo}/${tela}`;
       const sabida = gabaritos.get(chave);
       await p.locator('main input').first().fill(sabida ?? 'x');
       await p.keyboard.press('Enter');
@@ -223,13 +246,15 @@ async function percorre(letraId, etapa, rotulo, abrir) {
        resposta" - e o robô faz o mesmo que ele. */
     const desistir = e.botoes.find(x => !x.off && /^Mostrar a resposta/.test(x.txt));
     if (desistir) {
-      await p.locator('main button').nth(desistir.i).click();
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(desistir.i).click();
       await p.waitForTimeout(300);
       continue;
     }
 
     const alvos = e.botoes.filter(x => !x.off && !x.etapa && x.txt
       && !/dica|Pular|Ouvir|Tocar|Limpar|Desfazer/i.test(x.txt)
+      /* "0,7×" é o "Ouvir devagar": o nome está só no rótulo acessível. */
+      && !/Ouvir|Tocar/i.test(x.rotulo)
       /* Na academia o "← Academia" é BOTÃO, e é o primeiro da tela: tocar
          nele sai do treino. A primeira execução desta passada acusou
          «respondi 0 de 8» num treino que funcionava. */
@@ -257,28 +282,29 @@ async function percorre(letraId, etapa, rotulo, abrir) {
       const colunas = await p.evaluate(() => {
         const uls = [...document.querySelectorAll('main ul')]
           .filter(u => u.querySelectorAll('button').length >= 3);
-        const todos = [...document.querySelectorAll('main button')];
+        const todos = [...document.querySelectorAll('main button:not([aria-haspopup]):not(dialog *)')];
         const idx = el => todos.indexOf(el);
         return uls.slice(0, 2).map(u => [...u.querySelectorAll('button')]
-          .map(b => ({ i: idx(b), off: b.disabled })));
+          .map(b => ({ i: idx(b), off: b.disabled || b.getAttribute('aria-disabled') === 'true' })));
       });
       if (colunas.length < 2) { travas++; await p.waitForTimeout(300); continue; }
       const [esq, dir] = colunas;
       const aberto = esq.find(x => !x.off);
       if (!aberto) { await p.waitForTimeout(300); continue; }
       for (const alvo of dir.filter(x => !x.off)) {
-        await p.locator('main button').nth(aberto.i).click().catch(() => {});
+        await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(aberto.i).click().catch(() => {});
         await p.waitForTimeout(90);
-        await p.locator('main button').nth(alvo.i).click().catch(() => {});
+        await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvo.i).click().catch(() => {});
         await p.waitForTimeout(160);
-        const fechou = await p.locator('main button').nth(aberto.i)
-          .isDisabled().catch(() => false);
+        /* aria-disabled também fecha: o ligar mantém o botão focável (VIS-005). */
+        const fechou = await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(aberto.i)
+          .evaluate(b => b.disabled || b.getAttribute('aria-disabled') === 'true').catch(() => false);
         if (fechou) break;
       }
       continue;
     }
 
-    await p.locator('main button').nth(alvos[0].i).click();
+    await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvos[0].i).click();
     await p.waitForTimeout(250);
 
     const depois = await estado();
@@ -290,7 +316,7 @@ async function percorre(letraId, etapa, rotulo, abrir) {
     const jaRespondido = depois.botoes[alvos[0].i]?.off;
     if (jaRespondido) {
       const antes = depois.feito;
-      await p.locator('main button').nth(alvos[0].i).click({ force: true }).catch(() => {});
+      await p.locator('main button:not([aria-haspopup]):not(dialog *)').nth(alvos[0].i).click({ force: true }).catch(() => {});
       await p.waitForTimeout(200);
       const agora2 = await estado();
       if (agora2.feito !== antes) {
@@ -312,10 +338,13 @@ async function percorre(letraId, etapa, rotulo, abrir) {
 /* Letras escolhidas para varrer formatos diferentes: alef não tem palavra
    legível, mem abre o vocabulário, shin e bet trazem as duas leituras, vav
    traz a frase, e as tardias trazem forma final e cena. */
+/* Desde 11/10/2026 a etapa 4 é a Fixação guiada, sem o tocador de
+   perguntas (components/learn/FixacaoGuiada.tsx): os exercícios corrigidos
+   são os da etapa 5. */
 for (const [id, etapa, rotulo] of [
-  ['alef', 4, 'Praticar'], ['mem', 4, 'Praticar'], ['he', 4, 'Praticar'],
-  ['shin', 4, 'Praticar'], ['vav', 4, 'Praticar'], ['bet', 4, 'Praticar'],
-  ['mem', 5, 'Fixação'], ['pe', 5, 'Fixação']
+  ['alef', 5, 'Exercícios'], ['mem', 5, 'Exercícios'], ['he', 5, 'Exercícios'],
+  ['shin', 5, 'Exercícios'], ['vav', 5, 'Exercícios'], ['bet', 5, 'Exercícios'],
+  ['pe', 5, 'Exercícios']
 ]) {
   await percorre(id, etapa, rotulo);
 }
@@ -328,7 +357,7 @@ await percorre('academia', 0, 'Letras parecidas', async () => {
 });
 
 /* A segunda passada, agora sabendo o gabarito dos itens digitados. */
-for (const id of ['alef', 'vav']) await percorre(id, 4, 'Praticar');
+for (const id of ['alef', 'vav']) await percorre(id, 5, 'Exercícios');
 if (!digitadasCertas) erro('nenhuma resposta digitada certa foi conferida - a segunda passada não achou o item');
 else console.log(`  ✓ ${digitadasCertas} resposta(s) digitada(s) certa(s) aceita(s)`);
 

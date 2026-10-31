@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ehPaga } from '@/lib/seo';
 import type { ReactNode } from 'react';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'quiet';
@@ -9,11 +10,14 @@ type Size = 'sm' | 'md' | 'lg';
 /* O hover do design é uma cor declarada (navy → navy-2) mais um levantar de
    1-2px, e não um `brightness`: clarear um navy escuro dá um cinza azulado
    que não é cor nenhuma do sistema. */
+/* O toque afunda o botão (scale .97, 27/10/2026): o polegar sente que pegou.
+   O `hover:` do Tailwind 4 só vale onde há mouse, então o levantar não fica
+   preso no celular depois do toque. */
 const VARIANT: Record<Variant, string> = {
-  primary:   'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0 shadow-[var(--sh)]',
-  secondary: 'bg-[var(--card)] text-ink border border-line hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0',
-  ghost:     'bg-transparent text-ink-body hover:bg-surface-2',
-  quiet:     'bg-surface-2 text-ink-body hover:bg-surface'
+  primary:   'bg-[var(--navy)] text-white hover:bg-[var(--navy-2)] hover:-translate-y-[2px] active:translate-y-0 active:scale-[.97] shadow-[var(--sh)]',
+  secondary: 'bg-[var(--card)] text-ink border border-line hover:border-[#C9C3B4] hover:-translate-y-[2px] active:translate-y-0 active:scale-[.97]',
+  ghost:     'bg-transparent text-ink-body hover:bg-surface-2 active:scale-[.97]',
+  quiet:     'bg-surface-2 text-ink-body hover:bg-surface active:scale-[.97]'
 };
 const SIZE: Record<Size, string> = {
   /* 44px minimum on every interactive control: this course is used on a phone
@@ -25,7 +29,7 @@ const SIZE: Record<Size, string> = {
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-[var(--r-md)] font-ui font-medium ' +
-  'transition-[filter,background-color,transform] duration-[var(--dur)] ease-[var(--ease)] ' +
+  'transition-[filter,background-color,transform,scale,translate] duration-[var(--dur)] ease-[var(--ease)] ' +
   'disabled:opacity-45 disabled:cursor-not-allowed select-none';
 
 export function Button({
@@ -54,7 +58,12 @@ export function LinkButton({
   className?: string; full?: boolean;
 }) {
   return (
-    <Link href={href} className={`${base} ${VARIANT[variant]} ${SIZE[size]} ${full ? 'w-full' : ''} ${className}`}>
+    /* Rota paga sem pré-carregamento (30/09/2026): quem ainda não comprou
+       via o botão "Meu Hebraico" do topo e o Next pedia a página paga de
+       antemão - um 403 a cada tela. Pré-carregar só adianta para quem pode
+       abrir, e o clique continua instantâneo o bastante. */
+    <Link href={href} prefetch={ehPaga(href) ? false : undefined}
+          className={`${base} ${VARIANT[variant]} ${SIZE[size]} ${full ? 'w-full' : ''} ${className}`}>
       {children}
     </Link>
   );

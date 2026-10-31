@@ -49,7 +49,7 @@ describe('a contagem de dias', () => {
 
 describe('a escolha da frase de hoje', () => {
   it('não existe antes de haver frase legível', () => {
-    expect(antesEDepois(ate(9), 9, '2026-03-01', '2026-03-20')).toBeNull();
+    expect(antesEDepois(ate(5), 5, '2026-03-01', '2026-03-20')).toBeNull();
   });
 
   it('não existe no primeiro dia - não há "antes"', () => {

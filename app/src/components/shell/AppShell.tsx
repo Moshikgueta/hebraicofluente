@@ -18,22 +18,29 @@
  * to read than a 600px one, and the Hebrew is the subject at every size.
  */
 
+import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
+import { podeCompartilhar } from '@/lib/compartilhar';
+import { RedesSociais } from './RedesSociais';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { carregarManifesto } from '@/lib/audio-registro';
 import { useProgress } from '@/lib/state/store';
+import { ITENS, saldo } from '@/lib/loja';
 import { XPIndicator } from '@/components/game/Game';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ACHIEVEMENTS } from '@/lib/state/rules';
 import { Logo } from '@/components/shell/Logo';
 import { He } from '@/components/hebrew/He';
-import { allCourses, isPlayable } from '@/lib/catalog';
 import {
-  IconeHoje, IconeMapa, IconeRevisao, IconePraticar, IconeConquistas, IconePerfil, IconeAula0
+  IconeHoje, IconeMapa, IconePraticar, IconeConquistas, IconePerfil, IconeRecompensas
 } from '@/components/shell/NavIcons';
 import { useAccount } from '@/lib/account/store';
+import { FLAGSHIP } from '@/lib/catalog';
 import { DemoNotice } from '@/components/shell/DemoNotice';
+import { SessaoCaiu } from '@/components/shell/SessaoCaiu';
+import { tx } from '@/i18n/telas/conta-app-shell';
 
 /* A navegação, e ONDE cada item aparece no telefone.
  * ─────────────────────────────────────────────────────────────────────────
@@ -50,31 +57,41 @@ import { DemoNotice } from '@/components/shell/DemoNotice';
  *
  *   'barra' - na barra inferior, sob o polegar, e na sidebar
  *   'conta' - no cabeçalho do telefone, como a inicial da conta, e na sidebar
+ *   'cabecalho' - no cabeçalho do telefone, como ícone, e na sidebar
  */
+/* Quatro portas (28/10/2026, decisão do dono: "o caminho do estudante
+   simples e fácil de navegar"). Eram seis ou sete na barra do telefone, com
+   rótulos de 10,5 px, e o aluno tinha de saber a diferença entre Revisão,
+   Praticar e Palavras. Agora cada porta é uma pergunta:
+     Hoje      - o que eu faço agora?
+     Curso     - onde estou no caminho? (o mapa, as lições e a Aula 0)
+     Praticar  - quero treinar (revisão, flashcards, jogos, leitura, palavras)
+     Progresso - o que eu já conquistei? (diário, coleção, conquistas)
+   Nenhuma página saiu: Revisão e Palavras abrem pelo alto de Praticar, e a
+   Aula 0 pelo topo do mapa e pelo botão principal de Hoje. `secao` diz quais
+   endereços acendem cada porta. */
 const NAV = [
-  { href: '/meu-hebraico', label: 'Hoje', icon: IconeHoje, movel: 'barra' },
-  { href: '/mapa', label: 'Meu curso', icon: IconeMapa, movel: 'barra' },
-  { href: '/revisao', label: 'Revisão', icon: IconeRevisao, movel: 'barra' },
-  /* The gym is a destination, not a feature buried in a screen: a learner who
-     has finished the alphabet has nowhere else to go, and one who wants to
-     drill only the vowels should not have to find the door. */
-  { href: '/academia', label: 'Praticar', icon: IconePraticar, movel: 'barra' },
-  { href: '/conquistas', label: 'Progresso', icon: IconeConquistas, movel: 'barra' },
-  /* A aula 0 fica na navegação, e não só no painel.
-     ──────────────────────────────────────────────────────────────────────
-     Ela nasceu como uma etapa: o painel oferecia, o onboarding terminava
-     nela, e depois disso ela sumia do caminho. Só que a página não é uma
-     etapa - é referência. Quem esbarra no {{ה}} mudo na décima lição, ou
-     descobre na aula de cursiva que o desenho do livro não é o da mão,
-     precisa dela NAQUELE momento, e o que existia era um link solto no
-     painel que só aparece para quem volta ao painel.
-     Última posição de propósito: material de consulta, e nenhum dos cinco
-     destinos do dia muda de lugar. */
-  { href: '/inicio', label: 'Aula 0', icon: IconeAula0, movel: 'barra' },
+  { href: '/meu-hebraico', label: tx.navHoje, icon: IconeHoje, movel: 'barra', secao: [] },
+  { href: '/mapa', label: tx.navCurso, icon: IconeMapa, movel: 'barra',
+    secao: ['/inicio', '/licao', '/som', '/extra', '/modulo', '/checkpoint', '/desafio-final', '/concluido'] },
+  { href: '/academia', label: tx.navPraticar, icon: IconePraticar, movel: 'barra',
+    secao: ['/revisao', '/vocabulario', '/leitura', '/leituras', '/hebraico-na-rua', '/meu-nome', '/teclado-hebraico', '/bonus', '/nikud-biblico'] },
+  { href: '/conquistas', label: tx.navProgresso, icon: IconeConquistas, movel: 'barra',
+    secao: ['/historia', '/certificado', '/meu-hebraico/dominio'] },
   /* Perfil mora na sidebar no desktop; no telefone ele é a inicial da conta
      no cabeçalho, que diz de relance EM QUAL conta a pessoa está. */
-  { href: '/perfil', label: 'Perfil', icon: IconePerfil, movel: 'conta' }
+  /* Recompensas (27/09/2026): um ícone próprio, a pedido do dono do curso.
+     No telefone ele é o presente do cabeçalho, ao lado do XP que ele gasta. */
+  { href: '/loja', label: tx.navRecompensas, icon: IconeRecompensas, movel: 'cabecalho', secao: [] },
+  { href: '/perfil', label: tx.navPerfil, icon: IconePerfil, movel: 'conta', secao: [] }
 ] as const;
+
+/** A porta acesa: a própria página, ou uma página da seção dela. */
+function portaAtiva(pathname: string | null, item: (typeof NAV)[number]): boolean {
+  if (isActive(pathname, item.href)) return true;
+  const aqui = (pathname ?? '/').replace(/\/+$/, '') || '/';
+  return item.secao.some(base => aqui === base || aqui.startsWith(`${base}/`));
+}
 
 /**
  * Is this nav item the page we are on?
@@ -85,6 +102,17 @@ const NAV = [
  * dashboard was rendering with no item marked current, in the sidebar and in
  * the bottom bar, and with no `aria-current` for a screen reader either.
  */
+/* Pré-carregar as rotas da navegação só para quem tem o curso (28/10/2026).
+   As rotas do curso passam pelo portão, e o Next pré-carrega todo link que
+   aparece na tela: enquanto a sessão não respondia, ou numa conta que ainda
+   não tem o curso (o PIX esperando, em /perfil), cada link virava um 403 no
+   servidor. Para o aluno com o curso nada muda: depois de a sessão responder,
+   o pré-carregamento volta. É a mesma regra do LinkButton (components/ui). */
+function usePreCarregar(): false | undefined {
+  const account = useAccount();
+  return account.ready && account.signedIn && account.can(FLAGSHIP) ? undefined : false;
+}
+
 export function isActive(pathname: string | null, href: string): boolean {
   const here = (pathname ?? '/').replace(/\/+$/, '') || '/';
   const target = href.replace(/\/+$/, '') || '/';
@@ -93,20 +121,22 @@ export function isActive(pathname: string | null, href: string): boolean {
 
 export function AppShell({ children }: { children: ReactNode }) {
   const p = useProgress();
+  const preCarregar = usePreCarregar();
   const pathname = usePathname();
   const { remember } = p;
 
   useEffect(() => { if (pathname) remember(pathname); }, [pathname, remember]);
+  /* Os clipes gravados pelo painel depois da build (lib/audio-registro.ts). */
+  useEffect(() => { void carregarManifesto(); }, []);
 
   const avisos = (
     <>
       <DemoNotice />
+      <SessaoCaiu />
       {!p.persistent && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
-            O navegador está bloqueando o armazenamento local (janela anônima ou
-            cookies desativados). Você pode estudar normalmente, mas o progresso
-            não vai ser guardado ao fechar a aba.
+            {tx.armazenamentoBloqueado}
           </p>
         </Card>
       )}
@@ -122,10 +152,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {p.ready && !p.sincronizado && (
         <Card tone="ember" className="p-4 mb-4">
           <p className="font-ui text-[13px] leading-relaxed text-[var(--gold-body)]">
-            O que você acabou de fazer está salvo neste aparelho, mas ainda não
-            chegou à sua conta. Assim que a conexão voltar, ele sobe sozinho.
-            Se for trocar de aparelho agora, abra o curso uma vez com internet
-            antes.
+            {tx.naoSincronizado}
           </p>
         </Card>
       )}
@@ -154,11 +181,35 @@ export function AppShell({ children }: { children: ReactNode }) {
       <header className="lg:hidden sticky top-0 z-30 border-b border-[color:var(--line-soft)]
                          bg-[color-mix(in_srgb,var(--cream)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-4">
-          <Link href="/meu-hebraico" className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
-            <Logo size={30} />
+          {/* Abaixo de 380 px só o quadrado ע: a 360 px o nome passava por
+              baixo do "◆ XP" (auditoria de 01/10, VIS-003). O site público
+              já faz o mesmo abaixo de sm. */}
+          <Link href="/meu-hebraico" prefetch={preCarregar} className="flex items-center min-w-0 min-h-[44px] -ml-1 pl-1 pr-2 rounded-md">
+            <span className="min-[380px]:hidden"><Logo size={30} words={false} /></span>
+            <span className="hidden min-[380px]:inline-flex min-w-0"><Logo size={30} /></span>
+            <span className="sr-only min-[380px]:hidden">{tx.marca}</span>
           </Link>
           <div className="flex items-center gap-4">
-            {p.ready && <XPIndicator xp={p.state.xp} />}
+            {/* O XP leva às Recompensas (27/09/2026): é onde ele vale alguma coisa. */}
+            {p.ready && (
+              <Link href="/loja" prefetch={preCarregar} aria-label={tx.xpAbrirRecompensas(p.state.xp)}
+                    className="inline-flex items-center min-h-[40px] px-1.5 rounded-[var(--r-md)] hover:bg-surface-2">
+                <XPIndicator xp={p.state.xp} />
+              </Link>
+            )}
+            {/* E o ícone próprio delas. O ponto dourado: há saldo para trocar
+                pelo item mais barato - como o ponto da Revisão na barra. */}
+            {p.ready && (
+              <Link href="/loja" prefetch={preCarregar} aria-label={tx.navRecompensas}
+                    aria-current={isActive(pathname, '/loja') ? 'page' : undefined}
+                    className={`relative inline-grid place-items-center w-[40px] h-[40px] rounded-full hover:bg-surface-2
+                      ${isActive(pathname, '/loja') ? 'text-[var(--accent)] bg-[var(--accent-wash)]' : 'text-ink-muted'}`}>
+                <IconeRecompensas size={21} />
+                {saldo(p.state) >= Math.min(...Object.values(ITENS).map(i => i.custo)) && (
+                  <span aria-hidden className="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
+                )}
+              </Link>
+            )}
             <ProfileLink />
           </div>
         </div>
@@ -188,7 +239,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
               Agora o topo é `pt-*` e o rodapé é `pb-*`: eles não se
               cruzam mais, e `app/toque.mjs` mede a tela de verdade. */}
-          <main className="min-w-0 pt-6 sm:pt-8 lg:px-9 lg:pt-[34px]
+          <main id="hf-principal" className="min-w-0 pt-6 sm:pt-8 lg:px-9 lg:pt-[34px]
                            pb-[calc(84px+env(safe-area-inset-bottom))] lg:pb-10">
             {avisos}
             {children}
@@ -229,19 +280,20 @@ export function AppShell({ children }: { children: ReactNode }) {
 function RodapeDeAjuda() {
   return (
     <footer className="print:hidden mt-10 pt-5 border-t border-[color:var(--line-soft)]">
-      <nav aria-label="Ajuda e informações">
+      <nav aria-label={tx.ajudaEInformacoes}>
         <ul className="flex flex-wrap gap-x-5 gap-y-2 list-none p-0 m-0">
           {[
-            ['/suporte', 'Precisa de ajuda?'],
-            ['/faq', 'Dúvidas frequentes'],
-            ['/reembolso', 'Reembolso e cancelamento'],
-            ['/termos', 'Termos'],
-            ['/privacidade', 'Privacidade']
+            ['/suporte', tx.precisaDeAjuda],
+            ['/faq', tx.duvidasFrequentes],
+            ['/reembolso', tx.reembolso],
+            ['/termos', tx.termos],
+            ['/privacidade', tx.privacidade],
+            ['/acessibilidade', tx.acessibilidade]
           ].map(([href, label]) => (
             <li key={href}>
               {/* Alvo de 44px de altura também aqui: um link de 13px em cima
                   da barra fixa é o tipo de alvo que se erra com o polegar. */}
-              <Link href={href!}
+              <Link href={href!} prefetch={false}
                     className="inline-flex items-center min-h-[44px] font-ui text-[13px]
                                text-ink-muted hover:text-[var(--accent)] hover:underline">
                 {label}
@@ -250,6 +302,7 @@ function RodapeDeAjuda() {
           ))}
         </ul>
       </nav>
+      <RedesSociais classe="mt-1" />
     </footer>
   );
 }
@@ -263,30 +316,31 @@ function RodapeDeAjuda() {
    compra um A1. */
 function Sidebar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
-  const proximo = allCourses().find(c => !isPlayable(c));
+  const preCarregar = usePreCarregar();
 
   return (
     <aside className="hidden lg:flex flex-col gap-[26px] bg-[var(--navy)] px-[18px] py-[26px]">
-      <Link href="/meu-hebraico" className="flex items-center gap-2.5 px-2 rounded-md">
+      <Link href="/meu-hebraico" prefetch={preCarregar} className="flex items-center gap-2.5 px-2 rounded-md">
         <span aria-hidden className="w-8 h-8 rounded-[9px] bg-white/[.12] grid place-items-center shrink-0">
           <span style={{ fontSize: 16, marginTop: -2, lineHeight: 1 }}>
             <He size="inline" tone="lite" className="leading-none">ע</He>
           </span>
         </span>
         <span className="font-display font-semibold text-[16px] tracking-[-0.02em] text-white">
-          Hebraico Fluente
+          {tx.marca}
         </span>
       </Link>
 
-      <nav aria-label="Navegação principal">
+      <nav aria-label={tx.navegacaoPrincipal}>
         <ul className="grid gap-[3px]">
           {NAV.map(item => {
-            const active = isActive(pathname, item.href);
+            const active = portaAtiva(pathname, item);
             const Icone = item.icon;
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={preCarregar}
                   aria-current={active ? 'page' : undefined}
                   className={`flex items-center gap-[11px] rounded-[11px] px-3 py-2.5
                     font-ui text-[15px] transition-colors
@@ -296,8 +350,8 @@ function Sidebar({ pathname }: { pathname: string | null }) {
                 >
                   <Icone className={active ? 'text-[var(--teal-lite)]' : 'text-white/[.55]'} />
                   <span className="flex-1">{item.label}</span>
-                  {item.href === '/revisao' && p.dueCount > 0 && (
-                    <span className="rounded-full bg-[var(--gold)] px-[7px] py-[2px]
+                  {item.href === '/academia' && p.dueCount > 0 && (
+                    <span className="rounded-full bg-[var(--gold-solid)] px-[7px] py-[2px]
                                      font-ui text-[11.5px] font-bold text-white tabular-nums">
                       {p.dueCount}
                     </span>
@@ -311,18 +365,15 @@ function Sidebar({ pathname }: { pathname: string | null }) {
 
       <div className="flex-1" />
 
-      {proximo && (
-        <div className="rounded-[14px] bg-white/[.07] p-4">
-          <p className="font-ui text-[13px] text-white/60 mb-1.5">Próximo nível</p>
-          <p className="font-ui text-[15px] font-semibold text-white mb-1">{proximo.titlePt}</p>
-          <p className="font-ui text-[13px] leading-[1.45] text-white/[.55]">
-            Liberado quando você concluir a Alfabetização.
-          </p>
-        </div>
-      )}
+      {/* Aqui havia um cartão de "próximo nível" dizendo que o A1 seria
+          liberado ao concluir a Alfabetização. Removido em 25/09/2026, a
+          pedido do dono do curso: o A1 não existe ainda e será vendido à
+          parte, então o cartão prometia de graça um curso que vai custar. */}
 
-      <p className="font-ui text-[11.5px] leading-relaxed text-white/[.45] px-1">
-        Nos exercícios, <Key dark>1</Key>-<Key dark>4</Key> respondem e <Key dark>Enter</Key> avança.
+      {/* Branco a 85% (antes 45%, 3,8:1 - auditoria de 28/09, UX-007), e
+          "nas lições": os jogos da Academia não têm os atalhos (UX-014). */}
+      <p className="font-ui text-[12px] leading-relaxed text-white/[.85] px-1">
+        {tx.nasLicoes}<Key dark>1</Key>-<Key dark>4</Key>{tx.respondem}<Key dark>{tx.teclaEnter}</Key>{tx.avanca}
       </p>
     </aside>
   );
@@ -353,7 +404,7 @@ function ProfileLink() {
                        grid place-items-center">
         {initial}
       </span>
-      <span className="sr-only">Sua conta</span>
+      <span className="sr-only">{tx.suaConta}</span>
     </Link>
   );
 }
@@ -371,36 +422,47 @@ export function Key({ children, dark = false }: { children: ReactNode; dark?: bo
 /* ── the thumb ──────────────────────────────────────────────────────────── */
 function BottomBar({ pathname }: { pathname: string | null }) {
   const p = useProgress();
+  const preCarregar = usePreCarregar();
+  const itens = NAV.filter(item => item.movel === 'barra');
+  /* O rótulo cresce quando a Aula 0 sai da barra (28/10/2026): com seis
+     itens, cada um tem 58,7 px num celular de 360px, e "Progresso" a 11,5 px
+     mede 57. Abaixo de 360px (o iPhone SE antigo, 320) cai para 10 px. Com
+     sete, 10,5 px é o que cabe a partir de 360. */
+  /* Quatro portas: cada uma tem 90 px num celular de 360, e o rótulo
+     cresce para 12,5 px. */
+  const rotulo = 'text-[12.5px]';
   return (
     <nav
-      aria-label="Navegação principal"
+      aria-label={tx.navegacaoPrincipal}
       className="lg:hidden fixed bottom-0 inset-x-0 z-30 border-t border-[color:var(--line-soft)]
                  bg-[color-mix(in_srgb,var(--paper)_94%,transparent)] backdrop-blur-md
                  pb-[env(safe-area-inset-bottom)]"
     >
-      {/* Seis alvos num aparelho de 390px dão 65px cada, e o rótulo mais
-          largo ("Progresso") mede 52. O `min-w-0` é o que impede um deles de
+      {/* Sete alvos num aparelho de 390px dão 54px cada, e o rótulo mais
+          largo ("Progresso") mede 52 a 10,5 px. O `min-w-0` é o que impede um deles de
           esticar a linha: sem ele, `flex-1` respeita a largura do conteúdo e
           a barra fica mais larga que a tela. */}
       <ul className="mx-auto w-full max-w-[680px] px-1 flex items-stretch justify-around">
-        {NAV.filter(item => item.movel === 'barra').map(item => {
-          const active = isActive(pathname, item.href);
+        {itens.map(item => {
+          const active = portaAtiva(pathname, item);
           const Icone = item.icon;
           return (
             <li key={item.href} className="flex-1 min-w-0">
               <Link
                 href={item.href}
+                prefetch={preCarregar}
+                aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={`relative h-[60px] flex flex-col items-center justify-center gap-1.5
-                  font-ui text-[10.5px] leading-none text-center px-0.5 transition-colors
+                  font-ui ${rotulo} leading-none text-center px-0.5 transition-colors
                   whitespace-nowrap
-                  ${active ? 'text-[var(--navy)] font-semibold' : 'text-ink-muted'}`}
+                  ${active ? 'text-[var(--accent)] font-semibold' : 'text-ink-muted'}`}
               >
-                <Icone size={19} />
-                {item.label}
-                {item.href === '/revisao' && p.dueCount > 0 && (
+                <span aria-hidden className="hf-barra-icone inline-grid"><Icone size={19} /></span>
+                <span className="hf-barra-rotulo">{item.label}</span>
+                {item.href === '/academia' && p.dueCount > 0 && (
                   <span aria-hidden
-                        className="absolute top-2 right-[24%] w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
+                        className="absolute top-2 right-[30%] w-[7px] h-[7px] rounded-full bg-[var(--gold)]" />
                 )}
               </Link>
             </li>
@@ -413,10 +475,21 @@ function BottomBar({ pathname }: { pathname: string | null }) {
 
 function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void }) {
   const first = ACHIEVEMENTS.find(a => a.id === ids[0]);
+  const nosJogos = (usePathname() ?? '').startsWith('/academia');
+  /* Com o teclado hebraico da tela aberto, o pé da tela é dele: o aviso vai
+     para o alto, e nunca por cima das teclas (auditoria de 01/10, UXQA-014). */
+  const [comTeclado, setComTeclado] = useState(false);
+  useEffect(() => { setComTeclado(!!document.getElementById('teclado-hebraico')); }, [ids]);
+  const embaixo = nosJogos && !comTeclado;
+  /* Quem tocou em "Compartilhar" está usando o aviso: ele não some sozinho
+     no meio da folha de compartilhar. Com o botão, o aviso fica mais tempo. */
+  const [segura, setSegura] = useState(false);
+  const compartilhavel = !!first && podeCompartilhar(first.id);
   useEffect(() => {
-    const t = setTimeout(onClose, 6000);
+    if (segura) return;
+    const t = setTimeout(onClose, compartilhavel ? 12000 : 6000);
     return () => clearTimeout(t);
-  }, [onClose]);
+  }, [onClose, segura, compartilhavel]);
   if (!first) return null;
 
   return (
@@ -425,21 +498,32 @@ function AchievementToast({ ids, onClose }: { ids: string[]; onClose: () => void
        learner is looking at when an achievement fires. */
     <div
       role="status"
-      className="fixed top-[68px] left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))]
-                 animate-rise"
+      /* Nos jogos da academia a instrução e o alvo ficam no alto da tela, e o
+         aviso preso embaixo do cabeçalho os cobria (auditoria de 28/09,
+         UX-018). Lá ele desce para acima da barra e do botão de acessibilidade; o
+         "Continuar" das lições, que motivou o topo, não existe nos jogos. */
+      className={`fixed left-1/2 -translate-x-1/2 z-40 w-[min(420px,calc(100vw-32px))] animate-rise
+                  ${embaixo ? 'bottom-[136px] lg:bottom-6' : 'top-[68px]'}`}
     >
-      <Card tone="mint" className="p-4 shadow-[var(--shadow-2)] flex items-center gap-4">
-        <span aria-hidden className="text-[var(--mint-ink)] text-[22px] leading-none">◆</span>
+      {/* Uma linha só (27/10/2026, rodada 2 da experiência): com o botão de
+          compartilhar embaixo do título, o aviso ocupava cerca de 125 px no
+          alto do celular e cobria o título do relatório do exame. */}
+      <Card tone="mint" className="py-2.5 pl-4 pr-2 shadow-[var(--shadow-2)] flex items-center gap-3">
+        <span aria-hidden className="text-[var(--mint-ink)] text-[18px] leading-none">◆</span>
         <div className="min-w-0 flex-1">
-          <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)]">
-            Conquista desbloqueada
+          <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)] truncate">
+            {compartilhavel ? tx.conquista : tx.conquistaDesbloqueada}{ids.length > 1 ? ` +${ids.length - 1}` : ''}
           </p>
-          <p className="font-display text-[16px] font-semibold text-ink truncate">{first.titlePt}</p>
-          {ids.length > 1 && (
-            <p className="font-ui text-[12px] text-ink-muted">e mais {ids.length - 1}</p>
-          )}
+          {/* O título quebra em até duas linhas: cortado em "Primeira pala…"
+              ele deixava de dizer o que foi conquistado. */}
+          <p className="font-display text-[15.5px] font-semibold leading-tight text-ink line-clamp-2">{first.titlePt}</p>
         </div>
-        <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar">✕</Button>
+        {compartilhavel && (
+          <div className="shrink-0" onFocus={() => setSegura(true)} onPointerDown={() => setSegura(true)}>
+            <CompartilharConquista id={first.id} curto />
+          </div>
+        )}
+        <Button variant="ghost" size="sm" onClick={onClose} aria-label={tx.fechar}>✕</Button>
       </Card>
     </div>
   );

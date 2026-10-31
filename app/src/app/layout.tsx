@@ -17,20 +17,26 @@ import './globals.css';
 const display = localFont({
   variable: '--font-display-loaded',
   display: 'swap',
+  /* Sem preload desde 23/10/2026 (ver a nota acima de `cursive`). */
+  preload: false,
   src: [
-    { path: '../../public/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-600-normal.woff2', weight: '600', style: 'normal' },
-    { path: '../../public/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-600-normal.woff2', weight: '600', style: 'normal' },
+    { path: '../../../assets/fonts/bricolage-grotesque-latin-700-normal.woff2', weight: '700', style: 'normal' }
   ]
 });
+/* Instrument Sans no texto corrido: só 400 e 600 (26/10/2026, decisão do
+   dono). O 500 estava na primeira tela ("Entrar", "Começar", os botões) e os
+   três pesos chegavam antes da maior pintura; sem ele, o texto em 500 usa o
+   arquivo do 400. LCP da capa 2,93 -> 2,76 s. Um peso novo aqui é um arquivo
+   novo em toda página: medir antes. */
 const ui = localFont({
   variable: '--font-ui-loaded',
   display: 'swap',
   src: [
-    { path: '../../public/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/instrument-sans-latin-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
+    { path: '../../../assets/fonts/instrument-sans-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/instrument-sans-latin-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
 /* Noto SERIF Hebrew - e a troca foi conferida ANTES de ser feita.
@@ -49,25 +55,48 @@ const ui = localFont({
    consoante. A troca é segura. */
 const hebrew = localFont({
   variable: '--font-he-loaded',
-  display: 'swap',
+  /* `block`, e não `swap` (23/10/2026): sem preload, a fonte chega uma volta
+     de rede depois, e com `swap` o navegador pintaria o hebraico antes numa
+     fonte reserva - com o nikud fora do lugar, que é exatamente o erro que
+     esta família existe para evitar. Com `block` o hebraico espera a fonte
+     certa (no máximo uns 3 s, depois a reserva) e nunca aparece errado. */
+  display: 'block',
+  preload: false,
   src: [
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
-    { path: '../../public/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: '../../../assets/fonts/noto-serif-hebrew-hebrew-600-normal.woff2', weight: '600', style: 'normal' }
   ]
 });
+/* Preload só da fonte do texto corrido (23/10/2026).
+   ─────────────────────────────────────────────────────────────────────────
+   Eram 10 `<link rel=preload>` em toda página (4 pesos de Bricolage, 3 de
+   Instrument, 3 de Noto Serif Hebrew), 165 KB disputando banda com o CSS e
+   o JavaScript antes da primeira pintura. O Lighthouse de celular media a
+   maior pintura (LCP) em 3,2 a 3,9 s, e o elemento dela é um parágrafo em
+   Instrument Sans. Ficou o preload só dessa família; títulos (Bricolage) e
+   hebraico (Noto Serif Hebrew) são pedidos quando o CSS os usa, uma volta de
+   rede depois, cada família inteira, sem partir pesos (partir faria o
+   navegador sintetizar o negrito). A cursiva já não tinha preload
+   (auditoria de 01/10/2026, PERF-006): só aparece nas telas de escrita. */
 const cursive = localFont({
   variable: '--font-he-cursive-loaded',
   display: 'swap',
-  src: [{ path: '../../public/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
+  preload: false,
+  src: [{ path: '../../../assets/fonts/gveret-levin-hebrew-400-normal.woff2', weight: '400', style: 'normal' }]
 });
-import { ProgressProvider } from '@/lib/state/store';
+import { ProgressoQuandoPrecisa } from '@/components/shell/ProgressoQuandoPrecisa';
 import { AccountProvider } from '@/lib/account/store';
 import { Chrome } from '@/components/shell/Chrome';
 import { BotaoAcessibilidade } from '@/components/shell/BotaoAcessibilidade';
+import { EnvioDeEstatisticas } from '@/components/shell/EnvioDeEstatisticas';
+import { RegistroDeOrigem } from '@/components/shell/RegistroDeOrigem';
 import { SCRIPT_DE_ARRANQUE } from '@/lib/acessibilidade';
 import { course } from '@/lib/content-publico';
 import { ORIGEM } from '@/lib/seo';
+import { LANG_HTML } from '@/i18n';
+import { tx } from '@/i18n/telas/geral';
+import { tx as txLayout } from '@/i18n/telas/conta-layout';
 
 export const metadata: Metadata = {
   /* `metadataBase` é o que transforma "/media/og.jpg" em uma URL absoluta.
@@ -76,13 +105,17 @@ export const metadata: Metadata = {
      chegando sem imagem no WhatsApp, que é o problema que esta camada existe
      para resolver. Ver lib/seo.ts. */
   metadataBase: new URL(ORIGEM),
-  title: 'Hebraico Fluente - a plataforma de hebraico para brasileiros',
-  description:
-    'Do alfabeto à conversa, numa plataforma só. Alfabetização, A1, A2 e B1 - ' +
-    'aulas interativas, correção na hora e progresso que continua de onde você parou.',
+  title: tx.titulo,
+  /* Sem "do alfabeto à conversa" nem a lista A1/A2/B1: o que se vende hoje é a
+     alfabetização, e os outros são cursos à parte, ainda em produção
+     (auditoria de 01/10, CONV-011). */
+  description: tx.descricao,
   /* No Hebrew in <title> or <meta>: those cannot carry a direction span, so a
      Hebrew run there reorders with no way to isolate it. */
-  applicationName: 'Hebraico Fluente'
+  applicationName: tx.marca,
+  /* Aberto pela tela de início do iPhone, o curso vem em tela cheia, com o
+     nome curto embaixo do ícone (ver app/manifest.ts). */
+  appleWebApp: { capable: true, title: tx.marca, statusBarStyle: 'default' }
 };
 
 export const viewport: Viewport = {
@@ -97,7 +130,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
-      lang="pt-BR"
+      lang={LANG_HTML}
       dir="ltr"
       className={`${display.variable} ${ui.variable} ${hebrew.variable} ${cursive.variable}`}
     >
@@ -115,7 +148,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3
                      focus:bg-surface focus:text-ink focus:px-4 focus:py-2 focus:rounded-md"
         >
-          Pular para o conteúdo
+          {txLayout.pularParaConteudo}
         </a>
         {/* A conta por fora do progresso, e não o contrário: quem decide se
             esta rota pode ser vista é a sessão, e o progresso é o que se
@@ -126,19 +159,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             acessibilidade fica de fora dele de propósito - um controle de
             zoom que cresce junto com o zoom sai da tela em 150% e prende a
             pessoa no ajuste que ela acabou de fazer. */}
+        {/* De onde veio a visita (lib/origem.ts): antes do conteúdo, para o
+            efeito rodar antes de a página limpar o endereço. */}
+        <RegistroDeOrigem />
         <div id="hf-zoom">
           <AccountProvider>
+            {/* As estatísticas de aprendizagem, só com sessão (lib/estatisticas.ts). */}
+            <EnvioDeEstatisticas />
             {/* Modules 6 and 7 count toward completion: a bar that reads 100%
                 while the reader still cannot handle an unpointed word would be
                 lying about the thing the course exists to teach. */}
-            <ProgressProvider
+            <ProgressoQuandoPrecisa
               totalLetters={course.totalLetters}
               extraModuleIds={course.modules.filter(m => !m.letterIds.length).map(m => m.id)}
+              somIds={course.modules.flatMap(m => m.lessons.filter(l => l.som).map(l => `som-${l.som}`))}
             >
               <Chrome>
-                <div id="conteudo">{children}</div>
+                <div id="conteudo" tabIndex={-1} className="outline-none">{children}</div>
               </Chrome>
-            </ProgressProvider>
+            </ProgressoQuandoPrecisa>
           </AccountProvider>
         </div>
         <BotaoAcessibilidade />

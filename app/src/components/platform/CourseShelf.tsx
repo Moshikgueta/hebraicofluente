@@ -9,12 +9,14 @@
  * Aparece no painel e na página /cursos, com o mesmo componente, de propósito.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { useProgress } from '@/lib/state/store';
 import { useAccount } from '@/lib/account/store';
-import { allCourses, FLAGSHIP, isPlayable, type CatalogCourse } from '@/lib/catalog';
+import { allCourses, FLAGSHIP, isPlayable, type CatalogCourse, paginaDeVenda } from '@/lib/catalog';
 import { Card } from '@/components/ui/Card';
 import { CourseCard, courseCardState } from './CourseCard';
+import { tx } from '@/i18n/telas/conta-course-card';
 
 export function CourseShelf({
   headingPt, variant = 'cards'
@@ -32,7 +34,7 @@ export function CourseShelf({
     <section aria-labelledby="prateleira" className="grid gap-3">
       <h2 id="prateleira"
           className={`font-display text-[17px] font-bold text-ink ${headingPt ? '' : 'sr-only'}`}>
-        {headingPt ?? 'Cursos'}
+        {headingPt ?? tx.cursos}
       </h2>
       {variant === 'rows' ? <ShelfRows courses={courses} /> : (
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 list-none p-0 m-0">
@@ -82,7 +84,7 @@ function ShelfRows({ courses }: { courses: CatalogCourse[] }) {
           return (
             <li key={c.slug} className="min-w-0">
               <Link
-                href={state === 'owned' ? '/meu-hebraico' : `/cursos/${c.slug}`}
+                href={state === 'owned' ? '/meu-hebraico' : paginaDeVenda(c.slug)}
                 className="flex items-center gap-3 min-h-[52px] px-2.5 rounded-[var(--r-md)]
                            hover:bg-surface-2 transition-colors"
               >
@@ -95,13 +97,13 @@ function ShelfRows({ courses }: { courses: CatalogCourse[] }) {
                     {c.titlePt}
                   </span>
                   <span className="block font-ui text-[12px] text-ink-muted truncate">
-                    {state === 'owned' ? 'Na sua conta'
-                      : isPlayable(c) ? 'Disponível'
+                    {state === 'owned' ? tx.naSuaConta
+                      : isPlayable(c) ? tx.disponivel
                       : c.taglinePt}
                   </span>
                 </span>
                 <span className="font-ui text-[12px] text-ink-muted shrink-0">
-                  {state === 'owned' ? '✓' : isPlayable(c) ? '🔒' : 'em breve'}
+                  {state === 'owned' ? '✓' : isPlayable(c) ? <IconeCadeado size={14} className="inline" /> : tx.emBreveMinusculo}
                 </span>
               </Link>
             </li>
@@ -111,7 +113,7 @@ function ShelfRows({ courses }: { courses: CatalogCourse[] }) {
       <Link href="/cursos"
             className="flex items-center min-h-[44px] px-2.5 font-ui text-[13px]
                        text-[var(--accent)] hover:underline">
-        Ver todos os cursos →
+        {tx.verTodos}
       </Link>
     </Card>
   );

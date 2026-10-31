@@ -25,9 +25,9 @@
       "id": "quem-e",
       "fromOrder": 6,
       "sceneType": "conversa",
-      "labelPt": "A pergunta que abre qualquer apresentação",
+      "labelPt": "Quando alguém bate na porta ou liga",
       "he": "מִי",
-      "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém."
+      "contextPt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém. Quando alguém bate na porta ou liga, a pergunta é {{מִי זֶה?}}, \"quem é?\"."
     },
     {
       "id": "porta-loja",
@@ -35,23 +35,23 @@
       "sceneType": "placa",
       "labelPt": "Na porta de uma loja, na chegada e na saída",
       "he": "שָׁלוֹם",
-      "contextPt": "A mesma palavra abre e fecha uma conversa. Em Israel você vai ouvi-la umas quarenta vezes por dia."
+      "contextPt": "A mesma palavra abre e fecha uma conversa. Em Israel, você vai ouvir essa palavra o tempo todo."
     },
     {
       "id": "recibo-toda",
       "fromOrder": 12,
       "sceneType": "recibo",
       "labelPt": "No rodapé de um recibo de padaria",
-      "he": "תּוֹדָה",
+      "he": "תוֹדָה",
       "contextPt": "Impresso no fim de quase todo cupom fiscal do país."
     },
     {
-      "id": "aula-morá",
+      "id": "aula-more",
       "fromOrder": 12,
       "sceneType": "conversa",
-      "labelPt": "Como se chama a professora, na escola e no ulpan",
-      "he": "מוֹרָה",
-      "contextPt": "Se você fizer um ulpan em Israel, é assim que vai chamar quem está na frente da sala."
+      "labelPt": "Como se chama o professor na escola",
+      "he": "מוֹרֶה",
+      "contextPt": "Professor. Se for professora, {{מוֹרָה}}. Na escola as crianças chamam assim quem está na frente da sala; no ulpan, é muito comum chamar o professor pelo primeiro nome."
     },
     {
       "id": "padaria-lechem",
@@ -67,13 +67,13 @@
       "sceneType": "anuncio",
       "labelPt": "Num anúncio de imóvel",
       "he": "חָדָשׁ",
-      "contextPt": "Aparece em anúncio de tudo: apartamento, carro, cardápio. Quer dizer \"novo\"."
+      "contextPt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִירָה}} (apartamento), vira {{חֲדָשָׁה}}."
     },
     {
       "id": "horario-shaa",
       "fromOrder": 17,
       "sceneType": "placa",
-      "labelPt": "No ponto de ônibus, acima da tabela",
+      "labelPt": "Em horários de funcionamento, compromissos e reservas",
       "he": "שָׁעָה",
       "contextPt": "O {{ע}} é mudo: você lê só a vogal que vem com ele."
     },
@@ -82,8 +82,10 @@
       "fromOrder": 18,
       "sceneType": "jornal",
       "labelPt": "Na primeira página do jornal mais antigo do país",
-      "he": "אֶרֶץ",
-      "contextPt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha."
+      "he": "הָאָרֶץ",
+      "contextPt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha.",
+      "translit": "haárets",
+      "pt": "a terra"
     },
     {
       "id": "caixa-mits",
@@ -118,7 +120,7 @@
       "sceneType": "placa",
       "labelPt": "No horário de funcionamento, na porta",
       "he": "שַׁבָּת",
-      "contextPt": "Quase todo comércio de Israel fecha nesse dia. Saber ler a palavra evita uma viagem perdida."
+      "contextPt": "Uma grande parte das lojas fecha da tarde de sexta-feira até o fim do sábado, embora isso varie muito de cidade para cidade. Saber ler a palavra evita uma viagem perdida."
     },
     {
       "id": "praca-ochel",
@@ -132,9 +134,9 @@
       "id": "rua-hamelech",
       "fromOrder": 21,
       "sceneType": "placa",
-      "labelPt": "Numa placa de rua, em quase toda cidade do país",
-      "he": "הַמֶּלֶךְ",
-      "contextPt": "\"Do rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
+      "labelPt": "Em nomes de ruas, como a rua King George (Rei George)",
+      "he": "הַמֶלֶךְ",
+      "contextPt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
       "translit": "hamélech",
       "pt": "o rei"
     },
@@ -144,7 +146,7 @@
       "sceneType": "vitrine",
       "labelPt": "Na vitrine de uma casa de câmbio",
       "he": "כֶּסֶף",
-      "contextPt": "Dinheiro - e, por acaso, também é a palavra para prata."
+      "contextPt": "Dinheiro - e também prata: o dinheiro de antigamente era prata, e a palavra ficou."
     },
     {
       "id": "livraria-sefer",

@@ -19,10 +19,11 @@
 import type { PlatformApi } from './api';
 import {
   AuthError, emailLooksValid, normalizeEmail, passwordOk,
-  type Entitlement, type Order, type PaymentMethod, type Session
+  type Compras, type CreatedOrder, type Entitlement, type Order, type PaymentMethod, type Session
 } from './types';
 import { getCourse } from '@/lib/catalog';
 import { cents } from '@/lib/catalog';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 const KEY = 'hf-platform-local-v1';
 
@@ -37,6 +38,12 @@ type Stored = {
   accounts: Record<string, {
     id: string; name: string; email: string; createdAt: string;
     pw: string;                       // pbkdf2$<iter>$<saltB64>$<hashB64>
+    /** E-mail confirmado pelo link de demonstração. Ausente em contas antigas. */
+    verified?: boolean;
+    /** Pediu o aviso do próximo curso. */
+    novidades?: boolean;
+    /** Pediu o lembrete para estudar. */
+    lembrete?: boolean;
     entitlements: Entitlement[];
     orders: Order[];
   }>;
@@ -47,6 +54,7 @@ type Stored = {
    *  hash daria trabalho para proteger o dado de ninguém. O Worker guarda o
    *  hash, e a nota está em worker/schema.sql. */
   resets?: Record<string, { email: string; expiresAt: number; used?: boolean }>;
+  verifs?: Record<string, { email: string; expiresAt: number }>;
 };
 
 const EMPTY: Stored = { v: 1, accounts: {}, current: null, resets: {} };
@@ -114,7 +122,12 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) return null;
     return {
-      account: { id: a.id, name: a.name, email: a.email, createdAt: a.createdAt },
+      account: {
+        id: a.id, name: a.name, email: a.email, createdAt: a.createdAt,
+        emailVerified: !!a.verified,
+        novidades: !!a.novidades,
+        lembrete: !!a.lembrete
+      },
       entitlements: a.entitlements
     };
   }
@@ -123,11 +136,13 @@ export class LocalApi implements PlatformApi {
     return this.session(read());
   }
 
-  async signUp({ name, email, password }: { name: string; email: string; password: string }) {
+  async signUp({ name, email, password, aceitouTermos, declarouIdade }: { name: string; email: string; password: string; aceitouTermos: boolean; declarouIdade: boolean }) {
     await tick();
     const mail = normalizeEmail(email);
     if (!emailLooksValid(mail)) throw new AuthError('invalid-email');
     if (!passwordOk(password)) throw new AuthError('weak-password');
+    if (!aceitouTermos) throw new AuthError('termos');
+    if (!declarouIdade) throw new AuthError('idade');
     const s = read();
     if (s.accounts[mail]) throw new AuthError('email-taken');
     s.accounts[mail] = {
@@ -205,6 +220,8 @@ export class LocalApi implements PlatformApi {
 
     a.pw = await hashPassword(password);
     pedido.used = true;
+    /* Recuperar a senha prova a caixa de entrada, como no servidor. */
+    a.verified = true;
     s.current = a.email;
     write(s);
     return this.session(s)!;
@@ -240,6 +257,59 @@ export class LocalApi implements PlatformApi {
      a senha, recusar a errada com o mesmo código, e sair da conta no fim. É
      isso que a tela do perfil usa, e é isso que precisa se comportar do mesmo
      jeito nas duas builds. */
+  /* ── confirmar o e-mail ─────────────────────────────────────────────────
+     Como a recuperação de senha: sem e-mail para mandar, o link volta na
+     resposta e a tela o mostra no aviso de demonstração. E o mesmo rigor do
+     servidor - o link vale para a conta aberta, expira e vale uma vez. */
+
+  async requestEmailVerification(): Promise<{ demoLink?: string }> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    if (a.verified) return {};
+    s.verifs ??= {};
+    for (const [t, v] of Object.entries(s.verifs)) if (v.email === a.email) delete s.verifs[t];
+    const token = crypto.randomUUID().replace(/-/g, '');
+    s.verifs[token] = { email: a.email, expiresAt: Date.now() + 7 * 86_400_000 };
+    write(s);
+    return { demoLink: `/confirmar-email/?token=${encodeURIComponent(token)}` };
+  }
+
+  async confirmEmail(token: string): Promise<Session> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    const v = s.verifs?.[token];
+    if (v && v.email === a.email && v.expiresAt > Date.now()) {
+      a.verified = true;
+      delete s.verifs![token];
+      write(s);
+    } else if (!a.verified) {
+      throw new AuthError('bad-token');
+    }
+    return this.session(s)!;
+  }
+
+  async setNovidades(quero: boolean): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    a.novidades = quero;
+    write(s);
+  }
+
+  async setLembrete(quero: boolean): Promise<void> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    a.lembrete = quero;
+    write(s);
+  }
+
   async deleteAccount({ password }: { password: string }): Promise<void> {
     await tick();
     const s = read();
@@ -251,13 +321,16 @@ export class LocalApi implements PlatformApi {
     for (const [t, r] of Object.entries(s.resets ?? {})) {
       if (r.email === a.email) delete s.resets![t];
     }
+    for (const [t, v] of Object.entries(s.verifs ?? {})) {
+      if (v.email === a.email) delete s.verifs![t];
+    }
     s.current = null;
     write(s);
   }
 
   async startOrder(
     { courseSlug, method }: { courseSlug: string; method: PaymentMethod; installments?: number }
-  ): Promise<Order & { redirectUrl?: string }> {
+  ): Promise<CreatedOrder> {
     await tick();
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;
@@ -296,11 +369,15 @@ export class LocalApi implements PlatformApi {
     const a = s.current ? s.accounts[s.current] : undefined;
     if (!a) throw new AuthError('not-signed-in');
     const order = a.orders.find(o => o.id === orderId);
-    if (!order) throw new AuthError('server', 'Pedido não encontrado.');
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
 
     const age = Date.now() - new Date(order.createdAt).getTime();
     if (order.status === 'pending' && age > 3_000) {
       order.status = 'paid';
+      order.paidAt = new Date().toISOString();
+      /* O mesmo prazo do servidor, sem o arredondamento para o fim do dia:
+         aqui é demonstração, e o que importa é o botão aparecer e sumir. */
+      order.desistirAte = new Date(Date.now() + 7 * 86_400_000).toISOString();
       const course = getCourse(order.courseSlug);
       if (course && !a.entitlements.some(e => e.courseSlug === order.courseSlug)) {
         const expires = new Date();
@@ -321,5 +398,46 @@ export class LocalApi implements PlatformApi {
     const s = read();
     const a = s.current ? s.accounts[s.current] : undefined;
     return a ? a.orders.slice() : [];
+  }
+
+  async compras(): Promise<Compras> {
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) return { orders: [], vencidos: [] };
+    const agora = Date.now();
+    return {
+      orders: a.orders.slice(),
+      vencidos: a.entitlements
+        .filter(e => e.expiresAt && new Date(e.expiresAt).getTime() <= agora)
+        .map(e => ({ courseSlug: e.courseSlug, expiredAt: e.expiresAt! }))
+    };
+  }
+
+  async pixPendente(courseSlug: string): Promise<Order | null> {
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) return null;
+    return a.orders.find(o => o.courseSlug === courseSlug && o.status === 'pending'
+      && o.method === 'pix' && o.pix && new Date(o.pix.expiresAt).getTime() > Date.now()) ?? null;
+  }
+
+  /** A desistência, na demonstração: registra o pedido e pronto - não há
+   *  dinheiro para devolver nem dono para avisar. As mesmas recusas do
+   *  servidor, para a tela ser escrita contra o comportamento de verdade. */
+  async requestWithdrawal(orderId: string, _motivo?: string | null): Promise<{ pedidoEm: string }> {
+    await tick();
+    const s = read();
+    const a = s.current ? s.accounts[s.current] : undefined;
+    if (!a) throw new AuthError('not-signed-in');
+    const order = a.orders.find(o => o.id === orderId);
+    if (!order) throw new AuthError('server', tx.pedidoNaoEncontrado);
+    if (order.desistenciaEm) return { pedidoEm: order.desistenciaEm };
+    if (order.status !== 'paid') throw new AuthError('nao-pago');
+    if (!order.desistirAte || Date.now() > new Date(order.desistirAte).getTime()) {
+      throw new AuthError('fora-do-prazo');
+    }
+    order.desistenciaEm = new Date().toISOString();
+    write(s);
+    return { pedidoEm: order.desistenciaEm };
   }
 }

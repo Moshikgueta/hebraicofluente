@@ -45,6 +45,11 @@ function mercadoPagoFalsa() {
     if (u.host === 'api.resend.test') {
       if (recusarEmail) return new Response('{"message":"nope"}', { status: 422 });
       const b = JSON.parse(String(init?.body ?? '{}'));
+      /* O e-mail de confirmação do cadastro (tests/confirmacao.test.ts) não
+         é assunto deste arquivo, e contá-lo aqui mudaria toda contagem. */
+      if (String(b.subject).startsWith('Confirme seu e-mail')) {
+        return new Response('{"id":"m0"}', { status: 200 });
+      }
       enviados.push({ to: String(b.to?.[0] ?? ''), subject: b.subject, text: b.text, html: b.html });
       return new Response('{"id":"m1"}', { status: 200 });
     }
@@ -63,6 +68,8 @@ function mercadoPagoFalsa() {
       return new Response(JSON.stringify({ results }), { status: 200 });
     }
     const m = u.pathname.match(/^\/v1\/payments\/(\d+)$/);
+    /* Um pagamento de OUTRO vendedor: a Mercado Pago responde 403. */
+    if (m && m[1] === '403403') return new Response('{"message":"forbidden"}', { status: 403 });
     if (m) {
       const p = pagamentos.get(Number(m[1]));
       return p ? new Response(JSON.stringify(p), { status: 200 }) : new Response('{"message":"not found"}', { status: 404 });
@@ -80,8 +87,10 @@ let enviados: Enviado[] = [];
 let recusarEmail = false;
 
 /** Um aviso assinado como a Mercado Pago assina. */
-async function avisoAssinado(id: number) {
-  const ts = Math.floor(Date.now() / 1000);
+async function avisoAssinado(id: number, emMs = false) {
+  /* A Mercado Pago manda o `ts` em segundos (documentação) ou em
+     milissegundos (visto em produção em 28/09/2026). Os dois valem. */
+  const ts = emMs ? Date.now() : Math.floor(Date.now() / 1000);
   const v1 = await hmacHex(SEGREDO, `id:${id};request-id:req-1;ts:${ts};`);
   return new Request(`${SITE}/api/pay/webhook?data.id=${id}&type=payment`, {
     method: 'POST',
@@ -100,7 +109,7 @@ const envComEmail = () => envDeTeste({
 });
 
 async function compradora(env: Record<string, unknown>, email = 'compradora@exemplo.com.br') {
-  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
+  const r = await auth.signup({ request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Ana', email, password: 'senha-boa-123' }), env, ctx });
   const body = await r.json() as { account: { id: number } };
   return { cookie: cookieDe(r), id: body.account.id };
 }
@@ -176,6 +185,29 @@ describe('1. um PIX visto pendente e aprovado depois libera o curso', () => {
 
 /* ── 2. estorno fecha a porta ───────────────────────────────────────────── */
 
+describe('1c. aviso de pagamento de outro vendedor (PAY-006)', () => {
+  it('responde 200, fica na trilha como alheio e não vira erro de liberação', async () => {
+    const env = envPagamento();
+    const r = await pay.webhook({ request: await avisoAssinado(403403), env });
+    expect(r.status).toBe(200);
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'webhook-alheio'")).toBeTruthy();
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'settle-error'")).toBeFalsy();
+  });
+});
+
+describe('1b. aviso com o ts em milissegundos', () => {
+  it('é aceito e libera o curso', async () => {
+    const env = envPagamento();
+    const { cookie, id } = await compradora(env);
+    await pedidoPix(env, cookie);
+    const p = [...pagamentos.values()].at(-1)!;
+    p.status = 'approved';
+    const r = await pay.webhook({ request: await avisoAssinado(p.id, true), env });
+    expect(r.status).toBe(200);
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+  });
+});
+
 describe('2. estorno e chargeback fecham o acesso', () => {
   it.each(['refunded', 'charged_back'])('%s depois de pago revoga e marca o pedido', async (fim) => {
     const env = envPagamento();
@@ -193,6 +225,113 @@ describe('2. estorno e chargeback fecham o acesso', () => {
     expect(await hasEntitlement(env, id, 'alfabetizacao'), 'o acesso sobreviveu ao estorno').toBe(false);
     expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('refunded');
     expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'estorno'")).toBeTruthy();
+  });
+});
+
+/* ── 2b. cobrança em dobro (27/09/2026) ───────────────────────────────────
+   O link do cartão continua aceitando pagamento: dá para pagar o mesmo pedido
+   duas vezes. Estornar a cobrança duplicada NÃO pode fechar o acesso que o
+   outro pagamento paga - e a cobrança em dobro tem de aparecer na trilha. */
+
+describe('2b. o estorno de uma cobrança em dobro não fecha o acesso', () => {
+  it('o segundo pagamento fica na trilha; o estorno dele não recua nada; o do primeiro, sim', async () => {
+    const env = envPagamento();
+    const { cookie, id } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()][0]!;
+    p1.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+
+    /* A mesma compra, paga de novo. */
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'pagamento-duplicado'"),
+      'a cobrança em dobro passou calada').toBeTruthy();
+
+    /* O dono estorna a duplicada. */
+    p2.status = 'refunded';
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao'), 'o estorno da duplicada fechou o acesso pago').toBe(true);
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('paid');
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'estorno-duplicado'")).toBeTruthy();
+
+    /* E o estorno do pagamento que pagou continua fechando. */
+    p1.status = 'refunded';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(false);
+  });
+});
+
+/* ── 2b'. dois PEDIDOS do mesmo curso pagos (auditoria de 28/09, PAY-004) ──
+   "Gerar outro código" cria um PIX novo e o anterior continua pagável. Pagos
+   os dois, o aluno fica com os meses dos dois - e o dono precisa saber. */
+
+describe("2b'. dois pedidos do mesmo curso pagos no mesmo dia viram alerta", () => {
+  it('o segundo pedido pago grava pedido-duplicado; um pedido só, não', async () => {
+    const env = envPagamento();
+    const { cookie } = await compradora(env);
+    const o1 = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()].at(-1)!;
+    p1.status = 'approved';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(linha(env, "SELECT 1 AS x FROM access_log WHERE action = 'pedido-duplicado'"),
+      'um pedido só não é duplicidade').toBeFalsy();
+
+    /* Pagar um segundo pedido exige que a loja deixe criá-lo: com acesso
+       valendo, o checkout recusa - então o caso real é o PIX anterior,
+       ainda pendente, pago depois do novo. Simulamos o mesmo no banco. */
+    const db = (env.DB as { bruto: { prepare(s: string): { run(...a: unknown[]): unknown } } }).bruto;
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    const o2 = `${o1.id}-2`;
+    db.prepare(`INSERT INTO orders (id, account_id, course_slug, amount_cents, currency, method, status, provider, provider_ref, created_at)
+                SELECT ?, account_id, course_slug, amount_cents, currency, method, 'pending', provider, NULL, created_at
+                  FROM orders WHERE id = ?`).run(o2, o1.id);
+    p2.external_reference = o2;
+    await pay.webhook({ request: await avisoAssinado(p2.id), env });
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${o2}'`)!.status).toBe('paid');
+    expect(linha(env, "SELECT detail FROM access_log WHERE action = 'pedido-duplicado'"),
+      'dois pedidos pagos passaram calados').toBeTruthy();
+  });
+});
+
+/* ── 2c. recusado e aprovado na segunda tentativa (27/09/2026) ─────────────
+   O cartão recusado marca o pedido `failed`. A segunda tentativa, aprovada,
+   precisa ser achada pela tela e pela varredura - não só pelo aviso da
+   Mercado Pago, que pode se perder. */
+
+describe('2c. um pedido recusado e pago na segunda tentativa não fica de fora', () => {
+  async function recusadoDepoisAprovado(env: Record<string, unknown>) {
+    const { cookie, id } = await compradora(env);
+    const ordem = await pedidoPix(env, cookie);
+    const p1 = [...pagamentos.values()][0]!;
+    p1.status = 'rejected';
+    await pay.webhook({ request: await avisoAssinado(p1.id), env });
+    expect(linha(env, `SELECT status FROM orders WHERE id = '${ordem.id}'`)!.status).toBe('failed');
+    /* A segunda tentativa é aprovada - e o aviso dela se perde. */
+    const p2: Pagamento = { ...p1, id: proximoId++, status: 'approved' };
+    pagamentos.set(p2.id, p2);
+    return { cookie, id, ordem };
+  }
+
+  it('a tela do comprador acha o pagamento', async () => {
+    const env = envPagamento();
+    const { cookie, id, ordem } = await recusadoDepoisAprovado(env);
+    const r = await verify(env, cookie, ordem.id);
+    expect((await r.json() as { status: string }).status).toBe('paid');
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
+  });
+
+  it('a varredura de 5 em 5 minutos também', async () => {
+    const env = envPagamento();
+    const { id, ordem } = await recusadoDepoisAprovado(env);
+    (env.DB as { bruto: { prepare(s: string): { run(): unknown } } }).bruto
+      .prepare(`UPDATE orders SET created_at = created_at - 120000, checked_at = NULL WHERE id = '${ordem.id}'`).run();
+    const r = await runReconcile(env);
+    expect(r.settled).toBe(1);
+    expect(await hasEntitlement(env, id, 'alfabetizacao')).toBe(true);
   });
 });
 
@@ -390,10 +529,16 @@ describe('9. um pagamento que a Mercado Pago não conhece não vira reenvio eter
     /* A Mercado Pago de mentira responde 500 para qualquer id fora do
        padrão dela - uma falha de consulta, do nosso lado da conversa. */
     vi.stubGlobal('fetch', async () => new Response('{"message":"internal"}', { status: 500 }));
-    for (let i = 0; i < 40; i++) {
-      const w = await pay.webhook({ request: await avisoAssinado(800000 + i), env });
-      expect(w.status).toBe(500);
-    }
+    /* O teto é por minuto: com o relógio de verdade, as 40 chamadas às vezes
+       atravessavam a virada do minuto e o teto valia duas vezes. O relógio
+       fica parado no meio de um minuto. */
+    const agora = vi.spyOn(Date, 'now').mockReturnValue(Date.UTC(2026, 9, 22, 12, 0, 30));
+    try {
+      for (let i = 0; i < 40; i++) {
+        const w = await pay.webhook({ request: await avisoAssinado(800000 + i), env });
+        expect(w.status).toBe(500);
+      }
+    } finally { agora.mockRestore(); }
     const n = Number(linha(env, "SELECT COUNT(*) AS n FROM access_log WHERE action = 'settle-error'")!.n);
     expect(n).toBeGreaterThan(0);
     expect(n).toBeLessThanOrEqual(20);
@@ -424,6 +569,19 @@ describe('a confirmação de compra', () => {
     expect(m.text, 'sem o valor').toMatch(/R\$\s?\d/);
     expect(m.text, 'sem a data de vencimento').toMatch(/Acesso até: \d{2}\/\d{2}\/\d{4}/);
     expect(m.text, 'sem os sete dias do CDC').toContain('7 dias para desistir');
+    /* O contrato que vale para a compra, num meio que a pessoa guarda
+       (Decreto 7.962/2013, art. 4º, IV), e onde desistir pelo site (art. 5º). */
+    expect(m.text, 'sem os Termos').toContain('https://hebraicofluente.com.br/termos/');
+    expect(m.text, 'sem a Política de Reembolso').toContain('https://hebraicofluente.com.br/reembolso/');
+    expect(m.text, 'sem a versão dos termos').toMatch(/na versão de \d{2}\/\d{2}\/\d{4}/);
+    expect(m.text, 'sem onde desistir').toContain('Desistir da compra');
+    /* A cópia FIXA da versão do pedido, e não a página de hoje (LEGAL-104). */
+    const v = (env.DB as unknown as { bruto: import('node:sqlite').DatabaseSync }).bruto
+      .prepare('SELECT termos_versao FROM orders WHERE id = ?').get(ordem.id) as { termos_versao: string };
+    expect(v.termos_versao).toMatch(/^[0-9a-f]{10}$/);
+    expect(m.html).toContain(`href="https://hebraicofluente.com.br/termos/v/${v.termos_versao}/"`);
+    expect(m.text).toContain(`código ${v.termos_versao}`);
+    expect(m.text).toMatch(/https:\/\/hebraicofluente\.com\.br\/reembolso\/v\/[0-9a-f]{10}\//);
     expect(m.text, 'sem o suporte').toContain('@');
     /* E diz que abriu, não que renovou. */
     expect(m.text).toContain('está liberado');
@@ -532,5 +690,14 @@ describe('a renovação não é tratada como primeira compra', () => {
     expect(m.text).toContain('foi renovado');
     expect(m.text).not.toContain('está liberado');
     void ordem;
+  });
+});
+
+/* PAY-005: o link do cartão expira com fuso de Brasília escrito. */
+describe('a expiração do link do cartão', () => {
+  it('sai no formato da documentação da Mercado Pago', async () => {
+    // @ts-expect-error - módulo JS do Worker, sem tipos
+    const { comFusoBR } = await import('../../worker/src/lib/mercadopago.js');
+    expect(comFusoBR(Date.UTC(2026, 8, 29, 0, 30))).toBe('2026-09-28T21:30:00.000-03:00');
   });
 });

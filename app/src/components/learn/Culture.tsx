@@ -13,23 +13,31 @@
  * is scored, and nothing is unlocked by reading them.
  */
 
+import { tx } from '@/i18n/telas/licao-culture';
 import { useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Prose } from './Blocks';
 import { cultureUnlocked, cultureCards, type CultureCard } from '@/lib/content';
 import { useProgress } from '@/lib/state/store';
+import { cartasCompradas } from '@/lib/loja';
 
 const KIND_LABEL: Record<string, string> = {
-  historia: 'História',
-  curiosidade: 'Curiosidade',
-  cultura: 'Na vida real'
+  historia: tx.historia,
+  curiosidade: tx.curiosidade,
+  cultura: tx.cultura
 };
 
 export function CultureShelf() {
   const p = useProgress();
-  const unlocked = cultureUnlocked(p.mastered);
+  /* As abertas: por letras dominadas, e as trocadas por XP em Recompensas
+     (27/09/2026, lib/loja.ts). */
+  const compradas = cartasCompradas(p.state);
+  const unlocked = [
+    ...cultureUnlocked(p.mastered),
+    ...cultureCards().filter(c => c.unlockAt > p.mastered && compradas.has(c.id))
+  ];
   const locked = cultureCards()
-    .filter(c => c.unlockAt > p.mastered)
+    .filter(c => c.unlockAt > p.mastered && !compradas.has(c.id))
     .sort((a, b) => a.unlockAt - b.unlockAt);
 
   return (
@@ -37,9 +45,7 @@ export function CultureShelf() {
       {unlocked.length === 0 && (
         <Card tone="wash" className="p-5">
           <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-            A primeira carta abre quando você dominar 3 letras. Elas não valem XP
-            e não desbloqueiam nada - são só o que dá vontade de saber depois de
-            começar a ler.
+            {tx.primeiraCarta}
           </p>
         </Card>
       )}
@@ -49,14 +55,14 @@ export function CultureShelf() {
       {locked.length > 0 && (
         <Card className="p-5 grid gap-2">
           <p className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
-            Ainda fechadas
+            {tx.aindaFechadas}
           </p>
           <ul className="grid gap-1.5">
             {locked.slice(0, 4).map(c => (
               <li key={c.id} className="flex items-center gap-3 font-ui text-[13.5px] text-ink-muted">
                 <span aria-hidden className="w-6 text-center">◇</span>
                 <span className="flex-1 min-w-0 truncate">{c.titlePt}</span>
-                <span className="tabular-nums shrink-0">{c.unlockAt} letras</span>
+                <span className="tabular-nums shrink-0">{tx.letras(c.unlockAt)}</span>
               </li>
             ))}
           </ul>
@@ -78,7 +84,7 @@ export function CultureCardView({ card, open: initial = false }: { card: Culture
         className="w-full text-left px-5 py-4 grid gap-2 hover:bg-surface-2 transition-colors"
       >
         <span className="flex items-center gap-2.5">
-          <Badge tone="accent">{KIND_LABEL[card.kind] ?? 'Curiosidade'}</Badge>
+          <Badge tone="accent">{KIND_LABEL[card.kind] ?? tx.curiosidade}</Badge>
           <span aria-hidden className="ml-auto text-ink-muted text-[13px]">
             {open ? '−' : '+'}
           </span>
@@ -110,7 +116,7 @@ export function CultureUnlock({ card }: { card: CultureCard }) {
   return (
     <Card tone="mint" className="p-5 grid gap-2">
       <p className="font-ui text-[11px] uppercase tracking-[.1em] text-[var(--mint-ink)]">
-        Carta desbloqueada
+        {tx.desbloqueada}
       </p>
       <CultureCardView card={card} />
     </Card>

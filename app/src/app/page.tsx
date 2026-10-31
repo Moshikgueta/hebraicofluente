@@ -1,37 +1,21 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
-import { HomeClient } from './HomeClient';
-import { CANDIDATOS } from '@/components/landing/media';
-import { primeiroQueExiste } from '@/lib/midia-publica';
+import CursoDeHebraicoPage from './curso-de-hebraico/page';
+import { tx } from '@/i18n/telas/venda-curso-de-hebraico';
 
-/* O título começa pelo que a pessoa digitou na busca - "aprender a ler
-   hebraico" -, e não pelo nome da marca, que ninguém procura ainda. */
+/* A capa é a página do curso de alfabetização (27/10/2026, decisão do dono:
+   "por enquanto deixa o site só com o curso de alfabetização"). De 23 a
+   27/10/2026 ela foi o portal das três jornadas: o PortalClient.tsx continua
+   no código, para voltar quando o Israel Além do Óbvio e o Raízes abrirem.
+   /curso-de-hebraico segue respondendo a mesma página: é para lá que vão os
+   links de campanha, os e-mails e o portão. */
 export const metadata: Metadata = meta({
   rota: '/',
-  title: 'Aprenda a ler hebraico do zero - Hebraico Fluente',
-  description:
-    'Curso interativo de alfabetização em hebraico para brasileiros: as 22 letras, os sons e a ' +
-    'leitura de palavras reais, com explicações em português, exercícios corrigidos na hora e ' +
-    'progresso salvo na sua conta.'
+  title: tx.metaTitulo,
+  /* Até 155 caracteres (checa-seo.mjs). */
+  description: tx.metaDescricao
 });
 
-/* A capa é uma página de SERVIDOR que renderiza um cliente.
- * ─────────────────────────────────────────────────────────────────────────
- * O motivo é um só: só aqui dá para olhar o disco. A camada de atmosfera do
- * hero e o retrato do professor existem quando o ARQUIVO existe, e quem
- * responde isso é o `existsSync` da build - nunca uma constante que alguém
- * precisa lembrar de editar junto com o upload. Ver lib/midia-publica.ts.
- */
 export default function HomePage() {
-  return (
-    <HomeClient
-      midia={{
-        imagem: primeiroQueExiste(CANDIDATOS.imagem),
-        imagemMobile: primeiroQueExiste(CANDIDATOS.imagemMobile),
-        video: primeiroQueExiste(CANDIDATOS.video),
-        poster: primeiroQueExiste(CANDIDATOS.poster)
-      }}
-      retrato={primeiroQueExiste(['media/moshik.avif', 'media/moshik.webp', 'media/moshik.jpg'])}
-    />
-  );
+  return <CursoDeHebraicoPage />;
 }

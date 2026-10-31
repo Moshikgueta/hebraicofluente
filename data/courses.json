@@ -10,18 +10,40 @@
     "O preço daqui é o que o checkout cobra: ele não é copiado para nenhum",
     "outro lugar.",
     "",
-    "ALFABETIZAÇÃO: preço decidido. R$ 147 é o preço de PRÉ-LANÇAMENTO, e os",
-    "R$ 297 do listBrl são o preço cheio, que passa a valer quando o",
-    "pré-lançamento terminar. O listBrl não é um 'de' inventado para fazer",
-    "número: é o que o curso vai custar, e o site diz isso com essas palavras.",
-    "Quando o pré-lançamento acabar, brl vira 297 e listBrl vira null - e",
-    "nenhuma tela precisa ser editada junto.",
+    "PREÇOS (23/10/2026, decisão do dono): dois produtos e um combo só.",
+    "  Alfabetização em Hebraico        R$ 147 de pré-lançamento, R$ 297 oficial",
+    "  Israel Além do Óbvio             R$ 197 de pré-lançamento, R$ 297 oficial",
+    "  Descubra Israel + Aprenda Hebraico (o combo) R$ 297, R$ 397 oficial",
+    "brl é o preço de pré-lançamento, que é o cobrado; listBrl é o oficial, que",
+    "o site anuncia como 'depois' e que NÃO vira sozinho: sem data de fim",
+    "(decisão do dono, 23/10/2026: a Action virar-preco só roda à mão). Virar =",
+    "brl recebe o listBrl e listBrl vira null; nenhuma tela é editada junto.",
+    "Histórico: R$ 147 até 31/10 em 28/09; R$ 197 de 12/10 a 19/10; R$ 147 até",
+    "30/11 em 19/10 (oficial R$ 297); sem data e com oficial R$ 197 em 23/10;",
+    "oficial R$ 297 em 27/10 (o cobrado continua R$ 147).",
     "",
     "OS OUTROS TRÊS PREÇOS SÃO PROVISÓRIOS. São um ponto de partida plausível",
     "para o mercado brasileiro, não uma decisão comercial - troque antes de",
-    "vender."
+    "vender.",
+    "",
+    "PRODUTOS QUE NÃO SÃO CURSO (21/10/2026, decisão do dono): `tipo` diz o que é.",
+    "Sem `tipo`, é curso. `livro` é o e-book Israel Além do Óbvio (versão",
+    "interativa em /israel/, sem PDF para baixar desde 23/10/2026). `pacote` é o",
+    "combo único 'Descubra Israel + Aprenda Hebraico': libera, num pedido só, cada",
+    "slug de `componentes`, com os meses de cada um. R$ 297 contra R$ 344 dos dois",
+    "separados (R$ 47 de economia, calculada na tela). Não há outro combo.",
+    "allCourses() no app só devolve cursos: /cursos, a estante, o 'próximo curso'",
+    "e o rodapé não mudam.",
+    "Vender o e-book à parte é atividade fora do curso (ver CLAUDE.md,",
+    "Enquadramento): não publicar antes de o contador confirmar."
   ],
 
+  "_usd": [
+    "usd é o preço do site em inglês, em dólares inteiros, cobrado pelo Paddle",
+    "(decisão do dono, 28/10/2026: US$ 47). Só o curso que tem usd está à venda",
+    "lá: a build em inglês tira da vitrine e do checkout quem não tem, e o",
+    "Worker recusa o pedido. Sem parcelas, sem desconto e sem preço riscado."
+  ],
   "currency": "BRL",
 
   "courses": [
@@ -30,19 +52,35 @@
       "code": "01",
       "n": 1,
       "titlePt": "Alfabetização em Hebraico",
+      "titleEn": "Learn to Read Hebrew",
+      "levelEn": "From zero",
+      "taglineEn": "The 22 letters, the vowel signs and reading whole words.",
+      "summaryEn": "Do you look at Hebrew and not know where to start? Here you learn letter by letter, in the order that pays off most, and read a real word in the very first lesson.",
+      "outcomesEn": [
+        "Recognize the 22 letters - including the five final forms - out of order and out of context.",
+        "Read new words with nikud on your own, even without knowing what they mean.",
+        "Read the most common words without nikud, which is how Hebrew really appears.",
+        "Write the letters by hand in cursive, with the stroke order shown, and recognize the printed form.",
+        "Decode signs, labels and tags - Hebrew as it appears on the street."
+      ],
+      "forWhomEn": [
+        "People who have never seen the Hebrew alphabet and think they will not manage.",
+        "People who tried before and stopped at the first wall of look-alike letters.",
+        "People who are traveling, have Israeli family or read for religious reasons and want to decode on their own."
+      ],
       "levelPt": "Do zero",
       "cefr": null,
       "status": "available",
       "engine": "alfabetizacao",
       "modulesFrom": "alfabetizacao",
       "taglinePt": "As 22 letras, os sinais de vogal e a leitura de palavras inteiras.",
-      "summaryPt": "O curso que resolve o problema que trava todo mundo: você olha para o hebraico e não sabe por onde começar. Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na terceira lição.",
+      "summaryPt": "Você olha para o hebraico e não sabe por onde começar? Aqui você aprende letra por letra, na ordem em que elas rendem mais, e lê uma palavra de verdade já na primeira lição.",
       "outcomesPt": [
         "Reconhecer as 22 letras - incluindo as cinco formas finais - fora de ordem e fora de contexto.",
-        "Ler qualquer palavra com nikud, mesmo sem saber o que ela significa.",
+        "Ler sozinho palavras novas com nikud, mesmo sem saber o que elas significam.",
         "Ler sem nikud as palavras mais frequentes, que é como o hebraico realmente aparece.",
-        "Escrever as letras à mão, na ordem certa dos traços, em letra de forma e cursiva.",
-        "Decodificar placas, rótulos e cardápios - o hebraico como ele aparece na rua."
+        "Escrever as letras à mão em cursiva, com a ordem dos traços mostrada, e reconhecer a forma impressa.",
+        "Decodificar placas, rótulos e etiquetas - o hebraico como ele aparece na rua."
       ],
       "forWhomPt": [
         "Quem nunca viu o alfabeto hebraico e acha que não vai conseguir.",
@@ -50,7 +88,7 @@
         "Quem vai viajar, tem família israelense ou lê por motivo religioso e quer decodificar sozinho."
       ],
       "requiresPurchase": true,
-      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10 },
+      "price": { "brl": 147, "listBrl": 297, "installments": 12, "pixDiscountPct": 10, "usd": 47, "preLancamentoAte": "2026-11-30" },
       "accessMonths": 12
     },
 
@@ -63,27 +101,35 @@
       "cefr": "A1",
       "status": "soon",
       "engine": null,
-      "taglinePt": "Falar de si, perguntar o básico e entender uma resposta curta.",
-      "summaryPt": "Depois de ler, falar. O A1 pega a leitura que você já tem e põe vocabulário e gramática por cima: presente dos verbos, gênero e número, as perguntas que resolvem o dia.",
+      "taglinePt": "Se apresentar, comprar, pedir, perguntar o caminho e marcar um encontro, no hebraico do dia a dia.",
+      "summaryPt": "Depois de ler, falar. São 21 unidades, cada uma em torno de uma situação real em Israel: um diálogo, as palavras novas em blocos curtos, a gramática do presente e exercícios logo depois de cada parte. A revisão traz de volta, no dia certo, o que você errou. No fim, um exame final corrigido no servidor dá um certificado com código de verificação.",
       "outcomesPt": [
-        "Se apresentar, dizer de onde é, o que faz e com quem mora.",
-        "Conjugar verbos no presente nos quatro padrões e reconhecer a raiz de três letras.",
-        "Pedir, comprar, perguntar preço e horário.",
-        "Entender frases curtas ditas devagar por um falante nativo."
+        "Se apresentar, dizer de onde é, o que faz, onde mora e falar da família.",
+        "Usar os verbos no presente nas quatro formas, com o gênero e o número certos também nos adjetivos.",
+        "Pedir num café ou restaurante, comprar, perguntar o preço e pagar.",
+        "Dizer a hora, a data e os dias da semana, e marcar, aceitar ou remarcar um compromisso.",
+        "Perguntar o caminho e se virar no aeroporto, no hotel e no médico.",
+        "Ler textos curtos e acompanhar diálogos simples do dia a dia."
       ],
       "forWhomPt": [
-        "Quem terminou a Alfabetização ou já lê hebraico com nikud."
+        "Quem terminou a Alfabetização ou já lê hebraico com nikud.",
+        "Quem quer chegar a Israel resolvendo o básico sozinho."
       ],
       "requiresPurchase": true,
       "price": { "brl": 297, "listBrl": 397, "installments": 12, "pixDiscountPct": 10 },
       "accessMonths": 12,
       "modules": [
-        { "n": 1, "titlePt": "Quem é você", "subPt": "Pronomes, gênero e a frase sem verbo" },
-        { "n": 2, "titlePt": "A raiz de três letras", "subPt": "O mecanismo que faz o hebraico inteiro" },
-        { "n": 3, "titlePt": "Presente", "subPt": "Os quatro padrões, um de cada vez" },
-        { "n": 4, "titlePt": "Números, horas e dias", "subPt": "Marcar, combinar, chegar na hora" },
-        { "n": 5, "titlePt": "Na rua", "subPt": "Comprar, pedir, perguntar o caminho" },
-        { "n": 6, "titlePt": "Sem nikud, de verdade", "subPt": "Ler o que está escrito nas placas" }
+        { "n": 0, "titlePt": "Começando no hebraico", "subPt": "Os sons que mais confundem brasileiros e as expressões do primeiro dia. As letras e o nikud estão no curso de alfabetização." },
+        { "n": 1, "titlePt": "Eu e você", "subPt": "Se apresentar, perguntar quem é e o que é." },
+        { "n": 2, "titlePt": "Minha vida", "subPt": "Descrever pessoas e coisas, dizer o que você faz e onde mora." },
+        { "n": 3, "titlePt": "Comer, querer e ter", "subPt": "Dizer o que você come e quer, falar da família e do que você tem." },
+        { "n": 4, "titlePt": "Números e conversa", "subPt": "Preço, hora e dias da semana, e uma conversa inteira com alguém novo." },
+        { "n": 5, "titlePt": "Minha rotina", "subPt": "Contar o seu dia, dizer do que gosta e o que quer, precisa ou pode fazer." },
+        { "n": 6, "titlePt": "Casa e cidade", "subPt": "Dizer onde as coisas estão, descrever a casa, andar pela cidade e perguntar o caminho." },
+        { "n": 7, "titlePt": "Comida e compras", "subPt": "Pedir num café ou restaurante, comprar roupas e coisas, entender preços e pagar." },
+        { "n": 8, "titlePt": "Tempo e compromissos", "subPt": "Datas, meses e o tempo; marcar, aceitar, recusar e remarcar um compromisso." },
+        { "n": 9, "titlePt": "Israel na vida real", "subPt": "Aeroporto e hotel, corpo e saúde, e os números e as expressões que ainda faltavam." },
+        { "n": 10, "titlePt": "Consolidação A1", "subPt": "Se virar quando não entende, juntar tudo numa situação de verdade, e o exame final." }
       ]
     },
 
@@ -145,6 +191,73 @@
         { "n": 4, "titlePt": "Escuta longa", "subPt": "Áudio em velocidade normal, sem legenda" },
         { "n": 5, "titlePt": "Escrita", "subPt": "E-mail, carta, mensagem" }
       ]
+    },
+
+    {
+      "slug": "israel-alem-do-roteiro",
+      "aVenda": false,
+      "tipo": "livro",
+      "code": "E1",
+      "n": 101,
+      "titlePt": "Israel Além do Óbvio",
+      "levelPt": "Experiência interativa",
+      "cefr": null,
+      "status": "available",
+      "engine": "livro",
+      "abre": "/israel/",
+      "taglinePt": "O Olhar de um Israelense",
+      "descricaoPt": "Uma jornada interativa pela história, cultura e lugares de Israel.",
+      "autorPt": "Moshik Gueta",
+      "summaryPt": "Onze capítulos para quem vai a Israel ou quer entender o país: o mapa, a história, Jerusalém, os outros destinos, a vida real, a comida, o hebraico das placas, a viagem na prática, curiosidades, as dicas do Moshik de onde comer, comprar e sair em cada cidade, e um diário para preencher. Com mapas, ilustrações, fotos e exercícios de compreensão no fim de cada capítulo.",
+      "outcomesPt": [
+        "Situar no mapa as regiões e os lugares que aparecem num roteiro.",
+        "Separar o que é história do que é tradição em cada lugar visitado.",
+        "Reconhecer palavras em hebraico nas placas e nos cardápios.",
+        "Planejar a viagem com as regras práticas de entrada, transporte e Shabat."
+      ],
+      "forWhomPt": [
+        "Quem vai viajar para Israel, em grupo ou sozinho.",
+        "Quem quer entender o país além do que o guia conta no ônibus."
+      ],
+      "requiresPurchase": true,
+      "price": { "brl": 197, "listBrl": 297, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": [
+        { "n": 1, "titlePt": "Israel no mapa", "subPt": "Um país pequeno, uma geografia surpreendente" },
+        { "n": 2, "titlePt": "Milhares de anos de história", "subPt": "Povos, reinos e impérios na mesma terra" },
+        { "n": 3, "titlePt": "Jerusalém", "subPt": "O que as pedras contam, e o que se conta sobre elas" },
+        { "n": 4, "titlePt": "Além de Jerusalém", "subPt": "Dez lugares, cada um com mais de uma história" },
+        { "n": 5, "titlePt": "A vida real em Israel", "subPt": "A semana, o calendário e quem vive no país" },
+        { "n": 6, "titlePt": "Sabores de Israel", "subPt": "Pratos que viajaram, receitas que se disputam" },
+        { "n": 7, "titlePt": "Hebraico para compreender Israel", "subPt": "Palavras para reconhecer o que se vê e se ouve" },
+        { "n": 8, "titlePt": "Israel na prática", "subPt": "O que conferir, onde conferir e quando" },
+        { "n": 9, "titlePt": "41 curiosidades sobre Israel", "subPt": "Histórias curtas, cada uma com a fonte" },
+        { "n": 10, "titlePt": "Dicas do Moshik", "subPt": "Onde comer, comprar e sair em cada cidade, longe do roteiro de sempre" },
+        { "n": 11, "titlePt": "Diário de descobertas", "subPt": "Páginas para antes, durante e depois da viagem" }
+      ]
+    },
+
+    {
+      "slug": "alfabetizacao-e-israel",
+      "aVenda": false,
+      "tipo": "pacote",
+      "code": "P1",
+      "n": 102,
+      "titlePt": "Descubra Israel + Aprenda Hebraico",
+      "levelPt": "Combo",
+      "cefr": null,
+      "status": "available",
+      "engine": "pacote",
+      "componentes": ["alfabetizacao", "israel-alem-do-roteiro"],
+      "abre": "/minha-biblioteca/",
+      "taglinePt": "Para quem quer conhecer Israel e aprender a ler hebraico.",
+      "summaryPt": "Acesso completo à plataforma Israel Além do Óbvio e ao curso interativo de Alfabetização em Hebraico, numa compra só e no mesmo login.",
+      "outcomesPt": [],
+      "forWhomPt": [],
+      "requiresPurchase": true,
+      "price": { "brl": 297, "listBrl": 397, "installments": 12, "pixDiscountPct": 10 },
+      "accessMonths": 12,
+      "modules": []
     }
   ]
 }

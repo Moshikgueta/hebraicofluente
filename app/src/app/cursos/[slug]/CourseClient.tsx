@@ -17,13 +17,35 @@
  */
 
 import Link from 'next/link';
-import { He } from '@/components/hebrew/He';
+import { useEffect, useState } from 'react';
+import { Prose } from '@/components/hebrew/Prose';
 import { Card, Badge } from '@/components/ui/Card';
 import { LinkButton } from '@/components/ui/Button';
 import { Section, SectionHead } from '@/components/platform/Section';
-import { ancora, brl, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
+import { ancora, brl, fimDoPreLancamento, FLAGSHIP, getCourse, isPlayable, parcelasMax, pixPrice } from '@/lib/catalog';
 import { useAccount } from '@/lib/account/store';
-import { confirmaSozinho, empresa, soPix, temCartao, temPix } from '@/lib/empresa';
+import { tempoDoCursoPt } from '@/lib/content-publico';
+import { confirmaSozinho, empresa, O_QUE_O_CURSO_ENSINA, parcelasTexto, prazoResposta, soPix, temCartao, temPix } from '@/lib/empresa';
+import { api } from '@/lib/account/api';
+import type { AcessoVencido } from '@/lib/account/types';
+import { fraseDeVencido, vencidoDe } from '@/app/perfil/compras';
+import { tx } from '@/i18n/telas/venda-course-client';
+
+/* Os acessos vencidos da conta, uma pergunta por página (a caixa de compra
+   aparece duas vezes). Só para quem está logado e não tem o curso: é o aluno
+   que pagou, venceu, e o portão mandou para cá (PAY-B-004). */
+let vencidosDaPagina: Promise<AcessoVencido[]> | null = null;
+function useVencido(slug: string, perguntar: boolean): string | null {
+  const [vencidos, setVencidos] = useState<AcessoVencido[] | null>(null);
+  useEffect(() => {
+    if (!perguntar) return;
+    let stop = false;
+    vencidosDaPagina ??= api().then(a => a.compras()).then(r => r.vencidos).catch(() => []);
+    void vencidosDaPagina.then(v => { if (!stop) setVencidos(v); });
+    return () => { stop = true; };
+  }, [perguntar]);
+  return perguntar ? vencidoDe(vencidos, slug) : null;
+}
 
 export function CourseClient({ slug }: { slug: string }) {
   const account = useAccount();
@@ -36,45 +58,47 @@ export function CourseClient({ slug }: { slug: string }) {
   return (
     <>
       {/* ── cabeçalho ───────────────────────────────────────────────── */}
-      <div className="border-b border-[color:var(--line-soft)]">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-12 sm:py-16
+      <div className="border-b border-line">
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 pt-12 pb-16 sm:pt-16 sm:pb-20
                         grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
           <div className="grid gap-4">
-            <nav aria-label="Você está em" className="font-ui text-[13px] text-ink-muted">
-              <Link href="/cursos" className="hover:text-[var(--accent)]">Cursos</Link>
+            <nav aria-label={tx.voceEstaEm} className="font-ui text-[13px] text-ink-muted">
+              <Link href="/cursos" className="hover:text-[var(--accent)]">{tx.cursos}</Link>
               <span aria-hidden> · </span>
-              <span>Curso {c.code}</span>
+              <span>{tx.curso(c.code)}</span>
             </nav>
 
             <div className="flex flex-wrap items-center gap-2">
-              {owned ? <Badge tone="mint">Seu curso</Badge>
-                : open ? <Badge tone="accent">Disponível</Badge>
-                : <Badge>Em breve</Badge>}
+              {owned ? <Badge tone="mint">{tx.seuCurso}</Badge>
+                : open ? <Badge tone="accent">{tx.disponivel}</Badge>
+                : <Badge>{tx.emBreve}</Badge>}
               <span className="font-ui text-[12.5px] text-ink-muted">
                 {c.levelPt}{c.cefr ? ` · ${c.cefr}` : ''}
               </span>
             </div>
 
-            <h1 className="font-display text-[32px] sm:text-[42px] font-bold leading-[1.12] text-ink">
+            <h1 className="font-display font-semibold text-[clamp(36px,4.4vw,56px)] leading-[1.03]
+                           tracking-[-0.036em] text-ink m-0">
               {c.titlePt}
             </h1>
-            <p className="text-[17px] leading-relaxed text-ink-body max-w-[54ch]">
+            <p className="font-display text-[clamp(19px,1.9vw,23px)] leading-[1.35] font-medium tracking-[-0.018em]
+                          text-ink max-w-[40ch] m-0">
               {c.taglinePt}
             </p>
-            <p className="font-ui text-[15px] leading-relaxed text-ink-body max-w-[62ch]">
+            <p className="font-ui text-[16.5px] leading-[1.6] text-ink-muted max-w-[60ch] m-0">
               {c.summaryPt}
             </p>
 
-            <dl className="flex flex-wrap gap-x-8 gap-y-3 pt-3">
+            <dl className="flex flex-wrap gap-x-10 gap-y-4 pt-5 mt-2 border-t border-line max-w-[560px]">
               {([
-                ['Módulos', String(c.stats.modules)],
-                ...(c.stats.lessons ? [['Lições', String(c.stats.lessons)] as const] : []),
-                ['Acesso', `${c.accessMonths} meses`],
-                ['Ritmo', 'Seu']
+                [tx.modulos, String(c.stats.modules)],
+                ...(c.stats.lessons ? [[tx.licoes, String(c.stats.lessons)] as const] : []),
+                [tx.acesso, tx.nMeses(c.accessMonths)],
+                [tx.ritmo, tx.seu]
               ] as const).map(([k, v]) => (
                 <div key={k} className="grid gap-0.5">
-                  <dt className="font-ui text-[10.5px] uppercase tracking-[.08em] text-ink-muted">{k}</dt>
-                  <dd className="font-display text-[19px] font-bold text-ink tabular-nums">{v}</dd>
+                  <dt className="font-ui text-[11.5px] font-semibold uppercase tracking-[.12em] text-ink-muted">{k}</dt>
+                  <dd className="font-display text-[24px] font-semibold tracking-[-0.02em] text-ink tabular-nums m-0">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -88,17 +112,15 @@ export function CourseClient({ slug }: { slug: string }) {
       <Section labelledBy="resultado">
         <SectionHead
           id="resultado"
-          eyebrowPt="No fim deste curso"
-          titlePt="O que você vai conseguir fazer."
-          leadPt="Escrito como coisa que se faz, não como tema que se estuda - é assim que dá para conferir se aconteceu."
+          eyebrowPt={tx.resultadoEyebrow}
+          titlePt={tx.resultadoTitulo}
         />
-        <ul className="grid gap-3 sm:grid-cols-2 list-none p-0 m-0">
+        {/* Resultados sob fios, em duas colunas: são frases, não produtos. */}
+        <ul className="grid sm:grid-cols-2 gap-x-10 list-none p-0 m-0 border-t border-line">
           {c.outcomesPt.map(o => (
-            <li key={o}>
-              <Card className="p-4 flex gap-3 h-full">
-                <span aria-hidden className="text-[var(--accent)] text-[15px] mt-[2px]">✓</span>
-                <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{o}</span>
-              </Card>
+            <li key={o} className="flex gap-3.5 py-5 border-b border-line">
+              <span aria-hidden className="text-[var(--teal)] text-[15px] mt-[3px]">✓</span>
+              <span className="font-ui text-[16px] leading-[1.6] text-ink-body">{o}</span>
             </li>
           ))}
         </ul>
@@ -108,32 +130,30 @@ export function CourseClient({ slug }: { slug: string }) {
       <Section tone="surface" labelledBy="modulos">
         <SectionHead
           id="modulos"
-          eyebrowPt="O caminho"
-          titlePt={`${c.stats.modules} módulos, nesta ordem.`}
+          eyebrowPt={tx.caminhoEyebrow}
+          titlePt={tx.modulosNestaOrdem(c.stats.modules)}
           leadPt={open
-            ? 'A ordem não é alfabética nem histórica: é a ordem em que cada peça abre mais palavras para você ler.'
-            : 'O plano do curso. Pode mudar de nome até a publicação; a sequência, não.'}
+            ? tx.ordemAberto
+            : tx.ordemFechado}
         />
-        <ol className="grid gap-3 list-none p-0 m-0">
+        {/* O sumário do curso, como o currículo da capa: linhas sob fio. */}
+        <ol className="list-none p-0 m-0 border-t border-line">
           {c.modules.map(m => (
-            <li key={m.n}>
-              <Card className="p-4 sm:p-5 flex items-start gap-4">
-                <span aria-hidden
-                      className="w-[34px] h-[34px] shrink-0 rounded-full bg-[var(--accent-wash)]
-                                 text-[var(--accent)] font-ui text-[14px] font-bold
-                                 grid place-items-center tabular-nums">
-                  {m.n}
+            <li key={m.n} className="flex items-start gap-4 sm:gap-6 py-5 sm:py-6 border-b border-line">
+              <span aria-hidden
+                    className="w-8 shrink-0 font-display text-[15px] font-semibold tabular-nums
+                               text-[var(--teal-ink)] pt-1">
+                {String(m.n).padStart(2, '0')}
+              </span>
+              <div className="grid gap-0.5 min-w-0">
+                <h3 className="font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] text-ink m-0">{m.titlePt}</h3>
+                <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted m-0"><Prose text={m.subPt} /></p>
+              </div>
+              {m.letters ? (
+                <span className="ml-auto shrink-0 font-ui text-[13px] text-ink-muted tabular-nums pt-1.5">
+                  {tx.nLetras(m.letters)}
                 </span>
-                <div className="grid gap-0.5 min-w-0">
-                  <h3 className="font-display text-[16.5px] font-bold text-ink">{m.titlePt}</h3>
-                  <p className="font-ui text-[13.5px] leading-relaxed text-ink-muted">{m.subPt}</p>
-                </div>
-                {m.letters ? (
-                  <span className="ml-auto shrink-0 font-ui text-[12px] text-ink-muted tabular-nums">
-                    {m.letters} {m.letters === 1 ? 'letra' : 'letras'}
-                  </span>
-                ) : null}
-              </Card>
+              ) : null}
             </li>
           ))}
         </ol>
@@ -143,32 +163,39 @@ export function CourseClient({ slug }: { slug: string }) {
       <Section labelledBy="paraquem">
         <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
           <div className="grid gap-4">
-            <SectionHead id="paraquem" eyebrowPt="Para quem é" titlePt="Este curso é para você se…" />
+            <SectionHead id="paraquem" eyebrowPt={tx.paraQuemEyebrow} titlePt={tx.paraQuemTitulo} />
             <ul className="grid gap-2.5 list-none p-0 m-0">
               {c.forWhomPt.map(f => (
                 <li key={f} className="flex gap-3">
-                  <span aria-hidden className="text-[var(--accent)] text-[14px] mt-[3px]">→</span>
-                  <span className="font-ui text-[14.5px] leading-relaxed text-ink-body">{f}</span>
+                  <span aria-hidden className="text-[var(--teal)] text-[14px] mt-[3px]">→</span>
+                  <span className="font-ui text-[16px] leading-[1.6] text-ink-body">{f}</span>
                 </li>
               ))}
             </ul>
+            {/* UXQA-010 (auditoria de 01/10/2026): ler e escrever, não conversar.
+                Texto para aprovação, em lib/empresa.ts. */}
+            {c.slug === FLAGSHIP && (
+              <p className="font-ui text-[14.5px] leading-relaxed text-ink-body m-0">{O_QUE_O_CURSO_ENSINA}</p>
+            )}
           </div>
 
-          <Card tone="wash" className="p-6 grid gap-3 content-start">
-            <He size="lg" dim>ע</He>
-            <h3 className="font-display text-[18px] font-bold text-ink">
-              E se não for para mim?
+          <aside className="grid gap-3 content-start pl-6 border-l-2 border-[var(--teal)] lg:mt-[76px]">
+            <h3 className="font-display text-[24px] font-semibold tracking-[-0.022em] text-ink m-0">
+              {tx.seNaoFor}
             </h3>
-            <p className="font-ui text-[14px] leading-relaxed text-ink-body">
-              Você tem {c.accessMonths} meses de acesso e nenhum prazo interno: dá para
-              fazer em três semanas ou em três meses. O curso guarda onde você
-              parou e volta exatamente ali.
+            {/* O título é a objeção, e a resposta começa por ela: a
+                desistência do CDC (art. 49), com o prazo de data/empresa.json
+                e o caminho pelo site (Decreto 7.962/2013, art. 5º). Até
+                01/10/2026 o cartão respondia só com o prazo de estudo
+                (auditoria, CONV-001). */}
+            <p className="font-ui text-[16px] leading-[1.65] text-ink-body m-0">
+              {tx.seNaoForTexto(empresa.politicas.arrependimentoDias, c.accessMonths, tempoDoCursoPt())}
             </p>
-            <Link href="/faq" className="font-ui text-[13.5px] text-[var(--accent)] hover:underline
+            <Link href="/faq" className="font-ui text-[15px] font-semibold text-[var(--teal-ink)] hover:underline
                                           inline-flex items-center min-h-[36px]">
-              Ver as dúvidas mais comuns →
+              {tx.verDuvidas}
             </Link>
-          </Card>
+          </aside>
         </div>
       </Section>
 
@@ -176,8 +203,8 @@ export function CourseClient({ slug }: { slug: string }) {
       <Section tone="wash">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-center">
           <div className="grid gap-3">
-            <h2 className="font-display text-[26px] sm:text-[30px] font-bold leading-tight text-ink max-w-[22ch]">
-              {open ? 'Comece hoje, na primeira lição.' : 'Ainda não, mas está vindo.'}
+            <h2 className="font-display font-semibold text-[clamp(28px,3.4vw,40px)] leading-[1.08] tracking-[-0.03em] text-ink max-w-[22ch] m-0">
+              {open ? tx.comeceHoje : tx.aindaNao}
             </h2>
             <p className="font-ui text-[15.5px] leading-relaxed text-ink-body max-w-[52ch]">
               {/* A promessa de "sem liberação manual" só pode ser feita onde
@@ -187,9 +214,9 @@ export function CourseClient({ slug }: { slug: string }) {
                   diferença depois de pagar. */}
               {open
                 ? confirmaSozinho()
-                  ? 'O acesso é liberado assim que o pagamento é confirmado - sem espera, sem liberação manual, sem e-mail para procurar na caixa de spam.'
-                  : 'Você paga no PIX pelo aplicativo do seu banco e entra com o mesmo e-mail e senha. O acesso abre assim que o pagamento cai, normalmente em alguns minutos.'
-                : 'Este curso está em produção. Quando sair, entra na mesma conta e continua de onde o anterior parou.'}
+                  ? tx.liberadoSozinho
+                  : tx.liberadoAMao(prazoResposta())
+                : tx.emProducao}
             </p>
           </div>
           <BuyBox slug={slug} />
@@ -208,15 +235,16 @@ function BuyBox({ slug }: { slug: string }) {
   const open = isPlayable(c);
   const parcelas = parcelasMax(c.price);
   const cheio = ancora(c.price);
+  const venceuEm = useVencido(c.slug, account.ready && account.signedIn && !owned && open);
 
   if (owned) {
     return (
       <Card tone="mint" className="p-6 grid gap-3 content-start">
-        <Badge tone="mint">Na sua conta</Badge>
+        <Badge tone="mint">{tx.naSuaConta}</Badge>
         <p className="font-display text-[19px] font-bold text-ink leading-snug">
-          Você já tem este curso.
+          {tx.jaTem}
         </p>
-        <LinkButton href="/meu-hebraico" size="lg" full>Continuar</LinkButton>
+        <LinkButton href="/meu-hebraico" size="lg" full>{tx.continuar}</LinkButton>
       </Card>
     );
   }
@@ -224,19 +252,62 @@ function BuyBox({ slug }: { slug: string }) {
   if (!open) {
     return (
       <Card className="p-6 grid gap-3 content-start">
-        <Badge>Em breve</Badge>
+        <Badge>{tx.emBreve}</Badge>
         <p className="font-display text-[19px] font-bold text-ink leading-snug">
-          Ainda não está à venda.
+          {tx.naoAVenda}
         </p>
         <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-          Enquanto isso, o caminho para chegar até aqui começa na alfabetização.
+          {tx.enquantoIsso}
         </p>
-        <LinkButton href="/cursos/alfabetizacao" variant="secondary" size="lg" full>
-          Ver o curso 01
+        <LinkButton href="/curso-de-hebraico" variant="secondary" size="lg" full>
+          {tx.verCurso01}
         </LinkButton>
       </Card>
     );
   }
+
+  /* Pagou, e o acesso venceu: o aviso diz isso com a data, acima do preço,
+     no lugar do "esta conta ainda não tem o curso" (PAY-B-004). */
+  const aviso = venceuEm ? (
+        <Card tone="wash" className="p-5 grid gap-2.5">
+          <p className="font-display text-[17px] font-bold text-ink leading-snug">
+            {fraseDeVencido(venceuEm)}
+          </p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+            {tx.progressoGuardado}
+          </p>
+          <LinkButton href={`/checkout/${c.slug}`} size="sm" className="justify-self-start">
+            {tx.renovar(c.accessMonths)}
+          </LinkButton>
+        </Card>
+      ) : account.signedIn ? (
+        <Card tone="wash" className="p-5 grid gap-2.5">
+          <p className="font-display text-[17px] font-bold text-ink leading-snug">
+            {tx.semCurso}
+          </p>
+          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
+            {tx.conectadoComo(<strong className="break-all">{account.session?.account.email}</strong>)}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <LinkButton href="/entrar" variant="secondary" size="sm">
+              {tx.outroEmail}
+            </LinkButton>
+          </div>
+          <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
+                        border-t border-[color:var(--line-soft)] pt-3">
+            {tx.jaPagou(
+              <a href={`mailto:${empresa.contato.emailSuporte}`}
+                 className="text-[var(--accent)] hover:underline break-all">
+                {empresa.contato.emailSuporte}
+              </a>
+            )}
+          </p>
+        </Card>
+      ) : null;
+  const criada = account.session?.account.createdAt ? Date.parse(account.session.account.createdAt) : NaN;
+  /* Quem tem acesso vencido não é conta nova para este curso: o aviso com a
+     data vem antes do preço. */
+  const contaNova = !venceuEm && Number.isFinite(criada) && Date.now() - criada < 86_400_000;
 
   return (
     <div className="grid gap-4 content-start">
@@ -254,34 +325,12 @@ function BuyBox({ slug }: { slug: string }) {
           é ter comprado com outro e-mail), como trocar de conta, e para onde
           escrever. O preço continua logo abaixo, para quem de fato ainda não
           comprou. */}
-      {account.signedIn && (
-        <Card tone="wash" className="p-5 grid gap-2.5">
-          <p className="font-display text-[17px] font-bold text-ink leading-snug">
-            Esta conta ainda não tem o curso
-          </p>
-          <p className="font-ui text-[13.5px] leading-relaxed text-ink-body">
-            Você está conectado como{' '}
-            <strong className="break-all">{account.session?.account.email}</strong>.
-            Se a compra foi feita com outro e-mail, entre com ele: o acesso
-            fica na conta do e-mail que pagou.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <LinkButton href="/entrar" variant="secondary" size="sm">
-              Entrar com outro e-mail
-            </LinkButton>
-          </div>
-          <p className="font-ui text-[12.5px] leading-relaxed text-ink-muted
-                        border-t border-[color:var(--line-soft)] pt-3">
-            Já pagou e continua vendo esta tela? <strong>Não pague de novo.</strong>{' '}
-            Escreva para{' '}
-            <a href={`mailto:${empresa.contato.emailSuporte}`}
-               className="text-[var(--accent)] hover:underline break-all">
-              {empresa.contato.emailSuporte}
-            </a>{' '}
-            com o e-mail da compra que a gente libera.
-          </p>
-        </Card>
-      )}
+      {/* Conta criada há menos de um dia (30/09/2026): quase sempre é quem
+          acabou de se cadastrar PARA comprar, e abrir com "esta conta não tem
+          o curso" parecia erro. Para ela, o preço vem primeiro e o aviso de
+          "já pagou com outro e-mail?" vem depois. Conta mais antiga continua
+          vendo o aviso antes: é o caso de quem pagou e caiu aqui. */}
+      {!contaNova && aviso}
 
       <Card className="p-6 grid gap-4 content-start">
       <div className="grid gap-1">
@@ -289,11 +338,13 @@ function BuyBox({ slug }: { slug: string }) {
             diz o que é. Ver `ancora()` em lib/catalog.ts. */}
         {cheio && (
           <p className="font-ui text-[12px] font-bold uppercase tracking-[.08em] text-[var(--accent)]">
-            Preço de pré-lançamento
+            {tx.precoPreLancamento}
           </p>
         )}
         {cheio && (
-          <p className="font-ui text-[14px] text-ink-muted line-through">{brl(cheio)}</p>
+          <p className="font-ui text-[13px] text-ink-muted">
+            {tx.depois(fimDoPreLancamento(c.price), brl(cheio))}
+          </p>
         )}
         {/* O preço em destaque é o preço que vai ser cobrado. Com só PIX no ar,
             o desconto deixa de ser alternativa e passa a ser o preço, e o valor
@@ -305,55 +356,59 @@ function BuyBox({ slug }: { slug: string }) {
               {brl(pixPrice(c.price))}
             </p>
             <p className="font-ui text-[13.5px] text-ink-body">
-              no PIX
+              {tx.noPix}
               {c.price.pixDiscountPct > 0
-                && ` · ${c.price.pixDiscountPct}% de desconto sobre ${brl(c.price.brl)}`}
+                && tx.descontoSobre(c.price.pixDiscountPct, brl(c.price.brl))}
             </p>
           </>
         ) : (
           <>
             <p className="font-display text-[38px] font-bold text-ink leading-none">{brl(c.price.brl)}</p>
             <p className="font-ui text-[13.5px] text-ink-body">
-              ou em até {parcelas}x no cartão
+              {tx.noCartao(parcelasTexto(parcelas))}
             </p>
             {/* O preço do PIX some junto com a possibilidade de pagar no
                 PIX - ver a nota de `temPix` em app/src/lib/empresa.ts. */}
             {c.price.pixDiscountPct > 0 && temPix() && (
               <p className="font-ui text-[13.5px] font-medium text-[var(--accent)]">
-                {brl(pixPrice(c.price))} no PIX ({c.price.pixDiscountPct}% off)
+                {tx.descontoNoPix(c.price.pixDiscountPct, brl(pixPrice(c.price)))}
               </p>
             )}
           </>
         )}
       </div>
 
-      <LinkButton href={`/checkout/${c.slug}`} size="lg" full>Desbloquear curso</LinkButton>
+      <LinkButton href={`/checkout/${c.slug}`} size="lg" full>{tx.desbloquear}</LinkButton>
 
       <ul className="grid gap-1.5 list-none p-0 m-0 font-ui text-[13px] text-ink-muted">
         <li>
           {soPix()
-            ? 'Pagamento por PIX, pelo aplicativo do seu banco.'
+            ? tx.pagamentoPix
             : temPix() && temCartao()
-              ? `PIX, cartão ou parcelado em até ${parcelas}x.`
+              ? tx.pixCartao(parcelasTexto(parcelas))
               : temCartao()
-                ? `Cartão de crédito, ou parcelado em até ${parcelas}x.`
-                : 'Pagamento por PIX, pelo aplicativo do seu banco.'}
+                ? tx.cartao(parcelasTexto(parcelas))
+                : tx.pagamentoPix}
         </li>
         <li>
           {confirmaSozinho()
-            ? 'Acesso liberado automaticamente.'
-            : 'Acesso liberado em alguns minutos, depois do pagamento.'}
+            ? tx.automatico
+            : tx.aMao(prazoResposta())}
         </li>
-        <li>{c.accessMonths} meses, do celular ao computador.</li>
+        <li>{tx.mesesAparelhos(c.accessMonths)}</li>
+        {/* A mesma linha da caixa de preço da capa (CONV-001); o prazo vem de
+            data/empresa.json e `check-legal.mjs` confere que ela saiu. */}
+        <li>{tx.desistir(empresa.politicas.arrependimentoDias)}</li>
       </ul>
 
       {!account.signedIn && (
         <p className="font-ui text-[12.5px] text-ink-muted border-t border-[color:var(--line-soft)] pt-3">
-          Já comprou?{' '}
-          <Link href="/entrar" className="text-[var(--accent)] hover:underline">Entre na sua conta</Link>
+          {tx.jaComprou}{' '}
+          <Link href="/entrar" className="text-[var(--accent)] hover:underline">{tx.entre}</Link>
         </p>
       )}
       </Card>
+      {contaNova && aviso}
     </div>
   );
 }

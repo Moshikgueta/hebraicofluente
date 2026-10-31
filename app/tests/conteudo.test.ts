@@ -33,7 +33,9 @@ import { conteudoBruto, content } from '../../worker/src/api/content.js';
 // @ts-expect-error - idem
 import * as auth from '../../worker/src/api/auth.js';
 // @ts-expect-error - idem
-import { createOrder, grantAccess } from '../../worker/src/lib/db.js';
+import { conteudoBaixado, createOrder, grantAccess } from '../../worker/src/lib/db.js';
+// @ts-expect-error - módulo JS do Worker, sem tipos
+import { mensagemDeArrependimentoDono } from '../../worker/src/lib/mail.js';
 import { cookieDe, envDeTeste, pedido } from './ajuda/d1';
 
 const SITE = 'https://hebraicofluente.com.br';
@@ -48,7 +50,7 @@ const src = (p: string) => readFileSync(new URL(`../src/${p}`, import.meta.url),
    são públicos, e o caso logo abaixo é quem diz isso em voz alta. */
 const OS_PAGOS = [
   'letters', 'nikud', 'extras', 'real-world', 'sentences', 'eras',
-  'stroke-paths', 'culture'
+  'stroke-paths', 'culture', 'missoes', 'textos'
 ];
 
 /* ── 1. a fonte do vazamento ─────────────────────────────────────────────── */
@@ -134,7 +136,9 @@ describe('o que o Worker manda é o que o navegador espera', () => {
   const doWorker = JSON.parse(conteudoBruto());
 
   it('tem as mesmas seis partes, do mesmo tamanho', () => {
-    expect(Object.keys(doWorker).sort()).toEqual(Object.keys(conteudoPago).sort());
+    /* `_licenca` é o aviso de uso pessoal com o número da cópia (lib/marca.js);
+       o navegador não o usa. */
+    expect(Object.keys(doWorker).filter(k => k !== '_licenca').sort()).toEqual(Object.keys(conteudoPago).sort());
     expect(doWorker.letters).toHaveLength(conteudoPago.letters.length);
     expect(doWorker.scenes).toHaveLength(conteudoPago.scenes.length);
     expect(doWorker.culture).toHaveLength(conteudoPago.culture.length);
@@ -163,7 +167,7 @@ describe('o que o Worker manda é o que o navegador espera', () => {
 async function contaLogada(env: Record<string, unknown>, ctx = {}) {
   const r = await auth.signup({
     request: pedido(`${SITE}/api/auth/signup`,
-      { name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' }),
+      { aceitouTermos: true, declarouIdade: true, name: 'Ana', email: 'ana@exemplo.com', password: 'senha-boa-123' }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -225,7 +229,10 @@ describe('/api/content só responde a quem pagou', () => {
     /* Sem isto, um cache no caminho entrega a aula de quem pagou para o
        próximo que pedir - e desfaz a rota inteira sem erro nenhum. */
     expect(cache).toContain('private');
-    expect(cache).toContain('no-store');
+    expect(cache).not.toContain('public');
+    /* Desde 01/10/2026 (PERF-008) o navegador do aluno guarda 5 minutos,
+       mas só para o MESMO cookie: outra conta no mesmo aparelho não reusa. */
+    expect(r.headers.get('vary') || '').toContain('Cookie');
   });
 
   it('fecha a porta quando o direito de acesso vence', async () => {
@@ -250,5 +257,76 @@ describe('o Worker conhece a rota', () => {
   it('tem GET /api/content na tabela de rotas', () => {
     const doWorker = readFileSync(new URL('../../worker/src/worker.js', import.meta.url), 'utf8');
     expect(doWorker).toContain("'GET /api/content': content");
+  });
+});
+
+/* ── os diagramas de traçado ─────────────────────────────────────────────
+   Auditoria de 24/09/2026: os 27 diagramas de ordem dos traços eram
+   públicos em /stroke-order/, e a landing usava dois. Agora /stroke-order/
+   está atrás do portão, e a landing lê de /tracado-amostra/, que só tem as
+   letras que ela mostra. */
+describe('os diagramas de traçado', () => {
+  const publico = new URL('../public/tracado-amostra/', import.meta.url);
+
+  it('a landing só usa letras que estão na amostra pública, e a amostra só tem essas', () => {
+    const landing = readdirSync(new URL('../src/components/landing/', import.meta.url))
+      .map(f => src(`components/landing/${f}`)).join('\n');
+    const usadas = [...landing.matchAll(/<DiagramaDeTracado[^>]*letterId="([^"]+)"/g)].map(m => m[1]!);
+    expect(usadas.length).toBeGreaterThan(0);
+    const publicadas = readdirSync(publico).map(f => f.replace(/\.svg$/, '')).sort();
+    expect(publicadas).toEqual([...new Set(usadas)].sort());
+  });
+
+  it('o componente da landing lê da amostra, não de /stroke-order/', () => {
+    const c = src('components/landing/DiagramaDeTracado.tsx');
+    expect(c).toContain('/tracado-amostra/');
+    expect(c).not.toMatch(/src=\{`\/stroke-order\//);
+  });
+
+  it('/stroke-order/ exige o curso; /tracado-amostra/ não', async () => {
+    // @ts-expect-error - módulo JS do Worker, sem tipos
+    const { gate, isGatedPath } = await import('../../worker/src/gate.js');
+    expect(isGatedPath('/stroke-order/tav.svg')).toBe(true);
+    expect(isGatedPath('/tracado-amostra/alef.svg')).toBe(false);
+
+    const env = envDeTeste();
+    const img = { headers: { 'Sec-Fetch-Dest': 'image' } };
+    const semConta = await gate(new Request(`${SITE}/stroke-order/tav.svg`, img), env);
+    expect(semConta.status).toBe(403);
+
+    const r = await auth.signup({
+      request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, email: 'traco@exemplo.com', password: 'senha-boa-123' }),
+      env, ctx: { waitUntil() {} }
+    });
+    const cookie = cookieDe(r);
+    const semCurso = await gate(new Request(`${SITE}/stroke-order/tav.svg`, { headers: { ...img.headers, cookie } }), env);
+    expect(semCurso.status).toBe(403);
+
+    const { account } = await r.json() as { account: { id: string } };
+    await grantAccess(env, { accountId: account.id, courseSlug: 'alfabetizacao', orderId: 'TESTE', months: 12 });
+    expect(await gate(new Request(`${SITE}/stroke-order/tav.svg`, { headers: { ...img.headers, cookie } }), env)).toBeNull();
+  });
+});
+
+/* ── 5. o rastro de quem baixou (auditoria de 01/10/2026, SEC-A-010) ───── */
+
+describe('o conteúdo baixado fica na trilha, uma vez por dia', () => {
+  it('dois downloads no mesmo dia viram uma linha, e a desistência informa', async () => {
+    const env = envDeTeste();
+    const { cookie, id } = await contaLogada(env);
+    await comprou(env, id);
+    expect((await content({ request: pedirConteudo(cookie), env, ctx: {} })).status).toBe(200);
+    expect((await content({ request: pedirConteudo(cookie), env, ctx: {} })).status).toBe(200);
+    const b = await conteudoBaixado(env, id, 0);
+    expect(b.dias).toBe(1);
+    expect(b.primeiro).toBeTypeOf('number');
+
+    const m = mensagemDeArrependimentoDono({
+      email: 'ana@exemplo.com', curso: 'Alfabetização', valor: 'R$ 132,30', pedido: 'HF1',
+      pedidoEm: '01/10/2026', prazoUteis: 2, pixDireto: false, marca: 'Hebraico Fluente',
+      estado: 'pedido', conteudo: { dias: 1, primeiro: '01/10/2026 10:00' }
+    });
+    expect(m.text).toContain('Conteúdo do curso aberto em 1 dia(s)');
+    expect(m.text).toContain('não muda o direito de desistir');
   });
 });

@@ -19,7 +19,18 @@ DB_NAME="hebraico-fluente"
 # (token da Cloudflare, Mercado Pago, Resend); `wrangler@4` resolvia para a
 # versão mais nova a cada execução, e um pacote comprometido rodaria com tudo
 # isso nas mãos. Subir de versão é uma edição deliberada, testada, aqui.
-W="npx --yes wrangler@4.135.0"
+# O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+# SEC-A-009): com `npm ci` na raiz, a versão E todas as dependências dela vêm
+# do lockfile, conferidas pelo hash. O `npx --yes wrangler@VERSÃO` fixava só
+# o pacote de cima e resolvia o resto a cada execução - num passo que tem os
+# segredos de produção no ambiente. Sem `npm ci` (uma máquina nova), cai no
+# npx com a mesma versão do lockfile.
+if [ -x "$PWD/node_modules/.bin/wrangler" ]; then
+  WRANGLER_LOCAL="$PWD/node_modules/.bin/wrangler"
+else
+  WRANGLER_LOCAL="npx --yes wrangler@4.146.0"
+fi
+W="$WRANGLER_LOCAL"
 # Vira 1 quando este script edita o wrangler.toml. No CI a edição é
 # descartável (o runner some), então a publicação funciona mesmo assim - mas
 # o arquivo do repositório continua com o valor de exemplo, e é isso que o
@@ -167,6 +178,41 @@ else
        npx wrangler d1 execute $DB_NAME --remote --file=worker/schema.sql"
 fi
 
+# ── 3b. migrações ─────────────────────────────────────────────────────────
+# O schema.sql só CRIA o que não existe (auditoria de 28/09, INFRA-005): uma
+# coluna nova numa tabela que já está no ar nunca chegaria à produção. Cada
+# mudança assim é um arquivo em worker/migrations/ (NNNN-descricao.sql),
+# aplicado UMA vez, em ordem, e anotado na tabela `migracoes`. Uma migração
+# que falha para a publicação ANTES de o código novo subir - o site continua
+# com a versão anterior, que não depende dela.
+MIGR_DIR=worker/migrations
+if ls "$MIGR_DIR"/[0-9][0-9][0-9][0-9]-*.sql >/dev/null 2>&1; then
+  if ! FEITAS_JSON="$($W d1 execute "$DB_NAME" --remote --json --command "SELECT nome FROM migracoes" 2>/dev/null)"; then
+    morre "Não consegui ler a tabela de migrações." \
+          "Sem saber quais já rodaram, aplicar de novo pode duplicar uma mudança."
+  fi
+  FEITAS="$(printf '%s' "$FEITAS_JSON" | python3 -c 'import json,sys
+d=json.load(sys.stdin)
+print("\n".join(r["nome"] for b in d for r in b.get("results", [])))')"
+  for f in $(ls "$MIGR_DIR"/[0-9][0-9][0-9][0-9]-*.sql | sort); do
+    n="$(basename "$f")"
+    case "$n" in *[!a-z0-9.-]*) morre "Nome de migração inválido: $n" "Use NNNN-descricao.sql, só minúsculas, números e hífen." ;; esac
+    grep -qxF "$n" <<<"$FEITAS" && continue
+    info "Aplicando a migração $n…"
+    $W d1 execute "$DB_NAME" --remote --file="$f" >/dev/null 2>&1 \
+      || morre "A migração $n falhou." "Rode à mão para ver a mensagem:
+       npx wrangler d1 execute $DB_NAME --remote --file=$f"
+    $W d1 execute "$DB_NAME" --remote --command \
+      "INSERT INTO migracoes (nome, aplicado_em) VALUES ('$n', unixepoch()*1000)" >/dev/null 2>&1 \
+      || morre "A migração $n rodou, mas não consegui anotá-la." \
+               "Anote à mão antes de publicar de novo, senão ela roda outra vez:
+       npx wrangler d1 execute $DB_NAME --remote --command \"INSERT INTO migracoes (nome, aplicado_em) VALUES ('$n', unixepoch()*1000)\""
+    ok "Migração $n aplicada"
+  done
+else
+  ok "Nenhuma migração pendente"
+fi
+
 # ── 4. segredos ───────────────────────────────────────────────────────────
 echo
 bold "4. Segredos"
@@ -193,6 +239,24 @@ else
           "Rode à mão: npx wrangler secret put SESSION_SECRET
        (cole o resultado de: openssl rand -base64 48)"
   fi
+fi
+
+# ADMIN_TOKEN: o que abre os detalhes de /api/health (auditoria de
+# 01/10/2026, SEC-A-007). Para o público a saúde diz só `ok` e `monitor`; a
+# conferência desta publicação (worker/e2e.sh) precisa do resto - tabelas,
+# sessão, e-mail, modo da cobrança - e o recebe em HF_ADMIN_TOKEN.
+#
+# Um valor NOVO a cada publicação, a menos que ADMIN_TOKEN venha no ambiente
+# (quem quiser um fixo põe nos segredos do repositório). Ninguém precisa
+# guardá-lo: quem lê os detalhes fora da publicação é o administrador, pela
+# própria sessão com o segundo fator. Trocar a cada vez é também o que
+# torna inútil um token visto num log velho.
+ADMIN_TOKEN="${ADMIN_TOKEN:-$(openssl rand -hex 32)}"
+if printf '%s' "$ADMIN_TOKEN" | $W secret put ADMIN_TOKEN >/dev/null 2>&1; then
+  ok "ADMIN_TOKEN enviado ao Worker"
+  export HF_ADMIN_TOKEN="$ADMIN_TOKEN"
+else
+  info "Não consegui enviar ADMIN_TOKEN: a conferência vai ver só a saúde pública."
 fi
 
 # Os da Mercado Pago: se o valor estiver no AMBIENTE (segredo do GitHub, ou
@@ -271,6 +335,26 @@ echo
 bold "6. Publicar"
 # Guardado antes de publicar, para a checagem logo abaixo.
 HAVE_BEFORE="$(grep -oP 'SITE_ORIGIN\s*=\s*"\K[^"]+' wrangler.toml || true)"
+
+# A versão que está no ar AGORA, para voltar a ela sozinho se as conferências
+# do passo 9 falharem (auditoria de 28/09, INFRA-003: #152 e #154 subiram,
+# a conferência falhou, e a versão nova ficou no ar sem ninguém desfazer).
+# Vazio = primeira publicação, ou o wrangler não respondeu: aí não há para
+# onde voltar, e o passo 9 só avisa, como antes.
+ANTERIOR="$($W deployments status --json 2>/dev/null | node -e '
+  let s = "";
+  process.stdin.on("data", d => s += d).on("end", () => {
+    try {
+      const v = (JSON.parse(s).versions || []).slice().sort((a, b) => (b.percentage || 0) - (a.percentage || 0))[0];
+      process.stdout.write(v && v.version_id ? String(v.version_id) : "");
+    } catch { /* sem versão anterior conhecida */ }
+  });' 2>/dev/null || true)"
+if [ -n "$ANTERIOR" ]; then
+  info "Versão no ar antes desta publicação: $ANTERIOR (é para ela que se volta se algo falhar)"
+else
+  info "Não consegui ler a versão no ar agora: se a conferência falhar, não haverá volta automática."
+fi
+
 DEPLOY="$($W deploy 2>&1)"
 RC=$?
 
@@ -330,7 +414,10 @@ fi
 # O domínio próprio sai do wrangler.toml, e não da saída do wrangler: é o
 # arquivo que manda em qual endereço o site atende. O www é descartado aqui
 # porque ele existe para redirecionar, não para ser o endereço.
-DOMINIO="$(grep -oP 'pattern\s*=\s*"\K[^"]+(?="\s*,\s*custom_domain\s*=\s*true)' wrangler.toml \
+# Só as linhas de verdade: o exemplo comentado no toml do site em inglês
+# ("<dominio>") virou SITE_ORIGIN em 29/10/2026 e o link do e-mail saiu quebrado.
+DOMINIO="$(grep -vE '^\s*#' wrangler.toml \
+  | grep -oP 'pattern\s*=\s*"\K[^"]+(?="\s*,\s*custom_domain\s*=\s*true)' \
   | grep -v '^www\.' | head -1)"
 
 if [ -n "$DOMINIO" ]; then
@@ -753,9 +840,45 @@ fi
 HF_BASE="$URL" bash worker/e2e.sh
 RC=$?
 
+# ── 10. voltar sozinho, se a conferência falhou ──────────────────────────
+# Uma falha pode ser passageira (a do portão no #154 passou na segunda
+# tentativa, com o mesmo código), e desfazer uma versão boa por ruído seria
+# pior do que o ruído. Então: uma segunda conferência; se ela também falhar,
+# volta para a versão anterior e confere que o site responde.
+#
+# O que o rollback NÃO desfaz: o schema (só cresce, e a versão anterior
+# convive com tabelas a mais) e os segredos já enviados no passo 4.
+if [ $RC -ne 0 ]; then
+  echo
+  bold "10. A conferência falhou: tentando mais uma vez antes de voltar"
+  HF_BASE="$URL" bash worker/e2e.sh
+  RC=$?
+  if [ $RC -ne 0 ] && [ -n "$ANTERIOR" ]; then
+    bold "Falhou de novo. Voltando para a versão anterior ($ANTERIOR)."
+    if $W rollback "$ANTERIOR" -m "Conferência pós-publicação falhou duas vezes (deploy automático)" -y >/tmp/hf-rollback 2>&1; then
+      if espera_subir "$URL"; then
+        ok "De volta à versão anterior; $URL responde."
+      else
+        erro "Voltei para a versão anterior, mas $URL respondeu $ULTIMO."
+      fi
+    else
+      erro "O rollback automático falhou. O wrangler disse:"
+      tail -15 /tmp/hf-rollback | sed 's/^/       /'
+      info "Volte à mão: npx wrangler rollback $ANTERIOR"
+    fi
+    VOLTOU=1
+  elif [ $RC -ne 0 ]; then
+    erro "Sem versão anterior conhecida: a versão nova continua no ar."
+  else
+    ok "Na segunda conferência passou: a falha anterior foi passageira."
+  fi
+fi
+
 echo
 if [ $RC -eq 0 ]; then
   bold "Pronto. $URL"
+elif [ "${VOLTOU:-0}" = "1" ]; then
+  bold "A versão nova NÃO ficou no ar: a conferência falhou duas vezes e o site voltou à anterior."
 else
   bold "Subiu, mas alguma verificação falhou (acima)."
 fi

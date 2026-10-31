@@ -1,0 +1,60 @@
+{
+  "note": [
+    "As explicações gravadas pelo professor, num lugar só (11/10/2026).",
+    "Cada uma tem um id com significado; tools/gen-audio.mjs põe cada uma no catálogo de áudio (onda 7),",
+    "e o painel /admin/gravar mostra para gravar. Enquanto não há gravação, a tela do aluno não mostra nada:",
+    "sem botão que não toca e sem voz sintética no lugar do professor.",
+    "Para acrescentar uma: um item aqui, `npm run audio-manifest`, e <GravacaoDoProfessor id=\"...\" /> na tela.",
+    "`roteiroPt` é só para quem grava: aparece no painel, nunca para o aluno."
+  ],
+  "gravacoes": [
+    {
+      "id": "intro-rtl-reading",
+      "tituloPt": "Ouça a explicação do professor",
+      "ondePt": "Aula 0 · Da direita para a esquerda",
+      "roteiroPt": "Explique que o hebraico se lê da direita para a esquerda. Mostre a palavra שָׁלוֹם: a leitura começa no ש, à direita, e termina no ם, à esquerda. Lembre que a tela do curso continua em português."
+    },
+    {
+      "id": "intro-nikud-vowels",
+      "tituloPt": "Ouça a explicação do professor",
+      "ondePt": "Aula 0 · O nikud",
+      "roteiroPt": "Explique que as letras são, em essência, as consoantes, e que o nikud marca as vogais embaixo, em cima ou dentro da letra. Leia as três palavras do quadro: סֵפֶר, סָפַר, סַפָּר."
+    },
+    {
+      "id": "letter-het-pronunciation",
+      "tituloPt": "Ouça a pronúncia com seu professor",
+      "ondePt": "Lição do ח",
+      "roteiroPt": "Pronuncie o ח sozinho, devagar, e depois חַ, חָלָב e לֶחֶם. Compare com o R de \"carro\" de alguns sotaques brasileiros, dizendo que é só uma aproximação."
+    },
+    {
+      "id": "final-mem-vs-nun",
+      "tituloPt": "Escute a diferença: português × hebraico",
+      "ondePt": "Módulo 6 · As formas finais (ם e ן)",
+      "roteiroPt": "Diga שָׁם e שֵׁן devagar, duas vezes cada. Mostre que no ם os lábios se fecham no fim (/m/) e no ן a língua toca atrás dos dentes, com a boca aberta (/n/)."
+    },
+    {
+      "id": "portuguese-em-vs-hebrew-mem",
+      "tituloPt": "Escute a diferença: português × hebraico",
+      "ondePt": "Módulo 6 · As formas finais (ם e ן)",
+      "roteiroPt": "Diga \"bem\" em português, do jeito natural, e depois שָׁם em hebraico. Mostre que no português o fim vira um som nasal sem fechar os lábios de verdade, e que em hebraico o ם fecha os lábios e se ouve um M claro."
+    },
+    {
+      "id": "international-words-pronunciation",
+      "tituloPt": "Ouça como essa palavra é pronunciada em hebraico",
+      "ondePt": "Lições das letras · Você já conhece estas palavras",
+      "roteiroPt": "Explique que as palavras internacionais em hebraico têm o acento e as vogais do hebraico, e não do português: dê dois exemplos, como טֶלֶפוֹן e בָּנָנָה, dizendo cada uma em hebraico e depois em português."
+    },
+    {
+      "id": "letter-alef-tav-example",
+      "tituloPt": "Ouça a explicação do professor",
+      "ondePt": "Lição do ת · Palavras (אַתְ)",
+      "roteiroPt": "Leia אַתְ (\"at\", você, para uma mulher) e explique que o sinal embaixo do ת não muda o som: lê-se só \"at\". Mostre que as mesmas duas letras também formam אֶת (\"et\"), a palavra que vem antes do objeto definido, e que é o nikud que decide qual das duas é."
+    },
+    {
+      "id": "reading-lab-how-to",
+      "tituloPt": "Ouça a explicação do professor",
+      "ondePt": "Laboratório de Leitura · topo da página",
+      "roteiroPt": "Mostre como ler uma palavra nova: comece pela letra da direita, diga o som da letra junto com a vogal embaixo dela, siga para a esquerda e, no fim, junte tudo numa palavra só. Use שָׁלוֹם como exemplo, devagar e depois no ritmo normal."
+    }
+  ]
+}

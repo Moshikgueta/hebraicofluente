@@ -21,7 +21,18 @@
 
 import { b64url, b64urlDecode, hmacB64, timingSafeEqual } from './crypto.js';
 
-const COOKIE = 'hf_session';
+/* `__Host-` é uma trava do NAVEGADOR: ele só aceita um cookie com esse
+   prefixo se vier com Secure, Path=/ e SEM Domain - ou seja, só este host
+   consegue gravá-lo. Um subdomínio (hoje não há nenhum além do www, que só
+   redireciona) não consegue plantar um cookie de sessão com este nome no
+   navegador de alguém - por exemplo, o de uma conta do atacante, para que
+   a vítima estude e pague dentro dela. */
+const COOKIE = '__Host-hf_session';
+
+/* O nome antigo, sem o prefixo (`hf_session`), foi aceito até 15/10/2026 e
+   trocado pelo novo em /api/me, para a mudança de nome não deslogar
+   ninguém. Passado o prazo, ele não abre mais nada e o ramo de migração
+   saiu (auditoria SEC-007, 16/10/2026). Sair ainda o apaga, por limpeza. */
 
 /* Sete dias. O cookie é um retrato: sua validade é a pior janela em que uma
    conta apagada continua sendo reconhecida. Trinta dias seria carregar um
@@ -30,22 +41,33 @@ const DAYS = 7;
 
 const enc = new TextEncoder();
 
-export async function makeSessionCookie(env, account) {
-  /* Só o que o servidor lê de volta: quem, qual versão, até quando. O
+export async function makeSessionCookie(env, account, ap = null) {
+  /* Só o que o servidor lê de volta: quem, qual versão, até quando, qual
+     aparelho. O
      e-mail e o nome já viajaram aqui dentro e ninguém os lia - e um cookie
      é visível em captura de tela de suporte, em extensão de navegador, em
      log de proxy. O que não está no cookie não vaza pelo cookie. */
   const payload = b64url(enc.encode(JSON.stringify({
     uid: account.id,
     sv: Number(account.session_version) || 0,
-    exp: Date.now() + DAYS * 86_400_000
+    exp: Date.now() + DAYS * 86_400_000,
+    /* O aparelho desta entrada (lib/aparelhos.js): um id aleatório, que só
+       diz qual das três vagas da conta este navegador ocupa. */
+    ...(ap ? { ap } : {})
   })));
   const sig = await hmacB64(env.SESSION_SECRET, 'sess:' + payload);
   return `${COOKIE}=${payload}.${sig}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${DAYS * 86_400}`;
 }
 
-export const clearSessionCookie =
-  `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
+/* O nome novo e, por limpeza, o antigo, que não vale mais nada. `json()` em
+   lib/http.js manda um array como vários Set-Cookie. */
+export const clearSessionCookie = [
+  `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`,
+  'hf_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0',
+  /* E o segundo fator do administrador (lib/admin.js): ele já morre com a
+     sessão, mas sair não deixa nem o cookie para trás. */
+  '__Host-hf_admin=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'
+];
 
 /** O conteúdo do cookie, só se a assinatura confere e ele não venceu.
  *  Não consulta o banco: quem precisa da conta de verdade usa `requireAccount`. */
@@ -61,11 +83,11 @@ export async function readSession(request, env) {
      reabria a porta que ele fechava - bastavam cinco enxertos para o
      legítimo nunca entrar no laço. Conferir trinta HMACs curtos custa menos
      de um milissegundo. */
-  const candidatos = (request.headers.get('Cookie') || '')
-    .split(/;\s*/)
-    .filter(c => c.startsWith(COOKIE + '=') && c.length <= 512)
-    .map(c => c.slice(COOKIE.length + 1))
-    .slice(0, 32);
+  const partes = (request.headers.get('Cookie') || '').split(/;\s*/);
+  const doNome = nome => partes
+    .filter(c => c.startsWith(nome + '=') && c.length <= 512)
+    .map(val => val.slice(nome.length + 1));
+  const candidatos = doNome(COOKIE).slice(0, 32);
 
   for (const val of candidatos) {
     const dot = val.lastIndexOf('.');

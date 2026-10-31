@@ -17,6 +17,7 @@
  */
 
 import type { Skill } from '@/lib/state/types';
+import { hebraicoDigitadoCerto } from './palavras';
 
 export type ExerciseBase = {
   id: string;
@@ -59,8 +60,16 @@ export type Exercise =
   | (ChoiceBase & { kind: 'word-meaning'; he: string })
   | (ChoiceBase & { kind: 'sentence-reading'; he: string; words: { he: string; translit: string; pt: string }[] })
   | (ChoiceBase & { kind: 'meaning-to-word'; pt: string })
+  /* A foto do vocabulário e as palavras em hebraico (28/10/2026, pedido do
+     dono: "תמונה ומילה"). A imagem é a de data/imagens-vocabulario.json, e
+     `imageAlt` descreve a cena para quem não vê. */
+  | (ChoiceBase & { kind: 'image-to-word'; image: string; imageAlt: string; pt: string })
   | (ChoiceBase & { kind: 'complete-word'; parts: (string | null)[]; hintPt: string })
   | (ChoiceBase & { kind: 'audio-recognition'; audioId: string })
+  /* A frase OUVIDA, sem o texto na tela, e a pergunta é o que ela quer dizer.
+     É a escuta de verdade - a palavra solta treina o ouvido para um som, a
+     frase treina para o ritmo da fala. As alternativas são em português. */
+  | (ChoiceBase & { kind: 'listen-meaning'; audioId: string })
 
   /* ── vowels, which the course taught and never tested ─────────────── */
   /** A syllable is shown; which vowel sound is it. Tests the SIGN, not the letter. */
@@ -237,9 +246,10 @@ export function normalizeTyped(text: string): string {
  * som, e que a transliteração do curso escreve de um jeito só.
  *
  *   · consoante dobrada vira uma - "imma", "abba" e "shabbat" são o que o
- *     daguesh sugere, e o som é o mesmo de "imá", "abá", "shabat";
+ *     daguesh sugere, e o som é o mesmo de "íma", "ába", "shabát"; e o "ss"
+ *     que o curso escreve entre vogais ("kissé", "ossá") é o S de "kise";
  *   · y vira i - "iam", "iom", "tiul" é como se escreve esse som em português,
- *     e o "ii" que isso cria em "tiyul" vira um i só;
+ *     e o "ii" que isso cria em "tiyúl" vira um i só;
  *   · kh vira ch, tz vira ts - as duas convenções de transliteração que o
  *     aluno encontra fora do curso.
  *
@@ -250,17 +260,46 @@ export function normalizeTyped(text: string): string {
 export function normalizeLoose(text: string): string {
   return normalizeTyped(text)
     .replace(/kh/g, 'ch')
+    /* O brasileiro escreve o som do ח como "rr" - a própria checagem do ח
+       propõe "lerrem" - e o K como "c" antes de a, o, u ("col" para קוֹל).
+       Antes do corte de letras dobradas, que faria de "rr" um "r"
+       (auditoria de 28/09, PED-022). */
+    .replace(/rr/g, 'ch')
+    .replace(/c(?=[aou])/g, 'k')
+    /* "gue"/"gui" é a convenção do curso para o G duro antes de E e I; quem
+       escreve "ge", "gi" ou "geshem" leu certo (auditoria de 01/10/2026,
+       CONT-012). E o h final depois de vogal ("todah", "imah") é
+       grafia de fora do curso para a mesma palavra: o curso nunca escreve o
+       ה final mudo. */
+    .replace(/gu(?=[ei])/g, 'g')
+    .replace(/([aeiou])h\b/g, '$1')
     .replace(/tz/g, 'ts')
     .replace(/y/g, 'i')
-    /* "tiyul" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
+    /* "tiyúl" vira "tiiul" na linha de cima; "tiul" é o mesmo som. */
     .replace(/i{2,}/g, 'i')
     .replace(/([^aeiou])\1+/g, '$1');
 }
 
+/* Resposta digitada EM HEBRAICO (04/10/2026, pedido do dono): quem ouve
+   יַלְדָה e escreve ילדה acertou. O teclado do celular não põe nikud, e o
+   exercício de ouvir não está ensinando nikud - está ensinando a reconhecer
+   a palavra. A regra é a MESMA do "Digite em hebraico" (palavras.ts,
+   `hebraicoDigitadoCerto`): sem vogais e sem exigir a forma final. Duas
+   regras diferentes para hebraico digitado fariam o curso se contradizer. */
+const LETRA_HEBRAICA = /[\u05D0-\u05EA]/;
+
 export const typedIsCorrect = (typed: string, accept: readonly string[]): boolean => {
+  if (LETRA_HEBRAICA.test(String(typed ?? ''))) {
+    return hebraicoDigitadoCerto(typed, accept.filter(a => LETRA_HEBRAICA.test(a)));
+  }
   const t = normalizeTyped(typed);
   if (!t.length) return false;
   if (accept.some(a => normalizeTyped(a) === t)) return true;
   const f = normalizeLoose(typed);
-  return accept.some(a => normalizeLoose(a) === f);
+  if (accept.some(a => normalizeLoose(a) === f)) return true;
+  /* Um passo a mais, e só numa direção: o "ch" do curso (ח e כ sem ponto)
+     escrito "h", como o português escreve "Hanucá" e "lehaim" - "lehem" para
+     léchem (CONT-012). O contrário NÃO vale: "ch" no lugar do "h" do ה
+     seria ler ה como ח, que é exatamente a troca que o curso corrige. */
+  return accept.some(a => normalizeLoose(a).replace(/ch/g, 'h') === f);
 };

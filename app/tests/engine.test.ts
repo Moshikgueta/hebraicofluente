@@ -11,7 +11,7 @@ import {
   buildCheckpoint, buildConfusionDrill, buildFinalChallenge, buildLessonQuiz, buildReview,
   isChoice, spread, typedIsCorrect, violatesOrderRule
 } from '@/lib/engine/exercises';
-import { exCursiveToPrint, exPrintVsCursive } from '@/lib/engine/generators';
+import { exCursiveToPrint, exPrintVsCursive, gravado } from '@/lib/engine/generators';
 import { rng } from '@/lib/engine/rng';
 import { normalizeTyped } from '@/lib/engine/types';
 import { clean, clusters, joinSyllable, splitSyllable } from '@/lib/hebrew';
@@ -213,7 +213,16 @@ describe('typed answers are forgiving about the right things', () => {
 
   it('does NOT collapse distinctions the course teaches', () => {
     expect(typedIsCorrect('sam', ['sham'])).toBe(false);
-    expect(typedIsCorrect('kar', ['car'])).toBe(false);
+    /* C antes de E e I é S em português: não vira K. */
+    expect(typedIsCorrect('cel', ['kel'])).toBe(false);
+  });
+
+  /* O brasileiro escreve o ח como "rr" e o K como "c" antes de a, o, u
+     (auditoria de 28/09, PED-022, aprovado pelo dono). */
+  it('accepts rr for ch and c for k before a, o, u', () => {
+    expect(typedIsCorrect('lerrem', ['léchem'])).toBe(true);
+    expect(typedIsCorrect('col', ['kol'])).toBe(true);
+    expect(typedIsCorrect('car', ['kar'])).toBe(true);
   });
 
   it('never accepts an empty answer', () => {
@@ -348,11 +357,31 @@ describe('a checkpoint is a demonstration, not a longer lesson', () => {
     }
   });
 
-  it('adds listening as a fourth dimension once there are recordings', () => {
-    const m = course.modules.find(x => x.n === 3)!;
-    const own = letters.filter(l => l.module === m.n);
-    const cp = buildCheckpoint(own, historyFor(m.upTo!), { audioAvailable: true, count: 12 });
-    expect(new Set(cp.map(e => e.skill)).has('ouvir')).toBe(true);
+  /* O áudio chega letra por letra (25/09/2026: Álef e He primeiro). Escuta
+     só onde já há gravação: o módulo 1 tem o Álef e o He gravados; um
+     módulo sem nenhuma gravação não ganha exercício de escuta mudo. */
+  it('adds listening where there are recordings, and only there', () => {
+    const cp = (n: number) => {
+      const m = course.modules.find(x => x.n === n)!;
+      const own = letters.filter(l => l.module === m.n);
+      return buildCheckpoint(own, historyFor(m.upTo!), { audioAvailable: true, count: 12 });
+    };
+    const ouvir = (n: number) => cp(n).filter(e => e.skill === 'ouvir');
+    const gravadas = letters.filter(l => l.syllables.some(s => gravado(s.audioId)));
+    if (gravadas.some(l => l.module === 1)) expect(ouvir(1).length).toBeGreaterThan(0);
+    if (!letters.some(l => l.module === 3 && l.syllables.some(s => gravado(s.audioId)))) {
+      expect(ouvir(3)).toEqual([]);
+    }
+  });
+
+  it('never builds a listening exercise for a clip that was not recorded', () => {
+    for (const m of course.modules) {
+      if (!m.letterIds.length || m.upTo == null) continue;
+      const own = letters.filter(l => l.module === m.n);
+      for (const e of buildCheckpoint(own, historyFor(m.upTo), { audioAvailable: true, count: 12 })) {
+        if (e.skill === 'ouvir') expect(gravado(e.audioId), e.id).toBe(true);
+      }
+    }
   });
 
   it('still fills the whole checkpoint', () => {
@@ -362,5 +391,26 @@ describe('a checkpoint is a demonstration, not a longer lesson', () => {
       const cp = buildCheckpoint(own, historyFor(m.upTo), { audioAvailable: false, count: 12 });
       expect(cp.length, `cp${m.n}`).toBe(12);
     }
+  });
+});
+
+/* "Escreva o que você ouviu" em hebraico (04/10/2026, pedido do dono): quem
+   ouviu יַלְדָה e digitou ילדה no teclado do celular acertou. */
+describe('resposta digitada em hebraico', () => {
+  const accept = ['yaldá', 'יַלְדָה'];
+  it('aceita a palavra sem nikud, com nikud e com espaço sobrando', () => {
+    expect(typedIsCorrect('ילדה', accept)).toBe(true);
+    expect(typedIsCorrect('יַלְדָה', accept)).toBe(true);
+    expect(typedIsCorrect('  ילדה ', accept)).toBe(true);
+    expect(typedIsCorrect('yalda', accept)).toBe(true);
+  });
+  it('letra errada continua errada; a forma final segue a regra do "Digite em hebraico"', () => {
+    expect(typedIsCorrect('ילדא', accept)).toBe(false);
+    expect(typedIsCorrect('שלום', ['shalom', 'שָׁלוֹם'])).toBe(true);
+    /* A mesma régua de hebraicoDigitadoCerto: a forma final não é exigida. */
+    expect(typedIsCorrect('שלומ', ['shalom', 'שָׁלוֹם'])).toBe(true);
+  });
+  it('sem hebraico entre as respostas, hebraico digitado não passa', () => {
+    expect(typedIsCorrect('ילדה', ['yaldá'])).toBe(false);
   });
 });
