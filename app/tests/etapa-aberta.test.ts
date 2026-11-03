@@ -5,7 +5,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { etapaAberta } from '@/lib/state/rules';
-import { entendeuCom } from '@/components/learn/Compreensao';
+import { embaralharChecagem, entendeuCom } from '@/components/learn/Compreensao';
 
 describe('as etapas abrem em ordem', () => {
   it('lição nova: só a primeira', () => {
@@ -43,5 +43,27 @@ describe('a lição usa a trava', () => {
   });
   it('as abas fechadas ficam desabilitadas', () => {
     expect(fonte).toContain('disabled={!aberta}');
+  });
+});
+
+describe('a segunda rodada vem embaralhada', () => {
+  const L = JSON.parse(readFileSync(new URL('../../data/letters.json', import.meta.url), 'utf8'));
+  const letras = (Array.isArray(L) ? L : L.letters) as { id: string; ensino: { checagem: Parameters<typeof embaralharChecagem>[0] } }[];
+  const certa = (p: Parameters<typeof embaralharChecagem>[0][number]) =>
+    p.t === 'escolha' || p.t === 'visual' ? p.opcoes[p.certa] : p.t === 'vf' ? p.certa : p.linhas.map(l => `${l.item}=${p.rotulos[l.certa]}`).sort().join();
+
+  it('as respostas certas continuam certas', () => {
+    for (const l of letras) for (const s of [1, 2, 3]) {
+      const orig = new Map(l.ensino.checagem.map(p => [p.q, certa(p)]));
+      for (const p of embaralharChecagem(l.ensino.checagem, s)) expect(certa(p), `${l.id} ${p.q}`).toEqual(orig.get(p.q));
+    }
+  });
+
+  it('a ordem muda em pelo menos uma rodada, em toda letra', () => {
+    for (const l of letras) {
+      const assinatura = (ps: typeof l.ensino.checagem) => JSON.stringify(ps.map(p => [p.q, 'opcoes' in p ? p.opcoes : null]));
+      const mudou = [1, 2, 3].some(s => assinatura(embaralharChecagem(l.ensino.checagem, s)) !== assinatura(l.ensino.checagem));
+      expect(mudou, l.id).toBe(true);
+    }
   });
 });

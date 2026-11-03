@@ -59,6 +59,29 @@ export type { ItemCompreensao };
  *  liberar o botão de continuar. */
 export const entendeuCom = (total: number) => Math.ceil(total * 0.7);
 
+/** As mesmas perguntas em outra ordem, e as alternativas de cada uma também
+ *  (03/11/2026). Depois de um erro a certa aparece marcada; sem isto, a
+ *  segunda rodada da lição de letra se respondia de memória ("a primeira, a
+ *  segunda, a primeira") sem reler nada. Verdadeiro/falso fica como está:
+ *  trocar a ordem dos dois botões só confundiria. Mesma semente, mesma ordem. */
+export function embaralharChecagem(itens: readonly ItemCompreensao[], semente: number): ItemCompreensao[] {
+  let x = (semente * 2654435761) >>> 0 || 1;
+  const sorte = () => { x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; return x / 4294967296; };
+  const misturar = <T,>(a: readonly T[]): T[] => {
+    const r = [...a];
+    for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(sorte() * (i + 1)); [r[i], r[j]] = [r[j]!, r[i]!]; }
+    return r;
+  };
+  return misturar(itens).map(p => {
+    if (p.t === 'escolha' || p.t === 'visual') {
+      const ordem = misturar(p.opcoes.map((_, i) => i));
+      return { ...p, opcoes: ordem.map(i => p.opcoes[i]!), certa: ordem.indexOf(p.certa) };
+    }
+    if (p.t === 'assoc') return { ...p, linhas: misturar(p.linhas) };
+    return p;
+  });
+}
+
 /* A cor de uma alternativa depois de respondida. A certa fica verde mesmo
    quando a pessoa escolheu outra - ver a nota do topo. */
 function tom(respondida: boolean, estaCerta: boolean, marcada: boolean) {

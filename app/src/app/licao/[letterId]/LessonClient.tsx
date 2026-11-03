@@ -37,7 +37,7 @@ import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose,
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
-import { Compreensao, entendeuCom } from '@/components/learn/Compreensao';
+import { Compreensao, embaralharChecagem, entendeuCom } from '@/components/learn/Compreensao';
 import { MeExplica } from '@/components/learn/MeExplica';
 import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
 import { CelebracaoDaLetra } from '@/components/aventura/CartaDaLetra';
@@ -362,6 +362,11 @@ function StageConhecer({
   const [certas, setCertas] = useState<number | null>(null);
   const [rodada, setRodada] = useState(0);
   const totalChecagem = letter.ensino?.checagem?.length ?? 0;
+  /* A primeira rodada na ordem do autor; a partir da segunda, embaralhada. */
+  const perguntas = useMemo(() => {
+    const todas = letter.ensino?.checagem ?? [];
+    return rodada === 0 ? todas : embaralharChecagem(todas, rodada);
+  }, [letter, rodada]);
   const liberado = jaFeita || !temChecagem || (certas !== null && certas >= entendeuCom(totalChecagem));
   const ensinadas = useMemo(() => new Set([...history, letter].map(l => l.letter)), [history, letter]);
 
@@ -489,7 +494,7 @@ function StageConhecer({
           id={`checagem-${letter.id}`}
           titulo={tx.entendeu}
           intro={tx.naoVaiNota}
-          perguntas={letter.ensino.checagem}
+          perguntas={perguntas}
           fecho={{
             bom: tx.fechoBom,
             parcial: tx.fechoParcial
