@@ -58,10 +58,10 @@ describe('o painel de vendas', () => {
     expect(vendas).toEqual([
       { orderId: doLink.id, curso: 'alfabetizacao', valorCentavos: 14700, liquidoCentavos: null, metodo: 'card', parcelas: 12,
         status: 'paid', pagoEm: 2000, parceria: 'sefarad', origem: null, campanha: null, nome: 'Ana', email: 'ana@exemplo.com',
-        estudouEm: null, concluidas: [], teste: false, desistiuEm: null, exameFeito: false },
+        estudouEm: null, concluidas: [], teste: false, desistiuEm: null, exameFeito: false, diasDeEstudo: 0, minutosEstimados: 0 },
       { orderId: semLink.id, curso: 'alfabetizacao', valorCentavos: 13230, liquidoCentavos: null, metodo: 'pix', parcelas: 1,
         status: 'refunded', pagoEm: 1000, parceria: null, origem: null, campanha: null, nome: 'Bia', email: 'bia@exemplo.com',
-        estudouEm: null, concluidas: [], teste: false, desistiuEm: null, exameFeito: false }
+        estudouEm: null, concluidas: [], teste: false, desistiuEm: null, exameFeito: false, diasDeEstudo: 0, minutosEstimados: 0 }
     ]);
     expect(vendas.some(v => v.orderId === pendente.id)).toBe(false);
   });
@@ -92,5 +92,24 @@ describe('o painel de vendas', () => {
     expect(vendas.map(v => [v.nome, v.estudouEm, v.concluidas])).toEqual([
       ['Ana', 5000, ['alef', 'mem']], ['Bia', 4000, []], ['Caio', null, []]
     ]);
+  });
+
+  it('diz em quantos dias a pessoa estudou e estima o tempo de prática', async () => {
+    const env = envDeTeste({ ADMIN_EMAILS: DONO }) as Env;
+    await conta(env, 'ana@exemplo.com', 'Ana');
+    const dono = await comoAdmin(env, await conta(env, DONO));
+    const ana = idDe(env, 'ana@exemplo.com');
+    const o = await createOrder(env, { accountId: ana, courseSlug: 'alfabetizacao', amountCents: 14700, method: 'card' });
+    env.DB.bruto.prepare("UPDATE orders SET status = 'paid', paid_at = ? WHERE id = ?").run(1000, o.id);
+    const estado = { version: 2, lessons: {}, days: {
+      '2026-11-01': { answered: 10, units: 90, xp: 0, goalMet: true },
+      '2026-11-02': { answered: 4, units: 45, xp: 0, goalMet: true },
+      '2026-11-03': { answered: 0, units: 0, xp: 0, goalMet: false }
+    } };
+    env.DB.bruto.prepare('INSERT INTO progress (account_id, state, version, rev, updated_at) VALUES (?, ?, 2, 1, ?)')
+      .run(ana, JSON.stringify(estado), 5000);
+    const { vendas } = await (await listar(env, dono)).json() as { vendas: Record<string, unknown>[] };
+    /* 135 unidades de 20 segundos = 45 minutos; o dia sem nada não conta */
+    expect(vendas.map(v => [v.nome, v.diasDeEstudo, v.minutosEstimados])).toEqual([['Ana', 2, 45]]);
   });
 });

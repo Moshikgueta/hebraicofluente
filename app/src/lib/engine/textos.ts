@@ -56,6 +56,11 @@ export type Texto = {
 export const textosPublicados = (textos: readonly Texto[]): Texto[] =>
   textos.filter(t => t.revisado);
 
+/** O `firsts` da Primeira Leitura do módulo. Mora aqui, e não em
+ *  lib/laboratorio.ts (que o reexporta), porque lib/sons.ts precisa dele para
+ *  as portas entre módulos e este arquivo não importa nada pesado. */
+export const primeiraLeituraId = (modulo: number): string => `primeira-leitura-m${modulo}`;
+
 /** O `firsts` que registra o texto do módulo `n` como lido. */
 export const textoLidoId = (n: number, revisao = false, ordem = 1): string =>
   revisao ? `revisao-texto-${n}` : ordem > 1 ? `texto-${n}-${ordem}` : `texto-${n}`;

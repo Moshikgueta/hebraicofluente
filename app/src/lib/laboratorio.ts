@@ -332,7 +332,7 @@ export function palavrasDaRodada(
 }
 
 /** O id do momento "Minha Primeira Leitura" de um módulo, em `firsts`. */
-export const primeiraLeituraId = (modulo: number): string => `primeira-leitura-m${modulo}`;
+export { primeiraLeituraId } from '@/lib/engine/textos';
 
 /**
  * As palavras da Primeira Leitura de um módulo: as das letras DESTE módulo

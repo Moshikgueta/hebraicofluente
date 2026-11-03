@@ -21,6 +21,7 @@ import type { Exercise } from '@/lib/engine/types';
 import type { SomLicao } from '@/lib/engine/extras';
 import { rng, shuffled, take, type Rand } from '@/lib/engine/rng';
 import { ehLicaoDeSom, SOM_PREFIXO, type PortaDeModulo } from '@/lib/state/rules';
+import { primeiraLeituraId, textoLidoId } from '@/lib/engine/textos';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/motor-sons';
 
@@ -68,12 +69,16 @@ export function ordemDeEnsino(
 /**
  * As portas entre módulos (03/11/2026): a primeira lição de um módulo que
  * vem logo depois de outro módulo de lições só abre com a revisão
- * (checkpoint) dele. Ver `PortaDeModulo` em lib/state/rules.ts. Os módulos 6
+ * (checkpoint) dele e as leituras dele (a Primeira Leitura e o texto
+ * principal). Ver `PortaDeModulo` em lib/state/rules.ts. Os módulos 6
  * e 7 não entram: o 6 não tem lição no caminho, e o 7 vem depois dele.
  */
 export function portasDosModulos(
   ordem: readonly string[],
-  modulos: readonly { n: number; lessons: readonly { som?: string; letters?: string[] }[]; checkpoint: { id: string } | null }[]
+  modulos: readonly {
+    n: number; lessons: readonly { som?: string; letters?: string[] }[];
+    checkpoint: { id: string } | null; textoPrincipal?: boolean;
+  }[]
 ): Map<string, PortaDeModulo> {
   const doModulo = new Map<string, number>();
   for (const m of modulos) for (const l of m.lessons) {
@@ -85,9 +90,16 @@ export function portasDosModulos(
     const a = doModulo.get(ordem[i - 1]!);
     const b = doModulo.get(ordem[i]!);
     if (a == null || b !== a + 1) continue;
-    const cp = modulos.find(m => m.n === a)?.checkpoint;
-    if (!cp) continue;
-    portas.set(ordem[i]!, { modulo: a, checkpoint: cp.id, licoes: ordem.filter(id => doModulo.get(id) === a) });
+    const mod = modulos.find(m => m.n === a);
+    if (!mod?.checkpoint) continue;
+    portas.set(ordem[i]!, {
+      modulo: a, checkpoint: mod.checkpoint.id, licoes: ordem.filter(id => doModulo.get(id) === a),
+      /* A Primeira Leitura e o texto principal (03/11/2026, decisão do dono). */
+      leituras: [
+        { tipo: 'primeira', id: primeiraLeituraId(a) },
+        ...(mod.textoPrincipal ? [{ tipo: 'texto' as const, id: textoLidoId(a) }] : [])
+      ]
+    });
   }
   return portas;
 }

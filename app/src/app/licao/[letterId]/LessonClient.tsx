@@ -14,7 +14,7 @@
  * there - never on navigation. */
 
 import { tx } from '@/i18n/telas/licao-lesson-client';
-import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
+import { PortaDoModulo } from '@/components/learn/PortaDoModulo';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
@@ -1181,6 +1181,21 @@ function PortaTrancada({ letter, porque }: {
     );
   }
 
+  /* O fim de um módulo (03/11/2026): a revisão e as leituras dele. */
+  if (porque.falta === 'revisao') {
+    return (
+      <div className="grid gap-5 focus-col">
+        <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">
+            {tx.naoAbriu(<He size="inline">{letter.letter}</He>)}
+          </h1>
+          <PortaDoModulo porque={porque} />
+          <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-5 focus-col">
       <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
@@ -1197,12 +1212,7 @@ function PortaTrancada({ letter, porque }: {
             {tx.naoAbriu(<He size="inline">{letter.letter}</He>)}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-            {porque.falta === 'revisao' ? (
-              <>
-                {txRevisao.porque(porque.modulo!, porque.modulo! + 1)}
-                {porque.abreEm && <> <strong className="font-semibold text-ink">{txRevisao.abreAmanha}</strong></>}
-              </>
-            ) : porque.falta === 'licao' ? (
+            {porque.falta === 'licao' ? (
               tx.vemDepois(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>)
             ) : (
               tx.faltamExercicios(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
@@ -1211,17 +1221,11 @@ function PortaTrancada({ letter, porque }: {
           </p>
         </div>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          {porque.falta === 'revisao' ? (
-            <LinkButton href={`/checkpoint/${porque.modulo}`} size="lg" full>
-              {txRevisao.irRevisao(porque.modulo!)}
-            </LinkButton>
-          ) : (
-            <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
-              {porque.falta === 'licao'
-                ? tx.irPara(anterior?.namePt)
-                : tx.refazerDe(anterior?.namePt)}
-            </LinkButton>
-          )}
+          <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
+            {porque.falta === 'licao'
+              ? tx.irPara(anterior?.namePt)
+              : tx.refazerDe(anterior?.namePt)}
+          </LinkButton>
           {atual !== porque.anterior && atualL && (
             <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>
               {tx.continuarDeOnde(atualL.namePt)}
