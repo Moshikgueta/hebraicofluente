@@ -966,6 +966,9 @@ export type PortaDeModulo = {
   checkpoint: string;
   /** As lições desse módulo, letras e sons. */
   licoes: readonly string[];
+  /** As leituras obrigatórias desse módulo (03/11/2026): a Primeira Leitura
+   *  e o texto principal, pelo `firsts` que cada uma grava ao terminar. */
+  leituras: readonly { tipo: 'primeira' | 'texto'; id: string }[];
 };
 export type Portas = ReadonlyMap<string, PortaDeModulo>;
 
@@ -1022,8 +1025,12 @@ export function letraLiberada(
 
   if (!liberaSeguinte(state, ordem[i - 1]!)) return false;
   const porta = portas?.get(letterId);
-  return !porta || !!state.checkpoints[porta.checkpoint]?.passedAt;
+  return !porta || portaAberta(state, porta);
 }
+
+/** A revisão aprovada e as leituras feitas. */
+const portaAberta = (state: LearnerState, porta: PortaDeModulo) =>
+  !!state.checkpoints[porta.checkpoint]?.passedAt && porta.leituras.every(l => !!state.firsts?.[l.id]);
 
 /** O que falta para abrir. `null` quando já está aberta. `falta: 'aula0'`
  *  é a primeira letra antes da Aula 0: `anterior` vem como AULA0_ID. */
@@ -1031,8 +1038,10 @@ export function porQueTrancada(
   state: LearnerState, ordem: readonly string[], letterId: string, portas?: Portas, agora: Date = new Date()
 ): {
   anterior: string; falta: 'licao' | 'nota' | 'aula0' | 'revisao'; nota: number | null;
-  /** Só em `revisao`: o módulo a revisar, e quando a revisão abre (ISO), se ainda não abriu. */
+  /** Só em `revisao`: o módulo a fechar, quando a revisão abre (ISO, se
+   *  ainda não abriu), se ela falta, e as leituras que faltam. */
   modulo?: number; abreEm?: string | null;
+  faltaCheckpoint?: boolean; faltaLer?: PortaDeModulo['leituras'];
 } | null {
   if (letraLiberada(state, ordem, letterId, portas)) return null;
   const i = ordem.indexOf(letterId);
@@ -1042,7 +1051,9 @@ export function porQueTrancada(
     const porta = portas!.get(letterId)!;
     return {
       anterior, falta: 'revisao', nota: null, modulo: porta.modulo,
-      abreEm: revisaoAbreEm(state, porta, agora)?.toISOString() ?? null
+      abreEm: revisaoAbreEm(state, porta, agora)?.toISOString() ?? null,
+      faltaCheckpoint: !state.checkpoints[porta.checkpoint]?.passedAt,
+      faltaLer: porta.leituras.filter(l => !state.firsts?.[l.id])
     };
   }
   const l = state.lessons[anterior];

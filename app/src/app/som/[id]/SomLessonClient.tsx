@@ -17,7 +17,7 @@
  */
 
 import { tx } from '@/i18n/telas/licao-som-lesson-client';
-import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
+import { PortaDoModulo } from '@/components/learn/PortaDoModulo';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -186,14 +186,24 @@ export function useDestino(modulo: number, id: string, ordem: readonly string[])
 /** A porta fechada: a lição anterior ainda não foi concluída ou dominada. */
 export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNullable<ReturnType<typeof porQueTrancada>> }) {
   const anterior = nomeDaLicao(trancada.anterior, allLetters(), course.modules);
+  /* O fim de um módulo (03/11/2026): a revisão e as leituras dele. */
+  if (trancada.falta === 'revisao') {
+    return (
+      <div className="grid gap-5 focus-col">
+        <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
+          <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
+          <PortaDoModulo porque={trancada} />
+          <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
+        </Card>
+      </div>
+    );
+  }
   return (
     <div className="grid gap-5 focus-col">
       <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
         <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-          {trancada.falta === 'revisao'
-            ? txRevisao.porque(trancada.modulo!, trancada.modulo! + 1) + (trancada.abreEm ? ` ${txRevisao.abreAmanha}` : '')
-            : trancada.falta === 'aula0'
+          {trancada.falta === 'aula0'
             ? tx.trancadaAula0
             : trancada.falta === 'licao'
             ? tx.trancadaLicao(<strong className="font-semibold text-ink">{anterior}</strong>)
@@ -201,9 +211,7 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
                 Math.round((trancada.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))}
         </p>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          {trancada.falta === 'revisao'
-            ? <LinkButton href={`/checkpoint/${trancada.modulo}`} size="lg" full>{txRevisao.irRevisao(trancada.modulo!)}</LinkButton>
-            : <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>{tx.irPara(anterior)}</LinkButton>}
+          <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>{tx.irPara(anterior)}</LinkButton>
           <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
         </div>
       </Card>

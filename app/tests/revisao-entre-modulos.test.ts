@@ -74,13 +74,31 @@ describe('a primeira letra do módulo seguinte', () => {
   it('fecha sem a revisão, e diz por quê', () => {
     expect(letraLiberada(estado(ONTEM), ORDEM, 'gimel', PORTAS)).toBe(false);
     expect(porQueTrancada(estado(HOJE), ORDEM, 'gimel', PORTAS, AGORA)).toEqual({
-      anterior: 'yod', falta: 'revisao', nota: null, modulo: 1, abreEm: new Date(2026, 10, 4).toISOString()
+      anterior: 'yod', falta: 'revisao', nota: null, modulo: 1, abreEm: new Date(2026, 10, 4).toISOString(),
+      faltaCheckpoint: true, faltaLer: [{ tipo: 'primeira', id: 'primeira-leitura-m1' }]
     });
     expect(porQueTrancada(estado(ONTEM), ORDEM, 'gimel', PORTAS, AGORA)?.abreEm).toBeNull();
   });
 
-  it('abre com o checkpoint aprovado', () => {
-    expect(letraLiberada(estado(HOJE, { checkpoints: aprovado } as never), ORDEM, 'gimel', PORTAS)).toBe(true);
+  it('o checkpoint aprovado não basta: faltam as leituras', () => {
+    const s = estado(HOJE, { checkpoints: aprovado } as never);
+    expect(letraLiberada(s, ORDEM, 'gimel', PORTAS)).toBe(false);
+    expect(porQueTrancada(s, ORDEM, 'gimel', PORTAS, AGORA)).toMatchObject({
+      falta: 'revisao', faltaCheckpoint: false, faltaLer: [{ tipo: 'primeira' }]
+    });
+  });
+
+  it('abre com o checkpoint aprovado e as leituras feitas', () => {
+    const s = estado(HOJE, { checkpoints: aprovado, firsts: { 'primeira-leitura-m1': HOJE } } as never);
+    expect(letraLiberada(s, ORDEM, 'gimel', PORTAS)).toBe(true);
+  });
+
+  it('do módulo 2 em diante, o texto principal também é obrigatório', () => {
+    expect(PORTAS.get('vav')!.leituras).toEqual([
+      { tipo: 'primeira', id: 'primeira-leitura-m2' }, { tipo: 'texto', id: 'texto-2' }
+    ]);
+    /* o módulo 1 não tem texto principal publicado */
+    expect(PORTAS.get('gimel')!.leituras.map(l => l.tipo)).toEqual(['primeira']);
   });
 
   it('quem já entrou no módulo seguinte segue com ele aberto', () => {

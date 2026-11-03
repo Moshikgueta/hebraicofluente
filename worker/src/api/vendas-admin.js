@@ -14,7 +14,11 @@
  * `teste: true`: são os testes do dono, que o painel mostra à parte e não soma.
  *
  * Desde 03/11/2026, também quando a pessoa desistiu pelo site e se já tinha
- * passado no exame final - para medir quem faz o curso e desiste.
+ * passado no exame final - para medir quem faz o curso e desiste -, em
+ * quantos dias ela estudou e uma ESTIMATIVA do tempo de prática: a soma das
+ * unidades da meta diária (`days[*].units`, cerca de 20 segundos cada; ver
+ * `goalTarget` em app/src/lib/state/rules.ts). Não é relógio: o tempo real
+ * de cada etapa só sai anônimo, nas estatísticas.
  * Desde 05/10/2026, cada compra diz também se a pessoa já começou o curso:
  * quando o progresso dela foi gravado pela última vez (`progress.updated_at`,
  * que só muda quando algo de verdade mudou) e quais lições ela concluiu.
@@ -30,6 +34,8 @@ import { emailsDeAdmin, exigirAdmin } from '../lib/admin.js';
 import { normalizeEmail } from '../lib/db.js';
 
 const LIMITE = 200;
+/** Uma unidade da meta diária vale cerca de 20 segundos (rules.ts, goalTarget). */
+const UNIDADE_SEGUNDOS = 20;
 
 const lista = texto => {
   try { const l = JSON.parse(texto || '[]'); return Array.isArray(l) ? l.map(String) : []; } catch { return []; }
@@ -48,7 +54,12 @@ export async function listar({ request, env }) {
               WHERE e.order_id = o.id AND e.status = 'paid' AND json_valid(e.raw)
               ORDER BY e.created_at DESC LIMIT 1) AS liquido,
             (SELECT json_group_array(l.key) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.lessons') l
-              WHERE json_extract(l.value, '$.completedAt') IS NOT NULL) AS concluidas
+              WHERE json_extract(l.value, '$.completedAt') IS NOT NULL) AS concluidas,
+            (SELECT COUNT(*) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.days') d
+              WHERE COALESCE(json_extract(d.value, '$.units'), 0) > 0
+                 OR COALESCE(json_extract(d.value, '$.answered'), 0) > 0) AS dias_estudo,
+            (SELECT SUM(COALESCE(json_extract(d.value, '$.units'), 0))
+               FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.days') d) AS unidades
        FROM orders o LEFT JOIN accounts a ON a.id = o.account_id
                      LEFT JOIN progress p ON p.account_id = o.account_id
       WHERE o.status IN ('paid', 'refunded')
@@ -68,6 +79,8 @@ export async function listar({ request, env }) {
       /* Desistência pelo site (03/11/2026): quando foi pedida, para o painel
          dizer quantos dias depois da compra e até onde a pessoa chegou. */
       desistiuEm: v.desistiu_em || null, exameFeito: !!v.exame_em,
+      diasDeEstudo: Number(v.dias_estudo) || 0,
+      minutosEstimados: Math.round((Number(v.unidades) || 0) * UNIDADE_SEGUNDOS / 60),
       teste: !!v.email && admins.includes(normalizeEmail(v.email))
     }))
   });

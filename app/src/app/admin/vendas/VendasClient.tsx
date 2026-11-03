@@ -24,6 +24,7 @@ type Venda = {
   nome: string; email: string | null;
   estudouEm: number | null; concluidas: string[]; teste?: boolean;
   desistiuEm?: number | null; exameFeito?: boolean;
+  diasDeEstudo?: number; minutosEstimados?: number;
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; vendas: Venda[] };
@@ -38,6 +39,8 @@ const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currenc
 const LETRAS = new Set(letterIds());
 const quando = (ms: number) => new Date(ms).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 const letrasDe = (v: Venda) => v.concluidas.filter(id => LETRAS.has(id)).length;
+/** "45 min", "2 h 10 min". */
+const duracao = (min: number) => (min < 60 ? `${min} min` : `${Math.floor(min / 60)} h${min % 60 ? ` ${min % 60} min` : ''}`);
 const diasAte = (v: Venda) => Math.max(0, Math.floor(((v.desistiuEm ?? v.pagoEm) - v.pagoEm) / 86_400_000));
 
 export function VendasClient() {
@@ -153,6 +156,11 @@ function Cartao({ v }: { v: Venda }) {
           {v.estudouEm === null
             ? 'Ainda não começou o curso.'
             : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
+        </p>
+      )}
+      {v.status === 'paid' && v.estudouEm !== null && v.diasDeEstudo != null && (
+        <p className="font-ui text-[14px] m-0">
+          Estudou em {v.diasDeEstudo} {v.diasDeEstudo === 1 ? 'dia' : 'dias'} · cerca de {duracao(v.minutosEstimados ?? 0)} de prática (estimativa)
         </p>
       )}
       {v.desistiuEm != null && (

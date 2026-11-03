@@ -37,6 +37,7 @@ import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, portasDosModulos, rot
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-dashboard-client';
 import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
+import { passosDaPorta } from '@/components/learn/PortaDoModulo';
 
 /** Itens vencidos a partir dos quais o painel sugere revisar antes da lição. */
 export const REVISAO_URGENTE = 15;
@@ -100,6 +101,19 @@ export function DashboardClient() {
     };
   }, [next, p.state]);
 
+  /* As leituras que faltam para abrir o módulo seguinte (03/11/2026): a
+     revisão já aprovada, a próxima lição trancada pelas leituras. O cartão
+     principal aponta para a primeira que falta. */
+  const ler = useMemo(() => {
+    const id = next.kind === 'letter' ? next.letter.id : next.kind === 'som' ? idDoSom(next.som) : null;
+    if (!id) return null;
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
+    const porque = porQueTrancada(p.state, ordem, id, portasDosModulos(ordem, course.modules));
+    if (porque?.falta !== 'revisao' || porque.faltaCheckpoint) return null;
+    const passo = passosDaPorta(porque).find(x => !x.feito);
+    return passo ? { ...passo, proximo: porque.modulo! + 1 } : null;
+  }, [next, p.state]);
+
   /* A Aula 0 é a ação principal enquanto não foi CONCLUÍDA (desde 11/10/2026
      ela é obrigatória e abre a primeira letra). Depois, a lição. */
   const aula0Primeiro = !aula0Feita(p.state);
@@ -151,6 +165,8 @@ export function DashboardClient() {
   const totalLetras = course.totalLetters;
   const orientacao = aula0Primeiro
     ? tx.orientaAula0
+    : ler
+      ? fmt(txRevisao.paraAbrir(ler.proximo), { nome: ler.nome })
     : terminar
       ? fmt(tx.orientaTerminar, { nome: terminar.nome })
       : next.kind === 'letter'
@@ -170,6 +186,7 @@ export function DashboardClient() {
 
   /* A lição do plano de hoje: a mesma do botão principal. */
   const licaoDeHoje = aula0Primeiro ? { nome: tx.hojeAula0, href: '/inicio' }
+    : ler ? { nome: ler.nome, href: ler.href }
     : terminar ? { nome: terminar.nome, href: rotaDaLicao(terminar.id) }
     : next.kind === 'letter' ? { nome: next.letter.namePt, href: `/licao/${next.letter.id}` }
     : next.kind === 'som' ? { nome: next.nome, href: `/som/${next.som}` }
@@ -251,7 +268,19 @@ export function DashboardClient() {
           />
         )}
 
-        {!aula0Primeiro && !terminar && next.kind === 'letter' && (
+        {!aula0Primeiro && ler && next.kind !== 'done' && (
+          <CartaoCurso
+            kicker={tx.emAndamento}
+            titulo={flagship().titlePt}
+            sub={txRevisao.lerSub(ler.proximo)}
+            pct={p.progress}
+            href={ler.href}
+            cta={txRevisao.irPara(ler.nome)}
+            modulo={next.module.n}
+          />
+        )}
+
+        {!aula0Primeiro && !terminar && !ler && next.kind === 'letter' && (
           <CartaoCurso
             kicker={tx.emAndamento}
             titulo={flagship().titlePt}
@@ -268,7 +297,7 @@ export function DashboardClient() {
           />
         )}
 
-        {!aula0Primeiro && !terminar && next.kind === 'som' && (
+        {!aula0Primeiro && !terminar && !ler && next.kind === 'som' && (
           <CartaoCurso
             kicker={tx.emAndamento}
             titulo={flagship().titlePt}
@@ -370,7 +399,7 @@ export function DashboardClient() {
       {!aula0Primeiro && licoesFeitas > 0 && <InstalarApp variante="cartao" />}
 
       {/* A Primeira Leitura do módulo que acabou de fechar (11/10/2026). */}
-      {!aula0Primeiro && primeiraPendente && (
+      {!aula0Primeiro && primeiraPendente && !ler && (
         <Card tone="wash" className="p-5 grid gap-2.5 sm:flex sm:items-center sm:justify-between sm:gap-5">
           <div className="grid gap-1 min-w-0">
             <Badge tone="accent">{tx.primeiraBadge}</Badge>

@@ -256,6 +256,8 @@ export type CourseModule = {
   letterIds: string[];
   upTo: number | null;
   checkpoint: Checkpoint | null;
+  /** O módulo tem texto principal publicado (ver tools/export-content.mjs). */
+  textoPrincipal?: boolean;
 };
 
 /** O esqueleto de uma letra que a vitrine mostra: o glifo e o nome. */

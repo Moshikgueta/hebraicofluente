@@ -305,6 +305,12 @@ function main() {
         milestonePt: M.milestonePt,
         lessons: M.lessons,
         letterIds: own.map(l => l.id),
+        /* Tem texto principal publicado (03/11/2026)? Só o sim/não sai aqui,
+           nunca o texto: a porta do módulo seguinte (lib/sons.ts,
+           portasDosModulos) precisa saber antes de o conteúdo pago chegar.
+           A mesma regra de `textoDoModulo` em lib/content.ts. */
+        textoPrincipal: readJson('data/textos.json').textos
+          .some(t => t.modulo === M.n && t.revisado && !t.revisao && !t.n),
         upTo: own.length ? own[own.length - 1].order : null,
         /* Um módulo sem letras PRÓPRIAS também tem checkpoint - e por um bom
            tempo não teve, o que deixou os dois últimos módulos do curso sem
