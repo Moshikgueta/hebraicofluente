@@ -21,6 +21,7 @@ import { fail, json, notSignedIn, readJson } from '../lib/http.js';
 import { hasEntitlement, throttled } from '../lib/db.js';
 import { ip, requireAccount } from './auth.js';
 import { CURSO_A1 } from './content-a1.js';
+import { CURSO_ALFA, publicoDoAlfa } from './certificado-alfa.js';
 import exame from '../../../app/content/a1-exame.json';
 import { AUDIO_MANIFEST } from '../../../app/src/lib/audio-manifest.ts';
 import { corrigir, provaPublica, sortear } from '../../../app/src/lib/a1-prova.ts';
@@ -180,10 +181,11 @@ export async function trocarPublico({ request, env }) {
 export async function verificar({ request, env }) {
   if (await throttled(env, `verif:${ip(request)}`, 30, 60_000)) return fail('limite', 429);
   const id = new URL(request.url).searchParams.get('id') || '';
-  if (!/^A1-[A-Z2-9]{8}$/.test(id)) return fail('not-found', 404);
+  /* A1-… é o do A1; HF-… o do alfabeto (api/certificado-alfa.js). */
+  if (!/^(A1|HF)-[A-Z2-9]{8}$/.test(id)) return fail('not-found', 404);
   const c = await env.DB.prepare('SELECT * FROM certificados WHERE id = ? AND publico = 1').bind(id).first();
   if (!c) return fail('not-found', 404);
-  const { nota: _nota, publico: _publico, ...resto } = publicoDe(c);
+  const { nota: _nota, publico: _publico, ...resto } = c.curso === CURSO_ALFA ? publicoDoAlfa(c, env) : publicoDe(c);
   void _nota; void _publico;
   return json(resto);
 }

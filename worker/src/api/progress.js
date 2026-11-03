@@ -24,7 +24,7 @@ import { json, fail, notSignedIn, readJson } from '../lib/http.js';
 import { requireAccount } from './auth.js';
 import { ehCurso } from '../lib/catalog.js';
 import {
-  activeEntitlements, clearProgress, getProgress, hasProgress, putProgress, throttled
+  activeEntitlements, clearProgress, desistivelAte, getProgress, hasProgress, putProgress, throttled
 } from '../lib/db.js';
 
 /* Em bytes de verdade, agora que `readJson` mede bytes. O limite antigo media
@@ -124,6 +124,18 @@ export async function write({ request, env }) {
   if (!state || typeof state !== 'object' || Array.isArray(state)) return fail('estado', 400);
   if (typeof state.version !== 'number') return fail('estado', 400);
   if (temChavePerigosa(state)) return fail('estado', 400);
+
+  /* O exame final não é gravado dentro do prazo de desistência (03/11/2026,
+     decisão do dono). A tela já o tranca (AbreDepoisDoPrazo); isto é a
+     mesma regra do lado de cá, para quem burlar a tela: o resultado fica só
+     no aparelho, e o certificado (api/certificado-alfa.js), que lê o
+     progresso DAQUI, não sai. Passado o prazo, a próxima gravação do
+     aparelho traz o exame junto, pela fusão de sempre. */
+  if (state.finalChallenge && typeof state.finalChallenge === 'object' && state.finalChallenge.passedAt
+      && await desistivelAte(env, account.id, 'alfabetizacao') !== null) {
+    const antes = (await getProgress(env, account.id))?.state?.finalChallenge;
+    state.finalChallenge = antes && typeof antes === 'object' ? antes : { best: null, completedAt: null };
+  }
 
   const r = await putProgress(env, account.id, {
     state, version: version ?? state.version, expected: Number(rev) || 0

@@ -36,6 +36,7 @@ import { contentA1 } from './api/content-a1.js';
 import { contentRaizes } from './api/content-raizes.js';
 import { licenca as licencaDoLivro, pdfMarcado, CAMINHO_DO_PDF } from './api/livro.js';
 import * as exameA1 from './api/exame-a1.js';
+import * as certificadoAlfa from './api/certificado-alfa.js';
 import * as audio from './api/audio.js';
 import * as novidades from './api/novidades.js';
 import * as lembrete from './api/lembrete.js';
@@ -124,6 +125,8 @@ const ROUTES = {
   'POST /api/a1/certificado': exameA1.emitirCertificado,
   'POST /api/a1/certificado/publico': exameA1.trocarPublico,
   'GET /api/certificado': exameA1.verificar,
+  'GET /api/certificado/alfabetizacao': certificadoAlfa.meu,
+  'POST /api/certificado/alfabetizacao': certificadoAlfa.emitir,
 
   /* O que a CSP estrita bloqueou. Ver api/csp.js. */
   'POST /api/csp-report': csp.relatorio,
