@@ -128,7 +128,11 @@ async function alertaDeSaude(env, at) {
   const linhas = [];
   if (backupVelho) {
     linhas.push(backup === null
-      ? '- Backup: nenhum carimbo de backup no banco. Ou o backup diário nunca terminou desde 01/10/2026, ou o passo "Carimbando" dele falhou.'
+      /* Sem data aqui (03/11/2026): a frase dizia "desde 01/10/2026", o dia
+         em que o carimbo nasceu, e o banco do site em inglês, que nunca teve
+         backup, mandava todo dia um "nenhum backup desde 01/10" que parecia
+         falar do banco daqui. O site de origem vai no fim (comOrigem). */
+      ? '- Backup: nenhum carimbo de backup no banco DESTE site. A Action "Backup do banco" do repositório deste site nunca terminou uma cópia (o agendamento está desligado?), ou o passo "Carimbando" dela falhou.'
       : `- Backup: a última cópia nova é de ${horasSemBackup} horas atrás (o limite é ${BACKUP_MAX_HORAS}).`,
     '  Veja GitHub -> Actions -> "Backup do banco": a última execução diz o motivo. Rode "copiar" à mão depois de resolver.');
   }
