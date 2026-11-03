@@ -21,6 +21,7 @@ import { itemDaLeitura } from '@/lib/engine/bonus';
 import { cartasCompradas, folgasLivres, gasto, ITENS, leiturasCompradas, MAX_FOLGAS, saldo, temNomeDecorado, type Recusa } from '@/lib/loja';
 import { arquivoDoNome, desenharNome, FORMATOS_NOME, type FormatoNome } from '@/lib/nome-decorado';
 import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
+import { AbreDepoisDoPrazo, useAbreEm } from '@/components/platform/AbreDepoisDoPrazo';
 import { tx } from '@/i18n/telas/academia-loja-client';
 
 const MOTIVO: Record<Recusa, string> = {
@@ -121,6 +122,8 @@ function LeiturasBonus({ livre, mastered, semDominio, totalLetras, minhas, onTro
   onTrocar: (item: 'texto-bonus' | 'bencao', id: string, legivel: boolean) => void;
 }) {
   const leituras = leiturasBonus();
+  const abreEm = useAbreEm();
+  if (abreEm) return <AbreDepoisDoPrazo o="bonus" em={abreEm} comBotao={false} />;
   if (!leituras.length) return null;
   const adiantadas = leituras.some(l => mastered < l.after);
   return (

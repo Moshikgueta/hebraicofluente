@@ -45,6 +45,10 @@ export type Entitlement = {
   expiresAt: string | null;
   /** O pedido que gerou o acesso. É por aqui que um estorno o encontra. */
   orderId: string;
+  /** Até quando a compra ainda pode ser desfeita pelo site (ISO), ou null:
+   *  presente, liberação à mão ou prazo vencido. Enquanto houver, o exame
+   *  final, o certificado e as leituras bônus ficam para depois (03/11/2026). */
+  desistivelAte?: string | null;
 };
 
 export type Session = {
@@ -175,6 +179,17 @@ export function entitlementFor(
   if (!e) return null;
   if (e.expiresAt && new Date(e.expiresAt).getTime() <= now.getTime()) return null;
   return e;
+}
+
+/** Quando abrem o exame final, o certificado e as leituras bônus: o fim do
+ *  prazo de desistência da compra, ou null se já estão abertos (03/11/2026). */
+export function abreDepoisDoPrazo(
+  session: Session | null, courseSlug = 'alfabetizacao', now: Date = new Date()
+): Date | null {
+  const e = entitlementFor(session, courseSlug, now);
+  if (!e?.desistivelAte) return null;
+  const fim = new Date(e.desistivelAte).getTime() + 1;
+  return fim > now.getTime() ? new Date(fim) : null;
 }
 
 export const hasAccess = (

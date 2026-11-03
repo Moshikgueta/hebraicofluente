@@ -36,6 +36,7 @@ import { EditorDeNome } from '@/components/learn/MeuNome';
 import { MEU_NOME_EM_HEBRAICO } from '@/lib/recursos';
 import { sugerirNome } from '@/lib/nome-hebraico';
 import { fmt } from '@/i18n';
+import { AbreDepoisDoPrazo, useAbreEm } from '@/components/platform/AbreDepoisDoPrazo';
 import { tx } from '@/i18n/telas/painel-certificado-client';
 
 export function CertificadoClient() {
@@ -63,6 +64,7 @@ export function CertificadoClient() {
   /* Preenchido uma vez, com o nome do onboarding ou, sem ele, o nome da
      conta (UXQA-008); depois o campo é do aluno - quem apagou quis apagar. */
   const account = useAccount();
+  const abreEm = useAbreEm();
   const nomeDaConta = account.session?.account.name?.trim() ?? '';
   useEffect(() => {
     if (!touched && p.ready) setName(p.state.onboarding?.name?.trim() || nomeDaConta);
@@ -138,6 +140,9 @@ export function CertificadoClient() {
   }, []);
 
   if (!p.ready) return null;
+
+  /* ── o prazo de desistência (03/11/2026) ── */
+  if (abreEm) return <div className="focus-col grid gap-5"><AbreDepoisDoPrazo o="certificado" em={abreEm} /></div>;
 
   /* ── not yet ──────────────────────────────────────────────────────── */
   if (!gate.ready) {
@@ -399,8 +404,9 @@ function Requirement({
 /** The card the completion page shows once the certificate exists. */
 export function CertificateCallout() {
   const p = useProgress();
+  const abreEm = useAbreEm();
   const gate = certificateReady(p.state, course.totalLetters);
-  if (!gate.ready) return null;
+  if (!gate.ready || abreEm) return null;
   return (
     <Card tone="mint" className="p-6 grid gap-3">
       <Badge tone="mint">{tx.certificado}</Badge>

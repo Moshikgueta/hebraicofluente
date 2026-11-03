@@ -7,6 +7,8 @@
  * Desde 23/10/2026, também a origem da visita (lib/origem.ts) e a campanha,
  * e as compras de contas de administrador (os testes do dono) vão à parte.
  * Desde 05/10/2026, também se a pessoa já começou o curso, e até onde foi.
+ * Desde 03/11/2026, as desistências: quantos dias depois da compra, com
+ * quantas letras concluídas e se já tinha passado no exame final.
  */
 
 import { useCallback, useEffect, useState } from 'react';
@@ -21,6 +23,7 @@ type Venda = {
   status: 'paid' | 'refunded'; pagoEm: number; parceria: string | null; origem?: string | null; campanha?: string | null;
   nome: string; email: string | null;
   estudouEm: number | null; concluidas: string[]; teste?: boolean;
+  desistiuEm?: number | null; exameFeito?: boolean;
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
   | { tipo: 'pronto'; vendas: Venda[] };
@@ -34,6 +37,8 @@ const LINK: Record<string, string> = {
 const reais = (c: number) => (c / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const LETRAS = new Set(letterIds());
 const quando = (ms: number) => new Date(ms).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+const letrasDe = (v: Venda) => v.concluidas.filter(id => LETRAS.has(id)).length;
+const diasAte = (v: Venda) => Math.max(0, Math.floor(((v.desistiuEm ?? v.pagoEm) - v.pagoEm) / 86_400_000));
 
 export function VendasClient() {
   const [estado, setEstado] = useState<Estado>({ tipo: 'carregando' });
@@ -56,6 +61,9 @@ export function VendasClient() {
   const testes = estado.tipo === 'pronto' ? estado.vendas.filter(v => v.teste) : [];
   const pagas = reaisDeAlunos.filter(v => v.status === 'paid');
   const doLink = pagas.filter(v => v.parceria).length;
+  const desistencias = reaisDeAlunos.filter(v => v.desistiuEm);
+  const mediaLetras = desistencias.length
+    ? Math.round(desistencias.reduce((s, v) => s + letrasDe(v), 0) / desistencias.length) : 0;
 
   return (
     <main className="mx-auto max-w-[760px] px-4 py-10 grid gap-5">
@@ -84,6 +92,13 @@ export function VendasClient() {
             <strong>{pagas.length}</strong> {pagas.length === 1 ? 'compra paga' : 'compras pagas'}
             {' · '}{reais(pagas.reduce((s, v) => s + v.valorCentavos, 0))}
             {' · '}{doLink} pelo link de campanha
+          </p>
+        )}
+        {estado.tipo === 'pronto' && desistencias.length > 0 && (
+          <p className="m-0 text-[15px]">
+            <strong>{desistencias.length}</strong> {desistencias.length === 1 ? 'desistência' : 'desistências'} pelo site
+            {' · '}em média {mediaLetras} de {course.totalLetters} letras concluídas antes de desistir
+            {' · '}{desistencias.filter(v => v.exameFeito).length} com o exame final feito
           </p>
         )}
         {estado.tipo === 'pronto' && pagas.some(v => v.liquidoCentavos != null) && (
@@ -138,6 +153,13 @@ function Cartao({ v }: { v: Venda }) {
           {v.estudouEm === null
             ? 'Ainda não começou o curso.'
             : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
+        </p>
+      )}
+      {v.desistiuEm != null && (
+        <p className="font-ui text-[14px] m-0">
+          <strong>Desistiu {diasAte(v) === 0 ? 'no mesmo dia' : `${diasAte(v)} ${diasAte(v) === 1 ? 'dia' : 'dias'} depois da compra`}</strong>
+          {' · '}{letrasDe(v)} de {course.totalLetters} letras concluídas
+          {v.exameFeito ? ' · já tinha passado no exame final' : ''}
         </p>
       )}
       {v.status === 'refunded' && <p className="font-ui text-[14px] text-ink-muted m-0">Estornada</p>}
