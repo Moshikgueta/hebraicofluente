@@ -8,7 +8,10 @@
  * e as compras de contas de administrador (os testes do dono) vão à parte.
  * Desde 05/10/2026, também se a pessoa já começou o curso, e até onde foi.
  * Desde 03/11/2026, as desistências: quantos dias depois da compra, com
- * quantas letras concluídas e se já tinha passado no exame final.
+ * quantas letras concluídas e se já tinha passado no exame final. E o funil
+ * (`funil`): de quem pagou, quantos começaram, quantos fecharam cada módulo
+ * de letras e quantos fizeram o exame final - para ver se as travas de
+ * 03/11/2026 (perguntas, revisão entre módulos, leituras) ajudam ou atrapalham.
  */
 
 import { useCallback, useEffect, useState } from 'react';
@@ -41,6 +44,54 @@ const quando = (ms: number) => new Date(ms).toLocaleString('pt-BR', { dateStyle:
 const letrasDe = (v: Venda) => v.concluidas.filter(id => LETRAS.has(id)).length;
 /** "45 min", "2 h 10 min". */
 const duracao = (min: number) => (min < 60 ? `${min} min` : `${Math.floor(min / 60)} h${min % 60 ? ` ${min % 60} min` : ''}`);
+/** O funil, uma pessoa por e-mail (quem renovou conta uma vez). */
+export function funil(pagas: readonly Venda[]) {
+  const porPessoa = new Map<string, Venda>();
+  for (const v of pagas) {
+    const chave = v.email ?? v.orderId;
+    const antes = porPessoa.get(chave);
+    if (!antes || v.concluidas.length > antes.concluidas.length) porPessoa.set(chave, v);
+  }
+  const pessoas = [...porPessoa.values()];
+  const modulos = course.modules.filter(m => m.letterIds.length > 0);
+  return {
+    total: pessoas.length,
+    etapas: [
+      { rotulo: 'Começaram o curso', n: pessoas.filter(v => v.estudouEm !== null).length },
+      ...modulos.map(m => ({
+        rotulo: `Fecharam o módulo ${m.n}`,
+        n: pessoas.filter(v => m.letterIds.every(id => v.concluidas.includes(id))).length
+      })),
+      { rotulo: 'Fizeram o exame final', n: pessoas.filter(v => v.exameFeito).length }
+    ]
+  };
+}
+
+function Funil({ pagas }: { pagas: readonly Venda[] }) {
+  const { total, etapas } = funil(pagas);
+  if (!total) return null;
+  const pct = (n: number) => Math.round((n / total) * 100);
+  return (
+    <section aria-labelledby="funil" className="grid gap-2 rounded-[var(--r-md)] border border-line p-4">
+      <h2 id="funil" className="text-[18px] font-semibold m-0">Até onde os alunos chegam</h2>
+      <p className="font-ui text-[14px] text-ink-muted m-0">
+        De {total} {total === 1 ? 'pessoa que pagou' : 'pessoas que pagaram'} (uma vez por e-mail, sem estornos nem testes).
+      </p>
+      <ul className="grid gap-1.5 m-0 p-0 list-none">
+        {etapas.map(e => (
+          <li key={e.rotulo} className="grid grid-cols-[minmax(0,11rem)_1fr_auto] items-center gap-3 font-ui text-[14px]">
+            <span>{e.rotulo}</span>
+            <span aria-hidden className="h-2.5 rounded-full bg-surface-2 overflow-hidden">
+              <span className="block h-full rounded-full bg-[var(--teal)]" style={{ width: `${pct(e.n)}%` }} />
+            </span>
+            <span className="tabular-nums text-right">{e.n} · {pct(e.n)}%</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 const diasAte = (v: Venda) => Math.max(0, Math.floor(((v.desistiuEm ?? v.pagoEm) - v.pagoEm) / 86_400_000));
 
 export function VendasClient() {
@@ -113,6 +164,8 @@ export function VendasClient() {
           </p>
         )}
       </div>
+
+      {estado.tipo === 'pronto' && <Funil pagas={pagas} />}
 
       {reaisDeAlunos.map(v => <Cartao key={v.orderId} v={v} />)}
 
