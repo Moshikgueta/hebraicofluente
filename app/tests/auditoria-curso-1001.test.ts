@@ -256,7 +256,7 @@ describe('UXQA-002: abaixo de 80% nada aponta para letra trancada', () => {
     const d = fonte('app/meu-hebraico/DashboardClient.tsx');
     expect(d).toContain('cta={fmt(tx.terminarCta, { nome: terminar.nome })}');
     expect(fonte('i18n/telas/painel-dashboard-client.tsx')).toContain("terminarCta: 'Terminar {nome}'");
-    expect(d).toContain('porQueTrancada(p.state, ordem, id)');
+    expect(d).toContain('porQueTrancada(p.state, ordem, id, portasDosModulos(ordem, course.modules))');
   });
 });
 

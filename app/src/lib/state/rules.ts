@@ -939,7 +939,6 @@ export const AULA0_MINIMO = 12;
 export const aula0Feita = (state: LearnerState): boolean =>
   !!state.firsts?.[AULA0_CONCLUIDA] || Object.keys(state.lessons ?? {}).length > 0;
 
-/** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
 /** A etapa `n` de uma lição de letra abre quando a anterior foi concluída
  *  (03/11/2026, decisão do dono: avançar só depois de ler e escrever de
  *  verdade). Etapa já concluída continua aberta, sempre: nada do que o
@@ -947,7 +946,45 @@ export const aula0Feita = (state: LearnerState): boolean =>
 export const etapaAberta = (n: number, feitas: readonly number[]) =>
   n === 1 || feitas.includes(n) || feitas.includes(n - 1);
 
+/** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
 export const LIBERA_MARK = 0.8;
+
+/* ── a revisão entre módulos (03/11/2026, decisão do dono) ────────────────
+   A primeira lição de um módulo só abre com o checkpoint do módulo anterior
+   aprovado, e esse checkpoint só abre num DIA depois do último dia em que o
+   aluno concluiu uma lição daquele módulo. É o efeito de espaçamento: o que
+   se revisa depois de uma noite fica; e, de quebra, o alfabeto inteiro não
+   cabe numa tarde. As portas saem de `portasDosModulos` (lib/sons.ts): hoje,
+   na entrada dos módulos 2 a 5.
+
+   NUNCA TIRA O QUE JÁ FOI DADO: checkpoint já aprovado não fecha, e quem já
+   entrou numa lição do módulo seguinte segue com ela aberta (a regra de
+   `letraLiberada` abaixo vale para as portas também). */
+export type PortaDeModulo = {
+  /** O módulo cuja revisão abre a porta. */
+  modulo: number;
+  checkpoint: string;
+  /** As lições desse módulo, letras e sons. */
+  licoes: readonly string[];
+};
+export type Portas = ReadonlyMap<string, PortaDeModulo>;
+
+/** Quando a revisão de um módulo abre: `null` se já pode ser feita, ou a
+ *  meia-noite (local) de amanhã se alguma lição do módulo foi concluída hoje. */
+export function revisaoAbreEm(
+  state: LearnerState, porta: Pick<PortaDeModulo, 'checkpoint' | 'licoes'>, agora: Date = new Date()
+): Date | null {
+  if (state.checkpoints[porta.checkpoint]?.passedAt) return null;
+  const hoje = today(agora);
+  const estudouHoje = porta.licoes.some(id => {
+    const quando = state.lessons[id]?.completedAt;
+    return !!quando && today(new Date(quando)) >= hoje;
+  });
+  if (!estudouHoje) return null;
+  const amanha = new Date(agora);
+  amanha.setHours(24, 0, 0, 0);
+  return amanha;
+}
 
 /** A letra foi dominada para efeito de DESTRAVAR a próxima. */
 export const liberaSeguinte = (state: LearnerState, letterId: string): boolean => {
@@ -962,7 +999,7 @@ export const liberaSeguinte = (state: LearnerState, letterId: string): boolean =
  * ordenada por `order`. A primeira está sempre aberta.
  */
 export function letraLiberada(
-  state: LearnerState, ordem: readonly string[], letterId: string
+  state: LearnerState, ordem: readonly string[], letterId: string, portas?: Portas
 ): boolean {
   const i = ordem.indexOf(letterId);
   /* A primeira letra abre quando a Aula 0 foi concluída (11/10/2026).
@@ -983,28 +1020,41 @@ export function letraLiberada(
   if (state.lessons[letterId]) return true;
   for (let k = i + 1; k < ordem.length; k++) if (state.lessons[ordem[k]!]) return true;
 
-  return liberaSeguinte(state, ordem[i - 1]!);
+  if (!liberaSeguinte(state, ordem[i - 1]!)) return false;
+  const porta = portas?.get(letterId);
+  return !porta || !!state.checkpoints[porta.checkpoint]?.passedAt;
 }
 
 /** O que falta para abrir. `null` quando já está aberta. `falta: 'aula0'`
  *  é a primeira letra antes da Aula 0: `anterior` vem como AULA0_ID. */
 export function porQueTrancada(
-  state: LearnerState, ordem: readonly string[], letterId: string
-): { anterior: string; falta: 'licao' | 'nota' | 'aula0'; nota: number | null } | null {
-  if (letraLiberada(state, ordem, letterId)) return null;
+  state: LearnerState, ordem: readonly string[], letterId: string, portas?: Portas, agora: Date = new Date()
+): {
+  anterior: string; falta: 'licao' | 'nota' | 'aula0' | 'revisao'; nota: number | null;
+  /** Só em `revisao`: o módulo a revisar, e quando a revisão abre (ISO), se ainda não abriu. */
+  modulo?: number; abreEm?: string | null;
+} | null {
+  if (letraLiberada(state, ordem, letterId, portas)) return null;
   const i = ordem.indexOf(letterId);
   if (i <= 0) return { anterior: AULA0_ID, falta: 'aula0', nota: null };
   const anterior = ordem[i - 1]!;
+  if (liberaSeguinte(state, anterior)) {
+    const porta = portas!.get(letterId)!;
+    return {
+      anterior, falta: 'revisao', nota: null, modulo: porta.modulo,
+      abreEm: revisaoAbreEm(state, porta, agora)?.toISOString() ?? null
+    };
+  }
   const l = state.lessons[anterior];
   const completa = (l?.stagesDone.length ?? 0) >= STAGE_COUNT;
   return { anterior, falta: completa ? 'nota' : 'licao', nota: l?.quizBest ?? null };
 }
 
 /** A última letra aberta - para onde mandar quem bateu numa porta trancada. */
-export function letraAtual(state: LearnerState, ordem: readonly string[]): string {
+export function letraAtual(state: LearnerState, ordem: readonly string[], portas?: Portas): string {
   let ultima = ordem[0]!;
   for (const id of ordem) {
-    if (!letraLiberada(state, ordem, id)) break;
+    if (!letraLiberada(state, ordem, id, portas)) break;
     ultima = id;
   }
   return ultima;

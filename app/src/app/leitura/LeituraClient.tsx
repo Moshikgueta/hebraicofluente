@@ -32,7 +32,7 @@ import { useProgress } from '@/lib/state/store';
 import { aula0Feita, isLessonComplete, letraAtual } from '@/lib/state/rules';
 import type { LearnerState } from '@/lib/state/types';
 import { useLeitura } from '@/lib/vocabulario';
-import { idDoSom, ordemDeEnsino, rotaDaLicao } from '@/lib/sons';
+import { idDoSom, ordemDeEnsino, portasDosModulos, rotaDaLicao } from '@/lib/sons';
 import { rng } from '@/lib/engine/rng';
 import {
   NIVEIS, bancoDePalavras, descricao, instrucao, mensagemDaPrimeiraLeitura, nPalavras,
@@ -105,7 +105,8 @@ function Laboratorio() {
      fazer AGORA: a Aula 0, ou a lição atual do caminho. */
   const destinoDoCurso = useMemo(() => {
     if (!aula0Feita(p.state)) return '/inicio';
-    const atual = letraAtual(p.state, ordemDeEnsino(allLetters(), course.modules));
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
+    const atual = letraAtual(p.state, ordem, portasDosModulos(ordem, course.modules));
     return atual ? rotaDaLicao(atual) : '/mapa';
   }, [p.state]);
 

@@ -17,6 +17,7 @@
  */
 
 import { tx } from '@/i18n/telas/licao-som-lesson-client';
+import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -38,7 +39,7 @@ import { useProgress } from '@/lib/state/store';
 import { LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course } from '@/lib/content';
 import type { SomLicao } from '@/lib/engine/extras';
-import { CONTRASTE, idDoSom, nomeDaLicao, ordemDeEnsino, rodadaDoSom, rotaDaLicao } from '@/lib/sons';
+import { CONTRASTE, idDoSom, nomeDaLicao, ordemDeEnsino, portasDosModulos, rodadaDoSom, rotaDaLicao } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
@@ -70,7 +71,7 @@ export function SomLessonClient({ som: S }: { som: SomLicao }) {
   /* A mesma porta da lição de letra, e pelo mesmo motivo - ver LessonClient. */
   useEffect(() => {
     if (!p.ready) return;
-    setTrancada(porQueTrancada(p.state, ordem, id));
+    setTrancada(porQueTrancada(p.state, ordem, id, portasDosModulos(ordem, course.modules)));
   }, [p.ready, p.state, ordem, id]);
 
   /* Refazer é outra rodada, e o que já apareceu vai para o fim da fila
@@ -190,7 +191,9 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
       <Card className="p-6 sm:p-8 grid gap-4 justify-items-center text-center">
         <h1 className="font-display text-[23px] sm:text-[27px] font-bold leading-tight text-ink">{titulo}</h1>
         <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-          {trancada.falta === 'aula0'
+          {trancada.falta === 'revisao'
+            ? txRevisao.porque(trancada.modulo!, trancada.modulo! + 1) + (trancada.abreEm ? ` ${txRevisao.abreAmanha}` : '')
+            : trancada.falta === 'aula0'
             ? tx.trancadaAula0
             : trancada.falta === 'licao'
             ? tx.trancadaLicao(<strong className="font-semibold text-ink">{anterior}</strong>)
@@ -198,7 +201,9 @@ export function Trancada({ titulo, trancada }: { titulo: string; trancada: NonNu
                 Math.round((trancada.nota ?? 0) * 100), Math.round(LIBERA_MARK * 100))}
         </p>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>{tx.irPara(anterior)}</LinkButton>
+          {trancada.falta === 'revisao'
+            ? <LinkButton href={`/checkpoint/${trancada.modulo}`} size="lg" full>{txRevisao.irRevisao(trancada.modulo!)}</LinkButton>
+            : <LinkButton href={rotaDaLicao(trancada.anterior)} size="lg" full>{tx.irPara(anterior)}</LinkButton>}
           <LinkButton href="/mapa" variant="ghost" full>{tx.verMapa}</LinkButton>
         </div>
       </Card>

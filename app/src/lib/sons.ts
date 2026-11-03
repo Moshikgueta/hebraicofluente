@@ -20,7 +20,7 @@
 import type { Exercise } from '@/lib/engine/types';
 import type { SomLicao } from '@/lib/engine/extras';
 import { rng, shuffled, take, type Rand } from '@/lib/engine/rng';
-import { ehLicaoDeSom, SOM_PREFIXO } from '@/lib/state/rules';
+import { ehLicaoDeSom, SOM_PREFIXO, type PortaDeModulo } from '@/lib/state/rules';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/motor-sons';
 
@@ -63,6 +63,33 @@ export function ordemDeEnsino(
     ...modulos.flatMap(m => m.lessons.filter(l => l.som).map(l => ({ id: idDoSom(l.som!), lesson: l.n, order: 0 })))
   ];
   return itens.sort((a, b) => a.lesson - b.lesson || a.order - b.order).map(i => i.id);
+}
+
+/**
+ * As portas entre módulos (03/11/2026): a primeira lição de um módulo que
+ * vem logo depois de outro módulo de lições só abre com a revisão
+ * (checkpoint) dele. Ver `PortaDeModulo` em lib/state/rules.ts. Os módulos 6
+ * e 7 não entram: o 6 não tem lição no caminho, e o 7 vem depois dele.
+ */
+export function portasDosModulos(
+  ordem: readonly string[],
+  modulos: readonly { n: number; lessons: readonly { som?: string; letters?: string[] }[]; checkpoint: { id: string } | null }[]
+): Map<string, PortaDeModulo> {
+  const doModulo = new Map<string, number>();
+  for (const m of modulos) for (const l of m.lessons) {
+    if (l.som) doModulo.set(idDoSom(l.som), m.n);
+    for (const id of l.letters ?? []) doModulo.set(id, m.n);
+  }
+  const portas = new Map<string, PortaDeModulo>();
+  for (let i = 1; i < ordem.length; i++) {
+    const a = doModulo.get(ordem[i - 1]!);
+    const b = doModulo.get(ordem[i]!);
+    if (a == null || b !== a + 1) continue;
+    const cp = modulos.find(m => m.n === a)?.checkpoint;
+    if (!cp) continue;
+    portas.set(ordem[i]!, { modulo: a, checkpoint: cp.id, licoes: ordem.filter(id => doModulo.get(id) === a) });
+  }
+  return portas;
 }
 
 /* ── os exercícios ─────────────────────────────────────────────────────── */

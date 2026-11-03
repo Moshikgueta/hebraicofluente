@@ -8,6 +8,8 @@
  * or two letters, named specifically, and the retry is unlimited. */
 
 import { tx } from '@/i18n/telas/licao-checkpoint-client';
+import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
+import { ordemDeEnsino, portasDosModulos } from '@/lib/sons';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { CompartilharConquista } from '@/components/learn/CompartilharConquista';
 import { conquistaDoModulo } from '@/lib/compartilhar';
@@ -31,7 +33,7 @@ import { buildCheckpoint } from '@/lib/engine/exercises';
 import { buildSemPontos, MODULOS_COM_RAMPA } from '@/lib/engine/palavras';
 import { rng } from '@/lib/engine/rng';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
-import { isLessonComplete, isLessonMastered, PASS_MARK, REGRA_DO_DOMINIO_CURTA } from '@/lib/state/rules';
+import { isLessonComplete, isLessonMastered, PASS_MARK, REGRA_DO_DOMINIO_CURTA, revisaoAbreEm } from '@/lib/state/rules';
 import { track } from '@/lib/analytics';
 
 export function CheckpointClient({ module: mod, letters }: { module: CourseModule; letters: Letter[] }) {
@@ -58,6 +60,16 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
   );
 
   const readyLetters = letters.filter(l => isLessonComplete(p.state, l.id));
+
+  /* A revisão que abre o módulo seguinte (03/11/2026) só abre no dia
+     seguinte ao último dia em que uma lição deste módulo foi concluída. Só
+     vale para os checkpoints que são porta (lib/sons.ts, portasDosModulos);
+     e só depois de o progresso carregar, para não piscar trancado. */
+  const porta = useMemo(() => {
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
+    return [...portasDosModulos(ordem, course.modules).values()].find(x => x.checkpoint === mod.checkpoint?.id) ?? null;
+  }, [mod.checkpoint?.id]);
+  const abreAmanha = p.ready && porta ? revisaoAbreEm(p.state, porta) !== null : false;
   const record = mod.checkpoint ? p.state.checkpoints[mod.checkpoint.id] : undefined;
   const nextModule = course.modules.find(m => m.n === mod.n + 1 && m.letterIds.length);
 
@@ -255,7 +267,12 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
       )}
 
 
-      {readyLetters.length < letters.length ? (
+      {abreAmanha ? (
+        <Card tone="amber" className="p-5 grid gap-2">
+          <p className="font-ui text-[15px] font-semibold text-ink">{txRevisao.amanhaTitulo}</p>
+          <p className="text-[15px] leading-relaxed text-ink-body">{txRevisao.amanhaTexto}</p>
+        </Card>
+      ) : readyLetters.length < letters.length ? (
         <Card tone="amber" className="p-5 grid gap-3">
           <p className="text-[15px] leading-relaxed text-ink-body">
             {tx.faltam(letters.length - readyLetters.length, letters.length)}

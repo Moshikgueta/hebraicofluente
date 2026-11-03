@@ -24,7 +24,7 @@ import { TesteFinalCard } from '@/components/game/TesteFinal';
 import { useProgress } from '@/lib/state/store';
 import { allLetters, course, getLetter, getModule } from '@/lib/content';
 import { Prose } from '@/components/learn/Blocks';
-import { alphabetComplete, aula0Feita, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada } from '@/lib/state/rules';
+import { alphabetComplete, aula0Feita, isExtraModuleDone, isLessonComplete, LIBERA_MARK, needsWarmUp, porQueTrancada, revisaoAbreEm } from '@/lib/state/rules';
 import { useAccount } from '@/lib/account/store';
 import { OfertaProximoCurso } from '@/components/platform/ProximoPasso';
 import { AccessNotice } from '@/components/platform/AccessNotice';
@@ -33,9 +33,10 @@ import { InstalarApp } from '@/components/platform/InstalarApp';
 import { desafioFeitoHoje } from '@/lib/desafio-feito';
 import { primeiraLeituraId } from '@/lib/laboratorio';
 import { resumoDoDominio } from '@/lib/dominio';
-import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
+import { ehContraste, idDoSom, nomeDaLicao, ordemDeEnsino, portasDosModulos, rotaDaLicao, soOLadoDoPonto } from '@/lib/sons';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-dashboard-client';
+import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
 
 /** Itens vencidos a partir dos quais o painel sugere revisar antes da lição. */
 export const REVISAO_URGENTE = 15;
@@ -88,9 +89,10 @@ export function DashboardClient() {
     const id = next.kind === 'letter' ? next.letter.id : next.kind === 'som' ? idDoSom(next.som) : null;
     if (!id) return null;
     const ordem = ordemDeEnsino(allLetters(), course.modules);
-    const porque = porQueTrancada(p.state, ordem, id);
-    /* Antes da Aula 0 o cartão principal já é ela (`aula0Primeiro`). */
-    if (!porque || porque.falta === 'aula0') return null;
+    const porque = porQueTrancada(p.state, ordem, id, portasDosModulos(ordem, course.modules));
+    /* Antes da Aula 0 o cartão principal já é ela (`aula0Primeiro`). A
+       revisão entre módulos já é o próximo passo do painel (`checkpoint`). */
+    if (!porque || porque.falta === 'aula0' || porque.falta === 'revisao') return null;
     return {
       id: porque.anterior,
       nome: nomeDaLicao(porque.anterior, allLetters(), course.modules),
@@ -108,6 +110,15 @@ export function DashboardClient() {
     && m.letterIds.length > 0
     && m.letterIds.every(id => isLessonComplete(p.state, id))
     && !p.state.firsts?.[primeiraLeituraId(m.n)]) ?? null, [p.state]);
+
+  /* O checkpoint que abre o módulo seguinte pode estar esperando o dia de
+     amanhã (03/11/2026, `revisaoAbreEm`): o cartão diz isso. */
+  const revisaoAmanha = useMemo(() => {
+    if (next.kind !== 'checkpoint') return false;
+    const ordem = ordemDeEnsino(allLetters(), course.modules);
+    const porta = [...portasDosModulos(ordem, course.modules).values()].find(x => x.checkpoint === next.checkpoint.id);
+    return !!porta && revisaoAbreEm(p.state, porta) !== null;
+  }, [next, p.state]);
 
   const dominio = useMemo(() => resumoDoDominio(p.state, allLetters().map(l => l.id)), [p.state]);
 
@@ -277,7 +288,8 @@ export function DashboardClient() {
           <CartaoCurso
             kicker={fmt(tx.checkpointKicker, { n: next.module.n })}
             titulo={next.module.titlePt}
-            sub={fmt(tx.checkpointSub, { n: next.module.letterIds.length })}
+            sub={fmt(tx.checkpointSub, { n: next.module.letterIds.length })
+              + (revisaoAmanha ? ` ${txRevisao.abreAmanha}` : '')}
             pct={p.progress}
             href={`/checkpoint/${next.module.n}`}
             cta={tx.checkpointCta}

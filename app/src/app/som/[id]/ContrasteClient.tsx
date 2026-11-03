@@ -34,7 +34,7 @@ import { useProgress } from '@/lib/state/store';
 import { LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course } from '@/lib/content';
 import type { DageshLetter, SomLicao } from '@/lib/engine/extras';
-import { CONTRASTE, idDoSom, ordemDeEnsino, rodadaDoContraste } from '@/lib/sons';
+import { CONTRASTE, idDoSom, ordemDeEnsino, portasDosModulos, rodadaDoContraste } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 import { Linha, marcaDe, Par, Trancada, useDestino } from './SomLessonClient';
@@ -68,7 +68,7 @@ export function ContrasteClient({ sons, dagesh, modulo, licao }: {
 
   useEffect(() => {
     if (!p.ready) return;
-    setTrancada(porQueTrancada(p.state, ordem, id));
+    setTrancada(porQueTrancada(p.state, ordem, id, portasDosModulos(ordem, course.modules)));
   }, [p.ready, p.state, ordem, id]);
 
   /* A etapa 4 é a Fixação guiada, um par por vez, sem nota: ouvir, ligar
