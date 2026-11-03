@@ -14,6 +14,7 @@
  * there - never on navigation. */
 
 import { tx } from '@/i18n/telas/licao-lesson-client';
+import { tx as txRevisao } from '@/i18n/telas/revisao-entre-modulos';
 import { SugestaoDePar } from '@/components/learn/SugestaoDePar';
 import { AvaliarLicao } from '@/components/learn/AvaliarLicao';
 import { useCallback, useEffect, useMemo, useState, useRef, type ReactNode } from 'react';
@@ -55,7 +56,7 @@ import {
 } from '@/lib/engine/exercises';
 import { track } from '@/lib/analytics';
 import { somPt } from '@/lib/som-pt';
-import { glifoDaLicao, nomeDaLicao, ordemDeEnsino, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
+import { glifoDaLicao, nomeDaLicao, ordemDeEnsino, portasDosModulos, rotaDaLicao, semPalavrasDeSom, soOLadoDoPonto } from '@/lib/sons';
 import { escolherRodada, registrarRodada } from '@/lib/rodadas';
 
 const STAGES = [
@@ -125,7 +126,7 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
   useEffect(() => {
     if (!p.ready) return;
     const ordem = ordemDeEnsino(allLetters(), course.modules);
-    setTrancada(porQueTrancada(p.state, ordem, letter.id));
+    setTrancada(porQueTrancada(p.state, ordem, letter.id, portasDosModulos(ordem, course.modules)));
   }, [p.ready, p.state, letter.id]);
 
   /* Trocar de etapa desmonta o botão que tinha o foco, e ele caía no
@@ -217,6 +218,8 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
   /* A lição seguinte abre com esta nota? Abaixo de LIBERA_MARK o botão
      principal não pode mandar para uma porta trancada (UXQA-002): ele vira
      "Refazer os exercícios". */
+  /* Sem as portas entre módulos de propósito: no fim do módulo o botão já
+     leva à revisão (o checkpoint), que é o que abre a porta. */
   const proximaTrancada = !!seguinte && !letraLiberada(p.state, ordemToda, seguinte);
 
   if (trancada) return <PortaTrancada letter={letter} porque={trancada} />;
@@ -1154,7 +1157,7 @@ function PortaTrancada({ letter, porque }: {
   const ordem = ordemDeEnsino(allLetters(), course.modules);
   /* A anterior pode ser uma lição de som: Kaf vem depois de Vet. */
   const anterior = { namePt: nomeDaLicao(porque.anterior, allLetters(), course.modules) };
-  const atual = letraAtual(p.state, ordem);
+  const atual = letraAtual(p.state, ordem, portasDosModulos(ordem, course.modules));
   const atualL = { namePt: nomeDaLicao(atual, allLetters(), course.modules) };
 
   /* A primeira letra antes da Aula 0 (11/10/2026): o que falta não é uma
@@ -1194,7 +1197,12 @@ function PortaTrancada({ letter, porque }: {
             {tx.naoAbriu(<He size="inline">{letter.letter}</He>)}
           </h1>
           <p className="text-[16px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-            {porque.falta === 'licao' ? (
+            {porque.falta === 'revisao' ? (
+              <>
+                {txRevisao.porque(porque.modulo!, porque.modulo! + 1)}
+                {porque.abreEm && <> <strong className="font-semibold text-ink">{txRevisao.abreAmanha}</strong></>}
+              </>
+            ) : porque.falta === 'licao' ? (
               tx.vemDepois(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>)
             ) : (
               tx.faltamExercicios(<strong className="font-semibold text-ink">{anterior?.namePt}</strong>,
@@ -1203,11 +1211,17 @@ function PortaTrancada({ letter, porque }: {
           </p>
         </div>
         <div className="grid gap-2 w-full max-w-[320px] pt-1">
-          <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
-            {porque.falta === 'licao'
-              ? tx.irPara(anterior?.namePt)
-              : tx.refazerDe(anterior?.namePt)}
-          </LinkButton>
+          {porque.falta === 'revisao' ? (
+            <LinkButton href={`/checkpoint/${porque.modulo}`} size="lg" full>
+              {txRevisao.irRevisao(porque.modulo!)}
+            </LinkButton>
+          ) : (
+            <LinkButton href={rotaDaLicao(porque.anterior)} size="lg" full>
+              {porque.falta === 'licao'
+                ? tx.irPara(anterior?.namePt)
+                : tx.refazerDe(anterior?.namePt)}
+            </LinkButton>
+          )}
           {atual !== porque.anterior && atualL && (
             <LinkButton href={rotaDaLicao(atual)} variant="secondary" full>
               {tx.continuarDeOnde(atualL.namePt)}

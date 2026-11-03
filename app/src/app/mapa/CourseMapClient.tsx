@@ -39,7 +39,7 @@ import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
 import { aula0Feita, isLessonComplete, isLessonMastered, letraLiberada, REGRA_DO_DOMINIO, STAGE_COUNT } from '@/lib/state/rules';
 import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
-import { idDoSom, ordemDeEnsino } from '@/lib/sons';
+import { idDoSom, ordemDeEnsino, portasDosModulos } from '@/lib/sons';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-course-map-client';
 
@@ -423,6 +423,7 @@ function Trecho({ module: m, estado, novo = false }: {
      não no carregamento do arquivo: na plataforma o conteúdo das letras
      chega do servidor depois, e uma constante de módulo nasceria vazia. */
   const ordem = ordemDeEnsino(allLetters(), course.modules);
+  const portas = portasDosModulos(ordem, course.modules);
   const feitas = itens.filter(i => isLessonComplete(p.state, i.id)).length;
   const extra = m.letterIds.length === 0;
   /* O módulo 7 tem as três lições de som E o fecho de três etapas. */
@@ -560,7 +561,7 @@ function Trecho({ module: m, estado, novo = false }: {
                  mesma regra da lição, `letraLiberada`). A próxima a estudar
                  fica SEM cadeado, e nada aparece antes de o progresso
                  carregar - senão o mapa inteiro piscaria trancado. */
-              const bloqueada = p.ready && !aberta && !letraLiberada(p.state, ordem, L.id);
+              const bloqueada = p.ready && !aberta && !letraLiberada(p.state, ordem, L.id, portas);
               const liberada = aberta || (p.ready && !bloqueada);
               const ehAProxima = p.ready && L.id === proxima && liberada;
               const estadoDaLetra = feita ? tx.letraConcluida
