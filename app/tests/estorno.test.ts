@@ -355,6 +355,8 @@ describe('a saúde do dia, no alerta ao dono', () => {
     await runAlertas(env);
     expect(saude()).toHaveLength(1);
     expect(saude()[0]!.text).toContain('nenhum carimbo de backup');
+    // Sem data fixa: "desde 01/10/2026" fazia o aviso de um banco parecer do outro.
+    expect(saude()[0]!.text).not.toMatch(/\d{2}\/\d{2}\/\d{4}/);
   });
 
   it('5xx acima do limite em 24 h viram e-mail; os de ontem não contam', async () => {
