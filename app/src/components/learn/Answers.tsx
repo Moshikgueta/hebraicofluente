@@ -33,6 +33,7 @@ import { stripNikud } from '@/lib/hebrew';
 import { hebraicoDigitadoCerto, pareceTecladoLatino } from '@/lib/engine/palavras';
 import { rng, shuffled } from '@/lib/engine/rng';
 import { TecladoHebraico } from './TecladoHebraico';
+import { allLetters } from '@/lib/content';
 import { useArrastarPecas } from './useArrastarPecas';
 import type { Selecao } from '@/lib/teclado-hebraico';
 
@@ -78,6 +79,74 @@ export function BuildSyllable({
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/* ── a caça à letra (03/11/2026) ────────────────────────────────────────
+   A grade de `letter-hunt`. Cada toque na letra certa a marca (teal, com ✓);
+   um toque errado pisca em gold com ✕ e volta. A questão fecha quando as
+   certas foram todas achadas, e conta como acerto com no máximo UM toque
+   errado: num telefone, um dedo que escorrega não é não saber a letra. */
+export const CACA_ERROS_PERDOADOS = 1;
+
+export function LetterHunt({
+  letter, grade, settled, onAnswer
+}: {
+  letter: string; grade: string[]; settled: boolean;
+  onAnswer: (correct: boolean, erros: number) => void;
+}) {
+  const total = grade.filter(g => g === letter).length;
+  const [achadas, setAchadas] = useState<number[]>([]);
+  const [erros, setErros] = useState(0);
+  const [piscando, setPiscando] = useState<number | null>(null);
+  const nome = (g: string, k: number) =>
+    allLetters().find(l => l.letter === g)?.namePt ?? allLetters().find(l => l.finalForm === g)?.namePt ?? tx.cacaCelula(k + 1);
+
+  const tocar = (k: number) => {
+    if (settled || achadas.includes(k)) return;
+    if (grade[k] === letter) {
+      const novas = [...achadas, k];
+      setAchadas(novas);
+      if (novas.length === total) onAnswer(erros <= CACA_ERROS_PERDOADOS, erros);
+    } else {
+      setErros(e => e + 1);
+      setPiscando(k);
+      window.setTimeout(() => setPiscando(p => (p === k ? null : p)), 650);
+    }
+  };
+
+  return (
+    <div className="grid gap-3">
+      <ul dir="rtl" className="grid grid-cols-4 gap-2 sm:gap-2.5">
+        {grade.map((g, k) => {
+          const achada = achadas.includes(k) || (settled && g === letter);
+          const errada = piscando === k;
+          return (
+            <li key={k}>
+              <button
+                type="button"
+                onClick={() => tocar(k)}
+                aria-disabled={settled || achada}
+                aria-pressed={achada}
+                aria-label={nome(g, k)}
+                className={`relative w-full min-h-[64px] rounded-[var(--r-md)] border-2 grid place-items-center
+                  transition-colors aria-disabled:cursor-default
+                  ${achada ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
+                    : errada ? 'border-[var(--gold)] bg-[var(--gold-soft)]'
+                    : 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'}`}
+              >
+                <He size="lg">{g}</He>
+                {achada && <span aria-hidden className="absolute top-1 right-1.5 text-[12px] text-[var(--teal-ink)]">✓</span>}
+                {errada && <span aria-hidden className="absolute top-1 right-1.5 text-[12px] text-[var(--gold-ink)]">✕</span>}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <p role="status" className="m-0 font-ui text-[13.5px] text-ink-muted text-center">
+        {tx.cacaAchou(achadas.length, total)}
+      </p>
     </div>
   );
 }

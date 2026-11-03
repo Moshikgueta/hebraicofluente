@@ -106,8 +106,18 @@ export type Exercise =
   | (ChoiceBase & { kind: 'letter-position'; he: string; letter: string })
 
   /* ── construction: the learner assembles, rather than recognises ──── */
+  /* ── a varredura (03/11/2026, pedido do dono: "ציד אותיות") ───────────
+     Uma grade de letras e a instrução "toque em todas as {{מ}}". É o único
+     gesto que treina o que a leitura faz de verdade: varrer uma linha cheia
+     de formas parecidas e achar a que importa. O jogo da academia
+     (components/game/CacaLetra.tsx) já fazia isso; este é o item de prova,
+     uma grade só, dentro da lição. `grade` são os glifos, na ordem da tela. */
+  | (ExerciseBase & { kind: 'letter-hunt'; letter: string; grade: string[] })
   | (ExerciseBase & {
       kind: 'build-syllable';
+      /** De ouvido (03/11/2026): a sílaba TOCA, e a leitura dela não aparece
+       *  no enunciado. Só quando há gravação. */
+      ouvir?: boolean;
       /** The finished syllable, for checking. */
       target: string;
       /** The consonant, already on screen. */

@@ -426,6 +426,55 @@ export const exBuildSyllable: Gen = (L, _ctx, rand, i) => {
 };
 
 /**
+ * A mesma montagem, DE OUVIDO (03/11/2026, pedido do dono: "השלמת ניקוד").
+ *
+ * A sílaba toca, e o enunciado não diz como ela se lê: o aluno ouve e escolhe
+ * o sinal que faz aquele som. É a ponte entre o ouvido e o nikud, que a
+ * versão escrita não cobra - lá a transliteração na tela já diz o som.
+ * Precisa da gravação da sílaba; sem ela o gerador não entra (NEEDS_AUDIO).
+ */
+export const exBuildSyllableOuvido: Gen = (L, ctx, rand, i) => {
+  const base = exBuildSyllable(L, ctx, rand, i);
+  if (!base || base.kind !== 'build-syllable' || !temClipe(base.audioId)) return null;
+  return {
+    ...base,
+    id: `${L.id}-bso-${i}`, ouvir: true, skill: 'ouvir',
+    promptPt: tx.ouvirMonteSilaba,
+    hintsPt: []
+  };
+};
+
+/**
+ * A caça à letra, como item de prova (03/11/2026, pedido do dono: "ציד
+ * אותיות"). Doze células: a letra de hoje três ou quatro vezes, e o resto
+ * SÓ com letras que o aluno já aprendeu - as parecidas com a de hoje
+ * primeiro. Diferente da alternativa única de `exOddOneOut`, aqui a grade
+ * inteira é feita das outras letras, e nenhuma letra aparece antes de ser
+ * ensinada. Sem ao menos duas outras letras conhecidas (Álef e Mem), não sai.
+ */
+export const exLetterHunt: Gen = (L, ctx, rand, i) => {
+  const conhecidas = ctx.history.map(x => x.letter).filter(c => c !== L.letter && !mesmaLetra(L, c));
+  const parecidas = L.confusableWith.filter(c => !mesmaLetra(L, c) && conhecidas.includes(c));
+  const outras = [...new Set([...parecidas, ...conhecidas])];
+  if (outras.length < 2) return null;
+  const quantas = 3 + (i % 2);
+  const TAMANHO = 12;
+  /* As parecidas primeiro: são elas que fazem a varredura valer. */
+  const distratores: string[] = [];
+  for (let k = 0; distratores.length < TAMANHO - quantas; k++) {
+    const fonte = parecidas.length && k % 3 !== 2 ? parecidas : outras;
+    distratores.push(fonte[Math.floor(rand() * fonte.length)]!);
+  }
+  const grade = shuffled([...Array.from({ length: quantas }, () => L.letter), ...distratores], rand);
+  return {
+    id: `${L.id}-caca-${i}`, kind: 'letter-hunt', letterId: L.id, skill: 'rec',
+    promptPt: fmt(tx.cacaPergunta, { nome: L.namePt, n: quantas }),
+    letter: L.letter, grade,
+    explainPt: fmt(tx.cacaExplica, { letra: L.letter, n: quantas })
+  };
+};
+
+/**
  * The word, in pieces, in the wrong order.
  *
  * Right to left is not a decoration here: a learner who assembles שָׁלוֹם from
@@ -1098,7 +1147,7 @@ export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
 /* ── the catalogue ──────────────────────────────────────────────────────── */
 
 /** Every generator that needs a recording to be honest. */
-export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard, exListenSentence, exListenMeaning]);
+export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard, exListenSentence, exListenMeaning, exBuildSyllableOuvido]);
 
 /**
  * The order a lesson walks through. Deliberately alternating in GESTURE, not
@@ -1111,6 +1160,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exLetterInWord,
   exBuildSyllable,
   exConfusablePick,
+  exLetterHunt,
   exWordMeaning,
   exSentenceReading,
   exOddOneOut,
@@ -1134,6 +1184,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exCursiveToPrint,
   exAudioWord,
   exMatchLetterSound,
+  exBuildSyllableOuvido,
   exTypeHeard,
   exListenSentence,
   exListenMeaning
