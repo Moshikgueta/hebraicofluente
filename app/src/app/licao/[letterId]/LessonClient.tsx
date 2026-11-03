@@ -37,7 +37,7 @@ import {
   BrazilianTip, BridgeWords, HebrewLetterCard, Prose,
   RealWorldHebrew, RegraCursiva, SyllableTrainer, TituloComSelo, WordReveal
 } from '@/components/learn/Blocks';
-import { Compreensao } from '@/components/learn/Compreensao';
+import { Compreensao, embaralharChecagem, entendeuCom } from '@/components/learn/Compreensao';
 import { MeExplica } from '@/components/learn/MeExplica';
 import { AberturaDoLugar } from '@/components/aventura/AberturaDoLugar';
 import { CelebracaoDaLetra } from '@/components/aventura/CartaDaLetra';
@@ -48,7 +48,7 @@ import { alvoDaLetra } from '@/lib/fixacao';
 import { ContadorDeLeitura } from '@/components/learn/ContadorDeLeitura';
 import { CartaoMeuNome } from '@/components/learn/MeuNome';
 import { useProgress } from '@/lib/state/store';
-import { acertosPara, FIXACAO_ITENS, letraAtual, letraLiberada, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
+import { acertosPara, etapaAberta, FIXACAO_ITENS, letraAtual, letraLiberada, LIBERA_MARK, MASTERY_MARK, porQueTrancada } from '@/lib/state/rules';
 import { allLetters, course, cultureAt, nextLetter, scenesForOrder, semOSomDe, type Letter } from '@/lib/content';
 import {
   buildMiniTest, buildRemedial, type Exercise
@@ -188,6 +188,20 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
   }, [p, letter.id, setStage, tempoDaEtapa]);
 
   const stagesDone = p.state.lessons[letter.id]?.stagesDone ?? [];
+  const etapa1Feita = stagesDone.includes(1);
+  const etapa3Feita = stagesDone.includes(3);
+
+  /* A etapa salva (recarregar a página) ou um link antigo podem apontar
+     para uma etapa ainda fechada: volta para a primeira que falta. Só
+     depois de `p.ready`, pela mesma razão da trava de rota. */
+  useEffect(() => {
+    if (!p.ready) return;
+    const feitas = p.state.lessons[letter.id]?.stagesDone ?? [];
+    if (!etapaAberta(stage, feitas)) {
+      setStageCru(STAGES.find(s => !feitas.includes(s.n))?.n ?? 1);
+    }
+  }, [p.ready, p.state, letter.id, stage]);
+
   const unlockedCard = cultureAt(p.mastered);
   const after = nextLetter(letter.id);
   /* Resh, Bet, Kaf e Pe têm uma lição de som logo depois (Sin, Vet, Chaf,
@@ -211,9 +225,9 @@ export function LessonClient({ letter: letraInteira }: { letter: Letter }) {
     <div className="grid gap-6 reading">
       <LessonHeader letter={letter} stage={stage} stagesDone={stagesDone} onStage={setStage} />
 
-      {stage === 1 && <StageConhecer letter={letter} history={history} onDone={() => done(1)} />}
+      {stage === 1 && <StageConhecer letter={letter} history={history} jaFeita={etapa1Feita} onDone={() => done(1)} />}
       {stage === 2 && <StagePalavras letter={letter} onDone={() => done(2)} />}
-      {stage === 3 && <StageEscrever letter={letter} onDone={() => done(3)} />}
+      {stage === 3 && <StageEscrever letter={letter} jaFeita={etapa3Feita} onDone={() => done(3)} />}
       {stage === 4 && (
         <FixacaoGuiada key={`f-${letter.id}`} alvo={alvo} onDone={() => done(4)} />
       )}
@@ -290,14 +304,16 @@ function LessonHeader({
         {STAGES.map(s => {
           const isDone = stagesDone.includes(s.n);
           const isNow = stage === s.n;
+          const aberta = isNow || etapaAberta(s.n, stagesDone);
           return (
             <li key={s.n} className="flex-1">
               <button
                 type="button"
                 onClick={() => onStage(s.n)}
+                disabled={!aberta}
                 aria-current={isNow ? 'step' : undefined}
-                aria-label={tx.etapaDe(s.n, s.label)}
-                className="w-full min-h-[44px] grid content-center gap-1.5 group"
+                aria-label={aberta ? tx.etapaDe(s.n, s.label) : tx.etapaFechada(s.n, s.label)}
+                className="w-full min-h-[44px] grid content-center gap-1.5 group disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-colors
@@ -330,8 +346,8 @@ function LessonHeader({
 export const ENXUTA_DESDE = 12;
 
 function StageConhecer({
-  letter, history, onDone
-}: { letter: Letter; history: Letter[]; onDone: () => void }) {
+  letter, history, jaFeita, onDone
+}: { letter: Letter; history: Letter[]; jaFeita: boolean; onDone: () => void }) {
   const enxuta = letter.order >= ENXUTA_DESDE;
   const [completa, setCompleta] = useState(false);
   const [comparar, setComparar] = useState(false);
@@ -339,6 +355,19 @@ function StageConhecer({
   const [passo, setPasso] = useState(0);
   const topo = useRef<HTMLDivElement>(null);
   const temChecagem = (letter.ensino?.checagem?.length ?? 0) > 0;
+  /* As perguntas são a porta da etapa (03/11/2026, decisão do dono): o botão
+     de continuar só abre com elas certas. Errou, volta à explicação, e as
+     perguntas recomeçam do zero (`rodada` remonta o componente). Quem já
+     concluiu esta etapa antes não é cobrado de novo. */
+  const [certas, setCertas] = useState<number | null>(null);
+  const [rodada, setRodada] = useState(0);
+  const totalChecagem = letter.ensino?.checagem?.length ?? 0;
+  /* A primeira rodada na ordem do autor; a partir da segunda, embaralhada. */
+  const perguntas = useMemo(() => {
+    const todas = letter.ensino?.checagem ?? [];
+    return rodada === 0 ? todas : embaralharChecagem(todas, rodada);
+  }, [letter, rodada]);
+  const liberado = jaFeita || !temChecagem || (certas !== null && certas >= entendeuCom(totalChecagem));
   const ensinadas = useMemo(() => new Set([...history, letter].map(l => l.letter)), [history, letter]);
 
   /* Os passos da etapa (28/10/2026, decisão do dono: "em telas curtas").
@@ -347,7 +376,8 @@ function StageConhecer({
      a explicação, as sílabas e as perguntas, tudo de uma vez. O conteúdo é o
      mesmo; ele chega um bloco por vez, na ordem em que se aprende: ver a
      letra, ouvir, entender, praticar com as vogais, conferir. Voltar é
-     livre, e nenhum passo é cobrado: "Próximo" sempre anda. */
+     livre, e "Próximo" sempre anda. Só o último passo cobra: o botão de
+     continuar espera as perguntas certas (03/11/2026, ver `liberado`). */
   const passos: { nome: string; corpo: ReactNode }[] = [
     {
       nome: tx.descobrir,
@@ -460,13 +490,24 @@ function StageConhecer({
          sobre o que foi EXPLICADO. Ver components/learn/Compreensao.tsx. */
       corpo: (
         <Compreensao
+          key={rodada}
           id={`checagem-${letter.id}`}
           titulo={tx.entendeu}
           intro={tx.naoVaiNota}
-          perguntas={letter.ensino.checagem}
+          perguntas={perguntas}
           fecho={{
             bom: tx.fechoBom,
             parcial: tx.fechoParcial
+          }}
+          aoCompletar={setCertas}
+          reler={{
+            rotulo: tx.relerEResponder,
+            aoReler: () => {
+              setCertas(null);
+              setRodada(r => r + 1);
+              setCompleta(true);
+              ir(passos.findIndex(x => x.nome === tx.entender));
+            }
           }}
         />
       )
@@ -512,11 +553,16 @@ function StageConhecer({
           <Button variant="secondary" size="lg" onClick={() => ir(passo - 1)}>{tx.voltar}</Button>
         ) : <span />}
         {ultimo
-          ? <Button size="lg" onClick={onDone} full>{tx.continuarPalavras}</Button>
+          ? <Button size="lg" onClick={onDone} disabled={!liberado} full>{tx.continuarPalavras}</Button>
           : <Button size="lg" onClick={() => ir(passo + 1)} full>
               {tx.proximo(passos[passo + 1]!.nome.toLowerCase())}
             </Button>}
       </div>
+      {ultimo && !liberado && (
+        <p role="status" className="m-0 font-ui text-[13.5px] text-ink-muted text-center">
+          {certas === null ? tx.respondaParaContinuar : tx.acerteParaContinuar}
+        </p>
+      )}
     </div>
   );
 }
@@ -827,8 +873,17 @@ function WordList({ letter }: { letter: Letter }) {
 }
 
 /* ── 3 · escrever ───────────────────────────────────────────────────────── */
-function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void }) {
+function StageEscrever({ letter, jaFeita, onDone }: { letter: Letter; jaFeita: boolean; onDone: () => void }) {
   const p = useProgress();
+  /* Escrever pelo menos uma vez (03/11/2026, decisão do dono): o botão de
+     continuar abre depois do primeiro "Conferir", com qualquer nota - é a
+     tentativa que conta, não o acerto. `semTela` é para quem não consegue
+     desenhar (leitor de tela, só teclado): a etapa não pode ser uma parede
+     para essa pessoa. */
+  const [escreveu, setEscreveu] = useState(false);
+  const [semTela, setSemTela] = useState(false);
+  const liberado = jaFeita || escreveu || semTela;
+  const anotar = useCallback((score: number) => { setEscreveu(true); p.recordWriting(letter.id, score); }, [p, letter.id]);
   return (
     <div className="grid gap-5">
       <div className="grid gap-1">
@@ -871,7 +926,7 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
         glyph={letter.letter}
         letterId={letter.id}
         label={letter.namePt}
-        onScored={score => p.recordWriting(letter.id, score)}
+        onScored={anotar}
       />
 
       {letter.finalForm && (
@@ -879,11 +934,20 @@ function StageEscrever({ letter, onDone }: { letter: Letter; onDone: () => void 
           glyph={letter.finalForm}
           letterId={`${letter.id}-final`}
           label={tx.formaFinal(letter.namePt)}
-          onScored={score => p.recordWriting(letter.id, score)}
+          onScored={anotar}
         />
       )}
 
-      <Button size="lg" onClick={onDone} full>{tx.continuarFixacao}</Button>
+      <Button size="lg" onClick={onDone} disabled={!liberado} full>{tx.continuarFixacao}</Button>
+      {!liberado && (
+        <div className="grid gap-1 justify-items-center text-center">
+          <p role="status" className="m-0 font-ui text-[13.5px] text-ink-muted">{tx.escrevaParaContinuar}</p>
+          <button type="button" onClick={() => setSemTela(true)}
+                  className="min-h-[44px] px-2 font-ui text-[13px] text-ink-muted underline underline-offset-2">
+            {tx.naoConsigoEscrever}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

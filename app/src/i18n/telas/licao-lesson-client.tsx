@@ -20,6 +20,7 @@ const pt = {
   badge: (modulo: number, licao: number, ordem: number) => `Módulo ${modulo} · lição ${licao} · letra ${ordem}/22`,
   etapas: 'Etapas da lição',
   etapaDe: (n: number, rotulo: string) => `Etapa ${n} de 5 - ${rotulo}`,
+  etapaFechada: (n: number, rotulo: string) => `Etapa ${n} de 5 - ${rotulo} (abre quando você concluir a anterior)`,
 
   descobrir: 'Descobrir',
   oQueVamos: 'O que vamos aprender hoje?',
@@ -40,7 +41,10 @@ const pt = {
   compararComAsQueSabe: 'Comparar com as letras que você já sabe',
   conferir: 'Conferir',
   entendeu: 'Entendeu? Perguntas rápidas',
-  naoVaiNota: 'Não vale nota e não tranca nada. Se errar, a explicação aparece na hora.',
+  naoVaiNota: 'Não vale nota. Se errar, a explicação aparece na hora, e você relê o passo antes de responder de novo.',
+  relerEResponder: 'Reler a explicação e responder de novo',
+  respondaParaContinuar: 'Responda às perguntas acima para continuar.',
+  acerteParaContinuar: 'Acerte todas as perguntas para continuar. Releia a explicação e tente de novo.',
   fechoBom: 'Boa. Agora as palavras que esta letra abre.',
   fechoParcial: 'Vale reler os passos anteriores - são duas ou três ideias, e elas voltam nas próximas letras.',
   passoDe: (n: number, total: number) => `Passo ${n} de ${total}`,
@@ -73,6 +77,8 @@ const pt = {
   cursiva: 'Cursiva',
   formaFinal: (nome: string) => `${nome} - forma final`,
   continuarFixacao: 'Continuar para a fixação',
+  escrevaParaContinuar: 'Escreva a letra pelo menos uma vez e toque em Conferir para continuar.',
+  naoConsigoEscrever: 'Não consigo escrever nesta tela',
 
   praticarMais: 'Vamos praticar mais um pouco.',
   reforcoTexto: (n: number) =>
@@ -148,6 +154,7 @@ const en: Traducao<typeof pt> = {
   badge: (modulo, licao, ordem) => `Module ${modulo} · lesson ${licao} · letter ${ordem}/22`,
   etapas: 'Lesson steps',
   etapaDe: (n, rotulo) => `Step ${n} of 5 - ${rotulo}`,
+  etapaFechada: (n, rotulo) => `Step ${n} of 5 - ${rotulo} (opens when you finish the previous one)`,
 
   descobrir: 'Discover',
   oQueVamos: 'What will we learn today?',
@@ -169,7 +176,10 @@ const en: Traducao<typeof pt> = {
   compararComAsQueSabe: 'Compare with the letters you already know',
   conferir: 'Check',
   entendeu: 'Got it? Quick questions',
-  naoVaiNota: 'Not scored and nothing gets locked. If you get one wrong, the explanation appears right away.',
+  naoVaiNota: 'Not scored. If you get one wrong, the explanation appears right away, and you reread the step before answering again.',
+  relerEResponder: 'Reread the explanation and answer again',
+  respondaParaContinuar: 'Answer the questions above to continue.',
+  acerteParaContinuar: 'Get every question right to continue. Reread the explanation and try again.',
   fechoBom: 'Nice. Now the words this letter opens up.',
   fechoParcial: 'Worth rereading the previous steps - there are two or three ideas, and they come back in the next letters.',
   passoDe: (n, total) => `Step ${n} of ${total}`,
@@ -202,6 +212,8 @@ const en: Traducao<typeof pt> = {
   cursiva: 'Cursive',
   formaFinal: nome => `${nome} - final form`,
   continuarFixacao: 'Continue to Reinforce',
+  escrevaParaContinuar: 'Write the letter at least once and tap Check to continue.',
+  naoConsigoEscrever: "I can't write on this screen",
 
   praticarMais: 'Let\'s practice a little more.',
   reforcoTexto: n =>
