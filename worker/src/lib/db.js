@@ -9,6 +9,7 @@
  */
 
 import { newId, PBKDF2_ITER } from './crypto.js';
+import { diasDoPedido, prazoDeDesistencia } from './desistencia.js';
 
 const now = () => Date.now();
 
@@ -489,16 +490,30 @@ export async function avisosPurge(env, at = now()) {
  *  deveria precisar saber a diferença entre "nunca teve" e "não tem mais". */
 export async function activeEntitlements(env, accountId, at = now()) {
   const { results } = await env.DB.prepare(
-    `SELECT course_slug, granted_at, expires_at, order_id
-       FROM entitlements
-      WHERE account_id = ? AND (expires_at IS NULL OR expires_at > ?)`
+    `SELECT e.course_slug, e.granted_at, e.expires_at, e.order_id,
+            o.status AS order_status, o.paid_at, o.provider
+       FROM entitlements e LEFT JOIN orders o ON o.id = e.order_id
+      WHERE e.account_id = ? AND (e.expires_at IS NULL OR e.expires_at > ?)`
   ).bind(accountId, at).all();
-  return (results || []).map(r => ({
-    courseSlug: r.course_slug,
-    grantedAt: new Date(r.granted_at).toISOString(),
-    expiresAt: r.expires_at ? new Date(r.expires_at).toISOString() : null,
-    orderId: r.order_id
-  }));
+  return (results || []).map(r => {
+    /* Ainda no prazo de desistência (03/11/2026, decisão do dono): o exame
+       final, o certificado e as leituras bônus abrem depois dele. Só para
+       acesso que veio de um pedido PAGO; presente e liberação à mão, não. */
+    const prazo = r.order_status === 'paid' && r.paid_at ? prazoDeDesistencia(r.paid_at, diasDoPedido(r)) : null;
+    return {
+      courseSlug: r.course_slug,
+      grantedAt: new Date(r.granted_at).toISOString(),
+      expiresAt: r.expires_at ? new Date(r.expires_at).toISOString() : null,
+      orderId: r.order_id,
+      desistivelAte: prazo && prazo > at ? new Date(prazo).toISOString() : null
+    };
+  });
+}
+
+/** Até quando o acesso a `slug` ainda pode ser desistido (ms), ou null. */
+export async function desistivelAte(env, accountId, slug, at = now()) {
+  const e = (await activeEntitlements(env, accountId, at)).find(x => x.courseSlug === slug);
+  return e && e.desistivelAte ? Date.parse(e.desistivelAte) : null;
 }
 
 /**

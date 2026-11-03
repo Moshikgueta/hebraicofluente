@@ -13,6 +13,8 @@
  * Desde 23/10/2026, a compra de uma conta de ADMIN_EMAILS vem com
  * `teste: true`: são os testes do dono, que o painel mostra à parte e não soma.
  *
+ * Desde 03/11/2026, também quando a pessoa desistiu pelo site e se já tinha
+ * passado no exame final - para medir quem faz o curso e desiste.
  * Desde 05/10/2026, cada compra diz também se a pessoa já começou o curso:
  * quando o progresso dela foi gravado pela última vez (`progress.updated_at`,
  * que só muda quando algo de verdade mudou) e quais lições ela concluiu.
@@ -40,6 +42,8 @@ export async function listar({ request, env }) {
     `SELECT o.id, o.course_slug, o.amount_cents, o.method, o.installments, o.status,
             o.created_at, o.paid_at, o.parceria, o.origem, o.campanha, a.name, a.email,
             p.updated_at AS progresso_em,
+            (SELECT d.pedido_em FROM arrependimentos d WHERE d.order_id = o.id) AS desistiu_em,
+            CASE WHEN json_valid(p.state) THEN json_extract(p.state, '$.finalChallenge.passedAt') END AS exame_em,
             (SELECT json_extract(e.raw, '$.liquido') FROM payment_events e
               WHERE e.order_id = o.id AND e.status = 'paid' AND json_valid(e.raw)
               ORDER BY e.created_at DESC LIMIT 1) AS liquido,
@@ -61,6 +65,9 @@ export async function listar({ request, env }) {
       parcelas: v.installments, status: v.status, pagoEm: v.paid_at || v.created_at,
       parceria: v.parceria || null, origem: v.origem || null, campanha: v.campanha || null, nome: v.name || '', email: v.email || null,
       estudouEm: v.progresso_em || null, concluidas: lista(v.concluidas),
+      /* Desistência pelo site (03/11/2026): quando foi pedida, para o painel
+         dizer quantos dias depois da compra e até onde a pessoa chegou. */
+      desistiuEm: v.desistiu_em || null, exameFeito: !!v.exame_em,
       teste: !!v.email && admins.includes(normalizeEmail(v.email))
     }))
   });

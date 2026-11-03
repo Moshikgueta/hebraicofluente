@@ -20,11 +20,15 @@ import { He } from '@/components/hebrew/He';
 import { stripNikud } from '@/lib/hebrew';
 import { useProgress } from '@/lib/state/store';
 import { tx } from '@/i18n/telas/academia-bonus-client';
+import { AbreDepoisDoPrazo, useAbreEm } from '@/components/platform/AbreDepoisDoPrazo';
 
 export function BonusClient() {
   const p = useProgress();
   const id = useSearchParams()?.get('l') ?? null;
+  const abreEm = useAbreEm();
   if (!p.ready) return null;
+  /* O prazo de desistência (03/11/2026): as leituras nem chegam antes dele. */
+  if (abreEm) return <div className="focus-col grid gap-5"><AbreDepoisDoPrazo o="bonus" em={abreEm} /></div>;
 
   const minhas = leiturasCompradas(p.state);
   const todas = leiturasBonus();

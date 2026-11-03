@@ -45,6 +45,7 @@ import {
   paddlePronto, pagamentoDe, tokenDoCliente
 } from '../lib/paddle.js';
 import empresa from '../../../data/empresa.json';
+import { DIAS_PADDLE, diasDoPedido, prazoDeDesistencia } from '../lib/desistencia.js';
 import { gravarTermosDoPedido, linkDaVersao, versaoAtual } from '../lib/versoes.js';
 
 /* ── qual trilho de cobrança está ligado ──────────────────────────────────
@@ -80,29 +81,8 @@ const aceita = forma => {
 };
 
 /* ── o prazo de desistência ────────────────────────────────────────────────
- * Sete dias corridos (CDC, art. 49), contados da liberação do acesso - que é
- * o pagamento confirmado, e é depois da compra, então é o mais favorável ao
- * consumidor, como a Política de Reembolso promete. E vai até o FIM do
- * sétimo dia no horário de Brasília: "sete dias" que acabam às 14h32 porque
- * foi a hora em que o PIX caiu não é como ninguém conta dias.
- *
- * Brasília é UTC-3 o ano inteiro desde 2019 (sem horário de verão).
- */
-const DIA = 86_400_000;
-const BRASILIA = 3 * 3_600_000;
-const DIAS_ARREPENDIMENTO = Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7;
-/* No site em inglês, 14 dias: é o prazo que as regras do Paddle para o
-   comprador garantem (PLANO-INGLES.md, etapa 5; o texto da política é da
-   etapa 6). Lido do pedido, e não do Worker, para que um pedido nunca mude
-   de prazo depois de pago. */
-export const DIAS_PADDLE = 14;
-const diasDoPedido = row => (row && row.provider === 'paddle' ? DIAS_PADDLE : DIAS_ARREPENDIMENTO);
-
-export function prazoDeDesistencia(paidAt, dias = DIAS_ARREPENDIMENTO) {
-  if (!paidAt || !dias) return null;
-  const local = Number(paidAt) - BRASILIA + dias * DIA;
-  return Math.floor(local / DIA) * DIA + DIA - 1 + BRASILIA;
-}
+ * Em lib/desistencia.js desde 03/11/2026 (o acesso também o usa). */
+export { DIAS_PADDLE, prazoDeDesistencia };
 
 /** Um pedido, no formato que o app espera (app/src/lib/account/types.ts).
  *  `desistenciaEm` é o momento do pedido de desistência, se houver. */

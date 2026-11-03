@@ -34,6 +34,7 @@ import { alphabetComplete, isExtraModuleDone, isLessonComplete, isLessonMastered
 import { idDoSom } from '@/lib/sons';
 import { track } from '@/lib/analytics';
 import { tx } from '@/i18n/telas/academia-final-challenge-client';
+import { AbreDepoisDoPrazo, useAbreEm } from '@/components/platform/AbreDepoisDoPrazo';
 
 type Phase =
   | { kind: 'intro' }
@@ -70,6 +71,7 @@ function gravarExame(s: ExameSalvo | null) {
 
 export function FinalChallengeClient() {
   const p = useProgress();
+  const abreEm = useAbreEm();
   const [phase, setPhase] = useState<Phase>({ kind: 'intro' });
   const [results, setResults] = useState<PartResult[]>([]);
   const [attempt, setAttempt] = useState(() => (p.state.finalChallenge.attempts ?? 0) + 1);
@@ -179,6 +181,11 @@ export function FinalChallengeClient() {
         </Card>
       </div>
     );
+  }
+
+  /* ── o prazo de desistência (03/11/2026) ─────────────────────────────── */
+  if (abreEm && phase.kind !== 'done') {
+    return <div className="focus-col grid gap-5 py-4"><AbreDepoisDoPrazo o="exame" em={abreEm} /></div>;
   }
 
   /* ── running a part ───────────────────────────────────────────────────── */

@@ -40,7 +40,7 @@
 
 import { notSignedIn, fail } from '../lib/http.js';
 import { requireAccount } from './auth.js';
-import { hasEntitlement, registrarConteudo } from '../lib/db.js';
+import { hasEntitlement, registrarConteudo, desistivelAte } from '../lib/db.js';
 import { marcaDaConta, invisivel } from '../lib/marca.js';
 
 /* O mesmo curso que o portão protege (worker/src/gate.js). Quando o A1 tiver
@@ -93,6 +93,14 @@ const MOLDE = JSON.stringify({
   guiaNikud: bonus.guia ?? null
 });
 
+/* As leituras bônus abrem depois do prazo de desistência (decisão do dono,
+   03/11/2026): enquanto a compra ainda pode ser desfeita, o conteúdo sai sem
+   elas. O resto do curso é o mesmo. */
+const MOLDE_SEM_BONUS = (() => {
+  const m = JSON.parse(MOLDE);
+  return JSON.stringify({ ...m, bonus: [], guiaNikud: null });
+})();
+
 /* A impressão do molde: FNV-1a de 32 bits, calculada uma vez por isolate.
    Não é segurança (quem decide o acesso é a sessão), só identidade da versão. */
 const VERSAO = (() => {
@@ -120,7 +128,8 @@ export async function content({ request, env }) {
   /* Sem marca (banco fora do ar), o curso sai mesmo assim: quem pagou não
      perde a aula por causa de uma defesa contra cópia. */
   const marca = await marcaDaConta(env, account.id);
-  const etag = `"c-${VERSAO}-${marca || 'sem-marca'}"`;
+  const noPrazo = (await desistivelAte(env, account.id, COURSE)) !== null;
+  const etag = `"c-${VERSAO}${noPrazo ? '-p' : ''}-${marca || 'sem-marca'}"`;
   const cabecalhos = {
     'Cache-Control': CACHE_DO_CONTEUDO,
     'ETag': etag,
@@ -131,7 +140,7 @@ export async function content({ request, env }) {
   if (jaTem.includes(etag)) return new Response(null, { status: 304, headers: cabecalhos });
 
   await registrarConteudo(env, account.id);
-  const corpo = MOLDE
+  const corpo = (noPrazo ? MOLDE_SEM_BONUS : MOLDE)
     .replaceAll(MARCADOR, marca ? invisivel(marca) : '')
     .replaceAll(MARCADOR_VISIVEL, marca ? marca.toUpperCase() : '-');
 
