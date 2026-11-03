@@ -1,0 +1,20 @@
+{
+  "_nota": [
+    "A coleção de guias digitais do Hebraico Fluente. Uma linha por produto; cada produto",
+    "tem a sua pasta (produtos/<slug>/) com produto.json, conteúdo, textos e áudio.",
+    "Os próximos títulos estão listados como 'planejado' só para orientar a estrutura:",
+    "nenhum deles existe ainda e nenhum aparece em tela alguma."
+  ],
+  "id": "guias-israel",
+  "nome": "Guias Hebraico Fluente",
+  "linha": "Para viajar a Israel",
+  "produtos": [
+    { "slug": "sobrevivencia-israel", "estado": "rascunho" },
+    { "slug": "israel-sem-perrengue", "titulo": "Israel Sem Perrengue", "estado": "planejado" },
+    { "slug": "50-coisas-sobre-israel", "titulo": "50 Coisas Sobre Israel", "estado": "planejado" },
+    { "slug": "jerusalem-alem-das-fotografias", "titulo": "Jerusalém Além das Fotografias", "estado": "planejado" },
+    { "slug": "atlas-das-terras-biblicas", "titulo": "Atlas das Terras Bíblicas", "estado": "planejado" },
+    { "slug": "diario-de-viagem-a-israel", "titulo": "Diário de Viagem a Israel", "estado": "planejado" },
+    { "slug": "kit-israel-antes-de-embarcar", "titulo": "Kit Israel Antes de Embarcar", "estado": "planejado" }
+  ]
+}
