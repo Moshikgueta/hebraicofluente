@@ -8,6 +8,7 @@ const pt = {
   abreAmanha: 'A revisão abre amanhã.',
   irRevisao: (n: number) => `Ir para a revisão do módulo ${n}`,
   amanhaTitulo: 'A revisão abre amanhã',
+  praticarHoje: 'Praticar as letras que você já sabe',
   amanhaTexto: 'Você estudou letras deste módulo hoje. A revisão fica para amanhã: revisar depois de uma noite de sono é o que fixa as letras na memória. Até lá, dá para refazer os exercícios das letras acima.'
 } as const;
 
@@ -17,6 +18,7 @@ const en: Traducao<typeof pt> = {
   abreAmanha: 'The review opens tomorrow.',
   irRevisao: (n: number) => `Go to the module ${n} review`,
   amanhaTitulo: 'The review opens tomorrow',
+  praticarHoje: 'Practice the letters you already know',
   amanhaTexto: 'You studied letters from this module today. The review waits until tomorrow: reviewing after a night\'s sleep is what makes the letters stick. Until then, you can redo the exercises for the letters above.'
 };
 

@@ -271,6 +271,7 @@ export function CheckpointClient({ module: mod, letters }: { module: CourseModul
         <Card tone="amber" className="p-5 grid gap-2">
           <p className="font-ui text-[15px] font-semibold text-ink">{txRevisao.amanhaTitulo}</p>
           <p className="text-[15px] leading-relaxed text-ink-body">{txRevisao.amanhaTexto}</p>
+          <LinkButton href="/academia" className="justify-self-start mt-1">{txRevisao.praticarHoje}</LinkButton>
         </Card>
       ) : readyLetters.length < letters.length ? (
         <Card tone="amber" className="p-5 grid gap-3">
