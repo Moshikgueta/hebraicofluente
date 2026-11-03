@@ -422,6 +422,11 @@ if (DADOS.fotos?.length) {
   await p.waitForTimeout(400);
   ok(await p.locator('dialog.rz-foto-grande[open]').count() === 1, 'tocar na foto abre a imagem grande');
   await p.keyboard.press('Escape');
+  await p.goto(`${BASE}/raizes/modulo/8/?etapa=contextualizar`, { waitUntil: 'networkidle' });
+  await p.waitForTimeout(600);
+  const daSecao = p.locator('#secao-contextualizar section[aria-label^="Imagens desta seção"], #secao-contextualizar section[aria-label^="Imagem desta seção"]');
+  ok(await daSecao.count() === 1, 'a seção do módulo 8 mostra as suas imagens');
+  if (await daSecao.count()) { await daSecao.scrollIntoViewIfNeeded(); await p.waitForTimeout(500); await daSecao.screenshot({ path: '.shots/raizes-fotos-secao.png' }); }
   await p.goto(`${BASE}/raizes/modulo/1/`, { waitUntil: 'networkidle' });
   const faixa = p.locator('section[aria-label="Imagens deste capítulo"]');
   ok(await faixa.count() === 1, 'o módulo 1 mostra as imagens do capítulo');
