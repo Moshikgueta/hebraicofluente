@@ -28,11 +28,11 @@ import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
 import {
   BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO,
-  exBuildSyllable, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
+  exBuildSyllable, exBuildSyllableOuvido, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
   exLetterVariant, exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning,
   exVariantSyllable, exVowelPair, exMatchSyllable, exMatchWordMeaning,
-  exMatchLetterSound, exMeaningToWord, exImageToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
+  exLetterHunt, exMatchLetterSound, exMeaningToWord, exImageToWord, exOddOneOut, exPrintVsCursive, exSoundToSyllable,
   exSentenceReading, exSyllableReading, exTypeSyllable, exTypeTranslit, exVowelSound, exWordMeaning,
   type Ctx, type Gen
 } from './generators';
@@ -148,6 +148,9 @@ export function glyphOptionsOf(ex: Exercise): string[] {
     case 'complete-word':
     case 'odd-one-out':
       return ex.options;
+    /* A grade da caça é toda de letras soltas (03/11/2026). */
+    case 'letter-hunt':
+      return ex.grade;
     case 'match':
       /* A letter↔sound match puts single glyphs on the left; a word or
          syllable match puts reading material there, and that is handled by
@@ -885,7 +888,9 @@ export function buildMiniTest(
      geral desce de três para dois, e digitar fica em um (P0-4: é o item mais
      lento, no celular). */
   const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
-    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1, 'type-answer': 1
+    'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1, 'type-answer': 1,
+    /* A caça é o item mais demorado depois de digitar: uma por fixação. */
+    'letter-hunt': 1
   };
   const TETO_GERAL = 2;
   let tetoGeral = TETO_GERAL;
@@ -907,7 +912,8 @@ export function buildMiniTest(
 
   /* A abertura muda de letra para letra (#266): reconhecer a letra, achar a
      intrusa, achá-la dentro de uma palavra ou ligar cada letra ao seu som. */
-  tentar(girar([exLetterRecognition, exOddOneOut, exLetterInWord, exMatchLetterSound], L.order + 1));
+  /* A caça à letra entra na abertura desde 03/11/2026 (pedido do dono). */
+  tentar(girar([exLetterRecognition, exOddOneOut, exLetterInWord, exMatchLetterSound, exLetterHunt], L.order + 1));
   /* E o "qual destas é a letra" logo em seguida, quando a abertura foi outra:
      é um por teste, sempre, e gastá-lo cedo é o que tira do bloco o contraste
      do par que mostraria a forma final antes da hora (a lição do Kaf). */
@@ -977,7 +983,9 @@ export function buildMiniTest(
      Cada camada é uma LISTA em ordem de preferência, e não um gerador fixo:
      nas primeiras letras não há palavra legível nem frase, e a camada cai
      para o que existe em vez de sumir. */
-  tentar([...girar([exBuildSyllable, exBuildWord, exBuildLetters], L.order + 1), exSoundToSyllable]);
+  /* A sílaba montada DE OUVIDO (03/11/2026) entra na rotação quando há a
+     gravação; sem ela, `tentar` a pula (NEEDS_AUDIO) e a camada segue. */
+  tentar([...girar([exBuildSyllable, exBuildWord, exBuildLetters, exBuildSyllableOuvido], L.order + 1), exSoundToSyllable]);
   /* A frase fica SEMPRE na frente quando existe: ler uma linha inteira é o
      que o curso promete, e é a pergunta que mais vale numa prova. */
   tentar([exSentenceReading, ...girar([exSyllableReading, exVowelSound], L.order + 1)]);

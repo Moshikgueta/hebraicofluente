@@ -40,7 +40,9 @@ const pt = {
     <>Você escreveu {escrito}. O certo era {certo}{extra}.</>,
   precisaDica: 'Precisa de uma dica?',
   maisUmaDica: 'Mais uma dica',
-  ouvir: 'Ouvir'
+  ouvir: 'Ouvir',
+  cacaAchou: (n: number, total: number) => `Achou ${n} de ${total}.`,
+  cacaCelula: (k: number) => `Letra ${k}`
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -80,7 +82,9 @@ const en: Traducao<typeof pt> = {
     <>You wrote {escrito}. The correct answer was {certo}{extra}.</>,
   precisaDica: 'Need a hint?',
   maisUmaDica: 'One more hint',
-  ouvir: 'Listen'
+  ouvir: 'Listen',
+  cacaAchou: (n, total) => `Found ${n} of ${total}.`,
+  cacaCelula: k => `Letter ${k}`
 };
 
 export const DICIONARIO = { pt, en };

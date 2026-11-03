@@ -28,7 +28,7 @@ import { Prose } from '@/components/hebrew/Prose';
 import { AudioButton, hasAudio } from './AudioButton';
 import { OuvirInstrucao } from './OuvirInstrucao';
 import {
-  BuildLetters, BuildSyllable, BuildWord, Hints, MatchPairs, TypeAnswer, TypeHebrew
+  BuildLetters, BuildSyllable, BuildWord, Hints, LetterHunt, MatchPairs, TypeAnswer, TypeHebrew
 } from './Answers';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -460,7 +460,36 @@ function Body({
   }) => void;
 }) {
   switch (ex.kind) {
+    case 'letter-hunt':
+      return (
+        <LetterHunt
+          letter={ex.letter} grade={ex.grade} settled={settled}
+          onAnswer={(correct, erros) => onSettle(correct, {
+            why: erros > 0 ? tx.cacaErros(erros) : null
+          })}
+        />
+      );
+
     case 'build-syllable':
+      /* De ouvido: o som toca acima dos sinais, e a leitura só aparece
+         depois de escolher. */
+      if (ex.ouvir && ex.audioId) {
+        return (
+          <div className="grid gap-4">
+            <div className="flex justify-center">
+              <AudioButton audioId={ex.audioId} label={tx.ouvirDeNovo} size="lg" slow />
+            </div>
+            <BuildSyllable
+              consonant={ex.consonant} vowels={ex.vowels} answer={ex.answer} sound={ex.sound}
+              settled={settled}
+              onAnswer={(correct, chosen) => onSettle(correct, {
+                why: correct ? null : tx.sinalNaoFaz(ex.sound),
+                expected: ex.vowels[ex.answer], chosenGlyph: chosen
+              })}
+            />
+          </div>
+        );
+      }
       return (
         <BuildSyllable
           consonant={ex.consonant} vowels={ex.vowels} answer={ex.answer} sound={ex.sound}
