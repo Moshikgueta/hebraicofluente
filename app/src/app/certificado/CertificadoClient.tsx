@@ -11,6 +11,13 @@
  * one place this is actually shared from; everywhere else it downloads, which
  * is what a desktop expects anyway.
  *
+ * Desde 03/11/2026 o certificado é EMITIDO pelo servidor
+ * (worker/src/api/certificado-alfa.js): só depois do prazo de desistência e
+ * com o exame aprovado no progresso do servidor, com um código conferível.
+ * Antes da emissão a tela não desenha nada; depois, desenha com o código, e o
+ * nome é o que foi emitido. Na build de demonstração, sem servidor, segue
+ * desenhando como antes.
+ *
  * The name is editable here even though onboarding asked for one - people put
  * "Mo" into an onboarding field and their full name on a certificate, and
  * making them re-run onboarding to fix it would be absurd.
@@ -38,6 +45,9 @@ import { sugerirNome } from '@/lib/nome-hebraico';
 import { fmt } from '@/i18n';
 import { AbreDepoisDoPrazo, useAbreEm } from '@/components/platform/AbreDepoisDoPrazo';
 import { tx } from '@/i18n/telas/painel-certificado-client';
+import {
+  CERTIFICADO_NO_SERVIDOR, emitirCertificadoAlfa, situacaoDoCertificado, type SituacaoAlfa
+} from '@/lib/certificado-alfa';
 
 export function CertificadoClient() {
   const p = useProgress();
@@ -54,6 +64,9 @@ export function CertificadoClient() {
   const [comHebraico, setComHebraico] = useState(false);
   const [grafiaHe, setGrafiaHe] = useState('');
   const [conferida, setConferida] = useState(false);
+  const [emissao, setEmissao] = useState<SituacaoAlfa | { situacao: 'carregando' } | { situacao: 'erro' }>({ situacao: 'carregando' });
+  const [emitindo, setEmitindo] = useState(false);
+  const [erroEmissao, setErroEmissao] = useState<string | null>(null);
 
   const gate = certificateReady(p.state, course.totalLetters);
   const letters = allLetters().map(l => l.letter);
@@ -73,12 +86,35 @@ export function CertificadoClient() {
      em branco, sem aviso nenhum. */
   const semNome = !name.trim();
 
+  /* A situação no servidor. Emitido, o nome é o do certificado. */
+  const aplicar = useCallback((s: SituacaoAlfa | { erro: string }) => {
+    if ('erro' in s) { setEmissao({ situacao: 'erro' }); return; }
+    setEmissao(s);
+    if (s.situacao === 'emitido') { setTouched(true); setName(s.certificado.nome); }
+  }, []);
+  const carregar = useCallback(async () => {
+    setEmissao({ situacao: 'carregando' });
+    aplicar(await situacaoDoCertificado());
+  }, [aplicar]);
+  useEffect(() => {
+    if (CERTIFICADO_NO_SERVIDOR && p.ready && gate.ready && !abreEm) void carregar();
+  }, [p.ready, gate.ready, abreEm, carregar]);
+  const emitir = useCallback(async () => {
+    setEmitindo(true); setErroEmissao(null);
+    const r = await emitirCertificadoAlfa(name.trim());
+    setEmitindo(false);
+    if ('erro' in r) { setErroEmissao(r.erro === 'nome-invalido' ? tx.nomeInvalido : tx.erroEmitir); return; }
+    aplicar(r);
+  }, [name, aplicar]);
+  const codigo = emissao.situacao === 'emitido' ? emissao.certificado.id : null;
+
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || !gate.ready) return;
+    if (CERTIFICADO_NO_SERVIDOR && !codigo) return;
     const nameHe = comHebraico && conferida ? grafiaHe : null;
-    void drawCertificate(canvas, { name, date, letters, score, format, nameHe });
-  }, [name, date, letters, score, format, gate.ready, comHebraico, conferida, grafiaHe]);
+    void drawCertificate(canvas, { name, date, letters, score, format, nameHe, codigo });
+  }, [name, date, letters, score, format, gate.ready, comHebraico, conferida, grafiaHe, codigo]);
 
   useEffect(() => { redraw(); }, [redraw]);
 
@@ -188,6 +224,53 @@ export function CertificadoClient() {
     );
   }
 
+  /* ── aprovado, antes da emissão pelo servidor ─────────────────────── */
+  if (CERTIFICADO_NO_SERVIDOR && emissao.situacao !== 'emitido') {
+    if (emissao.situacao === 'prazo') {
+      return <div className="focus-col grid gap-5"><AbreDepoisDoPrazo o="certificado" em={new Date(emissao.abreEm)} /></div>;
+    }
+    return (
+      <div className="focus-col grid gap-5">
+        <header className="grid gap-3">
+          <Badge tone="mint">{fmt(tx.aprovadoEm, { data: formatDate(date) })}</Badge>
+          <h1 className="text-[27px] sm:text-[33px] font-bold">{tx.emitirTitulo}</h1>
+          <p className="font-ui text-[15px] leading-relaxed text-ink-muted">{tx.emitirTexto}</p>
+        </header>
+        <Card className="p-5 grid gap-4">
+          {emissao.situacao === 'carregando' && <p role="status" className="m-0 font-ui text-[15px]">{tx.carregando}</p>}
+          {(emissao.situacao === 'falta' || emissao.situacao === 'erro') && (
+            <div className="grid gap-3">
+              <p role="status" className="m-0 font-ui text-[15px] text-ink-body">
+                {emissao.situacao === 'falta' ? tx.faltaServidor : tx.erroEmitir}
+              </p>
+              <Button variant="secondary" onClick={() => void carregar()} className="justify-self-start">{tx.tentarDeNovo}</Button>
+            </div>
+          )}
+          {emissao.situacao === 'pode' && (
+            <>
+              <div className="grid gap-2">
+                <label htmlFor="cert-name" className="font-ui text-[12px] uppercase tracking-[.07em] text-ink-muted">
+                  {tx.nomeNoCertificado}
+                </label>
+                <input
+                  id="cert-name" value={name}
+                  onChange={e => { setTouched(true); setName(e.target.value.slice(0, 80)); }}
+                  placeholder={tx.comoAparecer} autoComplete="name"
+                  className="min-h-[52px] px-4 rounded-[var(--r-md)] border-2 border-line bg-surface
+                             font-ui text-[17px] text-ink placeholder:text-ink-muted focus:border-[var(--accent-soft)]"
+                />
+              </div>
+              <Button size="lg" onClick={() => void emitir()} disabled={emitindo || semNome} className="justify-self-start">
+                {emitindo ? tx.emitindo : tx.emitir}
+              </Button>
+              {erroEmissao && <p role="alert" className="m-0 font-ui text-[14px] text-[var(--amber)]">{erroEmissao}</p>}
+            </>
+          )}
+        </Card>
+      </div>
+    );
+  }
+
   /* ── earned ───────────────────────────────────────────────────────── */
   return (
     <div className="grid gap-6">
@@ -218,6 +301,7 @@ export function CertificadoClient() {
           <input
             id="cert-name"
             value={name}
+            readOnly={!!codigo}
             onChange={e => { setTouched(true); setName(e.target.value.slice(0, 48)); }}
             placeholder={tx.comoAparecer}
             autoComplete="name"
@@ -230,6 +314,11 @@ export function CertificadoClient() {
           {semNome && (
             <p id="cert-name-falta" className="font-ui text-[13.5px] text-[var(--amber)]">
               {tx.semNome}
+            </p>
+          )}
+          {codigo && (
+            <p className="font-ui text-[13.5px] text-ink-muted m-0">
+              {tx.nomeFixo} {tx.codigoPagina(codigo)}
             </p>
           )}
         </div>

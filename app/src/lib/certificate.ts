@@ -43,6 +43,8 @@ export type CertificateInput = {
    * transliteração, e o certificado não escolhe por ele.
    */
   nameHe?: string | null;
+  /** O código conferível que o servidor deu ao certificado (03/11/2026). */
+  codigo?: string | null;
 };
 
 export const FORMATS: Record<CertificateFormat, { w: number; h: number; labelPt: string; hintPt: string }> = {
@@ -231,6 +233,7 @@ export async function drawCertificate(
   ctx.fillStyle = C.muted;
   const parts = [formatDate(input.date)];
   if (input.score != null) parts.push(fmt(tx.exame, { nota: Math.round(input.score * 100) }));
+  if (input.codigo) parts.push(fmt(tx.codigo, { codigo: input.codigo }));
   ctx.fillText(parts.join('   ·   '), cx, footY);
 
   /* The honest line. Small, and present. */
