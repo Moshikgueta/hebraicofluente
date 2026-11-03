@@ -9,8 +9,11 @@
  * quando o conceito volta e a pessoa conclui que "hebraico é difícil".
  *
  * ── o que ele NÃO é ─────────────────────────────────────────────────────
- * Não é prova. Não vale nota, não conta XP, não tranca nada e não entra na
- * revisão espaçada. É uma conferência de entendimento, e é por isso que:
+ * Não é prova. Não vale nota, não conta XP e não entra na revisão espaçada.
+ * Na lição de letra (03/11/2026, decisão do dono) ela passou a ser a porta da
+ * etapa 1: o botão de continuar só abre com `entendeuCom` certas, e quem não
+ * chega lá volta à explicação (`reler`) e responde de novo. Nas outras telas
+ * continua sem trancar nada. É uma conferência de entendimento, e é por isso que:
  *
  *   · a alternativa certa aparece marcada mesmo depois de um erro, em vez
  *     de pedir outra tentativa - o objetivo é ensinar, não medir;
@@ -51,6 +54,11 @@ import type { ItemCompreensao } from '@/lib/content-publico';
 
 export type { ItemCompreensao };
 
+/** Quantas certas contam como "entendeu" (70%, arredondado para cima: com
+ *  duas ou três perguntas, todas). A lição de letra usa a mesma régua para
+ *  liberar o botão de continuar. */
+export const entendeuCom = (total: number) => Math.ceil(total * 0.7);
+
 /* A cor de uma alternativa depois de respondida. A certa fica verde mesmo
    quando a pessoa escolheu outra - ver a nota do topo. */
 function tom(respondida: boolean, estaCerta: boolean, marcada: boolean) {
@@ -60,7 +68,7 @@ function tom(respondida: boolean, estaCerta: boolean, marcada: boolean) {
   return 'border-line bg-surface text-ink-muted';
 }
 
-export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, tituloOculto = false }: {
+export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, reler, tituloOculto = false }: {
   id: string;
   titulo: string;
   /** Quando a checagem mora dentro de uma parte que já mostra o título (a
@@ -72,6 +80,9 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
   fecho: { bom: string; parcial: string };
   /** Chamado uma vez, quando a última pergunta é respondida. */
   aoCompletar?: (certas: number) => void;
+  /** Só na lição de letra (03/11/2026): abaixo de `ENTENDEU`, um botão leva
+   *  de volta à explicação. Quem usa decide o que "de novo" quer dizer. */
+  reler?: { rotulo: string; aoReler: () => void };
 }) {
   /* Uma resposta por pergunta; na associação, uma por linha. */
   const [resp, setResp] = useState<Record<number, number>>({});
@@ -92,6 +103,7 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
   const feitas = perguntas.filter((p, i) => respondida(i, p)).length;
   const certas = perguntas.filter((p, i) => respondida(i, p) && acertou(i, p)).length;
   const completo = feitas === perguntas.length;
+  const entendeu = certas >= entendeuCom(perguntas.length);
 
   /* Uma vez só: responder de novo não dispara outra vez. Quem ouve (o
      mini-texto) grava um `firsts`, que já é idempotente, mas a guarda deixa
@@ -254,8 +266,15 @@ export function Compreensao({ id, titulo, intro, perguntas, fecho, aoCompletar, 
                 maioria entendeu o conceito e escorregou num detalhe, e
                 mandá-lo reler a página inteira por causa disso é o tipo de
                 rigor que só serve para desanimar. */}
-            {certas >= Math.ceil(perguntas.length * 0.7) ? fecho.bom : fecho.parcial}
+            {entendeu ? fecho.bom : fecho.parcial}
           </p>
+          {!entendeu && reler && (
+            <button type="button" onClick={reler.aoReler}
+                    className="justify-self-center mt-1 min-h-[44px] px-2 font-ui text-[14.5px] font-semibold
+                               text-[var(--accent)] underline underline-offset-2">
+              {reler.rotulo}
+            </button>
+          )}
         </Card>
       )}
     </section>

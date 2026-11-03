@@ -940,6 +940,13 @@ export const aula0Feita = (state: LearnerState): boolean =>
   !!state.firsts?.[AULA0_CONCLUIDA] || Object.keys(state.lessons ?? {}).length > 0;
 
 /** A nota de fixação que libera a letra seguinte. Um número, num lugar só. */
+/** A etapa `n` de uma lição de letra abre quando a anterior foi concluída
+ *  (03/11/2026, decisão do dono: avançar só depois de ler e escrever de
+ *  verdade). Etapa já concluída continua aberta, sempre: nada do que o
+ *  aluno já fez se fecha. */
+export const etapaAberta = (n: number, feitas: readonly number[]) =>
+  n === 1 || feitas.includes(n) || feitas.includes(n - 1);
+
 export const LIBERA_MARK = 0.8;
 
 /** A letra foi dominada para efeito de DESTRAVAR a próxima. */
