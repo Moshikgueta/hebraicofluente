@@ -42,7 +42,9 @@ const pt = {
   maisUmaDica: 'Mais uma dica',
   ouvir: 'Ouvir',
   cacaAchou: (n: number, total: number) => `Achou ${n} de ${total}.`,
-  cacaCelula: (k: number) => `Letra ${k}`
+  cacaCelula: (k: number) => `Letra ${k}`,
+  igualSim: 'Sim, é igual',
+  igualNao: 'Não, é diferente'
 } as const;
 
 const en: Traducao<typeof pt> = {
@@ -84,7 +86,9 @@ const en: Traducao<typeof pt> = {
   maisUmaDica: 'One more hint',
   ouvir: 'Listen',
   cacaAchou: (n, total) => `Found ${n} of ${total}.`,
-  cacaCelula: k => `Letter ${k}`
+  cacaCelula: k => `Letter ${k}`,
+  igualSim: 'Yes, the same',
+  igualNao: 'No, different'
 };
 
 export const DICIONARIO = { pt, en };
