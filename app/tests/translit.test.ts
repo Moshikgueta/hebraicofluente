@@ -73,7 +73,8 @@ describe('os textos em inglês', () => {
     const pasta = raiz('app/src/i18n/telas/');
     for (const f of readdirSync(pasta)) {
       const s = readFileSync(new URL(f, pasta), 'utf8');
-      const en = s.slice(s.indexOf('\nconst en'), s.indexOf('\nexport const DICIONARIO'))
+      const fim = s.includes('\nconst es') ? s.indexOf('\nconst es') : s.indexOf('\nexport const DICIONARIO');
+      const en = s.slice(s.indexOf('\nconst en'), fim)
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .split('\n').filter(l => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n');
       const sobra = (en.match(AGUDO_LATINO) ?? []).filter(p => !PERMITIDOS.has(p));
@@ -87,6 +88,6 @@ describe('o que o site em inglês não tem', () => {
     // A build dos testes é a em português.
     expect(MEU_NOME_EM_HEBRAICO).toBe(true);
     const recursos = readFileSync(raiz('app/src/lib/recursos.ts'), 'utf8');
-    expect(recursos).toContain("export const MEU_NOME_EM_HEBRAICO = LOCALE !== 'en';");
+    expect(recursos).toContain('export const MEU_NOME_EM_HEBRAICO = !EXTERIOR;');
   });
 });

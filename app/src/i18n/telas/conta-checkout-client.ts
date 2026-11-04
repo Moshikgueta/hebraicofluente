@@ -312,5 +312,160 @@ const en: Traducao<typeof pt> = {
   paddleResumo: 'One-time payment · taxes included',
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+/* etapa 5/6: Brasil, rever - quase tudo aqui é a cobrança brasileira (PIX,
+   parcelamento, Mercado Pago, prazo de desistência do CDC). */
+const es: Traducao<typeof pt> = {
+  metaTitulo: (titulo: string) => `Comprar ${titulo} - Hebraico Fluente`,
+  metaTituloPadrao: 'Pago - Hebraico Fluente',
+  oLivro: 'Israel Alem do Obvio',
+  oCombo: 'El combo',
+  oCurso: 'El curso',
+
+  emConfiguracao: 'En configuración',
+  pagamentoDesligado: 'El pago todavía no está activado.',
+  pagamentoDesligadoTexto:
+    'La plataforma ya está en línea, pero el medio de pago se está configurando. Tu cuenta quedó ' +
+    'creada - escribe a la dirección de abajo desde este correo y mientras tanto liberamos el acceso a mano.',
+  voltarAoCurso: 'Volver al curso',
+
+  jaTemParte: 'Ya tienes parte del paquete',
+  leveSoOQueFalta: 'Llévate solo lo que falta.',
+  pacoteCobrariaDeNovo: 'El paquete te cobraría de nuevo lo que ya está en tu cuenta.',
+  comprar: (titulo: string, preco: string) => `Comprar ${titulo} · ${preco}`,
+
+  jaESeu: 'Ya es tuyo',
+  livroJaNaConta: 'Israel Alem do Obvio ya está en tu cuenta.',
+  cursoJaNaConta: 'Este curso ya está en tu cuenta.',
+  nadaAPagar: 'Nada que pagar.',
+  nadaAPagarContinue: 'Nada que pagar. Sigue desde donde lo dejaste.',
+  abrirLivro: 'Abrir Israel Alem do Obvio',
+  irParaMeuHebraico: 'Ir a Mi Hebreo',
+
+  pagamentoConfirmado: 'Pago confirmado',
+  prontoESeu: (oQue: string) => `Listo. ${oQue} es tuyo.`,
+  livroLiberado: (meses: number) => `Versión interactiva liberada por ${meses} meses.`,
+  comboLiberado:
+    'El curso e Israel Alem do Obvio están liberados, con el mismo usuario. Los dos quedan en Mi Biblioteca.',
+  cursoLiberado: (meses: number) =>
+    `Acceso liberado por ${meses} meses. La primera letra lleva unos diez minutos.`,
+  abrirBiblioteca: 'Abrir Mi Biblioteca',
+  comecarAgora: 'Empezar ahora',
+
+  passo1: 'Paso 1 de 2',
+  primeiroSuaConta: 'Primero, tu cuenta.',
+  primeiroSuaContaTexto:
+    'Es la que guarda el acceso. Lleva quince segundos y el pago viene justo después, en esta misma página.',
+
+  parceriaAntes: 'Precio especial garantizado por tu enlace: ',
+  parceriaAte: (data: string) => `, hasta el ${data}`,
+  passo2: 'Paso 2 de 2',
+  comoQuerPagar: '¿Cómo quieres pagar?',
+  cartaoDeCredito: 'Tarjeta de crédito',
+  soCartao: (preco: string, parcelas: string) =>
+    ` · ${preco} en un pago, o en cuotas ${parcelas} (el total aparece antes de confirmar).`,
+  pix: 'PIX',
+  soPix: (preco: string, desconto: number) =>
+    ` · ${preco}${desconto > 0 ? ` (${desconto}% de descuento)` : ''}. Pagas desde la aplicación de tu banco.`,
+  formaDePagamento: 'Forma de pago',
+  pixComDesconto: (preco: string, desconto: number) =>
+    `${preco} - ${desconto}% de descuento. Se acredita en segundos.`,
+  pixSemDesconto: (preco: string) => `${preco}. Se acredita en segundos.`,
+  cartaoDetalhe: (preco: string, parcelas: string) =>
+    `${preco} en un pago, o en cuotas ${parcelas} (el total aparece antes de confirmar).`,
+  cartaoNaMercadoPago:
+    'El número de la tarjeta se escribe en la pantalla de Mercado Pago, no aquí. Esta plataforma nunca ' +
+    'recibe los datos de tu tarjeta. Ahí también eliges en cuántas cuotas pagar y ves el ' +
+    'monto de cada cuota y el total, con los intereses de las cuotas, antes de confirmar.',
+  aguardandoConfirmacao: 'Esperando la confirmación del pago…',
+  gerando: 'Generando…',
+  pagar: (preco: string) => `Pagar ${preco}`,
+  aoContinuar: 'Al continuar aceptas los',
+  termosDeUso: 'Términos de Uso',
+  eComA: 'y la',
+  politicaDePrivacidade: 'Política de Privacidad',
+
+  condicoes: 'Condiciones de esta compra',
+  oQueVoceLeva: 'Qué te llevas',
+  levaLivro: (titulo: string) => `${titulo}: una experiencia digital interactiva, en el navegador.`,
+  levaCombo:
+    'Acceso completo al curso interactivo Aprende a leer hebreo y a la plataforma Israel Alem do Obvio.',
+  levaCurso: (titulo: string) => `Acceso completo a ${titulo}, dentro de la plataforma, en el navegador.`,
+  porQuantoTempo: 'Por cuánto tiempo',
+  tempoRenovacao: (meses: number) => `${meses} meses más, sumados al final del acceso actual.`,
+  tempoLivro: (meses: number, inicio: string) => `La versión interactiva por ${meses} meses, ${inicio}.`,
+  tempoCurso: (meses: number, inicio: string) => `${meses} meses, ${inicio}.`,
+  cobranca: 'Cobro',
+  cobrancaTexto:
+    'Pago único. No hay suscripción ni renovación automática: al final del plazo, el acceso ' +
+    'termina y no se cobra nada más.',
+  naoVemJunto: 'Lo que no viene incluido',
+  naoVemLivro:
+    'El curso de hebreo: Israel Alem do Obvio trata sobre Israel, y no enseña a leer hebreo como ' +
+    'las lecciones del curso.',
+  naoVemCurso:
+    'Clases en vivo y corrección por un profesor: el curso es autodidacta, y la plataforma corrige ' +
+    'cada ejercicio en el momento.',
+  termos: 'Términos',
+  quandoAbre: 'Cuándo se abre',
+  abreComPix: 'En cuanto se confirme el pago - en minutos, con PIX.',
+  abreSemPix: 'En cuanto se confirme el pago.',
+  abreManual: (dias: string | number) =>
+    `Después de que revisemos el pago: la liberación se hace a mano, en hasta ${dias} días hábiles. ` +
+    'Entras a la plataforma con tu correo y tu contraseña.',
+  seDesistir: 'Si cambias de idea',
+  desistirTexto: (dias: string | number) =>
+    `${dias} días para cancelar y recibir el 100% de vuelta, sin dar explicaciones.`,
+  politicaDeReembolso: 'Política de reembolso',
+
+  pixRetomado: (hora: string) =>
+    `Este es el mismo código PIX que generaste antes, y vale hasta las ${hora}. Si ya pagaste, ` +
+    'no pagues de nuevo: el acceso entra solo.',
+  pixCopiaECola: 'PIX copiar y pegar',
+  copiado: 'Copiado ✓',
+  copiarCodigo: 'Copiar código',
+  pixManual: (dias: string | number) =>
+    `Paga desde la aplicación de tu banco. Revisamos el pago y liberamos tu acceso a mano, en ` +
+    `hasta ${dias} días hábiles. Puedes cerrar esta página: para ver el curso, entra con el mismo ` +
+    'correo y la misma contraseña que acabas de usar.',
+  sePassarDoPrazo: 'Si pasa de ese plazo, escribe a',
+  comONumero: 'con el número del pedido: ',
+  pagamentoNaoApareceu:
+    'El pago todavía no apareció por aquí. Si ya pagaste, el acceso entra solo en cuanto ' +
+    'el banco lo confirme - recarga esta página en unos minutos. Si no pagaste, puedes generar un ' +
+    'código nuevo.',
+  gerarOutroCodigo: 'Generar otro código',
+  esperandoPagamento:
+    'Esperando que se acredite el pago. Puedes dejar esta página abierta - se actualiza sola.',
+
+  voceEstaEm: 'Estás en',
+  pagamento: 'Pago',
+  seuPedido: 'Tu pedido',
+  resumoLivro: (capitulos: number, meses: number) =>
+    `Experiencia interactiva · ${capitulos} capítulos · ${meses} meses de acceso`,
+  resumoCombo: (meses: number) =>
+    `Combo: curso de alfabetización + Israel Alem do Obvio · ${meses} meses de acceso`,
+  resumoCurso: (modulos: number, licoes: number | null, meses: number) =>
+    `${modulos} módulos${licoes ? ` · ${licoes} lecciones` : ''} · ${meses} meses de acceso`,
+  noPix: 'con PIX',
+  descontoSobre: (desconto: number, preco: string) => ` · ${desconto}% de descuento sobre ${preco}`,
+  preLancamento: (ate: string | null, depois: string) =>
+    `Prelanzamiento${ate ? ` hasta el ${ate}` : ''} · después, ${depois}`,
+  ouNoCartao: (parcelas: string) => `o ${parcelas} con tarjeta`,
+  pixDesconto: (preco: string, desconto: number) => `${preco} con PIX · ${desconto}% de descuento`,
+  resumoDesistir: (dias: string | number) =>
+    `${dias} días para cancelar y recibir el 100% de vuelta, sin dar explicaciones.`,
+  paddleComoPaga: 'Tarjeta, PayPal, Apple Pay o Google Pay',
+  paddleTexto: (preco: string) =>
+    `${preco}, impuestos incluidos, en un pago único. Pagas en el checkout seguro de Paddle, nuestro ` +
+    'revendedor autorizado: Paddle procesa el pago y se ocupa del impuesto de tu país. ' +
+    'Esta plataforma nunca recibe los datos de tu tarjeta.',
+  paddleAbrindo: 'Abriendo el pago…',
+  paddleFechou: 'La ventana de pago se cerró sin terminar. Cuando quieras, solo haz clic de nuevo.',
+  paddleNaoCarregou:
+    'La ventana de pago no se abrió. Revisa la conexión, desactiva los bloqueadores en esta página e inténtalo de nuevo.',
+  paddleConfirmando: 'Pago recibido. Confirmando tu acceso…',
+  paddleResumo: 'Pago único · impuestos incluidos',
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

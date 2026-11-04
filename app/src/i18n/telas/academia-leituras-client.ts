@@ -53,5 +53,31 @@ const en: Traducao<typeof pt> = {
   feitas: (n: number, total: number) => `${n} of ${total} done`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Lecturas - Hebraico Fluente',
+  metaDescricao: 'Los ejercicios de lectura del curso en un solo lugar: el laboratorio, la Primera Lectura, los textos breves y las lecturas de repaso.',
+
+  titulo: 'Lecturas',
+  intro: 'Todos los ejercicios de lectura del curso en un solo lugar, módulo por módulo. Cada uno usa solo las letras que ya aprendiste hasta ese punto.',
+  rua: 'Hebreo en la calle',
+  ruaDesc: 'Carteles reales de Israel, con palabras que ya lees.',
+  laboratorio: 'Laboratorio de lectura',
+  laboratorioDesc: 'Una palabra a la vez, con la ayuda que elijas.',
+  abrir: 'Abrir',
+  modulo: (n: number, titulo: string) => `Módulo ${n} · ${titulo}`,
+  primeira: 'Mi Primera Lectura',
+  primeiraDesc: 'Palabras del módulo para que las leas por tu cuenta y después compruebes.',
+  primeiraDepois: 'Se abre cuando termines las letras del módulo.',
+  texto: (tipo: string) => `Texto breve · ${tipo}`,
+  revisao: 'Lectura de repaso',
+  revisaoDesc: 'Un texto hecho solo con palabras que ya acumulaste.',
+  feito: 'Hecho',
+  depoisDoModulo: (n: number) => `Llega con el módulo ${n}.`,
+  nenhumaAinda: 'Las lecturas de este módulo aparecen cuando los textos estén revisados.',
+  bonus: 'Lecturas extra',
+  bonusDesc: 'Textos bíblicos para canjear por XP en Recompensas.',
+  feitas: (n: number, total: number) => `${n} de ${total} hechas`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

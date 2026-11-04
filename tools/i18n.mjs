@@ -1,4 +1,4 @@
-/* i18n.mjs - o inglês do conteúdo do curso (data/en/)
+/* i18n.mjs - o inglês e o espanhol do conteúdo do curso (data/en/, data/es/)
  * ─────────────────────────────────────────────────────────────────────────
  * data/*.json continua sendo a fonte, em português. O inglês mora ao lado,
  * em data/en/<arquivo>.json, um registro por texto:
@@ -21,19 +21,26 @@
  * (etapa 3 do PLANO-INGLES.md), não tradução palavra a palavra.
  *
  * Uso (da raiz):
- *   node tools/i18n.mjs extrair     atualiza data/en/ com os textos de hoje
- *   node tools/i18n.mjs relatorio   quanto falta, por arquivo
- *   node tools/i18n.mjs planilha    CSV (caminho, pt, en) para os revisores
+ *   node tools/i18n.mjs extrair [en|es]     atualiza data/en/ e data/es/ (ou um só)
+ *   node tools/i18n.mjs relatorio [en|es]   quanto falta, por arquivo
+ *   node tools/i18n.mjs planilha [en|es]    CSV (caminho, pt, tradução) para os revisores
+ *
+ * O espanhol (04/11/2026) segue as mesmas regras, em data/es/, com o texto no
+ * campo `es`: { "pt": "...", "es": "..." }.
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
-const PASTA = join(ROOT, 'data/en');
+/** Os idiomas traduzidos; o português é a fonte. */
+export const IDIOMAS = ['en', 'es'];
+const pasta = idioma => join(ROOT, 'data', idioma);
 
-/** O idioma da build: `NEXT_PUBLIC_LOCALE=en` faz o site em inglês. */
-export const LOCALE = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'en' : 'pt';
+/** O idioma da build: `NEXT_PUBLIC_LOCALE=en` faz o site em inglês, `es` o em espanhol. */
+export const LOCALE = IDIOMAS.includes(process.env.NEXT_PUBLIC_LOCALE) ? process.env.NEXT_PUBLIC_LOCALE : 'pt';
+/** A traduzir, na build: o idioma dela, ou o inglês na build em português (os testes). */
+const ALVO = LOCALE === 'pt' ? 'en' : LOCALE;
 
 /** Os arquivos do curso de alfabetização que o aluno lê. Fora: o catálogo e
     a empresa (o site em inglês terá os seus), o A1 e o Raízes. */
@@ -123,8 +130,8 @@ export function mesmoHebraico(pt, en) {
     && assinatura(pt, MARCA) === assinatura(en, MARCA);
 }
 
-export function carregar(nome) {
-  const p = join(PASTA, `${nome}.json`);
+export function carregar(nome, idioma = ALVO) {
+  const p = join(pasta(idioma), `${nome}.json`);
   return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : {};
 }
 
@@ -135,19 +142,20 @@ export function carregar(nome) {
  * ou 'hebraico'. Sem inglês válido, o texto fica em português: quem decide
  * se isso pode ir ao ar é o modo estrito do exportador.
  */
-export function traduzir(nome, json, faltas = [], reg = carregar(nome)) {
+export function traduzir(nome, json, faltas = [], reg = carregar(nome), idioma = ALVO) {
   percorrer(nome, json, (caminho, _k, pt, trocar) => {
     const r = reg[caminho];
-    if (!r || typeof r.en !== 'string' || !r.en.trim()) {
+    const t = r && r[idioma];
+    if (typeof t !== 'string' || !t.trim()) {
       faltas.push({ arquivo: nome, caminho, motivo: 'sem-traducao' });
       return;
     }
-    if (!mesmoHebraico(pt, r.en)) {
+    if (!mesmoHebraico(pt, t)) {
       faltas.push({ arquivo: nome, caminho, motivo: 'hebraico' });
       return;
     }
     if (r.pt !== pt) faltas.push({ arquivo: nome, caminho, motivo: 'desatualizado' });
-    trocar(r.en);
+    trocar(t);
   });
   return json;
 }
@@ -157,14 +165,14 @@ const lerFonte = nome => JSON.parse(readFileSync(join(ROOT, 'data', `${nome}.jso
 /** Os registros de data/en/<nome>.json refeitos a partir da fonte de hoje:
     caminho novo entra com en null, caminho que sumiu sai, e o inglês de um
     português que mudou fica, marcado `revisar`. */
-export function extrair(nome) {
-  const antigo = carregar(nome);
+export function extrair(nome, idioma = ALVO) {
+  const antigo = carregar(nome, idioma);
   const novo = {};
   percorrer(nome, lerFonte(nome), (caminho, _k, pt) => {
     const a = antigo[caminho];
-    if (!a) { novo[caminho] = { pt, en: null }; return; }
-    const r = { pt, en: a.en ?? null };
-    if (a.pt !== pt && r.en) r.revisar = true;
+    if (!a) { novo[caminho] = { pt, [idioma]: null }; return; }
+    const r = { pt, [idioma]: a[idioma] ?? null };
+    if (a.pt !== pt && r[idioma]) r.revisar = true;
     else if (a.revisar) r.revisar = true;
     if (a.comentario) r.comentario = a.comentario;
     novo[caminho] = r;
@@ -172,12 +180,12 @@ export function extrair(nome) {
   return novo;
 }
 
-export function relatorio() {
+export function relatorio(idioma = ALVO) {
   return ARQUIVOS.map(nome => {
     const faltas = [];
     let total = 0;
     percorrer(nome, lerFonte(nome), () => { total++; });
-    traduzir(nome, lerFonte(nome), faltas);
+    traduzir(nome, lerFonte(nome), faltas, carregar(nome, idioma), idioma);
     const conta = m => faltas.filter(f => f.motivo === m).length;
     return {
       arquivo: nome, total,
@@ -189,30 +197,41 @@ export function relatorio() {
 
 const csv = s => (s == null ? '' : /[",\n]/.test(s) ? `"${String(s).replace(/"/g, '""')}"` : String(s));
 
-function principal(cmd) {
+function principal(cmd, qual) {
+  if (qual && !IDIOMAS.includes(qual)) {
+    console.error(`Idioma desconhecido: ${qual} (${IDIOMAS.join(', ')})`);
+    process.exit(1);
+  }
+  const idiomas = qual ? [qual] : IDIOMAS;
   if (cmd === 'extrair') {
-    mkdirSync(PASTA, { recursive: true });
-    for (const nome of ARQUIVOS) {
-      writeFileSync(join(PASTA, `${nome}.json`), JSON.stringify(extrair(nome), null, 2) + '\n');
+    for (const idioma of idiomas) {
+      mkdirSync(pasta(idioma), { recursive: true });
+      for (const nome of ARQUIVOS) {
+        writeFileSync(join(pasta(idioma), `${nome}.json`), JSON.stringify(extrair(nome, idioma), null, 2) + '\n');
+      }
+      console.log(`data/${idioma}/: ${ARQUIVOS.length} arquivos atualizados.`);
     }
-    console.log(`data/en/: ${ARQUIVOS.length} arquivos atualizados.`);
   } else if (cmd === 'relatorio') {
-    const linhas = relatorio();
-    console.table(linhas);
-    const soma = k => linhas.reduce((n, l) => n + l[k], 0);
-    console.log(`Prontos: ${soma('prontos')} de ${soma('total')} textos.`);
+    for (const idioma of idiomas) {
+      console.log(`\n${idioma}:`);
+      const linhas = relatorio(idioma);
+      console.table(linhas);
+      const soma = k => linhas.reduce((n, l) => n + l[k], 0);
+      console.log(`Prontos: ${soma('prontos')} de ${soma('total')} textos.`);
+    }
   } else if (cmd === 'planilha') {
-    const saida = ['arquivo,caminho,pt,en,comentario'];
+    const idioma = qual || 'en';
+    const saida = [`arquivo,caminho,pt,${idioma},comentario`];
     for (const nome of ARQUIVOS) {
-      for (const [c, r] of Object.entries(carregar(nome))) {
-        saida.push([nome, c, r.pt, r.en, r.comentario].map(csv).join(','));
+      for (const [c, r] of Object.entries(carregar(nome, idioma))) {
+        saida.push([nome, c, r.pt, r[idioma], r.comentario].map(csv).join(','));
       }
     }
     process.stdout.write(saida.join('\n') + '\n');
   } else {
-    console.error('Uso: node tools/i18n.mjs extrair | relatorio | planilha');
+    console.error('Uso: node tools/i18n.mjs extrair | relatorio | planilha [en|es]');
     process.exit(1);
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) principal(process.argv[2]);
+if (import.meta.url === `file://${process.argv[1]}`) principal(process.argv[2], process.argv[3]);

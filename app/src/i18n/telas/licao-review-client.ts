@@ -57,5 +57,33 @@ const en: Traducao<typeof pt> = {
     `${n === 1 ? 'This letter needs' : 'These letters need'} to be traced again. A good tracing clears the review mark.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  nadaARevisar: 'Todavía no hay nada que repasar',
+  seAlimenta:
+    'El repaso rápido se alimenta de lo que fallas. Haz la primera lección y empezará a aparecer aquí, el día indicado.',
+  irPrimeira: 'Ir a la primera lección',
+  placar: (certas, total) => `${certas} de ${total}`,
+  feita: 'Repaso hecho.',
+  aindaFaltam: n =>
+    `Lo que fallaste vuelve mañana, y lo que acertaste vuelve más adelante. Todavía ${n === 1 ? 'falta 1 elemento' : `faltan ${n} elementos`} para hoy: cinco preguntas más lo resuelven.`,
+  tudoRevisado:
+    'Ya repasaste todo lo de hoy. Lo que fallaste vuelve mañana; lo que acertaste vuelve más adelante, y desaparece cuando esté firme.',
+  maisCinco: 'Cinco más',
+  voltarInicio: 'Volver al inicio',
+  revisaoRapida: 'Repaso rápido',
+  tresMinutos: '3 minutos',
+  cincoQuestoes: 'Cinco preguntas sacadas de lo que más te ha costado hasta ahora.',
+  hojeVale: 'Hoy vale la pena repasar',
+  nadaPendente: 'Nada pendiente - reforcemos las últimas',
+  escorregadas: n => `${n} ${n === 1 ? 'tropiezo' : 'tropiezos'}`,
+  naoDa:
+    'Todavía no se puede armar un repaso: con las letras que tienes ahora no hay opciones suficientes para una pregunta justa. Haz una lección más y vuelve.',
+  comecar: 'Empezar',
+  verMapa: 'Ver el mapa del curso',
+  escreverDeNovo: 'Escribir de nuevo',
+  pedemTracado: n =>
+    `${n === 1 ? 'Esta letra pide' : 'Estas letras piden'} el trazado otra vez. Un buen trazado quita la marca de repaso.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -23,5 +23,16 @@ const en: Traducao<typeof pt> = {
   ouvirNome: ': hear the name'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Laboratorio de sonidos',
+  toque: 'toca una sílaba para escucharla y ver cómo se lee',
+  letra: 'Letra',
+  silaba: (nome, vogal, translit) => `${nome} con ${vogal}: ${translit}`,
+  deNovo: 'Otra vez',
+  consoanteMuda:
+    'La consonante cambia de fila en fila. El signo es el mismo en toda la columna - eso es lo que hace que la lectura se vuelva automática.',
+  ouvirNome: ': escuchar el nombre'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -8,11 +8,18 @@
  * perguntas dão a mesma resposta, e o código continua certo para os dois.
  */
 
-/** 'en' no Worker do site em inglês, 'pt' em qualquer outro. */
-export const idiomaDoWorker = env => (env && env.LOCALE === 'en' ? 'en' : 'pt');
+/** Os idiomas que o Worker conhece: 'en', 'es' (04/11/2026, PLANO-ESPANHOL.md)
+    e o português, que é o resto. */
+export const idiomaValido = x => (x === 'en' || x === 'es' ? x : 'pt');
+
+/** Site de fora do Brasil (inglês ou espanhol): Paddle, dólar, 14 dias. */
+export const exterior = idioma => idioma === 'en' || idioma === 'es';
+
+/** 'en' ou 'es' no Worker do site naquele idioma, 'pt' em qualquer outro. */
+export const idiomaDoWorker = env => idiomaValido(env && env.LOCALE);
 
 /** O idioma de uma linha de `accounts`; conta sem a coluna é do site brasileiro. */
-export const idiomaDaConta = conta => (conta && conta.idioma === 'en' ? 'en' : 'pt');
+export const idiomaDaConta = conta => idiomaValido(conta && conta.idioma);
 
 const semBarra = s => String(s || '').replace(/\/+$/, '');
 
@@ -25,12 +32,14 @@ const semBarra = s => String(s || '').replace(/\/+$/, '');
 export function origemDoIdioma(env, idioma) {
   if (idioma === idiomaDoWorker(env)) return semBarra(env && env.SITE_ORIGIN);
   if (idioma === 'en') return semBarra((env && env.SITE_ORIGIN_EN) || (env && env.SITE_ORIGIN));
+  if (idioma === 'es') return semBarra((env && env.SITE_ORIGIN_ES) || (env && env.SITE_ORIGIN));
   return semBarra((env && env.SITE_ORIGIN_PT) || (env && env.SITE_ORIGIN));
 }
 
-/** O nome do curso no idioma: `titleEn` do catálogo, quando existe. */
+/** O nome do curso no idioma: `titleEn` (ou `titleEs`) do catálogo, quando existe. */
 export const tituloDoCurso = (curso, idioma, reserva = '') =>
-  (idioma === 'en' && curso && curso.titleEn) || (curso && curso.titlePt) || reserva;
+  (idioma === 'en' && curso && curso.titleEn) || (idioma === 'es' && curso && curso.titleEs)
+  || (curso && curso.titlePt) || reserva;
 
 /**
  * O que o site em inglês não tem: os produtos que só existem em português
@@ -39,5 +48,6 @@ export const tituloDoCurso = (curso, idioma, reserva = '') =>
  * site brasileiro (o banco é o mesmo). Página e API. O Worker em inglês
  * responde 404 a isso tudo; o brasileiro não olha esta lista.
  */
+/* O site em espanhol usa a mesma lista: os mesmos produtos só existem em português. */
 export const FORA_DO_SITE_EN =
   /^\/(raizes|a1|israel|previa|admin|meu-nome)(\/|$)|^\/api\/(admin|a1|livro|content\/(raizes|a1))(\/|$)/i;

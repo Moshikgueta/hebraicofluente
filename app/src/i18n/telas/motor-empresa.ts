@@ -30,5 +30,21 @@ const en: Traducao<typeof pt> = {
   oQueOCursoEnsina: 'This course teaches you to read and write Hebrew. It does not teach conversation.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  // etapa 5/6: Brasil, rever
+  parcelas: 'en hasta {n} cuotas, con intereses de Mercado Pago',
+  // etapa 5/6: Brasil, rever
+  parcelasCurto: 'en hasta {n} cuotas, con intereses',
+  // etapa 5/6: Brasil, rever
+  parcelasTotal: 'el valor de cada cuota y el total aparecen en la pantalla de Mercado Pago antes de que confirmes',
+  prazoResposta: (n: number): string => `en hasta ${n} ${n === 1 ? 'día hábil' : 'días hábiles'}`,
+  // etapa 5/6: Brasil, rever
+  confirmacaoDesistencia: 'Desde el sitio, la confirmación llega a tu correo al instante. Por correo, respondemos confirmando la recepción {prazo}, y vale la fecha en que escribiste, no la de nuestra respuesta.',
+  inicioDoAcesso: 'contados desde la liberación del acceso',
+  renovacao: 'En los últimos {dias} días de acceso, puedes renovar con una compra nueva, al precio del día. Los {meses} meses de la renovación se suman al final del acceso actual, y no se cuentan desde el día del pago: renovar antes no te hace perder ningún día. Nada se renueva ni se cobra solo.',
+  duvidasDeConteudo: 'Las dudas sobre el contenido también son bienvenidas por correo, en el mismo plazo.',
+  oQueOCursoEnsina: 'Este curso enseña a leer y escribir en hebreo. No enseña conversación.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

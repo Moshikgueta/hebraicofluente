@@ -39,5 +39,24 @@ const en: Traducao<typeof pt> = {
   refazer: 'Retake the test'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  registrada: (n, total) => `Respuesta registrada. Pregunta ${n} de ${total}.`,
+  tempoDecorrido: s => `Tiempo transcurrido: ${s} segundos`,
+  escolhaOpcao: 'Elige una opción',
+  terminar: 'Terminar la prueba',
+  confirmar: 'Confirmar y continuar',
+
+  concluido: 'Prueba terminada',
+  acertou: (acertos, total) => `Acertaste ${acertos} de ${total}.`,
+  forte: 'Eso es lectura firme. Lo que se escapó vuelve solo en el repaso, el día justo.',
+  meio: 'Buena base, con huecos puntuales. La lista de abajo dice exactamente cuáles.',
+  cedo: 'Todavía es pronto para este conjunto, y eso no es un problema. Repasa las letras de abajo y vuelve a intentarlo - no hay límite de intentos.',
+  escapou: 'Lo que se escapó',
+  voceMarcou: dada => `marcaste ${dada}`,
+  outraLetra: 'marcaste otra letra',
+  rever: nome => `Repasar ${nome}`,
+  refazer: 'Repetir la prueba'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

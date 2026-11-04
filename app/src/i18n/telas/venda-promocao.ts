@@ -31,5 +31,20 @@ const en: Traducao<typeof pt> = {
   dias: 'days'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+// rever: o site em espanhol não tem pré-lançamento nem PIX (Paddle, etapa 5)
+const es: Traducao<typeof pt> = {
+  rotulo: (data: string) => `Preventa · hasta el ${data}`,
+  noCartao: (parcelas: string) => `con tarjeta, ${parcelas}`,
+  noPix: (pct: number) => `por PIX (${pct}% de descuento)`,
+  ou: 'o',
+  depois: (data: string, cheio: string) => `Después del ${data}, el curso pasará a costar ${cheio}.`,
+  aMenos: (valor: string) => `${valor} menos`,
+  aPartirDe: (data: string) => `A partir del ${data}`,
+  verPreco: 'Ver lo que incluye el precio',
+  selo: (dias: number) => `${dias} días para cancelar`,
+  seloLinha: 'Te devolvemos el 100%, sin explicaciones',
+  dias: 'días'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

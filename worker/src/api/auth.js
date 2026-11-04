@@ -895,7 +895,8 @@ export async function health({ request, env }) {
   /* O site em inglês cobra pelo Paddle (lib/paddle.js): os campos da
      cobrança respondem por ele, e os que só existem na Mercado Pago (que
      credencial foi colada, de quem é a conta) ficam `null`. */
-  const emIngles = env.LOCALE === 'en';
+  /* E o em espanhol, igual (04/11/2026). */
+  const emIngles = env.LOCALE === 'en' || env.LOCALE === 'es';
   const paddleLigado = emIngles && paddlePronto(env) && !!tokenDoCliente(env);
 
   const out = {

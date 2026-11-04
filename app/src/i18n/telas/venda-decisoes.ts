@@ -52,5 +52,30 @@ const en: Traducao<typeof pt> = {
   lead: 'Every part of the course was organized to avoid overload and let you move forward with confidence.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  acesas: (n: number, total: number, nomes: string) => `${n} de ${total} · ${nomes}`,
+
+  inicio: 'Inicio',
+  meio: 'Mitad',
+  depois: 'Después',
+  shalomTr: 'shalóm',
+  shalomPt: 'hola, paz',
+  notaInicio: 'Todo a la vista: la palabra, cómo se dice y qué significa.',
+  notaMeio: 'El apoyo se achica. Lees y revisas solo lo que te quedó en duda.',
+  notaDepois: 'Lees directo del hebreo. El apoyo se fue porque ya no hacía falta.',
+  estagios: 'Etapas del apoyo',
+
+  c1t: 'Una letra a la vez',
+  c1b: 'Conoces la letra, practicas con ella y solo entonces avanzas. El alfabeto entero en la pantalla el primer día no enseña: asusta.',
+  c2t: 'El apoyo aparece y después se va',
+  c2b: 'La transliteración ayuda al principio, y el objetivo nunca fue que dependieras de ella. Va disminuyendo junto con tu progreso, hasta que lees directo del hebreo.',
+  c3t: 'Respuesta al instante, en cada paso',
+  c3b: 'No necesitas esperar a un profesor para saber si acertaste. Cuando te equivocas, el curso te dice dónde mirar y te devuelve el intento, y el examen final corrige cada pregunta al instante.',
+
+  rubrica: 'Cómo se pensó el curso',
+  titulo: 'Tres decisiones que hacen el aprendizaje más ligero.',
+  lead: 'Cada parte del curso se organizó para evitar la sobrecarga y dejarte avanzar con confianza.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -27,5 +27,16 @@ const en: Traducao<typeof pt> = {
   fazer: 'Take the final test'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Prueba final del alfabeto',
+  complete: 'Completa todas las letras para desbloquear la prueba final.',
+  faltam: n => (n === 1 ? 'Falta 1 letra.' : `Faltan ${n} letras.`),
+  desbloqueado: '¡Prueba final desbloqueada!',
+  fechou: (letras, partes) => `Terminaste las ${letras} letras. La prueba final mide el alfabeto entero, en ${partes} partes.`,
+  resumo: (letras, partes) => `Las ${letras} letras, en ${partes} partes, sin transliteración en la que apoyarte.`,
+  refazer: 'Repetir la prueba final',
+  fazer: 'Hacer la prueba final'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

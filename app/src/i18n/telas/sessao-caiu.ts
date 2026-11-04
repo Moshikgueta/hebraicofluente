@@ -13,5 +13,11 @@ const en: Traducao<typeof pt> = {
   entrar: 'Sign in again'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Tu sesión terminó.',
+  texto: 'Lo que hagas ahora se guarda solo en este dispositivo, hasta que vuelvas a entrar.',
+  entrar: 'Volver a entrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

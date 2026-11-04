@@ -17,5 +17,13 @@ const en: Traducao<typeof pt> = {
   placar: (certas, total) => `${certas} of ${total}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  verdadeiro: 'Verdadero',
+  falso: 'Falso',
+  isso: 'Eso es. ',
+  certaEmVerde: 'La respuesta correcta es la marcada en verde. ',
+  placar: (certas, total) => `${certas} de ${total}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

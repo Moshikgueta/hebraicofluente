@@ -36,5 +36,23 @@ const en: Traducao<typeof pt> = {
   legenda: 'Portuguese'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  meExplica: 'Explícamelo, Moshik',
+  fechar: 'Cerrar la explicación',
+  ouvirLetra: 'Escuchar la letra',
+  lembrar: 'Lo que necesitas recordar',
+  faz: 'Lo que hace esta letra',
+  pronunciar: 'Cómo pronunciarla',
+  // etapa 3: pronúncia, rever
+  erroComum: 'El error más común de quien habla español',
+  sai: 'Lo que sale:',
+  certo: 'Correcto:',
+  naoConfunda: 'No la confundas con',
+  gravacao: nome => `El nombre, el sonido y una palabra con ${nome}.`,
+  entendi: 'Entendido, volver a la lección',
+  video: nome => `Moshik explica la ${nome}`,
+  legenda: 'Portugués'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

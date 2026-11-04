@@ -27,5 +27,18 @@ const en: Traducao<typeof pt> = {
   versiculoDesc: 'A well-known verse from the Old Testament, with transliteration, translation and the recorded reading.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  folgaTitulo: 'Día libre',
+  folgaDesc: 'Si pasas un día sin cumplir la meta, el día libre se usa solo y tu racha continúa. Puedes guardar hasta dos.',
+  cartaTitulo: 'Carta de cultura anticipada',
+  cartaDesc: 'Abre ahora la próxima carta del viaje por la historia del hebreo, sin esperar a completar más lecciones.',
+  nomeTitulo: 'Tu nombre en hebreo decorado',
+  nomeDesc: 'Tu nombre en letra de molde y a mano, en una imagen para descargar: fondo de pantalla del celular o para imprimir.',
+  textoTitulo: 'Texto bíblico extra',
+  textoDesc: 'Un pasaje del Antiguo Testamento en hebreo, con transliteración, traducción y la lectura grabada, línea por línea.',
+  versiculoTitulo: 'Versículo bíblico',
+  versiculoDesc: 'Un versículo conocido del Antiguo Testamento, con transliteración, traducción y la lectura grabada.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

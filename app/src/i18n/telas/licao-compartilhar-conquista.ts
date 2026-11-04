@@ -28,5 +28,18 @@ const en: Traducao<typeof pt> = {
   fechar: 'Close'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  dataLocale: 'es',
+  compartilhar: 'Compartir',
+  compartilharInstagram: 'Compartir en Instagram',
+  preparando: 'Preparando…',
+  preparandoImagem: 'Preparando la imagen…',
+  baixada: 'La imagen se descargó. Publícala en Instagram desde el celular.',
+  falhou: 'No pude generar la imagen ahora.',
+  dialogo: 'La imagen del logro',
+  tocarESegurar: 'Mantén presionada la imagen para guardarla en el celular. Después, publícala en tu historia de Instagram.',
+  fechar: 'Cerrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

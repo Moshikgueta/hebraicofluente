@@ -26,5 +26,17 @@ const en: Traducao<typeof pt> = {
     'Today I can see that I am learning Hebrew in a different way.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  natContexto: 'alumna particular del profesor',
+  natResultado: 'Lee y escribe en hebreo',
+  // tradução do depoimento: o dono confere com a aluna antes de publicar
+  natCitacao:
+    'Yo ya había estudiado hebreo con otros profesores, pero encontré en Moshik un enfoque ' +
+    'diferente. Te hace prestar atención a cada palabra, cada letra y cada pronunciación [...].\n\n' +
+    'La plataforma también muestra ese cuidado, con audio, texto, imágenes y ejercicios de lectura, ' +
+    'escritura y pronunciación. Hay una preocupación real por que el alumno aprenda de verdad.\n\n' +
+    'Hoy me doy cuenta de que estoy aprendiendo hebreo de una manera diferente.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

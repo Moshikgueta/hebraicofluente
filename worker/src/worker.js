@@ -254,7 +254,7 @@ async function responder(request, env, ctx) {
        Os produtos só em português e os painéis do dono existem no export em
        inglês (é o mesmo código), mas não fazem parte dele: 404, com a página
        de erro do próprio site (lib/idioma.js, PLANO-INGLES.md). */
-    if (idiomaDoWorker(env) === 'en' && FORA_DO_SITE_EN.test(path)) {
+    if (idiomaDoWorker(env) !== 'pt' && FORA_DO_SITE_EN.test(path)) {
       if (path.startsWith('/api/')) return json({ error: 'not-found' }, 404);
       const pagina = env.ASSETS ? await env.ASSETS.fetch(new Request(new URL('/404.html', url))) : null;
       return new Response(pagina && pagina.ok ? pagina.body : 'Not found', {

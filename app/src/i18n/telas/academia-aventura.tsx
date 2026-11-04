@@ -78,5 +78,41 @@ const en: Traducao<typeof pt> = {
   lugar7: 'the rooftop'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  degrauComAjuda: 'Con ayuda',
+  degrauMenosAjuda: 'Menos ayuda',
+  degrauSemAjuda: 'Sin ayuda',
+  marcoPrimeiraGuiada: 'Tu primera palabra leída en el laboratorio.',
+  marcoPrimeiraMenos: 'Tu primera palabra leída con menos ayuda.',
+  marcoPrimeiraSem: 'Tu primera palabra leída sin ninguna ayuda.',
+  marcoDezenas: n => `${n} palabras leídas sin ayuda.`,
+  escadaAria: 'Palabras que marcaste como leídas, por nivel de ayuda',
+  nPalavras: n => `${n} ${n === 1 ? 'palabra' : 'palabras'}`,
+  escadaNota: 'Cuentan las palabras que marcaste como leídas. El dominio de las letras viene de los ejercicios corregidos.',
+  marcoDeLeitura: 'Hito de lectura',
+  continuarLendo: 'Seguir leyendo',
+
+  rotuloDominada: 'Dominada',
+  rotuloConcluida: 'Terminada',
+  rotuloAdiante: 'Todavía no',
+  cartaAria: (nome, estado) => `${nome}: ${estado.toLowerCase()}`,
+  abrirLicao: rotulo => `${rotulo}. Abrir la lección`,
+  letraConquistada: 'Letra conquistada',
+  entrouNaColecao: nome => `${nome} entró en tu colección.`,
+  leNomeYael: he => <>Ahora lees el nombre de Yael:{' '}{he}</>,
+  yaelLegenda: "ya'él · el íbice",
+  verColecao: 'Ver la colección de letras',
+
+  moduloLugar: (n, lugar) => `Módulo ${n} · ${lugar}`,
+
+  lugar1: 'el mar',
+  lugar2: 'el jardín',
+  lugar3: 'la ventana',
+  lugar4: 'la ciudad',
+  lugar5: 'el mercado',
+  lugar6: 'la calle, sin los puntos',
+  lugar7: 'el tejado'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

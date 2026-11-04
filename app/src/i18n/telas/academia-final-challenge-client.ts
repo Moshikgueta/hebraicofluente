@@ -107,5 +107,58 @@ const en: Traducao<typeof pt> = {
   partesDoExame: 'Exam parts'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  trancadoTitulo: 'La prueba final todavía está bloqueada.',
+  trancadoTexto: (total, faltam, regra) =>
+    `Termina las lecciones de las ${total} letras para desbloquear la prueba final. ` +
+    `${faltam === 1 ? 'Falta terminar 1 lección.' : `Faltan ${faltam} lecciones por terminar.`} ` +
+    `${regra} La prueba mide el alfabeto entero - hecha antes de tiempo, pregunta por letras que todavía no viste y el número no dice nada.`,
+  continuarDeOnde: 'Seguir donde lo dejé',
+  verMapa: 'Ver el mapa',
+
+  parteTitulo: (n, titulo) => `Parte ${n} · ${titulo}`,
+  parteDe: (n, total) => `Parte ${n} de ${total}`,
+  retomado: feitas =>
+    `Volviste al examen. ${feitas === 1 ? 'La parte 1 ya está contada' : `Las partes 1 a ${feitas} ya están contadas`}; esta parte empieza de nuevo desde el principio.`,
+  questoesSemTempo: n => `${n} preguntas. Sin tiempo, sin penalización por equivocarte.`,
+  comecar: 'Empezar',
+  continuar: 'Continuar',
+
+  kicker: (certas, total, pct) => `${certas} de ${total} · ${pct}%`,
+  partePorParte: 'Parte por parte',
+  treinarNaAcademia: parte => `Entrenar ${parte} en la Academia →`,
+  aprovado: 'Aprobado',
+  certificadoPronto: 'Tu certificado está listo.',
+  certificadoTexto: 'Con tu nombre, la fecha y las 22 letras - para descargar o compartir.',
+  verCertificado: 'Ver el certificado',
+  oQueConquistou: 'Lo que lograste',
+  faltaram: (pct, n) =>
+    `El certificado se obtiene a partir del ${pct}%. Te faltaron ${n} preguntas - y el próximo intento es un examen nuevo, no el mismo.`,
+  refazer: 'Repetir el examen',
+  refazerMesmoAssim: 'Repetirlo de todos modos',
+
+  exameFinal: 'Examen final',
+  portaTitulo: 'Hebreo de verdad, sin apoyo',
+  portaTexto: (questoes, partes) =>
+    `${questoes} preguntas en ${partes} partes, con las 22 letras y sin transliteración. Cada parte tiene su propia nota - al final ves exactamente qué está firme y qué no.`,
+  oQueCai: '¿Qué entra?',
+  semEscuta: 'La parte de escucha entra cuando lleguen las grabaciones. Hasta entonces el examen no evalúa lo que el curso todavía no pudo enseñar.',
+  semMod6e7: 'Las partes "Sin los puntos" y "Los sonidos de afuera" entran cuando hagas los módulos 6 y 7. ',
+  semMod6: 'La parte "Sin los puntos" entra cuando hagas el módulo 6. ',
+  semMod7: 'La parte "Los sonidos de afuera" entra cuando hagas el módulo 7. ',
+  ateLa: 'Hasta entonces el examen no evalúa lo que todavía no estudiaste.',
+  licoesConcluidas: 'Lecciones terminadas',
+  melhorResultado: pct => `Mejor resultado hasta ahora: ${pct}%`,
+  aprovadoCurto: ' · aprobado',
+  tentativas: n => ` · ${n} ${n === 1 ? 'intento' : 'intentos'}`,
+  comecarExame: 'Empezar el examen',
+  aprovacao: pct => `Se aprueba a partir del ${pct}%. Sin límite de intentos, y cada intento es un examen diferente.`,
+  verMeuCertificado: 'Ver mi certificado',
+  faltamLetras: n =>
+    `Faltan ${n} letras. El examen solo tiene sentido con el alfabeto entero - y te espera aquí, sin plazo.`,
+  voltarMapa: 'Volver al mapa',
+  partesDoExame: 'Partes del examen'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

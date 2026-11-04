@@ -62,7 +62,9 @@ const UNIDADE = {
   /* O site em inglês (NEXT_PUBLIC_LOCALE=en): as mesmas grandezas. */
   'lessons': 'licoes', 'lesson': 'licoes',
   'letters': 'letras', 'letter': 'letras',
-  'modules': 'modulos', 'module': 'modulos'
+  'modules': 'modulos', 'module': 'modulos',
+  /* O espanhol (NEXT_PUBLIC_LOCALE=es). */
+  'lecciones': 'licoes', 'lección': 'licoes'
 };
 
 /* Duas regras, e as duas foram escolhidas para não gritar à toa.

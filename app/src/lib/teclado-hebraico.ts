@@ -18,7 +18,7 @@ export const LETRAS: Tecla[] = [
   ['ז', 'Záyin'], ['ח', 'Het'], ['ט', 'Tet'], ['י', 'Yud'], ['כ', 'Kaf'], ['ל', 'Lámed'], // i18n-ok: transliteração
   ['מ', 'Mem'], ['נ', 'Nun'], ['ס', 'Sámech'], ['ע', 'Áyin'], ['פ', 'Pe'], ['צ', 'Tsádi'], // i18n-ok: transliteração
   ['ק', 'Kuf'], ['ר', 'Resh'], ['ש', 'Shin'], ['ת', 'Tav']
-].map(([ch, nome]) => ({ ch: ch!, nome: ch === 'ח' && LOCALE === 'en' ? 'Chet' : translit(nome!) }));
+].map(([ch, nome]) => ({ ch: ch!, nome: ch === 'ח' && LOCALE === 'en' ? 'Chet' : ch === 'ח' && LOCALE === 'es' ? 'Jet' : translit(nome!) }));
 
 export const FINAIS: Tecla[] = [
   ['ך', 'Kaf'], ['ם', 'Mem'], ['ן', 'Nun'], ['ף', 'Pe'], ['ץ', 'Tsádi'] // i18n-ok: transliteração

@@ -27,5 +27,18 @@ const en: Traducao<typeof pt> = {
   agoraNao: 'Not now'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'El curso en tu celular',
+  texto: 'Instala el curso como una app: se abre directo desde la pantalla de inicio, en pantalla completa, sin buscar la página.',
+  instalar: 'Instalar la app',
+  iosAntes: 'En Safari, toca',
+  iosCompartilhar: 'Compartir',
+  iosDepois: 'y después',
+  iosAdicionar: 'Agregar a inicio',
+  outro: 'En el menú del navegador, elige "Instalar app" o "Agregar a la pantalla principal".',
+  instalado: 'Listo: el curso ya está en tu pantalla de inicio.',
+  agoraNao: 'Ahora no'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -20,5 +20,14 @@ const en: Traducao<typeof pt> = {
   origem: 'Wikimedia Commons'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  rubrica: 'En la calle, en Israel',
+  naRuaTitulo: 'Al final del curso, lees esto.',
+  naRuaLead: 'Fotos reales de carteles en Israel. La palabra resaltada es una que el curso enseña.',
+  naPlaca: 'En el cartel:',
+  foto: 'Foto:',
+  origem: 'Wikimedia Commons'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

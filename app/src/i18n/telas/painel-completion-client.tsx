@@ -68,5 +68,38 @@ const en: Traducao<typeof pt> = {
   continuarRevisando: 'Keep reviewing'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  cursoConcluido: 'Curso completado',
+  ondeEsta: 'Dónde estás',
+  consegueLer: 'Ahora puedes leer hebreo.',
+  estaLendo: 'Estás leyendo hebreo.',
+  seuCaminho: 'Tu camino por el alfabeto',
+  semanasAtras: 'Hace algunas semanas esto era un conjunto de símbolos.',
+  faltam: (n: number) => `${n === 1 ? 'Falta' : 'Faltan'} ${n} ${n === 1 ? 'lección' : 'lecciones'} para completar el alfabeto.`,
+  licoesConcluidas: 'lecciones completadas',
+  abaixoDoDominio: (n: number) => n === 1
+    ? '1 lección completada todavía está por debajo del dominio: rehacer sus ejercicios ya cuenta.'
+    : `${n} lecciones completadas todavía están por debajo del dominio: rehacer sus ejercicios ya cuenta.`,
+  refazerDe: 'Rehacer los ejercicios de {nome}',
+  irParaLetra: 'Ir a la letra {nome}',
+  localeDosNumeros: 'es-419',
+  xpAcumulado: 'XP acumulado',
+  maiorSequencia: 'Racha más larga',
+  dias: '{n} días',
+  conquistas: 'Logros',
+  conquistasDe: '{n} de {total}',
+  desbloqueou: '¿Qué desbloqueaste?',
+  sabeFazer: '¿Qué sabes hacer ahora?',
+  sabe1: 'Reconocer las 22 letras, impresas y en cursiva',
+  sabe2: 'Reconocer las cinco formas finales de un vistazo',
+  sabe3: 'Leer palabras vocalizadas con los signos que enseñó el curso',
+  sabe4: (sfr: ReactNode, bait: ReactNode, shalom: ReactNode) => <>Leer sin nikud, como aparece en la calle: {sfr}, {bait}, {shalom}</>,
+  sabe5: 'Escribir las letras a mano, en la dirección correcta',
+  // etapa 3: pronúncia, rever
+  sabe6: 'Pronunciar los sonidos que el español no tiene, sin confundirlos',
+  continuaAberto: 'El curso de alfabetización sigue abierto, sin plazo. Aquí no hay nada bloqueado.',
+  continuarRevisando: 'Seguir repasando'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

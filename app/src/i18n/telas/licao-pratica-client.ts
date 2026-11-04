@@ -86,5 +86,47 @@ const en: Traducao<typeof pt> = {
   maisJogos: 'More games in the Academy'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  prefixo: numero => (numero ? `Lección ${numero}` : 'Práctica enfocada'),
+  correcao: 'corrección',
+  par: (a, b) => `${a} y ${b}`,
+  correcaoConcluida: 'Corrección terminada',
+  parecidasConcluidas: 'Letras parecidas terminadas',
+  voltou: 'Cada pregunta que fallaste volvió hasta que la acertaste.',
+  quandoQuiser: 'Cuando quieras, hazla de nuevo: las preguntas cambian. O sigue a otra parte de la práctica.',
+  voltarPratica: 'Volver a la práctica',
+  voltarPraticaSeta: '← Volver a la práctica',
+  lerEmVozAlta: 'Leer en voz alta',
+  palavrasDoModulo: 'Las palabras del módulo. Lee cada una en voz alta antes de escucharla, de derecha a izquierda.',
+  compare: 'Compara tu lectura con la del curso',
+  leiaALista: 'Lee la lista completa y escúchate',
+  leiaInstrucao: 'Lee en voz alta las palabras de arriba, grábate y escucha: ¿qué salió distinto de lo que querías?',
+  termineiDeLer: 'Terminé de leer',
+  modulo: n => `← Módulo ${n}`,
+  badge: (n, numero) => `Módulo ${n} · ${numero ? `lección ${numero} · práctica` : 'práctica enfocada'}`,
+  feita: ' · hecha ✓',
+  titulo: n => `Práctica del módulo ${n}`,
+  intro:
+    'Ninguna letra nueva: el módulo completo otra vez, empezando por lo que fallaste. Haz las partes en el orden que quieras. Una pregunta que fallas vuelve después de otras hasta que la aciertes.',
+  item1: '1. Corrección',
+  dosErros: 'Sacada de tus errores con las letras de este módulo.',
+  semErros: 'No hay errores tuyos registrados en este módulo: sus letras, mezcladas.',
+  perguntasMisturadas: 'Las preguntas del módulo, mezcladas.',
+  fazerDeNovo: 'Hacerla de nuevo',
+  comecar: 'Empezar',
+  item2: (a, b) => `2. Letras parecidas: ${a} y ${b}`,
+  ladoALado: 'Las dos lado a lado, hasta que el ojo las distinga sin pensar.',
+  itemLer: n => `${n}. Leer en voz alta`,
+  palavrasParaLer: n => `${n} palabras del módulo, para leer, escuchar y grabar tu lectura.`,
+  abrir: 'Abrir',
+  fechar: 'Y para cerrar el módulo',
+  leituraDeRevisao: 'Lectura de repaso',
+  lerTexto: 'Leer el texto del módulo',
+  missaoFeita: 'Misión ✓',
+  fazerMissao: 'Hacer la misión',
+  checkpoint: n => `Checkpoint ${n}`,
+  maisJogos: 'Más juegos en la Academia'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

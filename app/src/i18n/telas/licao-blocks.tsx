@@ -50,5 +50,30 @@ const en: Traducao<typeof pt> = {
   ouvirLetra: 'Listen to the letter'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  paraLer: 'Para leer',
+  paraEscrever: 'Para escribir a mano',
+  // etapa 3: pronúncia, rever
+  sai: 'Lo que suena',
+  certo: 'Correcto',
+  ouvirNome: nome => `Escuchar ${nome}`,
+  leiaCadaSilaba: 'Lee cada sílaba en voz alta tres veces. Es la repetición en voz alta la que fija el sonido.',
+  ouvir: 'Escuchar',
+  mostrarSignificado: 'Mostrar el significado',
+  jaConhece: 'Ya conoces estas palabras',
+  importou: he =>
+    <>El hebreo moderno tomó prestadas cientos de palabras. Ya sabes lo que quieren decir - solo que nunca las viste escritas así. Encuentra la {he} dentro de cada una.</>,
+  ouvirEmHebraico: pt => `Escuchar ${pt} en hebreo`,
+  // etapa 3: pronúncia, rever
+  acento: 'El acento y las vocales son los del hebreo, no los del español. Escucha antes de leer.',
+  naoTente: 'No intentes leer la palabra entera todavía - usa letras que aún no aprendiste.',
+  mundoReal: 'Hebreo en el mundo real',
+  conferir: '¿Puedes leerla? Comprobar',
+  mostrarResposta: '¿Puedes leerla? Mostrar la respuesta',
+  noFim: 'al final de la palabra',
+  ipa: 'Transcripción fonética (IPA)',
+  ouvirLetra: 'Escuchar la letra'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

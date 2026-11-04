@@ -31,5 +31,20 @@ const en: Traducao<typeof pt> = {
   entrar: 'Sign in'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  naoCarregou: 'No pude cargar la clase.',
+  acessoEmDia:
+    'Tu acceso está al día - lo que falló fue traer el contenido. Casi siempre es la conexión.',
+  tentarDeNovo: 'Intentar de nuevo',
+  semCurso: 'Este curso todavía no está en tu cuenta.',
+  entreParaContinuar: 'Entra para continuar.',
+  raizesNaoAVenda:
+    'Raizes Sefarditas todavía no está a la venta. Aparece aquí cuando se libere el acceso en tu cuenta.',
+  liberadoAoPagar: (curso: string) => `${curso} se libera en cuanto se confirma el pago.`,
+  ficamNaConta: 'Tus clases, tu progreso y tu certificado quedan en tu cuenta.',
+  verOCurso: 'Ver el curso',
+  entrar: 'Entrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

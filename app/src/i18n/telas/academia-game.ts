@@ -27,5 +27,18 @@ const en: Traducao<typeof pt> = {
   naoConquistada: ' (not earned yet)'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  localeNumero: 'es-419',
+  progresso: 'Progreso',
+  comeceHoje: 'Empieza hoy',
+  umDia: '1 día seguido',
+  dias: n => `${n} días seguidos`,
+  metaConcluida: 'Meta de hoy cumplida',
+  meta: 'Meta de hoy',
+  retomar: 'Tu progreso sigue aquí, sin plazo. ¿Lo retomamos?',
+  xp: 'XP',
+  naoConquistada: ' (todavía no conseguida)'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -78,5 +78,43 @@ const en: Traducao<typeof pt> = {
   ctaLinha: 'The first letter takes ten minutes and answers better than this page does.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'El método - Hebraico Fluente',
+  metaDescricao:
+    'Una letra a la vez, en el orden que más rinde; ninguna palabra con una letra que ' +
+    'todavía no viste; repaso en el día justo; y la transliteración se va a propósito.',
+  trilha: 'El método',
+  eyebrow: 'El método',
+  titulo: (quantas: string) => `${quantas} etapas en cada lección, y una regla que las sostiene a todas.`,
+  lead: 'No es un método nuevo ni el secreto de nadie. Es un conjunto pequeño de decisiones, tomadas a propósito, y mantenidas incluso cuando dan trabajo.',
+
+  regraRubrica: 'La regla número uno',
+  regraTitulo: 'Nunca ves una palabra con una letra que todavía no aprendiste.',
+  regraP1: 'Parece obvio. Casi ningún curso lo hace. Es común que la lección 2 traiga שָׁלוֹם como ejemplo - cuatro letras y un signo que todavía no tienes. El efecto es siempre el mismo: en lugar de leer, memorizas la forma entera como si fuera un dibujo, y la lectura nunca empieza.',
+  regraP2: 'Aquí esto no es un cuidado editorial, es un candado en el programa. Cada letra lleva la lista exacta de signos que ya se enseñaron, y el generador de ejercicios solo puede usar esa lista - incluso en las opciones incorrectas. Un ejercicio fuera de la regla no sale al aire, porque la verificación automática no deja que la versión se publique.',
+  licao3: 'Lección 3',
+  mayim: 'máyim · agua',
+  legenda: 'Tres letras, dos signos - y todos ya enseñados. Por eso puede aparecer tan pronto: se puede leer, no hay que memorizarla.',
+
+  outrasEyebrow: 'Las otras decisiones',
+  outrasTitulo: 'Por qué la lección es así.',
+  ordemT: 'El orden es por utilidad, no por el alfabeto',
+  ordemB: (modulos: number, licoes: number) =>
+    `Las letras no van de א a ת. Vienen en el orden que abre más palabras más pronto - por eso la primera lección ya lee una palabra entera, apenas en la segunda letra. Son ${modulos} módulos de letras, en ${licoes} lecciones.`,
+  parecidasT: 'Las letras parecidas se enfrentan de lleno',
+  parecidasB: 'ב y כ, ד y ר, ה y ח. En lugar de esperar a que aparezca la confusión, el curso presenta el par lado a lado, muestra lo que las diferencia y después te obliga a elegir entre las dos. Cuando fallas en un par, vuelve más veces.',
+  revisaoT: 'El repaso es por habilidad, no por lección',
+  revisaoB: 'Reconocer la forma, saber el sonido, leer la sílaba, escuchar y escribir son cinco cosas distintas. El curso guarda las cinco por separado para cada letra, y el repaso trae de vuelta exactamente la que está débil - no la lección entera otra vez.',
+  translitT: 'La transliteración se va',
+  translitB: 'Mientras haya "shalóm" debajo de la palabra, estás leyendo español. El curso usa transliteración al principio y la retira a propósito, en etapas anunciadas, hasta que lees sin ningún apoyo - que es la única definición de leer.',
+
+  aulaEyebrow: 'Una lección por dentro',
+  aulaTitulo: (quantas: string) => `Diez minutos, ${quantas} etapas.`,
+  aulaLead: 'Toda lección de letra tiene la misma forma, con estas pestañas, en este orden. La previsibilidad es a propósito: nunca tienes que descubrir cómo funciona la pantalla antes de aprender la letra.',
+
+  ctaTitulo: 'El método solo existe en la práctica.',
+  ctaLinha: 'La primera letra toma diez minutos y responde mejor que esta página.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

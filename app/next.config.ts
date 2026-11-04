@@ -13,28 +13,34 @@ export const BASE = /[\\/](content[\\/](course|courses|empresa)\.json|src[\\/]li
    export em out-en, que o wrangler.toml deste repositório serve. A build
    sem a variável sai em português: é a dos testes. */
 const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
+/* O site em espanhol (04/11/2026, PLANO-ESPANHOL.md): mesma ideia, export em out-es. */
+const EM_ESPANHOL = process.env.NEXT_PUBLIC_LOCALE === 'es';
 
 /* O endereço do site em inglês. A publicação passa NEXT_PUBLIC_SITE_ORIGIN
    (lido do wrangler.toml); sem ele, a build em inglês lê o mesmo
    SITE_ORIGIN do wrangler.toml deste repositório, e nunca cai no domínio
    brasileiro (o padrão de lib/seo.ts), que daria a cada página o endereço
    canônico e o cartão do link de outro site. */
-function origemDoToml(): string {
+function origemDoToml(arquivo = '../wrangler.toml'): string {
   try {
-    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    const toml = readFileSync(new URL(arquivo, import.meta.url), 'utf8');
     return (toml.match(/^\s*SITE_ORIGIN\s*=\s*"([^"]+)"/m) || [])[1] || '';
   } catch { return ''; }
 }
 const ORIGEM_EN = EM_INGLES ? (process.env.NEXT_PUBLIC_SITE_ORIGIN || origemDoToml()) : '';
+/* O espanhol lê o wrangler.es.toml (o do Worker dele); sem domínio ainda, sem
+   origem: lib/seo.ts usa então o padrão, e a build é só para conferência. */
+const ORIGEM_ES = EM_ESPANHOL ? (process.env.NEXT_PUBLIC_SITE_ORIGIN || origemDoToml('../wrangler.es.toml')) : '';
+const ORIGEM = ORIGEM_EN || ORIGEM_ES;
 
 const nextConfig: NextConfig = {
   output: 'export',
-  distDir: EM_INGLES ? 'out-en' : undefined,
+  distDir: EM_INGLES ? 'out-en' : EM_ESPANHOL ? 'out-es' : undefined,
   /* Sempre definida, mesmo na build em português: variável NEXT_PUBLIC_ que
      não existe na build não é embutida, vira uma consulta no navegador, e aí
      o pacote leva os dois idiomas de cada tela (medido em 28/10/2026). Com
      o valor fixo, o minificador apaga o idioma que não vai ao ar. */
-  env: { NEXT_PUBLIC_LOCALE: EM_INGLES ? 'en' : 'pt', ...(ORIGEM_EN ? { NEXT_PUBLIC_SITE_ORIGIN: ORIGEM_EN } : {}) },
+  env: { NEXT_PUBLIC_LOCALE: EM_INGLES ? 'en' : EM_ESPANHOL ? 'es' : 'pt', ...(ORIGEM ? { NEXT_PUBLIC_SITE_ORIGIN: ORIGEM } : {}) },
   basePath: basePath || undefined,
   reactStrictMode: true,
   /* Static export has no image optimiser. The only images here are the 27

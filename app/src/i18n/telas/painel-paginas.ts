@@ -33,5 +33,20 @@ const en: Traducao<typeof pt> = {
   verificarDescricao: 'Check whether a Hebraico A1 course certificate was issued by Hebraico Fluente.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  historiaTitulo: 'Viaje por la historia del hebreo - Hebraico Fluente',
+  historiaDescricao: 'De dónde viene el alfabeto, de dónde salieron los puntitos y cómo una lengua volvió a hablarse.',
+  meuHebraicoTitulo: 'Mi hebreo - Hebraico Fluente',
+  meuHebraicoDescricao: 'Tus cursos, tu progreso y la lección de hoy.',
+  dominioTitulo: 'Mi dominio de las letras - Hebraico Fluente',
+  dominioDescricao: 'Las letras que ya dominas, las que casi dominas y lo que vale la pena practicar ahora.',
+  depoimentoTitulo: 'Tu testimonio - Hebraico Fluente',
+  depoimentoDescricao: 'Cuéntanos cómo es aprender a leer hebreo con el curso.',
+  certificadoTitulo: 'Certificado - Hebraico Fluente',
+  certificadoDescricao: 'El certificado de finalización del curso de lectura en hebreo.',
+  verificarTitulo: 'Verificar un certificado - Hebraico Fluente',
+  verificarDescricao: 'Comprueba si un certificado del curso Hebraico A1 fue emitido por Hebraico Fluente.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

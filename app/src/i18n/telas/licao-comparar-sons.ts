@@ -41,5 +41,25 @@ const en: Traducao<typeof pt> = {
   era: nome => `It was ${nome}. Listen to both again and compare.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  oucaDiferenca: 'Escucha la diferencia:',
+  ou: ' o ',
+  somDe: (tocando, nome) => `${tocando ? 'Pausar' : 'Escuchar'} el sonido de ${nome}`,
+  carregando: 'Cargando...',
+  pausar: '❚❚ Pausar',
+  continuar: '▶ Continuar',
+  ouvir: '▶ Escuchar',
+  emPreparacao: 'Grabación en preparación.',
+  falhou: 'No pude reproducir el audio. Revisa la conexión y toca de nuevo.',
+  identificar: '¿Puedes identificar el sonido?',
+  tocarUm: 'Reproducir un sonido',
+  proximo: 'Siguiente sonido',
+  ouvirDeNovo: 'Escuchar de nuevo',
+  acertos: (certos, total) => `Aciertos: ${certos} de ${total}`,
+  qualLetra: '¿Qué letra escuchaste?',
+  isso: nome => `¡Eso! Era ${nome}.`,
+  era: nome => `Era ${nome}. Escucha las dos de nuevo y compara.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

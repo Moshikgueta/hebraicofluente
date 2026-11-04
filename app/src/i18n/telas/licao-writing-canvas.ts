@@ -39,5 +39,24 @@ const en: Traducao<typeof pt> = {
   proxima: 'Next step →'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ver: 'Ver',
+  verDica: 'Mira por dónde empieza el lápiz.',
+  tracar: 'Trazar',
+  tracarDica: 'Pasa el dedo por encima del modelo.',
+  guiaFraco: 'Guía tenue',
+  guiaFracoDica: 'El modelo está más tenue. Síguelo de todos modos.',
+  semModelo: 'Sin modelo',
+  semModeloDica: 'Ahora solo. Escribe de memoria.',
+  etapas: 'Etapas de la escritura',
+  cursiva: 'La cursiva es la que se escribe a mano - nadie escribe hebreo en letra de imprenta.',
+  comecar: 'Empezar a trazar',
+  direcao: '← escribe en esta dirección ←',
+  conferir: 'Comprobar',
+  limpar: 'Borrar',
+  verTracado: 'Ver el trazado',
+  proxima: 'Próxima etapa →'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

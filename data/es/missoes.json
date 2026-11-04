@@ -1,0 +1,198 @@
+{
+  "missoes/#0/tituloPt": {
+    "pt": "No mercado, na primeira semana",
+    "es": "En el supermercado, la primera semana"
+  },
+  "missoes/#0/situacaoPt": {
+    "pt": "Você acabou de chegar em Israel e vai ao mercado da esquina. Ainda não sabe quase nada de hebraico - mas já sabe ler seis letras, e é disso que vai precisar.",
+    "es": "Acabas de llegar a Israel y vas al supermercado de la esquina. Todavía no sabes casi nada de hebreo, pero ya sabes leer seis letras, y eso es lo que vas a necesitar."
+  },
+  "missoes/#0/passos/#0/ondePt": {
+    "pt": "Na prateleira de bebidas, o rótulo de uma garrafa",
+    "es": "En el estante de bebidas, la etiqueta de una botella"
+  },
+  "missoes/#0/passos/#1/ondePt": {
+    "pt": "Ao lado, uma caixinha de saquinhos",
+    "es": "Al lado, una cajita de bolsitas"
+  },
+  "missoes/#0/passos/#2/promptPt": {
+    "pt": "Na fila do caixa, perguntam quem é o próximo. Qual destas palavras diz “eu”?",
+    "es": "En la fila de la caja, preguntan quién sigue. ¿Cuál de estas palabras dice “yo”?"
+  },
+  "missoes/#0/passos/#3/promptPt": {
+    "pt": "O caixa devolve o troco dizendo esta palavra. Escreva como ela se lê.",
+    "es": "El cajero te devuelve el cambio diciendo esta palabra. Escribe cómo se lee."
+  },
+  "missoes/#0/fechoPt": {
+    "pt": "Água, chá, “eu” e “aqui está”: uma ida ao mercado inteira, lida por você.",
+    "es": "Agua, té, “yo” y “aquí tienes”: una ida al supermercado completa, leída por ti."
+  },
+  "missoes/#1/tituloPt": {
+    "pt": "A ficha da escola",
+    "es": "La ficha de la escuela"
+  },
+  "missoes/#1/situacaoPt": {
+    "pt": "Você foi matricular seu filho numa escola em Israel, e a secretaria entregou uma ficha. Ninguém vai preencher por você.",
+    "es": "Fuiste a inscribir a tu hijo en una escuela en Israel, y la secretaría te entregó una ficha. Nadie la va a llenar por ti."
+  },
+  "missoes/#1/passos/#0/ondePt": {
+    "pt": "O primeiro campo da ficha",
+    "es": "El primer campo de la ficha"
+  },
+  "missoes/#1/passos/#1/ondePt": {
+    "pt": "Num formulário, dentro de expressões como \"nome da criança\"",
+    "es": "En un formulario, dentro de expresiones como \"nombre del niño\""
+  },
+  "missoes/#1/passos/#2/promptPt": {
+    "pt": "A secretária pergunta quando você pode vir às reuniões. Qual destas palavras diz “noite”?",
+    "es": "La secretaria pregunta cuándo puedes venir a las reuniones. ¿Cuál de estas palabras dice “noche”?"
+  },
+  "missoes/#1/passos/#3/promptPt": {
+    "pt": "No mural da escola, o cartaz da festa diz esta palavra. Escreva como ela se lê.",
+    "es": "En el mural de la escuela, el cartel de la fiesta dice esta palabra. Escribe cómo se lee."
+  },
+  "missoes/#1/fechoPt": {
+    "pt": "Nome, menino, noite e canção: a ficha está preenchida, e você não precisou pedir ajuda.",
+    "es": "Nombre, niño, noche y canción: la ficha está llena, y no tuviste que pedir ayuda."
+  },
+  "missoes/#2/tituloPt": {
+    "pt": "Na padaria",
+    "es": "En la panadería"
+  },
+  "missoes/#2/situacaoPt": {
+    "pt": "É sexta de manhã e você vai à padaria do bairro. Desta vez quer entrar, pedir e sair sem apontar para nada.",
+    "es": "Es viernes por la mañana y vas a la panadería del barrio. Esta vez quieres entrar, pedir y salir sin señalar nada."
+  },
+  "missoes/#2/passos/#0/ondePt": {
+    "pt": "Na porta da padaria, uma plaquinha",
+    "es": "En la puerta de la panadería, un letrerito"
+  },
+  "missoes/#2/passos/#1/ondePt": {
+    "pt": "Na etiqueta da prateleira",
+    "es": "En la etiqueta del estante"
+  },
+  "missoes/#2/passos/#2/promptPt": {
+    "pt": "Você quer levar só um pão. Qual destas palavras diz “um”?",
+    "es": "Quieres llevar un solo pan. ¿Cuál de estas palabras dice “uno”?"
+  },
+  "missoes/#2/passos/#3/promptPt": {
+    "pt": "No fim do recibo vem esta palavra. Escreva como ela se lê.",
+    "es": "Al final del recibo viene esta palabra. Escribe cómo se lee."
+  },
+  "missoes/#2/fechoPt": {
+    "pt": "Olá, pão, um e obrigado: você entrou, pediu e agradeceu, tudo por escrito.",
+    "es": "Hola, pan, uno y gracias: entraste, pediste y agradeciste, todo por escrito."
+  },
+  "missoes/#3/tituloPt": {
+    "pt": "Pela cidade",
+    "es": "Por la ciudad"
+  },
+  "missoes/#3/situacaoPt": {
+    "pt": "Um dia inteiro resolvendo coisas no centro: uma loja, a biblioteca, um quiosque. As placas agora usam quase todo o alfabeto.",
+    "es": "Un día entero haciendo trámites en el centro: una tienda, la biblioteca, un quiosco. Los letreros ahora usan casi todo el alfabeto."
+  },
+  "missoes/#3/passos/#0/ondePt": {
+    "pt": "Em expressões de horário, como o horário de funcionamento de uma loja",
+    "es": "En expresiones de horario, como el horario de atención de una tienda"
+  },
+  "missoes/#3/passos/#1/ondePt": {
+    "pt": "Na parede da biblioteca",
+    "es": "En la pared de la biblioteca"
+  },
+  "missoes/#3/passos/#2/promptPt": {
+    "pt": "Com sede, você procura suco na geladeira do quiosque. Qual caixinha diz “suco”?",
+    "es": "Con sed, buscas jugo en el refrigerador del quiosco. ¿Cuál cajita dice “jugo”?"
+  },
+  "missoes/#3/passos/#3/promptPt": {
+    "pt": "No alto do mapa do centro vem esta palavra. Escreva como ela se lê.",
+    "es": "En lo alto del mapa del centro viene esta palabra. Escribe cómo se lee."
+  },
+  "missoes/#3/fechoPt": {
+    "pt": "Hora, silêncio, suco e cidade: as placas do centro deixaram de ser desenho.",
+    "es": "Hora, silencio, jugo y ciudad: los letreros del centro dejaron de ser dibujos."
+  },
+  "missoes/#4/tituloPt": {
+    "pt": "Um sábado com a família",
+    "es": "Un sábado con la familia"
+  },
+  "missoes/#4/situacaoPt": {
+    "pt": "O alfabeto está completo. É sábado, a família está em casa, e o celular não para de apitar.",
+    "es": "El alfabeto está completo. Es sábado, la familia está en casa, y el celular no para de sonar."
+  },
+  "missoes/#4/passos/#0/ondePt": {
+    "pt": "A primeira mensagem do dia no grupo da família",
+    "es": "El primer mensaje del día en el grupo de la familia"
+  },
+  "missoes/#4/passos/#1/promptPt": {
+    "pt": "Seu filho pede para adotar um bicho. Qual destas palavras diz “cachorro”?",
+    "es": "Tu hijo pide adoptar una mascota. ¿Cuál de estas palabras dice “perro”?"
+  },
+  "missoes/#4/passos/#2/ondePt": {
+    "pt": "Na vitrine da livraria, no passeio da tarde",
+    "es": "En la vitrina de la librería, en el paseo de la tarde"
+  },
+  "missoes/#4/passos/#3/promptPt": {
+    "pt": "À noite, você escreve a legenda da foto de todos juntos. Escreva como esta palavra se lê.",
+    "es": "Por la noche, escribes el pie de la foto de todos juntos. Escribe cómo se lee esta palabra."
+  },
+  "missoes/#4/fechoPt": {
+    "pt": "Bom dia, cachorro, livro e família: um dia inteiro lido com as 22 letras.",
+    "es": "Buenos días, perro, libro y familia: un día entero leído con las 22 letras."
+  },
+  "missoes/#5/tituloPt": {
+    "pt": "A rua sem pontinhos",
+    "es": "La calle sin puntitos"
+  },
+  "missoes/#5/situacaoPt": {
+    "pt": "Fora do curso, quase nada vem com nikud. Placas, vitrines e telas escrevem só as letras, e quem lê é que sabe o som.",
+    "es": "Fuera del curso, casi nada viene con nikud. Letreros, vitrinas y pantallas escriben solo las letras, y quien lee es quien sabe el sonido."
+  },
+  "missoes/#5/passos/#0/ondePt": {
+    "pt": "Na vitrine da casa de câmbio",
+    "es": "En la vitrina de la casa de cambio"
+  },
+  "missoes/#5/passos/#1/ondePt": {
+    "pt": "Na placa de uma rua",
+    "es": "En el letrero de una calle"
+  },
+  "missoes/#5/passos/#2/promptPt": {
+    "pt": "Na plaquinha de uma prateleira de livros, sem nenhum ponto. Sem os pontos, as mesmas letras podem ter mais de uma leitura, e quem decide é o lugar onde a palavra está. Escreva como esta palavra se lê.",
+    "es": "En el letrerito de un estante de libros, sin ningún punto. Sin los puntos, las mismas letras pueden tener más de una lectura, y quien decide es el lugar donde está la palabra. Escribe cómo se lee esta palabra."
+  },
+  "missoes/#5/passos/#3/ondePt": {
+    "pt": "Na tela, quando o filme acaba",
+    "es": "En la pantalla, cuando termina la película"
+  },
+  "missoes/#5/fechoPt": {
+    "pt": "Dinheiro, rei, livro e fim, sem um ponto sequer: é assim que o hebraico aparece na rua.",
+    "es": "Dinero, rey, libro y fin, sin un solo punto: así aparece el hebreo en la calle."
+  },
+  "missoes/#6/tituloPt": {
+    "pt": "Uma viagem",
+    "es": "Un viaje"
+  },
+  "missoes/#6/situacaoPt": {
+    "pt": "Você vai viajar saindo de Israel. No aeroporto, no hotel e no passeio, aparecem as palavras que o hebraico pegou emprestadas de outras línguas.",
+    "es": "Vas a viajar saliendo de Israel. En el aeropuerto, en el hotel y en el paseo, aparecen las palabras que el hebreo tomó prestadas de otras lenguas."
+  },
+  "missoes/#6/passos/#0/ondePt": {
+    "pt": "No painel de partidas do aeroporto",
+    "es": "En el tablero de salidas del aeropuerto"
+  },
+  "missoes/#6/passos/#1/promptPt": {
+    "pt": "No banheiro do hotel há uma fileira de frasquinhos. Qual etiqueta diz “gel”?",
+    "es": "En el baño del hotel hay una fila de frasquitos. ¿Cuál etiqueta dice “gel”?"
+  },
+  "missoes/#6/passos/#2/ondePt": {
+    "pt": "No mapa do zoológico, num passeio",
+    "es": "En el mapa del zoológico, en un paseo"
+  },
+  "missoes/#6/passos/#3/promptPt": {
+    "pt": "Arrumando a mala para voltar. Qual etiqueta diz “pijama”?",
+    "es": "Armando la maleta para volver. ¿Cuál etiqueta dice “pijama”?"
+  },
+  "missoes/#6/fechoPt": {
+    "pt": "Chile, gel, girafa e pijama: sons que o alfabeto antigo não tinha, lidos de primeira.",
+    "es": "Chile, gel, jirafa y pijama: sonidos que el alfabeto antiguo no tenía, leídos a la primera."
+  }
+}

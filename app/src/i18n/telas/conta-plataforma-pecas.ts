@@ -39,5 +39,24 @@ const en: Traducao<typeof pt> = {
   mostrarSenha: 'Show password'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  antesEDepois: 'Antes y después',
+  frasesDestravadas: (n: number) => (n === 1 ? '1 frase desbloqueada' : `${n} frases desbloqueadas`),
+  eraUmDesenho: (data: string, dias: number) =>
+    `El ${data}, hace ${dias} ${dias === 1 ? 'día' : 'días'}, esto era un dibujo.`,
+  oQueEstaEscrito: '¿Qué dice aquí?',
+  leiaAntes: 'Léelo antes de abrir. Para eso sirve.',
+
+  terminaHoje: 'Tu acceso termina hoy.',
+  terminaEm: (dias: number) => `Tu acceso termina en ${dias} ${dias === 1 ? 'día' : 'días'}.`,
+  depoisDisso: (curso: string) =>
+    `Después de eso, las clases de ${curso} se cierran. Tu progreso sigue guardado en tu cuenta y ` +
+    'vuelve completo en cuanto renueves.',
+  renovarAcesso: 'Renovar acceso',
+
+  ocultarSenha: 'Ocultar contraseña',
+  mostrarSenha: 'Mostrar contraseña'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

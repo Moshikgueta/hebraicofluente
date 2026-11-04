@@ -25,5 +25,17 @@ const en: Traducao<typeof pt> = {
   m7: 'The sounds of modern Hebrew'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aula0: 'Primeros pasos',
+  final: 'Mi desafío final',
+  m1: 'Reconociendo las letras',
+  m2: 'Descubriendo los sonidos',
+  m3: 'Leyendo mis primeras palabras',
+  m4: 'Separando las letras parecidas',
+  m5: 'Completando el alfabeto',
+  m6: 'Leyendo con más autonomía',
+  m7: 'Los sonidos del hebreo moderno'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

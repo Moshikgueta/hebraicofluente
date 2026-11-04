@@ -15,19 +15,21 @@ const TRAVESSAO = new RegExp(`[${String.fromCodePoint(0x2014, 0x2013)}]`);
 const HEBRAICO = /[\u0590-\u05FF\uFB1D-\uFB4F]+/g;
 const variaveis = (s: string) => (s.match(/\{\w+\}/g) ?? []).sort().join(',');
 
-/* Cada arquivo de app/src/i18n/telas/ exporta DICIONARIO = { pt, en } e o
-   `tx` escolhido na build. */
+/* Cada arquivo de app/src/i18n/telas/ exporta DICIONARIO = { pt, en, es } e o
+   `tx` escolhido na build (o espanhol desde 04/11/2026, PLANO-ESPANHOL.md). */
 type Dic = Record<string, unknown>;
 const PASTA = new URL('../src/i18n/telas/', import.meta.url);
 const TELAS = readdirSync(PASTA).filter(f => /\.tsx?$/.test(f));
 const modulos = await Promise.all(TELAS.map(async f => ({
   arquivo: f,
   fonte: readFileSync(new URL(f, PASTA), 'utf8'),
-  mod: await import(`../src/i18n/telas/${f.replace(/\.tsx?$/, '')}`) as { DICIONARIO: { pt: Dic; en: Dic }; tx: Dic }
+  mod: await import(`../src/i18n/telas/${f.replace(/\.tsx?$/, '')}`) as { DICIONARIO: { pt: Dic; en: Dic; es: Dic }; tx: Dic }
 })));
 
 /* Palavras que denunciam um "inglês" que ficou em português. */
 const PORTUGUES = /[ãõç]|(^|\s)(não|você|para|uma|com|está|também)(\s|$)/i;
+/* No espanhol, só o que o espanhol não tem: "para" e "está" são das duas línguas. */
+const PORTUGUES_NO_ESPANHOL = /[ãõç]|(^|\s)(não|você|uma|com|também|isso|muito|então)(\s|$)/i;
 
 describe('o dicionário da interface', () => {
   it('sem a variável, a build é a de hoje, em português', () => {
@@ -42,17 +44,21 @@ describe('o dicionário da interface', () => {
 
   it('todo arquivo escolhe o idioma na linha que a build consegue apagar', () => {
     for (const { arquivo, fonte, mod } of modulos) {
-      expect(fonte, arquivo).toContain("export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;");
+      expect(fonte, arquivo).toContain(
+        "export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;");
       expect(mod.tx, arquivo).toBe(mod.DICIONARIO.pt);
     }
   });
 
-  it('o inglês tem as mesmas chaves, as mesmas variáveis e o mesmo hebraico', () => {
-    for (const { arquivo, mod: { DICIONARIO: { pt, en } } } of modulos) {
-      expect(Object.keys(en).sort(), arquivo).toEqual(Object.keys(pt).sort());
+  it('o inglês e o espanhol têm as mesmas chaves, as mesmas variáveis e o mesmo hebraico', () => {
+    for (const { arquivo, mod: { DICIONARIO } } of modulos) for (const lado of ['en', 'es'] as const) {
+      const { pt } = DICIONARIO;
+      const outro = DICIONARIO[lado];
+      expect(outro, `${arquivo} sem ${lado}`).toBeTruthy();
+      expect(Object.keys(outro).sort(), `${arquivo} ${lado}`).toEqual(Object.keys(pt).sort());
       for (const [k, v] of Object.entries(pt)) {
-        const e = en[k];
-        const onde = `${arquivo}: ${k}`;
+        const e = outro[k];
+        const onde = `${arquivo} ${lado}: ${k}`;
         expect(typeof e, onde).toBe(typeof v);
         if (typeof v !== 'string' || typeof e !== 'string') continue;
         expect(e.trim(), onde).not.toBe('');
@@ -71,14 +77,24 @@ describe('o dicionário da interface', () => {
       }
     }
   });
+
+  it('nenhum espanhol traz travessão nem ficou em português', () => {
+    for (const { arquivo, mod: { DICIONARIO: { es } } } of modulos) {
+      for (const [k, v] of Object.entries(es)) {
+        if (typeof v !== 'string') continue;
+        expect(v, `${arquivo}: ${k}`).not.toMatch(TRAVESSAO);
+        expect(v, `${arquivo}: ${k}`).not.toMatch(PORTUGUES_NO_ESPANHOL);
+      }
+    }
+  });
 });
 
 describe('os nomes do curso são os mesmos em toda tela', () => {
   it('as abas da lição: o motor (etapas-da-licao) e as telas das lições dizem o mesmo', async () => {
     const etapas = (await import('@/i18n/telas/motor-etapas-da-licao')).DICIONARIO;
     for (const tela of ['licao-lesson-client', 'licao-som-lesson-client', 'licao-contraste-client']) {
-      const d = (await import(`../src/i18n/telas/${tela}`)).DICIONARIO as { pt: Dic; en: Dic };
-      for (const lado of ['pt', 'en'] as const) {
+      const d = (await import(`../src/i18n/telas/${tela}`)).DICIONARIO as { pt: Dic; en: Dic; es: Dic };
+      for (const lado of ['pt', 'en', 'es'] as const) {
         for (const k of ['conhecer', 'palavras', 'escrever', 'fixacao', 'exercicios']) {
           if (k in d[lado]) expect(d[lado][k], `${tela} ${lado} ${k}`).toBe((etapas[lado] as Dic)[k]);
         }
@@ -159,10 +175,37 @@ describe('o inglês do conteúdo (tools/i18n.mjs)', () => {
     }
   });
 
+  it('data/es/ está em dia com data/*.json (rode: node tools/i18n.mjs extrair)', () => {
+    for (const nome of ARQUIVOS as string[]) {
+      expect(carregar(nome, 'es'), nome).toEqual(extrair(nome, 'es'));
+    }
+  });
+
+  it('todo espanhol já escrito mantém o hebraico e não tem travessão', () => {
+    for (const nome of ARQUIVOS as string[]) {
+      for (const [caminho, r] of Object.entries(carregar(nome, 'es') as Record<string, { pt: string; es: string | null }>)) {
+        if (!r.es) continue;
+        expect(mesmoHebraico(r.pt, r.es), `${nome}:${caminho}`).toBe(true);
+        expect(r.es, `${nome}:${caminho}`).not.toMatch(TRAVESSAO);
+      }
+    }
+  });
+
+  it('o espanhol do conteúdo está completo (a build estrita em espanhol pararia)', () => {
+    const faltas: { arquivo: string; caminho: string; motivo: string }[] = [];
+    for (const nome of ARQUIVOS as string[]) {
+      const fonte = JSON.parse(readFileSync(new URL(`../../data/${nome}.json`, import.meta.url), 'utf8'));
+      traduzir(nome, fonte, faltas, carregar(nome, 'es'), 'es');
+    }
+    expect(faltas.slice(0, 10)).toEqual([]);
+  });
+
   it('a transliteração fica de fora: o inglês terá sistema próprio', () => {
     for (const nome of ARQUIVOS as string[]) {
-      const caminhos = Object.keys(carregar(nome));
-      expect(caminhos.filter(c => /\/translit\w*$/i.test(c)), nome).toEqual([]);
+      for (const idioma of ['en', 'es']) {
+        const caminhos = Object.keys(carregar(nome, idioma));
+        expect(caminhos.filter(c => /\/translit\w*$/i.test(c)), `${idioma} ${nome}`).toEqual([]);
+      }
     }
   });
 });

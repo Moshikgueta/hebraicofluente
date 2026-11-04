@@ -1,0 +1,311 @@
+{
+  "modules/mod1/titlePt": {
+    "pt": "As seis primeiras letras",
+    "es": "Las seis primeras letras"
+  },
+  "modules/mod1/subPt": {
+    "pt": "e as primeiras palavras inteiras",
+    "es": "y las primeras palabras completas"
+  },
+  "modules/mod1/introPt": {
+    "pt": "Seis letras escolhidas por uma razão só: juntas elas já formam palavras que você vai usar no primeiro dia. Duas delas - {{מ}} e {{נ}} - trazem de brinde as suas formas finais, {{ם}} e {{ן}}, e com isso você aprende, logo de entrada, que uma letra hebraica pode mudar de desenho no fim da palavra.",
+    "es": "Seis letras elegidas por una sola razón: juntas ya forman palabras que vas a usar el primer día. Dos de ellas, {{מ}} y {{נ}}, traen de regalo sus formas finales, {{ם}} y {{ן}}, y con eso aprendes, desde el comienzo, que una letra hebrea puede cambiar de forma al final de la palabra."
+  },
+  "modules/mod1/goalsPt/#0": {
+    "pt": "Ler e escrever {{מ ת א נ ה י}} em cursiva",
+    "es": "Leer y escribir {{מ ת א נ ה י}} en cursiva"
+  },
+  "modules/mod1/goalsPt/#1": {
+    "pt": "Reconhecer as formas finais {{ם}} e {{ן}}",
+    "es": "Reconocer las formas finales {{ם}} y {{ן}}"
+  },
+  "modules/mod1/goalsPt/#2": {
+    "pt": "Ler sem ajuda {{אִמָא}}, {{אֲנִי}}, {{מַיִם}}, {{אַתָה}} e {{הִנֵה}}",
+    "es": "Leer sin ayuda {{אִמָא}}, {{אֲנִי}}, {{מַיִם}}, {{אַתָה}} y {{הִנֵה}}"
+  },
+  "modules/mod1/goalsPt/#3": {
+    "pt": "Dizer quem você é: {{אֲנִי}} + o seu nome",
+    "es": "Decir quién eres: {{אֲנִי}} + tu nombre"
+  },
+  "modules/mod1/milestonePt": {
+    "pt": "No fim deste módulo você lê a palavra {{אֲנִי}} - \"eu\" - e a escreve à mão.",
+    "es": "Al final de este módulo lees la palabra {{אֲנִי}}, \"yo\", y la escribes a mano."
+  },
+  "modules/mod2/titlePt": {
+    "pt": "Cinco consoantes familiares",
+    "es": "Cinco consonantes conocidas"
+  },
+  "modules/mod2/subPt": {
+    "pt": "e o primeiro ponto que muda um som",
+    "es": "y el primer punto que cambia un sonido"
+  },
+  "modules/mod2/lessons/#2/nomePt": {
+    "pt": "Sin",
+    "es": "Sin"
+  },
+  "modules/mod2/lessons/#2/topicPt": {
+    "pt": "{{שׂ}} com o ponto à esquerda - o som S",
+    "es": "{{שׂ}} con el punto a la izquierda: el sonido S"
+  },
+  "modules/mod2/introPt": {
+    "pt": "Nenhum destes cinco sons é novo para um brasileiro: G de \"gato\", D de \"dado\", X de \"xícara\", L de \"lua\", R do fundo da garganta, com voz (o R francês). O que é novo é o desenho - e, no caso do {{ש}}, um ponto que decide tudo: com o ponto à direita ele é {{שׁ}} (sh), com o ponto à esquerda é {{שׂ}} (s).",
+    "es": "Cuatro de estos cinco sonidos ya los conoces: la G de \"gato\", la D de \"dado\", la SH de \"show\", la L de \"luna\". El quinto es la R del fondo de la garganta, con voz (la R francesa), que el español no tiene. Lo nuevo es la forma, y, en el caso de {{ש}}, un punto que lo decide todo: con el punto a la derecha es {{שׁ}} (sh), con el punto a la izquierda es {{שׂ}} (s).",
+    "comentario": "adaptado como el inglés: el original dice que ningún sonido es nuevo para un brasileño; para el hispanohablante la R gutural es nueva; revisar la pronunciación"
+  },
+  "modules/mod2/goalsPt/#0": {
+    "pt": "Ler e escrever {{ג ד ש ל ר}}",
+    "es": "Leer y escribir {{ג ד ש ל ר}}"
+  },
+  "modules/mod2/goalsPt/#1": {
+    "pt": "Distinguir {{שׁ}} de {{שׂ}} pelo lado do ponto",
+    "es": "Distinguir {{שׁ}} de {{שׂ}} por el lado del punto"
+  },
+  "modules/mod2/goalsPt/#2": {
+    "pt": "Ler {{שֵׁם}}, {{אִשָׁה}}, {{יֶלֶד}}, {{לַיְלָה}} e {{שֶׁמֶשׁ}}",
+    "es": "Leer {{שֵׁם}}, {{אִשָׁה}}, {{יֶלֶד}}, {{לַיְלָה}} y {{שֶׁמֶשׁ}}"
+  },
+  "modules/mod2/goalsPt/#3": {
+    "pt": "Não confundir {{ד}} com {{ר}} - a diferença é o canto superior direito",
+    "es": "No confundir {{ד}} con {{ר}}: la diferencia está en la esquina superior derecha"
+  },
+  "modules/mod2/milestonePt": {
+    "pt": "No fim deste módulo você lê {{שֶׁמֶשׁ}} - \"sol\" - que usa a mesma letra duas vezes.",
+    "es": "Al final de este módulo lees {{שֶׁמֶשׁ}}, \"sol\", que usa la misma letra dos veces."
+  },
+  "modules/mod3/titlePt": {
+    "pt": "O vav, o zayin e os sons da garganta",
+    "es": "La vav, la záyin y los sonidos de la garganta"
+  },
+  "modules/mod3/subPt": {
+    "pt": "e a palavra que todo mundo conhece",
+    "es": "y la palabra que todo el mundo conoce"
+  },
+  "modules/mod3/introPt": {
+    "pt": "O {{ו}} é a letra mais versátil do alfabeto: sozinha vale V, com um ponto em cima vira o som O, com um ponto no meio vira U. É por causa dela que este módulo abre a porta para metade do vocabulário básico. O {{ח}} traz o primeiro som raspado da garganta, parecido com o R de \"carro\" em muitos sotaques brasileiros ou com o J espanhol de \"Juan\". Não é o {{ר}}: aquele vibra com voz, este é só ar raspando.",
+    "es": "La {{ו}} es la letra más versátil del alfabeto: sola vale V, con un punto arriba pasa a ser el sonido O, con un punto en medio pasa a ser U. Por ella este módulo abre la puerta a la mitad del vocabulario básico. La {{ח}} trae el primer sonido raspado de la garganta, como la j de \"Juan\". No es la {{ר}}: aquella vibra con voz, esta es solo aire que raspa.",
+    "comentario": "comparación con el español (la j de \"Juan\" en lugar de la R de \"carro\" del portugués); revisar la pronunciación"
+  },
+  "modules/mod3/goalsPt/#0": {
+    "pt": "Ler e escrever {{ו ז ח ט}}",
+    "es": "Leer y escribir {{ו ז ח ט}}"
+  },
+  "modules/mod3/goalsPt/#1": {
+    "pt": "Ler {{ו}} nos três papéis: consoante V, vogal {{וֹ}} (o) e vogal {{וּ}} (u)",
+    "es": "Leer la {{ו}} en sus tres papeles: consonante V, vocal {{וֹ}} (o) y vocal {{וּ}} (u)"
+  },
+  "modules/mod3/goalsPt/#2": {
+    "pt": "Produzir o {{ח}} raspado sem trocá-lo por R",
+    "es": "Producir la {{ח}} raspada, como la j de \"Juan\", sin cambiarla por la R",
+    "comentario": "el original dice \"sem trocá-lo por R\"; se añadió la comparación con la j española; revisar la pronunciación"
+  },
+  "modules/mod3/goalsPt/#3": {
+    "pt": "Ler {{שָׁלוֹם}}, {{תוֹדָה}}, {{לֶחֶם}} e {{אֶחָד}}",
+    "es": "Leer {{שָׁלוֹם}}, {{תוֹדָה}}, {{לֶחֶם}} y {{אֶחָד}}"
+  },
+  "modules/mod3/milestonePt": {
+    "pt": "No fim deste módulo você lê {{שָׁלוֹם}} e {{תוֹדָה}} - e já consegue cumprimentar e agradecer por escrito.",
+    "es": "Al final de este módulo lees {{שָׁלוֹם}} y {{תוֹדָה}}, y ya puedes saludar y agradecer por escrito."
+  },
+  "modules/mod4/titlePt": {
+    "pt": "Sámech, áyin, tsádi e kuf",
+    "es": "Sámej, áyin, tsádi y kuf"
+  },
+  "modules/mod4/subPt": {
+    "pt": "as quatro letras de placa e rótulo",
+    "es": "las cuatro letras de letreros y etiquetas"
+  },
+  "modules/mod4/introPt": {
+    "pt": "Quatro letras que aparecem em quase toda placa de rua em Israel. Duas delas exigem atenção redobrada: o {{ע}} é mudo no hebraico moderno - só segura a vogal -, e o {{ק}} soa exatamente igual ao {{כּ}}, que você ainda vai conhecer. Ouvir não basta para escolher entre os dois: é preciso saber a palavra.",
+    "es": "Cuatro letras que aparecen en casi todo letrero de calle en Israel. Dos de ellas exigen atención redoblada: la {{ע}} es muda en el hebreo moderno (solo sostiene la vocal), y la {{ק}} suena exactamente igual que la {{כּ}}, que todavía vas a conocer. Oír no basta para elegir entre las dos: hay que saber la palabra."
+  },
+  "modules/mod4/goalsPt/#0": {
+    "pt": "Ler e escrever {{ס ע צ ק}} e a forma final {{ץ}}",
+    "es": "Leer y escribir {{ס ע צ ק}} y la forma final {{ץ}}"
+  },
+  "modules/mod4/goalsPt/#1": {
+    "pt": "Entender que {{ע}} não tem som próprio no hebraico moderno",
+    "es": "Entender que la {{ע}} no tiene sonido propio en el hebreo moderno"
+  },
+  "modules/mod4/goalsPt/#2": {
+    "pt": "Ler {{עִיר}}, {{אֶרֶץ}}, {{מָקוֹם}} e {{שֶׁקֶט}}",
+    "es": "Leer {{עִיר}}, {{אֶרֶץ}}, {{מָקוֹם}} y {{שֶׁקֶט}}"
+  },
+  "modules/mod4/goalsPt/#3": {
+    "pt": "Não confundir {{ס}} com a forma final {{ם}}",
+    "es": "No confundir {{ס}} con la forma final {{ם}}"
+  },
+  "modules/mod4/milestonePt": {
+    "pt": "No fim deste módulo você lê {{אֶרֶץ}} - \"terra\", \"país\" - a palavra que está no nome do jornal {{הָאָרֶץ}} e na expressão {{אֶרֶץ יִשְׂרָאֵל}}, a Terra de Israel.",
+    "es": "Al final de este módulo lees {{אֶרֶץ}}, \"tierra\", \"país\", la palabra que está en el nombre del periódico {{הָאָרֶץ}} y en la expresión {{אֶרֶץ יִשְׂרָאֵל}}, la Tierra de Israel."
+  },
+  "modules/mod5/titlePt": {
+    "pt": "As três letras com ponto",
+    "es": "Las tres letras con punto"
+  },
+  "modules/mod5/lessons/#1/nomePt": {
+    "pt": "Vet",
+    "es": "Vet"
+  },
+  "modules/mod5/lessons/#1/topicPt": {
+    "pt": "{{ב}} sem o ponto - o som V",
+    "es": "{{ב}} sin el punto: el sonido V"
+  },
+  "modules/mod5/lessons/#3/nomePt": {
+    "pt": "Chaf",
+    "es": "Jaf"
+  },
+  "modules/mod5/lessons/#3/topicPt": {
+    "pt": "{{כ}} sem o ponto e a final {{ך}} - o som raspado",
+    "es": "{{כ}} sin el punto y la final {{ך}}: el sonido raspado"
+  },
+  "modules/mod5/lessons/#5/nomePt": {
+    "pt": "Fe",
+    "es": "Fe"
+  },
+  "modules/mod5/lessons/#5/topicPt": {
+    "pt": "{{פ}} sem o ponto e a final {{ף}} - o som F",
+    "es": "{{פ}} sin el punto y la final {{ף}}: el sonido F"
+  },
+  "modules/mod5/lessons/#6/nomePt": {
+    "pt": "Com e sem o ponto",
+    "es": "Con y sin el punto"
+  },
+  "modules/mod5/lessons/#6/topicPt": {
+    "pt": "{{בּ}} e {{ב}}, {{כּ}} e {{כ}}, {{פּ}} e {{פ}} lado a lado - o contraste dos três pares",
+    "es": "{{בּ}} y {{ב}}, {{כּ}} y {{כ}}, {{פּ}} y {{פ}} lado a lado: el contraste de los tres pares"
+  },
+  "modules/mod5/introPt": {
+    "pt": "Aqui o alfabeto se fecha, e com a sua regra mais elegante: três letras mudam de som conforme levem ou não um ponto no meio - o daguesh. Com ponto são oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sem ponto são fricativas, {{ב}} v, {{כ}} ch, {{פ}} f. O guia apresenta primeiro as formas com ponto para introduzir de maneira clara os sons B, K e P antes de compará-los com V, CH e F.",
+    "es": "Aquí el alfabeto se cierra, y con su regla más elegante: tres letras cambian de sonido según lleven o no un punto en medio, el daguesh. Con punto son oclusivas, {{בּ}} b, {{כּ}} k, {{פּ}} p; sin punto son fricativas, {{ב}} v, {{כ}} j, {{פ}} f. El curso presenta primero las formas con punto para introducir con claridad los sonidos B, K y P antes de compararlos con V, J y F."
+  },
+  "modules/mod5/goalsPt/#0": {
+    "pt": "Ler e escrever {{ב כ פ}} e as formas finais {{ך}} e {{ף}}",
+    "es": "Leer y escribir {{ב כ פ}} y las formas finales {{ך}} y {{ף}}"
+  },
+  "modules/mod5/goalsPt/#1": {
+    "pt": "Ouvir e ver a diferença entre {{בּ}}/{{ב}}, {{כּ}}/{{כ}}, {{פּ}}/{{פ}}",
+    "es": "Oír y ver la diferencia entre {{בּ}}/{{ב}}, {{כּ}}/{{כ}}, {{פּ}}/{{פ}}"
+  },
+  "modules/mod5/goalsPt/#2": {
+    "pt": "Ler {{אַבָּא}}, {{בַּיִת}}, {{טוֹב}}, {{כֶּלֶב}}, {{סֵפֶר}} e {{מִשְׁפָּחָה}}",
+    "es": "Leer {{אַבָּא}}, {{בַּיִת}}, {{טוֹב}}, {{כֶּלֶב}}, {{סֵפֶר}} y {{מִשְׁפָּחָה}}"
+  },
+  "modules/mod5/goalsPt/#3": {
+    "pt": "Completar o alfabeto: 22 letras e 5 formas finais",
+    "es": "Completar el alfabeto: 22 letras y 5 formas finales"
+  },
+  "modules/mod5/milestonePt": {
+    "pt": "No fim deste módulo você conhece as 22 letras - e lê {{מֶלֶךְ}}, que estava esperando desde a primeira lição.",
+    "es": "Al final de este módulo conoces las 22 letras, y lees {{מֶלֶךְ}}, que te estaba esperando desde la primera lección."
+  },
+  "modules/mod6/titlePt": {
+    "pt": "Sem o ponto",
+    "es": "Sin el punto"
+  },
+  "modules/mod6/subPt": {
+    "pt": "as formas suaves e as cinco finais",
+    "es": "las formas suaves y las cinco finales"
+  },
+  "modules/mod6/lessons/#0/topicPt": {
+    "pt": "Onde o ponto aparece: ler {{ב}}, {{כ}} e {{פ}} quando o ponto não está impresso",
+    "es": "Dónde aparece el punto: leer {{ב}}, {{כ}} y {{פ}} cuando el punto no está impreso"
+  },
+  "modules/mod6/lessons/#1/topicPt": {
+    "pt": "As cinco formas finais, juntas pela primeira vez",
+    "es": "Las cinco formas finales, juntas por primera vez"
+  },
+  "modules/mod6/lessons/#2/topicPt": {
+    "pt": "Ler sem nikud, e o fecho do módulo",
+    "es": "Leer sin nikud, y el cierre del módulo"
+  },
+  "modules/mod6/introPt": {
+    "pt": "Nenhuma letra nova neste módulo - e ainda assim ele é o que separa quem decora de quem lê. Você já viu as três letras do daguesh com o ponto; agora vai vê-las sem ele. No começo da palavra elas quase sempre soam b, k, p, como se tivessem o ponto; no fim, praticamente sempre v, ch, f; no meio, depende da palavra, e é preciso conhecê-la. É aqui também que as cinco formas finais deixam de ser curiosidade e viram hábito de leitura.",
+    "es": "Ninguna letra nueva en este módulo, y aun así es el que separa a quien memoriza de quien lee. Ya viste las tres letras del daguesh con el punto; ahora las vas a ver sin él. Al comienzo de la palabra casi siempre suenan b, k, p, como si tuvieran el punto; al final, prácticamente siempre v, j, f; en medio, depende de la palabra, y hay que conocerla. Es aquí también donde las cinco formas finales dejan de ser una curiosidad y se vuelven un hábito de lectura."
+  },
+  "modules/mod6/goalsPt/#0": {
+    "pt": "Ler {{ב}}, {{כ}} e {{פ}} sem daguesh, do jeito que aparecem na rua",
+    "es": "Leer {{ב}}, {{כ}} y {{פ}} sin daguesh, tal como aparecen en la calle"
+  },
+  "modules/mod6/goalsPt/#1": {
+    "pt": "Saber quando o ponto some - e por que isso não é opcional",
+    "es": "Saber cuándo desaparece el punto, y por qué eso no es opcional"
+  },
+  "modules/mod6/goalsPt/#2": {
+    "pt": "Reconhecer {{ם ן ך ף ץ}} de relance, sem pensar",
+    "es": "Reconocer {{ם ן ך ף ץ}} de un vistazo, sin pensar"
+  },
+  "modules/mod6/goalsPt/#3": {
+    "pt": "Ler {{דֶרֶךְ}}, {{כֶּסֶף}}, {{סוֹף}} e {{מֶלֶךְ}}",
+    "es": "Leer {{דֶרֶךְ}}, {{כֶּסֶף}}, {{סוֹף}} y {{מֶלֶךְ}}"
+  },
+  "modules/mod6/milestonePt": {
+    "pt": "No fim deste módulo você lê palavras sem nikud: no começo e no fim da palavra, o lugar da letra quase sempre diz o som; no meio, é o conhecimento da palavra que decide.",
+    "es": "Al final de este módulo lees palabras sin nikud: al comienzo y al final de la palabra, el lugar de la letra casi siempre dice el sonido; en medio, lo que decide es conocer la palabra."
+  },
+  "modules/mod7/titlePt": {
+    "pt": "Os sons modernos",
+    "es": "Los sonidos modernos"
+  },
+  "modules/mod7/subPt": {
+    "pt": "{{צ׳}} tch · {{ג׳}} dj · {{ז׳}} j",
+    "es": "{{צ׳}} ch · {{ג׳}} y · {{ז׳}} zh"
+  },
+  "modules/mod7/lessons/#0/nomePt": {
+    "pt": "Tch",
+    "es": "Ch"
+  },
+  "modules/mod7/lessons/#0/topicPt": {
+    "pt": "{{צ׳}} - o TCH de \"tchau\"",
+    "es": "{{צ׳}}: la CH de \"chico\"",
+    "comentario": "comparación con el español; revisar la pronunciación"
+  },
+  "modules/mod7/lessons/#1/nomePt": {
+    "pt": "Dj",
+    "es": "Y",
+    "comentario": "el sonido de \"jeans\" (ג׳) se escribe y en la transliteración en español; revisar el nombre de la lección"
+  },
+  "modules/mod7/lessons/#1/topicPt": {
+    "pt": "{{ג׳}} - o DJ de \"Djavan\"",
+    "es": "{{ג׳}}: la J del inglés \"jeans\" (que se dice \"yins\")",
+    "comentario": "revisar la pronunciación"
+  },
+  "modules/mod7/lessons/#2/nomePt": {
+    "pt": "J",
+    "es": "Zh",
+    "comentario": "el sonido de la j portuguesa (ז׳) se escribe zh en la transliteración en español"
+  },
+  "modules/mod7/lessons/#2/topicPt": {
+    "pt": "{{ז׳}} - o J de \"jarro\"",
+    "es": "{{ז׳}}: la J del francés \"journal\"",
+    "comentario": "el español no tiene este sonido; revisar la pronunciación"
+  },
+  "modules/mod7/lessons/#3/topicPt": {
+    "pt": "Os três sons juntos, e o fecho do alfabeto",
+    "es": "Los tres sonidos juntos, y el cierre del alfabeto"
+  },
+  "modules/mod7/introPt": {
+    "pt": "O alfabeto hebraico tem 22 letras e não ganhou nenhuma nova em milhares de anos. Mas o hebraico moderno precisou de três sons que ele não tinha - os do português \"tchau\", \"Djavan\" e \"jarro\" - e resolveu o problema sem inventar letra: pôs um apóstrofo, o {{גֶרֶשׁ}}, ao lado de três letras que já existiam.",
+    "es": "El alfabeto hebreo tiene 22 letras y no ganó ninguna nueva en miles de años. Pero el hebreo moderno necesitó tres sonidos que no tenía, los de \"chico\", del inglés \"jeans\" y del francés \"journal\", y resolvió el problema sin inventar letras: puso un apóstrofo, el {{גֶרֶשׁ}}, al lado de tres letras que ya existían.",
+    "comentario": "ejemplos cambiados como en el inglés (tchau/Djavan/jarro); revisar la pronunciación"
+  },
+  "modules/mod7/goalsPt/#0": {
+    "pt": "Ler e escrever {{צ׳}}, {{ג׳}} e {{ז׳}}",
+    "es": "Leer y escribir {{צ׳}}, {{ג׳}} y {{ז׳}}"
+  },
+  "modules/mod7/goalsPt/#1": {
+    "pt": "Reconhecer o {{גֶרֶשׁ}} e saber que ele muda o som, não a letra",
+    "es": "Reconocer el {{גֶרֶשׁ}} y saber que cambia el sonido, no la letra"
+  },
+  "modules/mod7/goalsPt/#2": {
+    "pt": "Ler nomes de países e palavras importadas: {{צ׳ילה}}, {{ג׳ירפה}}, {{ז׳רגון}}",
+    "es": "Leer nombres de países y palabras importadas: {{צ׳ילה}}, {{ג׳ירפה}}, {{ז׳רגון}}"
+  },
+  "modules/mod7/goalsPt/#3": {
+    "pt": "Chegar ao fim do alfabeto sem nenhuma lacuna",
+    "es": "Llegar al final del alfabeto sin ningún vacío"
+  },
+  "modules/mod7/milestonePt": {
+    "pt": "No fim deste módulo você lê qualquer letra que encontrar num texto hebraico moderno.",
+    "es": "Al final de este módulo lees cualquier letra que encuentres en un texto hebreo moderno."
+  }
+}

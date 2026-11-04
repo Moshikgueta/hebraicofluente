@@ -46,5 +46,28 @@ const en: Traducao<typeof pt> = {
   marca: 'Hebraico Fluente'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  licenciadoPara: (email: string) => `Licenciado para ${email}`,
+  copia: (numero: string) => `copia ${numero}`,
+  // etapa 6: escrito para el sitio de fuera (sigue la versión en inglés)
+  avisoDeDireitos:
+    'Contenido protegido por derechos de autor, licenciado para el uso personal de ' +
+    'esta cuenta. Copiar, grabar para distribuir o revender sin autorización puede generar ' +
+    'responsabilidad civil y penal.',
+  termosArtigo5: 'Términos de Uso, artículo 5',
+
+  instagram: 'Instagram',
+  instagramSr: ' de Hebraico Fluente (se abre en otra pestaña)',
+  linkedin: 'LinkedIn',
+  linkedinSr: ' del profesor (se abre en otra pestaña)',
+
+  demoTitulo: 'Entorno de demostración.',
+  demoTexto:
+    'Esta versión no tiene servidor: las cuentas y los pagos quedan solo en este navegador, no se ' +
+    'cobra nada y el acceso no funciona en otro dispositivo.',
+
+  marca: 'Hebraico Fluente'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

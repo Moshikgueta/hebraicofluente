@@ -22,5 +22,15 @@ const en: Traducao<typeof pt> = {
   explica: 'The letter {letra} is {posicao}: {decisao}, and sounds {som}. {he} - "{leitura}", {sentido}.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  comeco: 'al principio de la palabra',
+  depoisDeConsoante: 'después de una consonante que cierra la sílaba (shvá en el medio de la palabra)',
+  depoisDeVogal: 'después de una vocal',
+  pergunta: 'El punto no se imprimió. ¿Cómo se lee?',
+  levaOPonto: 'lleva el punto',
+  semOPonto: 'queda sin el punto',
+  explica: 'La letra {letra} está {posicao}: {decisao}, y suena {som}. {he} - "{leitura}", {sentido}.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

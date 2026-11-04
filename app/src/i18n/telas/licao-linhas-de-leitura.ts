@@ -25,5 +25,17 @@ const en: Traducao<typeof pt> = {
   toqueNumaLinha: 'Tap a line to see the help for that line only.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ajudas: 'Ayudas de lectura',
+  mostrarPontos: 'Mostrar los puntos',
+  transliteracao: 'Transliteración',
+  traducao: 'Traducción',
+  parar: '■ Detener',
+  ouvirTexto: '▶ Escuchar el texto completo',
+  linha: (n, aberta) => `Línea ${n}: ${aberta ? 'ocultar' : 'mostrar'} la ayuda`,
+  ouvirLinha: n => `Escuchar la línea ${n}`,
+  toqueNumaLinha: 'Toca una línea para ver solo la ayuda de esa línea.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

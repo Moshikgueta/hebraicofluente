@@ -21,5 +21,15 @@ const en: Traducao<typeof pt> = {
   conquista: 'Achievement: {titulo}.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aula0: 'Terminó la Clase 0: entendió cómo funciona el hebreo.',
+  letra: 'Aprendió la letra {nome}.',
+  checkpoint: 'Aprobó el checkpoint del módulo {n}.',
+  leitura: 'Hizo la Primera Lectura del módulo {n}.',
+  texto: 'Leyó el minitexto del módulo {n}.',
+  missao: 'Cumplió la misión del módulo {n}.',
+  conquista: 'Logro: {titulo}.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

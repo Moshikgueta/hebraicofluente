@@ -49,5 +49,30 @@ const en: Traducao<typeof pt> = {
   duvida: 'Any questions about your data? Write to'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Cuenta eliminada - Hebraico Fluente',
+  metaDescricao: 'La confirmación de que la cuenta y los datos personales se eliminaron.',
+  titulo: 'Cuenta eliminada',
+  feito: 'Está hecho, y no hace falta hacer nada más.',
+  oQueFoiApagado: 'Qué se eliminó',
+  apagadoTexto:
+    'Tu correo, tu nombre, tu contraseña, todo tu progreso y tu acceso al curso. Ya se cerró tu ' +
+    'sesión en todos los dispositivos donde la tenías abierta.',
+  oQueFicou: 'Qué quedó, y por qué',
+  // etapa 6: escrito para o site de fora
+  ficouTexto:
+    'El registro de tus compras, sin tu nombre y sin tu correo. Guardar los registros de venta ' +
+    'es una obligación legal de quien vende, y la ley de protección de datos permite ' +
+    'guardarlos. Lo que queda es el monto, la fecha y el estado del pago - ' +
+    'nada que apunte a ti.',
+  voltar: 'Si algún día quieres volver',
+  voltarTexto:
+    'Solo crea una cuenta nueva con el mismo correo. Empieza desde cero, porque no quedó nada ' +
+    'para recuperar - ni las letras que ya habías aprendido.',
+  paginaInicial: 'Ir a la página de inicio',
+  falarComAGente: 'Escríbenos',
+  duvida: '¿Te quedó alguna duda sobre tus datos? Escribe a'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

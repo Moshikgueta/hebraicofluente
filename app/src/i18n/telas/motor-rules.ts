@@ -84,5 +84,46 @@ const en: Traducao<typeof pt> = {
   mostrarLeitura: 'Show reading'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  regraCurta: '{certos} de {total}',
+  regraDominio: 'completar las {etapas} etapas de la lección y acertar al menos {regra} en los ejercicios',
+  regraConclusao: 'Una lección cuenta como completada cuando terminas las {etapas} etapas y aciertas al menos {regra} en los ejercicios.',
+  nivelNovo: 'todavía no vista',
+  nivelAprendendo: 'aprendiendo',
+  nivelPraticando: 'practicando',
+  nivelForte: 'fuerte',
+  nivelRevisar: 'necesita repaso',
+  primeiraLetraTitulo: 'Primera letra',
+  primeiraLetraDesc: 'Completaste tu primera lección.',
+  primeiraPalavraTitulo: 'Primera palabra leída',
+  primeiraPalavraDesc: 'Leíste una palabra entera en hebreo.',
+  modulo1Titulo: 'Módulo 1',
+  modulo1Desc: 'Seis letras y el primer checkpoint.',
+  tresDiasTitulo: 'Tres días seguidos',
+  tresDiasDesc: 'La constancia es lo que hace que la lectura se vuelva automática.',
+  dezLetrasTitulo: 'Diez letras',
+  dezLetrasDesc: 'Casi la mitad del alfabeto.',
+  metadeTitulo: 'La mitad del alfabeto',
+  metadeDesc: 'Once de las 22 letras.',
+  checkpointPerfeitoTitulo: 'Checkpoint perfecto',
+  checkpointPerfeitoDesc: 'Un checkpoint sin ningún error.',
+  vinteEDuasTitulo: '22 letras',
+  vinteEDuasDesc: 'El alfabeto entero.',
+  semOPontoTitulo: 'Sin el punto',
+  semOPontoDesc: 'Lees {{בּ}}, {{כּ}} y {{פּ}} sin el daguesh, como aparecen en la calle.',
+  sonsModernosTitulo: 'Los sonidos modernos',
+  sonsModernosDesc: 'El guéresh y las tres letras que el hebreo moderno inventó sin inventar ninguna letra.',
+  semApoioTitulo: 'Sin apoyo',
+  semApoioDesc: 'Leíste una palabra entera sin transliteración.',
+  leitorTitulo: 'Lector de hebreo',
+  leitorDesc: 'Completaste el desafío final.',
+  lePalavrasTitulo: (n: number): string => `${n} palabras`,
+  lePalavrasDesc: (n: number): string => `Ya puedes leer ${n} palabras en hebreo.`,
+  meuNomeTitulo: 'Mi nombre en hebreo',
+  meuNomeDesc: 'Escribiste tu nombre con las letras que aprendiste.',
+  precisaAjuda: '¿Necesitas ayuda?',
+  mostrarLeitura: 'Mostrar lectura'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

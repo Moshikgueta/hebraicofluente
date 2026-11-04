@@ -18,7 +18,7 @@ import { Section } from '@/components/platform/Section';
 import { Rubrica } from '@/components/landing/base';
 import { FaixaCta } from '@/components/platform/ProximoPasso';
 import { cidadeUf, empresa, enderecoLinha, nomeLegalCompleto, prazoResposta, whatsappUrl } from '@/lib/empresa';
-import { LOCALE } from '@/i18n';
+import { EXTERIOR } from '@/i18n';
 import { tx } from '@/i18n/telas/conta-legal';
 import { LOCALE_INTL } from '@/i18n';
 
@@ -65,9 +65,9 @@ export function LegalPage({
 
         <div className="grid gap-6">{children}</div>
 
-        {/* No site em inglês a empresa aparece só onde a lei pede: Termos,
+        {/* No site em inglês (e no em espanhol) a empresa aparece só onde a lei pede: Termos,
             Privacidade e Reembolso (decisão do dono, 29/10/2026). */}
-        {(LOCALE !== 'en' || documento !== 'acessibilidade') && <Identificacao />}
+        {(!EXTERIOR || documento !== 'acessibilidade') && <Identificacao />}
         </article>
 
         {/* Um CTA no fim de uma política não é oportunismo: quem chegou aqui
@@ -176,7 +176,7 @@ export function Identificacao() {
  * (auditoria de 01/10/2026, LEGAL-118). Cada pedaço só sai se existir.
  */
 export function IdentificacaoCurta() {
-  if (LOCALE === 'en') return null;
+  if (EXTERIOR) return null;
   const partes = [
     nomeLegalCompleto(),
     empresa.cnpj && tx.cnpjNumero(empresa.cnpj),

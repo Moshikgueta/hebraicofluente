@@ -17,5 +17,14 @@ const en: Traducao<typeof pt> = {
   pix: (preco: string, ate: string | null) => `or ${preco} by PIX${ate ? ` · until ${ate}` : ''}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  // etapa 5: el sitio de fuera cobra por Paddle
+  parcelas: () => 'pago único',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  desistir: (dias: number) => `${dias} días para cancelar`,
+  aMenos: (valor: string) => `${valor} menos`,
+  pix: (preco: string, ate: string | null) => `o ${preco} por PIX${ate ? ` · hasta el ${ate}` : ''}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

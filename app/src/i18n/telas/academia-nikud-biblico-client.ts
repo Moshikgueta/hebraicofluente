@@ -17,5 +17,13 @@ const en: Traducao<typeof pt> = {
   ouvir: translit => `Listen to ${translit}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  indisponivel: 'Esta guía todavía no está disponible.',
+  voltarBonus: '← Lecturas extra',
+  guiaOpcional: 'Guía opcional',
+  nesteGuia: 'En esta guía',
+  ouvir: translit => `Escuchar ${translit}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

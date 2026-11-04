@@ -31,15 +31,16 @@ describe('o site em inglês para buscador e rede social', () => {
 
   it('a build em inglês tira o endereço do wrangler.toml, nunca do domínio brasileiro', () => {
     const cfg = ler('../next.config.ts');
-    expect(cfg).toContain('NEXT_PUBLIC_SITE_ORIGIN: ORIGEM_EN');
+    expect(cfg).toContain('const ORIGEM = ORIGEM_EN || ORIGEM_ES;');
+    expect(cfg).toContain('NEXT_PUBLIC_SITE_ORIGIN: ORIGEM');
     expect(cfg).toMatch(/SITE_ORIGIN\\s\*=/);
   });
 
   it('sitemap, robots e llms.txt saem do out-en, sem o que o Worker em inglês não serve', () => {
     const s = ler('../seo.mjs');
-    expect(s).toContain("EM_INGLES ? 'out-en' : 'out'");
+    expect(s).toContain("EM_INGLES ? 'out-en' : EM_ESPANHOL ? 'out-es' : 'out'");
     expect(s).toContain('FORA_DO_SITE_EN.test');
-    expect(ler('../checa-seo.mjs')).toContain("'out-en' : 'out'");
+    expect(ler('../checa-seo.mjs')).toContain("'out-es' : 'out'");
   });
 
   it('o curso à venda no site em inglês tem em inglês todo texto que as telas leem do catálogo', () => {
@@ -51,8 +52,15 @@ describe('o site em inglês para buscador e rede social', () => {
     }
   });
 
+  it('o curso à venda tem em espanhol todo texto que as telas leem do catálogo', () => {
+    const curso = JSON.parse(ler('../../data/courses.json')).courses.find((c: { slug: string }) => c.slug === 'alfabetizacao');
+    for (const k of Object.keys(curso).filter(k => k.endsWith('Pt'))) {
+      expect(curso, `${k} sem a versão ${k.slice(0, -2)}Es`).toHaveProperty(k.slice(0, -2) + 'Es');
+    }
+  });
+
   it('o exportador tira do catálogo em inglês os cursos sem preço em dólar', () => {
     const e = ler('../../tools/export-content.mjs');
-    expect(e).toMatch(/\.filter\(c => LOCALE !== 'en' \|\| \(c\.tipo && c\.tipo !== 'curso'\) \|\| Number\(c\.price && c\.price\.usd\) > 0\)/);
+    expect(e).toMatch(/\.filter\(c => !EXTERIOR \|\| \(c\.tipo && c\.tipo !== 'curso'\) \|\| Number\(c\.price && c\.price\.usd\) > 0\)/);
   });
 });

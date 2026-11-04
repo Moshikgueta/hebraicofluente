@@ -44,5 +44,27 @@ const en: Traducao<typeof pt> = {
   r8: 'You keep your access for the full 12 months: to review, play the Reading Academy games and take the final exam whenever you are ready. For now, this is the only course on this site.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  p1: '¿Necesito saber hebreo?',
+  r1: 'No. El curso empieza desde cero absoluto, en la primera letra, y asume que nunca viste el alfabeto.',
+  p2: '¿Es hebreo moderno o bíblico?',
+  r2: 'La lectura es la misma: las letras y los signos de vocal del texto bíblico son los que enseña este curso. El curso usa la pronunciación del hebreo moderno y vocabulario del día a día, lo que abre los dos caminos. Leer en voz alta y entender, sin embargo, son cosas distintas: la página /biblia responde eso por completo.',
+  p3: '¿Cuánto tiempo lleva?',
+  r3: (tempo: string) => `${tempo} El ritmo es tuyo.`,
+  p4: '¿El curso funciona en el celular?',
+  r4: 'Sí. La plataforma se diseñó primero para el celular: una actividad por pantalla y el botón de continuar siempre a mano.',
+  p5: '¿Tiene audio?',
+  r5Audio: 'Cada letra, sílaba y palabra tiene audio grabado por el profesor, un israelí, para escucharlo cuantas veces quieras.',
+  // etapa 3: pronúncia, rever
+  r5SemAudio: 'Las grabaciones están en producción. Mientras no estén, el curso no usa voz sintética: cada sonido se explica comparándolo con un sonido del español, y los ejercicios de escucha quedan desactivados en lugar de volverse adivinanza.',
+  p6: '¿Por cuánto tiempo tengo acceso?',
+  r6: (meses: number) => `${meses} meses a partir de la confirmación del pago, incluidas las actualizaciones que se hagan al curso en ese período.`,
+  p7: '¿Y si no me gusta?',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  r7: (dias: number) => `Tienes ${dias} días, contados desde que se libera tu acceso, para cancelar en el sitio y recibir el 100% de vuelta, sin tener que justificarlo. El reembolso vuelve por el mismo medio de pago.`,
+  p8: '¿Qué pasa cuando termino?',
+  r8: 'Conservas tu acceso los 12 meses completos: para repasar, jugar los juegos de la Academia de lectura y hacer el examen final cuando estés listo. Por ahora, este es el único curso de este sitio.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

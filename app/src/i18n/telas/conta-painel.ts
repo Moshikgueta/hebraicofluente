@@ -98,5 +98,54 @@ const en: Traducao<typeof pt> = {
   min: 'min'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  progressoNoCurso: 'Progreso en el curso',
+  moduloELugar: (n: number, lugar: string) => `Módulo ${n} · ${lugar}`,
+  horaDeRevisar: 'Hora de repasar',
+  umItem: 'Un elemento necesita un repaso rápido.',
+  nItens: (n: number) => `${n} elementos necesitan un repaso rápido.`,
+  levaCerca: (minutos: number) => `Lleva unos ${minutos} minutos.`,
+  comecarRevisao: 'Empezar el repaso',
+  /* As iniciais dos dias, de domingo a sábado: uma letra por dia. */
+  diasDaSemana: 'DLMMJVS',
+  suaSemana: 'Tu semana',
+  nadaEstudado: 'Todavía no estudiaste nada esta semana.',
+  estudados: (horas: number, minutos: number) => `${horas > 0 ? `${horas}h ` : ''}${minutos}min estudiados`,
+  diasDeEstudo: 'días de estudio',
+  letrasNovas: 'letras nuevas',
+  palavrasNovas: 'palabras nuevas',
+  falaQuieta: 'Esta semana estuvo tranquila. ¿Qué tal una letra hoy?',
+  falaRitmo: '¡Cinco días o más de estudio! Eso es ritmo.',
+  falaPalavras: (n: number) => `Esta semana empezaste a leer ${n} ${n === 1 ? 'palabra nueva' : 'palabras nuevas'}.`,
+  falaContinua: 'Toda práctica cuenta. ¿Seguimos?',
+
+  metaCumprida: 'Meta del día cumplida',
+  metaDoDia: (alvo: number) => `Meta del día: ${alvo} minutos`,
+  sequenciaGarantida: (n: number) => `La racha de ${n} ${n === 1 ? 'día' : 'días'} está asegurada hoy.`,
+  amanhaContinua: 'Mañana la racha sigue desde aquí.',
+  minutosHoje: (feitos: number, alvo: number) => `${feitos} de ${alvo} min hoy.`,
+  cumpraParaManter: (n: number) => ` Cúmplela para mantener los ${n} ${n === 1 ? 'día seguido' : 'días seguidos'}.`,
+  licaoFeita: 'Lección de hoy hecha',
+  aProxima: (nome: string) => `La próxima es ${nome}, cuando quieras.`,
+  bomTrabalho: 'Buen trabajo.',
+  licao: (nome: string) => `Lección: ${nome}`,
+  licaoDeHoje: 'Lección de hoy',
+  umaLicaoLeva: 'Una lección lleva unos diez minutos.',
+  abrir: 'Abrir',
+  revisaoEmDia: 'Repaso al día',
+  nadaEsperando: 'Nada te está esperando.',
+  revisaoItens: (n: number) => `Repaso: ${n} ${n === 1 ? 'elemento' : 'elementos'}`,
+  tresMinutos: 'Tres minutos en lo que se te está escapando.',
+  revisar: 'Repasar',
+  seuPlano: 'Tu plan de hoy',
+  tudoFeito: 'Todo hecho hoy. ¡Hasta mañana!',
+  feitosDe: (feitos: number, total: number) => `${feitos} de ${total} hechos`,
+  feito: 'Hecho: ',
+  aFazer: 'Por hacer: ',
+  desafioFeito: '✓ Desafío del día hecho.',
+  desafioOpcional: 'Opcional: el desafío del día, cinco preguntas rápidas',
+  min: 'min'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

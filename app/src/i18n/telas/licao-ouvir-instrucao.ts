@@ -27,5 +27,17 @@ const en: Traducao<typeof pt> = {
   ouvirInstrucao: 'Listen to the instructions'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  vozLang: 'es-MX',
+  vozPrefixo: 'es',
+  hebraicoMostrado: 'el hebreo que se muestra',
+  pausarInstrucao: 'Pausar la instrucción',
+  continuarInstrucao: 'Continuar la instrucción',
+  ouvirInstrucaoNoIdioma: 'Escuchar la instrucción en español',
+  pausar: 'Pausar',
+  continuar: 'Continuar',
+  ouvirInstrucao: 'Escuchar la instrucción'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

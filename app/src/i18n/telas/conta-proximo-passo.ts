@@ -25,5 +25,17 @@ const en: Traducao<typeof pt> = {
   pecaOAviso: 'Ask for the notice in Your account'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  depoisDestaEtapa: 'Después de esta etapa',
+  jaNaConta: 'Este curso ya está en tu cuenta. ',
+  abrir: (titulo: string) => `Abrir ${titulo}`,
+  conhecer: (nivel: string) => `Conocer ${nivel}`,
+  verOPlano: 'Ver el plan de este curso',
+  compraSeparada: 'Se compra aparte. El curso que ya tienes sigue abierto.',
+  aindaNaoAbriu: 'Todavía no abrió. La página muestra lo que va a cubrir.',
+  querSaber: '¿Quieres saber cuándo abre?',
+  pecaOAviso: 'Pide el aviso en Tu cuenta'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -41,7 +41,7 @@ const SITE = toml.match(/^\s*SITE_ORIGIN\s*=\s*"([^"]+)"/m)[1].replace(/\/+$/, '
 const problemas = [];
 const nota = (s) => problemas.push(s);
 
-const DIR = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'out-en' : 'out';
+const DIR = process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'out-en' : process.env.NEXT_PUBLIC_LOCALE === 'es' ? 'out-es' : 'out';
 const html = (rota) => readFileSync(`${DIR}${rota}index.html`, 'utf8');
 const tag = (h, re) => (h.match(re) || [])[1] || null;
 
@@ -201,7 +201,7 @@ for (const rota of listadas) {
   if (!tipo('WebSite')) nota('JSON-LD da página do curso sem WebSite');
   if (!org) nota('JSON-LD da página do curso sem Organization');
   /* O site em inglês sai sem CNPJ no JSON-LD (decisão do dono, 29/10/2026); lá, ele não pode aparecer. */
-  else if (DIR === 'out-en') { if (org.taxID || org.address) nota('JSON-LD em inglês com CNPJ ou endereço da empresa'); }
+  else if (DIR !== 'out') { if (org.taxID || org.address) nota('JSON-LD do site de fora com CNPJ ou endereço da empresa'); }
   else if (empresa.cnpj && org.taxID !== empresa.cnpj) nota(`JSON-LD: CNPJ ${org.taxID}, empresa.json diz ${empresa.cnpj}`);
   if (!faq || !faq.mainEntity?.length) nota('JSON-LD da página do curso sem FAQPage com perguntas');
   else for (const q of faq.mainEntity) {

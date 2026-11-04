@@ -23,5 +23,16 @@ const en: Traducao<typeof pt> = {
   progresso: 'Progress saved, on your phone and on your computer'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aula0: 'Clase 0: cómo funciona el hebreo, antes de la primera letra',
+  licoes: (n: number): string => `${n} lecciones, una letra a la vez`,
+  cursiva: 'Escritura cursiva trazada en la pantalla, con evaluación del trazo',
+  audio: 'Audio grabado por el profesor, un israelí',
+  semAudio: 'Explicación del sonido de cada letra',
+  jogos: 'Juegos de práctica en la Academia de Lectura',
+  exame: 'Examen final y certificado de finalización (no oficial)',
+  progresso: 'Progreso guardado, en el celular y en la computadora'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

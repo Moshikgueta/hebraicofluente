@@ -60,6 +60,6 @@ export async function abrirCheckout(
   paddle.Checkout.open({
     transactionId: dados.transactionId,
     ...(email ? { customer: { email } } : {}),
-    settings: { displayMode: 'overlay', locale: 'en', theme: 'light', allowLogout: false }
+    settings: { displayMode: 'overlay', locale: process.env.NEXT_PUBLIC_LOCALE === 'es' ? 'es' : 'en', theme: 'light', allowLogout: false }
   });
 }

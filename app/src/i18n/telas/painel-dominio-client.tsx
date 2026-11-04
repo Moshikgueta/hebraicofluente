@@ -46,5 +46,25 @@ const en: Traducao<typeof pt> = {
   regraConta: 'Corrected exercises and reviews count. Your own self-assessment in the Reading Lab does not go into this calculation.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  migalha: (link: Link) => <>{link('Mi hebreo')} · Dominio</>,
+  titulo: 'Mi dominio de las letras',
+  intro: 'Completar una lección no significa necesariamente dominar una letra. Aquí sigues tu progreso en tres habilidades: reconocer la letra, identificar su sonido y leerla dentro de palabras. Tu nivel de dominio avanza a medida que practicas y repasas con el tiempo.',
+  vazio: 'En cuanto hagas los primeros ejercicios, tu progreso empezará a aparecer aquí.',
+  voltarPainel: 'Volver al panel',
+  resumoAria: 'Resumen',
+  habilidadesAria: 'Las tres habilidades',
+  praticarTitulo: '¿Qué vale la pena practicar ahora?',
+  revisarEstas: 'Repasar estas letras',
+  semReforco: (link: Link) => <>Ninguna letra necesita un refuerzo especial ahora. Una lectura en el{' '}{link('Laboratorio de Lectura')} puede ayudarte a consolidar lo que aprendiste.</>,
+  letrasAria: 'Las letras que ya empezaste',
+  calculo: 'Tu nivel de dominio se calcula a partir de tus respuestas y repasos. Para considerar una letra dominada, necesitamos ver buenos resultados en días diferentes.',
+  comoCalculado: '¿Cómo se calcula el nivel?',
+  regraPoucos: 'Con menos de {n} respuestas en una habilidad, aparece "{nivel}" en lugar de una suposición.',
+  regraErro: 'Un error reciente baja el nivel hasta que vuelvas a acertar.',
+  regraDominada: '"{nivel}" pide {seguidos} aciertos seguidos, una buena tasa de aciertos y aciertos en al menos {dias} días diferentes.',
+  regraConta: 'Cuentan los ejercicios corregidos y el repaso. Tu propia evaluación en el Laboratorio de Lectura no entra en esta cuenta.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

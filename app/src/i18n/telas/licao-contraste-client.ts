@@ -82,5 +82,46 @@ const en: Traducao<typeof pt> = {
   concluir: 'Finish and continue'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  osPares: 'Los pares',
+  silabas: 'Sílabas',
+  palavras: 'Palabras',
+  fixacao: 'Fijación',
+  exercicios: 'Ejercicios',
+  naoAbriu: 'La lección de los tres pares todavía no se abrió',
+  mapa: '← Mapa',
+  badge: (modulo, licao) => `Módulo ${modulo} · lección ${licao} · con y sin el punto`,
+  etapas: 'Etapas de la lección',
+  etapaDe: (n, rotulo) => `Etapa ${n} de 5 - ${rotulo}`,
+  parDe: (n, total) => `par ${n} de ${total}`,
+  proximoPar: 'Siguiente par',
+  irExercicios: 'Ir a los ejercicios',
+  tituloExercicios: 'Ejercicios - con y sin el punto',
+  comESem: 'Con y sin el punto',
+  seisSons:
+    'Ya conoces los seis sonidos, cada uno en su lección. Ahora quedan uno al lado del otro: la misma letra, con el punto adentro y sin él.',
+  quandoVem: '¿Cuándo va el punto?',
+  continuarSilabas: 'Continuar a las sílabas',
+  silabasLado: 'Las sílabas, una al lado de la otra',
+  leiaCadaLinha:
+    'Lee cada fila en voz alta, primero la columna de la derecha (con el punto) y después la de la izquierda (sin el punto), y siente cómo cambia la boca.',
+  continuarPalavras: 'Continuar a las palabras',
+  palavrasLados: 'Las palabras, de los dos lados',
+  olheOMiolo: 'Antes de leer cada palabra, mira el centro de la letra resaltada: con el punto o sin él.',
+  leiaDoisLados: 'Lee los dos lados en voz alta',
+  // etapa 3: pronúncia, rever
+  leiaDoisLadosInstrucao:
+    'Lee las palabras de cada par, grábate y comprueba que se note la diferencia: B y V, K y el sonido raspado, P y F.',
+  continuarFixacao: 'Continuar a la fijación',
+  placar: (certas, total, pct) => `${certas} de ${total} · ${pct}%`,
+  firmes: 'Los tres pares están firmes.',
+  vamosFirmar: 'Vamos a afirmar los tres pares.',
+  bom: 'Miras el centro de la letra y decides el sonido. Puedes seguir.',
+  refaca: libera =>
+    `Rehazlo cuando quieras: las preguntas cambian, y lo que cuenta es decidir con el punto o sin él sin dudar. El checkpoint se abre a partir del ${libera}%.`,
+  refazer: 'Rehacer los ejercicios',
+  concluir: 'Terminar y continuar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

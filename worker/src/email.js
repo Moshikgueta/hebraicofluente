@@ -27,6 +27,7 @@
 
 import { dataHoraBR, sendMail } from './lib/mail.js';
 import { dataEN } from './lib/mail-en.js';
+import { dataES } from './lib/mail-es.js';
 import { log, throttled } from './lib/db.js';
 import { idiomaDoWorker } from './lib/idioma.js';
 
@@ -44,7 +45,7 @@ export function dominioDe(env) {
 /** O assunto pede desistência ou reembolso? Sem acento e sem caixa. */
 export function pedeDesistencia(assunto) {
   const s = String(assunto || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  return /reembols|desist|estorn|arrepend|cancel|devolu|refund|withdraw|money back|chargeback/.test(s);
+  return /reembols|desist|estorn|arrepend|arrepent|reintegr|cancel|devolu|refund|withdraw|money back|chargeback/.test(s);
 }
 
 /** O endereço dentro de `Nome <a@b.c>` ou um endereço solto. */
@@ -72,7 +73,27 @@ function horaEN(ms) {
   return `${h % 12 || 12}:${m} ${h < 12 ? 'am' : 'pm'}`;
 }
 
+/* A hora em espanhol, 24 h, no mesmo fuso. */
+function horaES(ms) {
+  const d = new Date(Number(ms) - 3 * 60 * 60 * 1000);
+  return `${d.getUTCHours()}:${String(d.getUTCMinutes()).padStart(2, '0')}`;
+}
+
 export function confirmacaoTexto(recebidaEm, idioma = 'pt', contato = `contato@${DOMINIO}`) {
+  if (idioma === 'es') {
+    return [
+      'Hola:',
+      '',
+      `Recibimos tu mensaje el ${dataES(recebidaEm)} a las ${horaES(recebidaEm)} (UTC-3). Esta es una confirmación automática, enviada en el momento en que llegó, y sirve como registro de que la recibimos.`,
+      '',
+      'Si estás pidiendo cancelar tu compra, vale la fecha en que escribiste, no la de nuestra respuesta. Respondemos personalmente en un plazo de 2 días hábiles.',
+      '',
+      'Si prefieres, puedes cancelar en el propio sitio: entra en tu cuenta, abre Tu cuenta y, en Compras, usa "Cancelar la compra". La solicitud queda registrada al instante.',
+      '',
+      'Hebraico Fluente',
+      contato
+    ].join('\n');
+  }
   if (idioma === 'en') {
     return [
       'Hello,',
@@ -119,7 +140,7 @@ export async function receberEmail(message, env, agora = Date.now()) {
   const contato = env.SUPPORT_EMAIL || `contato@${dominio}`;
   const r = await sendMail(env, {
     to: para,
-    subject: idioma === 'en' ? 'We received your message' : 'Recebemos a sua mensagem',
+    subject: idioma === 'en' ? 'We received your message' : idioma === 'es' ? 'Recibimos tu mensaje' : 'Recebemos a sua mensagem',
     text: confirmacaoTexto(agora, idioma, contato)
   });
   /* O registro do recebimento, também do nosso lado. Sem o endereço: a

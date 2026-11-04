@@ -20,7 +20,7 @@ import { Container } from './base';
 import { tx } from '@/i18n/telas/venda-promocao';
 
 export function FaixaDaPromocao() {
-  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return null;
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en' || process.env.NEXT_PUBLIC_LOCALE === 'es') return null;
   const c = flagship();
   const cheio = ancora(c.price);
   const ate = fimDoPreLancamento(c.price);

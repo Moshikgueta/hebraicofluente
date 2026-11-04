@@ -1,0 +1,2346 @@
+{
+  "textos/#0/tituloPt": {
+    "pt": "O peixe",
+    "es": "El pez"
+  },
+  "textos/#0/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#0/introPt": {
+    "pt": "Na praia, a Maya e o Dani acham alguma coisa na água, e a mãe do Dani tem a última palavra. Só as letras dos módulos 1 e 2, e quase só palavras que você já leu nas lições.",
+    "es": "En la playa, Maya y Dani encuentran algo en el agua, y la mamá de Dani tiene la última palabra. Solo las letras de los módulos 1 y 2, y casi solo palabras que ya leíste en las lecciones."
+  },
+  "textos/#0/linhas/#0/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#0/linhas/#0/pt": {
+    "pt": "Maya, olha o mar!",
+    "es": "¡Maya, mira el mar!"
+  },
+  "textos/#0/linhas/#1/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#0/linhas/#1/pt": {
+    "pt": "Tem peixe ali?",
+    "es": "¿Hay un pez allí?"
+  },
+  "textos/#0/linhas/#2/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#0/linhas/#2/pt": {
+    "pt": "Tem! Olha um peixe!",
+    "es": "¡Sí! ¡Mira un pez!"
+  },
+  "textos/#0/linhas/#3/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#0/linhas/#3/pt": {
+    "pt": "O que tem ali, Dani?",
+    "es": "¿Qué hay allí, Dani?"
+  },
+  "textos/#0/linhas/#4/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#0/linhas/#4/pt": {
+    "pt": "Um peixe, mãe! Olha, ali.",
+    "es": "¡Un pez, mamá! Mira, allí."
+  },
+  "textos/#0/linhas/#5/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#0/linhas/#5/pt": {
+    "pt": "O peixe é meu!",
+    "es": "¡El pez es mío!"
+  },
+  "textos/#0/linhas/#6/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#0/linhas/#6/pt": {
+    "pt": "Não, Maya. O peixe é do mar.",
+    "es": "No, Maya. El pez es del mar."
+  },
+  "textos/#0/novas/#0/pt": {
+    "pt": "meu, minha",
+    "es": "mi, mío"
+  },
+  "textos/#0/novas/#1/pt": {
+    "pt": "Maya (nome)",
+    "es": "Maya (nombre)"
+  },
+  "textos/#0/novas/#2/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#0/novas/#3/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#0/perguntas/#0/q": {
+    "pt": "O que as crianças veem no mar?",
+    "es": "¿Qué ven los niños en el mar?"
+  },
+  "textos/#0/perguntas/#0/opcoes/#0": {
+    "pt": "Um peixe",
+    "es": "Un pez"
+  },
+  "textos/#0/perguntas/#0/opcoes/#1": {
+    "pt": "Um sorvete",
+    "es": "Un helado"
+  },
+  "textos/#0/perguntas/#0/opcoes/#2": {
+    "pt": "A mãe",
+    "es": "La mamá"
+  },
+  "textos/#0/perguntas/#0/porque": {
+    "pt": "{{הִנֵה דָג}}: olha um peixe.",
+    "es": "{{הִנֵה דָג}}: mira un pez."
+  },
+  "textos/#0/perguntas/#1/q": {
+    "pt": "Quem diz que o peixe é seu?",
+    "es": "¿Quién dice que el pez es suyo?"
+  },
+  "textos/#0/perguntas/#1/opcoes/#0": {
+    "pt": "A Maya",
+    "es": "Maya"
+  },
+  "textos/#0/perguntas/#1/opcoes/#1": {
+    "pt": "O Dani",
+    "es": "Dani"
+  },
+  "textos/#0/perguntas/#1/opcoes/#2": {
+    "pt": "A mãe",
+    "es": "La mamá"
+  },
+  "textos/#0/perguntas/#1/porque": {
+    "pt": "A Maya diz {{הַדָג שֶׁלִי}}: o peixe é meu.",
+    "es": "Maya dice {{הַדָג שֶׁלִי}}: el pez es mío."
+  },
+  "textos/#0/perguntas/#2/q": {
+    "pt": "Para a mãe, o peixe é do mar.",
+    "es": "Para la mamá, el pez es del mar."
+  },
+  "textos/#0/perguntas/#2/porque": {
+    "pt": "{{הַדָג שֶׁל הַיָם}}: o peixe é do mar.",
+    "es": "{{הַדָג שֶׁל הַיָם}}: el pez es del mar."
+  },
+  "textos/#1/tituloPt": {
+    "pt": "Tem pão?",
+    "es": "¿Hay pan?"
+  },
+  "textos/#1/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#1/introPt": {
+    "pt": "Dana acorda, a casa está em silêncio, e ela manda uma mensagem para a mãe, que já saiu. É a primeira conversa que você lê inteira em hebraico.",
+    "es": "Dana se despierta, la casa está en silencio, y le manda un mensaje a su mamá, que ya salió. Es la primera conversación que lees completa en hebreo."
+  },
+  "textos/#1/linhas/#0/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#1/linhas/#0/pt": {
+    "pt": "Mãe, tem pão?",
+    "es": "Mamá, ¿hay pan?"
+  },
+  "textos/#1/linhas/#1/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#1/linhas/#1/pt": {
+    "pt": "Tem pão fresco, e tem chá quente também.",
+    "es": "Hay pan fresco, y también hay té caliente."
+  },
+  "textos/#1/linhas/#2/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#1/linhas/#2/pt": {
+    "pt": "Obrigada! E o Yonatan?",
+    "es": "¡Gracias! ¿Y Yonatan?"
+  },
+  "textos/#1/linhas/#3/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#1/linhas/#3/pt": {
+    "pt": "Ele está dormindo.",
+    "es": "Está durmiendo."
+  },
+  "textos/#1/novas/#0/pt": {
+    "pt": "Dana (nome)",
+    "es": "Dana (nombre)"
+  },
+  "textos/#1/novas/#1/pt": {
+    "pt": "Yonatan (nome)",
+    "es": "Yonatan (nombre)"
+  },
+  "textos/#1/novas/#2/pt": {
+    "pt": "também",
+    "es": "también"
+  },
+  "textos/#1/novas/#3/pt": {
+    "pt": "quente",
+    "es": "caliente"
+  },
+  "textos/#1/novas/#4/pt": {
+    "pt": "dorme, está dormindo",
+    "es": "duerme, está durmiendo"
+  },
+  "textos/#1/novas/#5/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#1/perguntas/#0/q": {
+    "pt": "O que a Dana pergunta primeiro?",
+    "es": "¿Qué pregunta Dana primero?"
+  },
+  "textos/#1/perguntas/#0/opcoes/#0": {
+    "pt": "Se tem pão",
+    "es": "Si hay pan"
+  },
+  "textos/#1/perguntas/#0/opcoes/#1": {
+    "pt": "Se tem chá",
+    "es": "Si hay té"
+  },
+  "textos/#1/perguntas/#0/opcoes/#2": {
+    "pt": "Onde está o Yonatan",
+    "es": "Dónde está Yonatan"
+  },
+  "textos/#1/perguntas/#0/porque": {
+    "pt": "{{אִמָא, יֵשׁ לֶחֶם?}}: mãe, tem pão?",
+    "es": "{{אִמָא, יֵשׁ לֶחֶם?}}: mamá, ¿hay pan?"
+  },
+  "textos/#1/perguntas/#1/q": {
+    "pt": "O chá está frio.",
+    "es": "El té está frío."
+  },
+  "textos/#1/perguntas/#1/porque": {
+    "pt": "{{חַם}} é quente: o chá está quente.",
+    "es": "{{חַם}} es caliente: el té está caliente."
+  },
+  "textos/#1/perguntas/#2/q": {
+    "pt": "O que o Yonatan está fazendo?",
+    "es": "¿Qué está haciendo Yonatan?"
+  },
+  "textos/#1/perguntas/#2/opcoes/#0": {
+    "pt": "Tomando chá",
+    "es": "Tomando té"
+  },
+  "textos/#1/perguntas/#2/opcoes/#1": {
+    "pt": "Comendo pão",
+    "es": "Comiendo pan"
+  },
+  "textos/#1/perguntas/#2/opcoes/#2": {
+    "pt": "Dormindo",
+    "es": "Durmiendo"
+  },
+  "textos/#1/perguntas/#2/porque": {
+    "pt": "{{הוּא יָשֵׁן}}: ele está dormindo.",
+    "es": "{{הוּא יָשֵׁן}}: está durmiendo."
+  },
+  "textos/#1/perguntas/#3/q": {
+    "pt": "O pão é fresco.",
+    "es": "El pan es fresco."
+  },
+  "textos/#1/perguntas/#3/porque": {
+    "pt": "{{טָרִי}} é fresco.",
+    "es": "{{טָרִי}} es fresco."
+  },
+  "textos/#2/tituloPt": {
+    "pt": "Uma mensagem da montanha",
+    "es": "Un mensaje desde la montaña"
+  },
+  "textos/#2/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#2/introPt": {
+    "pt": "A Noa foi passar uns dias na montanha, e o Dan manda uma mensagem para saber como ela está.",
+    "es": "Noa fue a pasar unos días en la montaña, y Dan le manda un mensaje para saber cómo está."
+  },
+  "textos/#2/linhas/#0/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#2/linhas/#0/pt": {
+    "pt": "Oi, Noa, tudo bem?",
+    "es": "Hola, Noa, ¿qué tal?"
+  },
+  "textos/#2/linhas/#1/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#2/linhas/#1/pt": {
+    "pt": "Ótimo! Estou na montanha.",
+    "es": "¡Muy bien! Estoy en la montaña."
+  },
+  "textos/#2/linhas/#2/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#2/linhas/#2/pt": {
+    "pt": "Está frio aí?",
+    "es": "¿Hace frío allá?"
+  },
+  "textos/#2/linhas/#3/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#2/linhas/#3/pt": {
+    "pt": "Um pouco. Estou tomando chá.",
+    "es": "Un poco. Estoy tomando té."
+  },
+  "textos/#2/linhas/#4/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#2/linhas/#4/pt": {
+    "pt": "Quando você volta?",
+    "es": "¿Cuándo vuelves?"
+  },
+  "textos/#2/linhas/#5/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#2/linhas/#5/pt": {
+    "pt": "Amanhã. Quero mais um dia!",
+    "es": "Mañana. ¡Quiero un día más!"
+  },
+  "textos/#2/novas/#0/pt": {
+    "pt": "Noa (nome)",
+    "es": "Noa (nombre)"
+  },
+  "textos/#2/novas/#1/pt": {
+    "pt": "Dan (nome)",
+    "es": "Dan (nombre)"
+  },
+  "textos/#2/novas/#2/pt": {
+    "pt": "oi",
+    "es": "hola"
+  },
+  "textos/#2/novas/#3/pt": {
+    "pt": "tudo bem? (o que se ouve?)",
+    "es": "¿qué tal? (¿qué se oye?)"
+  },
+  "textos/#2/novas/#4/pt": {
+    "pt": "ótimo",
+    "es": "muy bien, excelente"
+  },
+  "textos/#2/novas/#5/pt": {
+    "pt": "frio",
+    "es": "frío"
+  },
+  "textos/#2/novas/#6/pt": {
+    "pt": "lá, aí",
+    "es": "allá, ahí"
+  },
+  "textos/#2/novas/#7/pt": {
+    "pt": "um pouco",
+    "es": "un poco"
+  },
+  "textos/#2/novas/#8/pt": {
+    "pt": "volta (ela volta)",
+    "es": "vuelve (ella vuelve)"
+  },
+  "textos/#2/novas/#9/pt": {
+    "pt": "amanhã",
+    "es": "mañana"
+  },
+  "textos/#2/novas/#10/pt": {
+    "pt": "mais, ainda",
+    "es": "más, todavía"
+  },
+  "textos/#2/perguntas/#0/q": {
+    "pt": "Onde a Noa está?",
+    "es": "¿Dónde está Noa?"
+  },
+  "textos/#2/perguntas/#0/opcoes/#0": {
+    "pt": "Em casa",
+    "es": "En casa"
+  },
+  "textos/#2/perguntas/#0/opcoes/#1": {
+    "pt": "Na montanha",
+    "es": "En la montaña"
+  },
+  "textos/#2/perguntas/#0/opcoes/#2": {
+    "pt": "No mar",
+    "es": "En el mar"
+  },
+  "textos/#2/perguntas/#0/porque": {
+    "pt": "{{אֲנִי עַל הָהָר}}: estou na montanha.",
+    "es": "{{אֲנִי עַל הָהָר}}: estoy en la montaña."
+  },
+  "textos/#2/perguntas/#1/q": {
+    "pt": "Está muito frio na montanha.",
+    "es": "Hace mucho frío en la montaña."
+  },
+  "textos/#2/perguntas/#1/porque": {
+    "pt": "{{קְצָת}}: só um pouco.",
+    "es": "{{קְצָת}}: solo un poco."
+  },
+  "textos/#2/perguntas/#2/q": {
+    "pt": "Quando ela volta?",
+    "es": "¿Cuándo vuelve?"
+  },
+  "textos/#2/perguntas/#2/opcoes/#0": {
+    "pt": "Hoje",
+    "es": "Hoy"
+  },
+  "textos/#2/perguntas/#2/opcoes/#1": {
+    "pt": "Amanhã",
+    "es": "Mañana"
+  },
+  "textos/#2/perguntas/#2/opcoes/#2": {
+    "pt": "Daqui a uma semana",
+    "es": "Dentro de una semana"
+  },
+  "textos/#2/perguntas/#2/porque": {
+    "pt": "{{מָחָר}} é amanhã.",
+    "es": "{{מָחָר}} es mañana."
+  },
+  "textos/#2/perguntas/#3/q": {
+    "pt": "A Noa quer ficar mais um dia.",
+    "es": "Noa quiere quedarse un día más."
+  },
+  "textos/#2/perguntas/#3/porque": {
+    "pt": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: quero mais um dia!",
+    "es": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: ¡quiero un día más!"
+  },
+  "textos/#3/tituloPt": {
+    "pt": "Sábado de manhã",
+    "es": "Sábado por la mañana"
+  },
+  "textos/#3/tipoPt": {
+    "pt": "Grupo da família no WhatsApp",
+    "es": "Grupo de la familia en WhatsApp"
+  },
+  "textos/#3/introPt": {
+    "pt": "Sábado de manhã, cada um num canto da casa, e o pai escreve no grupo da família.",
+    "es": "Sábado por la mañana, cada uno en un rincón de la casa, y el papá escribe en el grupo de la familia."
+  },
+  "textos/#3/linhas/#0/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#3/linhas/#0/pt": {
+    "pt": "Bom dia! Quem quer café?",
+    "es": "¡Buenos días! ¿Quién quiere café?"
+  },
+  "textos/#3/linhas/#1/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#3/linhas/#1/pt": {
+    "pt": "Eu!",
+    "es": "¡Yo!"
+  },
+  "textos/#3/linhas/#2/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#3/linhas/#2/pt": {
+    "pt": "Eu também. Estou no jardim.",
+    "es": "Yo también. Estoy en el jardín."
+  },
+  "textos/#3/linhas/#3/quem": {
+    "pt": "Yonatan",
+    "es": "Yonatan"
+  },
+  "textos/#3/linhas/#3/pt": {
+    "pt": "O cachorro quer sair!",
+    "es": "¡El perro quiere salir!"
+  },
+  "textos/#3/linhas/#4/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#3/linhas/#4/pt": {
+    "pt": "Já vou. Shabát shalóm!",
+    "es": "Ya voy. ¡Shabat shalom!"
+  },
+  "textos/#3/novas/#0/pt": {
+    "pt": "café",
+    "es": "café"
+  },
+  "textos/#3/novas/#1/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "es": "en el, en la (pegado a la palabra)"
+  },
+  "textos/#3/novas/#2/pt": {
+    "pt": "sair",
+    "es": "salir"
+  },
+  "textos/#3/novas/#3/pt": {
+    "pt": "vem, está vindo",
+    "es": "viene, está viniendo"
+  },
+  "textos/#3/novas/#4/pt": {
+    "pt": "bom sábado (a saudação do sábado)",
+    "es": "buen sábado (el saludo del sábado)"
+  },
+  "textos/#3/perguntas/#0/q": {
+    "pt": "Quem oferece café?",
+    "es": "¿Quién ofrece café?"
+  },
+  "textos/#3/perguntas/#0/opcoes/#0": {
+    "pt": "O pai",
+    "es": "El papá"
+  },
+  "textos/#3/perguntas/#0/opcoes/#1": {
+    "pt": "A mãe",
+    "es": "La mamá"
+  },
+  "textos/#3/perguntas/#0/opcoes/#2": {
+    "pt": "A Dana",
+    "es": "Dana"
+  },
+  "textos/#3/perguntas/#0/porque": {
+    "pt": "É o pai quem pergunta {{מִי רוֹצֶה קָפֶה?}}",
+    "es": "Es el papá quien pregunta {{מִי רוֹצֶה קָפֶה?}}"
+  },
+  "textos/#3/perguntas/#1/q": {
+    "pt": "Onde a mãe está?",
+    "es": "¿Dónde está la mamá?"
+  },
+  "textos/#3/perguntas/#1/opcoes/#0": {
+    "pt": "Na cozinha",
+    "es": "En la cocina"
+  },
+  "textos/#3/perguntas/#1/opcoes/#1": {
+    "pt": "No jardim",
+    "es": "En el jardín"
+  },
+  "textos/#3/perguntas/#1/opcoes/#2": {
+    "pt": "Na rua",
+    "es": "En la calle"
+  },
+  "textos/#3/perguntas/#1/porque": {
+    "pt": "{{אֲנִי בַּגַן}}: estou no jardim.",
+    "es": "{{אֲנִי בַּגַן}}: estoy en el jardín."
+  },
+  "textos/#3/perguntas/#2/q": {
+    "pt": "O cachorro quer sair.",
+    "es": "El perro quiere salir."
+  },
+  "textos/#3/perguntas/#3/q": {
+    "pt": "A conversa é num dia de semana.",
+    "es": "La conversación es en un día de semana."
+  },
+  "textos/#3/perguntas/#3/porque": {
+    "pt": "{{שַׁבָּת שָׁלוֹם}}: é sábado.",
+    "es": "{{שַׁבָּת שָׁלוֹם}}: es sábado."
+  },
+  "textos/#4/tituloPt": {
+    "pt": "A caminho de casa",
+    "es": "De camino a casa"
+  },
+  "textos/#4/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#4/introPt": {
+    "pt": "O Dani está voltando para casa, e a mãe manda mensagem. Como toda mensagem de verdade, chega sem os pontos das vogais.",
+    "es": "Dani está volviendo a casa, y su mamá le manda un mensaje. Como todo mensaje de verdad, llega sin los puntos de las vocales."
+  },
+  "textos/#4/linhas/#0/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#4/linhas/#0/pt": {
+    "pt": "Dani, onde você está?",
+    "es": "Dani, ¿dónde estás?"
+  },
+  "textos/#4/linhas/#1/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#4/linhas/#1/pt": {
+    "pt": "A caminho de casa.",
+    "es": "De camino a casa."
+  },
+  "textos/#4/linhas/#2/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#4/linhas/#2/pt": {
+    "pt": "Você está com a chave?",
+    "es": "¿Tienes la llave?"
+  },
+  "textos/#4/linhas/#3/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#4/linhas/#3/pt": {
+    "pt": "Sim. Chego em casa em dez minutos.",
+    "es": "Sí. Llego a casa en diez minutos."
+  },
+  "textos/#4/linhas/#4/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#4/linhas/#4/pt": {
+    "pt": "Ótimo. Tem comida na geladeira.",
+    "es": "Muy bien. Hay comida en el refrigerador."
+  },
+  "textos/#4/linhas/#5/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#4/linhas/#5/pt": {
+    "pt": "Obrigado, mãe!",
+    "es": "¡Gracias, mamá!"
+  },
+  "textos/#4/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#4/novas/#1/pt": {
+    "pt": "onde",
+    "es": "dónde"
+  },
+  "textos/#4/novas/#2/pt": {
+    "pt": "a caminho de casa",
+    "es": "de camino a casa"
+  },
+  "textos/#4/novas/#3/pt": {
+    "pt": "você tem",
+    "es": "tienes"
+  },
+  "textos/#4/novas/#4/pt": {
+    "pt": "chave",
+    "es": "llave"
+  },
+  "textos/#4/novas/#5/pt": {
+    "pt": "daqui a, em (tempo)",
+    "es": "dentro de, en (tiempo)"
+  },
+  "textos/#4/novas/#6/pt": {
+    "pt": "dez",
+    "es": "diez"
+  },
+  "textos/#4/novas/#7/pt": {
+    "pt": "minutos",
+    "es": "minutos"
+  },
+  "textos/#4/novas/#8/pt": {
+    "pt": "comida",
+    "es": "comida"
+  },
+  "textos/#4/novas/#9/pt": {
+    "pt": "geladeira",
+    "es": "refrigerador"
+  },
+  "textos/#4/perguntas/#0/q": {
+    "pt": "O que a mãe pergunta primeiro?",
+    "es": "¿Qué pregunta la mamá primero?"
+  },
+  "textos/#4/perguntas/#0/opcoes/#0": {
+    "pt": "Onde o Dani está",
+    "es": "Dónde está Dani"
+  },
+  "textos/#4/perguntas/#0/opcoes/#1": {
+    "pt": "Se ele está com fome",
+    "es": "Si tiene hambre"
+  },
+  "textos/#4/perguntas/#0/opcoes/#2": {
+    "pt": "Quando ele sai",
+    "es": "Cuándo sale"
+  },
+  "textos/#4/perguntas/#0/porque": {
+    "pt": "{{אֵיפֹה אַתָה?}}: onde você está?",
+    "es": "{{אֵיפֹה אַתָה?}}: ¿dónde estás?"
+  },
+  "textos/#4/perguntas/#1/q": {
+    "pt": "Em quanto tempo o Dani chega?",
+    "es": "¿En cuánto tiempo llega Dani?"
+  },
+  "textos/#4/perguntas/#1/opcoes/#0": {
+    "pt": "Dois minutos",
+    "es": "Dos minutos"
+  },
+  "textos/#4/perguntas/#1/opcoes/#1": {
+    "pt": "Dez minutos",
+    "es": "Diez minutos"
+  },
+  "textos/#4/perguntas/#1/opcoes/#2": {
+    "pt": "Uma hora",
+    "es": "Una hora"
+  },
+  "textos/#4/perguntas/#1/porque": {
+    "pt": "{{עֶשֶׂר דַקוֹת}}: dez minutos.",
+    "es": "{{עֶשֶׂר דַקוֹת}}: diez minutos."
+  },
+  "textos/#4/perguntas/#2/q": {
+    "pt": "O Dani está sem a chave.",
+    "es": "Dani no tiene la llave."
+  },
+  "textos/#4/perguntas/#2/porque": {
+    "pt": "A mãe pergunta {{יֵשׁ לְךָ מַפְתֵחַ?}} e ele responde {{כֵּן}}: sim.",
+    "es": "La mamá pregunta {{יֵשׁ לְךָ מַפְתֵחַ?}} y él responde {{כֵּן}}: sí."
+  },
+  "textos/#4/perguntas/#3/q": {
+    "pt": "Tem comida na geladeira.",
+    "es": "Hay comida en el refrigerador."
+  },
+  "textos/#5/tituloPt": {
+    "pt": "No hotel",
+    "es": "En el hotel"
+  },
+  "textos/#5/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#5/introPt": {
+    "pt": "A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber como ela está. Repare nas palavras de fora, com o guéresh.",
+    "es": "Dana está viajando por América del Sur, y su mamá le manda un mensaje para saber cómo está. Fíjate en las palabras de fuera, con el guéresh."
+  },
+  "textos/#5/linhas/#0/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#5/linhas/#0/pt": {
+    "pt": "Dana, você está no hotel?",
+    "es": "Dana, ¿estás en el hotel?"
+  },
+  "textos/#5/linhas/#1/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#5/linhas/#1/pt": {
+    "pt": "Sim! Estou fazendo o check-in agora.",
+    "es": "¡Sí! Estoy haciendo el check-in ahora."
+  },
+  "textos/#5/linhas/#2/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#5/linhas/#2/pt": {
+    "pt": "Você tem pijama?",
+    "es": "¿Tienes pijama?"
+  },
+  "textos/#5/linhas/#3/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#5/linhas/#3/pt": {
+    "pt": "Não tenho! Compro aqui.",
+    "es": "¡No tengo! Me compro uno aquí."
+  },
+  "textos/#5/linhas/#4/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#5/linhas/#4/pt": {
+    "pt": "E amanhã?",
+    "es": "¿Y mañana?"
+  },
+  "textos/#5/linhas/#5/quem": {
+    "pt": "Dana",
+    "es": "Dana"
+  },
+  "textos/#5/linhas/#5/pt": {
+    "pt": "Amanhã, Chile! Beijos!",
+    "es": "¡Mañana, Chile! ¡Besos!"
+  },
+  "textos/#5/novas/#0/pt": {
+    "pt": "hotel",
+    "es": "hotel"
+  },
+  "textos/#5/novas/#1/pt": {
+    "pt": "faz, está fazendo (ela)",
+    "es": "hace, está haciendo (ella)"
+  },
+  "textos/#5/novas/#2/pt": {
+    "pt": "check-in",
+    "es": "check-in"
+  },
+  "textos/#5/novas/#3/pt": {
+    "pt": "agora",
+    "es": "ahora"
+  },
+  "textos/#5/novas/#4/pt": {
+    "pt": "você tem (para mulher)",
+    "es": "tienes (a una mujer)"
+  },
+  "textos/#5/novas/#5/pt": {
+    "pt": "eu não tenho",
+    "es": "no tengo"
+  },
+  "textos/#5/novas/#6/pt": {
+    "pt": "compra, está comprando (ela)",
+    "es": "compra, está comprando (ella)"
+  },
+  "textos/#5/novas/#7/pt": {
+    "pt": "aqui",
+    "es": "aquí"
+  },
+  "textos/#5/novas/#8/pt": {
+    "pt": "beijos",
+    "es": "besos"
+  },
+  "textos/#5/perguntas/#0/q": {
+    "pt": "Onde a Dana está?",
+    "es": "¿Dónde está Dana?"
+  },
+  "textos/#5/perguntas/#0/opcoes/#0": {
+    "pt": "No aeroporto",
+    "es": "En el aeropuerto"
+  },
+  "textos/#5/perguntas/#0/opcoes/#1": {
+    "pt": "No hotel",
+    "es": "En el hotel"
+  },
+  "textos/#5/perguntas/#0/opcoes/#2": {
+    "pt": "Em casa",
+    "es": "En casa"
+  },
+  "textos/#5/perguntas/#0/porque": {
+    "pt": "A mãe pergunta {{אַתְ בַּמָלוֹן?}} e ela responde {{כֵּן}}: sim.",
+    "es": "La mamá pregunta {{אַתְ בַּמָלוֹן?}} y ella responde {{כֵּן}}: sí."
+  },
+  "textos/#5/perguntas/#1/q": {
+    "pt": "O que a Dana está fazendo agora?",
+    "es": "¿Qué está haciendo Dana ahora?"
+  },
+  "textos/#5/perguntas/#1/opcoes/#0": {
+    "pt": "O check-in",
+    "es": "El check-in"
+  },
+  "textos/#5/perguntas/#1/opcoes/#1": {
+    "pt": "Comprando pijama",
+    "es": "Comprando pijama"
+  },
+  "textos/#5/perguntas/#1/opcoes/#2": {
+    "pt": "Dormindo",
+    "es": "Durmiendo"
+  },
+  "textos/#5/perguntas/#1/porque": {
+    "pt": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estou fazendo o check-in agora.",
+    "es": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estoy haciendo el check-in ahora."
+  },
+  "textos/#5/perguntas/#2/q": {
+    "pt": "A Dana tem pijama.",
+    "es": "Dana tiene pijama."
+  },
+  "textos/#5/perguntas/#2/porque": {
+    "pt": "{{אֵין לִי!}}: não tenho - e ela vai comprar aí mesmo, onde está.",
+    "es": "{{אֵין לִי!}}: no tengo, y lo va a comprar allí mismo, donde está."
+  },
+  "textos/#5/perguntas/#3/q": {
+    "pt": "Para onde ela vai amanhã?",
+    "es": "¿Adónde va mañana?"
+  },
+  "textos/#5/perguntas/#3/opcoes/#0": {
+    "pt": "Chile",
+    "es": "Chile"
+  },
+  "textos/#5/perguntas/#3/opcoes/#1": {
+    "pt": "Tchéquia",
+    "es": "Chequia"
+  },
+  "textos/#5/perguntas/#3/opcoes/#2": {
+    "pt": "Israel",
+    "es": "Israel"
+  },
+  "textos/#5/perguntas/#3/porque": {
+    "pt": "{{מָחָר צ׳ילה}}: amanhã, Chile.",
+    "es": "{{מָחָר צ׳ילה}}: mañana, Chile."
+  },
+  "textos/#6/tituloPt": {
+    "pt": "Na praia",
+    "es": "En la playa"
+  },
+  "textos/#6/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#6/introPt": {
+    "pt": "Natan e Maya se conhecem na praia. Tudo aqui usa só as seis letras do módulo, as palavras que você já leu nas lições e os sinais de vogal que você já aprendeu, incluindo {{וֹ}} e {{וּ}}.",
+    "es": "Natan y Maya se conocen en la playa. Todo aquí usa solo las seis letras del módulo, las palabras que ya leíste en las lecciones y los signos de vocal que ya aprendiste, incluidos {{וֹ}} y {{וּ}}."
+  },
+  "textos/#6/linhas/#0/quem": {
+    "pt": "Natan",
+    "es": "Natan"
+  },
+  "textos/#6/linhas/#0/pt": {
+    "pt": "Quem é você?",
+    "es": "¿Quién eres?"
+  },
+  "textos/#6/linhas/#1/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#6/linhas/#1/pt": {
+    "pt": "Eu sou a Maya. Quem é você?",
+    "es": "Yo soy Maya. ¿Quién eres tú?"
+  },
+  "textos/#6/linhas/#2/quem": {
+    "pt": "Natan",
+    "es": "Natan"
+  },
+  "textos/#6/linhas/#2/pt": {
+    "pt": "Eu sou o Natan. Olha a mamãe aqui.",
+    "es": "Yo soy Natan. Mira, aquí está mamá."
+  },
+  "textos/#6/linhas/#3/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#6/linhas/#3/pt": {
+    "pt": "Aqui está um chá.",
+    "es": "Aquí tienes un té."
+  },
+  "textos/#6/linhas/#4/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#6/linhas/#4/pt": {
+    "pt": "Chá? Olha o mar ali!",
+    "es": "¿Té? ¡Mira el mar allí!"
+  },
+  "textos/#6/linhas/#5/quem": {
+    "pt": "Natan",
+    "es": "Natan"
+  },
+  "textos/#6/linhas/#5/pt": {
+    "pt": "Hoje é dia de praia!",
+    "es": "¡Hoy es día de playa!"
+  },
+  "textos/#6/novas/#0/pt": {
+    "pt": "Natan (nome)",
+    "es": "Natan (nombre)"
+  },
+  "textos/#6/novas/#1/pt": {
+    "pt": "Maya (nome)",
+    "es": "Maya (nombre)"
+  },
+  "textos/#6/novas/#2/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#6/perguntas/#0/q": {
+    "pt": "Como se chama a menina?",
+    "es": "¿Cómo se llama la niña?"
+  },
+  "textos/#6/perguntas/#0/opcoes/#0": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#6/perguntas/#0/opcoes/#1": {
+    "pt": "Natan",
+    "es": "Natan"
+  },
+  "textos/#6/perguntas/#0/opcoes/#2": {
+    "pt": "Ima",
+    "es": "Ima"
+  },
+  "textos/#6/perguntas/#0/porque": {
+    "pt": "{{אֲנִי מַיָה}}: eu sou a Maya.",
+    "es": "{{אֲנִי מַיָה}}: yo soy Maya."
+  },
+  "textos/#6/perguntas/#1/q": {
+    "pt": "Quem traz o chá?",
+    "es": "¿Quién trae el té?"
+  },
+  "textos/#6/perguntas/#1/opcoes/#0": {
+    "pt": "A Maya",
+    "es": "Maya"
+  },
+  "textos/#6/perguntas/#1/opcoes/#1": {
+    "pt": "A mãe",
+    "es": "La mamá"
+  },
+  "textos/#6/perguntas/#1/opcoes/#2": {
+    "pt": "O Natan",
+    "es": "Natan"
+  },
+  "textos/#6/perguntas/#1/porque": {
+    "pt": "A mãe diz {{הִנֵה תֵה}}: aqui está um chá.",
+    "es": "La mamá dice {{הִנֵה תֵה}}: aquí tienes un té."
+  },
+  "textos/#6/perguntas/#2/q": {
+    "pt": "A Maya fala do mar.",
+    "es": "Maya habla del mar."
+  },
+  "textos/#6/perguntas/#2/porque": {
+    "pt": "Ela responde {{תֵה? הִנֵה הַיָם!}}: chá? Olha o mar ali!",
+    "es": "Ella responde {{תֵה? הִנֵה הַיָם!}}: ¿té? ¡Mira el mar allí!"
+  },
+  "textos/#7/tituloPt": {
+    "pt": "Sorvete para todos",
+    "es": "Helado para todos"
+  },
+  "textos/#7/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#7/introPt": {
+    "pt": "A Maya visita a tia, e a tia tem uma surpresa. Só palavras que você já leu nas lições dos módulos 1 e 2.",
+    "es": "Maya visita a su tía, y la tía tiene una sorpresa. Solo palabras que ya leíste en las lecciones de los módulos 1 y 2."
+  },
+  "textos/#7/linhas/#0/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#7/linhas/#0/pt": {
+    "pt": "Olá, tia!",
+    "es": "¡Hola, tía!"
+  },
+  "textos/#7/linhas/#1/quem": {
+    "pt": "Tia",
+    "es": "Tía"
+  },
+  "textos/#7/linhas/#1/pt": {
+    "pt": "Olá, Maya! Aqui está um sorvete.",
+    "es": "¡Hola, Maya! Aquí tienes un helado."
+  },
+  "textos/#7/linhas/#2/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#7/linhas/#2/pt": {
+    "pt": "Obrigada, tia!",
+    "es": "¡Gracias, tía!"
+  },
+  "textos/#7/linhas/#3/quem": {
+    "pt": "Tia",
+    "es": "Tía"
+  },
+  "textos/#7/linhas/#3/pt": {
+    "pt": "Quem é o menino ali?",
+    "es": "¿Quién es el niño de allí?"
+  },
+  "textos/#7/linhas/#4/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#7/linhas/#4/pt": {
+    "pt": "É o Dani.",
+    "es": "Es Dani."
+  },
+  "textos/#7/linhas/#5/quem": {
+    "pt": "Tia",
+    "es": "Tía"
+  },
+  "textos/#7/linhas/#5/pt": {
+    "pt": "Tem sorvete para o Dani também!",
+    "es": "¡También hay helado para Dani!"
+  },
+  "textos/#7/novas/#0/pt": {
+    "pt": "Maya (nome)",
+    "es": "Maya (nombre)"
+  },
+  "textos/#7/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#7/novas/#2/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#7/novas/#3/pt": {
+    "pt": "para (grudado na palavra)",
+    "es": "para (pegado a la palabra)"
+  },
+  "textos/#7/perguntas/#0/q": {
+    "pt": "O que a tia dá para a Maya?",
+    "es": "¿Qué le da la tía a Maya?"
+  },
+  "textos/#7/perguntas/#0/opcoes/#0": {
+    "pt": "Chá",
+    "es": "Té"
+  },
+  "textos/#7/perguntas/#0/opcoes/#1": {
+    "pt": "Sorvete",
+    "es": "Helado"
+  },
+  "textos/#7/perguntas/#0/opcoes/#2": {
+    "pt": "Água",
+    "es": "Agua"
+  },
+  "textos/#7/perguntas/#0/porque": {
+    "pt": "{{הִנֵה גְלִידָה}}: aqui está um sorvete.",
+    "es": "{{הִנֵה גְלִידָה}}: aquí tienes un helado."
+  },
+  "textos/#7/perguntas/#1/q": {
+    "pt": "Quem é o menino ali?",
+    "es": "¿Quién es el niño de allí?"
+  },
+  "textos/#7/perguntas/#1/opcoes/#0": {
+    "pt": "O Natan",
+    "es": "Natan"
+  },
+  "textos/#7/perguntas/#1/opcoes/#1": {
+    "pt": "O Dani",
+    "es": "Dani"
+  },
+  "textos/#7/perguntas/#1/opcoes/#2": {
+    "pt": "O tio",
+    "es": "Su tío"
+  },
+  "textos/#7/perguntas/#1/porque": {
+    "pt": "{{הוּא דָנִי}}: é o Dani.",
+    "es": "{{הוּא דָנִי}}: es Dani."
+  },
+  "textos/#7/perguntas/#2/q": {
+    "pt": "Só a Maya ganha sorvete.",
+    "es": "Solo Maya recibe helado."
+  },
+  "textos/#7/perguntas/#2/porque": {
+    "pt": "{{גַם לְדָנִי}}: para o Dani também.",
+    "es": "{{גַם לְדָנִי}}: para Dani también."
+  },
+  "textos/#8/tituloPt": {
+    "pt": "Um passeio",
+    "es": "Un paseo"
+  },
+  "textos/#8/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#8/introPt": {
+    "pt": "O Dani quer saber o que vai levar no passeio. Todas as palavras já apareceram nas lições.",
+    "es": "Dani quiere saber qué va a llevar al paseo. Todas las palabras ya aparecieron en las lecciones."
+  },
+  "textos/#8/linhas/#0/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#8/linhas/#0/pt": {
+    "pt": "Mãe, hoje tem passeio?",
+    "es": "Mamá, ¿hoy hay paseo?"
+  },
+  "textos/#8/linhas/#1/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#8/linhas/#1/pt": {
+    "pt": "Hoje tem passeio até o rio.",
+    "es": "Hoy hay paseo hasta el río."
+  },
+  "textos/#8/linhas/#2/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#8/linhas/#2/pt": {
+    "pt": "E pão também?",
+    "es": "¿Y pan también?"
+  },
+  "textos/#8/linhas/#3/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#8/linhas/#3/pt": {
+    "pt": "Aqui tem pão fresco, e água também.",
+    "es": "Aquí hay pan fresco, y agua también."
+  },
+  "textos/#8/linhas/#4/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#8/linhas/#4/pt": {
+    "pt": "E guarda-chuva também?",
+    "es": "¿Y paraguas también?"
+  },
+  "textos/#8/linhas/#5/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#8/linhas/#5/pt": {
+    "pt": "Não. Hoje tem sol.",
+    "es": "No. Hoy hay sol."
+  },
+  "textos/#8/linhas/#6/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#8/linhas/#6/pt": {
+    "pt": "Que sorte!",
+    "es": "¡Qué suerte!"
+  },
+  "textos/#8/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#8/novas/#1/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#8/novas/#2/pt": {
+    "pt": "até o, para o (grudado na palavra)",
+    "es": "hasta el, al (pegado a la palabra)"
+  },
+  "textos/#8/perguntas/#0/q": {
+    "pt": "Para onde é o passeio?",
+    "es": "¿Adónde es el paseo?"
+  },
+  "textos/#8/perguntas/#0/opcoes/#0": {
+    "pt": "Para o mar",
+    "es": "Al mar"
+  },
+  "textos/#8/perguntas/#0/opcoes/#1": {
+    "pt": "Para o rio",
+    "es": "Al río"
+  },
+  "textos/#8/perguntas/#0/opcoes/#2": {
+    "pt": "Para o jardim",
+    "es": "Al jardín"
+  },
+  "textos/#8/perguntas/#0/porque": {
+    "pt": "{{טִיוּל לַנָהָר}}: passeio até o rio.",
+    "es": "{{טִיוּל לַנָהָר}}: paseo hasta el río."
+  },
+  "textos/#8/perguntas/#1/q": {
+    "pt": "O pão é fresco.",
+    "es": "El pan es fresco."
+  },
+  "textos/#8/perguntas/#1/porque": {
+    "pt": "{{לֶחֶם טָרִי}}: pão fresco.",
+    "es": "{{לֶחֶם טָרִי}}: pan fresco."
+  },
+  "textos/#8/perguntas/#2/q": {
+    "pt": "Por que o Dani não leva guarda-chuva?",
+    "es": "¿Por qué Dani no lleva paraguas?"
+  },
+  "textos/#8/perguntas/#2/opcoes/#0": {
+    "pt": "Porque hoje tem sol",
+    "es": "Porque hoy hay sol"
+  },
+  "textos/#8/perguntas/#2/opcoes/#1": {
+    "pt": "Porque não tem guarda-chuva",
+    "es": "Porque no tiene paraguas"
+  },
+  "textos/#8/perguntas/#2/opcoes/#2": {
+    "pt": "Porque o passeio é amanhã",
+    "es": "Porque el paseo es mañana"
+  },
+  "textos/#8/perguntas/#2/porque": {
+    "pt": "{{הַיוֹם יֵשׁ שֶׁמֶשׁ}}: hoje tem sol.",
+    "es": "{{הַיוֹם יֵשׁ שֶׁמֶשׁ}}: hoy hay sol."
+  },
+  "textos/#9/tituloPt": {
+    "pt": "Meio-dia na cidade",
+    "es": "Mediodía en la ciudad"
+  },
+  "textos/#9/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#9/introPt": {
+    "pt": "A Noa conhece o Dani na cidade, ao meio-dia. Só palavras que você já leu nas lições.",
+    "es": "Noa conoce a Dani en la ciudad, al mediodía. Solo palabras que ya leíste en las lecciones."
+  },
+  "textos/#9/linhas/#0/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#9/linhas/#0/pt": {
+    "pt": "Com licença, você é estudante?",
+    "es": "Disculpa, ¿eres estudiante?"
+  },
+  "textos/#9/linhas/#1/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#9/linhas/#1/pt": {
+    "pt": "Sou um estudante novo. E você?",
+    "es": "Soy un estudiante nuevo. ¿Y tú?"
+  },
+  "textos/#9/linhas/#2/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#9/linhas/#2/pt": {
+    "pt": "Eu sou a Noa, muito prazer! Você quer um suco?",
+    "es": "Yo soy Noa, ¡mucho gusto! ¿Quieres un jugo?"
+  },
+  "textos/#9/linhas/#3/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#9/linhas/#3/pt": {
+    "pt": "Não, obrigado. Quero um lugar tranquilo.",
+    "es": "No, gracias. Quiero un lugar tranquilo."
+  },
+  "textos/#9/linhas/#4/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#9/linhas/#4/pt": {
+    "pt": "Olha aqui uma árvore grande, e sombra.",
+    "es": "Mira, aquí hay un árbol grande, y sombra."
+  },
+  "textos/#9/linhas/#5/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#9/linhas/#5/pt": {
+    "pt": "Obrigado, Noa. Que legal!",
+    "es": "Gracias, Noa. ¡Qué bien!"
+  },
+  "textos/#9/novas/#0/pt": {
+    "pt": "Noa (nome)",
+    "es": "Noa (nombre)"
+  },
+  "textos/#9/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#9/novas/#2/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#9/perguntas/#0/q": {
+    "pt": "O Dani é um estudante novo.",
+    "es": "Dani es un estudiante nuevo."
+  },
+  "textos/#9/perguntas/#0/porque": {
+    "pt": "{{אֲנִי סְטוּדֶנְט חָדָשׁ}}: sou um estudante novo.",
+    "es": "{{אֲנִי סְטוּדֶנְט חָדָשׁ}}: soy un estudiante nuevo."
+  },
+  "textos/#9/perguntas/#1/q": {
+    "pt": "O que a Noa oferece?",
+    "es": "¿Qué ofrece Noa?"
+  },
+  "textos/#9/perguntas/#1/opcoes/#0": {
+    "pt": "Café",
+    "es": "Café"
+  },
+  "textos/#9/perguntas/#1/opcoes/#1": {
+    "pt": "Suco",
+    "es": "Jugo"
+  },
+  "textos/#9/perguntas/#1/opcoes/#2": {
+    "pt": "Água",
+    "es": "Agua"
+  },
+  "textos/#9/perguntas/#1/porque": {
+    "pt": "{{אַתָה רוֹצֶה מִיץ?}}: você quer um suco?",
+    "es": "{{אַתָה רוֹצֶה מִיץ?}}: ¿quieres un jugo?"
+  },
+  "textos/#9/perguntas/#2/q": {
+    "pt": "O que o Dani procura?",
+    "es": "¿Qué busca Dani?"
+  },
+  "textos/#9/perguntas/#2/opcoes/#0": {
+    "pt": "Um lugar tranquilo",
+    "es": "Un lugar tranquilo"
+  },
+  "textos/#9/perguntas/#2/opcoes/#1": {
+    "pt": "Um ônibus",
+    "es": "Un autobús"
+  },
+  "textos/#9/perguntas/#2/opcoes/#2": {
+    "pt": "Uma árvore pequena",
+    "es": "Un árbol pequeño"
+  },
+  "textos/#9/perguntas/#2/porque": {
+    "pt": "{{מָקוֹם שֶׁקֶט}}: um lugar tranquilo.",
+    "es": "{{מָקוֹם שֶׁקֶט}}: un lugar tranquilo."
+  },
+  "textos/#10/tituloPt": {
+    "pt": "Café da manhã",
+    "es": "Desayuno"
+  },
+  "textos/#10/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#10/introPt": {
+    "pt": "Manhã corrida na casa do Dani. Agora, com o ב, o כ e o פ, já dá para ler a família inteira à mesa.",
+    "es": "Mañana apurada en la casa de Dani. Ahora, con la ב, la כ y la פ, ya puedes leer a toda la familia en la mesa."
+  },
+  "textos/#10/linhas/#0/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#10/linhas/#0/pt": {
+    "pt": "Bom dia, família! Tem café e chá.",
+    "es": "¡Buenos días, familia! Hay café y té."
+  },
+  "textos/#10/linhas/#1/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#10/linhas/#1/pt": {
+    "pt": "Obrigada! E comida?",
+    "es": "¡Gracias! ¿Y comida?"
+  },
+  "textos/#10/linhas/#2/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#10/linhas/#2/pt": {
+    "pt": "Aqui tem pão, e maçã também.",
+    "es": "Aquí hay pan, y manzana también."
+  },
+  "textos/#10/linhas/#3/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#10/linhas/#3/pt": {
+    "pt": "Pai, o ônibus! Agora!",
+    "es": "Papá, ¡el autobús! ¡Ahora!"
+  },
+  "textos/#10/linhas/#4/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#10/linhas/#4/pt": {
+    "pt": "Calma, um momento! Aqui está a mochila.",
+    "es": "¡Calma, un momento! Aquí está la mochila."
+  },
+  "textos/#10/linhas/#5/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#10/linhas/#5/pt": {
+    "pt": "Obrigado, pai! Tchau!",
+    "es": "¡Gracias, papá! ¡Adiós!"
+  },
+  "textos/#10/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#10/novas/#1/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#10/novas/#2/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#10/perguntas/#0/q": {
+    "pt": "O que o pai oferece primeiro?",
+    "es": "¿Qué ofrece primero el papá?"
+  },
+  "textos/#10/perguntas/#0/opcoes/#0": {
+    "pt": "Café e chá",
+    "es": "Café y té"
+  },
+  "textos/#10/perguntas/#0/opcoes/#1": {
+    "pt": "Pão e maçã",
+    "es": "Pan y manzana"
+  },
+  "textos/#10/perguntas/#0/opcoes/#2": {
+    "pt": "Suco",
+    "es": "Jugo"
+  },
+  "textos/#10/perguntas/#0/porque": {
+    "pt": "{{הִנֵה קָפֶה וְתֵה}}: tem café e chá.",
+    "es": "{{הִנֵה קָפֶה וְתֵה}}: hay café y té."
+  },
+  "textos/#10/perguntas/#1/q": {
+    "pt": "O Dani está com pressa por causa do ônibus.",
+    "es": "Dani tiene prisa por el autobús."
+  },
+  "textos/#10/perguntas/#1/porque": {
+    "pt": "{{הָאוֹטוֹבּוּס! עַכְשָׁיו!}}: o ônibus! Agora!",
+    "es": "{{הָאוֹטוֹבּוּס! עַכְשָׁיו!}}: ¡el autobús! ¡Ahora!"
+  },
+  "textos/#10/perguntas/#2/q": {
+    "pt": "O que o pai entrega ao Dani?",
+    "es": "¿Qué le entrega el papá a Dani?"
+  },
+  "textos/#10/perguntas/#2/opcoes/#0": {
+    "pt": "O telefone",
+    "es": "El teléfono"
+  },
+  "textos/#10/perguntas/#2/opcoes/#1": {
+    "pt": "A mochila",
+    "es": "La mochila"
+  },
+  "textos/#10/perguntas/#2/opcoes/#2": {
+    "pt": "O livro",
+    "es": "El libro"
+  },
+  "textos/#10/perguntas/#2/porque": {
+    "pt": "{{הִנֵה הַתִיק}}: aqui está a mochila.",
+    "es": "{{הִנֵה הַתִיק}}: aquí está la mochila."
+  },
+  "textos/#11/tituloPt": {
+    "pt": "Mensagem",
+    "es": "Mensaje"
+  },
+  "textos/#11/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#11/introPt": {
+    "pt": "O Dani e o Tom combinam um café. Como numa mensagem de verdade, sem os pontos das vogais, e só com palavras que você já leu.",
+    "es": "Dani y Tom quedan para tomar un café. Como en un mensaje de verdad, sin los puntos de las vocales, y solo con palabras que ya leíste."
+  },
+  "textos/#11/linhas/#0/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#11/linhas/#0/pt": {
+    "pt": "Oi, amigo! Você está na cidade?",
+    "es": "¡Hola, amigo! ¿Estás en la ciudad?"
+  },
+  "textos/#11/linhas/#1/quem": {
+    "pt": "Tom",
+    "es": "Tom"
+  },
+  "textos/#11/linhas/#1/pt": {
+    "pt": "Sim, estou na rua. Um momento.",
+    "es": "Sí, estoy en la calle. Un momento."
+  },
+  "textos/#11/linhas/#2/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#11/linhas/#2/pt": {
+    "pt": "Quero um café. Você também?",
+    "es": "Quiero un café. ¿Tú también?"
+  },
+  "textos/#11/linhas/#3/quem": {
+    "pt": "Tom",
+    "es": "Tom"
+  },
+  "textos/#11/linhas/#3/pt": {
+    "pt": "Não, só um suco. E comida!",
+    "es": "No, solo un jugo. ¡Y comida!"
+  },
+  "textos/#11/linhas/#4/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#11/linhas/#4/pt": {
+    "pt": "Ótimo. Agora?",
+    "es": "Muy bien. ¿Ahora?"
+  },
+  "textos/#11/linhas/#5/quem": {
+    "pt": "Tom",
+    "es": "Tom"
+  },
+  "textos/#11/linhas/#5/pt": {
+    "pt": "Agora!",
+    "es": "¡Ahora!"
+  },
+  "textos/#11/novas/#0/pt": {
+    "pt": "Tom (nome)",
+    "es": "Tom (nombre)"
+  },
+  "textos/#11/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#11/novas/#2/pt": {
+    "pt": "em, no, na (grudado na palavra)",
+    "es": "en, en el, en la (pegado a la palabra)"
+  },
+  "textos/#11/novas/#3/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#11/perguntas/#0/q": {
+    "pt": "Onde o Tom está?",
+    "es": "¿Dónde está Tom?"
+  },
+  "textos/#11/perguntas/#0/opcoes/#0": {
+    "pt": "Em casa",
+    "es": "En casa"
+  },
+  "textos/#11/perguntas/#0/opcoes/#1": {
+    "pt": "Na rua",
+    "es": "En la calle"
+  },
+  "textos/#11/perguntas/#0/opcoes/#2": {
+    "pt": "No ônibus",
+    "es": "En el autobús"
+  },
+  "textos/#11/perguntas/#0/porque": {
+    "pt": "{{אֲנִי בָּרְחוֹב}}: estou na rua.",
+    "es": "{{אֲנִי בָּרְחוֹב}}: estoy en la calle."
+  },
+  "textos/#11/perguntas/#1/q": {
+    "pt": "O Tom também quer café.",
+    "es": "Tom también quiere café."
+  },
+  "textos/#11/perguntas/#1/porque": {
+    "pt": "{{לֹא, רַק מִיץ}}: não, só um suco.",
+    "es": "{{לֹא, רַק מִיץ}}: no, solo un jugo."
+  },
+  "textos/#11/perguntas/#2/q": {
+    "pt": "Quando eles se encontram?",
+    "es": "¿Cuándo se encuentran?"
+  },
+  "textos/#11/perguntas/#2/opcoes/#0": {
+    "pt": "Agora",
+    "es": "Ahora"
+  },
+  "textos/#11/perguntas/#2/opcoes/#1": {
+    "pt": "Amanhã",
+    "es": "Mañana"
+  },
+  "textos/#11/perguntas/#2/opcoes/#2": {
+    "pt": "À noite",
+    "es": "En la noche"
+  },
+  "textos/#11/perguntas/#2/porque": {
+    "pt": "{{עַכְשָׁיו!}}: agora!",
+    "es": "{{עַכְשָׁיו!}}: ¡ahora!"
+  },
+  "textos/#12/tituloPt": {
+    "pt": "Viagem ao Chile",
+    "es": "Viaje a Chile"
+  },
+  "textos/#12/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#12/introPt": {
+    "pt": "A Maya está viajando, e o Dani quer saber o que ela levou na mochila. Repare nas palavras de fora, com o guéresh.",
+    "es": "Maya está de viaje, y Dani quiere saber qué llevó en la mochila. Fíjate en las palabras de fuera, con el guéresh."
+  },
+  "textos/#12/linhas/#0/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#12/linhas/#0/pt": {
+    "pt": "Dani, hoje estou no Chile!",
+    "es": "¡Dani, hoy estoy en Chile!"
+  },
+  "textos/#12/linhas/#1/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#12/linhas/#1/pt": {
+    "pt": "No Chile? Que lindo! O que tem na mochila?",
+    "es": "¿En Chile? ¡Qué lindo! ¿Qué hay en la mochila?"
+  },
+  "textos/#12/linhas/#2/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#12/linhas/#2/pt": {
+    "pt": "Pijama, gel, um livro e dinheiro.",
+    "es": "Pijama, gel, un libro y dinero."
+  },
+  "textos/#12/linhas/#3/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#12/linhas/#3/pt": {
+    "pt": "E guarda-chuva também?",
+    "es": "¿Y paraguas también?"
+  },
+  "textos/#12/linhas/#4/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#12/linhas/#4/pt": {
+    "pt": "Não. Hoje tem sol.",
+    "es": "No. Hoy hay sol."
+  },
+  "textos/#12/linhas/#5/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#12/linhas/#5/pt": {
+    "pt": "Que sorte! Tchau, Maya!",
+    "es": "¡Qué suerte! ¡Adiós, Maya!"
+  },
+  "textos/#12/novas/#0/pt": {
+    "pt": "Maya (nome)",
+    "es": "Maya (nombre)"
+  },
+  "textos/#12/novas/#1/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#12/novas/#2/pt": {
+    "pt": "em, no, na (grudado na palavra)",
+    "es": "en, en el, en la (pegado a la palabra)"
+  },
+  "textos/#12/novas/#3/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#12/perguntas/#0/q": {
+    "pt": "Onde a Maya está hoje?",
+    "es": "¿Dónde está Maya hoy?"
+  },
+  "textos/#12/perguntas/#0/opcoes/#0": {
+    "pt": "No Chile",
+    "es": "En Chile"
+  },
+  "textos/#12/perguntas/#0/opcoes/#1": {
+    "pt": "Na Tchéquia",
+    "es": "En Chequia"
+  },
+  "textos/#12/perguntas/#0/opcoes/#2": {
+    "pt": "Em Israel",
+    "es": "En Israel"
+  },
+  "textos/#12/perguntas/#0/porque": {
+    "pt": "{{הַיוֹם אֲנִי בְּצ׳ילה}}: hoje estou no Chile.",
+    "es": "{{הַיוֹם אֲנִי בְּצ׳ילה}}: hoy estoy en Chile."
+  },
+  "textos/#12/perguntas/#1/q": {
+    "pt": "A Maya levou um guarda-chuva.",
+    "es": "Maya llevó un paraguas."
+  },
+  "textos/#12/perguntas/#1/porque": {
+    "pt": "{{לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.}}: não, hoje tem sol.",
+    "es": "{{לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.}}: no, hoy hay sol."
+  },
+  "textos/#12/perguntas/#2/q": {
+    "pt": "Qual destas coisas está na mochila?",
+    "es": "¿Cuál de estas cosas está en la mochila?"
+  },
+  "textos/#12/perguntas/#2/opcoes/#0": {
+    "pt": "Pijama",
+    "es": "Pijama"
+  },
+  "textos/#12/perguntas/#2/opcoes/#1": {
+    "pt": "Bola",
+    "es": "Pelota"
+  },
+  "textos/#12/perguntas/#2/opcoes/#2": {
+    "pt": "Telefone",
+    "es": "Teléfono"
+  },
+  "textos/#12/perguntas/#2/porque": {
+    "pt": "{{פיג׳מה}} é pijama.",
+    "es": "{{פיג׳מה}} es pijama."
+  },
+  "textos/#13/tituloPt": {
+    "pt": "A rosa",
+    "es": "La rosa"
+  },
+  "textos/#13/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#13/introPt": {
+    "pt": "O Dani e a mãe estão no jardim.",
+    "es": "Dani y su mamá están en el jardín."
+  },
+  "textos/#13/linhas/#0/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#13/linhas/#0/pt": {
+    "pt": "Mãe, o que é isto?",
+    "es": "Mamá, ¿qué es esto?"
+  },
+  "textos/#13/linhas/#1/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#13/linhas/#1/pt": {
+    "pt": "É uma rosa.",
+    "es": "Es una rosa."
+  },
+  "textos/#13/linhas/#2/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#13/linhas/#2/pt": {
+    "pt": "Uma rosa grande!",
+    "es": "¡Una rosa grande!"
+  },
+  "textos/#13/linhas/#3/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#13/linhas/#3/pt": {
+    "pt": "Olha, tem uma rosa lá também.",
+    "es": "Mira, allá también hay una rosa."
+  },
+  "textos/#13/linhas/#4/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#13/linhas/#4/pt": {
+    "pt": "Uma rosa para a mamãe!",
+    "es": "¡Una rosa para mamá!"
+  },
+  "textos/#13/linhas/#5/quem": {
+    "pt": "Mãe",
+    "es": "Mamá"
+  },
+  "textos/#13/linhas/#5/pt": {
+    "pt": "Obrigada, Dani!",
+    "es": "¡Gracias, Dani!"
+  },
+  "textos/#13/novas/#0/pt": {
+    "pt": "Dani (nome)",
+    "es": "Dani (nombre)"
+  },
+  "textos/#13/novas/#1/pt": {
+    "pt": "para (grudado na palavra)",
+    "es": "para (pegado a la palabra)"
+  },
+  "textos/#13/perguntas/#0/q": {
+    "pt": "O que a mãe mostra ao Dani?",
+    "es": "¿Qué le muestra la mamá a Dani?"
+  },
+  "textos/#13/perguntas/#0/opcoes/#0": {
+    "pt": "Uma rosa",
+    "es": "Una rosa"
+  },
+  "textos/#13/perguntas/#0/opcoes/#1": {
+    "pt": "Um peixe",
+    "es": "Un pez"
+  },
+  "textos/#13/perguntas/#0/opcoes/#2": {
+    "pt": "O mar",
+    "es": "El mar"
+  },
+  "textos/#13/perguntas/#0/porque": {
+    "pt": "{{זֶה וֶרֶד}}: é uma rosa.",
+    "es": "{{זֶה וֶרֶד}}: es una rosa."
+  },
+  "textos/#13/perguntas/#1/q": {
+    "pt": "A rosa é pequena.",
+    "es": "La rosa es pequeña."
+  },
+  "textos/#13/perguntas/#1/porque": {
+    "pt": "{{וֶרֶד גָדוֹל!}}: uma rosa grande.",
+    "es": "{{וֶרֶד גָדוֹל!}}: una rosa grande."
+  },
+  "textos/#13/perguntas/#2/q": {
+    "pt": "Para quem o Dani quer a rosa?",
+    "es": "¿Para quién quiere Dani la rosa?"
+  },
+  "textos/#13/perguntas/#2/opcoes/#0": {
+    "pt": "Para a mãe",
+    "es": "Para su mamá"
+  },
+  "textos/#13/perguntas/#2/opcoes/#1": {
+    "pt": "Para a Maya",
+    "es": "Para Maya"
+  },
+  "textos/#13/perguntas/#2/opcoes/#2": {
+    "pt": "Para o pai",
+    "es": "Para su papá"
+  },
+  "textos/#13/perguntas/#2/porque": {
+    "pt": "{{וֶרֶד לְאִמָא!}}: uma rosa para a mamãe.",
+    "es": "{{וֶרֶד לְאִמָא!}}: una rosa para mamá."
+  },
+  "textos/#14/tituloPt": {
+    "pt": "Um suco gelado",
+    "es": "Un jugo frío"
+  },
+  "textos/#14/tipoPt": {
+    "pt": "Conversa no WhatsApp",
+    "es": "Conversación por WhatsApp"
+  },
+  "textos/#14/introPt": {
+    "pt": "É meio-dia, faz calor, e a Noa manda uma mensagem para o Dan.",
+    "es": "Es mediodía, hace calor, y Noa le manda un mensaje a Dan."
+  },
+  "textos/#14/linhas/#0/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#14/linhas/#0/pt": {
+    "pt": "Oi, Dan, o que você está fazendo?",
+    "es": "Hola, Dan, ¿qué estás haciendo?"
+  },
+  "textos/#14/linhas/#1/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#14/linhas/#1/pt": {
+    "pt": "Estou tomando um suco gelado.",
+    "es": "Estoy tomando un jugo frío."
+  },
+  "textos/#14/linhas/#2/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#14/linhas/#2/pt": {
+    "pt": "Que suco?",
+    "es": "¿Qué jugo?"
+  },
+  "textos/#14/linhas/#3/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#14/linhas/#3/pt": {
+    "pt": "Suco fresco.",
+    "es": "Jugo fresco."
+  },
+  "textos/#14/linhas/#4/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#14/linhas/#4/pt": {
+    "pt": "Eu também quero!",
+    "es": "¡Yo también quiero!"
+  },
+  "textos/#14/linhas/#5/quem": {
+    "pt": "Dan",
+    "es": "Dan"
+  },
+  "textos/#14/linhas/#5/pt": {
+    "pt": "Tem mais.",
+    "es": "Hay más."
+  },
+  "textos/#14/linhas/#6/quem": {
+    "pt": "Noa",
+    "es": "Noa"
+  },
+  "textos/#14/linhas/#6/pt": {
+    "pt": "Estou aí num instante!",
+    "es": "¡Llego en un momento!"
+  },
+  "textos/#14/novas/#0/pt": {
+    "pt": "Dan (nome)",
+    "es": "Dan (nombre)"
+  },
+  "textos/#14/novas/#1/pt": {
+    "pt": "oi",
+    "es": "hola"
+  },
+  "textos/#14/novas/#2/pt": {
+    "pt": "faz, está fazendo",
+    "es": "hace, está haciendo"
+  },
+  "textos/#14/novas/#3/pt": {
+    "pt": "bebe, está tomando",
+    "es": "bebe, está tomando"
+  },
+  "textos/#14/novas/#4/pt": {
+    "pt": "gelado, frio",
+    "es": "helado, frío"
+  },
+  "textos/#14/novas/#5/pt": {
+    "pt": "qual, que",
+    "es": "cuál, qué"
+  },
+  "textos/#14/novas/#6/pt": {
+    "pt": "quer (para mulher)",
+    "es": "quiere (una mujer)"
+  },
+  "textos/#14/perguntas/#0/q": {
+    "pt": "O que o Dan está tomando?",
+    "es": "¿Qué está tomando Dan?"
+  },
+  "textos/#14/perguntas/#0/opcoes/#0": {
+    "pt": "Chá",
+    "es": "Té"
+  },
+  "textos/#14/perguntas/#0/opcoes/#1": {
+    "pt": "Suco",
+    "es": "Jugo"
+  },
+  "textos/#14/perguntas/#0/opcoes/#2": {
+    "pt": "Água",
+    "es": "Agua"
+  },
+  "textos/#14/perguntas/#0/porque": {
+    "pt": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: estou tomando um suco gelado.",
+    "es": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: estoy tomando un jugo frío."
+  },
+  "textos/#14/perguntas/#1/q": {
+    "pt": "O suco está quente.",
+    "es": "El jugo está caliente."
+  },
+  "textos/#14/perguntas/#1/porque": {
+    "pt": "{{מִיץ קַר}}: um suco gelado.",
+    "es": "{{מִיץ קַר}}: un jugo frío."
+  },
+  "textos/#14/perguntas/#2/q": {
+    "pt": "A Noa também quer suco.",
+    "es": "Noa también quiere jugo."
+  },
+  "textos/#14/perguntas/#2/porque": {
+    "pt": "{{גַם אֲנִי רוֹצָה!}}: eu também quero!",
+    "es": "{{גַם אֲנִי רוֹצָה!}}: ¡yo también quiero!"
+  },
+  "textos/#15/tituloPt": {
+    "pt": "No mercado",
+    "es": "En el mercado"
+  },
+  "textos/#15/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#15/introPt": {
+    "pt": "A Maya passa no mercado de manhã.",
+    "es": "Maya pasa por el mercado en la mañana."
+  },
+  "textos/#15/linhas/#0/quem": {
+    "pt": "Vendedor",
+    "es": "Vendedor"
+  },
+  "textos/#15/linhas/#0/pt": {
+    "pt": "Bom dia! O que você quer?",
+    "es": "¡Buenos días! ¿Qué quieres?"
+  },
+  "textos/#15/linhas/#1/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#15/linhas/#1/pt": {
+    "pt": "Um pão sírio, por favor.",
+    "es": "Un pan pita, por favor."
+  },
+  "textos/#15/linhas/#2/quem": {
+    "pt": "Vendedor",
+    "es": "Vendedor"
+  },
+  "textos/#15/linhas/#2/pt": {
+    "pt": "Mais alguma coisa?",
+    "es": "¿Algo más?"
+  },
+  "textos/#15/linhas/#3/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#15/linhas/#3/pt": {
+    "pt": "Sim, um café.",
+    "es": "Sí, un café."
+  },
+  "textos/#15/linhas/#4/quem": {
+    "pt": "Vendedor",
+    "es": "Vendedor"
+  },
+  "textos/#15/linhas/#4/pt": {
+    "pt": "Aqui está. São vinte shekels.",
+    "es": "Aquí tienes. Son veinte shékels."
+  },
+  "textos/#15/linhas/#5/quem": {
+    "pt": "Maya",
+    "es": "Maya"
+  },
+  "textos/#15/linhas/#5/pt": {
+    "pt": "Muito obrigada!",
+    "es": "¡Muchas gracias!"
+  },
+  "textos/#15/novas/#0/pt": {
+    "pt": "alguma coisa",
+    "es": "algo"
+  },
+  "textos/#15/novas/#1/pt": {
+    "pt": "shekel (a moeda de Israel)",
+    "es": "shékel (la moneda de Israel)"
+  },
+  "textos/#15/novas/#2/pt": {
+    "pt": "muita (תוֹדָה רַבָּה: muito obrigado)",
+    "es": "mucha (תוֹדָה רַבָּה: muchas gracias)"
+  },
+  "textos/#15/novas/#3/pt": {
+    "pt": "quer (para mulher)",
+    "es": "quiere (una mujer)"
+  },
+  "textos/#15/perguntas/#0/q": {
+    "pt": "O que a Maya pede primeiro?",
+    "es": "¿Qué pide Maya primero?"
+  },
+  "textos/#15/perguntas/#0/opcoes/#0": {
+    "pt": "Um pão sírio",
+    "es": "Un pan pita"
+  },
+  "textos/#15/perguntas/#0/opcoes/#1": {
+    "pt": "Um café",
+    "es": "Un café"
+  },
+  "textos/#15/perguntas/#0/opcoes/#2": {
+    "pt": "Um suco",
+    "es": "Un jugo"
+  },
+  "textos/#15/perguntas/#0/porque": {
+    "pt": "{{פִּתָה, בְּבַקָשָׁה}}: um pão sírio, por favor.",
+    "es": "{{פִּתָה, בְּבַקָשָׁה}}: un pan pita, por favor."
+  },
+  "textos/#15/perguntas/#1/q": {
+    "pt": "A Maya também quer um café.",
+    "es": "Maya también quiere un café."
+  },
+  "textos/#15/perguntas/#1/porque": {
+    "pt": "{{כֵּן, קָפֶה}}: sim, um café.",
+    "es": "{{כֵּן, קָפֶה}}: sí, un café."
+  },
+  "textos/#15/perguntas/#2/q": {
+    "pt": "Quanto custa?",
+    "es": "¿Cuánto cuesta?"
+  },
+  "textos/#15/perguntas/#2/opcoes/#0": {
+    "pt": "Dez shekels",
+    "es": "Diez shékels"
+  },
+  "textos/#15/perguntas/#2/opcoes/#1": {
+    "pt": "Vinte shekels",
+    "es": "Veinte shékels"
+  },
+  "textos/#15/perguntas/#2/opcoes/#2": {
+    "pt": "Quatro shekels",
+    "es": "Cuatro shékels"
+  },
+  "textos/#15/perguntas/#2/porque": {
+    "pt": "{{עֶשְׂרִים שֶׁקֶל}}: vinte shekels.",
+    "es": "{{עֶשְׂרִים שֶׁקֶל}}: veinte shékels."
+  },
+  "textos/#16/tituloPt": {
+    "pt": "O bilhete da mãe",
+    "es": "La nota de mamá"
+  },
+  "textos/#16/tipoPt": {
+    "pt": "Bilhete",
+    "es": "Nota"
+  },
+  "textos/#16/introPt": {
+    "pt": "O Dani chega em casa e encontra um bilhete da mãe.",
+    "es": "Dani llega a casa y encuentra una nota de su mamá."
+  },
+  "textos/#16/linhas/#0/pt": {
+    "pt": "Para o Dani,",
+    "es": "Para Dani:"
+  },
+  "textos/#16/linhas/#1/pt": {
+    "pt": "Tem pão e queijo na mesa.",
+    "es": "Hay pan y queso en la mesa."
+  },
+  "textos/#16/linhas/#2/pt": {
+    "pt": "O suco está na geladeira.",
+    "es": "El jugo está en el refrigerador."
+  },
+  "textos/#16/linhas/#3/pt": {
+    "pt": "Estou no trabalho até as quatro.",
+    "es": "Estoy en el trabajo hasta las cuatro."
+  },
+  "textos/#16/linhas/#4/pt": {
+    "pt": "Com amor, mãe",
+    "es": "Con cariño, mamá"
+  },
+  "textos/#16/novas/#0/pt": {
+    "pt": "para (grudado na palavra)",
+    "es": "para (pegado a la palabra)"
+  },
+  "textos/#16/novas/#1/pt": {
+    "pt": "e (grudado na palavra)",
+    "es": "y (pegado a la palabra)"
+  },
+  "textos/#16/novas/#2/pt": {
+    "pt": "queijo",
+    "es": "queso"
+  },
+  "textos/#16/novas/#3/pt": {
+    "pt": "o, a (grudado na palavra)",
+    "es": "el, la (pegado a la palabra)"
+  },
+  "textos/#16/novas/#4/pt": {
+    "pt": "mesa",
+    "es": "mesa"
+  },
+  "textos/#16/novas/#5/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "es": "en el, en la (pegado a la palabra)"
+  },
+  "textos/#16/novas/#6/pt": {
+    "pt": "geladeira",
+    "es": "refrigerador"
+  },
+  "textos/#16/novas/#7/pt": {
+    "pt": "trabalho",
+    "es": "trabajo"
+  },
+  "textos/#16/novas/#8/pt": {
+    "pt": "até",
+    "es": "hasta"
+  },
+  "textos/#16/novas/#9/pt": {
+    "pt": "ama (ela ama); no fim do bilhete, com amor",
+    "es": "ama (ella ama); al final de la nota, con cariño"
+  },
+  "textos/#16/perguntas/#0/q": {
+    "pt": "Onde está o suco?",
+    "es": "¿Dónde está el jugo?"
+  },
+  "textos/#16/perguntas/#0/opcoes/#0": {
+    "pt": "Na mesa",
+    "es": "En la mesa"
+  },
+  "textos/#16/perguntas/#0/opcoes/#1": {
+    "pt": "Na geladeira",
+    "es": "En el refrigerador"
+  },
+  "textos/#16/perguntas/#0/opcoes/#2": {
+    "pt": "Na mochila",
+    "es": "En la mochila"
+  },
+  "textos/#16/perguntas/#0/porque": {
+    "pt": "{{הַמִיץ בַּמְקָרֵר}}: o suco está na geladeira.",
+    "es": "{{הַמִיץ בַּמְקָרֵר}}: el jugo está en el refrigerador."
+  },
+  "textos/#16/perguntas/#1/q": {
+    "pt": "Tem pão na mesa.",
+    "es": "Hay pan en la mesa."
+  },
+  "textos/#16/perguntas/#1/porque": {
+    "pt": "{{יֵשׁ לֶחֶם}}: tem pão.",
+    "es": "{{יֵשׁ לֶחֶם}}: hay pan."
+  },
+  "textos/#16/perguntas/#2/q": {
+    "pt": "Até que horas a mãe trabalha?",
+    "es": "¿Hasta qué hora trabaja la mamá?"
+  },
+  "textos/#16/perguntas/#2/opcoes/#0": {
+    "pt": "Até as quatro",
+    "es": "Hasta las cuatro"
+  },
+  "textos/#16/perguntas/#2/opcoes/#1": {
+    "pt": "Até as cinco",
+    "es": "Hasta las cinco"
+  },
+  "textos/#16/perguntas/#2/opcoes/#2": {
+    "pt": "Até o meio-dia",
+    "es": "Hasta el mediodía"
+  },
+  "textos/#16/perguntas/#2/porque": {
+    "pt": "{{עַד אַרְבַּע}}: até as quatro.",
+    "es": "{{עַד אַרְבַּע}}: hasta las cuatro."
+  },
+  "textos/#17/tituloPt": {
+    "pt": "A girafa",
+    "es": "La jirafa"
+  },
+  "textos/#17/tipoPt": {
+    "pt": "Conversa",
+    "es": "Conversación"
+  },
+  "textos/#17/introPt": {
+    "pt": "O Dani e o pai passeiam no zoológico.",
+    "es": "Dani y su papá pasean por el zoológico."
+  },
+  "textos/#17/linhas/#0/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#17/linhas/#0/pt": {
+    "pt": "Pai, olha! Uma girafa!",
+    "es": "¡Papá, mira! ¡Una jirafa!"
+  },
+  "textos/#17/linhas/#1/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#17/linhas/#1/pt": {
+    "pt": "É. Ela é muito grande.",
+    "es": "Sí. Es muy grande."
+  },
+  "textos/#17/linhas/#2/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#17/linhas/#2/pt": {
+    "pt": "O que ela come?",
+    "es": "¿Qué come?"
+  },
+  "textos/#17/linhas/#3/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#17/linhas/#3/pt": {
+    "pt": "Folhas da árvore.",
+    "es": "Hojas del árbol."
+  },
+  "textos/#17/linhas/#4/quem": {
+    "pt": "Dani",
+    "es": "Dani"
+  },
+  "textos/#17/linhas/#4/pt": {
+    "pt": "Eu também quero comer!",
+    "es": "¡Yo también quiero comer!"
+  },
+  "textos/#17/linhas/#5/quem": {
+    "pt": "Pai",
+    "es": "Papá"
+  },
+  "textos/#17/linhas/#5/pt": {
+    "pt": "Tem pão sírio na mochila.",
+    "es": "Hay pan pita en la mochila."
+  },
+  "textos/#17/novas/#0/pt": {
+    "pt": "olha! (para homem)",
+    "es": "¡mira! (a un hombre)"
+  },
+  "textos/#17/novas/#1/pt": {
+    "pt": "grande (para feminino)",
+    "es": "grande (femenino)"
+  },
+  "textos/#17/novas/#2/pt": {
+    "pt": "come (ela come)",
+    "es": "come (ella come)"
+  },
+  "textos/#17/novas/#3/pt": {
+    "pt": "folhas",
+    "es": "hojas"
+  },
+  "textos/#17/novas/#4/pt": {
+    "pt": "de o, da (grudado na palavra)",
+    "es": "del, de la (pegado a la palabra)"
+  },
+  "textos/#17/novas/#5/pt": {
+    "pt": "comer",
+    "es": "comer"
+  },
+  "textos/#17/novas/#6/pt": {
+    "pt": "no, na (grudado na palavra)",
+    "es": "en el, en la (pegado a la palabra)"
+  },
+  "textos/#17/perguntas/#0/q": {
+    "pt": "Que animal o Dani vê?",
+    "es": "¿Qué animal ve Dani?"
+  },
+  "textos/#17/perguntas/#0/opcoes/#0": {
+    "pt": "Uma girafa",
+    "es": "Una jirafa"
+  },
+  "textos/#17/perguntas/#0/opcoes/#1": {
+    "pt": "Um cavalo",
+    "es": "Un caballo"
+  },
+  "textos/#17/perguntas/#0/opcoes/#2": {
+    "pt": "Um cachorro",
+    "es": "Un perro"
+  },
+  "textos/#17/perguntas/#0/porque": {
+    "pt": "{{ג׳ירפה}}: girafa.",
+    "es": "{{ג׳ירפה}}: jirafa."
+  },
+  "textos/#17/perguntas/#1/q": {
+    "pt": "A girafa é pequena.",
+    "es": "La jirafa es pequeña."
+  },
+  "textos/#17/perguntas/#1/porque": {
+    "pt": "{{הִיא גְדוֹלָה מְאוֹד}}: ela é muito grande.",
+    "es": "{{הִיא גְדוֹלָה מְאוֹד}}: es muy grande."
+  },
+  "textos/#17/perguntas/#2/q": {
+    "pt": "O que a girafa come?",
+    "es": "¿Qué come la jirafa?"
+  },
+  "textos/#17/perguntas/#2/opcoes/#0": {
+    "pt": "Folhas",
+    "es": "Hojas"
+  },
+  "textos/#17/perguntas/#2/opcoes/#1": {
+    "pt": "Pão sírio",
+    "es": "Pan pita"
+  },
+  "textos/#17/perguntas/#2/opcoes/#2": {
+    "pt": "Sorvete",
+    "es": "Helado"
+  },
+  "textos/#17/perguntas/#2/porque": {
+    "pt": "{{עָלִים מֵהָעֵץ}}: folhas da árvore.",
+    "es": "{{עָלִים מֵהָעֵץ}}: hojas del árbol."
+  }
+}

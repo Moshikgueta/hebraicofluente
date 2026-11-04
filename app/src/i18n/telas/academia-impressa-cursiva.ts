@@ -34,5 +34,22 @@ const en: Traducao<typeof pt> = {
   ariaPeca: (nome, cursiva) => `${nome}${cursiva ? ' in cursive' : ' in print'}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Imprenta y cursiva',
+  placar: (n, total, acertos) =>
+    `${n} / ${total} · ${acertos} ${acertos === 1 ? 'acierto' : 'aciertos'}`,
+  rodadaDe: (n, total) => `Ronda ${n} de ${total}`,
+  exatamente: 'Exacto.',
+  compare: 'Compara los dos dibujos con calma.',
+  qualCursiva: '¿Cuál es esta letra en cursiva?',
+  qualImpressa: '¿Cuál es esta letra en imprenta?',
+  estaEOutra: (esta, alvo) => `Esta es la ${esta}. La que buscas es la ${alvo}.`,
+  paresInstrucao: 'Toca una letra de imprenta y después la misma letra en cursiva.',
+  deTotal: (n, total) => `${n} de ${total}`,
+  impressa: 'Imprenta',
+  cursiva: 'Cursiva',
+  ariaPeca: (nome, cursiva) => `${nome}${cursiva ? ' en cursiva' : ' en imprenta'}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

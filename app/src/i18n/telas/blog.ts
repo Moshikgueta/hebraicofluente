@@ -38,5 +38,24 @@ const en: Traducao<typeof pt> = {
   maisArtigos: 'More articles'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+// rever: o blog é em português; a build em espanhol sai sem artigos
+const es: Traducao<typeof pt> = {
+  blog: 'Blog',
+  metaTitulo: 'Blog de Hebraico Fluente: aprende a leer hebreo',
+  metaDescricao: 'Artículos para quien quiere leer hebreo: el alfabeto, las vocales, la dirección de lectura y palabras para el viaje a Israel.',
+  titulo: 'Aprende a leer hebreo',
+  lead: 'Artículos cortos para quien está empezando: el alfabeto, las vocales, la dirección de lectura y las primeras palabras.',
+  vazio: 'Los primeros artículos están en camino.',
+  ler: 'Leer el artículo',
+  emResumo: 'En resumen',
+  atualizado: (data: string) => `Actualizado el ${data}`,
+  testeTitulo: 'Prueba la primera letra, gratis',
+  testeLinha: 'Una clase abierta, sin registro: la Álef, su sonido, cómo se escribe y la primera palabra.',
+  testeBotao: 'Hacer la prueba gratis',
+  ctaTitulo: 'Aprende a leer hebreo, una letra a la vez.',
+  ctaLinha: 'Con audio, escritura a mano y corrección al instante, en el celular o en la computadora.',
+  maisArtigos: 'Más artículos'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

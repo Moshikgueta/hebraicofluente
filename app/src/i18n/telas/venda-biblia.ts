@@ -99,5 +99,54 @@ const en: Traducao<typeof pt> = {
   ctaLinha: 'The 22 letters, with no transliteration by the end. The first one takes ten minutes and answers better than this page does.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: '¿Voy a poder leer la Biblia en hebreo? - Hebraico Fluente',
+  metaDescricao:
+    'Sí, vas a leer el texto en voz alta; no, no lo vas a entender sin vocabulario y gramática. ' +
+    'Génesis 1:1, palabra por palabra, para que juzgues tú.',
+  trilha: 'Leer la Biblia',
+  eyebrow: 'La pregunta que más nos llega',
+  titulo: '¿Voy a poder leer la Biblia en hebreo?',
+  lead: 'La respuesta tiene dos mitades, y las dos importan.',
+
+  respostaEyebrow: 'La respuesta corta',
+  respostaTitulo: 'Sí para leer. No para entender.',
+  respostaLead: 'Son dos habilidades distintas, y confundirlas es lo que hace que alguien compre un curso de lectura creyendo que compró un curso de idioma.',
+  sim: 'Sí.',
+  simTitulo: 'Vas a leer en voz alta.',
+  simTexto: 'El texto hebreo de la Biblia que se usa hoy viene con los signos de vocal - el nikud que los masoretas de Tiberíades fijaron para registrar la pronunciación. Son exactamente las 22 letras y los signos que enseña este curso. Con ellos decodificas cualquier versículo, sin transliteración y sin ayuda.',
+  nao: 'No.',
+  naoTitulo: 'No vas a entender lo que leíste.',
+  naoTexto: 'Entender pide vocabulario y gramática, y el hebreo de la Biblia tiene construcciones que el hebreo de hoy no usa. Este es un curso de lectura: te da la puerta, no la casa. Quien promete la casa en ocho semanas está vendiendo otra cosa.',
+
+  versiculoEyebrow: 'Míralo tú',
+  versiculoTitulo: 'Las siete primeras palabras de la Biblia hebrea.',
+  versiculoLead: 'Toca cualquiera. Vas a ver las dos mitades de la respuesta en el mismo lugar: cómo se lee, y qué quiere decir - que es la parte que alguien tuvo que traer.',
+  legivel: (letra: number, total: number, licao: number | null, licoes: number) =>
+    `Todas las letras de este versículo se enseñan hasta la letra ${letra} de ${total}${licao !== null ? ` (lección ${licao} de ${licoes})` : ''}. O sea: se vuelve legible antes de que el curso termine, y no al final.`,
+
+  mudaEyebrow: 'Aun así',
+  mudaTitulo: 'Lo que cambia cuando lees las letras.',
+  mudaLead: 'Decodificar sin entender parece poco dicho así. En la práctica es la diferencia entre depender por completo de una traducción y poder verificarla.',
+  originalT: 'Sigues el original',
+  originalB: 'Una Biblia interlineal o con el hebreo al lado deja de ser decoración en la página. Sigues la línea en lugar de saltar a la columna en español.',
+  lexicoT: 'Buscas en el léxico',
+  lexicoB: 'Los diccionarios, léxicos y concordancias de hebreo están organizados por el alfabeto hebreo. Sin las letras no encuentras la palabra; con ellas, sí.',
+  traducaoT: 'Verificas una traducción',
+  traducaoB: 'Cuando dos versiones no coinciden en un versículo, la diferencia está en una palabra. Saber leer es lo que te permite ir a mirar esa palabra.',
+  reconheceT: 'Reconoces lo que ya conoces',
+  reconheceB: 'Nombres, lugares y palabras que oyes toda la vida dejan de ser sonido y se vuelven texto - empezando por esta, en la tercera posición del versículo de arriba.',
+
+  roloEyebrow: 'Algo que nadie te avisa',
+  roloTitulo: 'En un rollo de Torá no hay ni un solo punto de vocal.',
+  roloLead: 'Los signos son una invención posterior, hecha para registrar la pronunciación. El rollo que se lee en la sinagoga no los tiene, y el Israel de hoy también escribe sin ellos.',
+  comPontos: 'Con los puntos, en una Biblia impresa',
+  semPontos: 'Sin los puntos, como está en el rollo',
+  mesmaLinha: 'Es la misma línea. Por eso el curso no termina en el nikud: el módulo 6 cierra con una etapa entera de lectura sin los puntos, que es la forma en que el hebreo existe en la calle, en el periódico y en el rollo.',
+
+  ctaTitulo: 'La puerta primero.',
+  ctaLinha: 'Las 22 letras, sin transliteración al final. La primera lleva diez minutos y responde mejor que esta página.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -157,5 +157,87 @@ const en: Traducao<typeof pt> = {
   entre: 'Sign in to your account'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  naoEncontrado: 'Curso no encontrado - Hebraico Fluente',
+
+  voceEstaEm: 'Estás en',
+  cursos: 'Cursos',
+  curso: (code: string) => `Curso ${code}`,
+  seuCurso: 'Tu curso',
+  disponivel: 'Disponible',
+  emBreve: 'Próximamente',
+  modulos: 'Módulos',
+  licoes: 'Lecciones',
+  acesso: 'Acceso',
+  nMeses: (n: number) => `${n} meses`,
+  ritmo: 'Ritmo',
+  seu: 'El tuyo',
+
+  resultadoEyebrow: 'Al final de este curso',
+  resultadoTitulo: 'Lo que vas a poder hacer.',
+  caminhoEyebrow: 'El camino',
+  modulosNestaOrdem: (n: number) => `${n} módulos, en este orden.`,
+  ordemAberto: 'El orden no es alfabético ni histórico: es el orden en que cada pieza te abre más palabras para leer.',
+  ordemFechado: 'El plan del curso. Los nombres pueden cambiar hasta la publicación; la secuencia, no.',
+  nLetras: (n: number) => `${n} ${n === 1 ? 'letra' : 'letras'}`,
+
+  paraQuemEyebrow: 'Para quién es',
+  paraQuemTitulo: 'Este curso es para ti si…',
+  seNaoFor: '¿Y si no es para mí?',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  seNaoForTexto: (dias: number, meses: number, tempo: string) =>
+    `Tienes ${dias} días, contados desde que se libera tu acceso, para cancelar y recibir el 100% de vuelta, sin dar explicaciones; es solo un botón en Tu cuenta. Después de eso, tienes ${meses} meses de acceso y ningún plazo interno. ${tempo} El curso guarda dónde te quedaste y vuelve exactamente ahí.`,
+  verDuvidas: 'Ver las dudas más comunes →',
+
+  comeceHoje: 'Empieza hoy, con la primera lección.',
+  aindaNao: 'Todavía no, pero ya viene.',
+  liberadoSozinho: 'El acceso se libera apenas se confirma el pago - sin espera, sin liberación manual, sin un correo que buscar en la carpeta de spam.',
+  // etapa 5/6: Brasil, rever (PIX)
+  liberadoAMao: (prazo: string) =>
+    `Pagas por PIX en la aplicación de tu banco y entras con el mismo correo y contraseña. Revisamos el pago y liberamos el acceso a mano, ${prazo}.`,
+  emProducao: 'Este curso está en producción. Cuando salga, entra en la misma cuenta y sigue donde el anterior terminó.',
+
+  naSuaConta: 'En tu cuenta',
+  jaTem: 'Ya tienes este curso.',
+  continuar: 'Continuar',
+  naoAVenda: 'Todavía no está a la venta.',
+  enquantoIsso: 'Mientras tanto, el camino para llegar hasta aquí empieza aprendiendo a leer.',
+  verCurso01: 'Ver el curso 01',
+  progressoGuardado: 'Tu progreso sigue guardado en tu cuenta y vuelve completo cuando renuevas.',
+  renovar: (meses: number) => `Renovar por ${meses} meses más`,
+  semCurso: 'Esta cuenta todavía no tiene el curso',
+  conectadoComo: (email: ReactNode): ReactNode => (
+    <>Entraste como{' '}{email}. Si la compra se hizo con otro correo, entra con ese: el acceso queda en la cuenta del correo que pagó.</>
+  ),
+  outroEmail: 'Entrar con otro correo',
+  jaPagou: (contato: ReactNode): ReactNode => (
+    <>¿Ya pagaste y sigues viendo esta pantalla? <strong>No pagues de nuevo.</strong>{' '}Escribe a{' '}{contato}{' '}con el correo de la compra y liberamos tu acceso.</>
+  ),
+
+  precoPreLancamento: 'Precio de prelanzamiento',
+  depois: (fim: string | null, cheio: string) => `${fim ? `Hasta el ${fim}. ` : ''}Después, ${cheio}.`,
+  // etapa 5/6: Brasil, rever (PIX)
+  noPix: 'por PIX',
+  descontoSobre: (pct: number, preco: string) => ` · ${pct}% de descuento sobre ${preco}`,
+  // etapa 5: el sitio de fuera cobra por Paddle
+  noCartao: () => 'pago único, impuestos incluidos',
+  // etapa 5/6: Brasil, rever (PIX)
+  descontoNoPix: (pct: number, preco: string) => `${pct}% de descuento por PIX: ${preco}`,
+  desbloquear: 'Desbloquear el curso',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagamentoPix: 'Pago por PIX, en la aplicación de tu banco.',
+  // etapa 5/6: Brasil, rever (PIX e parcelamento)
+  pixCartao: (parcelas: string) => `PIX, tarjeta o en cuotas ${parcelas}.`,
+  // etapa 5: el sitio de fuera cobra por Paddle
+  cartao: () => 'Tarjeta, PayPal, Apple Pay o Google Pay, a través de Paddle.',
+  automatico: 'Acceso liberado automáticamente.',
+  aMao: (prazo: string) => `Acceso liberado a mano, ${prazo} después del pago.`,
+  mesesAparelhos: (meses: number) => `${meses} meses, del celular a la computadora.`,
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  desistir: (dias: number) => `${dias} días para cancelar y recibir el 100% de vuelta, sin dar explicaciones.`,
+  jaComprou: '¿Ya compraste?',
+  entre: 'Entra en tu cuenta'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

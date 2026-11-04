@@ -29,5 +29,16 @@ const en: Traducao<typeof pt> = {
   quero: 'I want to start'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Aprende a leer hebreo desde cero - Hebraico Fluente',
+  metaDescricao:
+    'Aprende a leer hebreo desde cero con un profesor israelí: las 22 letras, las vocales y ' +
+    'palabras reales, con corrección al instante. Primera letra gratis.',
+  parceria: (preco: ReactNode, ate: string | null): ReactNode => (
+    <>Tu enlace te da un precio especial: el curso sale a {preco} en el pago{ate ? `, hasta el ${ate}` : ''}.</>
+  ),
+  quero: 'Quiero empezar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;
