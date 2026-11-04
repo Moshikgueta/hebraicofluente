@@ -28,7 +28,7 @@ import { ALL_GLYPHS, isReadableWith } from '@/lib/hebrew';
 import { rng, shuffled, type Rand } from './rng';
 import {
   BY_SKILL, LESSON_GENERATORS, NEEDS_AUDIO,
-  exBuildSyllable, exBuildSyllableOuvido, exBuildWord, exCompleteWord, exConfusablePick, exCursiveToPrint,
+  exBuildSyllable, exBuildSyllableOuvido, exBuildWord, exCompleteWord, exFixLetter, exConfusablePick, exCursiveToPrint,
   exFinalForm, exFinalInWord, exLetterInWord, exLetterPosition, exLetterRecognition,
   exLetterVariant, exListenSyllable, exAudioWord, exTypeHeard, exListenMeaning,
   exVariantSyllable, exVowelPair, exMatchSyllable, exMatchWordMeaning,
@@ -102,6 +102,14 @@ export function readingUsedBy(ex: Exercise): string[] {
       out.push(...ex.options);
       break;
     case 'letter-position':
+      out.push(ex.he);
+      break;
+    /* A palavra com a troca é lida inteira, e a troca é sempre por uma letra
+       já ensinada (exFixLetter): a regra de ordem vale para ela. */
+    case 'fix-letter':
+      out.push(ex.he, ...ex.options);
+      break;
+    case 'listen-same':
       out.push(ex.he);
       break;
     case 'build-syllable':
@@ -890,7 +898,10 @@ export function buildMiniTest(
   const TETO_POR_TIPO: Partial<Record<Exercise['kind'], number>> = {
     'letter-recognition': 1, 'odd-one-out': 1, 'print-vs-cursive': 2, 'vowel-pair': 1, 'type-answer': 1,
     /* A caça é o item mais demorado depois de digitar: uma por fixação. */
-    'letter-hunt': 1
+    'letter-hunt': 1,
+    /* Duas respostas: só na prática, nunca na nota (04/11/2026). */
+    'listen-same': 0,
+    'fix-letter': 1
   };
   const TETO_GERAL = 2;
   let tetoGeral = TETO_GERAL;
@@ -932,7 +943,8 @@ export function buildMiniTest(
   const antesDoSom = out.length;
   if ((L.variantes?.length ?? 0) >= 2) tentar([exLetterVariant, exVariantSyllable]);
   if (out.length === antesDoSom) tentar(girar([exMatchLetterSound, exVowelSound, exSoundToSyllable], L.order + 1));
-  tentar(girar([exLetterInWord, exLetterPosition, exCompleteWord], L.order + 1));
+  /* A letra trocada (04/11/2026) entra na camada da letra dentro da palavra. */
+  tentar(girar([exLetterInWord, exLetterPosition, exCompleteWord, exFixLetter], L.order + 1));
   const contrastes = contrastesDoConteudo(history.filter(x => x.order <= L.order));
   const gemea = gemeaDe(L, contrastes);
   tentar(L.finalForm

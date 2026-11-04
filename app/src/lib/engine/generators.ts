@@ -474,6 +474,76 @@ export const exLetterHunt: Gen = (L, ctx, rand, i) => {
   };
 };
 
+/* Letras que a troca nunca usa nem tira: o vav e o shin mudam de leitura com
+   o ponto, e Bet/Kaf/Pe dependem do daguesh - trocar uma delas mexeria em
+   duas coisas ao mesmo tempo, e a pergunta é sobre UMA letra. */
+const FORA_DA_TROCA = new Set(['ו', 'ש', 'ב', 'כ', 'פ']);
+const MARCAS_DE_LEITURA = /[\u05BC\u05C1\u05C2]/;
+
+/**
+ * A letra trocada (04/11/2026, pedido do dono: "תקן את הטעות").
+ *
+ * Uma palavra que o aluno lê, com UMA letra trocada por outra já ensinada -
+ * de preferência uma parecida com ela, que é a troca que acontece de verdade.
+ * O enunciado dá a leitura certa e o sentido; o aluno toca na letra que não
+ * bate. Nunca a última letra (a forma final mudaria junto) nem as letras de
+ * `FORA_DA_TROCA`.
+ */
+export const exFixLetter: Gen = (L, ctx, rand, i) => {
+  const ensinadas = ctx.history.map(x => x.letter);
+  const palavras = L.wordsToRead.filter(w => {
+    const c = clusters(w.he);
+    return c.length >= 3 && c.length <= 5 && new Set(c).size === c.length;
+  });
+  const w = at(palavras, i);
+  if (!w) return null;
+  const partes = clusters(w.he);
+  const trocaveis = partes
+    .map((c, k) => ({ c, k }))
+    .filter(({ c, k }) => k < partes.length - 1 && !FORA_DA_TROCA.has(c[0]!) && !MARCAS_DE_LEITURA.test(c));
+  /* De preferência a letra de hoje. */
+  const alvo = trocaveis.find(t => t.c[0] === L.letter) ?? at(trocaveis, i);
+  if (!alvo) return null;
+  const original = alvo.c[0]!;
+  const dona = ctx.history.find(x => x.letter === original);
+  const parecidas = (dona?.confusableWith ?? []).filter(g => ensinadas.includes(g));
+  const candidatas = (parecidas.length ? parecidas : ensinadas)
+    .filter(g => g !== original && !FORA_DA_TROCA.has(g) && !partes.some(p => p[0] === g));
+  if (!candidatas.length) return null;
+  const nova = candidatas[Math.floor(rand() * candidatas.length)]!;
+  const trocada = [...partes];
+  trocada[alvo.k] = nova + alvo.c.slice(1);
+  const he = trocada.join('');
+  return {
+    id: `${L.id}-troca-${clean(w.he)}`, kind: 'fix-letter', letterId: L.id, skill: 'ler',
+    promptPt: fmt(tx.trocaPergunta, { leitura: w.translit, sentido: w.pt }),
+    he, certa: w.he, options: trocada, answer: alvo.k,
+    explainPt: fmt(tx.trocaExplica, { certa: w.he, leitura: w.translit, errada: nova, letra: original })
+  };
+};
+
+/**
+ * Ouvir e conferir (04/11/2026, pedido do dono: "נכון/לא נכון עם שמע").
+ * Uma sílaba escrita e uma gravação, metade das vezes da mesma sílaba e
+ * metade de outra vogal com a mesma letra. Só com gravação; só na prática.
+ */
+export const exListenSame: Gen = (L, _ctx, rand, i) => {
+  const pool = vowelSyllables(L).filter(s => temClipe(s.audioId));
+  if (pool.length < 2) return null;
+  const escrita = at(pool, i)!;
+  const igual = rand() < 0.5;
+  const outras = pool.filter(s => s.translit !== escrita.translit);
+  const ouvida = igual ? escrita : outras[Math.floor(rand() * outras.length)];
+  if (!ouvida) return null;
+  return {
+    id: `${L.id}-igual-${i}`, kind: 'listen-same', letterId: L.id, skill: 'ouvir',
+    promptPt: tx.igualPergunta, he: escrita.he, audioId: ouvida.audioId!, igual,
+    explainPt: igual
+      ? fmt(tx.igualSim, { he: escrita.he, leitura: escrita.translit })
+      : fmt(tx.igualNao, { he: escrita.he, leitura: escrita.translit, ouvida: ouvida.translit })
+  };
+};
+
 /**
  * The word, in pieces, in the wrong order.
  *
@@ -1147,7 +1217,7 @@ export const exCursiveToPrint: Gen = (L, ctx, rand, i) => {
 /* ── the catalogue ──────────────────────────────────────────────────────── */
 
 /** Every generator that needs a recording to be honest. */
-export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard, exListenSentence, exListenMeaning, exBuildSyllableOuvido]);
+export const NEEDS_AUDIO = new Set<Gen>([exAudioWord, exListenSyllable, exTypeHeard, exListenSentence, exListenMeaning, exBuildSyllableOuvido, exListenSame]);
 
 /**
  * The order a lesson walks through. Deliberately alternating in GESTURE, not
@@ -1162,6 +1232,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exConfusablePick,
   exLetterHunt,
   exWordMeaning,
+  exFixLetter,
   exSentenceReading,
   exOddOneOut,
   exVowelSound,
@@ -1185,6 +1256,7 @@ export const LESSON_GENERATORS: readonly Gen[] = [
   exAudioWord,
   exMatchLetterSound,
   exBuildSyllableOuvido,
+  exListenSame,
   exTypeHeard,
   exListenSentence,
   exListenMeaning

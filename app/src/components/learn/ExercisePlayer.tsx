@@ -22,6 +22,7 @@
  */
 
 import { tx } from '@/i18n/telas/licao-exercise-player';
+import { tx as txRespostas } from '@/i18n/telas/licao-answers';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { He, HeCloze } from '@/components/hebrew/He';
 import { Prose } from '@/components/hebrew/Prose';
@@ -460,6 +461,22 @@ function Body({
   }) => void;
 }) {
   switch (ex.kind) {
+    case 'listen-same':
+      return (
+        <div className="grid gap-4 justify-items-center py-2">
+          <He size="display">{ex.he}</He>
+          <AudioButton audioId={ex.audioId} label={tx.ouvirDeNovo} size="lg" slow />
+          <div className="grid grid-cols-2 gap-2.5 w-full max-w-[420px]">
+            {[true, false].map(sim => (
+              <Button key={String(sim)} variant="secondary" size="lg" disabled={settled}
+                      onClick={() => onSettle(sim === ex.igual)}>
+                {sim ? txRespostas.igualSim : txRespostas.igualNao}
+              </Button>
+            ))}
+          </div>
+        </div>
+      );
+
     case 'letter-hunt':
       return (
         <LetterHunt
@@ -749,9 +766,11 @@ function Options({
   /* A row of nearly identical glyphs is the exercise itself, so it is laid out
      as a row and never as a list - the learner has to scan it the way they will
      scan a word. */
-  if (ex.kind === 'odd-one-out' || ex.kind === 'letter-variant') {
+  /* A letra trocada (04/11/2026): as alternativas SÃO as letras da palavra,
+     em fila e da direita para a esquerda, como a palavra se lê. */
+  if (ex.kind === 'odd-one-out' || ex.kind === 'letter-variant' || ex.kind === 'fix-letter') {
     return (
-      <ul className="flex flex-wrap justify-center gap-2.5" role="list">
+      <ul className="flex flex-wrap justify-center gap-2.5" role="list" dir={ex.kind === 'fix-letter' ? 'rtl' : undefined}>
         {ex.options.map((opt, idx) => (
           <li key={idx}>
             <button

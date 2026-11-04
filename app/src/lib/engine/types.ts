@@ -113,6 +113,17 @@ export type Exercise =
      (components/game/CacaLetra.tsx) já fazia isso; este é o item de prova,
      uma grade só, dentro da lição. `grade` são os glifos, na ordem da tela. */
   | (ExerciseBase & { kind: 'letter-hunt'; letter: string; grade: string[] })
+  /* ── a letra trocada (04/11/2026, pedido do dono: "תקן את הטעות") ─────
+     Uma palavra do curso com UMA letra trocada por outra já ensinada, a
+     leitura certa e o sentido no enunciado; as alternativas são as letras da
+     palavra mostrada, e a resposta é a trocada. `he` é a palavra COM a troca;
+     `certa` é a grafia do curso. */
+  | (ChoiceBase & { kind: 'fix-letter'; he: string; certa: string })
+  /* ── ouvir e conferir (04/11/2026, pedido do dono: "נכון/לא נכון עם שמע") ──
+     Uma sílaba escrita e uma gravação: é o mesmo som? Duas respostas, e por
+     isso NUNCA vale nota: só entra na prática, não na fixação (o teto dele lá
+     é zero). `igual` é a resposta. */
+  | (ExerciseBase & { kind: 'listen-same'; he: string; audioId: string; igual: boolean })
   | (ExerciseBase & {
       kind: 'build-syllable';
       /** De ouvido (03/11/2026): a sílaba TOCA, e a leitura dela não aparece
