@@ -28,3 +28,18 @@ describe('o funil', () => {
     expect(n['Fizeram o exame final']).toBe(1);
   });
 });
+
+import { ondeEsta } from '@/app/admin/vendas/VendasClient';
+
+describe('em que módulo a pessoa está', () => {
+  it('o módulo atual, os fechados e o que falta nos de letras feitas', () => {
+    const concluidas = [...mod(1), ...mod(2), ...mod(3), ...mod(4)];
+    const o = ondeEsta({
+      concluidas, revisoes: ['cp1', 'cp2', 'cp3'],
+      leituras: ['primeira-leitura-m1', 'primeira-leitura-m2', 'texto-2', 'primeira-leitura-m3', 'texto-3']
+    });
+    expect(o.atual).toMatchObject({ n: 5, feitas: 0 });
+    expect(o.fechados).toEqual([1, 2, 3]);
+    expect(o.abertos).toEqual([{ n: 4, faltam: ['a revisão', 'a Primeira Leitura', 'o texto principal'] }]);
+  });
+});
