@@ -1,5 +1,9 @@
 # Hebraico Fluente em espanhol - o terceiro Worker (PLANO-ESPANHOL.md, 04/11/2026).
 #
+# ATENÇÃO: o site em espanhol mora no repositório Moshikgueta/hebreo-fluido, com
+# BANCO PRÓPRIO (decisão do dono, 04/11/2026), e é o wrangler.toml de lá que se
+# publica. Este arquivo fica só para montar o espanhol aqui, à mão, para conferir.
+#
 # O mesmo código de worker/src e o MESMO banco D1 do site brasileiro: uma
 # conta criada num site entra no outro, e o curso comprado vale nos dois. O
 # que muda é o export servido (app/out-es, a build com NEXT_PUBLIC_LOCALE=es)
