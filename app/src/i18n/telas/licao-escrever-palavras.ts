@@ -49,5 +49,29 @@ const en: Traducao<typeof pt> = {
   limpar: 'Clear'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  porCima: 'Encima del modelo',
+  porCimaDica: 'Pasa el dedo por encima de la palabra, empezando por la derecha.',
+  fraco: 'Modelo tenue',
+  fracoDica: 'El modelo casi desapareció. Síguelo de todos modos.',
+  semModelo: 'Sin modelo',
+  semModeloDica: 'Ahora por tu cuenta. Escribe la palabra de memoria.',
+  semPalavra:
+    'Todavía no hay una palabra entera para escribir: llegan cuando ya se enseñaron todas las letras de una palabra. Sigue con las lecciones y vuelve aquí.',
+  completa: 'Ronda completa',
+  escreveu: (n, boas) =>
+    `Escribiste ${n} palabras a mano${boas ? `, ${boas} de ellas sin modelo y muy parecidas al original` : ''}.`,
+  palavrasDaRodada: 'Las palabras de esta ronda',
+  maisCinco: 'Cinco palabras más',
+  palavraDe: (n, total, etapa) => `Palabra ${n} de ${total} · ${etapa}`,
+  aMao: 'A mano, sin los puntitos de las vocales.',
+  proximaEtapa: 'Siguiente etapa',
+  proximaPalavra: 'Siguiente palabra',
+  terminar: 'Terminar',
+  conferir: 'Comprobar',
+  tentarDeNovo: 'Intentar de nuevo',
+  limpar: 'Borrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

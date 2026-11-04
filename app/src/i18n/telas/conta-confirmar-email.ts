@@ -53,5 +53,31 @@ const en: Traducao<typeof pt> = {
   irParaSuaConta: 'Go to Your account'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Confirmar correo - Hebraico Fluente',
+  metaDescricao: 'Confirma el correo de tu cuenta.',
+  titulo: 'Confirmar tu correo',
+  semTokenAntes:
+    'Esta dirección solo funciona con el enlace que te enviamos por correo. Si se perdió, pide otro en la página',
+  suaConta: 'Tu cuenta',
+  confirmando: 'Confirmando…',
+  entreParaConfirmar:
+    'Para confirmar, entra en la cuenta que se creó con este correo. Después de entrar, vuelves ' +
+    'aquí y la confirmación se hace en el momento.',
+  entrarEConfirmar: 'Entrar y confirmar',
+  naoFoiVoceAntes:
+    '¿No fuiste tú quien creó esta cuenta? Entonces alguien usó tu dirección. Puedes recuperarla ' +
+    'pidiendo una',
+  senhaNova: 'contraseña nueva',
+  naoFoiVoceDepois: '- el enlace te llega solo a ti, y cambiar la contraseña desconecta a quien creó la cuenta.',
+  confirmado: (email: string) => `Listo: el correo ${email} está confirmado.`,
+  irParaOCurso: 'Ir al curso',
+  recusado: 'Este enlace no vale para la cuenta abierta ahora, o ya venció - dura siete días.',
+  recusadoTexto:
+    'Si entraste con otra cuenta, sal y entra con la cuenta de este correo. Si el enlace venció, ' +
+    'pide otro en la página Tu cuenta.',
+  irParaSuaConta: 'Ir a Tu cuenta'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

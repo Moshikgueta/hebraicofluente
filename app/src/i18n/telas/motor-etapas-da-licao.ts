@@ -4,6 +4,7 @@ import type { Traducao } from '..';
    LessonClient) e o que o aluno faz em cada uma. */
 const NUMEROS_PT = ['Zero', 'Uma', 'Duas', 'Três', 'Quatro', 'Cinco', 'Seis', 'Sete'];
 const NUMEROS_EN = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
+const NUMEROS_ES = ['Cero', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete'];
 
 const pt = {
   conhecer: 'Conhecer',
@@ -35,5 +36,20 @@ const en: Traducao<typeof pt> = {
   numero: (n: number): string => NUMEROS_EN[n] ?? String(n)
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  conhecer: 'Conocer',
+  conhecerAudio: 'La forma, el nombre y el sonido de la letra, con el audio del profesor y la explicación en español.',
+  conhecerSemAudio: 'La forma, el nombre y el sonido de la letra, con la explicación en español.',
+  palavras: 'Palabras',
+  palavrasDesc: 'Palabras reales para leer, armadas solo con letras que ya aprendiste.',
+  escrever: 'Escribir',
+  escreverDesc: 'La letra en cursiva, trazada con el dedo en el orden correcto de los trazos.',
+  fixacao: 'Fijación',
+  fixacaoDesc: 'Escuchar, observar y recordar la letra, con apoyo en cada paso y sin nota.',
+  exercicios: 'Ejercicios',
+  exerciciosDesc: 'Ejercicios variados con nota, corregidos al instante. Lo que falles vuelve después, en el repaso.',
+  numero: (n: number): string => NUMEROS_ES[n] ?? String(n)
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

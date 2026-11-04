@@ -19,7 +19,7 @@ type Placa = { id: string; arquivo: string; palavra: string; mostraPt: string; a
   licenca: string; licencaUrl: string; pagina: string; largura: number; altura: number };
 
 export function Resultado() {
-  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return null;
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en' || process.env.NEXT_PUBLIC_LOCALE === 'es') return null;
   const placas = (vitrine as { placas: Placa[] }).placas;
   if (!placas.length) return null;
 

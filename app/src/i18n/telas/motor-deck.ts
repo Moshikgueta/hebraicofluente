@@ -32,5 +32,20 @@ const en: Traducao<typeof pt> = {
   ptPalavra: 'Which word means this?'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  tipoNome: 'Nombre de la letra',
+  tipoSom: 'Sonido',
+  tipoSilaba: 'Sílaba',
+  tipoPalavra: 'Palabra',
+  heNome: '¿Cuál es el nombre de esta letra?',
+  heSom: '¿Qué sonido hace esta letra?',
+  heSilaba: '¿Cómo se lee esta sílaba?',
+  hePalavra: '¿Qué quiere decir esta palabra?',
+  ptNome: '¿Cuál es esta letra?',
+  ptSom: '¿Qué letra hace este sonido?',
+  ptSilaba: '¿Qué sílaba se lee así?',
+  ptPalavra: '¿Qué palabra quiere decir esto?'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

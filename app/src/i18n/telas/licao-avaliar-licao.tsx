@@ -31,5 +31,19 @@ const en: Traducao<typeof pt> = {
   enviar: 'Send'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  facil: 'Fácil',
+  ok: 'Bien',
+  dificil: 'Difícil',
+  obrigado: forte => <>{forte('¡Gracias!')} Tu respuesta ayuda a mejorar las lecciones.</>,
+  pergunta: '¿Cómo te fue en esta lección?',
+  opcional: 'Opcional. Tu respuesta no queda vinculada a tu cuenta.',
+  contar: '¿Quieres contarnos algo? (opcional)',
+  exemplo: 'Lo que ayudó, lo que quedó confuso...',
+  erro: 'No pude enviarlo ahora. Intenta de nuevo en un momento.',
+  enviando: 'Enviando…',
+  enviar: 'Enviar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

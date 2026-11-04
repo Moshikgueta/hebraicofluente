@@ -45,5 +45,27 @@ const en: Traducao<typeof pt> = {
   apagar: 'Erase progress'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  localeNumero: 'es-419',
+  titulo: 'Tu progreso',
+  seusNumeros: 'Tus números',
+  xp: 'XP',
+  letras: 'Letras',
+  sequencia: 'Racha',
+  recorde: 'Mejor racha',
+  colecao: 'Tu colección de letras',
+  deTotal: (n, total) => `${n} de ${total}`,
+  colecaoTexto: 'Cada letra terminada se convierte en una tarjeta, y el sello dorado marca las dominadas. Toca una tarjeta para repasar la lección.',
+  conquistas: 'Logros',
+  viagem: 'Viaje por la historia del hebreo',
+  cartasAbertas: (abertas, total) => `${abertas} de ${total} tarjetas abiertas`,
+  recompensas: 'Recompensas',
+  saldo: saldo => `◆ ${saldo} de saldo para canjear`,
+  recomecar: 'Empezar de cero',
+  recomecarTexto: 'Borra todo tu progreso, en todos los dispositivos: XP, racha, lecciones y repasos. No se puede deshacer.',
+  confirmarApagar: '¿Borrar todo tu progreso? Esto no se puede deshacer.',
+  apagar: 'Borrar progreso'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

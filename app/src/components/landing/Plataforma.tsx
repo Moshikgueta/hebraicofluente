@@ -39,7 +39,7 @@ const HUMORES: readonly { h: HumorDaYael; rotulo: string }[] = [
 ];
 
 export function Plataforma() {
-  if (process.env.NEXT_PUBLIC_LOCALE === 'en') return null;
+  if (process.env.NEXT_PUBLIC_LOCALE === 'en' || process.env.NEXT_PUBLIC_LOCALE === 'es') return null;
   return (
     <section id="plataforma" aria-labelledby="plataforma-titulo" className="overflow-hidden">
       <Container className="pt-20 sm:pt-28">

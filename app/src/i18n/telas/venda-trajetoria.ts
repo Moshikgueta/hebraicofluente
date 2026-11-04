@@ -124,5 +124,66 @@ const en: Traducao<typeof pt> = {
   abreAba: ' (opens in a new tab)'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  padrao1: 'un alfabeto completamente nuevo',
+  padrao2: 'la dependencia de la transliteración',
+  padrao3: 'letras parecidas que se confunden',
+  padrao4: 'el salto de reconocer letras a leer palabras',
+  padrao5: 'materiales que dan por sabido lo que el alumno todavía no sabe',
+
+  caminhoIsraelT: 'Israel',
+  caminhoIsraelD: 'El hebreo como lengua materna.',
+  caminhoBrasilT: 'Brasil',
+  caminhoBrasilD: 'Desde 2021, viviendo y enseñando allí.',
+  caminhoSalaT: 'Aula',
+  caminhoSalaD: 'Profesor de hebreo en una escuela judía (2021-2023) y shaliaj en la comunidad judía.',
+  caminhoIdiomasT: 'Idiomas',
+  caminhoIdiomasD: 'Cinco idiomas, entre ellos hebreo, inglés, español e italiano.',
+  caminhoMetodologiaT: 'Metodología',
+  caminhoMetodologiaD: 'Gerente Pedagógico de New School, en Tel Aviv, y profesor en la Universidad Isaac Abarbanel, en Buenos Aires.',
+  caminhoHfT: 'Hebraico Fluente',
+  caminhoHfD: 'Todo esto en una plataforma de aprendizaje.',
+
+  reune1: 'El hebreo como lengua materna',
+  reune2: 'Experiencia en el aula con alumnos que empiezan de cero',
+  reune3: 'La experiencia de aprender cinco idiomas',
+  reune4: 'Formación en enseñanza de idiomas: CELTA y estudios en Letras',
+  reune5: 'El trabajo diario de crear cursos de idiomas',
+
+  atividade1: 'aprendes las letras poco a poco',
+  atividade2: 'practicas el reconocimiento',
+  atividade3: 'distingues letras parecidas',
+  atividade4: 'aprendes el nikud',
+  atividade5: 'practicas la lectura',
+  atividade6: 'conoces la escritura cursiva',
+  atividade7: 'armas palabras',
+  atividade8: 'recibes corrección al instante',
+
+  retratoAlt: 'Moshik Gueta, profesor y creador de Hebraico Fluente',
+  nome: 'Moshik Gueta',
+  descricao: 'Israelí, profesor de idiomas y educador',
+  rubrica: 'Quién está detrás de Hebraico Fluente',
+  titulo: 'Años enseñando, aprendiendo y pensando idiomas, convertidos en una metodología.',
+  p1: 'Soy Moshik Gueta, israelí, profesor de idiomas y educador. Enseñando hebreo a alumnos que empezaban de cero, pronto me di cuenta de que aprender la lengua empieza mucho antes de la gramática.',
+  p2: 'Para quien creció con el alfabeto latino, el primer contacto con el hebreo es una nueva dirección de lectura, nuevos símbolos, nuevos sonidos y otra lógica. En el aula, algunos puntos volvían siempre:',
+  decisao: 'Cada uno de esos puntos se convirtió en una decisión del curso.',
+  caminho: 'El camino hasta aquí',
+
+  ensinandoTitulo: 'Enseñando a principiantes',
+  ensinandoTexto: 'Fue dando clases en una escuela judía y en la comunidad judía como shaliaj que entendí qué dificultades se repetían y qué estrategias de verdad ayudaban al alumno a empezar a leer. Hebraico Fluente no es una adaptación del curso de otra persona: la metodología nació de ese contacto directo con alumnos aprendiendo hebreo.',
+  ensinandoCitacao: 'Enseñar hebreo me mostró que aprender el alfabeto no es solo memorizar 22 letras. Es aprender una nueva lógica de lectura.',
+  ladosTitulo: 'De los dos lados del aula',
+  ladosTexto: 'Además de enseñar, sigo siendo alumno de idiomas. Hablo cinco idiomas, y cada uno me puso de nuevo en el principio: estructuras diferentes, vocabulario desde cero, una lectura que tarda en arrancar, las ganas de traducirlo todo. Es desde ese lado que pienso cada ejercicio: lo que ayuda a avanzar, lo que crea dependencia y lo que convierte el conocimiento pasivo en habilidad real.',
+  ladosCitacao: 'Enseñar idiomas es parte de mi profesión. Aprenderlos también es parte de mi vida.',
+
+  nasceuTitulo: 'Cómo nació Hebraico Fluente',
+  nasceuP1: 'Con el tiempo, mi trabajo pasó a incluir cada vez más metodología. Hoy soy Gerente Pedagógico de New School, en Tel Aviv, donde trabajo en la estructura de cursos, materiales y experiencias de aprendizaje de idiomas, y enseño hebreo en la Universidad Isaac Abarbanel, en Buenos Aires. Mi formación en enseñanza de idiomas, del CELTA a los estudios en Letras, también está en cada decisión de este curso.',
+  nasceuP2: 'Hebraico Fluente nació de esa experiencia: quería convertir lo que funcionaba en mis clases en algo que cualquiera pudiera seguir a su propio ritmo. No es una serie de videos ni un PDF escaneado. Es la metodología convertida en actividades, en las que:',
+  nasceuFecho: 'y avanzas poco a poco, hasta leer tus primeras palabras por tu cuenta.',
+  junta: 'Lo que se reúne en esta plataforma',
+  linkedin: 'Ver mi perfil de LinkedIn',
+  abreAba: ' (se abre en otra pestaña)'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

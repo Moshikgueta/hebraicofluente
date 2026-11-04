@@ -97,5 +97,53 @@ const en: Traducao<typeof pt> = {
   minhaBiblioteca: 'My Library'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Mi Biblioteca - Hebraico Fluente',
+  metaDescricao: 'Los cursos y las experiencias de tu cuenta, en un solo lugar.',
+
+  resumoCurso: 'Leer y escribir hebreo desde cero, letra por letra.',
+  resumoLivro: 'Una experiencia digital interactiva por la historia, la cultura y los lugares de Israel.',
+  resumoA1: 'El hebreo del día a día, después del alfabeto.',
+  nomeRaizes: 'Raizes Sefarditas',
+  resumoRaizes: 'La historia, los caminos y la memoria sefardí.',
+
+  abrindo: 'Abriendo tu biblioteca...',
+  entreNaConta: 'Entra en tu cuenta para ver los cursos y las experiencias que tienes.',
+  entrar: 'Entrar',
+  abrir: 'Abrir',
+  acessoAte: (data: string) => `Acceso hasta el ${data}`,
+  acessoSemFim: 'Acceso sin fecha de fin',
+  comprasEmSuaContaAntes: 'Las compras, los recibos y las cancelaciones están en ',
+  suaConta: 'Tu cuenta',
+
+  conectadoComo: 'Entraste como ',
+  semNenhumCurso: ', y esta cuenta todavía no tiene ningún curso.',
+  pagamentoEsperando: 'Hay un pago esperando confirmación',
+  // etapa 5/6: Brasil, rever
+  pendente: (nome: string, pix: boolean) =>
+    `${nome}${pix ? ', por PIX' : ''}. En cuanto se confirme el pago, el curso aparece aquí.`,
+  conferirPagamento: 'Revisar el pago',
+  verCodigoPix: 'Ver el código PIX en Tu cuenta',
+  acessoTerminou: (data: string) => `Tu acceso terminó el ${data}`,
+  vencido: (nome: string) =>
+    `${nome}. Tu progreso sigue guardado y vuelve completo cuando renueves.`,
+  renovar: 'Renovar el acceso',
+  constaComoPago: 'Tu pago figura como pagado',
+  naoPagueDeNovo: 'No pagues de nuevo.',
+  pagoSemAcesso: ' El acceso todavía no apareció en esta cuenta: escríbenos y lo liberamos.',
+  comecarCurso: 'Empezar el curso de hebreo',
+  verTudo: 'Ver todo lo que ofrece Hebraico Fluente',
+  outroEmail: '¿Compraste con otro correo? El curso queda en la cuenta del correo que pagó.',
+  entrarComOutro: 'Entrar con otro correo',
+  jaPagou: '¿Ya pagaste y el curso no aparece? ',
+  faleComAGente: ' Escríbenos',
+  pelo: ' por ',
+  whatsapp: 'WhatsApp',
+  ou: ' o',
+  por: 'a ',
+  comEmailDaCompra: ', con el correo de la compra.',
+  minhaBiblioteca: 'Mi Biblioteca'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

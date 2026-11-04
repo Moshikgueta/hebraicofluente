@@ -29,5 +29,22 @@ const en: Traducao<typeof pt> = {
   betPe: 'בּ is voiced, like the B in "boy". פּ is unvoiced, like the P in "pen".'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  // etapa 3: pronúncia, rever
+  heHet: 'La ה es una H suave y soplada, como en el inglés "hello". La ח es raspada, en la parte de atrás de la boca, como la J de "jamón".',
+  // etapa 3: pronúncia, rever
+  shinSamech: 'La שׁ suena como la SH del inglés "show". La ס suena como la S de "sapo".',
+  // etapa 3: pronúncia, rever
+  zayinSamech: 'La ז tiene voz, como la Z del inglés "zebra", un zumbido. La ס no tiene voz, como la S de "sapo".',
+  // etapa 3: pronúncia, rever
+  tsadiSamech: 'La צ suena TS, como en "tsunami". La ס es solo S, como en "sapo".',
+  // etapa 3: pronúncia, rever
+  daletTav: 'La ד tiene voz, como la D de "dado". La ת no tiene voz, como la T de "techo".',
+  // etapa 3: pronúncia, rever
+  guimelKuf: 'La ג tiene voz, como la G de "gato". La ק no tiene voz, como la C de "casa".',
+  // etapa 3: pronúncia, rever
+  betPe: 'La בּ tiene voz, como la B de "bola". La פּ no tiene voz, como la P de "pato".'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

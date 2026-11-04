@@ -17,5 +17,12 @@ const en: Traducao<typeof pt> = {
   praticarAgora: 'Practice now'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  vamosPraticar: (a, b) => <>¿Practicamos la diferencia entre {a} y {b}?</>,
+  trocou: n =>
+    `Confundiste estas dos letras ${n} veces. Una ronda corta solo con ellas ayuda a distinguirlas.`,
+  praticarAgora: 'Practicar ahora'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -11,5 +11,10 @@ const en: Traducao<typeof pt> = {
   abrirTodas: 'Open all sections'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  fecharTodas: 'Cerrar todas las partes',
+  abrirTodas: 'Abrir todas las partes'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

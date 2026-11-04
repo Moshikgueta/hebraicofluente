@@ -204,5 +204,111 @@ const en: Traducao<typeof pt> = {
   )
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Preguntas frecuentes - Hebraico Fluente',
+  metaDescricao:
+    'Pago, acceso, plazo, celular, audio, certificado y reembolso - las preguntas ' +
+    'que aparecen antes de comprar, respondidas sin rodeos.',
+
+  saberQ: '¿Necesito saber algo de hebreo para empezar?',
+  saberA: 'No. El curso empieza suponiendo que nunca viste el alfabeto y que ni siquiera sabes dónde empieza el texto. La primera lección enseña una sola letra.',
+
+  tempoQ: '¿Cuánto tiempo lleva?',
+  tempoA: (tempo: string) => `${tempo} No hay plazos internos ni grupo: el curso te espera.`,
+
+  pagoQ: '¿Cómo pago?',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagoPix: 'Por PIX, desde la app de tu banco. El checkout muestra el código para copiar y pegar.',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagoPixPreco: (preco: string, pct: number, cheio: string) =>
+    `El curso cuesta ${preco}${pct > 0 ? ` por PIX (${pct}% de descuento sobre los ${cheio})` : ''}.`,
+  pagoSemCartao: 'Con tarjeta de crédito todavía no. Cuando esté disponible, aparecerá en el checkout.',
+  // etapa 5/6: Brasil, rever (PIX e parcelamento)
+  pagoPixCartao: (parcelas: string) => `PIX, tarjeta de crédito en un pago o en cuotas ${parcelas}.`,
+  // etapa 5: o site em espanhol cobra pelo Paddle
+  pagoCartao: () =>
+    'Tarjeta, PayPal, Apple Pay o Google Pay, en el checkout seguro de Paddle, nuestro revendedor autorizado. Pago único, impuestos incluidos.',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagoAVista: (preco: string, pix: string | null) => `En un solo pago, el curso cuesta ${preco}${pix ? `, o ${pix} por PIX` : ''}.`,
+  pagoPreLancamento: (fim: string | null, cheio: string, meses: number) =>
+    `Ese es el precio de preventa${fim ? `, válido hasta el ${fim}` : ''}. Después, el curso pasará a costar ${cheio}. Si compras ahora, pagas una vez y tienes los ${meses} meses de acceso.`,
+  // etapa 5: o site em espanhol cobra pelo Paddle
+  pagoJuros: 'Paddle procesa el pago y se encarga de los impuestos de tu país. El total en dólares estadounidenses aparece antes de que confirmes, y esta plataforma nunca recibe los datos de tu tarjeta.',
+
+  liberadoQ: '¿Cuándo se habilita el acceso?',
+  liberadoCartao: 'Con tarjeta, en el momento - la confirmación llega en segundos.',
+  // etapa 5/6: Brasil, rever (PIX)
+  liberadoPix: 'Por PIX, apenas se acredita el pago, lo que suele tardar menos de un minuto.',
+  liberadoAutomatico: 'El acceso se habilita automáticamente. No hay aprobación manual, y no necesitas enviarle un comprobante a nadie.',
+  liberadoAMao: (dias: number) =>
+    `Después de que revisamos el pago: por ahora el acceso se habilita a mano, en hasta ${dias} días hábiles. No necesitas dejar ninguna página abierta ni enviar comprobante: solo entra con el mismo correo y la misma contraseña que usaste para comprar.`,
+  liberadoPrazo: (email: string) => `Si pasa ese plazo, escribe a ${email} con el correo de la compra.`,
+
+  acessoQ: '¿Por cuánto tiempo tengo acceso?',
+  acessoMeses: (meses: number, inicio: string) =>
+    `${meses} meses, ${inicio}, con todo lo que se agregue al curso en ese período.`,
+  acessoAviso: 'Cerca del final, la plataforma te avisa - con treinta días de anticipación, y otra vez en la última semana.',
+
+  incluidoQ: '¿Qué no está incluido?',
+  incluidoA1: (duvidas: string) =>
+    `El curso es autoinstructivo: estudias a tu ritmo, y la plataforma corrige cada ejercicio en el momento. Por eso no hay clases en vivo, ni corrección o seguimiento por parte de un profesor. La atención por correo y WhatsApp es para acceso, pago y cuenta. ${duvidas}`,
+  incluidoA2: 'Tampoco vienen incluidos: otros cursos, una aplicación para instalar (todo funciona en el navegador) ni material físico. El certificado de finalización no es un certificado oficial.',
+
+  falarQ: '¿El curso enseña a hablar y a entender hebreo?',
+  falarA: 'Aquí aprendes a decodificar: reconocer cada letra y cada signo de vocal, leer palabras en voz alta y escribirlas.',
+
+  celularQ: '¿Funciona en el celular?',
+  celularA1: 'Se hizo primero para el celular. Los ejercicios caben en una mano, los botones son lo bastante grandes para el pulgar, y la pantalla no se mueve cuando escribes una letra con el dedo.',
+  celularA2: 'En la computadora se convierte en un panel más grande, con el alfabeto entero y el progreso a la vista de una vez.',
+
+  audioQ: '¿El curso tiene audio con voz real?',
+  audioSim1: 'Sí. Las letras, las sílabas, las palabras, las frases y los textos del curso tienen audio grabado por el profesor, un israelí. Escuchas cuantas veces quieras, y también más despacio.',
+  audioSim2: 'Los ejercicios de escucha usan esas grabaciones: escuchas y respondes, sin ver el texto.',
+  // etapa 3: pronúncia, rever
+  audioNao1: 'Las grabaciones están en producción. Mientras no estén, el curso no usa voz sintética: cada sonido se explica comparándolo con un sonido del español.',
+  audioNao2: 'Los ejercicios que dependen solo de escuchar quedan desactivados hasta entonces, en lugar de volverse adivinanza.',
+
+  maoQ: '¿Necesito saber escribir a mano?',
+  maoA1: 'No hace falta, pero el curso lo enseña. Trazas la letra con el dedo en la pantalla, en el orden correcto de los trazos, y recibes una evaluación del trazo - no una nota, un comentario.',
+  maoA2: 'Si no quieres escribir, puedes saltar esa etapa: no bloquea el resto de la lección.',
+
+  progressoQ: '¿Mi progreso queda guardado?',
+  progressoA1: 'Sí, y la plataforma vuelve exactamente a la lección y a la pregunta donde te quedaste.',
+  progressoA2: 'Es de tu cuenta, no del dispositivo: estudia en el celular, ábrelo en la computadora y sigue donde estabas. Si se cae internet en medio de una clase, lo que ya hiciste queda guardado en el dispositivo y se sube solo cuando vuelve la conexión. Para abrir una clase nueva, necesitas estar conectado.',
+  progressoA3: 'Y si ya habías estudiado en este dispositivo antes de entrar en tu cuenta, no se pierde nada: las dos cosas se juntan al iniciar sesión.',
+  progressoA4: 'La cuenta puede quedar conectada en hasta 3 dispositivos al mismo tiempo. Si entras en un cuarto, el más antiguo te pide iniciar sesión otra vez, y lo que tenía se junta con la cuenta cuando vuelvas a entrar.',
+
+  bibliaQ: '¿Voy a poder leer la Biblia en hebreo?',
+  bibliaA1: 'Leerla en voz alta, sí. El texto hebreo de la Biblia viene con los signos de vocal, que son exactamente los que enseña este curso - con las 22 letras decodificas cualquier versículo, sin transliteración.',
+  bibliaA2: 'Entender lo que leíste, no. Eso pide vocabulario y gramática, y es otro curso. Vale la pena decir que son dos cosas distintas antes de la compra, y no después.',
+  bibliaLink: 'Génesis 1:1, palabra por palabra',
+
+  certificadoQ: '¿Hay certificado?',
+  certificadoA1: 'Sí, y no es por participación. Sale cuando dos cosas están hechas: todas las letras completadas y el examen final aprobado, con al menos 70%.',
+  certificadoA2: 'Es una imagen con tu nombre y la fecha, lista para publicar. Dice, en la propia imagen, que no es un certificado oficial ni una evaluación de dominio reconocida - porque no lo es, y quien la recibe merece saberlo.',
+
+  gostarQ: '¿Y si no me gusta?',
+  // etapa 5/6: Brasil, rever (CDC, direito de arrependimento)
+  gostarA1: (dias: number, inicio: string) =>
+    `Tienes ${dias} días para cancelar, ${inicio}. Dentro de ese plazo, basta con pedirlo: te devolvemos el monto completo, sin preguntas y sin pasos extra.`,
+  // etapa 5/6: Brasil, rever (Mercado Pago)
+  gostarA2: (sozinho: boolean, email: string, confirmacao: string) =>
+    `En Tu cuenta, en la compra, usa "Cancelar la compra"${sozinho ? ': el reembolso se le pide a Paddle en el momento, de forma automática' : ''}. Si prefieres, escribe a ${email} con el correo de la compra. ${confirmacao}`,
+
+  niveisQ: '¿De verdad van a lanzar los otros niveles?',
+  niveisA1: 'El A1 está en producción y es el próximo. El A2 y el B1 vienen después, en ese orden.',
+  niveisA2: 'Cuando salgan, entran en la misma cuenta y en la misma plataforma - no empiezas de nuevo en otro lugar, y lo que ya hiciste sigue donde está.',
+
+  trilha: 'Preguntas',
+  eyebrow: 'Preguntas frecuentes',
+  titulo: 'Todo lo que vale la pena saber antes de empezar.',
+  lead: 'Respuestas directas sobre el curso, el acceso, el contenido y lo que puedes esperar de la experiencia dentro de la plataforma.',
+  perguntas: 'Preguntas frecuentes',
+  ctaTitulo: '¿Quedó alguna pregunta afuera?',
+  ctaLinha: (email: ReactNode, prazo: string, duvidas: string): ReactNode => (
+    <>Escribe a{' '}{email}. Respondemos {prazo}. {duvidas}</>
+  )
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

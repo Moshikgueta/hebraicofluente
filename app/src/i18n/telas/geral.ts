@@ -18,5 +18,14 @@ const en: Traducao<typeof pt> = {
     'instant feedback and progress that picks up where you left off.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  /* El nombre de la marca no se traduce. */
+  marca: 'Hebraico Fluente',
+  titulo: 'Hebraico Fluente - aprende a leer hebreo desde cero',
+  descricao:
+    'Aprende a leer y escribir hebreo, empezando por el alfabeto: lecciones interactivas, ' +
+    'corrección al instante y un progreso que sigue donde lo dejaste.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

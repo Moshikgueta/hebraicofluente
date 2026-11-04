@@ -14,5 +14,12 @@ const en: Traducao<typeof pt> = {
   voltar: 'Back to the start'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  tituloDaAba: 'Página no encontrada - Hebraico Fluente',
+  titulo: 'Esta página no existe',
+  texto: 'Tal vez el enlace sea antiguo.',
+  voltar: 'Volver al inicio'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

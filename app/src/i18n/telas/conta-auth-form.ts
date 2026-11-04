@@ -65,5 +65,37 @@ const en: Traducao<typeof pt> = {
   verOCurso: 'See the course'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaEntrarTitulo: 'Entrar - Hebraico Fluente',
+  metaEntrarDescricao: 'Entra en tu cuenta y sigue desde donde lo dejaste.',
+  metaCriarTitulo: 'Crear cuenta - Hebraico Fluente',
+  metaCriarDescricao: 'Crea tu cuenta en Hebraico Fluente.',
+  motivoAparelhos:
+    'Entraste en otro dispositivo y esta sesión se cerró. ' +
+    'El límite es de 3 dispositivos al mismo tiempo.',
+  criarSuaConta: 'Crea tu cuenta',
+  entrar: 'Entrar',
+  subtituloCadastro: 'Tus cursos, tu progreso y tu certificado quedan todos aquí.',
+  subtituloEntrar: 'Qué bueno verte de nuevo. ¿Seguimos con tu hebreo?',
+  comoQuerSerChamado: 'Cómo quieres que te llamemos',
+  exemploNome: 'ej.: Daniel',
+  email: 'Correo electrónico',
+  exemploEmail: 'ej.: tu@ejemplo.com',
+  confiraEmail: 'Revísalo con cuidado: ahí llegan el recibo de la compra y el enlace de la contraseña.',
+  senha: 'Contraseña',
+  peloMenos: (n: number) => `Al menos ${n} caracteres.`,
+  liEAceito: 'Leí y acepto los',
+  termosDeUso: 'Términos de Uso',
+  comoTratamos: 'Cómo tratamos tus datos:',
+  politicaDePrivacidade: 'Política de Privacidad',
+  criando: 'Creando…',
+  entrando: 'Entrando…',
+  criarConta: 'Crear cuenta',
+  esqueciSenha: 'Olvidé mi contraseña',
+  jaTemConta: '¿Ya tienes cuenta?',
+  aindaNaoComprou: '¿Todavía no lo compraste?',
+  verOCurso: 'Ver el curso'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

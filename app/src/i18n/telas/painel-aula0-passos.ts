@@ -78,5 +78,43 @@ const en: Traducao<typeof pt> = {
   fimVerPagina: 'See Lesson 0 on one page'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  passo1: 'No es el sistema del español',
+  passo2: 'Dónde están las vocales',
+  passo3: 'El nikud',
+  passo4: '¿Entendiste el nikud?',
+  passo5: 'Cuatro letras especiales',
+  passo6: 'De derecha a izquierda',
+  passo7: 'Formas finales y letra muda',
+  passo8: 'Impresa y cursiva',
+  passo9: 'Qué hebreo es este',
+  passo10: 'El camino del curso',
+  passo11: 'Revisión final',
+
+  entrega1: 'Por qué el hebreo casi no escribe las vocales, y dónde están.',
+  entrega2: 'Hacia qué lado se lee, y qué pasa con los números.',
+  entrega3: 'Qué son los puntitos, las formas finales y la letra muda.',
+  capaSelo: 'Clase 0 · {n} pasos cortos',
+  capaTitulo: 'El secreto del alfabeto, antes de la primera letra',
+  capaLeitura: 'shalóm · se lee de derecha a izquierda',
+  rever: 'Repasar paso a paso',
+  continuarDo: 'Continuar desde el paso {n}',
+  comecar: 'Empezar la Clase 0',
+  capaFeita: 'Clase 0 completada: las letras están abiertas.',
+  capaDuracao: 'Unos diez minutos. Al final, una revisión rápida abre la primera letra.',
+  verTudo: 'Ver todo en una página',
+
+  sairAria: 'Salir de los pasos y volver a la portada de la Clase 0',
+  passoDe: 'Clase 0 · paso {n} de {total}',
+  voltar: 'Volver',
+  respondaChecagem: 'Responde la revisión de arriba: abre la primera letra.',
+  proximo: 'Siguiente: {nome}',
+
+  fimTitulo: '¡Clase 0 completada!',
+  fimTexto: 'Ya sabes hacia qué lado se lee, dónde están las vocales y qué son los puntitos. La primera letra está abierta.',
+  fimComecar: 'Empezar la primera letra',
+  fimVerPagina: 'Ver la Clase 0 en una página'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

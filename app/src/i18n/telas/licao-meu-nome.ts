@@ -49,5 +49,30 @@ const en: Traducao<typeof pt> = {
       : `${n} more letters and you can write “${nome}” in Hebrew.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  montagem: 'Tu nombre en hebreo. Toca una letra para quitarla.',
+  toqueNasLetras: 'toca las letras de abajo',
+  tirarEspaco: 'Quitar el espacio',
+  tirarLetra: g => `Quitar la letra ${g}`,
+  disponiveis: 'Letras disponibles',
+  porLetra: g => `Poner la letra ${g}`,
+  // etapa 3: pronúncia, rever
+  porGeresh: 'Poner el guéresh, el signo de ZH, Y y CH',
+  // etapa 3: pronúncia, rever
+  gereshDica: 'El ׳ convierte ז en ZH, ג en Y y צ en CH',
+  espaco: 'espacio',
+  seuNomeEmHebraico: 'Tu nombre en hebreo',
+  seuNome: 'Tu nombre',
+  praticarOuMudar: 'Practicar o cambiar',
+  escreva: 'Escribe tu nombre en hebreo',
+  jaConsegue: 'Ahora ya puedes escribir tu nombre en hebreo.',
+  todasAsLetras: nome => `Todas las letras de “${nome}” ya pasaron por tus lecciones.`,
+  escrever: 'Escribir mi nombre',
+  faltam: (n, nome) =>
+    n === 1
+      ? `Te falta 1 letra para escribir “${nome}” en hebreo.`
+      : `Te faltan ${n} letras para escribir “${nome}” en hebreo.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -41,5 +41,25 @@ const en: Traducao<typeof pt> = {
   mandarOutro: 'Send another code'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  codigoInvalido: 'Código incorrecto. Revisa los seis números del correo.',
+  codigoVencido: 'Este código venció o se escribió mal demasiadas veces. Pide otro.',
+  semEmail: 'El envío de correo del sitio no está funcionando ahora, así que el código no puede salir.',
+  muitosPedidos: 'Se pidieron muchos códigos en la última hora. Espera un poco y vuelve a intentarlo.',
+  naoDeuMandar: 'No se pudo enviar el código ahora. Vuelve a intentarlo.',
+  semConexao: 'Sin conexión. Vuelve a intentarlo.',
+  naoDeuConferir: 'No se pudo verificar ahora. Vuelve a intentarlo.',
+  titulo: 'Confirma que eres tú',
+  texto:
+    'Los paneles de administrador piden, además de la contraseña, un código de seis números enviado al ' +
+    'correo de esta cuenta. Abre los paneles por 12 horas, solo en este dispositivo.',
+  enviando: 'Enviando…',
+  mandarCodigo: 'Enviar el código a mi correo',
+  codigoRecebido: 'Código recibido por correo (vale 10 minutos)',
+  conferindo: 'Verificando…',
+  entrarNoPainel: 'Entrar al panel',
+  mandarOutro: 'Enviar otro código'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

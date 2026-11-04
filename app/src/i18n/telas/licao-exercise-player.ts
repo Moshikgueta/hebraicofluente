@@ -55,5 +55,32 @@ const en: Traducao<typeof pt> = {
   cacaErros: n => `You tapped ${n === 1 ? 'a letter' : `${n} letters`} that ${n === 1 ? 'was' : 'were'} not the one you were looking for.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  boa: '¡Bien! Es esa.',
+  quaseTroca: '¡Casi!',
+  quase: 'Casi. Mira con calma:',
+  aCerta: nome => `la correcta: ${nome}`,
+  aEscolhida: nome => `la que elegiste: ${nome}`,
+  observeAsDuas: 'Observa las dos letras.',
+  volta: 'Esta pregunta vuelve en un rato, para que la aciertes.',
+  semTranslit: 'Acabas de leer hebreo sin transliteración.',
+  decodificou: 'Sin el apoyo de abajo, sin memorizar - lo decodificaste. Esto es lo que todo el curso estaba construyendo.',
+  verResultado: 'Ver el resultado',
+  continuar: 'Continuar',
+  ouvir: 'Escuchar',
+  sinalNaoFaz: som => `Ese signo no suena “${som}”.`,
+  ordemNaoFecha: 'El orden no cuadra. En hebreo la primera letra va a la derecha.',
+  paresErrados: n => `Uniste ${n === 1 ? 'un par' : `${n} pares`} que no combinan.`,
+  primeiraTentativa: (posicao, esperada, posta) =>
+    `En el primer intento, la letra número ${posicao} era ${esperada}, y no ${posta}.`,
+  procure: 'busca',
+  leitura: 'lectura ←',
+  assimQueSoa: 'así es como suena',
+  ouvirDeNovo: 'Escuchar de nuevo',
+  posicao: n => `Posición ${n}`,
+  seguidas: n => `¡${n} aciertos seguidos!`,
+  cacaErros: n => `Tocaste ${n === 1 ? 'una letra' : `${n} letras`} que no ${n === 1 ? 'era' : 'eran'} la que buscabas.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

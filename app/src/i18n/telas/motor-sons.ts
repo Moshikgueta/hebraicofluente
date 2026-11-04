@@ -54,5 +54,31 @@ const en: Traducao<typeof pt> = {
   gerechOuvir: 'It was {he}: {som}.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aula0: 'Clase 0',
+  silabaLeitura: '¿Cómo se lee esta sílaba?',
+  seLeAssim: '¿Cuál de estas se lee así?',
+  palavraLeitura: '¿Cómo se lee esta palabra?',
+  ouvirSilaba: 'Escucha. ¿Cuál fue la sílaba?',
+  leiaPalavra: 'Léela en voz alta. ¿Qué palabra es esta?',
+  qualSom: '¿Qué sonido tiene esta letra?',
+  ouvirLetra: 'Escucha. ¿Qué letra se dijo?',
+  palavraComSom: '¿Cuál de estas palabras tiene el sonido {som}?',
+  contrasteSilaba: '{he}, {rotulo}, es "{leitura}". {parHe}, {parRotulo}, sería "{parLeitura}".',
+  contrasteDesenho: '"{leitura}" es {he}, {rotulo}. {parHe}, {parRotulo}, es "{parLeitura}".',
+  contrastePalavra: '{he} - "{leitura}", {sentido}. La letra está {rotulo}: suena {som}.',
+  foiRotulo: 'Fue {he}, "{leitura}" - {rotulo}.',
+  suaveSilaba: '{he} es "{leitura}": {letra} {rotulo} suena {som}, y la vocal decide el resto.',
+  suaveDesenho: '"{leitura}" es {he}.',
+  suavePalavra: '{he} - "{leitura}", {sentido}. La {letra} suena {som}.',
+  palavraSentido: '{he} - "{leitura}", {sentido}.',
+  foi: 'Fue {he}, "{leitura}".',
+  gerechLetra: '{he}, con el guéresh, es {som} - {como}. Sin el signo, {parHe} es {parSom}.',
+  gerechDesenho: '{som} es {he}, con la rayita. {parHe}, sin ella, es {parSom}.',
+  gerechPalavra: '{he} - "{leitura}", {sentido}. La {letra} hace el sonido {som}.',
+  gerechQual: '{he} tiene {letra}, con la rayita. Las otras tienen {parHe} sin el signo, que suena {parSom}.',
+  gerechOuvir: 'Fue {he}: {som}.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

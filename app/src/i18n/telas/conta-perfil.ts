@@ -356,5 +356,184 @@ const en: Traducao<typeof pt> = {
   copiarCodigo: 'Copy code'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Tu cuenta - Hebraico Fluente',
+  metaDescricao: 'Tus datos, tus cursos, tu progreso y tus compras.',
+  fraseDeVencido: (data: string) => `Tu acceso terminó el ${data}.`,
+
+  titulo: 'Tu cuenta',
+  subtitulo: 'Tus datos, tus cursos y lo que ya hiciste.',
+  dados: 'Datos',
+  nome: 'Nombre',
+  email: 'Correo electrónico',
+  contaCriadaEm: 'Cuenta creada el',
+  trocarEmailAntes: 'Para cambiar el correo, escribe a',
+  trocarEmailDepois:
+    '. El correo es lo que identifica la cuenta y lo que recibe el enlace de recuperación, así que ' +
+    'cambiarlo tú mismo en la pantalla es el camino más corto para perder la cuenta por un error al escribir.',
+
+  seusCursos: 'Tus cursos',
+  acessoAte: (data: string, dias: number | null) =>
+    `Acceso hasta el ${data}${dias !== null ? ` · ${dias} ${dias === 1 ? 'día' : 'días'}` : ''}`,
+  acessoEncerrado: 'Acceso terminado',
+  aindaNaoLancado: 'Todavía no lanzado',
+  naoEstaNaConta: 'No está en tu cuenta',
+  ativo: 'Activo',
+  renovar: (meses: number) => `Renovar por ${meses} meses más`,
+  emBreve: 'Próximamente',
+  verOCurso: 'Ver el curso',
+  abrirBiblioteca: 'Abrir Mi Biblioteca',
+
+  seuProgresso: 'Tu progreso',
+  letras: 'Letras',
+  curso: 'Curso',
+  sequencia: 'Racha',
+  conquistas: 'Logros',
+  dias: (n: number) => `${n} d`,
+  progressoDemo:
+    'Estos números son de este dispositivo. En esta versión el progreso se guarda en el navegador y no ' +
+    'viaja con la cuenta.',
+  progressoSemCurso:
+    'Estos números son de este dispositivo. El progreso empieza a viajar con la cuenta cuando tengas ' +
+    'un curso - y lo que esté aquí se va con él.',
+  progressoNaConta:
+    'Tu progreso queda en tu cuenta y se sincroniza entre los dispositivos: lo que hagas en el ' +
+    'celular aparece en la computadora. Una copia sigue en este dispositivo: lo que hagas sin ' +
+    'conexión queda guardado y se sube cuando vuelva. Funciona con cualquier conexión; necesitas ' +
+    'internet para abrir cada clase.',
+  verConquistas: 'Ver logros',
+  meuCertificado: 'Mi certificado',
+
+  compras: 'Compras',
+  carregando: 'Cargando…',
+  nenhumaCompra: 'No hay compras registradas en esta cuenta.',
+  // etapa 5/6: Brasil, rever
+  pix: 'PIX',
+  cartao: 'Tarjeta',
+  statusPago: 'Pagado',
+  statusAguardando: 'Pendiente',
+  statusNaoConcluido: 'No completado',
+  statusEstornado: 'Reembolsado',
+  statusExpirado: 'Vencido',
+
+  sair: 'Salir',
+  sairTodosAparelhos:
+    'Esto cierra la sesión de tu cuenta en todos los dispositivos: en el celular, en la tableta y en cualquier ' +
+    'computadora donde esté abierta.',
+  sairProgresso:
+    'Vas a necesitar el correo y la contraseña para volver. Tu progreso queda guardado en tu cuenta ' +
+    'y vuelve en cuanto entres de nuevo, aquí o en cualquier otro dispositivo. Se borra de este ' +
+    'navegador para que nadie que use esta computadora después de ti vea lo que estudiaste.',
+  sairMesmoAssim: 'Salir de todos modos',
+  cancelar: 'Cancelar',
+  sairDaConta: 'Salir de la cuenta',
+  semCursoAtivo: 'Entraste en tu cuenta, pero todavía no tienes ningún curso activo.',
+  verOsCursos: 'Ver los cursos',
+
+  meusDados: 'Mis datos',
+  meusDadosTexto:
+    'Una copia, en un archivo, de todo lo que guardamos sobre tu cuenta: registro, compras, ' +
+    'aceptaciones, registros de acceso y progreso. Por seguridad, la contraseña y los identificadores de ' +
+    'sesión no van en el archivo.',
+  baixarMeusDados: 'Descargar mis datos',
+
+  apagarTitulo: 'Eliminar mi cuenta',
+  /* A palavra que a pessoa escreve para confirmar. Só a tela confere. */
+  palavraApagar: 'ELIMINAR',
+  escrevaParaConfirmar: (palavra: string) => `Escribe ${palavra} en el campo de arriba para confirmar.`,
+  semVolta: 'Esto no tiene vuelta atrás.',
+  semVoltaResto:
+    ' Desaparecen tu correo, tu nombre, tu contraseña, todo tu progreso y tu acceso al curso.',
+  suaSenha: 'Tu contraseña',
+  escreva: (palavra: string) => `Escribe ${palavra}`,
+  cliqueSemQuerer: 'Para estar seguros de que no fue un clic sin querer.',
+  apagando: 'Eliminando…',
+  apagarParaSempre: 'Eliminar mi cuenta para siempre',
+  // etapa 5/6: Brasil, rever
+  apagarExplicacaoAntes:
+    'Puedes eliminar tu cuenta y todos tus datos aquí mismo, sin tener que pedírselo a ' +
+    'nadie. Es definitivo, y también termina el acceso a los cursos que compraste, ',
+  semReembolso: 'sin reembolso',
+  apagarExplicacaoMeio:
+    ' - para recibir tu dinero de vuelta dentro del plazo para cancelar, usa antes',
+  desistirDaCompra: 'Cancelar la compra',
+  apagarExplicacaoFim: ', en Compras.',
+
+  avisoTitulo: 'Aviso del próximo curso',
+  avisoQuero: (curso: string) => `Quiero recibir un correo cuando abra ${curso}.`,
+  avisoNota:
+    'Un solo aviso, cuando abra el curso, y nada más. Sales cuando quieras, desmarcando aquí o ' +
+    'con el enlace que viene en el propio correo.',
+  avisoErro: 'No pude guardar ahora. Vuelve a intentarlo en un momento.',
+
+  lembreteTitulo: 'Recordatorio para estudiar',
+  lembreteQuero: 'Quiero un correo a las 19 h, hora de Brasil (UTC-3), los días en que todavía no haya estudiado.',
+  lembreteNota:
+    'Como máximo uno por día. Después de tres recordatorios sin estudio, se detienen solos hasta que vuelvas. ' +
+    'Lo desactivas cuando quieras, aquí o con el enlace del propio correo.',
+
+  senhaTitulo: 'Contraseña',
+  senhasDiferentes: 'Las dos contraseñas no son iguales.',
+  senhaIgualAtual: 'La contraseña nueva es igual a la actual.',
+  senhaAtualNaoConfere: 'La contraseña actual no es correcta.',
+  senhaTrocada:
+    'Contraseña cambiada. Se cerró la sesión en los otros dispositivos donde habías entrado - este sigue.',
+  senhaAtual: 'Contraseña actual',
+  senhaNova: 'Contraseña nueva',
+  peloMenos: (n: number) => `Al menos ${n} caracteres.`,
+  repitaSenhaNova: 'Repite la contraseña nueva',
+  trocando: 'Cambiando…',
+  trocarASenha: 'Cambiar la contraseña',
+  trocarSenhaExplicacao:
+    'Cambiar la contraseña cierra la sesión en los otros dispositivos. Es lo que quieres si crees que alguien entró ' +
+    'en tu cuenta.',
+
+  emailNaoConfirmadoAntes: 'Tu correo todavía no está confirmado. Al registrarte enviamos un enlace a',
+  emailNaoConfirmadoDepois:
+    ' - abre ese correo con la cuenta abierta aquí, y listo. Mientras tanto no se bloquea nada.',
+  linkEnviado: 'Enlace enviado. Vale por siete días.',
+  demonstracao: ' Demostración: ',
+  abrirOLink: 'abrir el enlace',
+  enviando: 'Enviando…',
+  mandarDeNovo: 'Enviar el enlace de nuevo',
+
+  // etapa 5/6: Brasil, rever
+  desistenciaPedidaEm: (quando: string) => `Cancelación pedida el ${quando}.`,
+  estornoAutomatico:
+    'El reembolso ya se pidió a Mercado Pago y el dinero vuelve por el mismo medio de pago. El ' +
+    'acceso se cierra cuando lo confirme.',
+  estornoManual: (dias: number) =>
+    `El dinero vuelve por el mismo medio de pago, en hasta ${dias} días hábiles.`,
+  confirmaPorEmail: (email: string) =>
+    `También lo vamos a confirmar por correo, a ${email}. Si el mensaje no llega, esta línea, con la ` +
+    'fecha y la hora, es el registro de tu pedido.',
+  temCerteza: '¿Seguro que quieres cancelar?',
+  perdeAcesso: 'Si cancelas, pierdes el acceso a:',
+  perdeLicoes: (n: number) => `${n} lecciones, con el audio del profesor`,
+  perdeExercicios: 'Los ejercicios de escritura, lectura y repaso',
+  perdeJogos: 'Los juegos de práctica y el certificado de finalización',
+  jaDomina: (n: number, total: number) => `Hasta ahora, ya dominas ${n} de ${total} letras.`,
+  motivoOpcional: 'Si quieres, cuéntanos el motivo: nos ayuda a mejorar el curso. Es opcional.',
+  prefiroNaoDizer: 'Prefiero no decirlo',
+  recebeAntes: 'Recibes ',
+  recebeForte: 'el 100% de tu dinero de vuelta',
+  recebeDepois:
+    ', sin tener que explicar el motivo, y el acceso al curso termina cuando se procese el ' +
+    'reembolso. Tu progreso queda guardado.',
+  confirmarDesistencia: 'Confirmar la cancelación',
+  voltar: 'Volver',
+  whatsappAntes:
+    '¿Te trabaste en alguna lección o tuviste un problema técnico? Si prefieres, habla antes con el profesor',
+  peloWhatsapp: 'por WhatsApp',
+  whatsappDepois: '. Puedes cancelar igual después, dentro del plazo.',
+  podeDesistirAte: (quando: string) => `Puedes cancelar hasta el ${quando}.`,
+
+  verCodigoPix: 'Ver código PIX',
+  pixValidoAte: (hora: string) =>
+    `Código PIX copiar y pegar de este pedido, válido hasta las ${hora}. Si ya pagaste, no pagues de nuevo.`,
+  copiado: 'Copiado ✓',
+  copiarCodigo: 'Copiar código'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

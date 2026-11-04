@@ -28,5 +28,18 @@ const en: Traducao<typeof pt> = {
   nLetras: n => `${n} letters`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  letra: 'letra',
+  nomeFinal: nome => `${nome} final`,
+  encontre: 'Encuentra todas las letras iguales a esta.',
+  aLetraE: nome => ` La letra es ${nome}.`,
+  nestaGrade: (achadas, quantas) => `${achadas} de ${quantas} en esta cuadrícula`,
+  letraDe: (n, total) => `Letra ${n} de ${total}`,
+  encontrada: nome => `${nome}, encontrada`,
+  achou: (n, he, ultima) =>
+    <>Encontraste las {n}{' '}{he}.{' '}{ultima ? 'Fin de la partida.' : 'Ahora otra letra.'}</>,
+  nLetras: n => `${n} letras`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

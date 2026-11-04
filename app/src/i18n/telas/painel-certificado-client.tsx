@@ -135,5 +135,68 @@ const en: Traducao<typeof pt> = {
   verCertificado: 'See the certificate'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  escrevaParaBaixar: 'Escribe tu nombre en el campo de arriba antes de descargar.',
+  imagemSalva: 'Imagen guardada.',
+  escrevaParaCompartilhar: 'Escribe tu nombre en el campo de arriba antes de compartir.',
+  textoCopiado: 'Texto copiado.',
+  naoCopiou: 'No se pudo copiar: selecciona el texto de arriba.',
+
+  certificado: 'Certificado',
+  faltaTitulo: 'Todavía falta un poco',
+  faltaTexto: 'El certificado sale cuando las dos cosas estén hechas. No tienen plazo.',
+  requisitoLicoes: 'Las lecciones de las {total} letras completadas',
+  requisitoLicoesDetalhe: '{n} de {total} completadas.',
+  irParaMapa: 'Ir al mapa',
+  requisitoExame: 'El examen final',
+  melhorResultado: 'Mejor resultado: {nota}% - aprobación desde {minimo}%',
+  aprovacaoAPartir: 'Aprobación desde {minimo}%',
+  fazerExame: 'Hacer el examen',
+  porParticipacao: 'Un certificado por participación no vale nada, ni para quien lo recibe. Por eso este depende de leer, y no de terminar.',
+
+  aprovadoEm: 'Aprobado el {data}',
+  seuCertificado: 'Tu certificado',
+  geradoAqui: 'La imagen se genera aquí, en tu dispositivo. Elige el formato, revisa el nombre y descárgala o compártela.',
+  imagemAria: 'Certificado de finalización del curso Hebraico Fluente a nombre de {nome}, {data}.',
+  alunoReserva: 'alumno',
+  nomeNoCertificado: 'Nombre en el certificado',
+  comoAparecer: 'Cómo quieres aparecer',
+  semNome: 'Escribe tu nombre: el certificado solo sale con él.',
+  nomeEmHebraico: 'Agregar mi nombre en hebreo al certificado',
+  grafiaNota: 'Un nombre no tiene una sola grafía en hebreo. Revisa cómo quedó y ajústalo si hace falta: el certificado usa exactamente lo que esté aquí.',
+  grafiasSugeridas: 'Grafías sugeridas',
+  conferi: 'Lo revisé: así se escribe mi nombre',
+  formato: 'Formato',
+  gerando: 'Generando…',
+  compartilhar: 'Compartir',
+  baixarPng: 'Descargar PNG',
+  textoDoPost: 'Texto para la publicación',
+  copiarTexto: 'Copiar texto',
+  oQueERotulo: 'Qué es este certificado:',
+  oQueETexto: 'el registro de que completaste las lecciones de las 22 letras y aprobaste el examen final de este curso, con {nota}.',
+  notaDeAprovacao: 'nota de aprobación',
+  verificouRotulo: 'Qué verificó el examen:',
+  naoERotulo: 'Qué no es:',
+  naoETexto: 'un certificado oficial, un diploma ni una evaluación de competencia reconocida. Eso está escrito en la propia imagen: quien lo recibe merece saberlo, y tú también.',
+  oQueConquistou: 'Lo que lograste',
+  continuarPraticando: 'Seguir practicando',
+
+  carregando: 'Cargando tu certificado…',
+  emitirTitulo: 'Emite tu certificado',
+  emitirTexto: 'Revisa el nombre tal como quieres que aparezca. Una vez emitido, el certificado recibe un código que cualquier persona puede verificar en el sitio, y el nombre ya no cambia.',
+  emitir: 'Emitir el certificado',
+  emitindo: 'Emitiendo…',
+  nomeFixo: 'El nombre quedó fijado al emitir el certificado.',
+  codigoPagina: (codigo: string) => `Código del certificado: ${codigo}. Cualquier persona puede verificarlo en la página de verificación de certificados del sitio.`,
+  faltaServidor: 'El resultado de tu examen todavía no llegó al servidor. Abre el curso con internet un momento e intenta de nuevo.',
+  tentarDeNovo: 'Intentar de nuevo',
+  erroEmitir: 'No pude emitirlo ahora. Revisa tu conexión e intenta de nuevo.',
+  nomeInvalido: 'Usa solo letras, espacios, guiones, apóstrofos y puntos, de 3 a 80 caracteres.',
+
+  cartaoTitulo: 'Tienes un certificado para compartir.',
+  cartaoTexto: (alef: ReactNode) => <>Con tu nombre, la fecha de aprobación y las 22 letras{' '}{alef}, en cuadrado o en horizontal.</>,
+  verCertificado: 'Ver el certificado'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

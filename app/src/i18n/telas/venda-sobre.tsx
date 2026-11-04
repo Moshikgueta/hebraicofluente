@@ -71,5 +71,40 @@ const en: Traducao<typeof pt> = {
   verDuvidas: 'See the frequently asked questions'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Sobre Moshik - Hebraico Fluente',
+  metaDescricao:
+    'Moshik Gueta, israelí, profesor de hebreo y de idiomas: el recorrido por ' +
+    'Israel y Buenos Aires detrás de Hebraico Fluente.',
+  trilha: 'Sobre',
+
+  porqueEyebrow: 'Cómo se pensó el curso',
+  porqueTitulo: 'Tres decisiones que hacen el aprendizaje más liviano.',
+  porqueLead: 'Cada parte del curso se organizó para evitar la sobrecarga y dejarte avanzar con confianza.',
+  umaT: 'Una letra a la vez',
+  umaB: 'Conoces la letra, practicas con ella y solo entonces avanzas. Lo que empieza como un alfabeto completamente extraño se vuelve familiar poco a poco - y lo que parecía imposible se convierte en una serie de pasos cortos.',
+  apoioT: 'El apoyo aparece y después se va',
+  apoioB: 'La transliteración ayuda al principio, y el objetivo nunca fue que dependieras de ella. Disminuye junto con tu progreso, con ejercicios hechos para cada etapa de esa retirada, hasta que lees directo del hebreo.',
+  retornoT: 'Respuesta al instante, en cada paso',
+  retornoB: 'No necesitas esperar a un profesor para saber si acertaste. Cada ejercicio corrige en el momento, cada error explica dónde mirar, y el examen final te dice antes de empezar la nota para aprobar y, al final, qué partes piden repaso.',
+
+  origemEyebrow: 'El método',
+  origemTitulo: 'Un método adaptado.',
+  origemLead: 'Principios consolidados de aprendizaje de idiomas, más lo que aprendí enseñando hebreo a principiantes.',
+  adaptacaoTitulo: 'Lo que adapté yo',
+  // etapa 3: pronúncia, rever (a adaptação para quem fala espanhol ainda está por fazer)
+  adaptacaoTexto: 'Los ejercicios, las explicaciones y la escritura cursiva se pensaron para las dificultades de quien parte de otro idioma: comparaciones con sonidos que ya conoces, los errores típicos de quien empieza y todo lo que pasa en la pantalla.',
+  deOndeTitulo: 'De dónde viene el método',
+  deOndeTexto: (autor: string, obra: ReactNode, translit: string, adaptacoes: string): ReactNode => (
+    <>El camino que sigue este curso parte del método del{' '}{autor}, autor de{' '}{obra}{' '}({translit}). El contenido de su libro es la base de lo que enseña la plataforma. {adaptacoes}</>
+  ),
+  licoesImpressas: (n: number) =>
+    `Las ${n} lecciones, las palabras de cada letra y los ejercicios vinieron de material impreso y pasaron a la plataforma desde la misma fuente: si una palabra cambia, cambia en los dos.`,
+
+  ctaTitulo: '¿Tienes una pregunta antes de empezar?',
+  ctaLinha: (email: string) => `Las más comunes ya están respondidas. Para lo demás, escribe a ${email}.`,
+  verDuvidas: 'Ver las preguntas frecuentes'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

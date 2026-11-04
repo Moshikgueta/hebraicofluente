@@ -89,5 +89,47 @@ const en: Traducao<typeof pt> = {
   cancelar: 'Cancel'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  estadoNovo: 'Recibido. El autor del curso todavía no lo leyó.',
+  estadoAprovado: 'Leído y aprobado para publicación.',
+  estadoRecusado: 'Leído. Este texto no se va a publicar, pero sigue contando como opinión para el curso.',
+  erroEnviar: 'No se pudo enviar ahora. Inténtalo de nuevo en unos instantes.',
+  obrigadoAutorizado: '¡Gracias! Recibimos tu testimonio y tu autorización.',
+  obrigadoPrivado: '¡Gracias! Recibimos tu testimonio. Solo lo va a leer el autor del curso.',
+  erroInternet: 'No se pudo enviar ahora. Revisa tu conexión a internet e inténtalo de nuevo.',
+  retirado: 'Listo: el testimonio y la autorización se borraron.',
+  erroRetirar: 'No se pudo retirar ahora. Inténtalo de nuevo en unos instantes.',
+
+  voltar: '← Mi hebreo',
+  titulo: 'Cuéntanos cómo te va',
+  intro: 'Tu testimonio ayuda a mejorar el curso y ayuda a quien está pensando en empezar. Escríbelo a tu manera, con lo que estuvo bien y con lo que no.',
+  seuDepoimento: 'Tu testimonio',
+  oSeuDepoimento: 'Tu testimonio',
+  dicas: 'Si te ayuda, responde una de estas: ¿por qué quisiste aprender a leer hebreo? ¿Qué puedes leer hoy que antes no podías? ¿Qué te ayudó más, o qué podría ser mejor?',
+  contagem: '{n} de {max} caracteres',
+  minimo: ' (mínimo {min})',
+
+  comoAssinar: 'Cómo firmarlo, si se publica',
+  formaNome: 'Con mi nombre (y la ciudad, si quiero)',
+  formaIniciais: 'Solo con las iniciales del nombre',
+  formaAnonimo: 'Sin nombre: "Alumno del curso"',
+  nomeIniciais: 'Nombre (solo aparecen las iniciales)',
+  nomeQueAparece: 'Nombre que aparece',
+  cidade: 'Ciudad (opcional)',
+  comoApareceria: 'Cómo aparecería',
+
+  autorizo: 'Autorizo a Hebraico Fluente a publicar este testimonio, tal como está en la vista previa de arriba, en el sitio y en materiales de divulgación del curso, sin pago. Puedo retirar la autorización cuando quiera, en esta misma página.',
+  aceitoEmail: 'Acepto recibir un correo del autor del curso sobre este testimonio.',
+  regras: (link: Link) => <>Sin la autorización, el texto queda solo para que lo lea el autor del curso. Publicamos el texto como lo escribiste, sin cambiar ninguna palabra; si hay que acortarlo, el corte aparece marcado con [...]. Si retiras la autorización, el testimonio se quita de donde esté publicado en un plazo de 7 días. Más detalles en la {link('Política de Privacidad')}.</>,
+
+  enviando: 'Enviando…',
+  salvarMudancas: 'Guardar los cambios',
+  enviar: 'Enviar el testimonio',
+  retirarTitulo: 'Retirar el testimonio',
+  retirarTexto: 'Borra el texto y la autorización. Si está publicado, se quita en un plazo de 7 días.',
+  simRetirar: 'Sí, retirar',
+  cancelar: 'Cancelar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

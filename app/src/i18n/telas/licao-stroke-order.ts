@@ -16,5 +16,12 @@ const en: Traducao<typeof pt> = {
   movimentos: n => (n === 1 ? 'just one stroke' : `${n} strokes, in this order`)
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  rotulo: (letra, n) => `Orden de los trazos de la letra ${letra}: ${n} ${n === 1 ? 'movimiento' : 'movimientos'}`,
+  mostrando: 'Mostrando…',
+  verDeNovo: 'Ver de nuevo',
+  movimentos: n => (n === 1 ? 'un solo movimiento' : `${n} movimientos, en este orden`)
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

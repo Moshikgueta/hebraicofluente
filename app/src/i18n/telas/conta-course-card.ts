@@ -46,5 +46,28 @@ const en: Traducao<typeof pt> = {
   verTodos: 'See all courses →'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  seuCurso: 'Tu curso',
+  disponivel: 'Disponible',
+  emBreve: 'Próximamente',
+  continuar: 'Continuar',
+  verOQueVem: 'Ver lo que viene',
+  verOCurso: 'Ver el curso',
+  aindaNaoNaConta: 'Todavía no está en tu cuenta',
+  modulos: (n: number) => `${n} módulos`,
+  licoes: (n: number) => ` · ${n} lecciones`,
+  concluido: (pct: number) => `${pct}% completado`,
+  // etapa 5/6: Brasil, rever
+  noPix: 'con PIX',
+  ouNoCartao: () => '· pago único',
+  preLancamento: (ate: string | null, depois: string) =>
+    `· prelanzamiento${ate ? ` hasta el ${ate}` : ''}, después ${depois}`,
+
+  cursos: 'Cursos',
+  naSuaConta: 'En tu cuenta',
+  emBreveMinusculo: 'próximamente',
+  verTodos: 'Ver todos los cursos →'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

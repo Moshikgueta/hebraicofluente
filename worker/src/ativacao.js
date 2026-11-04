@@ -25,7 +25,7 @@ import { ativacoesParaAvisar, normalizeEmail, pegarTrava, reservarAtivacao, solt
 import { emailsDeAdmin } from './lib/admin.js';
 import { mailReady, sendMail } from './lib/mail.js';
 import { mensagens } from './lib/mensagens.js';
-import { origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
+import { idiomaDaConta, origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
 import empresa from '../../data/empresa.json';
 
 /** Compras pagas a partir daqui recebem os lembretes (o dia seguinte à publicação). */
@@ -60,14 +60,14 @@ export async function runAtivacao(env, at = Date.now()) {
       const curso = getCourse(v.course_slug);
       /* A língua e os links são os da conta: este agendamento roda no Worker
          brasileiro para as contas dos dois sites (lib/idioma.js). */
-      const idioma = v.idioma === 'en' ? 'en' : 'pt';
+      const idioma = idiomaDaConta(v);
       const site = origemDoIdioma(env, idioma);
       const r = await sendMail(env, {
         to: email,
         ...mensagens(idioma).ativacao({
           nome: v.name || '',
           curso: v.course_slug === 'alfabetizacao-e-israel'
-            ? tituloDoCurso(getCourse('alfabetizacao'), idioma, idioma === 'en' ? 'Hebrew' : 'de hebraico')
+            ? tituloDoCurso(getCourse('alfabetizacao'), idioma, idioma === 'en' ? 'Hebrew' : idioma === 'es' ? 'de hebreo' : 'de hebraico')
             : tituloDoCurso(curso, idioma, v.course_slug),
           marco: v.marco,
           concluidas: v.concluidas,

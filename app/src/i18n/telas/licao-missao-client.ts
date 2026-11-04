@@ -43,5 +43,26 @@ const en: Traducao<typeof pt> = {
   comecar: 'Start the mission'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  semMissao: 'Este módulo todavía no tiene misión.',
+  voltarAoModulo: 'Volver al módulo',
+  titulo: titulo => `Misión · ${titulo}`,
+  kicker: (n, certas, total) => `Misión ${n} · ${certas} de ${total}`,
+  cumprida: 'Misión cumplida.',
+  quase: 'Casi - vale la pena intentarlo de nuevo.',
+  nadaSePerde: 'No se pierde nada: hazla de nuevo con calma, leyendo letra por letra. Las opciones cambian de lugar.',
+  refazer: 'Rehacer',
+  proximoModulo: (n, titulo) => `Módulo ${n} - ${titulo}`,
+  desafioFinal: 'Ir al desafío final',
+  voltar: n => `← Módulo ${n}`,
+  missaoDoModulo: n => `Misión del módulo ${n}`,
+  comoFunciona: '¿Cómo funciona?',
+  passos: n =>
+    `${n} pasos, en el orden de la historia, solo con palabras que ya aprendiste. Lee con calma: apruebas con 70%, y puedes rehacerla todas las veces que quieras.`,
+  jaCumpriu: '✓ Ya cumpliste esta misión.',
+  deNovo: 'Hacer la misión de nuevo',
+  comecar: 'Empezar la misión'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

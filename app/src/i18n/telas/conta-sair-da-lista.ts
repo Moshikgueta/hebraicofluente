@@ -49,5 +49,29 @@ const en: Traducao<typeof pt> = {
   sair: 'Leave the list'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Salir de la lista - Hebraico Fluente',
+  metaDescricao: 'Deja de recibir el aviso del próximo curso.',
+  titulo: 'Salir de la lista',
+  saiuInteressado: 'Listo: saliste de la lista y no vas a recibir ningún otro correo de ella.',
+  saiuAviso:
+    'Listo: ya no vas a recibir el aviso del próximo curso. Tu cuenta y tu acceso siguen iguales.',
+  saiuLembrete:
+    'Listo: el recordatorio para estudiar está apagado. Tu cuenta, tu progreso y tu acceso siguen iguales.',
+  confirmarLembrete:
+    'Ya no vas a recibir el recordatorio para estudiar. Esto no cambia nada en tu cuenta, en tu progreso ' +
+    'ni en tu acceso.',
+  invalidoAntes: 'Este enlace no está completo. Ábrelo de nuevo desde el correo, o desmarca el aviso en ',
+  suaConta: 'Tu cuenta',
+  confirmarInteressado:
+    'Ya no vas a recibir ningún correo de esta lista: ni las próximas letras, ni los avisos que pediste.',
+  confirmarAviso:
+    'Ya no vas a recibir el correo que avisa cuando abra el próximo curso. Esto no cambia nada ' +
+    'en tu cuenta ni en tu acceso.',
+  erro: 'No pude hacerlo ahora. Intenta de nuevo en un momento.',
+  saindo: 'Saliendo…',
+  sair: 'Salir de la lista'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

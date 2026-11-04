@@ -42,5 +42,25 @@ const en: Traducao<typeof pt> = {
   leSe: 'It is read "{leitura}".'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  monteCursiva: 'Arma en cursiva la palabra “{leitura}”.',
+  monteLetras: 'Arma la palabra “{leitura}”, letra por letra.',
+  primeiraADireita: 'La primera letra va a la DERECHA.',
+  comecaCom: 'Empieza con {letra}.',
+  monteExplicaCursiva: 'A mano, sin los signos de vocal: así se escribe de verdad.',
+  monteExplicaPlaca: 'Sin los signos de vocal, así aparece la palabra en un letrero.',
+  cursivaExplica: '{he} - {leitura} - {sentido}. A mano se escribe sin los signos de vocal, y así la vas a encontrar en una nota.',
+  cursivaLetra: 'En la palabra escrita a mano, ¿qué letra es esta, la resaltada?',
+  cursivaLetraOutra: 'Esa es otra letra. Compara el trazo resaltado con ella.',
+  cursivaSentido: 'Esta palabra está escrita a mano. ¿Qué quiere decir?',
+  paraCursiva: '¿Cuál de estas es la misma palabra, escrita a mano?',
+  qualPalavra: '¿Cuál de estas palabras está escrita a mano aquí?',
+  digite: 'Escribe en hebreo: “{leitura}” ({sentido}).',
+  digiteDica: 'La primera letra que escribes aparece a la derecha.',
+  semPontos: 'Sin los puntitos, como aparece en la calle. ¿Qué quiere decir?',
+  comOsPontos: 'Con los puntos: {he}',
+  leSe: 'Se lee "{leitura}".'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

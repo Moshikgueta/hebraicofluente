@@ -119,5 +119,64 @@ const en: Traducao<typeof pt> = {
     'open My Hebrew in a few minutes. If you did not pay, just do it again.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+/* etapa 5/6: Brasil, rever - cartão, PIX e Mercado Pago. */
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Confirmando tu pago - Hebraico Fluente',
+  confirmando: 'Confirmando tu pago…',
+  naoFeche: 'Esto suele tardar unos segundos. No cierres esta página.',
+  pagamentoConfirmado: 'Pago confirmado',
+  prontoLivro: 'Listo. Israel Alem do Obvio es tuyo.',
+  prontoCombo: 'Listo. El combo es tuyo.',
+  prontoCurso: 'Listo. El curso es tuyo.',
+  livroLiberado: (titulo: string, meses: number) =>
+    `${titulo}: versión interactiva liberada por ${meses} meses.`,
+  comboLiberado:
+    'El curso de alfabetización e Israel Alem do Obvio están liberados, con el mismo usuario. Los dos ' +
+    'quedan en Mi Biblioteca.',
+  cursoLiberado: (titulo: string, meses: number) =>
+    `${titulo}, liberado por ${meses} meses. La primera letra lleva unos diez minutos.`,
+  abrirLivro: 'Abrir Israel Alem do Obvio',
+  abrirBiblioteca: 'Abrir Mi Biblioteca',
+  comecarAgora: 'Empezar ahora',
+
+  emAnalise: 'Tu pago está en revisión por el emisor de la tarjeta.',
+  emAnaliseTexto:
+    'El emisor de la tarjeta está revisando la compra. No necesitas hacer nada: cuando la ' +
+    'apruebe, el acceso entra solo y recibes un correo de confirmación.',
+  emAnalisePrazoAntes:
+    'Esto suele tardar desde unos minutos hasta dos días hábiles. Si tarda más, escribe a ',
+  emAnalisePrazoDepois: ' con el correo de la compra.',
+  irParaMeuHebraico: 'Ir a Mi Hebreo',
+
+  devolvido: 'Este pago fue reembolsado.',
+  devolvidoTextoAntes:
+    'El monto de esta compra fue reembolsado, y el acceso que daba terminó. Si no ' +
+    'pediste el reembolso, escribe a ',
+  devolvidoTextoDepois: '.',
+  verMinhasCompras: 'Ver mis compras',
+
+  recusado: 'La tarjeta fue rechazada.',
+  recusadoTexto:
+    'No se cobró nada. Puede haber sido el límite, un dato mal escrito o un rechazo del banco. ' +
+    'Puedes intentarlo de nuevo con otra tarjeta o por PIX.',
+  tentarDeNovo: 'Intentar de nuevo',
+
+  expirado: 'El plazo de este pago terminó.',
+  semPagamento: 'Todavía no hay pago en este pedido.',
+  expiradoTexto:
+    'No llegó ningún pago para este pedido, y no se cobró nada. Para comprar, solo empieza de nuevo.',
+  semPagamentoTexto:
+    'Si saliste de la pantalla de pago sin terminar, no se cobró nada: solo inténtalo de nuevo. Si ' +
+    'acabas de pagar, el acceso entra solo en cuanto llegue la confirmación, y recibes un correo.',
+  meuHebraico: 'Mi Hebreo',
+
+  naoConcluido: 'El pago no se completó.',
+  naoConsegui: 'No pude confirmarlo desde aquí.',
+  naoConcluidoTexto: 'No se cobró nada. Puedes intentarlo de nuevo, con tarjeta o por PIX.',
+  naoConseguiTexto:
+    'Si ya pagaste, el acceso entra solo en cuanto llegue la confirmación: abre Mi Hebreo ' +
+    'en unos minutos. Si no pagaste, solo vuelve a hacerlo.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

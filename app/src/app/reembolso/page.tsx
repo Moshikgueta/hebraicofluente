@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { meta } from '@/lib/seo';
 import { RefundEn } from '@/components/legal/en/RefundEn';
+import { RefundEs } from '@/components/legal/es/RefundEs';
 import { Artigo, LegalPage, Lista } from '@/components/legal/Legal';
 import { Card } from '@/components/ui/Card';
 import { estaAVenda, flagship, getCourse } from '@/lib/catalog';
@@ -9,9 +10,12 @@ import { confirmacaoDaDesistencia, empresa, INICIO_DO_ACESSO, temCartao, temPix 
 
 export const metadata: Metadata = meta({
   rota: '/reembolso',
-  title: process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'Refund and Cancellation Policy - Hebraico Fluente' : 'Reembolso e Cancelamento - Hebraico Fluente',
+  title: process.env.NEXT_PUBLIC_LOCALE === 'en' ? 'Refund and Cancellation Policy - Hebraico Fluente'
+    : process.env.NEXT_PUBLIC_LOCALE === 'es' ? 'Reembolso y Cancelación - Hebraico Fluente' : 'Reembolso e Cancelamento - Hebraico Fluente',
   description: process.env.NEXT_PUBLIC_LOCALE === 'en'
     ? '14 days to cancel, no reason needed, with your money back. How to ask, when the money comes back, and what happens to your access.'
+    : process.env.NEXT_PUBLIC_LOCALE === 'es'
+    ? '14 días para desistir, sin dar motivos, con tu dinero de vuelta. Cómo pedirlo, cuándo vuelve el dinero y qué pasa con tu acceso.'
     : 'Sete dias para desistir, sem justificativa, com o dinheiro de volta. Como pedir, ' +
     'em quanto tempo o valor retorna, e o que acontece com o acesso.'
 });
@@ -31,6 +35,7 @@ export const metadata: Metadata = meta({
 export default function Page() {
   /* O site em inglês tem o próprio documento (PLANO-INGLES.md, etapa 6). */
   if (process.env.NEXT_PUBLIC_LOCALE === 'en') return <RefundEn />;
+  if (process.env.NEXT_PUBLIC_LOCALE === 'es') return <RefundEs />;
   const c = flagship();
   const { politicas, contato } = empresa;
 

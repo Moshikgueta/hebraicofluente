@@ -46,5 +46,30 @@ const en: Traducao<typeof pt> = {
   lamedCerto: 'Read {{שֶׁל}} as "shel", with the L clearly touching the tip of the tongue.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  alefSentido: 'papá',
+  alefErrado: 'Intentar darle un sonido propio a la {{א}}, o tratarla como una A fija.',
+  alefCerto: 'Leer solo la vocal marcada: {{אוֹ}} es "o", {{אִ}} es "i".',
+  memSentido: 'mamá',
+  // etapa 3: pronúncia, rever
+  memErrado: 'Leer {{אֵם}} con la vocal alargada o nasal, y dejar que la M del final se pierda.',
+  // etapa 3: pronúncia, rever
+  memCerto: 'Leer {{אֵם}} con una E corta y clara, como la E de "mesa", y cerrar de verdad los labios en la M del final.',
+  tavSentido: 'verdad',
+  // etapa 3: pronúncia, rever
+  tavErrado: 'Leer {{תִי}} como "chi" y {{תֵ}} como "che".',
+  // etapa 3: pronúncia, rever
+  tavCerto: 'Leer {{תִי}} como "ti" y {{תֵ}} como "te", con la T seca.',
+  shinSentido: 'paz / hola / adiós',
+  shinErrado: 'Leer {{ש}} como S: "salóm", "sem".',
+  // etapa 3: pronúncia, rever
+  shinCerto: 'Leer {{ש}} como el sonido que se hace para pedir silencio, "shh" (transliterado "sh"): "shalóm", "shem".',
+  lamedSentido: 'noche',
+  // etapa 3: pronúncia, rever
+  lamedErrado: 'Leer {{שֶׁל}} con la L final tragada u oscura, de modo que suene como "sheo".',
+  // etapa 3: pronúncia, rever
+  lamedCerto: 'Leer {{שֶׁל}} como "shel", con la L bien apoyada en la punta de la lengua, como la L de "sol".'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -12,5 +12,11 @@ const en: Traducao<typeof pt> = {
   ogLivro: 'Israel Alem do Obvio, by Moshik Gueta: coming soon'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  // a imagem do cartão ainda é a do site em português (tools/og.mjs)
+  ogCurso: 'Hebraico Fluente: aprende a leer hebreo desde cero',
+  ogLivro: 'Israel Alem do Obvio, de Moshik Gueta: próximamente'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

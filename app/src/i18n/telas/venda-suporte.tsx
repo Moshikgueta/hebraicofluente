@@ -109,5 +109,62 @@ const en: Traducao<typeof pt> = {
   ctaLinha: 'The first letter takes ten minutes, and you have 14 days to cancel without having to explain why.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Soporte - Hebraico Fluente',
+  metaDescricao:
+    'Cómo hablar con quienes hacen el curso: correo de atención, horario, plazo de ' +
+    'respuesta y los atajos para los problemas más comunes.',
+
+  pagueiTitulo: 'Pagué y el acceso no se habilitó',
+  // etapa 5/6: Brasil, rever (PIX)
+  pagueiAMao: (prazo: string) =>
+    `Después del PIX, revisamos el pago y habilitamos el acceso a mano, ${prazo}. Si pasa ese plazo, escribe desde el correo que usaste en la compra: lo resolvemos sin costo.`,
+  // etapa 5/6: Brasil, rever (PIX)
+  pagueiPix: 'Por PIX, el acceso suele llegar en minutos.',
+  pagueiCartao: 'Con tarjeta, en cuanto la emisora la aprueba.',
+  pagueiAutomatico: (frases: string) =>
+    `${frases} Si pasa ese plazo, es una falla nuestra y lo resolvemos sin costo - escribe desde el correo que usaste en la compra.`,
+  pagueiAssunto: 'Pagué y el acceso no se habilitó',
+  pagueiAcao: 'Avisar que el acceso no se habilitó →',
+
+  reembolsoTitulo: 'Quiero que me devuelvan el dinero',
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  reembolsoCorpo: (dias: number, conta: ReactNode, confirmacao: string, politica: ReactNode): ReactNode => (
+    <>Tienes {dias} días para cancelar, sin tener que explicar por qué y sin cargo. El camino más rápido es en{' '}{conta}, en la compra: <strong>Cancelar la compra</strong>. {confirmacao} La{' '}{politica}{' '}dice en cuánto tiempo vuelve el dinero.</>
+  ),
+  suaConta: 'Tu cuenta',
+  politicaCompleta: 'política completa',
+  /* O Worker confirma na hora os assuntos com "cancel" e "reembols" (worker/src/email.js). */
+  reembolsoAssunto: 'Solicitud de cancelación y reembolso',
+  reembolsoAcao: 'Pedir reembolso →',
+
+  dadosTitulo: 'Quiero acceder a mis datos, corregirlos o borrarlos',
+  // etapa 5/6: Brasil, rever (LGPD)
+  dadosCorpo: (dias: number, politica: ReactNode): ReactNode => (
+    <>Es tu derecho, y respondemos en hasta {dias} días. Lo que significa cada solicitud está en la{' '}{politica}.</>
+  ),
+  politicaPrivacidade: 'Política de Privacidad',
+  // etapa 6: escrito para o site de fora
+  dadosAssunto: 'Solicitud de protección de datos',
+  dadosAcao: 'Hacer una solicitud sobre mis datos →',
+
+  rubrica: 'Atención',
+  titulo: 'Habla con nosotros',
+  lead: (horario: string, prazo: string) =>
+    `Un correo, respondido por quienes hacen el curso. ${horario}. Respondemos ${prazo}.`,
+  emailAtendimento: 'Correo de atención',
+  telefone: (tel: string) => `Teléfono: ${tel}`,
+  whatsapp: 'WhatsApp:',
+  antesTitulo: 'Antes de escribir, fíjate si es uno de estos',
+  cursoTitulo: 'Una duda sobre el curso en sí',
+  cursoTexto: (faq: ReactNode, duvidas: string): ReactNode => (
+    <>Las preguntas que aparecen antes de comprar - precio, plazo, celular, audio, certificado - están respondidas en las{' '}{faq}. Si la tuya no está, escríbenos: la lista crece con lo que ustedes preguntan. {duvidas}</>
+  ),
+  duvidasFrequentes: 'preguntas frecuentes',
+  ctaTitulo: '¿Todavía no eres alumno?',
+  // etapa 5: o site em espanhol cobra pelo Paddle
+  ctaLinha: 'La primera letra toma diez minutos, y tienes 14 días para cancelar sin tener que explicar por qué.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

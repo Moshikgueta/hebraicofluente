@@ -47,5 +47,28 @@ const en: Traducao<typeof pt> = {
   pularTexto: 'And it is not a sales rule: from A1 on, nothing is written in transliteration. Anyone who arrives without reading the alphabet spends the whole course memorizing sounds instead of learning the language. If you already read Hebrew with nikud, start straight at A1 when it comes out.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Cursos de hebreo - Hebraico Fluente',
+  metaDescricao:
+    'Aprende a leer hebreo desde cero: las 22 letras, los signos de vocal y ' +
+    'palabras reales, a tu ritmo. Disponible hoy.',
+  trilha: 'Los cursos',
+  eyebrow: 'Cursos de hebreo',
+  titulo: 'Empieza por el alfabeto.',
+  lead: 'El curso de lectura está disponible hoy, y por ahora es el único curso de este sitio.',
+  ordemEyebrow: 'El orden',
+  ordemTitulo: 'Lo que entrega cada nivel.',
+  seuCurso: 'Tu curso',
+  disponivel: 'Disponible',
+  emBreve: 'Próximamente',
+  nModulos: (n: number) => `${n} módulos`,
+  nLicoes: (n: number) => `${n} lecciones`,
+  continuar: 'Continuar',
+  verCurso: 'Ver el curso',
+  oQueVem: 'Lo que trae',
+  pularTitulo: 'No se puede saltar el aprendizaje de la lectura.',
+  pularTexto: 'Y no es una regla de venta: del A1 en adelante nada se escribe en transliteración. Quien llega sin leer el alfabeto pasa el curso entero memorizando sonidos en lugar de aprender el idioma. Si ya lees hebreo con nikud, empieza directo en el A1 cuando salga.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

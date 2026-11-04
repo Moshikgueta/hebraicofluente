@@ -91,5 +91,49 @@ const en: Traducao<typeof pt> = {
   notaFala: 'To correct you, your voice goes to your browser\'s speech service (Google or Apple). Hebrew Unlocked does not keep anything.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  nomeShin: 'Shin',
+  nomeMem: 'Mem',
+  nomeLamed: 'Lámed',
+  porqueSamech: 'Esta es la Sámej: suena “s”, no “sh”.',
+  porqueTsadi: 'Esta es la Tsádi: suena “ts”.',
+  porqueTav: 'Esta es la Tav: suena “t”.',
+  porqueNun: 'Esta es la Nun: suena “n”.',
+  porqueBet: 'Esta es la Bet: suena “b”.',
+  porqueKaf: 'Esta es la Kaf: suena “k”.',
+  porqueResh: 'Esta es la Resh: suena “r”.',
+  porqueDalet: 'Esta es la Dálet: suena “d”.',
+  porqueGuimel: 'Esta es la Guímel: suena “g”.',
+
+  rubrica: 'Escuchar y hablar',
+  titulo: 'Escucha la letra. Después, habla y recibe la corrección.',
+  lead: 'Las grabaciones del curso son del profesor, un israelí. Escucha, descubre la letra y después dila tú: el curso revisa tu pronunciación en el momento.',
+
+  passo1: 'Escucha y descubre la letra',
+  ouvirNome: 'Escuchar el nombre de la letra',
+  deN: (i: number, n: number) => `${i} de ${n}`,
+  qualLetra: '¿Qué letra es esta?',
+  escolhaLetra: 'Elige la letra',
+  letra: (he: string) => `Letra ${he}`,
+  acerto: (nome: string, silaba: ReactNode, som: string): ReactNode => (
+    <><strong>¡Eso!</strong> Es la {nome}. Con la rayita debajo, {silaba} se lee “{som}”.</>
+  ),
+  ouvirSom: (som: string) => `Escuchar “${som}”`,
+  tenteOutra: (porque: string) => `${porque} Escucha otra vez y prueba con otra.`,
+  proxima: 'Siguiente letra →',
+  fim: 'Tres letras reconocidas por el nombre. En el curso son las 22, una a la vez, con el nombre y el sonido.',
+
+  passo2: 'Ahora te toca a ti',
+  shalomTr: 'shalóm',
+  shalomPt: 'hola, paz',
+  ouvirProfessor: 'Escuchar al profesor',
+  graveTitulo: 'Graba y compara',
+  graveInstrucao: 'Di “shalóm”, grábate y escúchate. Después escucha al profesor y compara.',
+  toqueMicrofone: (palavra: ReactNode): ReactNode => (
+    <>Toca el micrófono y di {palavra}. El curso escucha y te dice si coincidió.</>
+  ),
+  notaFala: 'Para corregirte, tu voz va al servicio de voz del navegador (Google o Apple). Hebraico Fluente no guarda nada.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

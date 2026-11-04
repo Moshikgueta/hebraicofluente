@@ -57,5 +57,29 @@ const en: Traducao<typeof pt> = {
   pedidoNaoEncontrado: 'Order not found.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  leituraNenhuma: 'Todavía ninguna palabra: llega con la próxima letra.',
+  leituraUma: 'Ya puedes leer 1 palabra en hebreo.',
+  leituraVarias: (n: number): string => `Ya puedes leer ${n} palabras en hebreo.`,
+  faixa0: 'menos de 1 min',
+  faixa1: '1 a 2 min',
+  faixa2: '2 a 4 min',
+  faixa3: '4 a 7 min',
+  faixa4: '7 a 12 min',
+  faixa5: '12 a 20 min',
+  faixa6: '20 min o más',
+  nivelFacil: 'Calentamiento',
+  nivelMedio: 'Entrenamiento',
+  nivelDificil: 'Difícil',
+  formatoCelular: 'Fondo de pantalla',
+  formatoQuadrado: 'Cuadrado',
+  skillRec: 'Reconocimiento',
+  skillSom: 'Sonido',
+  skillLer: 'Lectura',
+  skillOuvir: 'Audición',
+  skillEscrever: 'Escritura',
+  pedidoNaoEncontrado: 'Pedido no encontrado.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

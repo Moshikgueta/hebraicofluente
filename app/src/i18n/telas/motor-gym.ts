@@ -84,5 +84,46 @@ const en: Traducao<typeof pt> = {
   fotosRotulo: (n: number) => `From the ${n} words with a photo that you can already read`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  revisaoTitulo: 'Repaso personalizado',
+  revisaoDesc: 'Lo que fallaste, el día justo para repasarlo.',
+  letrasTitulo: 'Letras',
+  letrasDesc: 'Reconocer la forma, rápido, sin orden.',
+  vogaisTitulo: 'Vocales',
+  vogaisDesc: 'Los signos: qué sonido hacen y dónde van.',
+  silabasTitulo: 'Sílabas',
+  silabasDesc: 'Consonante más vocal: la operación de la lectura.',
+  palavrasTitulo: 'Palabras',
+  palavrasDesc: 'Leer palabras enteras, armarlas, escribirlas.',
+  fotosTitulo: 'Foto y palabra',
+  fotosDesc: 'La foto en la pantalla: elige la palabra en hebreo que le corresponde.',
+  ouvirTitulo: 'Escuchar y elegir',
+  ouvirDesc: 'Solo el sonido, sin verlo antes.',
+  parecidasTitulo: 'Letras parecidas',
+  parecidasDesc: 'Las que estás confundiendo, lado a lado.',
+  construirTitulo: 'Construir palabras',
+  construirDesc: 'El sonido en la pantalla, las letras en la mesa: arma la palabra, de derecha a izquierda.',
+  cursivaTitulo: 'Palabras a mano',
+  cursivaDesc: 'Palabras enteras en cursiva: reconocer, entender y armar.',
+  digitarTitulo: 'Escribir en hebreo',
+  digitarDesc: 'Escribe palabras en el teclado hebreo de tu dispositivo.',
+  relogioTitulo: 'Contra reloj',
+  relogioDesc: 'Lo mismo que ya sabes, más rápido que la última vez.',
+  esperandoGravacoes: 'Esperando las grabaciones.',
+  primeiraLicao: 'Haz la primera lección.',
+  emDia: 'Nada pendiente: estás al día.',
+  semTroca: 'Todavía no hay confusiones registradas.',
+  semPalavras: 'Todavía no hay palabras para leer.',
+  chegaComMem: 'Llega con la primera palabra, en la lección del Mem.',
+  chegaComTav: 'Llega en la lección del Tav.',
+  dosErros: 'Sacado de tus errores',
+  maisRecentes: 'Las letras más recientes',
+  par: '{a} y {b}',
+  acumuladas: 'De las {n} palabras que ya acumulaste',
+  maisFraco: 'Empezando por lo más flojo',
+  semFotos: 'Llega cuando haya tres palabras con foto, en la lección del Yod.',
+  fotosRotulo: (n: number) => `De las ${n} palabras con foto que ya lees`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

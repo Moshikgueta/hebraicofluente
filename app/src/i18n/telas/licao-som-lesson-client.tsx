@@ -167,5 +167,87 @@ const en: Traducao<typeof pt> = {
   concluir: 'Finish and continue'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  conhecer: 'Conocer',
+  palavras: 'Palabras',
+  ler: 'Leer',
+  contraste: 'Contraste',
+  fixacao: 'Fijación',
+  exercicios: 'Ejercicios',
+  naoAbriu: nome => `El sonido ${nome} todavía no se abrió`,
+  mapa: '← Mapa',
+  badge: (modulo, licao, nome) => `Módulo ${modulo} · lección ${licao} · sonido ${nome}`,
+  etapas: 'Etapas de la lección',
+  etapaDe: (n, rotulo) => `Etapa ${n} de 5 - ${rotulo}`,
+  exerciciosSom: nome => `Ejercicios - sonido ${nome}`,
+  emSeguidaPares: 'A continuación: los tres pares lado a lado',
+  emSeguidaSom: nome => `A continuación: el sonido ${nome}`,
+  emSeguidaLetra: nome => `A continuación: la letra ${nome}`,
+  emSeguidaCheckpoint: n => `A continuación: Checkpoint ${n}`,
+  emSeguidaSons: 'A continuación: los tres sonidos juntos, y el cierre del alfabeto',
+  deVolta: 'De vuelta al mapa del curso',
+  trancadaAula0: 'Antes de las letras y los sonidos, termina la Clase 0.',
+  trancadaLicao: anterior => <>Esta lección viene después de {anterior}, y esa lección todavía no está terminada.</>,
+  trancadaNota: (anterior, nota, libera) =>
+    <>Faltan los ejercicios de {anterior}: tu mejor nota allí fue {nota}%, y esta lección se abre a partir de {libera}%.</>,
+  irPara: nome => `Ir a ${nome}`,
+  verMapa: 'Ver el mapa',
+  noFimDaPalavraTitulo: 'Al final de la palabra',
+  noComeco: 'al principio y en el medio',
+  noFim: 'al final',
+  noFimAMao: 'al final, a mano',
+  finalMuda: nome =>
+    `Al final de la palabra la letra cambia de dibujo y baja por debajo de la línea. Nunca lleva el punto dentro, así que al final el sonido es siempre el de ${nome}.`,
+  formaFinal: nome => `${nome} - forma final`,
+  noFimDaPalavra: 'al final de la palabra',
+  ouvir: nome => `Escuchar ${nome}`,
+  comoPronunciar: '¿Cómo se pronuncia?',
+  // etapa 3: pronúncia, rever
+  soaComo: como => <>Suena como {como}.</>,
+  quandoTem: '¿Cuándo tiene la letra este sonido?',
+  comCadaVogal: 'El sonido con cada vocal',
+  emTodas: rotulo => `${rotulo}, en todas. Lee de derecha a izquierda.`,
+  entendeu: '¿Entendiste? Preguntas rápidas',
+  naoVaiNota: 'No cuenta para la nota y no bloquea nada. Si te equivocas, la explicación aparece enseguida.',
+  fechoBom: 'Bien. Ahora las palabras que tienen este sonido.',
+  fechoParcial: 'Vale la pena releer el cuadro "¿Cuándo tiene la letra este sonido?" - es la decisión que vas a tomar en cada palabra.',
+  continuarPalavras: 'Continuar a las palabras',
+  palavrasComOSom: nome => `Palabras con el sonido ${nome}`,
+  vieramDeFora: 'Palabras que vinieron de otros idiomas: ya sabes cómo suenan. Lee antes de revelar.',
+  tenteLer: rotulo => `Intenta leer antes de revelar. La letra destacada está ${rotulo}.`,
+  comparepalavras: 'Compara tu lectura de las palabras con la del curso',
+  continuarLeitura: 'Continuar a la lectura',
+  continuarContraste: 'Continuar al contraste',
+  lerEmVozAlta: nome => `Leer la ${nome} en voz alta`,
+  soOSom: (som, final) =>
+    <>Solo el sonido {som}, sin prisa. Lee cada sílaba y cada palabra en voz alta, de derecha a izquierda{final ? <>, y fíjate en la {final} del final de la palabra</> : null}.</>,
+  comOSom: som => `Con el sonido ${som} · `,
+  leiaPalavras: 'Lee las palabras en voz alta',
+  leiaPalavrasInstrucao: (som, somMaiusculo) =>
+    `Lee las palabras con ${som}, grábate y comprueba si el sonido salió ${somMaiusculo} en todas.`,
+  continuarFixacao: 'Continuar a la fijación',
+  ouPar: (par, nome) => `¿${par} o ${nome}?`,
+  ladoALado: (parRotulo, rotulo, parSom, som) =>
+    <>Lado a lado: {parRotulo} y {rotulo}. Lee cada fila en voz alta, primero la columna de la derecha y después la de la izquierda, y siente cómo cambia la boca: {parSom} y {som}.</>,
+  comTraco: (parHe, parSom, he, som) =>
+    <>Lado a lado, con y sin la rayita. Sin ella, {parHe} es {parSom}; con ella, {he} es {som}.</>,
+  leiaColunas: 'Lee las dos columnas en voz alta',
+  leiaColunasInstrucao: (som, parSom) =>
+    `Lee las palabras con ${som} y después las de ${parSom}, grábate y comprueba si se nota la diferencia.`,
+  ouvirItem: translit => `Escuchar ${translit}`,
+  placar: (certas, total, pct) => `${certas} de ${total} · ${pct}%`,
+  firme: nome => `El sonido ${nome} está firme.`,
+  vamosFirmar: nome => `Vamos a afianzar la ${nome}.`,
+  daguheshBom: (he, rotulo, som) =>
+    `Lees ${he} ${rotulo} como ${som}, con cada vocal. Puedes seguir.`,
+  daguheshRefaca: libera =>
+    `Rehazlo cuando quieras: las preguntas cambian. La próxima lección se abre a partir de ${libera}%.`,
+  decideBom: (parSom, som) => `Decides entre ${parSom} y ${som} mirando la letra. Puedes seguir.`,
+  decideRefaca: (parSom, som, libera) =>
+    `Rehazlo cuando quieras: las preguntas cambian, y lo que cuenta es decidir entre ${parSom} y ${som} sin dudar. La próxima lección se abre a partir de ${libera}%.`,
+  refazer: 'Rehacer los ejercicios',
+  concluir: 'Terminar y continuar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

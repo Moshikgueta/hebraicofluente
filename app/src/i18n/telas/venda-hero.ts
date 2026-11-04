@@ -31,5 +31,19 @@ const en: Traducao<typeof pt> = {
   mockupAlt: 'Screen of the Hebrew Unlocked interactive platform on a phone',
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Aprende hebreo con alguien que nació en Israel',
+  subtitulo: 'Lee y escribe en hebreo antes de tu viaje. Una plataforma interactiva creada por Moshik Gueta, israelí y profesor de hebreo desde hace más de 6 años.',
+  bullet1: 'Desde cero, a tu ritmo',
+  bullet2: 'Palabras bíblicas en el original',
+  bullet3: 'Con explicaciones en español',
+  whatsapp: 'Escribir por WhatsApp',
+  abreWhatsapp: '(abre WhatsApp)',
+  nome: 'Moshik Gueta',
+  credenciais: 'Israelí · Profesor de hebreo · Cientos de alumnos',
+  fotoAlt: 'Moshik Gueta, profesor israelí de hebreo',
+  mockupAlt: 'Pantalla de la plataforma interactiva Hebraico Fluente en el celular',
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

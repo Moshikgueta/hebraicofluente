@@ -41,5 +41,25 @@ const en: Traducao<typeof pt> = {
   voltar: 'Readings'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Hebreo en la calle - Hebraico Fluente',
+  metaDescricao: 'Carteles reales de Israel con palabras que ya lees.',
+  titulo: 'Hebreo en la calle',
+  intro: 'Carteles reales, fotografiados en Israel. En cada uno hay una palabra que ya lees. En la calle las palabras vienen sin los puntos: compara las letras.',
+  pergunta: 'Este cartel tiene una palabra que ya lees. ¿Cuál?',
+  certo: '¡Eso!',
+  quase: 'Casi.',
+  naPlaca: 'En el cartel viene sin los puntos:',
+  significa: (translit, pt) => `«${translit}», ${pt}.`,
+  proxima: 'Siguiente cartel',
+  deNovo: 'Ver los carteles de nuevo',
+  placaN: (n, total) => `Cartel ${n} de ${total}`,
+  todas: n => `Leíste los ${n} carteles.`,
+  faltam: n => `${n} ${n === 1 ? 'cartel más llega' : 'carteles más llegan'} con las próximas letras.`,
+  nenhumaAinda: 'El primer cartel aparece cuando puedas leer su primera palabra. Sigue con las lecciones.',
+  emBreve: 'Los carteles están en camino.',
+  voltar: 'Lecturas'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

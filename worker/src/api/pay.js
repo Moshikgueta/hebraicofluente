@@ -62,7 +62,7 @@ const pixDireto = () => PAGAMENTO === 'pix-direto';
    Decidido pelo idioma do Worker, e não por data/empresa.json: o arquivo é o
    mesmo nas duas builds, e o build do app decide pelo mesmo critério
    (NEXT_PUBLIC_LOCALE, lib/empresa.ts). */
-const paddle = env => !!env && env.LOCALE === 'en';
+const paddle = env => !!env && (env.LOCALE === 'en' || env.LOCALE === 'es');
 
 /* E QUAIS FORMAS a conta do provedor aceita nesta build.
  * ─────────────────────────────────────────────────────────────────────────
@@ -1240,7 +1240,7 @@ async function confirmarPorEmail(env, order, primeiraCompra) {
       termos: linkDaVersao(site, 'termos', order.termos_versao || versaoAtual('termos', env)),
       reembolso: linkDaVersao(site, 'reembolso', versaoAtual('reembolso', env)),
       versao: [
-        m.data(Date.parse(`${(idioma === 'en' && empresa.politicas?.atualizadoEmEn) || empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
+        m.data(Date.parse(`${(idioma === 'en' && empresa.politicas?.atualizadoEmEn) || (idioma === 'es' && empresa.politicas?.atualizadoEmEs) || empresa.politicas?.atualizadoEm || ''}T12:00:00Z`)),
         (order.termos_versao || versaoAtual('termos', env))
           && `${idioma === 'en' ? 'code' : 'código'} ${order.termos_versao || versaoAtual('termos', env)}`
       ].filter(Boolean).join(', '),

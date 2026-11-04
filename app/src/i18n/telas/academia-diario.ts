@@ -37,5 +37,23 @@ const en: Traducao<typeof pt> = {
   verVocabulario: 'See the whole vocabulary'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  localeData: 'es-419',
+  abaRegistros: 'Registros',
+  abaLugares: 'Lugares',
+  abaPalavras: 'Palabras',
+  titulo: 'Diario de descubrimientos',
+  nRegistros: n => `${n} ${n === 1 ? 'registro' : 'registros'}`,
+  paginas: 'Páginas del diario',
+  vazio: 'El diario empieza en la Clase 0. Cada letra aprendida, cada lectura y cada misión gana una línea aquí, con la fecha.',
+  verRecentes: 'Ver solo los más recientes',
+  verTodos: n => `Ver los ${n} registros`,
+  modulo: (n, foi) => `Módulo ${n} · ${foi ? 'visitado' : 'todavía no'}`,
+  visto: 'visto',
+  semPalavras: 'Las palabras aparecen aquí cuando leas la primera, más o menos en la segunda lección.',
+  jaLe: n => `Ya lees ${n} ${n === 1 ? 'palabra' : 'palabras'} del curso. Las más recientes:`,
+  verVocabulario: 'Ver todo el vocabulario'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

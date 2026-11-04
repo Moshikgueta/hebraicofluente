@@ -19,5 +19,14 @@ const en: Traducao<typeof pt> = {
   traducao: 'The translation comes from one English version. Versions differ, and that is why reading the original is worth it.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  convite: 'toca una palabra',
+  palavra: (n: number, translit: string) => `Palabra ${n}: ${translit}`,
+  leSe: 'se lee',
+  semPontos: 'sin los puntos, como en un rollo de sinagoga:',
+  setePalavras: 'Son siete palabras. Después del curso, lees las siete en voz alta - y necesitas un diccionario para saber qué significan cinco de ellas.',
+  traducao: 'La traducción es de una versión en español. Las versiones varían, y por eso leer el original tiene valor.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

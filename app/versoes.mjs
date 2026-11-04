@@ -45,12 +45,17 @@ import { join } from 'node:path';
    o atual.json de lá (worker/src/lib/versoes.js), e as versões do site
    brasileiro, que nasceram neste repositório, não se misturam com elas. */
 const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
-const OUT = EM_INGLES ? 'out-en' : 'out';
-const ARQUIVO = EM_INGLES ? '../data/politicas-versoes-en' : '../data/politicas-versoes';
+/* O espanhol (04/11/2026), igual: export em out-es, versões em data/politicas-versoes-es. */
+const EM_ESPANHOL = process.env.NEXT_PUBLIC_LOCALE === 'es';
+const OUT = EM_INGLES ? 'out-en' : EM_ESPANHOL ? 'out-es' : 'out';
+const ARQUIVO = EM_INGLES ? '../data/politicas-versoes-en'
+  : EM_ESPANHOL ? '../data/politicas-versoes-es' : '../data/politicas-versoes';
 const ATUAL = join(ARQUIVO, 'atual.json');
 
 export const DOCUMENTOS = EM_INGLES
   ? [['termos', 'Terms of Use'], ['reembolso', 'Refunds and Cancellation'], ['privacidade', 'Privacy Policy']]
+  : EM_ESPANHOL
+  ? [['termos', 'Términos de Uso'], ['reembolso', 'Reembolso y Cancelación'], ['privacidade', 'Política de Privacidad']]
   : [['termos', 'Termos de Uso'], ['reembolso', 'Reembolso e Cancelamento'], ['privacidade', 'Política de Privacidade']];
 
 /** O HTML de dentro de `<article data-politica="doc">`, ou null. */
@@ -95,14 +100,16 @@ function copiaFixa(doc, titulo, versao, trecho, hojeIso) {
   const dia = hojeIso.split('-').reverse().join('/');
   const aviso = EM_INGLES
     ? `Fixed copy of this version (code <strong>${versao}</strong>), saved on ${hojeIso} and never changed afterwards. The version in force today is at <a href="/${doc}/">/${doc}/</a>.`
+    : EM_ESPANHOL
+    ? `Copia fija de esta versión (código <strong>${versao}</strong>), guardada el ${dia} y nunca modificada después. La versión vigente hoy está en <a href="/${doc}/">/${doc}/</a>.`
     : `Cópia fixa desta versão (código <strong>${versao}</strong>), guardada em ${dia} e nunca alterada depois. A versão em vigor hoje está em <a href="/${doc}/">/${doc}/</a>.`;
   return `<!doctype html>
-<html lang="${EM_INGLES ? 'en' : 'pt-BR'}">
+<html lang="${EM_INGLES ? 'en' : EM_ESPANHOL ? 'es' : 'pt-BR'}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>${titulo} - ${EM_INGLES ? 'version' : 'versão'} ${versao} - Hebraico Fluente</title>
+<title>${titulo} - ${EM_INGLES ? 'version' : EM_ESPANHOL ? 'versión' : 'versão'} ${versao} - Hebraico Fluente</title>
 <style>
 body{margin:0;background:#fff;color:#1d2a2e;font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:760px;margin:0 auto;padding:24px 16px 48px}

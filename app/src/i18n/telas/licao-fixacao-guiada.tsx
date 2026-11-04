@@ -4,6 +4,7 @@ import type { Traducao } from '..';
 /* components/learn/FixacaoGuiada.tsx */
 const NUMERO = ['Zero', 'Um', 'Dois', 'Três', 'Quatro', 'Cinco'];
 const NUMERO_EN = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five'];
+const NUMERO_ES = ['Cero', 'Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco'];
 
 const pt = {
   ouvir: 'Ouça e repita',
@@ -81,5 +82,43 @@ const en: Traducao<typeof pt> = {
   nova: ' · new'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ouvir: 'Escucha y repite',
+  observar: 'Observa y reconoce',
+  som: 'Letra y sonido',
+  memoria: 'Memoria visual',
+  revisao: 'Repaso rápido',
+  irParaExercicios: 'Ir a los ejercicios',
+  cabecalho: 'Fijación: aprender y recordar, sin nota',
+  intro: (n, nome) =>
+    `${NUMERO_ES[n] ?? n} pasos cortos con ${nome}. Aquí no hay error que cuente: si eliges mal, aparece una pista y lo intentas de nuevo. Los ejercicios con nota vienen después.`,
+  passos: 'Pasos de la fijación',
+  passoDe: (k, total, nome) => `Paso ${k} de ${total}: ${nome}`,
+  voltar: 'Volver',
+  continuar: 'Continuar',
+  ouvirIntro: nome =>
+    `Escucha la letra y cada palabra, y repite en voz alta. En cada palabra, la letra ${nome} está resaltada.`,
+  ouvirItem: nome => `Escuchar ${nome}`,
+  impressa: 'impresa',
+  cursiva: 'cursiva (a mano)',
+  noFim: 'al final de la palabra',
+  noFimCursiva: 'al final, cursiva (a mano)',
+  formas: 'La misma letra, en las formas en que la vas a encontrar. Mírala con calma.',
+  repare: 'Fíjate: ',
+  queSom: '¿Qué sonido hace esta letra?',
+  escolhaOSom: 'Elige el sonido',
+  issoSom: (nome, som) => `Eso es: ${nome} hace el sonido ${som}.`,
+  aindaNao: dica => <>Todavía no. Pista: {dica} Intenta de nuevo.</>,
+  olhe: 'Mira bien la letra. En tres segundos desaparece, y la vas a buscar.',
+  jaMemorizei: 'Ya la memoricé',
+  qualEra: '¿Cuál era la letra?',
+  escolhaALetra: 'Elige la letra',
+  issoEra: nome => `Eso es, era ${nome}.`,
+  essaNao: 'Esa no. ¿Quieres ver la letra de nuevo?',
+  verDeNovo: 'Ver de nuevo',
+  revisaoIntro: 'La letra nueva al lado de letras que ya conoces. Escucha cada una y compara.',
+  nova: ' · nueva'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

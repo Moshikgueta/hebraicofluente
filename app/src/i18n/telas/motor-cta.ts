@@ -25,5 +25,17 @@ const en: Traducao<typeof pt> = {
   micro: '{quando} · {meses} months · no monthly fee'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  embreveLabel: 'Ver lo que viene en este curso',
+  embreveMicro: 'Muy pronto. La página muestra el plan completo.',
+  continuarLabel: 'Continuar donde lo dejé',
+  continuarMicro: 'Tu progreso está guardado.',
+  acessoImediato: 'Acceso inmediato',
+  acessoEmAte: 'Acceso en hasta {n} días hábiles',
+  liberar: 'Liberar mi acceso',
+  comecar: 'Quiero empezar',
+  micro: '{quando} · {meses} meses · sin mensualidad'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -16,5 +16,12 @@ const en: Traducao<typeof pt> = {
   formacao: 'CELTA qualification and studies in Languages and Literature'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  israelense: 'Israelí, con el hebreo como lengua materna',
+  brasil: 'En Brasil desde 2021, enseñando hebreo a brasileños',
+  gerente: 'Gerente Pedagógico de New School, en Tel Aviv',
+  formacao: 'Formación CELTA y estudios en Letras'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

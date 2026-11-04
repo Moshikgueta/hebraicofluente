@@ -11,5 +11,10 @@ const en: Traducao<typeof pt> = {
   feito: 'Done. Compare it with the model and see what you would change.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  areaDeEscrita: letra => `Área de escritura para la letra ${letra}`,
+  feito: 'Listo. Compara con el modelo y mira qué cambiarías.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

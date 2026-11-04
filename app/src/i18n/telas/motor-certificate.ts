@@ -10,6 +10,10 @@ const MESES_EN = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
+const MESES_ES = [
+  'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+  'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+];
 
 const pt = {
   titulo: 'Certificado de conclusão',
@@ -43,5 +47,21 @@ const en: Traducao<typeof pt> = {
   compartilhar: 'I could not read a single letter of the Hebrew alphabet. Today I read all 22 - and whole words, without transliteration. 🎉'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Certificado de finalización',
+  curso: 'Curso de alfabetización en hebreo moderno',
+  alunoPadrao: 'Alumno',
+  feito1: 'leyó las 22 letras del alfabeto hebreo,',
+  feito2: 'los signos de vocal y palabras completas -',
+  feito3: 'sin transliteración en la que apoyarse.',
+  exame: 'Examen final: {nota}%',
+  codigo: 'Código {codigo}',
+  honesto: 'Emitido por la plataforma. No es un certificado oficial de dominio del idioma.',
+  data: (d: Date): string => `${d.getDate()} de ${MESES_ES[d.getMonth()]} de ${d.getFullYear()}`,
+  arquivoPadrao: 'alumno',
+  arquivo: 'certificado-hebraico-fluente-{nome}.png',
+  compartilhar: 'No sabía leer ni una letra del alfabeto hebreo. Hoy leo las 22 - y palabras completas, sin transliteración. 🎉'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

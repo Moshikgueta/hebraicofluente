@@ -23,5 +23,16 @@ const en: Traducao<typeof pt> = {
   checkpointDoModulo: (n: number, aprovado: boolean) => `Module ${n} checkpoint${aprovado ? ': passed' : ''}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: (n: number) => `Tu camino en el módulo ${n}`,
+  verOMapa: 'Ver el mapa →',
+  feita: 'completada',
+  daVez: 'la siguiente',
+  vem: 'todavía no',
+  abrir: (rotulo: string) => `${rotulo}. Abrir la lección`,
+  checkpoint: 'Checkpoint',
+  checkpointDoModulo: (n: number, aprovado: boolean) => `Checkpoint del módulo ${n}${aprovado ? ': aprobado' : ''}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

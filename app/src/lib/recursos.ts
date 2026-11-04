@@ -1,6 +1,6 @@
 /* O que cada site tem. O mesmo código serve o site brasileiro e o em inglês,
    e algumas partes só fazem sentido em um deles. Ver PLANO-INGLES.md. */
-import { LOCALE } from '@/i18n';
+import { EXTERIOR } from '@/i18n';
 
 /**
  * "Meu nome em hebraico" escreve o nome do aluno com as regras do PORTUGUÊS
@@ -10,4 +10,4 @@ import { LOCALE } from '@/i18n';
  * certificado, o item da loja, a conquista e a página) até haver regras para
  * nomes em inglês.
  */
-export const MEU_NOME_EM_HEBRAICO = LOCALE !== 'en';
+export const MEU_NOME_EM_HEBRAICO = !EXTERIOR;

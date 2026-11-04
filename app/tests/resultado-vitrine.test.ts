@@ -23,6 +23,6 @@ describe('as placas da vitrine', () => {
     const s = readFileSync(new URL('../src/components/landing/Resultado.tsx', import.meta.url), 'utf8');
     expect(s).toContain('p.licencaUrl');
     expect(s).toContain('p.pagina');
-    expect(s).toMatch(/NEXT_PUBLIC_LOCALE === 'en'\) return null/);
+    expect(s).toMatch(/NEXT_PUBLIC_LOCALE === 'en' \|\| process\.env\.NEXT_PUBLIC_LOCALE === 'es'\) return null/);
   });
 });

@@ -164,6 +164,7 @@ export function ogDaRota(rota: string): { src: string; alt: string } {
   /* O site em inglês tem um cartão só, em inglês (tools/og.mjs), em toda rota:
      ele só vende o curso. */
   if (LOCALE === 'en') return { src: '/media/og-curso-en.jpg', alt: tx.ogCurso };
+  if (LOCALE === 'es') return { src: '/media/og-curso-es.jpg', alt: tx.ogCurso };
   const r = ('/' + rota).replace(/\/{2,}/g, '/').replace(/\/+$/, '') || '/';
   const porta = OG_POR_PORTA.find(p => p.prefixos.some(x => r === x || r.startsWith(x + '/')));
   /* Desde 27/10/2026 o site é só o curso de alfabetização (decisão do dono):

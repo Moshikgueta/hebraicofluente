@@ -36,5 +36,22 @@ const en: Traducao<typeof pt> = {
   palavraGerechExplica: '{he} - "{sentido}". The {letra} makes the sound {som}.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  dagueshPergunta: 'Sin los puntos, como en un periódico: en esta palabra («{sentido}»), ¿qué sonido tiene la letra {nome}?',
+  dagueshExplicaForte: 'Con daguesh: al principio de la palabra o después de una consonante que cierra la sílaba.',
+  dagueshExplicaSuave: 'Sin daguesh: casi siempre entre vocales, y al final de la palabra.',
+  palavraExplica: '{he} - {leitura} - {sentido}. ',
+  finalPergunta: '¿Cuál de estas es la forma final de {nome}?',
+  finalExplica: '{base} se convierte en {final} al final de la palabra, como en {palavra} ({leitura}), "{sentido}".',
+  semNikudPergunta: 'Sin nikud, como en un periódico. ¿Qué dice?',
+  semNikudExplica: '{nua} es {pontuada} - {leitura} - "{sentido}".',
+  gerechPergunta: '¿Qué sonido tiene esta letra?',
+  gerechExplica: '{he} es {som} - {como}. Sin el guéresh, {base} es {baseSom}.',
+  semSinalPergunta: 'Y sin el signo, ¿qué sonido tiene?',
+  semSinalExplica: 'Sin el guéresh, {base} es {baseSom}. Con él, {he} es {som}.',
+  palavraPergunta: 'Léela en voz alta. ¿Qué palabra es esta?',
+  palavraGerechExplica: '{he} - "{sentido}". La {letra} hace el sonido {som}.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

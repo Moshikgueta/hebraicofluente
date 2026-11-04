@@ -36,5 +36,22 @@ const en: Traducao<typeof pt> = {
   dominada: 'Mastered'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  formaTitulo: 'Reconocimiento visual',
+  formaDesc: 'Identificar la forma de la letra.',
+  formaResumo: 'identificar la forma de la letra',
+  somTitulo: 'Reconocimiento sonoro',
+  somDesc: 'Asociar la letra a su sonido.',
+  somResumo: 'asociar la letra al sonido',
+  leituraTitulo: 'Lectura en palabras',
+  leituraDesc: 'Reconocer y leer la letra dentro de palabras.',
+  leituraResumo: 'reconocer y leer la letra dentro de palabras',
+  poucosDados: 'Datos insuficientes',
+  aprendendo: 'Todavía aprendiendo',
+  desenvolvimento: 'En desarrollo',
+  quase: 'Casi dominada',
+  dominada: 'Dominada'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

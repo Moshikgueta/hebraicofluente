@@ -15,5 +15,11 @@ const en: Traducao<typeof pt> = {
   adaptacoes: 'The order in which the letters are introduced comes from his method. The exercises, the explanations and the cursive writing are mine.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  linha: (autor: string) => `Método inspirado en la obra del ${autor}.`,
+  // tradução fiel ao inglês; o dono decide se o site em espanhol fala do aluno brasileiro
+  adaptacoes: 'El orden en que se presentan las letras viene de su método. Los ejercicios, las explicaciones y la escritura cursiva son míos.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

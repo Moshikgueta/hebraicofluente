@@ -15,5 +15,12 @@ const en: Traducao<typeof pt> = {
   naoCombinam: 'Those two do not match.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  instrucao: 'Toca una tarjeta y después la que combina con ella.',
+  cronometro: 'Cronómetro',
+  parCorreto: 'Par correcto.',
+  naoCombinam: 'Esos dos no combinan.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

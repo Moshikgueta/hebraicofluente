@@ -115,5 +115,62 @@ const en: Traducao<typeof pt> = {
   as22: 'All 22 letters'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Alfabeto hebreo: las 22 letras, su sonido y cómo leer - Hebraico Fluente',
+  metaDescricao:
+    'Las 22 letras del alfabeto hebreo con su nombre y su sonido, las cinco formas finales y ' +
+    'cómo funcionan las vocales. Prueba gratis de la primera letra.',
+  alfabeto: 'Alfabeto hebreo',
+  titulo: 'Alfabeto hebreo: las 22 letras, una por una.',
+  lead: 'El alfabeto hebreo tiene 22 letras, y todas son consonantes. Las vocales son signos pequeños debajo, encima o al lado de las letras: el nikud. Y todo se lee de derecha a izquierda.',
+  tabelaEyebrow: 'La tabla',
+  tabelaTitulo: 'El nombre y el sonido de cada letra.',
+  tabelaLead: (autor: string) =>
+    `En el orden en que el curso las enseña, que viene del método de ${autor}. Las cinco letras que cambian de forma al final de la palabra aparecen con la forma final al lado.`,
+  colLetra: 'Letra',
+  colNome: 'Nombre',
+  colSom: 'Sonido',
+  colFinal: 'Forma final',
+  comoEyebrow: 'Cómo se lee',
+  comoTitulo: 'Tres cosas que saber antes de la primera letra.',
+  direitaTitulo: 'De derecha a izquierda',
+  direitaTexto: 'La línea empieza del lado derecho de la página, y el libro también se abre por el lado que, para nosotros, es el final.',
+  consoantesTitulo: 'Las letras son consonantes',
+  consoantesTexto: (alef: ReactNode): ReactNode => (
+    <>Cada una de las 22 letras es una consonante. Una de ellas, el {alef}, no tiene sonido propio: solo sostiene la vocal.</>
+  ),
+  vogaisTitulo: 'Las vocales son signos',
+  vogaisTexto: 'Los puntos y rayas debajo o encima de las letras son las vocales, el nikud. Con ellos, puedes leer en voz alta cualquier palabra, aunque no sepas qué significa.',
+  ctaTitulo: 'Aprende las 22 letras, una a la vez.',
+  ctaLinha: 'Empieza con la prueba gratis del Álef, en la página del curso: 6 ejercicios cortos, sin registro.',
+
+  letraMetaTitulo: (nome: string, letra: string) =>
+    `${nome} (${letra}): la letra del alfabeto hebreo y cómo se lee - Hebraico Fluente`,
+  // etapa 3: pronúncia, rever (o erro descrito hoje é o de quem fala português)
+  letraMetaDescricao: (nome: string, ordem: number, som: string) =>
+    `${nome}, la letra ${ordem} en el orden del curso: el sonido (${som}), una palabra grabada ` +
+    'por el profesor y el error más común de quien empieza.',
+  letraEyebrow: (ordem: number) => `Alfabeto hebreo · letra ${ordem} en el orden del curso`,
+  letraLead: (som: string, final: ReactNode): ReactNode => (
+    <>El sonido: {som}.{final && <> Al final de la palabra, la letra cambia de forma: {final}.</>}</>
+  ),
+  ouvirNome: (nome: string) => `Escuchar el nombre: ${nome}`,
+  palavraEyebrow: 'Una palabra',
+  palavraTitulo: (nome: string) => `Una palabra con ${nome}.`,
+  ouvirProfessor: 'Escuchar al profesor',
+  // etapa 3: pronúncia, rever
+  erroEyebrow: 'Cuidado',
+  erroTitulo: 'El error más común con esta letra.',
+  costumaSair: 'Lo que suele salir',
+  jeitoCerto: 'La forma correcta',
+  noCurso: 'En el curso, la lección de esta letra explica por qué pasa eso y entrena el sonido con la grabación del profesor.',
+  parecidasEyebrow: 'Atención al dibujo',
+  parecidasTitulo: 'Letras que se parecen a esta.',
+  parecidasLead: 'Al principio, es fácil confundirlas. El curso entrena la diferencia lado a lado.',
+  outrasEyebrow: 'Otras letras',
+  outrasTitulo: 'Sigue por el alfabeto.',
+  as22: 'Las 22 letras'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

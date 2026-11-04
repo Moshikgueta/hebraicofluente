@@ -139,5 +139,73 @@ const en: Traducao<typeof pt> = {
   emBreve: 'Coming soon'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  problema1: 'Las letras parecen todas iguales.',
+  problema2: 'No sabes por dónde empezar.',
+  problema3: 'Los materiales explican hebreo, pero no pensando en quien empieza de cero.',
+  problema4: 'Miras videos, pero sientes que no hay una secuencia.',
+  problemaTitulo: 'Aprender hebreo no debería parecer un rompecabezas.',
+  problemaFecho: 'Por eso creamos un camino claro, progresivo y pensado para quien empieza de cero.',
+
+  demoTitulo: 'Mira cómo vas a aprender.',
+  demoLead: 'Cinco momentos que se repiten en cada lección. Uno a la vez, siempre en el mismo orden.',
+  demoAbas: 'Momentos de una lección',
+
+  rotuloLicao: (etapa: string) => `Lección 4 · ${etapa}`,
+  aprender: 'Aprender',
+  escrever: 'Escribir',
+  shin: 'Shin',
+  // etapa 3: pronúncia, rever
+  aulaSom: 'sonido /ʃ/ - como la sh de “show”; en el curso, escrito sh',
+  aulaPonto: 'El punto de arriba, a la derecha, es lo que hace el sonido SH. Del lado izquierdo, la misma letra se vuelve Sin, con sonido de S.',
+  escritaTexto: 'Este es el diagrama que muestra la lección. Después de ver el movimiento, trazas la letra con el dedo y el curso la revisa. La forma es la de la cursiva que se escribe en Israel - la que vas a ver en una nota escrita a mano, y no la de imprenta.',
+  reproduzir: 'Reproducir audio',
+
+  samech: 'Sámej',
+  ayin: 'Áyin',
+  tet: 'Tet',
+  het: 'Jet',
+  confundidaMem: 'Confundida con ם',
+  confundidaAlef: 'Confundida con א',
+  tresErros: '3 errores seguidos',
+  somGutural: 'Sonido gutural',
+  revisaoHoje: 'Repaso de hoy',
+  revisaoQuantas: '4 letras necesitan volver',
+  revisar: 'Repasar',
+
+  seuProgresso: 'Tu progreso',
+  doCurso: 'del curso',
+  letrasFirmes: 'letras firmes',
+  diasSeguidos: 'días seguidos',
+  dominio22: 'Dominio de las 22 letras',
+
+  metodoRubrica: 'El método',
+  metodoTitulo: 'Un método simple para convertir símbolos en lectura.',
+  metodoLead: (quantas: string) =>
+    `${quantas} etapas en cada lección de letra, con los mismos nombres que vas a ver adentro, siempre en este orden. Ninguna letra avanza sin pasar por todas.`,
+
+  modulo: (n: number) => `Módulo ${n}`,
+  modulos: (a: number, b: number) => `Módulos ${a}-${b}`,
+  contaModulos: 'módulos',
+  contaLicoes: 'lecciones',
+  contaLetras: 'letras',
+  faixaLetras: (faixa: string, n: number) => `${faixa} · las ${n} letras`,
+  faixaLetrasTexto: 'Una a la vez, en el orden en que aparecen en las palabras - y cada una entra enseguida en una palabra real.',
+  faixaSemApoio: (faixa: string) => `${faixa} · leer sin apoyo`,
+  faixaSemApoioTexto: 'El alfabeto ya está completo. Aquí el texto pierde las marcas que lo facilitaban, tal como aparece en un cartel o en una etiqueta.',
+
+  curriculoRubrica: 'El programa',
+  curriculoTitulo: 'Lo que estudias, módulo a módulo.',
+  curriculoLead: (n: number) =>
+    `${n} módulos. Las letras aparecen por utilidad, no por orden alfabético - lees palabras reales ya en la primera semana.`,
+  nLicoes: (n: number) => `${n} ${n === 1 ? 'lección' : 'lecciones'}`,
+  nLetras: (n: number) => `${n} ${n === 1 ? 'letra' : 'letras'}`,
+
+  jornadaTitulo: 'Tu hebreo empieza aquí. No termina aquí.',
+  jornadaLead: 'Aprender a leer es el primer escalón. Los próximos niveles están en preparación y serán cursos aparte.',
+  disponivel: 'Disponible',
+  emBreve: 'Próximamente'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

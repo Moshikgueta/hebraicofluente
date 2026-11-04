@@ -77,7 +77,7 @@ async function call(env, path, { method = 'GET', body, signal } = {}) {
  * `transaction_default_checkout_url_not_set`, e a trilha diz isso.
  */
 export async function criarTransacao(env, { order, course, account }) {
-  const nome = course.titleEn || course.titlePt || course.slug;
+  const nome = (env && env.LOCALE === 'es' && course.titleEs) || course.titleEn || course.titlePt || course.slug;
   return call(env, '/transactions', {
     method: 'POST',
     body: {

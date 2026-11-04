@@ -80,5 +80,44 @@ const en: Traducao<typeof pt> = {
   mapaAlt: 'Course map with progress and the next step'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  rubrica: 'Por dentro de la plataforma',
+  titulo: 'Cada letra, de muchas formas.',
+  lead: 'Unir, armar, leer, escribir a mano. Son pantallas reales del curso, tal como se ven en el celular.',
+  anterior: 'Pantalla anterior',
+  proxima: 'Pantalla siguiente',
+  telas: 'Pantallas de la plataforma',
+  yaelTitulo: 'Yael va contigo.',
+  yaelTexto: 'Un íbice de Nubia de Ein Gedi acompaña cada lección: celebra el acierto y, en el error, te ayuda a mirar de nuevo, sin castigo.',
+  yaelBalao: '¡Hola! Soy Yael. Voy contigo por las 22 letras.',
+  humorFeliz: 'Acertaste',
+  humorQuase: 'Casi',
+  humorComemora: 'Módulo terminado',
+  conhecerT: 'Conocer la letra',
+  conhecerD: 'La letra grande, el nombre, el sonido y el lugar del módulo.',
+  conhecerAlt: 'Pantalla de la lección de Lámed, con la letra grande, el nombre y el sonido',
+  escreverT: 'Escribir a mano',
+  escreverD: 'La letra impresa y la cursiva, trazada en la pantalla.',
+  escreverAlt: 'Pantalla de escritura, con la letra Lámed impresa y en cursiva',
+  ligueT: 'Unir letra y sonido',
+  ligueD: 'Cada letra con su sonido.',
+  ligueAlt: 'Ejercicio de unir cada letra con su sonido',
+  monteT: 'Armar la palabra',
+  monteD: 'Letra por letra, de derecha a izquierda.',
+  monteAlt: 'Ejercicio de armar la palabra letra por letra',
+  maoT: 'Leer la cursiva',
+  maoD: 'Reconocer la palabra escrita a mano.',
+  maoAlt: 'Ejercicio de reconocer una palabra escrita a mano',
+  fraseT: 'Leer la frase entera',
+  fraseD: 'Y decir lo que significa.',
+  fraseAlt: 'Ejercicio de leer una frase en hebreo y elegir el sentido',
+  correcaoT: 'Corrección al instante',
+  correcaoD: '¿Te equivocaste? Yael te muestra por qué, y sigues.',
+  correcaoAlt: 'Pantalla de corrección con Yael explicando la respuesta',
+  mapaT: 'El mapa del curso',
+  mapaD: 'Dónde estás y cuál es el próximo paso.',
+  mapaAlt: 'Mapa del curso con el progreso y el próximo paso'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

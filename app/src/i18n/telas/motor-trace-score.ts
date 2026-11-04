@@ -16,5 +16,13 @@ const en: Traducao<typeof pt> = {
   deNovo: 'Try again while looking at the model. Tap “Show the strokes” to review the order.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  bom: '¡Muy bien! La forma está ahí.',
+  faltouParte: '¡Casi! Faltó parte de la letra: intenta cubrir el modelo entero.',
+  sigaAForma: '¡Casi! Intenta seguir un poco más la forma del modelo.',
+  // o nome do botão tem de ser o mesmo do espanhol do quadro de traçado
+  deNovo: 'Intenta de nuevo mirando el modelo. Toca “Ver el trazado” para repasar el orden.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -41,5 +41,25 @@ const en: Traducao<typeof pt> = {
   entraram: '✓ The new words from this text are now in your vocabulary and in the Words by hand practice.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  semRevisao: 'Este módulo todavía no tiene lectura de repaso.',
+  semTexto: 'Este módulo todavía no tiene texto de lectura.',
+  voltarAoModulo: 'Volver al módulo',
+  modulo: n => `← Módulo ${n}`,
+  leituraDeRevisao: n => `Lectura de repaso · módulo ${n}`,
+  leituraDoModulo: n => `Lectura del módulo ${n}`,
+  segundaLeitura: n => `Segunda lectura del módulo ${n}`,
+  leiaEmVozAlta: 'Lee el texto en voz alta',
+  leiaInstrucao: 'Lee el texto completo, sin detenerte en cada palabra, grábate y escúchate. Después léelo de nuevo y compara.',
+  nomesEPartes: 'Nombres y partes pegadas a la palabra',
+  palavrasNovas: 'Palabras nuevas en este texto',
+  ouvir: translit => `Escuchar ${translit}`,
+  entendeu: '¿Lo entendiste?',
+  responda: 'Responde según lo que leíste. No cuenta para la nota: el motivo aparece con cada respuesta.',
+  fechoBom: 'Leíste un texto completo en hebreo y lo entendiste. Para esto sirve el alfabeto.',
+  fechoParcial: 'Vuelve al texto y toca las líneas que se te trabaron. En la segunda lectura se vuelve más fácil.',
+  entraram: '✓ Las palabras nuevas de este texto entraron en tu vocabulario y en la práctica de palabras a mano.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

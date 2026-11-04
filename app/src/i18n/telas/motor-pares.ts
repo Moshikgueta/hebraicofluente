@@ -27,5 +27,18 @@ const en: Traducao<typeof pt> = {
   palavraErro: '{palavra} has {rival}, not {nome}. {porque}'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  essaE: 'Esa es {nome}. Mira el dibujo otra vez.',
+  outraParecida: 'Esa es otra letra, muy parecida.',
+  parecidasPergunta: 'Entre estas parecidas, ¿cuál es {nome}?',
+  seConfundem: '{a} y {b} se confunden. {porque}',
+  intrusaPergunta: 'Una de estas no es {nome}. ¿Cuál?',
+  intrusaEssaE: 'Esa es {nome}.',
+  intrusaExplica: 'La intrusa era {letra}, de {rival}. {porque}',
+  palavraPergunta: '¿En cuál de estas palabras aparece {nome}? Las otras tienen {rival}.',
+  essa: 'Esa',
+  palavraErro: '{palavra} tiene {rival}, no {nome}. {porque}'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

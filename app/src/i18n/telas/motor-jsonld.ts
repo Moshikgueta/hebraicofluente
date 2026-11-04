@@ -24,5 +24,16 @@ const en: Traducao<typeof pt> = {
   ensinaPalavras: 'Read real Hebrew words'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  professorDescricao: 'Israelí, profesor de idiomas y educador, creador de Hebraico Fluente.',
+  inicio: 'Inicio',
+  nivel: 'Principiante',
+  preRequisito: 'Ninguno: el curso empieza desde cero.',
+  ensinaLetras: (n: number) => `Leer las ${n} letras del alfabeto hebreo`,
+  ensinaNikud: 'Leer los signos de vocal (nikud)',
+  ensinaCursiva: 'Escribir en letra cursiva',
+  ensinaPalavras: 'Leer palabras reales en hebreo'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

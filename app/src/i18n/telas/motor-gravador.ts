@@ -15,5 +15,12 @@ const en: Traducao<typeof pt> = {
   ok: 'Good volume.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  semVoz: 'No oí voz en esta grabación. Revisa que el micrófono correcto esté encendido.',
+  estourado: 'La voz se saturó (pasó del máximo). Aleja un poco el celular y graba de nuevo.',
+  baixo: 'Quedó muy bajo. Acércate más al micrófono y graba de nuevo.',
+  ok: 'Buen volumen.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

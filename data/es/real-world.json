@@ -1,0 +1,156 @@
+{
+  "scenes/garrafa-mayim/labelPt": {
+    "pt": "Na garrafa d'água do supermercado",
+    "es": "En la botella de agua del supermercado"
+  },
+  "scenes/garrafa-mayim/contextPt": {
+    "pt": "Toda garrafa de água em Israel traz esta palavra. É provavelmente a primeira coisa que você vai ler sozinho numa prateleira.",
+    "es": "Toda botella de agua en Israel trae esta palabra. Probablemente sea lo primero que vas a leer solo en un estante."
+  },
+  "scenes/quem-e/labelPt": {
+    "pt": "Quando alguém bate na porta ou liga",
+    "es": "Cuando alguien toca a la puerta o llama"
+  },
+  "scenes/quem-e/contextPt": {
+    "pt": "Uma palavra de duas letras que você já lê inteira - e que serve para perguntar quem é alguém. Quando alguém bate na porta ou liga, a pergunta é {{מִי זֶה?}}, \"quem é?\".",
+    "es": "Una palabra de dos letras que ya lees completa, y que sirve para preguntar quién es alguien. Cuando alguien toca a la puerta o llama, la pregunta es {{מִי זֶה?}}, \"¿quién es?\"."
+  },
+  "scenes/porta-loja/labelPt": {
+    "pt": "Na porta de uma loja, na chegada e na saída",
+    "es": "En la puerta de una tienda, al entrar y al salir"
+  },
+  "scenes/porta-loja/contextPt": {
+    "pt": "A mesma palavra abre e fecha uma conversa. Em Israel, você vai ouvir essa palavra o tempo todo.",
+    "es": "La misma palabra abre y cierra una conversación. En Israel, vas a oír esta palabra todo el tiempo."
+  },
+  "scenes/recibo-toda/labelPt": {
+    "pt": "No rodapé de um recibo de padaria",
+    "es": "Al pie de un recibo de panadería"
+  },
+  "scenes/recibo-toda/contextPt": {
+    "pt": "Impresso no fim de quase todo cupom fiscal do país.",
+    "es": "Impresa al final de casi todo recibo del país."
+  },
+  "scenes/aula-more/labelPt": {
+    "pt": "Como se chama o professor na escola",
+    "es": "Cómo se llama al maestro en la escuela"
+  },
+  "scenes/aula-more/contextPt": {
+    "pt": "Professor. Se for professora, {{מוֹרָה}}. Na escola as crianças chamam assim quem está na frente da sala; no ulpan, é muito comum chamar o professor pelo primeiro nome.",
+    "es": "Maestro. Si es maestra, {{מוֹרָה}}. En la escuela los niños llaman así a quien está al frente del salón; en el ulpán, es muy común llamar al profesor por su nombre."
+  },
+  "scenes/padaria-lechem/labelPt": {
+    "pt": "Na etiqueta da prateleira de pães",
+    "es": "En la etiqueta del estante de los panes"
+  },
+  "scenes/padaria-lechem/contextPt": {
+    "pt": "O {{ח}} raspado bem no meio da palavra. Vale ler em voz alta antes de conferir.",
+    "es": "La {{ח}} raspada justo en medio de la palabra. Vale la pena leerla en voz alta antes de verificar."
+  },
+  "scenes/casa-nova/labelPt": {
+    "pt": "Num anúncio de imóvel",
+    "es": "En un anuncio inmobiliario"
+  },
+  "scenes/casa-nova/contextPt": {
+    "pt": "Aparece em anúncio de tudo: prédio, celular, cardápio. Quer dizer \"novo\"; com palavra feminina, como {{דִירָה}} (apartamento), vira {{חֲדָשָׁה}}.",
+    "es": "Aparece en anuncios de todo: edificios, celulares, menús. Quiere decir \"nuevo\"; con una palabra femenina, como {{דִירָה}} (departamento), pasa a ser {{חֲדָשָׁה}}."
+  },
+  "scenes/horario-shaa/labelPt": {
+    "pt": "Em horários de funcionamento, compromissos e reservas",
+    "es": "En horarios de atención, citas y reservas"
+  },
+  "scenes/horario-shaa/contextPt": {
+    "pt": "O {{ע}} é mudo: você lê só a vogal que vem com ele.",
+    "es": "La {{ע}} es muda: lees solo la vocal que viene con ella."
+  },
+  "scenes/jornal-haaretz/labelPt": {
+    "pt": "Na primeira página do jornal mais antigo do país",
+    "es": "En la primera plana del periódico más antiguo del país"
+  },
+  "scenes/jornal-haaretz/contextPt": {
+    "pt": "O jornal Haaretz é literalmente \"A Terra\". A palavra termina com o {{ץ}} final, que desce abaixo da linha.",
+    "es": "El periódico Haaretz es literalmente \"La Tierra\". La palabra termina con la {{ץ}} final, que baja por debajo de la línea."
+  },
+  "scenes/jornal-haaretz/pt": {
+    "pt": "a terra",
+    "es": "la tierra"
+  },
+  "scenes/caixa-mits/labelPt": {
+    "pt": "Na caixa de suco, na geladeira do mercado",
+    "es": "En la caja de jugo, en el refrigerador del supermercado"
+  },
+  "scenes/caixa-mits/contextPt": {
+    "pt": "Três letras, e a última é uma forma final. Suco.",
+    "es": "Tres letras, y la última es una forma final. Jugo."
+  },
+  "scenes/biblioteca-sheket/labelPt": {
+    "pt": "Numa placa de biblioteca",
+    "es": "En un letrero de biblioteca"
+  },
+  "scenes/biblioteca-sheket/contextPt": {
+    "pt": "Silêncio. Uma placa que você vai entender de relance.",
+    "es": "Silencio. Un letrero que vas a entender de un vistazo."
+  },
+  "scenes/whatsapp-boker/labelPt": {
+    "pt": "Mensagem de WhatsApp, oito da manhã",
+    "es": "Mensaje de WhatsApp, ocho de la mañana"
+  },
+  "scenes/whatsapp-boker/contextPt": {
+    "pt": "Duas palavras, seis letras, e o cumprimento mais comum de Israel antes do meio-dia.",
+    "es": "Dos palabras, seis letras, y el saludo más común de Israel antes del mediodía."
+  },
+  "scenes/whatsapp-boker/pt": {
+    "pt": "bom dia",
+    "es": "buenos días"
+  },
+  "scenes/whatsapp-boker/note": {
+    "pt": "Gloss explícito: a junção palavra a palavra dava 'manhã bom', que não é português.",
+    "es": "Glosa explícita: la unión palabra por palabra daba 'mañana buena', que no es español.",
+    "comentario": "adaptado: la nota original decía 'não é português'"
+  },
+  "scenes/loja-shabat/labelPt": {
+    "pt": "No horário de funcionamento, na porta",
+    "es": "En el horario de atención, en la puerta"
+  },
+  "scenes/loja-shabat/contextPt": {
+    "pt": "Uma grande parte das lojas fecha da tarde de sexta-feira até o fim do sábado, embora isso varie muito de cidade para cidade. Saber ler a palavra evita uma viagem perdida.",
+    "es": "Gran parte de las tiendas cierra desde la tarde del viernes hasta el final del sábado, aunque esto varía mucho de una ciudad a otra. Saber leer la palabra te evita un viaje perdido."
+  },
+  "scenes/praca-ochel/labelPt": {
+    "pt": "Na placa da praça de alimentação de um shopping",
+    "es": "En el letrero del patio de comidas de un centro comercial"
+  },
+  "scenes/praca-ochel/contextPt": {
+    "pt": "O {{כ}} aqui está sem ponto, no meio da palavra - então é o som raspado, não K.",
+    "es": "La {{כ}} aquí no tiene punto, en medio de la palabra: entonces es el sonido raspado, no K."
+  },
+  "scenes/rua-hamelech/labelPt": {
+    "pt": "Em nomes de ruas, como a rua King George (Rei George)",
+    "es": "En nombres de calles, como la calle King George (Rey Jorge)"
+  },
+  "scenes/rua-hamelech/contextPt": {
+    "pt": "\"O rei\". Termina com o {{ך}} final - e é a mesma palavra que esperava desde a primeira lição.",
+    "es": "\"El rey\". Termina con la {{ך}} final, y es la misma palabra que te esperaba desde la primera lección.",
+    "comentario": "como el inglés: el original es ambiguo ('a mesma palavra que esperava'); conferir el sentido"
+  },
+  "scenes/rua-hamelech/pt": {
+    "pt": "o rei",
+    "es": "el rey"
+  },
+  "scenes/cambio-kesef/labelPt": {
+    "pt": "Na vitrine de uma casa de câmbio",
+    "es": "En la vitrina de una casa de cambio"
+  },
+  "scenes/cambio-kesef/contextPt": {
+    "pt": "Dinheiro - e também prata: o dinheiro de antigamente era prata, e a palavra ficou.",
+    "es": "Dinero, y también plata: el dinero de antes era de plata, y la palabra se quedó."
+  },
+  "scenes/livraria-sefer/labelPt": {
+    "pt": "Na lombada de um livro, numa livraria de Tel Aviv",
+    "es": "En el lomo de un libro, en una librería de Tel Aviv"
+  },
+  "scenes/livraria-sefer/contextPt": {
+    "pt": "Você fechou o alfabeto. Esta palavra usa a última letra que aprendeu.",
+    "es": "Terminaste el alfabeto. Esta palabra usa la última letra que aprendiste."
+  }
+}

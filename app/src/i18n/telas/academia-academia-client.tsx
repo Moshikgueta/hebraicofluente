@@ -290,5 +290,149 @@ const en: Traducao<typeof pt> = {
   linkAcademia: 'Want more practice? Reading Academy'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Academia de Lectura - Hebraico Fluente',
+  metaDescricao: 'Practica letras, vocales, sílabas, palabras y escritura con lo que ya aprendiste.',
+
+  jogoMatchTitulo: 'Match',
+  jogoMatchDesc: 'Une cada letra con su nombre, su sonido o una palabra.',
+  jogoMatchTreina: 'Unir letra, nombre y sonido',
+  jogoBlastTitulo: 'Blast',
+  jogoBlastDesc: 'Rápido: aparece una letra, tú eliges. Tu racha de aciertos queda en pantalla.',
+  jogoBlastTreina: 'Reconocer la letra rápido',
+  jogoTesteTitulo: 'Prueba',
+  jogoTesteDesc: 'Sin corrección durante la prueba. Al final, la nota y la lista de lo que se escapó.',
+  jogoTesteTreina: 'Ver lo que ya está firme',
+  jogoCacaTitulo: 'Caza de letras',
+  jogoCacaDesc: 'Encuentra la letra correcta en medio del revoltijo.',
+  jogoCacaTreina: 'Encontrar la letra entre otras',
+  jogoBatalhaTitulo: 'Batalla de las parecidas',
+  jogoBatalhaDesc: 'Dos letras que se parecen, cara a cara, hasta que la diferencia sea obvia.',
+  jogoBatalhaTreina: 'Distinguir las letras parecidas',
+  jogoCursivaTitulo: 'Imprenta × cursiva',
+  jogoCursivaDesc: 'La misma letra en los dos alfabetos: el de los libros y el de la mano.',
+  jogoCursivaTreina: 'Leer la letra escrita a mano',
+
+  abreCom: 'Se abre con {n} letras',
+  abreParecidas: 'Se abre cuando haya dos letras parecidas',
+  abreMais: 'Se abre con más letras',
+
+  vazioBatalha: 'Todavía no hay dos letras parecidas entre las que aprendiste. Haz una lección más y vuelve.',
+  vazioRodada: 'Todavía no hay letras suficientes para armar la ronda. Haz una lección más y vuelve.',
+  vazioMatch: 'El Match necesita al menos tres pares distintos. Haz una lección más y vuelve.',
+  vazioAlternativas: 'Todavía no hay letras suficientes para armar las opciones. Haz una lección más y vuelve.',
+  vazioModo: 'Este modo todavía no tiene material suficiente. Haz una lección más y vuelve.',
+  vazioEscrita: 'Haz la primera lección.',
+
+  resultado: 'Resultado',
+  voltarAcademia: 'Volver a la academia',
+  continuarCurso: 'Seguir con el curso',
+
+  arco: (a, b, acertos, total) =>
+    `Confundías ${a} y ${b}. Ahora acertaste ${acertos} de ${total}.`,
+  kickerMatch: (pares, erros, segundos) =>
+    `${pares} pares · ${erros} ${erros === 1 ? 'error' : 'errores'} · ${segundos}s`,
+  kickerPlacar: (acertos, total, pct) => `${acertos} de ${total} · ${pct}%`,
+  semErro: 'Sin un solo error.',
+  boaSessao: 'Buena sesión.',
+  sessaoFeita: 'Sesión hecha.',
+  recordeSeu: 'Tu récord.',
+  corpoFirme: 'Este conjunto está firme. Vale la pena sumar material: sigue con una letra más.',
+  corpoEscapouDia: 'Lo que se escapó ya entró en tu fila de repaso, para el día justo en que debe volver.',
+  maisUma: 'Una más',
+  escolherOutro: 'Elegir otro',
+  escolherOutroModo: 'Elegir otro modo',
+
+  tecladoRotulo: 'Antes: el teclado hebreo',
+  tecladoTexto: 'Este ejercicio te pide escribir en hebreo, y hay un teclado hebreo en la pantalla: solo toca las letras, sin instalar nada.',
+  usarTecladoTela: 'Usar el teclado de la pantalla',
+  tecladoSistema: '¿Prefieres el teclado hebreo de tu dispositivo? Mira cómo agregarlo',
+  tecladoSistemaTexto: 'Agrégalo una vez - toma un minuto - y queda disponible junto a tu teclado de siempre.',
+
+  tempoBateu: (s, antes) => `${s} s, contra ${antes} s de la última vez.`,
+  tempoLevou: (s, antes) => `Tardaste ${s} s. La última vez: ${antes} s.`,
+  tempoPrimeiro: s => `Tardaste ${s} s. La próxima vez podrás comparar.`,
+  materialFirme: 'Este material está firme. Vale la pena cambiar de modo.',
+  escapouFila: 'Lo que se escapó ya entró en tu fila de repaso.',
+  acertos: 'Aciertos',
+  erros: 'Errores',
+  precisao: 'Precisión',
+  tempo: 'Tiempo',
+  melhorTempo: valor => <>Tu mejor tiempo en este modo: {valor}.</>,
+
+  sonsESinais: 'Sonidos y signos',
+  tudoQuePodeLer: 'Todo lo que ya puedes leer',
+  sinaisDeVogal: 'Los signos de vocal',
+  sinaisTexto: 'El mismo signo vale con cualquier consonante. Por eso aprender cinco signos vale más que memorizar sílaba por sílaba.',
+
+  desafioDoDia: 'Desafío del día',
+  desafioRotulo: 'Cinco preguntas rápidas de las letras que ya empezaste',
+  desafioFeitoTitulo: 'Desafío del día hecho',
+  desafioFeitoTexto: (acertos, total) =>
+    `${acertos} de ${total} al primer intento. Mañana hay otro, armado con lo que estés estudiando.`,
+  voltarPraticar: 'Volver a Practicar',
+
+  flashLetrasTitulo: 'Tarjetas de letras',
+  flashPalavrasTitulo: 'Tarjetas de palabras',
+  flashLetrasRotulo: 'La letra al frente; el nombre y el sonido atrás',
+  flashPalavrasRotulo: 'La palabra al frente; la lectura y el significado atrás',
+  flashCadernoTitulo: 'Mi cuaderno de palabras',
+  flashCadernoRotulo: 'Solo las palabras que marcaste para repasar',
+
+  palavrasAMao: 'Palabras a mano',
+  palavrasAMaoRotulo: 'Escribe en cursiva las palabras que ya aprendiste',
+
+  escrita: 'Escritura',
+  letraQueMaisPrecisa: nome => `La letra que más lo necesita: ${nome}`,
+
+  academiaDeLeitura: 'Academia de Lectura',
+  praticar: 'Practicar',
+  intro: n =>
+    `Todo aquí se arma con las letras que ya aprendiste - ${n} hasta ahora. Elige qué quieres entrenar, o deja que el repaso elija por ti.`,
+  abreDepois: 'La academia se abre después de la primera lección - solo usa letras que ya viste, y por ahora no hay ninguna.',
+  comecarPrimeira: 'Empezar la primera letra',
+
+  reverELer: 'Repasar y leer',
+  desafioFeitoHoje: 'Hecho hoy. Puedes hacerlo de nuevo; mañana hay otro.',
+  desafioConvite: 'Cinco preguntas rápidas, unos tres minutos. Opcional.',
+  revisao: 'Repaso',
+  revisaoEspera: n => `${n} ${n === 1 ? 'elemento te espera' : 'elementos te esperan'}`,
+  revisaoEmDia: 'Al día. Una ronda rápida de lo que más te costó',
+  laboratorio: 'Laboratorio de lectura',
+  laboratorioDesc: 'Una palabra a la vez, con la ayuda que elijas',
+  leituras: 'Lecturas',
+  leiturasDesc: 'El laboratorio, la Primera Lectura y los textos breves de cada módulo',
+  suasPalavras: 'Tus palabras',
+  suasPalavrasDesc: n => `${n} ${n === 1 ? 'palabra' : 'palabras'} que ya lees`,
+
+  flashcards: 'Tarjetas',
+  letras: 'Letras',
+  palavras: 'Palabras',
+  cartasLetras: n => `${n} ${n === 1 ? 'tarjeta' : 'tarjetas'}: la letra, después el nombre y el sonido`,
+  cartasPalavras: n => `${n} ${n === 1 ? 'tarjeta' : 'tarjetas'}: la palabra, después la lectura y el significado`,
+
+  jogosDePratica: 'Juegos de práctica',
+  treina: o => `Entrena: ${o}`,
+  treinarPorAssunto: 'Entrenar por tema',
+  tempoMarca: 'cronometrado',
+
+  refSonsDesc: 'La tabla completa: cada letra con cada vocal, para escuchar y comparar.',
+  refEscritaDesc: 'Trazar y escribir a mano la letra que más lo necesita.',
+  refPalavrasDesc: 'Escribir en cursiva palabras enteras que ya aprendiste, y no solo letras sueltas.',
+
+  hoje: 'hoy',
+  ontem: 'ayer',
+  haDias: n => `hace ${n} días`,
+  jogado: quando => `Jugado ${quando} · `,
+  sessoes: n => `${n} ${n === 1 ? 'sesión' : 'sesiones'}`,
+  melhorTempoCurto: s => ` · mejor tiempo ${s} s`,
+  melhorPct: pct => ` · mejor ${pct}%`,
+
+  voltarAcademiaSeta: '← Academia',
+  semMaterialTitulo: 'Todavía no hay material suficiente',
+  voltar: 'Volver',
+  linkAcademia: '¿Quieres practicar más? Academia de Lectura'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

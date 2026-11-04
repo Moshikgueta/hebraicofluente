@@ -4,6 +4,7 @@ import type { Traducao } from '..';
    som.", contado das lições do módulo. */
 const POR_EXTENSO_PT = ['nenhuma', 'uma', 'duas', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
 const POR_EXTENSO_EN = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const POR_EXTENSO_ES = ['ninguna', 'una', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
 
 const pt = {
   porExtenso: (n: number): string => POR_EXTENSO_PT[n] ?? String(n),
@@ -27,5 +28,16 @@ const en: Traducao<typeof pt> = {
     `This module has ${n} ${total === 1 ? 'lesson' : 'lessons'}${lista ? `: ${lista}` : ''}.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  porExtenso: (n: number): string => POR_EXTENSO_ES[n] ?? String(n),
+  letraNova: '{n} de letra nueva',
+  som: '{n} de sonido',
+  leitura: '{n} de lectura',
+  pratica: '{n} de práctica, sin letra nueva',
+  lista: (inicio: string, ultimo: string): string => `${inicio} y ${ultimo}`,
+  resumo: (n: string, total: number, lista: string): string =>
+    `Este módulo tiene ${n} ${total === 1 ? 'lección' : 'lecciones'}${lista ? `: ${lista}` : ''}.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

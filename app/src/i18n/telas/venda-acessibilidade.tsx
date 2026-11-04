@@ -107,5 +107,58 @@ const en: Traducao<typeof pt> = {
   )
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Declaración de Accesibilidad - Hebraico Fluente',
+  metaDescricao:
+    'Lo que hace la plataforma para que todas las personas puedan usarla, lo que todavía no hace, ' +
+    'cómo se probó y cómo avisar de una barrera.',
+  titulo: 'Declaración de Accesibilidad',
+  resumo: 'Lo que hacemos para que todas las personas puedan usar la plataforma, lo que todavía falta, y cómo avisarnos de una barrera.',
+
+  compromissoTitulo: 'Nuestro compromiso',
+  // etapa 6: escrito para el sitio de fuera
+  compromisso: 'Queremos que cualquier persona pueda aprender a leer hebreo aquí, con o sin discapacidad. La referencia que seguimos son las Pautas de Accesibilidad para el Contenido Web (WCAG 2.1, nivel AA). Todavía no cumplimos con todo; lo que falta está en el punto 4.',
+
+  ofereceTitulo: 'Lo que ofrece la plataforma',
+  menu: (): ReactNode => (
+    <><strong>Menú de accesibilidad</strong>, en el botón redondo de la esquina de la pantalla o con el atajo <strong>Alt + Shift + A</strong>, en cualquier página. Los ajustes se guardan en tu dispositivo y valen en todas las páginas:</>
+  ),
+  menu1: 'tamaño del texto en 100%, 115%, 130% o 150%;',
+  menu2: 'tema claro, oscuro o el de tu dispositivo;',
+  menu3: 'alto contraste;',
+  menu4: 'menos animación (también respetamos el ajuste de "reducir movimiento" de tu sistema);',
+  menu5: 'enlaces subrayados;',
+  menu6: 'más espacio entre letras y líneas en los textos en español.',
+  teclado: 'Teclado y lector de pantalla:',
+  teclado1: 'un atajo "Saltar al contenido" al inicio de cada página, y el foco visible en los botones y enlaces;',
+  teclado2: 'en las lecciones, las teclas 1 a 4 eligen la respuesta y Enter avanza;',
+  teclado3: 'los textos en hebreo están marcados como hebreo, para que el lector de pantalla cambie de idioma;',
+  teclado4: 'los botones de audio dicen lo que reproducen, y, en los ejercicios de las lecciones, se anuncia el resultado de cada respuesta (menos en el de unir pares: ver el punto 4);',
+  teclado5: 'ninguna imagen importante queda sin descripción.',
+  audio: 'Audio, tiempo y pantalla:',
+  audio1: 'las letras, las sílabas, las palabras, las frases y los textos tienen audio grabado, con la opción de escuchar más despacio; nada suena solo;',
+  audio2: 'ningún ejercicio tiene límite de tiempo; en los juegos, el cronómetro es opcional;',
+  audio3: 'la plataforma funciona en el celular y en la computadora, y sigue siendo usable con el zoom del navegador hasta 400%.',
+  escrever: (): ReactNode => (
+    <><strong>Escribir a mano es opcional.</strong> La etapa en la que trazas la letra con el dedo se puede saltar sin bloquear el resto de la lección.</>
+  ),
+
+  verificamosTitulo: 'Cómo lo verificamos',
+  verificamos: 'En cada publicación del sitio, una verificación automática abre las páginas en un navegador de verdad y revisa el menú de accesibilidad y el contraste. Otra, que entra con una cuenta de alumno, revisa en celulares de 360 y 390 píxeles que las pantallas del curso quepan en la pantalla también con el texto en 150% (se corre antes de cada cambio grande, todavía no en cada publicación). Ninguna de las dos reemplaza la prueba hecha a mano. El 28/09/2026 hicimos una revisión manual completa: navegación por teclado, foco, nombres de los botones, contraste medido, textos en hebreo y pantallas de 320 píxeles de ancho. Las correcciones de esa revisión ya están publicadas. El 29/09/2026 también probamos en celulares de verdad, un iPhone y un Android.',
+
+  faltaTitulo: 'Lo que todavía no está bien',
+  falta1: 'los ejercicios de escucha dependen de oír, y todavía no tienen una alternativa para personas sordas; el resto del curso no depende del audio;',
+  falta2: '"Habla y recibe corrección" depende del reconocimiento de voz del navegador, que no existe en todos (Firefox, por ejemplo, no lo tiene); es un recurso opcional, y "Grabar la mía" funciona en todos;',
+  falta3: 'el juego "Caza de la letra" entrena el reconocimiento visual de la forma de las letras; con lector de pantalla, anuncia el nombre de cada letra, lo que hace posible el juego, pero cambia lo que entrena;',
+  falta4: 'el foco después de responder se corrigió en los ejercicios y en los juegos que conocemos (el 01/10/2026); si encuentras una pantalla en la que vuelve al inicio de la página, avísanos por el canal de abajo;',
+  falta5: 'con un lector de pantalla real, probamos VoiceOver en el iPhone, con Safari (el 01/10/2026): entrar, abrir una lección, escuchar el audio, responder y seguir funcionaron; en Chrome del iPhone VoiceOver no funcionó bien, y recomendamos Safari; todavía no probamos con NVDA (computadora) ni TalkBack (Android).',
+
+  aviseTitulo: '¿Encontraste una barrera? Avísanos',
+  assunto: 'Accesibilidad',
+  avise: (email: ReactNode, assunto: string, prazo: string): ReactNode => (
+    <>Escribe a{' '}{email}{' '}con el asunto <em>{assunto}</em>. Cuéntanos en qué página estabas, qué intentaste hacer y, si puedes, qué dispositivo, navegador y tecnología de asistencia usas. Respondemos {prazo}, y, si la barrera te impide estudiar, buscamos una forma de que sigas mientras sale la corrección.</>
+  )
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;
