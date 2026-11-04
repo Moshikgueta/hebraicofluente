@@ -347,7 +347,9 @@ function pontuar(
     const cs = getComputedStyle(target);
     const size = parseFloat(cs.fontSize) || h * 0.6;
     const family = cs.fontFamily || 'serif';
-    mctx.filter = 'blur(13px)';
+    /* 17px desde 04/11/2026 (era 13): a tolerância a erros pequenos, junto
+       com o raio e a régua de lib/trace-score.ts. */
+    mctx.filter = 'blur(17px)';
     mctx.fillStyle = '#000';
     mctx.textAlign = 'center';
     mctx.textBaseline = 'middle';

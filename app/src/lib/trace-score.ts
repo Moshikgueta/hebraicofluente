@@ -59,9 +59,18 @@ export const COBERTURA_BOA = 0.7;
  *  (store.tsx). Todo traço que não é "good" fica abaixo, para o selo
  *  "forte" e a frase da tela nunca discordarem. */
 export const ACERTO_DO_TRACO = 0.5;
+/** Quanto da tinta precisa cair perto do modelo para "Muito bem". Era 0,5;
+ *  desde 04/11/2026 (pedido do dono: "mais flexível com erros pequenos")
+ *  0,45, com o raio e o borrão maiores - uma letra escrita um dedo para o
+ *  lado passa, e rabiscar a caixa inteira (≈0,2) continua não passando. */
+export const DENTRO_BOM = 0.45;
+/** O raio da cobertura, em pixels: era 26, e com 34 um traço um pouco
+ *  deslocado ainda cobre o modelo. Meia letra continua abaixo de
+ *  COBERTURA_BOA (tests/trace.test.ts). */
+export const PERTO = 34;
 
 export function scoreTrace(input: TraceInput): TraceVerdict {
-  const { alpha, w, h, points, near = 26 } = input;
+  const { alpha, w, h, points, near = PERTO } = input;
 
   if (points.length < 4) {
     return {
@@ -96,7 +105,7 @@ export function scoreTrace(input: TraceInput): TraceVerdict {
   /* Weighted toward coverage: drawing the whole letter roughly is closer to
      writing it than drawing a small perfect piece of it. */
   const bruto = Math.min(1, dentro * 0.4 + cobertura * 0.6);
-  const bom = dentro >= 0.5 && cobertura >= COBERTURA_BOA;
+  const bom = dentro >= DENTRO_BOM && cobertura >= COBERTURA_BOA;
   /* Só o traço "good" passa da régua de acerto; os outros guardam a nota,
      limitada logo abaixo dela. */
   const score = bom ? Math.max(bruto, ACERTO_DO_TRACO) : Math.min(bruto, ACERTO_DO_TRACO - 0.01);
@@ -107,7 +116,7 @@ export function scoreTrace(input: TraceInput): TraceVerdict {
   if (bom) {
     return { score, dentro, cobertura, tone: 'good', message: tx.bom };
   }
-  if (dentro >= 0.5) {
+  if (dentro >= DENTRO_BOM) {
     return {
       score, dentro, cobertura, tone: 'try',
       message: tx.faltouParte
