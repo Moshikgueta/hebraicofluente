@@ -28,9 +28,14 @@ type Venda = {
   estudouEm: number | null; concluidas: string[]; teste?: boolean;
   desistiuEm?: number | null; exameFeito?: boolean;
   diasDeEstudo?: number; minutosEstimados?: number;
+  revisoes?: string[]; leituras?: string[];
+};
+type NaoPago = {
+  orderId: string; curso: string; valorCentavos: number; metodo: string; status: string; criadoEm: number;
+  origem: string | null; campanha: string | null; nome: string; email: string | null; comprouDepois: boolean;
 };
 type Estado = { tipo: 'carregando' } | { tipo: 'sem-sessao' } | { tipo: 'nao-admin' } | { tipo: 'codigo' } | { tipo: 'erro' }
-  | { tipo: 'pronto'; vendas: Venda[] };
+  | { tipo: 'pronto'; vendas: Venda[]; naoPagos: NaoPago[] };
 
 /* O endereço que o dono divulgou, para cada nome de parceria. */
 const LINK: Record<string, string> = {
@@ -104,8 +109,8 @@ export function VendasClient() {
       if (await pedeCodigo(r)) return setEstado({ tipo: 'codigo' });
       if (r.status === 403) return setEstado({ tipo: 'nao-admin' });
       if (!r.ok) return setEstado({ tipo: 'erro' });
-      const { vendas } = await r.json() as { vendas: Venda[] };
-      setEstado({ tipo: 'pronto', vendas });
+      const { vendas, naoPagos } = await r.json() as { vendas: Venda[]; naoPagos?: NaoPago[] };
+      setEstado({ tipo: 'pronto', vendas, naoPagos: naoPagos ?? [] });
     } catch { setEstado({ tipo: 'erro' }); }
   }, []);
 
@@ -166,6 +171,7 @@ export function VendasClient() {
       </div>
 
       {estado.tipo === 'pronto' && <Funil pagas={pagas} />}
+      {estado.tipo === 'pronto' && <NaoPagos lista={estado.naoPagos} />}
 
       {reaisDeAlunos.map(v => <Cartao key={v.orderId} v={v} />)}
 
@@ -180,6 +186,96 @@ export function VendasClient() {
         </details>
       )}
     </main>
+  );
+}
+
+/* ── em que módulo a pessoa está, e o que falta para fechá-lo (04/11/2026) ──
+   O módulo atual é o primeiro de letras com alguma letra por concluir. Os
+   anteriores aparecem como "fechados" quando têm a revisão (checkpoint) e as
+   leituras obrigatórias (a Primeira Leitura e, onde existe, o texto
+   principal) - a mesma porta de lib/sons.ts, `portasDosModulos`. */
+export function ondeEsta(v: Pick<Venda, 'concluidas' | 'revisoes' | 'leituras'>) {
+  const feitas = new Set(v.concluidas);
+  const revisoes = new Set(v.revisoes ?? []);
+  const leituras = new Set(v.leituras ?? []);
+  const modulos = course.modules.filter(m => m.letterIds.length > 0);
+  const atual = modulos.find(m => !m.letterIds.every(id => feitas.has(id))) ?? null;
+  const fechamento = modulos
+    .filter(m => m.letterIds.every(id => feitas.has(id)))
+    .map(m => {
+      const faltam: string[] = [];
+      if (m.checkpoint && !revisoes.has(m.checkpoint.id)) faltam.push('a revisão');
+      if (!leituras.has(`primeira-leitura-m${m.n}`)) faltam.push('a Primeira Leitura');
+      if (m.textoPrincipal && !leituras.has(`texto-${m.n}`)) faltam.push('o texto principal');
+      return { n: m.n, faltam };
+    });
+  return {
+    atual: atual ? { n: atual.n, titulo: atual.titlePt, feitas: atual.letterIds.filter(id => feitas.has(id)).length, total: atual.letterIds.length } : null,
+    fechados: fechamento.filter(f => !f.faltam.length).map(f => f.n),
+    abertos: fechamento.filter(f => f.faltam.length)
+  };
+}
+
+const lista = (itens: string[]) =>
+  itens.length <= 1 ? (itens[0] ?? '') : `${itens.slice(0, -1).join(', ')} e ${itens[itens.length - 1]}`;
+
+function OndeEsta({ v }: { v: Venda }) {
+  const o = ondeEsta(v);
+  return (
+    <div className="font-ui text-[14px] m-0 grid gap-0.5">
+      <p className="m-0">
+        {o.atual
+          ? <>Está no <strong>módulo {o.atual.n}</strong> ({o.atual.titulo}) · {o.atual.feitas} de {o.atual.total} letras dele</>
+          : <>Concluiu as letras dos módulos 1 a 5</>}
+        {o.fechados.length > 0 && <> · fechou {o.fechados.length === 1 ? 'o módulo' : 'os módulos'} {lista(o.fechados.map(String))}</>}
+      </p>
+      {o.abertos.map(f => (
+        <p key={f.n} className="m-0 text-ink-muted">
+          Módulo {f.n}: letras feitas, falta {lista(f.faltam)}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+/* ── os pedidos que não foram pagos (04/11/2026) ───────────────────────── */
+const SITUACAO: Record<string, string> = {
+  pending: 'aguardando pagamento', expired: 'PIX vencido', failed: 'pagamento recusado', cancelled: 'cancelado'
+};
+
+function NaoPagos({ lista: itens }: { lista: readonly NaoPago[] }) {
+  if (!itens.length) return null;
+  const depois = itens.filter(x => x.comprouDepois).length;
+  return (
+    <details className="rounded-[var(--r-md)] border border-line p-4 font-ui text-[15px]">
+      <summary className="cursor-pointer">
+        <strong>Pedidos que não foram pagos ({itens.length})</strong>
+        {depois > 0 && <> · {depois} {depois === 1 ? 'dessas pessoas comprou' : 'dessas pessoas compraram'} depois</>}
+      </summary>
+      <p className="text-[14px] text-ink-muted mt-2 mb-3">
+        Quem chegou a gerar um PIX ou tentar o cartão e não concluiu. Só para você ver: o site não manda nada a essas pessoas.
+      </p>
+      <ul className="grid gap-2 m-0 p-0 list-none">
+        {itens.map(x => (
+          <li key={x.orderId} className="rounded-lg border border-[var(--line)] bg-surface p-3 grid gap-0.5">
+            <p className="m-0 break-words">
+              <strong>{x.nome || 'Sem nome'}</strong>{' · '}<span className="break-all">{x.email ?? 'conta apagada'}</span>
+            </p>
+            <p className="m-0 text-[14px] text-ink-body break-all">
+              {reais(x.valorCentavos)} · {x.metodo === 'pix' ? 'PIX' : 'cartão'} · {quando(x.criadoEm)}
+              {' · '}{SITUACAO[x.status] ?? x.status} · pedido {x.orderId}
+            </p>
+            {(x.origem || x.comprouDepois) && (
+              <p className="m-0 text-[14px]">
+                {x.origem && <>Origem: {FONTES_PT[x.origem] ?? x.origem}{x.campanha ? ` · campanha ${x.campanha}` : ''}</>}
+                {x.origem && x.comprouDepois && ' · '}
+                {x.comprouDepois && <strong>comprou depois</strong>}
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }
 
@@ -211,6 +307,7 @@ function Cartao({ v }: { v: Venda }) {
             : <>Estudou pela última vez em {quando(v.estudouEm)} · {v.concluidas.filter(id => LETRAS.has(id)).length} de {course.totalLetters} letras concluídas</>}
         </p>
       )}
+      {v.status === 'paid' && v.estudouEm !== null && <OndeEsta v={v} />}
       {v.status === 'paid' && v.estudouEm !== null && v.diasDeEstudo != null && (
         <p className="font-ui text-[14px] m-0">
           Estudou em {v.diasDeEstudo} {v.diasDeEstudo === 1 ? 'dia' : 'dias'} · cerca de {duracao(v.minutosEstimados ?? 0)} de prática (estimativa)

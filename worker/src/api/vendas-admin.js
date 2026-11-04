@@ -8,10 +8,15 @@
  * Só leitura. Cada linha diz também se o pedido veio de um link de campanha
  * (`orders.parceria`, migração 0002) e de que origem (`orders.origem` e
  * `orders.campanha`, migração 0003); pedidos de antes delas vêm sem a marca.
- * Pedidos pendentes, vencidos e recusados ficam de fora: não houve dinheiro.
+ * Pedidos pendentes, vencidos e recusados ficam fora de `vendas` (não houve
+ * dinheiro) e vão para `naoPagos`.
  *
  * Desde 23/10/2026, a compra de uma conta de ADMIN_EMAILS vem com
  * `teste: true`: são os testes do dono, que o painel mostra à parte e não soma.
+ *
+ * Desde 04/11/2026, também os pedidos NÃO pagos (`naoPagos`: PIX vencido,
+ * cartão recusado, aguardando), sem os testes do dono, e o fechamento de
+ * cada módulo de quem pagou (`revisoes`, `leituras`).
  *
  * Desde 03/11/2026, também quando a pessoa desistiu pelo site e se já tinha
  * passado no exame final - para medir quem faz o curso e desiste -, em
@@ -59,7 +64,11 @@ export async function listar({ request, env }) {
               WHERE COALESCE(json_extract(d.value, '$.units'), 0) > 0
                  OR COALESCE(json_extract(d.value, '$.answered'), 0) > 0) AS dias_estudo,
             (SELECT SUM(COALESCE(json_extract(d.value, '$.units'), 0))
-               FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.days') d) AS unidades
+               FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.days') d) AS unidades,
+            (SELECT json_group_array(c.key) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.checkpoints') c
+              WHERE json_extract(c.value, '$.passedAt') IS NOT NULL) AS revisoes,
+            (SELECT json_group_array(f.key) FROM json_each(CASE WHEN json_valid(p.state) THEN p.state ELSE '{}' END, '$.firsts') f
+              WHERE f.key LIKE 'primeira-leitura-m%' OR f.key LIKE 'texto-%') AS leituras
        FROM orders o LEFT JOIN accounts a ON a.id = o.account_id
                      LEFT JOIN progress p ON p.account_id = o.account_id
       WHERE o.status IN ('paid', 'refunded')
@@ -67,7 +76,30 @@ export async function listar({ request, env }) {
       LIMIT ?`
   ).bind(LIMITE).all();
   const admins = emailsDeAdmin(env);
+
+  /* Os pedidos que NÃO foram pagos (04/11/2026, pedido do dono): o PIX que
+     venceu, o cartão recusado, o que ainda espera. Só para o dono ver quem
+     tentou comprar - o painel não manda nada a ninguém. `comprouDepois` diz
+     se a mesma conta pagou o mesmo curso em outro pedido. */
+  const { results: naoPagos } = await env.DB.prepare(
+    `SELECT o.id, o.course_slug, o.amount_cents, o.method, o.status, o.created_at, o.origem, o.campanha,
+            a.name, a.email,
+            EXISTS (SELECT 1 FROM orders o2 WHERE o2.account_id = o.account_id AND o2.course_slug = o.course_slug
+                     AND o2.status IN ('paid', 'refunded')) AS comprou_depois
+       FROM orders o LEFT JOIN accounts a ON a.id = o.account_id
+      WHERE o.status NOT IN ('paid', 'refunded')
+      ORDER BY o.created_at DESC
+      LIMIT ?`
+  ).bind(LIMITE).all();
+
   return json({
+    naoPagos: (naoPagos || [])
+      .filter(v => !(v.email && admins.includes(normalizeEmail(v.email))))
+      .map(v => ({
+        orderId: v.id, curso: v.course_slug, valorCentavos: v.amount_cents, metodo: v.method,
+        status: v.status, criadoEm: v.created_at, origem: v.origem || null, campanha: v.campanha || null,
+        nome: v.name || '', email: v.email || null, comprouDepois: !!v.comprou_depois
+      })),
     vendas: (results || []).map(v => ({
       orderId: v.id, curso: v.course_slug, valorCentavos: v.amount_cents, metodo: v.method,
       /* O que a Mercado Pago depositou depois da taxa (enxuto: `liquido`). Null em
@@ -80,6 +112,9 @@ export async function listar({ request, env }) {
          dizer quantos dias depois da compra e até onde a pessoa chegou. */
       desistiuEm: v.desistiu_em || null, exameFeito: !!v.exame_em,
       diasDeEstudo: Number(v.dias_estudo) || 0,
+      /* O fechamento de cada módulo (04/11/2026): as revisões aprovadas
+         (cp1…) e as leituras feitas (primeira-leitura-mN, texto-N). */
+      revisoes: lista(v.revisoes), leituras: lista(v.leituras),
       minutosEstimados: Math.round((Number(v.unidades) || 0) * UNIDADE_SEGUNDOS / 60),
       teste: !!v.email && admins.includes(normalizeEmail(v.email))
     }))
