@@ -263,6 +263,13 @@ export default function Page() {
             Política de Reembolso e Cancelamento
           </Link>.
         </p>
+        <p>
+          Durante o prazo de desistência, todas as lições ficam abertas. O exame final, o
+          certificado de conclusão e as leituras bônus ficam disponíveis quando esse prazo
+          termina. O certificado é emitido pela plataforma depois disso, com um código que
+          qualquer pessoa pode conferir no site; o nome que vai nele é confirmado por você
+          antes da emissão e não muda depois.
+        </p>
       </Artigo>
 
       <Artigo n={9} titulo="Mudanças nestes termos">
