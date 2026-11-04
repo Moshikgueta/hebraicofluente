@@ -17,5 +17,13 @@ const en: Traducao<typeof pt> = {
   continuar: 'Continue the lessons'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  exame: data => `El examen final se abre el ${data}.`,
+  certificado: data => `El certificado se abre el ${data}.`,
+  bonus: data => `Las lecturas extra se abren el ${data}.`,
+  texto: 'El examen final, el certificado y las lecturas extra quedan disponibles cuando termina el plazo de reembolso de tu compra. Hasta entonces, todas las lecciones siguen abiertas.',
+  continuar: 'Seguir con las lecciones'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

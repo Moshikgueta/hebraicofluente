@@ -43,5 +43,26 @@ const en: Traducao<typeof pt> = {
   confirmar: 'Confirm'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Confirmar suscripción - Hebraico Fluente',
+  metaDescricao: 'Confirma que quieres recibir los correos que pediste.',
+  oQueCurso: 'las próximas letras del alfabeto y las novedades del curso',
+  oQueIsrael: 'el aviso de cuando abra Israel Alem do Obvio',
+  oQueRaizes: 'el aviso de cuando abra Raizes Sefarditas',
+  oQueA1: 'el aviso de cuando abra el curso Hebreo A1',
+  titulo: 'Confirmar suscripción',
+  confirmada: (oQue: string) =>
+    `Listo, suscripción confirmada. Vas a recibir ${oQue}. Cada correo trae el enlace para salir de la lista.`,
+  oQuePediu: 'lo que pediste',
+  invalidoAntes: 'Este enlace no está completo o ya no vale. Ábrelo de nuevo desde el correo, o pídelo otra vez en el',
+  site: 'sitio',
+  toqueNoBotao:
+    'Toca el botón para confirmar que quieres recibir los correos que pediste en el sitio de ' +
+    'Hebraico Fluente. Puedes salir de la lista cuando quieras, con el enlace de cualquiera de ellos.',
+  erro: 'No pude hacerlo ahora. Vuelve a intentarlo en un momento.',
+  confirmando: 'Confirmando…',
+  confirmar: 'Confirmar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

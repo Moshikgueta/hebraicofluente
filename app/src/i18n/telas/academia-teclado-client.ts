@@ -21,5 +21,15 @@ const en: Traducao<typeof pt> = {
   irDigitacao: 'Go to typing practice in the academy'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Teclado hebreo - Hebraico Fluente',
+  metaDescricao: 'Cómo agregar el teclado hebreo en iPhone, Android, Windows y Mac.',
+  ferramentas: 'Herramientas',
+  titulo: 'El teclado hebreo en tu dispositivo',
+  texto: 'Solo lo necesitas para los ejercicios de escritura con teclado de la academia. Todo lo demás del curso se hace tocando.',
+  confirmado: '✓ Ya confirmaste el teclado.',
+  irDigitacao: 'Ir a la escritura con teclado, en la academia'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

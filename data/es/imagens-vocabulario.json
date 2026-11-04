@@ -1,0 +1,810 @@
+{
+  "palavras/אִמָא/pt": {
+    "pt": "mãe",
+    "es": "madre"
+  },
+  "palavras/אִמָא/imageAlt": {
+    "pt": "Uma mulher adulta sorrindo, caminhando de mãos dadas com uma criança pequena.",
+    "es": "Una mujer adulta sonriendo, caminando de la mano con un niño pequeño."
+  },
+  "palavras/מַיִם/pt": {
+    "pt": "água",
+    "es": "agua"
+  },
+  "palavras/מַיִם/imageAlt": {
+    "pt": "Um copo transparente cheio de água, com uma gota caindo.",
+    "es": "Un vaso transparente lleno de agua, con una gota que cae."
+  },
+  "palavras/מִשְׁפָּחָה/pt": {
+    "pt": "família",
+    "es": "familia"
+  },
+  "palavras/מִשְׁפָּחָה/imageAlt": {
+    "pt": "Pai, mãe e dois filhos, lado a lado, abraçados.",
+    "es": "Padre, madre y dos hijos, uno al lado del otro, abrazados."
+  },
+  "palavras/מֶלֶךְ/pt": {
+    "pt": "rei",
+    "es": "rey"
+  },
+  "palavras/מֶלֶךְ/imageAlt": {
+    "pt": "Uma coroa dourada simples sobre uma almofada.",
+    "es": "Una corona dorada sencilla sobre un cojín."
+  },
+  "palavras/תֵה/pt": {
+    "pt": "chá",
+    "es": "té"
+  },
+  "palavras/תֵה/imageAlt": {
+    "pt": "Uma xícara de chá fumegante com um saquinho pendurado.",
+    "es": "Una taza de té humeante con una bolsita colgando."
+  },
+  "palavras/תַפּוּחַ/pt": {
+    "pt": "maçã",
+    "es": "manzana"
+  },
+  "palavras/תַפּוּחַ/imageAlt": {
+    "pt": "Uma maçã vermelha com uma folha no cabo.",
+    "es": "Una manzana roja con una hoja en el tallo."
+  },
+  "palavras/חַלוֹן/pt": {
+    "pt": "janela",
+    "es": "ventana"
+  },
+  "palavras/חַלוֹן/imageAlt": {
+    "pt": "Uma janela aberta, com venezianas verdes, mostrando árvores e céu azul.",
+    "es": "Una ventana abierta, con persianas verdes, que muestra árboles y cielo azul."
+  },
+  "palavras/יָם/pt": {
+    "pt": "mar",
+    "es": "mar"
+  },
+  "palavras/יָם/imageAlt": {
+    "pt": "Ondas do mar sob um céu claro, com a linha do horizonte.",
+    "es": "Olas del mar bajo un cielo despejado, con la línea del horizonte."
+  },
+  "palavras/יַלְדָה/pt": {
+    "pt": "menina",
+    "es": "niña"
+  },
+  "palavras/יַלְדָה/imageAlt": {
+    "pt": "Uma menina de cabelo comprido e vestido amarelo, sorrindo.",
+    "es": "Una niña de pelo largo y vestido amarillo, sonriendo."
+  },
+  "palavras/גַן/pt": {
+    "pt": "jardim · jardim de infância",
+    "es": "jardín · jardín de niños"
+  },
+  "palavras/גַן/imageAlt": {
+    "pt": "Um parquinho com árvore, escorregador, balanço e caixa de areia.",
+    "es": "Un parquecito con un árbol, un tobogán, un columpio y un arenero."
+  },
+  "palavras/גַג/pt": {
+    "pt": "telhado",
+    "es": "techo"
+  },
+  "palavras/גַג/imageAlt": {
+    "pt": "O telhado de uma casa, com telhas e uma chaminé.",
+    "es": "El techo de una casa, con tejas y una chimenea."
+  },
+  "palavras/אֲגַם/pt": {
+    "pt": "lago",
+    "es": "lago"
+  },
+  "palavras/אֲגַם/imageAlt": {
+    "pt": "Um lago calmo cercado de árvores, com um barquinho.",
+    "es": "Un lago tranquilo rodeado de árboles, con un botecito."
+  },
+  "palavras/גְלִידָה/pt": {
+    "pt": "sorvete",
+    "es": "helado"
+  },
+  "palavras/גְלִידָה/imageAlt": {
+    "pt": "Uma casquinha de sorvete com duas bolas.",
+    "es": "Un cono de helado con dos bolas."
+  },
+  "palavras/יָד/pt": {
+    "pt": "mão",
+    "es": "mano"
+  },
+  "palavras/יָד/imageAlt": {
+    "pt": "Uma mão aberta, palma para a frente.",
+    "es": "Una mano abierta, con la palma hacia adelante."
+  },
+  "palavras/דָג/pt": {
+    "pt": "peixe",
+    "es": "pez"
+  },
+  "palavras/דָג/imageAlt": {
+    "pt": "Um peixe nadando, de perfil.",
+    "es": "Un pez nadando, de perfil."
+  },
+  "palavras/דוֹדָה/pt": {
+    "pt": "tia",
+    "es": "tía"
+  },
+  "palavras/דוֹדָה/imageAlt": {
+    "pt": "Uma mulher adulta abaixada para abraçar uma sobrinha.",
+    "es": "Una mujer adulta agachada para abrazar a una sobrina."
+  },
+  "palavras/אִשָׁה/pt": {
+    "pt": "mulher",
+    "es": "mujer"
+  },
+  "palavras/אִשָׁה/imageAlt": {
+    "pt": "Uma mulher adulta de cabelo comprido, sorrindo, com as mãos nos bolsos.",
+    "es": "Una mujer adulta de pelo largo, sonriendo, con las manos en los bolsillos."
+  },
+  "palavras/שֶׁמֶשׁ/pt": {
+    "pt": "sol",
+    "es": "sol"
+  },
+  "palavras/שֶׁמֶשׁ/imageAlt": {
+    "pt": "Um sol redondo e brilhante num céu limpo.",
+    "es": "Un sol redondo y brillante en un cielo despejado."
+  },
+  "palavras/יֶלֶד/pt": {
+    "pt": "menino",
+    "es": "niño"
+  },
+  "palavras/יֶלֶד/imageAlt": {
+    "pt": "Um menino de uns oito anos segurando uma bola.",
+    "es": "Un niño de unos ocho años sosteniendo una pelota."
+  },
+  "palavras/לַיְלָה/pt": {
+    "pt": "noite",
+    "es": "noche"
+  },
+  "palavras/לַיְלָה/imageAlt": {
+    "pt": "Um céu noturno com lua crescente e estrelas sobre casas.",
+    "es": "Un cielo nocturno con luna creciente y estrellas sobre unas casas."
+  },
+  "palavras/לֶחֶם/pt": {
+    "pt": "pão",
+    "es": "pan"
+  },
+  "palavras/לֶחֶם/imageAlt": {
+    "pt": "Um pão de forma dourado, com algumas fatias cortadas.",
+    "es": "Un pan de molde dorado, con algunas rebanadas cortadas."
+  },
+  "palavras/הַר/pt": {
+    "pt": "montanha",
+    "es": "montaña"
+  },
+  "palavras/הַר/imageAlt": {
+    "pt": "Uma montanha com o pico nevado.",
+    "es": "Una montaña con el pico nevado."
+  },
+  "palavras/נָהָר/pt": {
+    "pt": "rio",
+    "es": "río"
+  },
+  "palavras/נָהָר/imageAlt": {
+    "pt": "Um rio correndo entre margens verdes.",
+    "es": "Un río que corre entre orillas verdes."
+  },
+  "palavras/רְחוֹב/pt": {
+    "pt": "rua",
+    "es": "calle"
+  },
+  "palavras/רְחוֹב/imageAlt": {
+    "pt": "Uma rua de cidade com calçada, poste e casas.",
+    "es": "Una calle de ciudad con acera, poste de luz y casas."
+  },
+  "palavras/חָבֵר/pt": {
+    "pt": "amigo",
+    "es": "amigo"
+  },
+  "palavras/חָבֵר/imageAlt": {
+    "pt": "Dois amigos adultos rindo, um com a mão no ombro do outro.",
+    "es": "Dos amigos adultos riendo, uno con la mano en el hombro del otro."
+  },
+  "palavras/וֶרֶד/pt": {
+    "pt": "rosa (flor)",
+    "es": "rosa (flor)"
+  },
+  "palavras/וֶרֶד/imageAlt": {
+    "pt": "Uma rosa vermelha com o cabo e duas folhas.",
+    "es": "Una rosa roja con el tallo y dos hojas."
+  },
+  "palavras/אֹזֶן/pt": {
+    "pt": "orelha",
+    "es": "oreja"
+  },
+  "palavras/אֹזֶן/imageAlt": {
+    "pt": "O perfil de uma cabeça com a orelha em destaque.",
+    "es": "El perfil de una cabeza con la oreja destacada."
+  },
+  "palavras/אָח/pt": {
+    "pt": "irmão",
+    "es": "hermano"
+  },
+  "palavras/אָח/imageAlt": {
+    "pt": "Dois irmãos, um mais velho e um mais novo, lado a lado.",
+    "es": "Dos hermanos, uno mayor y uno menor, uno al lado del otro."
+  },
+  "palavras/מִטָה/pt": {
+    "pt": "cama",
+    "es": "cama"
+  },
+  "palavras/מִטָה/imageAlt": {
+    "pt": "Uma cama arrumada com travesseiro e cobertor.",
+    "es": "Una cama tendida con almohada y cobija."
+  },
+  "palavras/מִטְרִיָה/pt": {
+    "pt": "guarda-chuva",
+    "es": "paraguas"
+  },
+  "palavras/מִטְרִיָה/imageAlt": {
+    "pt": "Um guarda-chuva verde, fechado, de cabo curvo.",
+    "es": "Un paraguas verde, cerrado, de mango curvo."
+  },
+  "palavras/סוּס/pt": {
+    "pt": "cavalo",
+    "es": "caballo"
+  },
+  "palavras/סוּס/imageAlt": {
+    "pt": "Um cavalo marrom em pé, de perfil.",
+    "es": "Un caballo marrón de pie, de perfil."
+  },
+  "palavras/סַל/pt": {
+    "pt": "cesta",
+    "es": "canasta"
+  },
+  "palavras/סַל/imageAlt": {
+    "pt": "Uma cesta de vime com frutas.",
+    "es": "Una canasta de mimbre con frutas."
+  },
+  "palavras/אוֹטוֹבּוּס/pt": {
+    "pt": "ônibus",
+    "es": "autobús"
+  },
+  "palavras/אוֹטוֹבּוּס/imageAlt": {
+    "pt": "Um ônibus urbano de frente.",
+    "es": "Un autobús urbano de frente."
+  },
+  "palavras/כִּסֵא/pt": {
+    "pt": "cadeira",
+    "es": "silla"
+  },
+  "palavras/כִּסֵא/imageAlt": {
+    "pt": "Uma cadeira de madeira simples.",
+    "es": "Una silla de madera sencilla."
+  },
+  "palavras/עִיר/pt": {
+    "pt": "cidade",
+    "es": "ciudad"
+  },
+  "palavras/עִיר/imageAlt": {
+    "pt": "Prédios de uma cidade vistos de longe.",
+    "es": "Edificios de una ciudad vistos de lejos."
+  },
+  "palavras/עֵץ/pt": {
+    "pt": "árvore",
+    "es": "árbol"
+  },
+  "palavras/עֵץ/imageAlt": {
+    "pt": "Uma árvore frondosa com tronco grosso.",
+    "es": "Un árbol frondoso de tronco grueso."
+  },
+  "palavras/מִיץ/pt": {
+    "pt": "suco",
+    "es": "jugo"
+  },
+  "palavras/מִיץ/imageAlt": {
+    "pt": "Um copo de suco de laranja com uma laranja cortada ao lado.",
+    "es": "Un vaso de jugo de naranja con una naranja cortada al lado."
+  },
+  "palavras/קָפֶה/pt": {
+    "pt": "café",
+    "es": "café"
+  },
+  "palavras/קָפֶה/imageAlt": {
+    "pt": "Uma xícara de café preto sobre o pires.",
+    "es": "Una taza de café negro sobre el platito."
+  },
+  "palavras/אַבָּא/pt": {
+    "pt": "pai",
+    "es": "padre"
+  },
+  "palavras/אַבָּא/imageAlt": {
+    "pt": "Um homem adulto carregando uma criança nos ombros.",
+    "es": "Un hombre adulto que lleva a un niño sobre los hombros."
+  },
+  "palavras/בַּיִת/pt": {
+    "pt": "casa",
+    "es": "casa"
+  },
+  "palavras/בַּיִת/imageAlt": {
+    "pt": "Uma casa simples com porta, janelas e telhado.",
+    "es": "Una casa sencilla con puerta, ventanas y techo."
+  },
+  "palavras/לֵב/pt": {
+    "pt": "coração",
+    "es": "corazón"
+  },
+  "palavras/לֵב/imageAlt": {
+    "pt": "Um coração vermelho desenhado.",
+    "es": "Un corazón rojo dibujado."
+  },
+  "palavras/כֶּלֶב/pt": {
+    "pt": "cachorro",
+    "es": "perro"
+  },
+  "palavras/כֶּלֶב/imageAlt": {
+    "pt": "Um cachorro sentado, olhando para a frente.",
+    "es": "Un perro sentado, mirando hacia adelante."
+  },
+  "palavras/כּוֹס/pt": {
+    "pt": "copo",
+    "es": "vaso"
+  },
+  "palavras/כּוֹס/imageAlt": {
+    "pt": "Um copo de vidro vazio.",
+    "es": "Un vaso de vidrio vacío."
+  },
+  "palavras/כַּדוּר/pt": {
+    "pt": "bola",
+    "es": "pelota"
+  },
+  "palavras/כַּדוּר/imageAlt": {
+    "pt": "Uma bola de futebol.",
+    "es": "Una pelota de fútbol."
+  },
+  "palavras/סֵפֶר/pt": {
+    "pt": "livro",
+    "es": "libro"
+  },
+  "palavras/סֵפֶר/imageAlt": {
+    "pt": "Um livro fechado, de capa verde, com uma fita marcando a página.",
+    "es": "Un libro cerrado, de tapa verde, con una cinta que marca la página."
+  },
+  "palavras/כֶּסֶף/pt": {
+    "pt": "dinheiro",
+    "es": "dinero"
+  },
+  "palavras/כֶּסֶף/imageAlt": {
+    "pt": "Algumas moedas e uma nota dobrada.",
+    "es": "Algunas monedas y un billete doblado."
+  },
+  "palavras/טֶלֶפוֹן/pt": {
+    "pt": "telefone",
+    "es": "teléfono"
+  },
+  "palavras/טֶלֶפוֹן/imageAlt": {
+    "pt": "Um celular de tela escura, inclinado.",
+    "es": "Un celular con la pantalla apagada, inclinado."
+  },
+  "palavras/אֹכֶל/pt": {
+    "pt": "comida",
+    "es": "comida"
+  },
+  "palavras/אֹכֶל/imageAlt": {
+    "pt": "Um prato com comida: arroz, legumes e um pedaço de frango.",
+    "es": "Un plato con comida: arroz, verduras y un trozo de pollo."
+  },
+  "palavras/מוֹרֶה/pt": {
+    "pt": "professor",
+    "es": "maestro"
+  },
+  "palavras/מוֹרֶה/imageAlt": {
+    "pt": "Um professor em pé ao lado de um quadro branco, apontando.",
+    "es": "Un maestro de pie junto a un pizarrón blanco, señalando."
+  },
+  "palavras/תָא/pt": {
+    "pt": "compartimento · cabine",
+    "es": "compartimento · cabina"
+  },
+  "palavras/תָא/imageAlt": {
+    "pt": "Uma cabine de estudo pequena, com mesa e cadeira, numa biblioteca.",
+    "es": "Una cabina de estudio pequeña, con mesa y silla, en una biblioteca."
+  },
+  "palavras/יִשְׂרָאֵל/pt": {
+    "pt": "Israel",
+    "es": "Israel"
+  },
+  "palavras/יִשְׂרָאֵל/imageAlt": {
+    "pt": "A bandeira de Israel tremulando.",
+    "es": "La bandera de Israel ondeando."
+  },
+  "palavras/אֲדָמָה/pt": {
+    "pt": "terra / solo",
+    "es": "tierra / suelo"
+  },
+  "palavras/אֲדָמָה/imageAlt": {
+    "pt": "Um monte de terra escura com um broto saindo.",
+    "es": "Un montón de tierra oscura con un brote que sale."
+  },
+  "palavras/מִדָה/pt": {
+    "pt": "medida / tamanho",
+    "es": "medida / tamaño"
+  },
+  "palavras/מִדָה/imageAlt": {
+    "pt": "Uma trena amarela com a fita puxada.",
+    "es": "Una cinta métrica amarilla con la cinta estirada."
+  },
+  "palavras/מְדַבֵּר/pt": {
+    "pt": "falo, fala",
+    "es": "hablo, habla"
+  },
+  "palavras/מְדַבֵּר/imageAlt": {
+    "pt": "Um homem falando, com balões de fala vazios.",
+    "es": "Un hombre hablando, con globos de diálogo vacíos."
+  },
+  "palavras/שָׁלוֹם/pt": {
+    "pt": "paz / olá / tchau",
+    "es": "paz / hola / adiós"
+  },
+  "palavras/שָׁלוֹם/imageAlt": {
+    "pt": "Duas pessoas se cumprimentando com um aceno.",
+    "es": "Dos personas que se saludan con la mano."
+  },
+  "palavras/שִׁיר/pt": {
+    "pt": "canção",
+    "es": "canción"
+  },
+  "palavras/שִׁיר/imageAlt": {
+    "pt": "Notas musicais saindo de um rádio antigo.",
+    "es": "Notas musicales que salen de una radio antigua."
+  },
+  "palavras/אַרְבַּע/pt": {
+    "pt": "quatro",
+    "es": "cuatro"
+  },
+  "palavras/אַרְבַּע/imageAlt": {
+    "pt": "O número 4, em azul.",
+    "es": "El número 4, en azul."
+  },
+  "palavras/יוֹם/pt": {
+    "pt": "dia",
+    "es": "día"
+  },
+  "palavras/יוֹם/imageAlt": {
+    "pt": "Um dia claro com sol e nuvens sobre um campo.",
+    "es": "Un día claro con sol y nubes sobre un campo."
+  },
+  "palavras/אֶחָד/pt": {
+    "pt": "um",
+    "es": "uno"
+  },
+  "palavras/אֶחָד/imageAlt": {
+    "pt": "Uma única maçã vermelha.",
+    "es": "Una sola manzana roja."
+  },
+  "palavras/שִׂמְחָה/pt": {
+    "pt": "alegria",
+    "es": "alegría"
+  },
+  "palavras/שִׂמְחָה/imageAlt": {
+    "pt": "Uma pessoa pulando de alegria, braços para cima.",
+    "es": "Una persona saltando de alegría, con los brazos arriba."
+  },
+  "palavras/חֲמִשָׁה/pt": {
+    "pt": "cinco",
+    "es": "cinco"
+  },
+  "palavras/חֲמִשָׁה/imageAlt": {
+    "pt": "Cinco maçãs vermelhas em fila.",
+    "es": "Cinco manzanas rojas en fila."
+  },
+  "palavras/טִיוּל/pt": {
+    "pt": "passeio",
+    "es": "paseo"
+  },
+  "palavras/טִיוּל/imageAlt": {
+    "pt": "Uma pessoa de mochila caminhando numa trilha.",
+    "es": "Una persona con mochila caminando por un sendero."
+  },
+  "palavras/טָרִי/pt": {
+    "pt": "fresco",
+    "es": "fresco"
+  },
+  "palavras/טָרִי/imageAlt": {
+    "pt": "Legumes frescos com gotas de água.",
+    "es": "Verduras frescas con gotas de agua."
+  },
+  "palavras/סְטוּדֶנְט/pt": {
+    "pt": "estudante",
+    "es": "estudiante"
+  },
+  "palavras/סְטוּדֶנְט/imageAlt": {
+    "pt": "Um estudante jovem de mochila, com livros nos braços.",
+    "es": "Un estudiante joven con mochila, con libros en los brazos."
+  },
+  "palavras/סוֹד/pt": {
+    "pt": "segredo",
+    "es": "secreto"
+  },
+  "palavras/סוֹד/imageAlt": {
+    "pt": "Uma pessoa cochichando no ouvido de outra.",
+    "es": "Una persona que le susurra algo al oído a otra."
+  },
+  "palavras/סֶרֶט/pt": {
+    "pt": "filme",
+    "es": "película"
+  },
+  "palavras/סֶרֶט/imageAlt": {
+    "pt": "Um rolo de filme de cinema e pipoca.",
+    "es": "Un rollo de película de cine y palomitas."
+  },
+  "palavras/שָׁעָה/pt": {
+    "pt": "hora",
+    "es": "hora"
+  },
+  "palavras/שָׁעָה/imageAlt": {
+    "pt": "Um relógio de parede sem números.",
+    "es": "Un reloj de pared sin números."
+  },
+  "palavras/עוֹלָם/pt": {
+    "pt": "mundo",
+    "es": "mundo"
+  },
+  "palavras/עוֹלָם/imageAlt": {
+    "pt": "Um globo terrestre.",
+    "es": "Un globo terráqueo."
+  },
+  "palavras/צֵל/pt": {
+    "pt": "sombra",
+    "es": "sombra"
+  },
+  "palavras/צֵל/imageAlt": {
+    "pt": "Uma árvore fazendo sombra no chão.",
+    "es": "Un árbol que da sombra en el suelo."
+  },
+  "palavras/צָהֳרַיִם/pt": {
+    "pt": "meio-dia",
+    "es": "mediodía"
+  },
+  "palavras/צָהֳרַיִם/imageAlt": {
+    "pt": "O sol brilhando alto no céu, acima das nuvens.",
+    "es": "El sol brillando alto en el cielo, por encima de las nubes."
+  },
+  "palavras/תִיק/pt": {
+    "pt": "bolsa / mochila",
+    "es": "bolsa / mochila"
+  },
+  "palavras/תִיק/imageAlt": {
+    "pt": "Uma mochila escolar.",
+    "es": "Una mochila escolar."
+  },
+  "palavras/שֶׁקֶט/pt": {
+    "pt": "silêncio",
+    "es": "silencio"
+  },
+  "palavras/שֶׁקֶט/imageAlt": {
+    "pt": "Uma mulher com o dedo nos lábios pedindo silêncio.",
+    "es": "Una mujer con el dedo en los labios pidiendo silencio."
+  },
+  "palavras/טוֹב/pt": {
+    "pt": "bom",
+    "es": "bueno"
+  },
+  "palavras/טוֹב/imageAlt": {
+    "pt": "Uma mão com o polegar para cima.",
+    "es": "Una mano con el pulgar hacia arriba."
+  },
+  "palavras/שַׁבָּת/pt": {
+    "pt": "sábado / shabát",
+    "es": "sábado / shabat"
+  },
+  "palavras/שַׁבָּת/imageAlt": {
+    "pt": "Duas velas acesas e uma chalá trançada.",
+    "es": "Dos velas encendidas y una jalá trenzada."
+  },
+  "palavras/בֹּקֶר/pt": {
+    "pt": "manhã",
+    "es": "mañana"
+  },
+  "palavras/בֹּקֶר/imageAlt": {
+    "pt": "O sol nascendo atrás de casas.",
+    "es": "El sol que sale detrás de unas casas."
+  },
+  "palavras/דֶרֶךְ/pt": {
+    "pt": "caminho",
+    "es": "camino"
+  },
+  "palavras/דֶרֶךְ/imageAlt": {
+    "pt": "Um caminho de terra atravessando um campo.",
+    "es": "Un camino de tierra que atraviesa un campo."
+  },
+  "palavras/כִּתָה/pt": {
+    "pt": "sala de aula, turma",
+    "es": "salón de clases, grupo"
+  },
+  "palavras/כִּתָה/imageAlt": {
+    "pt": "Uma sala de aula com carteiras e um quadro.",
+    "es": "Un salón de clases con pupitres y un pizarrón."
+  },
+  "palavras/לָלֶכֶת/pt": {
+    "pt": "ir, caminhar",
+    "es": "ir, caminar"
+  },
+  "palavras/לָלֶכֶת/imageAlt": {
+    "pt": "Uma pessoa caminhando de perfil.",
+    "es": "Una persona caminando, de perfil."
+  },
+  "palavras/פֶּה/pt": {
+    "pt": "boca",
+    "es": "boca"
+  },
+  "palavras/פֶּה/imageAlt": {
+    "pt": "Uma boca sorrindo.",
+    "es": "Una boca sonriendo."
+  },
+  "palavras/פָּרָה/pt": {
+    "pt": "vaca",
+    "es": "vaca"
+  },
+  "palavras/פָּרָה/imageAlt": {
+    "pt": "Uma vaca malhada no pasto.",
+    "es": "Una vaca manchada en el pasto."
+  },
+  "palavras/פִּתָה/pt": {
+    "pt": "pão sírio",
+    "es": "pan pita"
+  },
+  "palavras/פִּתָה/imageAlt": {
+    "pt": "Um pão sírio redondo, aberto ao meio.",
+    "es": "Un pan pita redondo, abierto por la mitad."
+  },
+  "palavras/שְׂמֹאל/pt": {
+    "pt": "esquerda",
+    "es": "izquierda"
+  },
+  "palavras/שְׂמֹאל/imageAlt": {
+    "pt": "Uma seta apontando para a esquerda.",
+    "es": "Una flecha que apunta hacia la izquierda."
+  },
+  "palavras/שָׂדֶה/pt": {
+    "pt": "campo",
+    "es": "campo"
+  },
+  "palavras/שָׂדֶה/imageAlt": {
+    "pt": "Um campo verde aberto.",
+    "es": "Un campo verde abierto."
+  },
+  "palavras/עֶרֶב/pt": {
+    "pt": "noite, fim de tarde",
+    "es": "noche, atardecer"
+  },
+  "palavras/עֶרֶב/imageAlt": {
+    "pt": "O pôr do sol sobre a água, no fim da tarde.",
+    "es": "La puesta de sol sobre el agua, al final de la tarde."
+  },
+  "palavras/אָבִיב/pt": {
+    "pt": "primavera",
+    "es": "primavera"
+  },
+  "palavras/אָבִיב/imageAlt": {
+    "pt": "Uma árvore florida na primavera.",
+    "es": "Un árbol en flor en primavera."
+  },
+  "palavras/זָהָב/pt": {
+    "pt": "ouro",
+    "es": "oro"
+  },
+  "palavras/זָהָב/imageAlt": {
+    "pt": "Barras de ouro empilhadas.",
+    "es": "Lingotes de oro apilados."
+  },
+  "palavras/צ׳יפס/pt": {
+    "pt": "batata frita",
+    "es": "papas fritas"
+  },
+  "palavras/צ׳יפס/imageAlt": {
+    "pt": "Batatas fritas num cone de papel.",
+    "es": "Papas fritas en un cono de papel."
+  },
+  "palavras/צ׳ילה/pt": {
+    "pt": "Chile",
+    "es": "Chile"
+  },
+  "palavras/צ׳ילה/imageAlt": {
+    "pt": "A bandeira do Chile.",
+    "es": "La bandera de Chile."
+  },
+  "palavras/סנדוויץ׳/pt": {
+    "pt": "sanduíche",
+    "es": "sándwich"
+  },
+  "palavras/סנדוויץ׳/imageAlt": {
+    "pt": "Um sanduíche com recheio.",
+    "es": "Un sándwich con relleno."
+  },
+  "palavras/צ׳כיה/pt": {
+    "pt": "Tchéquia",
+    "es": "Chequia"
+  },
+  "palavras/צ׳כיה/imageAlt": {
+    "pt": "A bandeira da Tchéquia.",
+    "es": "La bandera de Chequia."
+  },
+  "palavras/ג׳ינס/pt": {
+    "pt": "calça jeans",
+    "es": "jeans"
+  },
+  "palavras/ג׳ינס/imageAlt": {
+    "pt": "Uma calça jeans.",
+    "es": "Unos jeans."
+  },
+  "palavras/ג׳ירפה/pt": {
+    "pt": "girafa",
+    "es": "jirafa"
+  },
+  "palavras/ג׳ירפה/imageAlt": {
+    "pt": "Uma girafa.",
+    "es": "Una jirafa."
+  },
+  "palavras/פיג׳מה/pt": {
+    "pt": "pijama",
+    "es": "pijama"
+  },
+  "palavras/פיג׳מה/imageAlt": {
+    "pt": "Um pijama listrado dobrado.",
+    "es": "Un pijama a rayas, doblado."
+  },
+  "palavras/ג׳ל/pt": {
+    "pt": "gel",
+    "es": "gel"
+  },
+  "palavras/ג׳ל/imageAlt": {
+    "pt": "Um tubo de gel de cabelo.",
+    "es": "Un tubo de gel para el cabello."
+  },
+  "palavras/ג׳ונגל/pt": {
+    "pt": "selva",
+    "es": "selva"
+  },
+  "palavras/ג׳ונגל/imageAlt": {
+    "pt": "Uma selva densa com árvores e cipós.",
+    "es": "Una selva densa con árboles y lianas."
+  },
+  "palavras/ז׳קט/pt": {
+    "pt": "jaqueta",
+    "es": "chaqueta"
+  },
+  "palavras/ז׳קט/imageAlt": {
+    "pt": "Uma jaqueta verde num cabide.",
+    "es": "Una chaqueta verde en una percha."
+  },
+  "palavras/מסאז׳/pt": {
+    "pt": "massagem",
+    "es": "masaje"
+  },
+  "palavras/מסאז׳/imageAlt": {
+    "pt": "Uma pessoa recebendo massagem nas costas.",
+    "es": "Una persona que recibe un masaje en la espalda."
+  },
+  "palavras/בז׳/pt": {
+    "pt": "bege",
+    "es": "beige"
+  },
+  "palavras/בז׳/imageAlt": {
+    "pt": "Um quadrado da cor bege.",
+    "es": "Un cuadrado de color beige."
+  },
+  "palavras/מִצְוָה/pt": {
+    "pt": "preceito, boa ação",
+    "es": "precepto, buena acción"
+  },
+  "palavras/מִצְוָה/imageAlt": {
+    "pt": "Um jovem ajudando uma senhora idosa a atravessar a rua.",
+    "es": "Un joven ayudando a una señora mayor a cruzar la calle."
+  },
+  "palavras/זְמַן/pt": {
+    "pt": "tempo",
+    "es": "tiempo"
+  },
+  "palavras/זְמַן/imageAlt": {
+    "pt": "Uma ampulheta com areia caindo.",
+    "es": "Un reloj de arena con la arena cayendo."
+  },
+  "palavras/מַזָל/pt": {
+    "pt": "sorte",
+    "es": "suerte"
+  },
+  "palavras/מַזָל/imageAlt": {
+    "pt": "Um trevo de quatro folhas.",
+    "es": "Un trébol de cuatro hojas."
+  }
+}

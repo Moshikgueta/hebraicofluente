@@ -25,10 +25,12 @@ import { ip, requireAccount } from './auth.js';
 import empresa from '../../../data/empresa.json';
 
 /** A chave única do lembrete. Ver o `_notaLembrete` em data/empresa.json. O
- *  site em inglês (LOCALE = "en") lê a chave dele, `lembreteDeEstudoEn`. */
+ *  site em inglês (LOCALE = "en") lê a chave dele, `lembreteDeEstudoEn`, e o
+ *  em espanhol, `lembreteDeEstudoEs`. */
 export const lembreteLigado = (env) => {
   const p = empresa.privacidade || {};
-  return (env && env.LOCALE === 'en' ? p.lembreteDeEstudoEn : p.lembreteDeEstudo) === true;
+  const local = env && env.LOCALE;
+  return (local === 'en' ? p.lembreteDeEstudoEn : local === 'es' ? p.lembreteDeEstudoEs : p.lembreteDeEstudo) === true;
 };
 
 const assinatura = (env, id) => hmacB64(env.SESSION_SECRET, `lembrete:${id}`);

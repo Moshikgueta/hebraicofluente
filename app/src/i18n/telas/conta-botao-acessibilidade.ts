@@ -63,5 +63,37 @@ const en: Traducao<typeof pt> = {
   tituloDoBotao: 'Accessibility (Alt + Shift + A)'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ajustes: 'Ajustes de accesibilidad',
+  ajustesAtivos: (n: number) => `Ajustes de accesibilidad (${n} activo${n > 1 ? 's' : ''})`,
+  titulo: 'Accesibilidad',
+  guardado: 'Queda guardado en este dispositivo y vale en todas las páginas.',
+  tamanhoDoTexto: 'Tamaño del texto',
+  tema: 'Tema',
+  temaAuto: 'Automático',
+  temaClaro: 'Claro',
+  temaEscuro: 'Oscuro',
+  temaNota: 'Vale en las pantallas del curso. Las páginas de venta son siempre claras.',
+  contraste: 'Más contraste',
+  contrasteNota: 'Tinta más oscura y bordes visibles.',
+  espaco: 'Más espacio entre líneas',
+  espacoNota: 'Interlineado y espacio entre palabras más grandes.',
+  links: 'Subrayar enlaces',
+  linksNota: 'Todo enlace del texto queda subrayado.',
+  /* O leitor de enunciados usa hoje a voz pt-BR do aparelho
+     (lib/voz-instrucao.ts); a voz do site em espanhol fica para a etapa dele. */
+  voz: 'Escuchar las instrucciones en voz alta',
+  vozNota: 'Cada ejercicio recibe un botón que lee el enunciado en voz alta. No lee las respuestas.',
+  vozIndisponivel: 'Este navegador no tiene voz para leerlas en voz alta.',
+  sons: 'Sonidos del curso',
+  sonsNota: 'Un tintineo corto al acertar. Las grabaciones de las palabras no cambian.',
+  movimento: 'Menos animación',
+  movimentoNota: 'Nada entra deslizándose ni queda latiendo.',
+  voltarAoNormal: 'Volver a lo normal',
+  fechar: 'Cerrar',
+  atalho: 'Atajo: Alt + Shift + A.',
+  tituloDoBotao: 'Accesibilidad (Alt + Shift + A)'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

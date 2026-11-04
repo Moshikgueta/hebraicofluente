@@ -81,5 +81,45 @@ const en: Traducao<typeof pt> = {
   voltarMapa: 'Back to the map'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  kicker: (n, certas, total) => `Checkpoint ${n} · ${certas} de ${total}`,
+  concluido: pct => `${pct}% - checkpoint completado.`,
+  quaseLa: pct => `${pct}% - casi lo logras.`,
+  conhece: n => `Ahora conoces ${n} letras del alfabeto hebreo.`,
+  faltouPouco: 'Faltó poco. Vale la pena repasar las letras de abajo y volver a intentarlo - sin prisa y sin penalización.',
+  refazer: 'Volver a intentarlo',
+  missaoDoModulo: 'Misión del módulo',
+  proximoModulo: (n, titulo) => `Módulo ${n} - ${titulo}`,
+  desafioFinal: 'Ir al desafío final',
+  primeiraLeitura: 'Mi Primera Lectura',
+  jaFez: 'Ya hiciste la lectura de este módulo. Puedes leerla de nuevo cuando quieras.',
+  algumasPalavras: 'Algunas palabras con las letras de este módulo. Las lees por tu cuenta, después escuchas y compruebas.',
+  lerAgora: 'Leer ahora',
+  semPontinhos: 'Sin los puntitos',
+  rampa: (certas, total) =>
+    `Leíste ${certas} de ${total} palabras sin nikud, como aparecen en la calle. Esto no cuenta para la nota: es un calentamiento para el módulo 6, donde los puntos desaparecen del todo.`,
+  valeVoltar: 'Vale la pena volver a estas',
+  titulo: n => `Checkpoint ${n}`,
+  mapa: '← Mapa',
+  letrasDoModulo: 'Las letras de este módulo',
+  concluida: ' · completada',
+  faltaNota: ' · falta la nota de los ejercicios',
+  refazerExercicios: regra => `rehacer los ejercicios (${regra})`,
+  fazerLicao: 'hacer la lección',
+  licoesConcluidas: 'Lecciones completadas',
+  oQueVem: '¿Qué trae el checkpoint?',
+  questoes:
+    '12 preguntas que mezclan reconocimiento, lectura, vocabulario y las formas finales - solo con letras que ya viste. Se aprueba con 70%, y puedes rehacerlo todas las veces que quieras.',
+  comRampa:
+    ' Al final vienen 3 palabras que ya conoces, sin los puntitos, como aparecen en la calle. No cuentan para la nota.',
+  melhor: (pct, tentativas) =>
+    `Mejor resultado hasta ahora: ${pct}% en ${tentativas} ${tentativas === 1 ? 'intento' : 'intentos'}.`,
+  faltam: (faltam, total) =>
+    `Faltan ${faltam} lecciones de este módulo. Puedes hacer el checkpoint de todos modos, pero evalúa las ${total} letras.`,
+  mesmoAssim: 'Hacerlo de todos modos',
+  comecar: 'Empezar el checkpoint',
+  voltarMapa: 'Volver al mapa'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

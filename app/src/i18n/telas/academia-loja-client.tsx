@@ -110,5 +110,59 @@ const en: Traducao<typeof pt> = {
   baixarImagem: 'Download the image'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  localeNumero: 'es-419',
+  motivoSaldo: 'Saldo insuficiente.',
+  motivoLimite: n => `Ya tienes ${n} días libres guardados.`,
+  motivoJaTem: 'Ya tienes este artículo.',
+  motivoSemAlvo: 'No queda ninguna tarjeta cerrada para abrir.',
+  motivoSemNome: 'Primero confirma cómo se escribe tu nombre.',
+  pronto: '¡Listo!',
+
+  titulo: 'Recompensas',
+  intro: 'Canjea el XP que juntaste estudiando. Tu XP total es tu logro y nunca baja - lo que gastas sale de tu saldo.',
+  saldoParaTrocar: 'Saldo para canjear',
+  xpTotal: 'XP total',
+  jaTrocados: n => `${n} ya canjeados`,
+
+  folgasGuardadas: n => `Tienes ${n} ${n === 1 ? 'día libre guardado' : 'días libres guardados'}.`,
+  nenhumaFolga: 'Ningún día libre guardado.',
+  folgaFeito: 'Día libre guardado. Si te falta un día, protege tu racha.',
+  proximaCarta: (titulo, n) =>
+    <>La siguiente: <strong>{titulo}</strong> (se abriría con {n} letras).</>,
+  todasAbertas: 'Todas las tarjetas ya están abiertas.',
+  cartaFeito: '¡Tarjeta abierta! Léela en Viaje por la historia.',
+  lerCartas: 'Leer las tarjetas →',
+  seuNome: he => <>Tu nombre: {he}</>,
+  confirmeNome: link => <>Antes, confirma cómo se escribe tu nombre en {link}.</>,
+  meuNome: 'Mi nombre',
+  nomeFeito: '¡Listo! Elige el formato y descarga la imagen.',
+  leituraAberta: '¡Lectura abierta! Está en Lecturas extra.',
+  leituraGuardada: 'Lectura guardada en Lecturas extra. Vuelve a ella cuando termines las lecciones de las letras del texto.',
+
+  leiturasBonus: 'Lecturas extra',
+  leiturasIntro: 'Pasajes y versículos del Antiguo Testamento, con transliteración, traducción y la lectura grabada, línea por línea.',
+  cadaLeitura: c => `Cada lectura ◆ ${c}.`,
+  textoEVersiculo: (texto, versiculo) => `Texto bíblico ◆ ${texto}, versículo ◆ ${versiculo}.`,
+  podeTrocar: 'Puedes canjear cualquier lectura ahora. Queda guardada en Lecturas extra, y ya puedes escucharla y seguirla con la transliteración y la traducción.',
+  lerSozinho: (mastered, totalLetras) =>
+    <>Leer por tu cuenta, directo del hebreo, viene después: cada lectura dice cuántas lecciones de letras terminadas pide. Cuando llegues ahí, vuelve a ella. Terminaste <strong>{mastered} de {totalLetras} lecciones de letras</strong>.</>,
+  semDominioUma: regra => `Una lección que terminaste quedó por debajo de ${regra}. Rehacer sus ejercicios ya cuenta.`,
+  semDominioVarias: (n, regra) => `${n} lecciones que terminaste quedaron por debajo de ${regra}. Rehacer sus ejercicios ya cuenta.`,
+  verLicoes: 'Ver las lecciones',
+  guiaNikud: 'Guía opcional y gratuita: el nikud de la Biblia →',
+  lerMinhas: 'Leer mis lecturas →',
+  paraLerSozinho: (after, faltam) =>
+    `Para leer por tu cuenta: ${after} lecciones de letras terminadas (${faltam === 1 ? 'falta 1' : `faltan ${faltam}`}).`,
+  ler: 'Leer',
+  trocarPor: custo => `Canjear por ◆ ${custo}`,
+
+  nomeDecoradoTitulo: 'Tu nombre en hebreo decorado',
+  nomeDecoradoTexto: 'Ya es tuyo. Elige el formato y descárgalo las veces que quieras.',
+  formato: 'Formato',
+  nomeDecoradoAria: nomeHe => `El nombre ${nomeHe} decorado`,
+  baixarImagem: 'Descargar la imagen'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

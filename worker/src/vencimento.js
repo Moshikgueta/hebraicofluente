@@ -27,7 +27,7 @@ import { getCourse } from './lib/catalog.js';
 import { pegarTrava, reservarVencimento, soltarVencimento, vencimentosParaAvisar } from './lib/db.js';
 import { mailReady, sendMail } from './lib/mail.js';
 import { mensagens } from './lib/mensagens.js';
-import { origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
+import { idiomaDaConta, origemDoIdioma, tituloDoCurso } from './lib/idioma.js';
 import empresa from '../../data/empresa.json';
 
 const DIA = 86_400_000;
@@ -46,7 +46,7 @@ export async function runVencimentos(env, at = Date.now()) {
       };
       if (!await reservarVencimento(env, chave, at)) continue;
       /* A língua e os links são os da conta (lib/idioma.js). */
-      const idioma = v.idioma === 'en' ? 'en' : 'pt';
+      const idioma = idiomaDaConta(v);
       const site = origemDoIdioma(env, idioma);
       const m = mensagens(idioma);
       const r = await sendMail(env, {

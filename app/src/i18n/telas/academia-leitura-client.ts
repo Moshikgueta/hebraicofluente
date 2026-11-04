@@ -121,5 +121,65 @@ const en: Traducao<typeof pt> = {
   continuarLaboratorio: 'Continue in the Reading Lab'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Laboratorio de Lectura - Hebraico Fluente',
+  metaDescricao: 'Lee palabras en hebreo con las letras que ya aprendiste, con más o menos ayuda.',
+
+  laboratorio: 'Laboratorio de Lectura',
+  titulo: 'Aprende a leer hebreo, una palabra a la vez.',
+  intro: 'Practica la lectura con palabras formadas por las letras y los signos vocálicos que ya aprendiste. Intenta leer en voz alta antes de comprobar la pronunciación.',
+  gravacaoComoLer: 'Cómo leer una palabra nueva, paso a paso.',
+  vazio: 'Termina la lección de la letra Mem para desbloquear tus primeras palabras.',
+  irCurso: 'Ir al curso',
+  quantaAjuda: '¿Cuánta ayuda necesitas?',
+  aindaComNikud: 'Por ahora, las palabras aparecen con nikud (signos vocálicos). La lectura sin nikud se desbloquea después de la etapa "Sin el punto", en el módulo 6.',
+  rodadaConcluida: 'Ronda terminada',
+  voceMarcou: (certas, palavras) => `Marcaste ${certas} de ${palavras} como leídas correctamente.`,
+  autoavaliacao: 'Esta es tu propia evaluación. Tu dominio de las letras viene de los ejercicios que corrige el curso.',
+  maisCinco: 'Cinco palabras más',
+  voltarPainel: 'Volver al panel',
+  posicao: (i, total) => `${i} de ${total}`,
+
+  palavra: posicao => `Palabra ${posicao}`,
+  semNikudPlacas: 'Sin nikud, como en muchos carteles de Israel.',
+  esconderLetras: 'Ocultar las letras',
+  verLetras: 'Ver las letras',
+  ouvir: 'Escuchar',
+  ouvirPalavra: 'Escuchar la palabra',
+  precisoAjuda: 'Necesito ayuda',
+  jaLi: 'Ya la leí. Comprobar la respuesta',
+  conferirTranslit: 'Comprobar la transliteración',
+  ouvirComparar: 'Escuchar y comparar',
+  ouvirTranslit: translit => `Escuchar ${translit}`,
+  confiraPronuncia: 'Comprueba la pronunciación que indica la transliteración. Ayuda, pero no reemplaza escuchar la palabra.',
+  querDizer: 'Significa: ',
+  verSignificado: 'Ver el significado',
+  conseguiu: '¿Pudiste leerla correctamente?',
+  simConsegui: '¡Sí, pude!',
+  precisoPraticar: 'Todavía necesito practicar.',
+
+  explorar: 'Explorar letra por letra',
+  comecarDeNovo: 'Empezar de nuevo',
+  proximaLetra: 'Siguiente letra',
+  primeiraDireita: 'La primera letra es la de la derecha.',
+  vogalAtencao: 'En esta palabra, la pronunciación de una de las vocales merece atención especial. Observa la palabra y después comprueba la pronunciación.',
+  letrasNaOrdem: 'Las letras de la palabra, en orden de lectura',
+  sinal: sinais => ` · signo: ${sinais}`,
+
+  naoEncontrada: 'No encontramos esta actividad. Revisa la dirección o vuelve al panel.',
+  indisponivel: 'Esta actividad todavía no está disponible.',
+  irLaboratorio: 'Ir al Laboratorio de Lectura',
+  primeiraModulo: n => `Mi Primera Lectura · Módulo ${n}`,
+  liberadaQuando: n => `Esta actividad se desbloquea cuando termines todas las lecciones del módulo ${n}.`,
+  verCurso: 'Ver mi curso',
+  semPalavras: 'No encontramos palabras para esta lectura. Mientras tanto, practica en el Laboratorio de Lectura.',
+  introPrimeira: palavras =>
+    `${palavras} formadas con las letras y los signos vocálicos que ya aprendiste. Lee cada una por tu cuenta, en voz alta, antes de escuchar. Después escucha y comprueba.`,
+  comecarLeitura: 'Empezar la lectura',
+  primeiraConcluida: '¡Primera lectura terminada!',
+  lerDeNovo: 'Leer de nuevo',
+  continuarLaboratorio: 'Seguir en el Laboratorio de Lectura'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -30,7 +30,7 @@ export async function createAccount(env, { email, name, hash, salt, iterations, 
     `INSERT INTO accounts (email, name, pass_hash, pass_salt, pass_iter, created_at, idioma)
      VALUES (?, ?, ?, ?, ?, ?, ?)`
   ).bind(mail, String(name || '').trim().slice(0, 80), hash, salt,
-         iterations || PBKDF2_ITER, now(), idioma === 'en' ? 'en' : 'pt').run();
+         iterations || PBKDF2_ITER, now(), idioma === 'en' || idioma === 'es' ? idioma : 'pt').run();
   return findAccountByEmail(env, mail);
 }
 

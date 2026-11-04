@@ -15,5 +15,12 @@ const en: Traducao<typeof pt> = {
   falhou: 'I couldn\'t play the audio. Check your connection and tap again.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ouvir: 'Escuchar',
+  ouvirDevagar: 'Escuchar despacio',
+  devagar: '0,7×',
+  falhou: 'No pude reproducir el audio. Revisa la conexión y toca de nuevo.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

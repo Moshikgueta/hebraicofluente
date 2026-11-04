@@ -23,5 +23,16 @@ const en: Traducao<typeof pt> = {
   notSignedIn: 'Your session has ended. Sign in again to send it.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  // a assinatura do painel sai do Worker (worker/src/api/depoimentos.js), ainda em português
+  anonimo: 'Alumno del curso',
+  textoCurto: 'Escribe al menos {n} caracteres.',
+  textoLongo: 'El texto pasó de {n} caracteres. Recórtalo un poco.',
+  nomeFaltando: 'Escribe el nombre que debe aparecer, o elige otra forma de firmar.',
+  rateLimited: 'Demasiados cambios seguidos. Inténtalo de nuevo dentro de una hora.',
+  noAccess: 'El testimonio es solo para quien tiene el curso liberado.',
+  notSignedIn: 'Tu sesión terminó. Entra de nuevo para enviarlo.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

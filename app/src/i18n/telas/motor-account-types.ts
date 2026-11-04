@@ -48,5 +48,29 @@ const en: Traducao<typeof pt> = {
   naoPago: 'This purchase is not paid, so there is nothing to refund.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  badCredentials: 'El correo o la contraseña no coinciden.',
+  emailTaken: 'Ya existe una cuenta con ese correo. Intenta entrar.',
+  weakPassword: 'La contraseña necesita al menos 8 caracteres.',
+  invalidEmail: 'Ese correo no parece válido.',
+  termos: 'Para crear la cuenta, marca que leíste y aceptas los Términos de Uso.',
+  idade: 'Para crear la cuenta, confirma que tienes 18 años o más, o que eres el responsable legal de quien va a estudiar.',
+  notSignedIn: 'Necesitas entrar para continuar.',
+  offline: 'Sin conexión. Inténtalo de nuevo en un momento.',
+  server: 'Algo se rompió de nuestro lado. Inténtalo de nuevo.',
+  rateLimited: 'Demasiados intentos. Espera un minuto.',
+  rateLimitedHora: 'Demasiados intentos por ahora. Inténtalo de nuevo dentro de una hora.',
+  paymentsOff: 'El pago todavía no está activado. Escribe a {email} y liberamos tu acceso.',
+  badToken: 'Este enlace ya no es válido. Pide otro - duran una hora y funcionan una sola vez.',
+  paymentFailed: 'No pudimos generar el pago ahora, y el problema es nuestro, no tuyo. No se cobró nada. Escribe a {email}: respondemos {prazo}.',
+  // etapa 5/6: Brasil, rever
+  cardOff: 'Por ahora solo aceptamos PIX. Vuelve y elige PIX - el código sale al instante.',
+  // etapa 5/6: Brasil, rever
+  pixOff: 'Por ahora solo aceptamos tarjeta de crédito. Vuelve y elige tarjeta - puedes pagar en cuotas.',
+  alreadyOwned: 'Este curso ya está en tu cuenta. La renovación se abre en los últimos 45 días de acceso.',
+  foraDoPrazo: 'El plazo de {dias} días para desistir de esta compra terminó. Si hay un problema técnico o un cobro indebido, escribe a {email}.',
+  naoPago: 'Esta compra no está pagada, así que no hay nada que devolver.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

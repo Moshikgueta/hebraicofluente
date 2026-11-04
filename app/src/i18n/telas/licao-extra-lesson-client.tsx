@@ -180,5 +180,96 @@ const en: Traducao<typeof pt> = {
   refazer: 'Try again'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  ondeVemOPonto: '¿Dónde va el punto?',
+  asFinais: 'Las finales',
+  semNikud: 'Sin nikud',
+  oGueresh: 'El guéresh',
+  ler: 'Leer',
+  fecho: 'Cierre',
+  modulo: n => `← Módulo ${n}`,
+  badge: (n, licao) => `Módulo ${n} · lección ${licao}`,
+  etapas: 'Etapas del módulo',
+  etapaDe: (n, rotulo) => `Etapa ${n} de 3 - ${rotulo}`,
+  proximoModulo: (n, titulo) => `Módulo ${n} - ${titulo}`,
+  desafioFinal: 'Ir al desafío final',
+  fechoDoAlfabeto: 'Cierre del alfabeto',
+  semPontoImpresso: 'Sin el punto impreso',
+  licao21: 'Lección 21 completada',
+  decideOSom: 'Decides el sonido por el lugar de la letra.',
+  emTodaPalavra: 'Es lo que vas a hacer en toda palabra sin puntos. Ahora las cinco formas finales, juntas.',
+  continuarFinais: 'Continuar a las formas finales',
+  praticarDeNovo: 'Practicar de nuevo',
+  ondeAparece: '¿Dónde aparece el punto?',
+  doisLados: (b, k, p) =>
+    <>Ya conoces los dos lados de {b}, {k} y {p}. Pero fuera del libro el punto casi nunca se imprime. Entonces la pregunta cambia: sin ver el punto, ¿cómo saber el sonido? Por el lugar de la letra en la palabra.</>,
+  aRegra: 'La regla',
+  semOPonto: 'sin el punto: V, J, F',
+  comOPonto: 'con el punto: B, K, P',
+  eAsFinais: 'Y las formas finales',
+  finaisSemPonto: (chaf, fe) =>
+    <>{chaf} y {fe} nunca llevan el punto: al final de la palabra, son siempre J y F.</>,
+  regraNaoBasta: 'Cuando la regla no alcanza',
+  dobra:
+    'En algunas palabras el punto aparece después de una vocal. Ahí no cambia solo el sonido: duplica la consonante, y el sonido queda fuerte. Estas palabras se aprenden de oído y leyendo, una por una.',
+  shva: (a, b) =>
+    <>Y después de una letra con shvá al comienzo de la palabra (o de un prefijo) la regla también falla: ahí la letra queda sin el punto, y el sonido es el suave, como en {a} (bevakashá) y {b} (kvar).</>,
+  naoEDetalhe: 'Esto no es un detalle de acabado',
+  praticarSemPonto: 'Practicar: leer sin el punto impreso',
+  cincoFinais: 'Las cinco formas finales',
+  conheceuCada:
+    'Conociste cada una junto con su letra. Aquí están juntas por primera vez - y es así, en bloque, como se fijan.',
+  atalho: 'El atajo visual',
+  descem: (quatro, uma) =>
+    <>Cuatro de las cinco bajan por debajo de la línea - {quatro} - y solo {uma} cierra arriba. Si bajó, es final de palabra.</>,
+  outroDesenho: 'Otro dibujo, la misma letra',
+  final1: 'Cinco letras cambian de forma cuando aparecen al final de la palabra.',
+  final2: 'Cambia solo el dibujo: el nombre y el sonido de la letra siguen siendo los mismos.',
+  final3: 'La forma final no es una letra más. El alfabeto sigue teniendo 22 letras.',
+  final4: 'Al leer, lo que importa es reconocer la forma final cuando aparece.',
+  continuarSemNikud: 'Continuar - leer sin nikud',
+  memOuNunTitulo: '¿ם o ן? La M y la N del final de la palabra',
+  // etapa 3: pronúncia, rever
+  memOuNun: (mem, em, nun, min) =>
+    <>En español casi ninguna palabra termina en M, y la N final se dice con la lengua arriba y los labios abiertos, como en &quot;pan&quot;. En hebreo el final cuenta, y las dos existen. {mem} es la M, con los labios cerrados al final, como en {em} (em, madre). {nun} es la N, con la lengua detrás de los dientes y la boca abierta, como en {min} (min, de). Son dos letras diferentes, mem y nun, y cada una tiene su forma final.</>,
+  // etapa 3: pronúncia, rever
+  escuteDiferenca: 'Escucha la diferencia: portugués × hebreo',
+  // etapa 3: pronúncia, rever
+  oucaProfessor:
+    'Escucha cómo el profesor dice "bem" en portugués y las palabras en hebreo: presta atención a los labios al final de cada una.',
+  agoraVoce: 'Ahora tú: escucha cada palabra y di cómo termina.',
+  ouvir: 'Escuchar',
+  ouvirPalavra: translit => `Escuchar la palabra ${translit}`,
+  comoTermina: '¿Cómo termina la palabra?',
+  isso: 'Eso es. ',
+  nao: 'No: ',
+  termina: (translit, sentido, mem) =>
+    `${translit} (${sentido}) termina en ${mem
+      ? 'ם, una M: los labios se cierran al final.'
+      : 'ן, una N: la lengua toca detrás de los dientes, y los labios quedan abiertos.'}`,
+  fechoModulo6: 'Módulo 6 - cierre',
+  lerSemNikud: 'Leer sin nikud',
+  grupo: (i, total, palavras) => `${i} de ${total} · ${palavras} palabras`,
+  prontoFecho: 'Estoy listo - hacer el cierre del módulo',
+  umaQueEDuas: 'Y una que es dos',
+  conferir: 'Comprobar',
+  sonsModernos: 'Los sonidos modernos',
+  oSinal: 'El signo',
+  // etapa 3: pronúncia, rever
+  tresSons:
+    'Estos tres sonidos aparecen casi solo en nombres propios y en palabras tomadas de otros idiomas - que es justo donde más fácil aciertas, porque ya sabes cómo suenan esas palabras.',
+  continuarPalavras: 'Continuar - leer las palabras',
+  leiaEConfira: 'Lee y comprueba',
+  todasAsPalavras:
+    'Ya conoces en español todas las palabras de esta página. Lee cada una en voz alta antes de mirar el significado.',
+  continuarFecho: 'Continuar al cierre',
+  kicker: (n, certas, total, pct) => `Módulo ${n} · ${certas} de ${total} · ${pct}%`,
+  concluido: 'Módulo completado.',
+  repetir: 'Vale la pena repetir antes de seguir.',
+  separa: 'Este es el módulo que separa a quien memoriza de quien lee.',
+  semPressa: 'Sin prisa y sin penalización - rehazlo y mira lo que todavía se te escapa.',
+  refazer: 'Volver a intentarlo'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -34,7 +34,7 @@ export const FORA = ['data/biblia.json', 'data/bonus.json', 'data/audio.json', '
     lá é cópia do da fonte, já conferido aqui, e o próprio i18n exige que o
     inglês traga exatamente o mesmo hebraico. Mexer na cópia só a desataria
     da fonte. */
-export const foraDoDaguesh = rel => FORA.includes(rel) || rel.startsWith('data/en/');
+export const foraDoDaguesh = rel => FORA.includes(rel) || rel.startsWith('data/en/') || rel.startsWith('data/es/');
 
 /** Um daguesh que este cluster pode perder? */
 function inutil(cluster) {

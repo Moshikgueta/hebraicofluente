@@ -36,5 +36,22 @@ const en: Traducao<typeof pt> = {
   amanhaTexto: 'You studied letters from this module today. The review waits until tomorrow: reviewing after a night\'s sleep is what makes the letters stick. Until then, you can redo the exercises for the letters above.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  porque: (n: number, proximo: number) =>
+    `El módulo ${proximo} se abre cuando cierras el módulo ${n}: el repaso (un checkpoint corto, hecho un día después del día en que estudiaste las letras) y sus lecturas. Repasar después de una noche de sueño y leer textos enteros es lo que fija las letras en la memoria.`,
+  passoRevisao: (n: number) => `Repaso del módulo ${n}`,
+  passoPrimeira: 'Mi Primera Lectura',
+  passoTexto: (titulo: string) => `Texto: ${titulo}`,
+  feito: 'hecho',
+  faltaFazer: 'falta hacer',
+  paraAbrir: (n: number) => `Para abrir el módulo ${n}, falta: {nome}.`,
+  lerSub: (n: number) => `El módulo ${n} se abre después del repaso y de las lecturas del módulo anterior.`,
+  irPara: (nome: string) => `Ir a ${nome}`,
+  abreAmanha: 'El repaso se abre mañana.',
+  amanhaTitulo: 'El repaso se abre mañana',
+  praticarHoje: 'Practicar las letras que ya sabes',
+  amanhaTexto: 'Hoy estudiaste letras de este módulo. El repaso queda para mañana: repasar después de una noche de sueño es lo que fija las letras en la memoria. Mientras tanto, puedes rehacer los ejercicios de las letras de arriba.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

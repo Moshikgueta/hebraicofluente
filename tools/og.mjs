@@ -84,6 +84,7 @@ const shalom = `<div class="palavra"><span class="he" lang="he" dir="rtl">שָׁ
 /* O mesmo quadro no cartão em inglês: a transliteração do site de fora (sem
    acento) e o sentido em inglês. */
 const shalomEn = `<div class="palavra"><span class="he" lang="he" dir="rtl">שָׁלוֹם</span><span class="tr">shalom</span><span class="pt">hello · peace</span></div>`;
+const shalomEs = `<div class="palavra"><span class="he" lang="he" dir="rtl">שָׁלוֹם</span><span class="tr">shalóm</span><span class="pt">hola · paz</span></div>`;
 const foto = `.foto { position:absolute; inset:0; background:url(data:image/webp;base64,${b64('app/public/media/hero.webp')}) 68% 50% / cover; opacity:.5 }
   .veu  { position:absolute; inset:0; background:linear-gradient(95deg, var(--cream) 0%, rgba(251,249,245,.97) 34%,
           rgba(251,249,245,.7) 54%, rgba(251,249,245,.4) 78%, rgba(251,249,245,.62) 100%) }`;
@@ -154,6 +155,25 @@ const CARTOES = [
         <div class="pe">
           <div class="fatos"><span>${licoes} lessons</span><i></i><span>${curso.letters.length} letters</span><i></i><span>at your own pace</span></div>
           ${shalomEn}
+        </div>
+      </div>`
+  },
+  /* O do site em espanhol (PLANO-ESPANHOL.md, 04/11/2026): o mesmo desenho, o texto em espanhol. */
+  {
+    arquivo: 'og-curso-es.jpg',
+    lang: 'es',
+    css: `${foto}
+      h1 { font-family:D; font-weight:700; font-size:74px; line-height:1.03; letter-spacing:-.035em; color:var(--navy); max-width:15ch }
+      .pe { display:flex; align-items:flex-end; justify-content:space-between; gap:40px }
+      .fatos { font-family:U; font-size:23px; color:var(--ink-muted); display:flex; gap:14px; align-items:center }
+      .fatos i { width:4px; height:4px; border-radius:50%; background:var(--line); display:block }`,
+    corpo: `<div class="foto"></div><div class="veu"></div>
+      <div class="card">
+        ${marca()}
+        <h1>Aprende a leer hebreo desde cero.</h1>
+        <div class="pe">
+          <div class="fatos"><span>${licoes} lecciones</span><i></i><span>${curso.letters.length} letras</span><i></i><span>a tu ritmo</span></div>
+          ${shalomEs}
         </div>
       </div>`
   },

@@ -91,5 +91,49 @@ const en: Traducao<typeof pt> = {
   igualNao: 'No, different'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  toqueNumSinal: 'toca un signo para armar',
+  deveSoar: som => `debe sonar “${som}”`,
+  sinal: n => `Signo ${n}`,
+  palavraEmConstrucao: 'Palabra en construcción',
+  toqueNasPecas: 'toca o arrastra las piezas en orden - la primera letra va a la derecha',
+  tirarPeca: n => `Quitar la pieza ${n}`,
+  conferir: 'Comprobar',
+  recomecar: 'Empezar de nuevo',
+  soa: dica => `suena “${dica}”`,
+  avisoDeErro: (n, esperada, posta) =>
+    `La letra número ${n}, contando desde la derecha, es ${esperada} - pusiste ${posta}. Las letras correctas se quedaron; sigue desde ahí.`,
+  querDizer: pt => <>Quiere decir {pt}</>,
+  aMaoCurto: 'las letras están escritas a mano',
+  aMao: 'Las letras están escritas a mano.',
+  emConstrucao: (feitas, total) => `Palabra en construcción: ${feitas} de ${total} letras`,
+  toqueNasLetras: 'toca o arrastra las letras en orden - la primera va a la derecha',
+  tirarLetra: n => `Quitar la letra ${n}`,
+  letrasParaMontar: 'Letras para armar',
+  letra: g => `Letra ${g}`,
+  mostrarResposta: 'Mostrar la respuesta',
+  respostaEmHebraico: 'Tu respuesta, en hebreo',
+  digiteAqui: 'escribe aquí, en hebreo',
+  latino:
+    'Esto llegó en letras latinas: el teclado todavía está en español. Cámbialo al hebreo (el globo o la tecla de idioma) y escribe de nuevo.',
+  oCertoEra: he => <>La respuesta correcta era {he}.</>,
+  escolhido: valor => `Elegido: ${valor}. Ahora elige su pareja en la otra columna.`,
+  parCerto: (a, b, faltam) =>
+    `Pareja correcta: ${a} con ${b}.` + (faltam > 0 ? ` Faltan ${faltam}.` : ' Todas unidas.'),
+  naoCombinam: (a, b) => `No combinan: ${a} y ${b}. Prueba otra pareja.`,
+  ligadoA: (a, b) => `${a}, unido a ${b}`,
+  campoLang: 'es',
+  suaResposta: 'Tu respuesta',
+  voceEscreveu: (escrito, certo, extra) =>
+    <>Escribiste {escrito}. La respuesta correcta era {certo}{extra}.</>,
+  precisaDica: '¿Necesitas una pista?',
+  maisUmaDica: 'Una pista más',
+  ouvir: 'Escuchar',
+  cacaAchou: (n, total) => `Encontraste ${n} de ${total}.`,
+  cacaCelula: k => `Letra ${k}`,
+  igualSim: 'Sí, es igual',
+  igualNao: 'No, es diferente'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

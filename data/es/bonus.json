@@ -1,0 +1,736 @@
+{
+  "leituras/genesis-1/tituloPt": {
+    "pt": "No princípio",
+    "es": "En el principio"
+  },
+  "leituras/genesis-1/fontePt": {
+    "pt": "Gênesis 1:1-5",
+    "es": "Génesis 1:1-5"
+  },
+  "leituras/genesis-1/introPt": {
+    "pt": "O começo da Bíblia: a criação da luz e o primeiro dia. É hebraico bíblico, que conta no passado (וַיֹּאמֶר é «e disse»), então leia pelo som e use a tradução para acompanhar.",
+    "es": "El comienzo de la Biblia: la creación de la luz y el primer día. Es hebreo bíblico, que cuenta en pasado (וַיֹּאמֶר es «y dijo»), así que lee por el sonido y usa la traducción para acompañar."
+  },
+  "leituras/genesis-1/linhas/#0/pt": {
+    "pt": "No princípio, Deus criou os céus e a terra.",
+    "es": "En el principio, Dios creó los cielos y la tierra."
+  },
+  "leituras/genesis-1/linhas/#1/pt": {
+    "pt": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas.",
+    "es": "La tierra estaba sin forma y vacía, había oscuridad sobre el abismo, y el espíritu de Dios se movía sobre las aguas."
+  },
+  "leituras/genesis-1/linhas/#2/pt": {
+    "pt": "Deus disse: haja luz! E houve luz.",
+    "es": "Dios dijo: ¡que haya luz! Y hubo luz."
+  },
+  "leituras/genesis-1/linhas/#3/pt": {
+    "pt": "Deus viu que a luz era boa, e Deus separou a luz da escuridão.",
+    "es": "Dios vio que la luz era buena, y Dios separó la luz de la oscuridad."
+  },
+  "leituras/genesis-1/linhas/#4/pt": {
+    "pt": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»).",
+    "es": "Dios llamó a la luz día, y a la oscuridad la llamó noche. Hubo tarde y hubo mañana: el primer día (en el hebreo, «día uno»)."
+  },
+  "leituras/shema/tituloPt": {
+    "pt": "Shemá Israel",
+    "es": "Shemá Israel"
+  },
+  "leituras/shema/fontePt": {
+    "pt": "Deuteronômio 6:4-9",
+    "es": "Deuteronomio 6:4-9"
+  },
+  "leituras/shema/introPt": {
+    "pt": "O Shemá, a declaração de fé que se diz de manhã e à noite. O último versículo é a origem da mezuzá, no batente da porta: o pergaminho dela traz este trecho inteiro (e mais Deuteronômio 11:13-21).",
+    "es": "El Shemá, la declaración de fe que se dice por la mañana y por la noche. El último versículo es el origen de la mezuzá, en el marco de la puerta: su pergamino trae este pasaje entero (y además Deuteronomio 11:13-21)."
+  },
+  "leituras/shema/linhas/#0/pt": {
+    "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um.",
+    "es": "Oye, Israel: el Señor es nuestro Dios, el Señor es uno."
+  },
+  "leituras/shema/linhas/#1/pt": {
+    "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força.",
+    "es": "Amarás al Señor, tu Dios, con todo tu corazón, con toda tu alma y con todas tus fuerzas."
+  },
+  "leituras/shema/linhas/#2/pt": {
+    "pt": "Estas palavras que hoje eu te ordeno estarão no teu coração.",
+    "es": "Estas palabras que hoy yo te ordeno estarán en tu corazón."
+  },
+  "leituras/shema/linhas/#3/pt": {
+    "pt": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar.",
+    "es": "Se las enseñarás a tus hijos y hablarás de ellas sentado en tu casa y andando por el camino, al acostarte y al levantarte."
+  },
+  "leituras/shema/linhas/#4/pt": {
+    "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos.",
+    "es": "Las atarás como señal en tu mano, y serán como una banda entre tus ojos."
+  },
+  "leituras/shema/linhas/#5/pt": {
+    "pt": "E as escreverás nos batentes da tua casa e nos teus portões.",
+    "es": "Y las escribirás en los marcos de tu casa y en tus portones."
+  },
+  "leituras/salmo-23/tituloPt": {
+    "pt": "O Senhor é o meu pastor",
+    "es": "El Señor es mi pastor"
+  },
+  "leituras/salmo-23/fontePt": {
+    "pt": "Salmo 23",
+    "es": "Salmo 23"
+  },
+  "leituras/salmo-23/introPt": {
+    "pt": "O salmo mais conhecido, inteiro, nos seis versículos. Muita gente já o sabe de cor em português: ler em hebraico é reconhecer o que já conhece.",
+    "es": "El salmo más conocido, entero, en sus seis versículos. Mucha gente ya lo sabe de memoria en español: leerlo en hebreo es reconocer lo que ya conoces.",
+    "comentario": "adaptado: \"de cor em português\" pasó a \"en español\""
+  },
+  "leituras/salmo-23/linhas/#0/pt": {
+    "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará.",
+    "es": "Salmo de David. El Señor es mi pastor, nada me faltará."
+  },
+  "leituras/salmo-23/linhas/#1/pt": {
+    "pt": "Em pastos verdes me faz deitar, a águas tranquilas me conduz.",
+    "es": "En verdes pastos me hace descansar, a aguas tranquilas me conduce."
+  },
+  "leituras/salmo-23/linhas/#2/pt": {
+    "pt": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome.",
+    "es": "Restaura mi alma, me guía por caminos de justicia por amor de su nombre."
+  },
+  "leituras/salmo-23/linhas/#3/pt": {
+    "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam.",
+    "es": "Aunque ande por el valle de sombra de muerte, no temeré mal alguno, porque tú estás conmigo; tu vara y tu cayado me consuelan."
+  },
+  "leituras/salmo-23/linhas/#4/pt": {
+    "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda.",
+    "es": "Preparas una mesa para mí frente a mis enemigos; unges con aceite mi cabeza, mi copa rebosa."
+  },
+  "leituras/salmo-23/linhas/#5/pt": {
+    "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias.",
+    "es": "Ciertamente el bien y la bondad me seguirán todos los días de mi vida, y habitaré en la casa del Señor por largos días."
+  },
+  "leituras/salmo-121/tituloPt": {
+    "pt": "Levanto os meus olhos para os montes",
+    "es": "Alzo mis ojos a los montes"
+  },
+  "leituras/salmo-121/fontePt": {
+    "pt": "Salmo 121",
+    "es": "Salmo 121"
+  },
+  "leituras/salmo-121/introPt": {
+    "pt": "Um salmo de viagem, dos «cânticos das subidas» que, segundo uma tradição, se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
+    "es": "Un salmo de viaje, de los «cánticos de las subidas» que, según una tradición, se cantaban camino a Jerusalén. La raíz que más se repite es שׁ־מ־ר, «guardar»: cuenta cuántas veces aparece."
+  },
+  "leituras/salmo-121/linhas/#0/pt": {
+    "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?",
+    "es": "Cántico de las subidas. Alzo mis ojos a los montes: ¿de dónde vendrá mi socorro?"
+  },
+  "leituras/salmo-121/linhas/#1/pt": {
+    "pt": "O meu socorro vem do Senhor, que fez os céus e a terra.",
+    "es": "Mi socorro viene del Señor, que hizo los cielos y la tierra."
+  },
+  "leituras/salmo-121/linhas/#2/pt": {
+    "pt": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda.",
+    "es": "No dejará que tu pie tropiece; no se adormece el que te guarda."
+  },
+  "leituras/salmo-121/linhas/#3/pt": {
+    "pt": "Não cochila nem dorme o guarda de Israel.",
+    "es": "No se adormece ni duerme el guardián de Israel."
+  },
+  "leituras/salmo-121/linhas/#4/pt": {
+    "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita.",
+    "es": "El Señor es quien te guarda; el Señor es tu sombra, a tu mano derecha."
+  },
+  "leituras/salmo-121/linhas/#5/pt": {
+    "pt": "De dia o sol não te ferirá, nem a lua de noite.",
+    "es": "De día el sol no te dañará, ni la luna de noche."
+  },
+  "leituras/salmo-121/linhas/#6/pt": {
+    "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida.",
+    "es": "El Señor te guardará de todo mal; él guardará tu vida."
+  },
+  "leituras/salmo-121/linhas/#7/pt": {
+    "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.",
+    "es": "El Señor guardará tu salida y tu entrada, desde ahora y para siempre."
+  },
+  "leituras/rute-1/tituloPt": {
+    "pt": "O teu povo é o meu povo",
+    "es": "Tu pueblo es mi pueblo"
+  },
+  "leituras/rute-1/fontePt": {
+    "pt": "Rute 1:16-17",
+    "es": "Rut 1:16-17"
+  },
+  "leituras/rute-1/introPt": {
+    "pt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
+    "es": "Rut, que no era israelita, se niega a dejar a su suegra, Noemí, y elige el pueblo y el Dios de ella. Para muchos, es el texto de quien vuelve o llega al pueblo judío."
+  },
+  "leituras/rute-1/linhas/#0/pt": {
+    "pt": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir.",
+    "es": "Rut dijo: no insistas en que te deje y me vuelva, dejando de seguirte."
+  },
+  "leituras/rute-1/linhas/#1/pt": {
+    "pt": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei.",
+    "es": "Porque adonde tú vayas, yo iré, y donde tú te quedes, yo me quedaré."
+  },
+  "leituras/rute-1/linhas/#2/pt": {
+    "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus.",
+    "es": "Tu pueblo será mi pueblo, y tu Dios, mi Dios."
+  },
+  "leituras/rute-1/linhas/#3/pt": {
+    "pt": "Onde tu morreres, eu morrerei, e ali serei sepultada.",
+    "es": "Donde tú mueras, yo moriré, y allí seré sepultada."
+  },
+  "leituras/rute-1/linhas/#4/pt": {
+    "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti.",
+    "es": "Que el Señor me castigue, y más aún, si otra cosa que no sea la muerte me separa de ti."
+  },
+  "leituras/eclesiastes-3/tituloPt": {
+    "pt": "Tudo tem o seu tempo",
+    "es": "Todo tiene su tiempo"
+  },
+  "leituras/eclesiastes-3/fontePt": {
+    "pt": "Eclesiastes 3:1-8",
+    "es": "Eclesiastés 3:1-8"
+  },
+  "leituras/eclesiastes-3/introPt": {
+    "pt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes nos pares dos versos 2 a 8, e cada linha é um par de opostos. Um bom primeiro texto longo.",
+    "es": "El texto bíblico más fácil de leer en voz alta: la palabra עֵת, «tiempo», se repite 28 veces en los pares de los versículos 2 a 8, y cada línea es un par de opuestos. Un buen primer texto largo."
+  },
+  "leituras/eclesiastes-3/linhas/#0/pt": {
+    "pt": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:",
+    "es": "Todo tiene su tiempo, y hay un momento para cada cosa debajo del cielo:"
+  },
+  "leituras/eclesiastes-3/linhas/#1/pt": {
+    "pt": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;",
+    "es": "tiempo de nacer y tiempo de morir, tiempo de plantar y tiempo de arrancar lo plantado;"
+  },
+  "leituras/eclesiastes-3/linhas/#2/pt": {
+    "pt": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;",
+    "es": "tiempo de matar y tiempo de sanar, tiempo de derribar y tiempo de construir;"
+  },
+  "leituras/eclesiastes-3/linhas/#3/pt": {
+    "pt": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;",
+    "es": "tiempo de llorar y tiempo de reír, tiempo de lamentarse y tiempo de bailar;"
+  },
+  "leituras/eclesiastes-3/linhas/#4/pt": {
+    "pt": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;",
+    "es": "tiempo de esparcir piedras y tiempo de juntar piedras, tiempo de abrazar y tiempo de apartarse del abrazo;"
+  },
+  "leituras/eclesiastes-3/linhas/#5/pt": {
+    "pt": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;",
+    "es": "tiempo de buscar y tiempo de perder, tiempo de guardar y tiempo de tirar;"
+  },
+  "leituras/eclesiastes-3/linhas/#6/pt": {
+    "pt": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;",
+    "es": "tiempo de rasgar y tiempo de coser, tiempo de callar y tiempo de hablar;"
+  },
+  "leituras/eclesiastes-3/linhas/#7/pt": {
+    "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz.",
+    "es": "tiempo de amar y tiempo de odiar, tiempo de guerra y tiempo de paz."
+  },
+  "leituras/jeremias-29/tituloPt": {
+    "pt": "Planos de paz",
+    "es": "Planes de paz"
+  },
+  "leituras/jeremias-29/fontePt": {
+    "pt": "Jeremias 29:11",
+    "es": "Jeremías 29:11"
+  },
+  "leituras/jeremias-29/introPt": {
+    "pt": "Um dos versículos mais amados e citados: a promessa de um futuro e de uma esperança, numa carta de Jeremias aos exilados na Babilônia.",
+    "es": "Uno de los versículos más amados y citados: la promesa de un futuro y de una esperanza, en una carta de Jeremías a los exiliados en Babilonia."
+  },
+  "leituras/jeremias-29/linhas/#0/pt": {
+    "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:",
+    "es": "Porque yo sé los planes que tengo para ustedes, dice el Señor:"
+  },
+  "leituras/jeremias-29/linhas/#1/pt": {
+    "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança.",
+    "es": "planes de paz, y no de mal, para darles un futuro y una esperanza."
+  },
+  "leituras/josue-1/tituloPt": {
+    "pt": "Sê forte e corajoso",
+    "es": "Sé fuerte y valiente"
+  },
+  "leituras/josue-1/fontePt": {
+    "pt": "Josué 1:9",
+    "es": "Josué 1:9"
+  },
+  "leituras/josue-1/introPt": {
+    "pt": "O que Deus diz a Josué antes de ele entrar na terra prometida. חֲזַק וֶאֱמָץ, «chazák veemáts», se diz até hoje para dar coragem a alguém.",
+    "es": "Lo que Dios le dice a Josué antes de que entre en la tierra prometida. חֲזַק וֶאֱמָץ, «jazák veemáts», se dice hasta hoy para darle valor a alguien."
+  },
+  "leituras/josue-1/linhas/#0/pt": {
+    "pt": "Não fui eu que te ordenei? Sê forte e corajoso.",
+    "es": "¿No te lo he ordenado yo? Sé fuerte y valiente."
+  },
+  "leituras/josue-1/linhas/#1/pt": {
+    "pt": "Não tenhas medo nem desanimes,",
+    "es": "No tengas miedo ni te desanimes,"
+  },
+  "leituras/josue-1/linhas/#2/pt": {
+    "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores.",
+    "es": "porque el Señor, tu Dios, está contigo dondequiera que vayas."
+  },
+  "leituras/proverbios-3/tituloPt": {
+    "pt": "Confia no Senhor",
+    "es": "Confía en el Señor"
+  },
+  "leituras/proverbios-3/fontePt": {
+    "pt": "Provérbios 3:5-6",
+    "es": "Proverbios 3:5-6"
+  },
+  "leituras/proverbios-3/introPt": {
+    "pt": "O conselho de Salomão para as decisões da vida: confiar no Senhor, e não só no próprio entendimento.",
+    "es": "El consejo de Salomón para las decisiones de la vida: confiar en el Señor, y no solo en el propio entendimiento."
+  },
+  "leituras/proverbios-3/linhas/#0/pt": {
+    "pt": "Confia no Senhor de todo o teu coração",
+    "es": "Confía en el Señor con todo tu corazón"
+  },
+  "leituras/proverbios-3/linhas/#1/pt": {
+    "pt": "e não te apoies no teu próprio entendimento.",
+    "es": "y no te apoyes en tu propio entendimiento."
+  },
+  "leituras/proverbios-3/linhas/#2/pt": {
+    "pt": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.",
+    "es": "Reconócelo en todos tus caminos, y él enderezará tus sendas."
+  },
+  "leituras/isaias-41/tituloPt": {
+    "pt": "Não temas",
+    "es": "No temas"
+  },
+  "leituras/isaias-41/fontePt": {
+    "pt": "Isaías 41:10",
+    "es": "Isaías 41:10"
+  },
+  "leituras/isaias-41/introPt": {
+    "pt": "Uma das promessas mais repetidas da Bíblia, «não temas», com três verbos seguidos no fim: fortaleço, ajudo, sustento.",
+    "es": "Una de las promesas más repetidas de la Biblia, «no temas», con tres verbos seguidos al final: te fortalezco, te ayudo, te sostengo."
+  },
+  "leituras/isaias-41/linhas/#0/pt": {
+    "pt": "Não temas, porque eu estou contigo;",
+    "es": "No temas, porque yo estoy contigo;"
+  },
+  "leituras/isaias-41/linhas/#1/pt": {
+    "pt": "não te assustes, porque eu sou o teu Deus.",
+    "es": "no te asustes, porque yo soy tu Dios."
+  },
+  "leituras/isaias-41/linhas/#2/pt": {
+    "pt": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça.",
+    "es": "Te fortalezco, te ayudo, te sostengo con la mano derecha de mi justicia."
+  },
+  "leituras/isaias-40/tituloPt": {
+    "pt": "Asas como águias",
+    "es": "Alas como de águila"
+  },
+  "leituras/isaias-40/fontePt": {
+    "pt": "Isaías 40:31",
+    "es": "Isaías 40:31"
+  },
+  "leituras/isaias-40/introPt": {
+    "pt": "O versículo das águias: três imagens, subir como águias, correr e caminhar sem se cansar.",
+    "es": "El versículo de las águilas: tres imágenes, subir como águilas, correr y caminar sin cansarse."
+  },
+  "leituras/isaias-40/linhas/#0/pt": {
+    "pt": "Mas os que esperam no Senhor renovam as suas forças;",
+    "es": "Pero los que esperan en el Señor renuevan sus fuerzas;"
+  },
+  "leituras/isaias-40/linhas/#1/pt": {
+    "pt": "sobem com asas, como águias;",
+    "es": "suben con alas, como águilas;"
+  },
+  "leituras/isaias-40/linhas/#2/pt": {
+    "pt": "correm e não se cansam, caminham e não se fatigam.",
+    "es": "corren y no se cansan, caminan y no se fatigan."
+  },
+  "leituras/jeremias-33/tituloPt": {
+    "pt": "Clama a mim",
+    "es": "Clama a mí"
+  },
+  "leituras/jeremias-33/fontePt": {
+    "pt": "Jeremias 33:3",
+    "es": "Jeremías 33:3"
+  },
+  "leituras/jeremias-33/introPt": {
+    "pt": "Um convite à oração, dito a Jeremias quando ele estava preso: «clama a mim, e eu te responderei».",
+    "es": "Una invitación a la oración, dicha a Jeremías cuando estaba preso: «clama a mí, y yo te responderé»."
+  },
+  "leituras/jeremias-33/linhas/#0/pt": {
+    "pt": "Clama a mim, e eu te responderei;",
+    "es": "Clama a mí, y yo te responderé;"
+  },
+  "leituras/jeremias-33/linhas/#1/pt": {
+    "pt": "e te anunciarei coisas grandes e escondidas, que tu não conheces.",
+    "es": "y te anunciaré cosas grandes y ocultas, que tú no conoces."
+  },
+  "leituras/josue-24/tituloPt": {
+    "pt": "Eu e a minha casa",
+    "es": "Yo y mi casa"
+  },
+  "leituras/josue-24/fontePt": {
+    "pt": "Josué 24:15",
+    "es": "Josué 24:15"
+  },
+  "leituras/josue-24/introPt": {
+    "pt": "A decisão de Josué diante de todo o povo, que muita gente escreve na parede de casa. São só cinco palavras.",
+    "es": "La decisión de Josué ante todo el pueblo, que mucha gente escribe en la pared de su casa. Son solo cinco palabras."
+  },
+  "leituras/josue-24/linhas/#0/pt": {
+    "pt": "Eu e a minha casa serviremos ao Senhor.",
+    "es": "Yo y mi casa serviremos al Señor."
+  },
+  "leituras/salmo-91/tituloPt": {
+    "pt": "À sombra do Todo-Poderoso",
+    "es": "A la sombra del Todopoderoso"
+  },
+  "leituras/salmo-91/fontePt": {
+    "pt": "Salmo 91:1-2",
+    "es": "Salmo 91:1-2"
+  },
+  "leituras/salmo-91/introPt": {
+    "pt": "O salmo da proteção, que muita gente lê nos tempos difíceis. Aqui, os dois primeiros versículos. שַׁדַּי, «Shadái», é o Todo-Poderoso.",
+    "es": "El salmo de la protección, que mucha gente lee en los tiempos difíciles. Aquí, los dos primeros versículos. שַׁדַּי, «Shadái», es el Todopoderoso."
+  },
+  "leituras/salmo-91/linhas/#0/pt": {
+    "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso.",
+    "es": "El que habita al abrigo del Altísimo descansa a la sombra del Todopoderoso."
+  },
+  "leituras/salmo-91/linhas/#1/pt": {
+    "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio.",
+    "es": "Digo al Señor: mi refugio y mi fortaleza, mi Dios, en quien confío."
+  },
+  "leituras/lamentacoes-3/tituloPt": {
+    "pt": "Novas a cada manhã",
+    "es": "Nuevas cada mañana"
+  },
+  "leituras/lamentacoes-3/fontePt": {
+    "pt": "Lamentações 3:22-23",
+    "es": "Lamentaciones 3:22-23"
+  },
+  "leituras/lamentacoes-3/introPt": {
+    "pt": "No meio do livro mais triste da Bíblia, uma esperança: as misericórdias do Senhor se renovam a cada manhã.",
+    "es": "En medio del libro más triste de la Biblia, una esperanza: las misericordias del Señor se renuevan cada mañana."
+  },
+  "leituras/lamentacoes-3/linhas/#0/pt": {
+    "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;",
+    "es": "Las misericordias del Señor no tienen fin, sus compasiones no se agotan;"
+  },
+  "leituras/lamentacoes-3/linhas/#1/pt": {
+    "pt": "elas se renovam a cada manhã. Grande é a tua fidelidade!",
+    "es": "se renuevan cada mañana. ¡Grande es tu fidelidad!"
+  },
+  "leituras/salmo-119/tituloPt": {
+    "pt": "Lâmpada para os meus pés",
+    "es": "Lámpara para mis pies"
+  },
+  "leituras/salmo-119/fontePt": {
+    "pt": "Salmo 119:105",
+    "es": "Salmo 119:105"
+  },
+  "leituras/salmo-119/introPt": {
+    "pt": "Do maior capítulo da Bíblia, o versículo sobre a própria Palavra.",
+    "es": "Del capítulo más largo de la Biblia, el versículo sobre la propia Palabra."
+  },
+  "leituras/salmo-119/linhas/#0/pt": {
+    "pt": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho.",
+    "es": "Tu palabra es lámpara para mis pies y luz para mi camino."
+  },
+  "leituras/bencao-sacerdotal/tituloPt": {
+    "pt": "A bênção sacerdotal",
+    "es": "La bendición sacerdotal"
+  },
+  "leituras/bencao-sacerdotal/fontePt": {
+    "pt": "Números 6:24-26",
+    "es": "Números 6:24-26"
+  },
+  "leituras/bencao-sacerdotal/introPt": {
+    "pt": "A bênção que Deus manda Aarão e os seus filhos darem ao povo de Israel. Três versículos, cada um maior que o anterior.",
+    "es": "La bendición que Dios manda a Aarón y a sus hijos dar al pueblo de Israel. Tres versículos, cada uno más largo que el anterior."
+  },
+  "leituras/bencao-sacerdotal/linhas/#0/pt": {
+    "pt": "O Senhor te abençoe e te guarde.",
+    "es": "El Señor te bendiga y te guarde."
+  },
+  "leituras/bencao-sacerdotal/linhas/#1/pt": {
+    "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti.",
+    "es": "El Señor haga brillar su rostro sobre ti y tenga misericordia de ti."
+  },
+  "leituras/bencao-sacerdotal/linhas/#2/pt": {
+    "pt": "O Senhor volte o seu rosto para ti e te dê a paz.",
+    "es": "El Señor vuelva su rostro hacia ti y te dé la paz."
+  },
+  "leituras/isaias-6/tituloPt": {
+    "pt": "Santo, santo, santo",
+    "es": "Santo, santo, santo"
+  },
+  "leituras/isaias-6/fontePt": {
+    "pt": "Isaías 6:3",
+    "es": "Isaías 6:3"
+  },
+  "leituras/isaias-6/introPt": {
+    "pt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
+    "es": "Lo que proclaman los ángeles en la visión de Isaías. La palabra קָדוֹשׁ, «santo», viene tres veces seguidas."
+  },
+  "leituras/isaias-6/linhas/#0/pt": {
+    "pt": "E um clamava ao outro, dizendo:",
+    "es": "Y uno clamaba al otro, diciendo:"
+  },
+  "leituras/isaias-6/linhas/#1/pt": {
+    "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória.",
+    "es": "Santo, santo, santo es el Señor de los Ejércitos; toda la tierra está llena de su gloria."
+  },
+  "leituras/isaias-9/tituloPt": {
+    "pt": "Um menino nos nasceu",
+    "es": "Un niño nos ha nacido"
+  },
+  "leituras/isaias-9/fontePt": {
+    "pt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
+    "es": "Isaías 9:6 (9:5 en la Biblia hebrea)"
+  },
+  "leituras/isaias-9/introPt": {
+    "pt": "Um dos textos mais conhecidos da Bíblia. Na Bíblia hebraica a numeração é um versículo antes: 9:5. Há mais de uma leitura tradicional deste versículo; a tradução abaixo é a mais conhecida no Brasil.",
+    "es": "Uno de los textos más conocidos de la Biblia. En la Biblia hebrea la numeración va un versículo antes: 9:5. Hay más de una lectura tradicional de este versículo; la traducción de abajo es la más conocida en español.",
+    "comentario": "adaptado: \"a mais conhecida no Brasil\" pasó a \"la más conocida en español\""
+  },
+  "leituras/isaias-9/linhas/#0/pt": {
+    "pt": "Porque um menino nos nasceu, um filho nos foi dado;",
+    "es": "Porque un niño nos ha nacido, un hijo nos ha sido dado;"
+  },
+  "leituras/isaias-9/linhas/#1/pt": {
+    "pt": "o governo está sobre os seus ombros,",
+    "es": "el gobierno está sobre sus hombros,"
+  },
+  "leituras/isaias-9/linhas/#2/pt": {
+    "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz.",
+    "es": "y su nombre es llamado: Admirable, Consejero, Dios Fuerte, Padre Eterno, Príncipe de Paz."
+  },
+  "leituras/isaias-53/tituloPt": {
+    "pt": "Pelas suas feridas",
+    "es": "Por sus heridas"
+  },
+  "leituras/isaias-53/fontePt": {
+    "pt": "Isaías 53:5",
+    "es": "Isaías 53:5"
+  },
+  "leituras/isaias-53/introPt": {
+    "pt": "Do capítulo do servo sofredor, um dos textos do Antigo Testamento mais citados pelos cristãos.",
+    "es": "Del capítulo del siervo sufriente, uno de los textos del Antiguo Testamento más citados por los cristianos."
+  },
+  "leituras/isaias-53/linhas/#0/pt": {
+    "pt": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;",
+    "es": "Pero él fue herido por nuestras transgresiones, molido por nuestras culpas;"
+  },
+  "leituras/isaias-53/linhas/#1/pt": {
+    "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados.",
+    "es": "el castigo que nos trae la paz estaba sobre él, y por sus heridas fuimos sanados."
+  },
+  "leituras/levitico-19/tituloPt": {
+    "pt": "Amarás o teu próximo",
+    "es": "Amarás a tu prójimo"
+  },
+  "leituras/levitico-19/fontePt": {
+    "pt": "Levítico 19:18",
+    "es": "Levítico 19:18"
+  },
+  "leituras/levitico-19/introPt": {
+    "pt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
+    "es": "El versículo de donde viene «amarás a tu prójimo como a ti mismo». Termina con la firma que la Torá repite tantas veces: אֲנִי יְהוָה, «yo soy el Señor»."
+  },
+  "leituras/levitico-19/linhas/#0/pt": {
+    "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;",
+    "es": "No te vengarás ni guardarás rencor contra los hijos de tu pueblo;"
+  },
+  "leituras/levitico-19/linhas/#1/pt": {
+    "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor.",
+    "es": "amarás a tu prójimo como a ti mismo. Yo soy el Señor."
+  },
+  "leituras/salmo-133/tituloPt": {
+    "pt": "Como é bom",
+    "es": "Qué bueno"
+  },
+  "leituras/salmo-133/fontePt": {
+    "pt": "Salmo 133:1",
+    "es": "Salmo 133:1"
+  },
+  "leituras/salmo-133/introPt": {
+    "pt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+    "es": "Un solo versículo, y tal vez el más cantado: הִנֵּה מַה־טּוֹב se vuelve canción en bodas, en fiestas y en reuniones de amigos."
+  },
+  "leituras/salmo-133/linhas/#0/pt": {
+    "pt": "Cântico das subidas, de Davi.",
+    "es": "Cántico de las subidas, de David."
+  },
+  "leituras/salmo-133/linhas/#1/pt": {
+    "pt": "Vejam como é bom e agradável os irmãos viverem juntos.",
+    "es": "Miren qué bueno y qué agradable es que los hermanos vivan juntos."
+  },
+  "guia/tituloPt": {
+    "pt": "O nikud da Bíblia",
+    "es": "El nikud de la Biblia"
+  },
+  "guia/introPt": {
+    "pt": "Um guia opcional, para quem quer ler as leituras bônus ou abrir uma Bíblia em hebraico. Os pontos são os mesmos que você aprendeu no curso; a Bíblia só usa alguns a mais, e tem umas poucas regras de leitura. Os exemplos são todos das leituras bônus.",
+    "es": "Una guía opcional, para quien quiere leer las lecturas extra o abrir una Biblia en hebreo. Los puntos son los mismos que aprendiste en el curso; la Biblia solo usa algunos más, y tiene unas pocas reglas de lectura. Todos los ejemplos son de las lecturas extra."
+  },
+  "guia/secoes/nome/tituloPt": {
+    "pt": "O Nome não se pronuncia",
+    "es": "El Nombre no se pronuncia"
+  },
+  "guia/secoes/nome/textoPt": {
+    "pt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito. Na reza e na leitura da Torá na sinagoga, diz-se «Adonái», «meu Senhor». Fora da reza, muitos judeus evitam até essa palavra, por respeito ao Nome, e dizem «Hashém», que quer dizer «o Nome». As gravações deste curso seguem esse costume: por isso você ouve «Hashém», e a transliteração mostra o que se ouve. Ao ler sozinho, cada um segue o costume da sua casa: «Adonái», «Hashém» ou, nas traduções, «o Senhor». Por escrito, muita gente abrevia para {{ה׳}}.",
+    "es": "El nombre de Dios, {{יְהוָה}}, nunca se lee como está escrito. En la oración y en la lectura de la Torá en la sinagoga, se dice «Adonái», «mi Señor». Fuera de la oración, muchos judíos evitan incluso esa palabra, por respeto al Nombre, y dicen «Hashém», que quiere decir «el Nombre». Las grabaciones de este curso siguen esa costumbre: por eso oyes «Hashém», y la transliteración muestra lo que se oye. Al leer solo, cada uno sigue la costumbre de su casa: «Adonái», «Hashém» o, en las traducciones, «el Señor». Por escrito, mucha gente lo abrevia como {{ה׳}}."
+  },
+  "guia/secoes/nome/exemplos/#0/pt": {
+    "pt": "como está no texto bíblico; na gravação, «Hashém»",
+    "es": "como está en el texto bíblico; en la grabación, «Hashém»"
+  },
+  "guia/secoes/nome/exemplos/#1/pt": {
+    "pt": "o Senhor, nosso Deus (do Shemá)",
+    "es": "el Señor, nuestro Dios (del Shemá)"
+  },
+  "guia/secoes/sheva/tituloPt": {
+    "pt": "O shva no começo soa «e»",
+    "es": "El shvá al comienzo suena «e»"
+  },
+  "guia/secoes/sheva/textoPt": {
+    "pt": "O shva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
+    "es": "El shvá ({{ְ}}) debajo de la primera letra de la palabra suena como una «e» rápida. En medio de la palabra, después de otra vocal, suele quedar mudo: la letra cierra la sílaba anterior."
+  },
+  "guia/secoes/sheva/exemplos/#0/pt": {
+    "pt": "shva no começo: «be»",
+    "es": "shvá al comienzo: «be»"
+  },
+  "guia/secoes/sheva/exemplos/#1/pt": {
+    "pt": "shva no começo: «she»",
+    "es": "shvá al comienzo: «she»"
+  },
+  "guia/secoes/sheva/exemplos/#2/pt": {
+    "pt": "shva no meio, mudo: «Yis-ra-él»",
+    "es": "shvá en medio, mudo: «Yis-ra-él»"
+  },
+  "guia/secoes/chataf/tituloPt": {
+    "pt": "As vogais rápidas (chataf)",
+    "es": "Las vocales rápidas (jataf)"
+  },
+  "guia/secoes/chataf/textoPt": {
+    "pt": "Um shva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o shva simples.",
+    "es": "Un shvá con otra vocal al lado es una vocal corta, dicha deprisa: {{ֲ}} suena «a», {{ֱ}} suena «e» y {{ֳ}} suena «o». Aparecen casi siempre debajo de {{א}}, {{ה}}, {{ח}} y {{ע}}, las letras que no aceptan el shvá simple."
+  },
+  "guia/secoes/chataf/exemplos/#0/pt": {
+    "pt": "«e» rápido",
+    "es": "«e» rápida"
+  },
+  "guia/secoes/chataf/exemplos/#1/pt": {
+    "pt": "«a» rápido",
+    "es": "«a» rápida"
+  },
+  "guia/secoes/kamats-katan/tituloPt": {
+    "pt": "Quando o kamats soa «o»?",
+    "es": "¿Cuándo suena «o» el kamáts?"
+  },
+  "guia/secoes/kamats-katan/textoPt": {
+    "pt": "Em algumas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
+    "es": "En algunas palabras, el kamáts ({{ָ}}) suena «o», y no «a». La más común de todas es {{כָּל}}, «todo», que aparece en casi toda página. En las lecturas extra, la transliteración siempre muestra cuál es el caso."
+  },
+  "guia/secoes/kamats-katan/exemplos/#0/pt": {
+    "pt": "todos os dias de",
+    "es": "todos los días de"
+  },
+  "guia/secoes/kamats-katan/exemplos/#1/pt": {
+    "pt": "com todo o teu coração",
+    "es": "con todo tu corazón"
+  },
+  "guia/secoes/patach-furtivo/tituloPt": {
+    "pt": "O «a» que vem antes da letra",
+    "es": "La «a» que va antes de la letra"
+  },
+  "guia/secoes/patach-furtivo/textoPt": {
+    "pt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{הּ}} (com o ponto dentro) e há um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
+    "es": "Cuando la palabra termina en {{ח}}, {{ע}} o {{הּ}} (con el punto dentro) y hay un pátaj debajo, la «a» se dice ANTES de la letra: «ru-aj», y no «ru-ja»."
+  },
+  "guia/secoes/patach-furtivo/exemplos/#0/pt": {
+    "pt": "e o espírito",
+    "es": "y el espíritu"
+  },
+  "guia/secoes/maqaf/tituloPt": {
+    "pt": "O tracinho que liga palavras",
+    "es": "La rayita que une palabras"
+  },
+  "guia/secoes/maqaf/textoPt": {
+    "pt": "O tracinho no alto da linha ({{־}}), o maqaf, junta duas palavras que se leem de um fôlego só, como se fossem uma.",
+    "es": "La rayita en lo alto de la línea ({{־}}), el makaf, une dos palabras que se leen de un solo aliento, como si fueran una."
+  },
+  "guia/secoes/maqaf/exemplos/#0/pt": {
+    "pt": "sobre a face de",
+    "es": "sobre la faz de"
+  },
+  "guia/secoes/maqaf/exemplos/#1/pt": {
+    "pt": "que era bom",
+    "es": "que era bueno"
+  },
+  "guia/secoes/dagesh/tituloPt": {
+    "pt": "O daguesh, de novo",
+    "es": "El daguesh, otra vez"
+  },
+  "guia/secoes/dagesh/textoPt": {
+    "pt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o daguesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
+    "es": "Ya sabes que el punto dentro de {{ב}}, {{כ}} y {{פ}} cambia el sonido. La Biblia lo puntúa todo, así que vas a ver el daguesh en muchas otras letras también: en ellas, no cambia nada que necesites decir."
+  },
+  "guia/secoes/dagesh/exemplos/#0/pt": {
+    "pt": "com daguesh: «b»",
+    "es": "con daguesh: «b»"
+  },
+  "guia/secoes/dagesh/exemplos/#1/pt": {
+    "pt": "sem daguesh: «v»",
+    "es": "sin daguesh: «v»"
+  },
+  "guia/secoes/dagesh/exemplos/#2/pt": {
+    "pt": "daguesh no ש: o som não muda",
+    "es": "daguesh en la ש: el sonido no cambia"
+  },
+  "guia/secoes/yod/tituloPt": {
+    "pt": "O י que não se lê como «y»",
+    "es": "La י que no se lee como «y»"
+  },
+  "guia/secoes/yod/textoPt": {
+    "pt": "Quando o {{י}} vem depois de um chirik ({{ִ}}) só para marcar a vogal, ele não acrescenta outro som: juntos, {{ִי}} representam o som «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
+    "es": "Cuando la {{י}} viene después de un jírik ({{ִ}}) solo para marcar la vocal, no añade otro sonido: juntos, {{ִי}} representan el sonido «i». En la terminación {{ֶיךָ}}, queda muda. Después de un tsére ({{ֵ}}), en la pronunciación de hoy, suena «ei»."
+  },
+  "guia/secoes/yod/exemplos/#0/pt": {
+    "pt": "temerei",
+    "es": "temeré"
+  },
+  "guia/secoes/yod/exemplos/#1/pt": {
+    "pt": "a teus filhos",
+    "es": "a tus hijos"
+  },
+  "guia/secoes/yod/exemplos/#2/pt": {
+    "pt": "nosso Deus",
+    "es": "nuestro Dios"
+  },
+  "guia/secoes/vav/tituloPt": {
+    "pt": "O ו do «e disse»",
+    "es": "La ו del «y dijo»"
+  },
+  "guia/secoes/vav/textoPt": {
+    "pt": "A Bíblia conta o que aconteceu com um {{וַ}} na frente do verbo: {{וַיֹּאמֶר}} é «e disse», {{וַיְהִי}} é «e houve». É a forma bíblica de narrar no passado, e o hebraico de hoje não a usa. Para ler, basta dizer «va» e seguir.",
+    "es": "La Biblia cuenta lo que pasó con una {{וַ}} delante del verbo: {{וַיֹּאמֶר}} es «y dijo», {{וַיְהִי}} es «y hubo». Es la forma bíblica de narrar en pasado, y el hebreo de hoy no la usa. Para leer, basta decir «va» y seguir."
+  },
+  "guia/secoes/vav/exemplos/#0/pt": {
+    "pt": "e disse",
+    "es": "y dijo"
+  },
+  "guia/secoes/vav/exemplos/#1/pt": {
+    "pt": "e houve",
+    "es": "y hubo"
+  },
+  "guia/secoes/teamim/tituloPt": {
+    "pt": "Os sinais a mais numa Bíblia impressa",
+    "es": "Los signos de más en una Biblia impresa"
+  },
+  "guia/secoes/teamim/textoPt": {
+    "pt": "Numa Bíblia hebraica você vai ver ainda outros sinais, em cima e embaixo das letras: são os te'amim, as notas do canto da leitura na sinagoga. Para ler, pode ignorá-los. O {{׃}} marca o fim do versículo, e um {{פ}} ou {{ס}} sozinho entre versículos marca um parágrafo: nenhum dos dois se lê.",
+    "es": "En una Biblia hebrea vas a ver además otros signos, encima y debajo de las letras: son los te'amim, las notas del canto de la lectura en la sinagoga. Para leer, puedes ignorarlos. El {{׃}} marca el fin del versículo, y una {{פ}} o una {{ס}} sola entre versículos marca un párrafo: ninguna de las dos se lee."
+  },
+  "guia/secoes/teamim/exemplos/#0/pt": {
+    "pt": "Gênesis 1:1 como numa Bíblia impressa, com os te'amim e o ׃",
+    "es": "Génesis 1:1 como en una Biblia impresa, con los te'amim y el ׃"
+  }
+}

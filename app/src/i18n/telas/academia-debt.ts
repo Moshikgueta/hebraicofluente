@@ -21,5 +21,15 @@ const en: Traducao<typeof pt> = {
   trocaCom: 'mixed up with'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  paraRevisar: 'Para repasar',
+  nadaPendente: 'Nada pendiente. Cuando te equivoques en algo, aparece aquí - con el motivo, no solo la letra.',
+  nLetras: n => `${n} ${n === 1 ? 'letra' : 'letras'}`,
+  naFila: n => `${n} ${n === 1 ? 'elemento' : 'elementos'} en la fila`,
+  naFilaDeRevisao: 'en la fila de repaso',
+  trocando: letras => `La estás confundiendo con ${letras}`,
+  trocaCom: 'se confunde con'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

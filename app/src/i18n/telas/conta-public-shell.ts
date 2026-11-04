@@ -109,5 +109,59 @@ const en: Traducao<typeof pt> = {
   direitos: (ano: number, nome: string) => `© ${ano} ${nome}. All rights reserved.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  linkMetodo: 'El método',
+  linkSobre: 'Sobre',
+  linkDuvidas: 'Preguntas',
+  paginaInicial: 'Hebraico Fluente, página de inicio',
+  navegacao: 'Navegación del sitio',
+  meuHebraico: 'Mi Hebreo',
+  minhaConta: 'Mi cuenta',
+  minhaContaCurta: 'Cuenta',
+  comecar: 'Quiero empezar',
+  comecarCurto: 'Empezar',
+  comecarOCurso: 'Quiero empezar',
+  entrar: 'Entrar',
+  comecarAgora: 'Quiero empezar',
+  fecharMenu: 'Cerrar menú',
+  abrirMenu: 'Abrir menú',
+
+  rodapeTexto:
+    'Hebreo empezando por el alfabeto. Hecho para adultos que estudian solos, ' +
+    'en el celular, sin un profesor al lado.',
+  inspiradoEm: 'Método inspirado en',
+  creditoDepois: (translit: string, autor: string) => `(${translit}), de ${autor}.`,
+  contato: 'Contacto',
+  whatsapp: (numero: string) => `WhatsApp ${numero}`,
+  horario: (horario: string, prazo: string) => `${horario}. Respuesta ${prazo}.`,
+  // etapa 5/6: Brasil, rever
+  pagamentoSoPix: 'Pago por PIX. Acceso liberado después de revisar el pago.',
+  pagamentoPixECartao: (parcelas: string) =>
+    `Pago por PIX o tarjeta, ${parcelas}. Acceso liberado al instante.`,
+  pagamentoCartao: () =>
+    'Pago con tarjeta, PayPal, Apple Pay o Google Pay a través de Paddle, nuestro revendedor autorizado. Acceso liberado al instante.',
+  pagamentoPixNaHora: 'Pago por PIX. Acceso liberado al instante.',
+
+  aprender: 'Aprender',
+  alfabetizacao: 'Aprende a leer hebreo',
+  osCursos: 'Los cursos',
+  alfabetoHebraico: 'Alfabeto hebreo',
+  lerABiblia: '¿Leer la Biblia?',
+  blog: 'Blog',
+  proximosCursos: 'Próximos cursos, aparte y todavía en producción:',
+  e: ' y',
+  ajuda: 'Ayuda',
+  suporte: 'Soporte',
+  sobreOMoshik: 'Sobre Moshik',
+  acessibilidade: 'Accesibilidad',
+  legal: 'Legal',
+  termosDeUso: 'Términos de Uso',
+  politicaDePrivacidade: 'Política de Privacidad',
+  reembolso: 'Reembolso y Cancelación',
+  // etapa 6: escrito para o site de fora
+  cnpj: (numero: string) => `Número de empresa brasileña (CNPJ) ${numero}`,
+  direitos: (ano: number, nome: string) => `© ${ano} ${nome}. Todos los derechos reservados.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

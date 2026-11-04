@@ -67,5 +67,38 @@ const en: Traducao<typeof pt> = {
   comece: 'Start with lesson 0'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: '¿Por qué las letras no están en orden alfabético?',
+  esperando: 'Tal vez esperabas empezar así:',
+  tradicional: 'El orden tradicional',
+  desteCurso: 'El orden de este curso',
+  foraDeOrdem: 'No estás aprendiendo las letras fuera de orden.',
+  pensada: 'Las estás aprendiendo en un orden pensado para que empieces a leer antes.',
+  compra: '¿Qué te da este orden?',
+  peca:
+    'Cada letra nueva es una pieza que aumenta lo que puedes armar con las que ya tienes. Es el mismo principio de un juego de construcción: la tercera pieza vale más que la primera, porque se combina con las dos anteriores.',
+  passo1: 'Una letra nueva',
+  passo1d: 'aprendes la forma, el sonido y cómo escribirla',
+  passo2: 'Se combina con las anteriores',
+  passo2d: 'y eso no es adorno: es lo que hace que la letra rinda',
+  passo3: 'Salen sílabas',
+  passo3d: 'la consonante con cada signo de vocal',
+  passo4: 'Salen palabras',
+  passo4d: 'hechas solo con lo que ya conoces',
+  passo5: 'Y la próxima letra rinde todavía más',
+  passo5d: 'porque ahora hay más piezas en la mesa',
+  alfabetica: (a, b) =>
+    `En orden alfabético esto no pasa tan pronto: ${a} y ${b} no forman ninguna palabra solas, y el alumno pasa varias lecciones memorizando dibujos antes de leer lo primero.`,
+  objetivo: 'Y el objetivo no es memorizar 22 símbolos',
+  objetivoTexto:
+    'Es reconocer las letras, unir forma y sonido, escribir a mano, combinar, leer sílabas, formar palabras, reconocer patrones y empezar a leer texto de verdad. Memorizar la secuencia del alfabeto es una de las cosas más fáciles de esa lista, y la menos útil por sí sola.',
+  verTradicional: 'Ver el alfabeto en el orden tradicional',
+  importante:
+    'Este orden sigue siendo importante, y lo vas a necesitar: es el del diccionario, el de la guía telefónica, el de las referencias, el que recitan los israelíes. Aquí está con el número de la lección en que cada letra aparece en este curso.',
+  licao: n => `lección ${n}`,
+  aindaNaoViu: '¿Todavía no viste cómo funciona el alfabeto?',
+  comece: 'Empieza por la clase 0'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

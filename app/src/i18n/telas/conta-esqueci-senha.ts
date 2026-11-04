@@ -44,5 +44,26 @@ const en: Traducao<typeof pt> = {
   entrar: 'Sign in'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Recuperar la contraseña - Hebraico Fluente',
+  metaDescricao: 'Te enviamos un enlace para que elijas una contraseña nueva.',
+  titulo: 'Recuperar la contraseña',
+  olheCaixa:
+    'Revisa tu bandeja de entrada - y la carpeta de spam, que es donde suele caer este tipo de mensaje.',
+  digaEmail: 'Escribe tu correo y te enviamos un enlace para que elijas una contraseña nueva.',
+  seExistirAntes: 'Si existe una cuenta con ',
+  seExistirDepois: ', el enlace ya va en camino. Vale por una hora y funciona una sola vez.',
+  demoSemEmail: 'Esta versión no envía correos de verdad. El enlace sería este:',
+  mandarDeNovo: 'Enviar de nuevo',
+  naoChegou: '¿No llegó en unos minutos? Escribe a',
+  resolveNaMao: 'y lo resolvemos a mano.',
+  email: 'Correo electrónico',
+  exemploEmail: 'ej.: tu@ejemplo.com',
+  enviando: 'Enviando…',
+  mandarOLink: 'Enviar el enlace',
+  lembrou: '¿La recordaste?',
+  entrar: 'Entrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

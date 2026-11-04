@@ -25,5 +25,17 @@ const en: Traducao<typeof pt> = {
   salvando: 'Saving the image…'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  depoisWhatsapp: 'La imagen se guardó y el texto ya va en la conversación - solo adjunta la imagen.',
+  depoisInstagram: 'La imagen se guardó y el texto se copió. Abre Instagram y publica.',
+  depoisColar: 'La imagen se guardó y el texto se copió - pégalo en la publicación y adjunta la imagen.',
+  naoSalvou: 'No pude guardar la imagen aquí. Usa el botón "Descargar PNG" de arriba.',
+  publicarNumaRede: 'Publicar en una red',
+  imagemNoAparelho:
+    'La imagen se crea en tu dispositivo y no queda guardada en ningún servidor - por eso la ' +
+    'adjuntas tú, y no por el enlace.',
+  salvando: 'Guardando la imagen…'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

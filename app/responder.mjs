@@ -15,11 +15,11 @@
 
 /* Os rótulos nos dois idiomas: a build em inglês (NEXT_PUBLIC_LOCALE=en)
    escreve os mesmos botões em inglês (app/src/i18n/telas). */
-const SEGUIR = /^(Continuar|Ver resultado|Próxima parte|Começar a parte|Começar|Continue|See result|Start)$/;
-const LIGUE = /Ligue cada|Match each/;
-const ENVIAR = /^(Responder|Conferir|Verificar|Answer|Check|Verify)$/;
-const CONFERIR = /^(Conferir|Check)$/;
-const MOSTRAR = /Mostrar a resposta|Show the answer/;
+const SEGUIR = /^(Continuar|Ver resultado|Próxima parte|Começar a parte|Começar|Continue|See result|Start|Ver el resultado|Siguiente parte|Empezar la parte|Empezar)$/;
+const LIGUE = /Ligue cada|Match each|Une cada/;
+const ENVIAR = /^(Responder|Conferir|Verificar|Answer|Check|Verify|Comprobar)$/;
+const CONFERIR = /^(Conferir|Check|Comprobar)$/;
+const MOSTRAR = /Mostrar a resposta|Show the answer|Mostrar la respuesta/;
 
 export async function responder(p) {
   const seguir = p.getByRole('button', { name: SEGUIR });

@@ -200,5 +200,106 @@ const en: Traducao<typeof pt> = {
   fechoTitulo: 'Your next word in Hebrew could be the first one you can truly read.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  resumo1: 'Israelí, habla cinco idiomas',
+  resumo2: 'Profesor de hebreo para principiantes',
+  resumo3: 'Gerente Pedagógico en Tel Aviv',
+  resumo4: 'Formación CELTA y estudios en Letras',
+  rubricaProfessor: 'Quién está detrás de Hebraico Fluente',
+  tituloProfessor: 'Un profesor israelí que sabe dónde se traba quien empieza.',
+  apresentacao: 'Soy Moshik Gueta. Enseñando hebreo a principiantes entendí dónde se traba quien empieza de cero. Hebraico Fluente convierte lo que funcionaba en mis clases en una metodología que sigues a tu ritmo.',
+  historia: 'Conoce mi historia',
+  linkedin: 'Ver mi perfil de LinkedIn',
+  abreAba: ' (se abre en otra pestaña)',
+  instagram: 'Instagram',
+  instagramSr: ' de Hebraico Fluente (se abre en otra pestaña)',
+  metodo: (autor: ReactNode, obra: ReactNode, translit: string, adaptacoes: string): ReactNode => (
+    <>El método parte del trabajo de {autor}, autor de{' '}{obra}{' '}({translit}). El contenido de su libro es la base de lo que enseña esta plataforma. {adaptacoes}</>
+  ),
+
+  recursoAudioT: 'Audio y pronunciación',
+  recursoSemAudioT: 'Pronunciación explicada',
+  recursoAudioD: 'Cada letra, sílaba y palabra grabada por un hablante nativo.',
+  // etapa 3: pronúncia, rever
+  recursoSemAudioD: 'Cada sonido comparado con un sonido que ya haces en español.',
+  correcaoT: 'Corrección inmediata',
+  correcaoD: 'Sabes en el momento si acertaste - y por qué te equivocaste.',
+  sequenciaT: 'Racha de estudio',
+  sequenciaD: 'Los días seguidos cuentan. Faltar un día no borra tu XP ni tu récord, y un día libre guardado protege tu racha.',
+  progressoT: 'Progreso visual',
+  progressoD: 'Porcentaje por módulo y mapa de dominio de las letras.',
+  revisaoT: 'Repaso inteligente',
+  revisaoD: 'Lo que se te escapa vuelve solo, en el intervalo justo.',
+  celularT: 'Estudia en el celular',
+  celularD: 'Una actividad por pantalla, el botón de continuar siempre a mano.',
+  explicacoesT: 'Explicaciones en español',
+  // etapa 3: pronúncia, rever
+  explicacoesD: 'Comparaciones con sonidos que ya conoces, siempre.',
+  zeroT: 'Hebreo desde cero',
+  zeroD: 'Ningún conocimiento previo. Empieza en la primera letra.',
+  recursosTitulo: 'Lo que viene con el curso.',
+
+  amostraTitulo: 'Pruébalo antes de empezar.',
+  amostraTexto: 'Una pregunta real de la Lección 3, tal como aparece dentro de la plataforma. Elige una opción.',
+  amostraVer: 'Ver el curso por dentro',
+  amostraRotulo: 'Lección 3 · Reconocimiento',
+  amostraPergunta: '¿Qué letra hace el sonido N?',
+  amostraEscolha: 'Elige una de las cuatro letras de arriba.',
+  muitoBem: '¡Muy bien!',
+  xp: 'XP',
+  amostraCerto: 'Nun hace el sonido N. Mem hace M, Tav hace T y He hace una H aspirada: las cuatro vienen de las dos primeras lecciones.',
+  quase: 'Casi.',
+  amostraErrado: (nome: string) =>
+    `${nome} tiene otro sonido. Busca la letra angosta, de base corta - puedes intentarlo otra vez.`,
+
+  depoimentoUm: 'Lo que dice una alumna.',
+  depoimentosVarios: 'Lo que dicen los alumnos.',
+  depoimento: 'Testimonio',
+  depoimentos: 'Testimonios',
+
+  precoRubrica: 'Pago único, sin mensualidad',
+  precoTexto: 'Acceso completo a la plataforma, con el progreso guardado y repasos que se habilitan a medida que avanzas.',
+  naSuaConta: 'En tu cuenta',
+  jaESeu: 'Este curso ya es tuyo.',
+  precoPreLancamento: 'Precio de preventa',
+  acessoCompleto: 'Acceso completo',
+  // etapa 5/6: Brasil, rever (PIX)
+  noPix: 'por PIX, en un solo pago',
+  // etapa 5: o site em espanhol cobra pelo Paddle
+  noCartao: () => 'pago único, impuestos incluidos',
+  continua: 'Tu progreso sigue exactamente donde lo dejaste.',
+  liberadoNaHora: (meses: number) => `Acceso habilitado en cuanto se confirma el pago, por ${meses} meses.`,
+  // etapa 5/6: Brasil, rever (PIX)
+  pixNaHora: (preco: string, pct: number, meses: number) =>
+    `Por PIX cuesta ${preco} (${pct}% de descuento). Acceso habilitado en cuanto se confirma el pago, por ${meses} meses.`,
+  // etapa 5/6: Brasil, rever (PIX)
+  pixAMao: (preco: string, pct: number, meses: number) =>
+    `Por PIX cuesta ${preco} (${pct}% de descuento). Acceso habilitado a mano después de revisar el pago, por ${meses} meses.`,
+  // etapa 5/6: Brasil, rever (direito de arrependimento do CDC)
+  desistir: (dias: number) => `${dias} días para cancelar y recibir el 100% de vuelta, sin dar explicaciones.`,
+  porDia: (valor: string, meses: number) => `Cerca de ${valor} por día durante los ${meses} meses de acceso.`,
+  seloRotulo: 'Derecho a cancelar',
+  seloDias: 'días',
+  aMenos: (valor: string) => `${valor} menos`,
+  aPartirDe: (data: string, cheio: string) => `A partir del ${data}: ${cheio}`,
+  ate: (data: string) => `hasta el ${data}`,
+  noPixDesconto: (pct: number) => `por PIX, en un solo pago (${pct}% de descuento)`,
+  preLancamentoAte: (data: string, cheio: string) =>
+    `Precio de preventa hasta el ${data}. Después, el curso pasará a costar ${cheio}.`,
+  depoisDoPreLancamento: (cheio: string) => `Después de la preventa, el curso pasará a costar ${cheio}.`,
+
+  faqRubrica: 'Antes de empezar',
+  faqTitulo: 'Preguntas frecuentes',
+  faqTexto: 'Lo que cubre el curso, cómo funciona el acceso y qué esperar dentro de la plataforma.',
+
+  shalomTr: 'shalóm',
+  shalomPt: 'hola, paz',
+  todaTr: 'todá',
+  todaPt: 'gracias',
+  mayimTr: 'máyim',
+  mayimPt: 'agua',
+  fechoTitulo: 'Tu próxima palabra en hebreo puede ser la primera que de verdad logras leer.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

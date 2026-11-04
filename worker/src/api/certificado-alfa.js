@@ -43,7 +43,7 @@ const NOME = /^[\p{L}][\p{L} '.-]{1,78}[\p{L}.]$/u;
 
 /* O nome do curso como o catálogo o chama, no idioma do site. */
 export const publicoDoAlfa = (c, env) => ({
-  id: c.id, nome: c.nome, curso: env && env.LOCALE === 'en' ? 'Learn to Read Hebrew' : 'Alfabetização em Hebraico',
+  id: c.id, nome: c.nome, curso: env && env.LOCALE === 'en' ? 'Learn to Read Hebrew' : env && env.LOCALE === 'es' ? 'Aprende a leer hebreo' : 'Alfabetização em Hebraico',
   aprovadoEm: new Date(Number(c.aprovado_em)).toISOString(),
   emitidoEm: new Date(Number(c.emitido_em)).toISOString(),
   publico: !!c.publico, nota: Number(c.nota)

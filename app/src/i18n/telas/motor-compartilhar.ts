@@ -37,5 +37,23 @@ const en: Traducao<typeof pt> = {
   selo: 'A C H I E V E M E N T'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  primeiraLetra: 'Aprendí mi primera letra en hebreo',
+  primeiraPalavra: 'Leí mi primera palabra en hebreo',
+  semApoio: 'Leí una palabra en hebreo sin transliteración',
+  tresDias: 'Tres días seguidos estudiando hebreo',
+  dezLetras: 'Ya sé 10 letras del alfabeto hebreo',
+  metade: 'Ya sé la mitad del alfabeto hebreo',
+  vinteEDuas: 'Aprendí las 22 letras del alfabeto hebreo',
+  checkpointPerfeito: 'Hice un checkpoint sin ningún error',
+  lePalavras: (n: number): string => `Ya puedo leer ${n} palabras en hebreo`,
+  meuNome: 'Escribí mi nombre en hebreo',
+  leitor: 'Terminé el curso de alfabetización en hebreo',
+  modulo: (n: number): string => `Terminé el módulo ${n} del curso de hebreo`,
+  // o endereço e o @ do site em espanhol ainda não existem: rever com o domínio
+  legenda: 'Aprendiendo a leer hebreo con @hebraicofluente',
+  selo: 'L O G R O'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

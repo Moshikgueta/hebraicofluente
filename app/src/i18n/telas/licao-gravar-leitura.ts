@@ -33,5 +33,21 @@ const en: Traducao<typeof pt> = {
   soNoAparelho: 'The recording stays only on this device and disappears when you leave the page. Nothing is sent.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Lee en voz alta y escúchate',
+  parar: 'Detener',
+  gravando: tempo => `Grabando · ${tempo}`,
+  gravarDeNovo: 'Grabar de nuevo',
+  gravarMinha: 'Grabar mi lectura',
+  ouvirOriginal: 'Escuchar el original',
+  suaLeitura: 'Tu lectura:',
+  procure: 'Escucha buscando dónde la voz se detuvo o dudó: ahí vale la pena leer de nuevo.',
+  negado:
+    'El navegador no permitió usar el micrófono. Para grabar, toca el candado junto a la dirección del sitio y permite el micrófono, después intenta de nuevo.',
+  semSuporte: 'Este navegador no graba audio. Prueba con Chrome, Edge, Firefox o Safari actualizados.',
+  erro: 'No se pudo abrir el micrófono. Revisa que no lo esté usando otra app.',
+  soNoAparelho: 'La grabación queda solo en este dispositivo y desaparece cuando sales de la página. No se envía nada.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

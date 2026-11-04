@@ -44,6 +44,8 @@ export const FORA_DO_ESCOPO = [
   'src/app/termos/', 'src/app/privacidade/', 'src/app/reembolso/',
   /* As políticas do site em inglês, escritas direto em inglês (etapa 6). */
   'src/components/legal/en/',
+  /* E as do site em espanhol, traduzidas das em inglês (PLANO-ESPANHOL.md). */
+  'src/components/legal/es/',
   'src/lib/raizes', 'src/lib/a1', 'src/lib/state/raizes-estado.ts',
   'src/lib/audio-manifest.ts', 'src/lib/painel-estatisticas.ts', 'src/lib/ecossistema.ts',
   'src/components/portal/', 'src/app/cursos/[slug]/LivroClient.tsx',

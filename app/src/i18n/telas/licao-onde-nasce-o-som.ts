@@ -57,5 +57,33 @@ const en: Traducao<typeof pt> = {
   nariz: 'The air comes out through the nose'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  labios: 'labios',
+  labiosFrase: 'de los dos labios',
+  labioDentes: 'labio y dientes',
+  labioDentesFrase: 'de los dientes de arriba en el labio de abajo',
+  dentes: 'detrás de los dientes',
+  dentesFrase: 'de la punta de la lengua detrás de los dientes',
+  palato: 'paladar',
+  palatoFrase: 'del medio de la lengua cerca del paladar',
+  veu: 'fondo del paladar',
+  veuFrase: 'del fondo de la lengua en el fondo del paladar',
+  uvula: 'úvula',
+  uvulaFrase: 'de la úvula, al fondo de la boca',
+  glote: 'cuerdas vocales',
+  gloteFrase: 'de las cuerdas vocales, en la garganta',
+  semLugar: 'de ningún lugar: la letra no tiene sonido propio',
+  descricao: (letra, onde, voz, nariz) =>
+    `Corte de la cabeza de perfil. El sonido de ${letra} sale ${onde}${
+      voz === null ? '' : voz ? ', con la voz encendida' : ', sin voz, solo con el aire'
+    }${nariz ? ', y el aire sale por la nariz' : ''}.`,
+  semSom: 'sin sonido propio',
+  deOnde: '¿De dónde sale el sonido?',
+  muda: 'Muda: lo que suena es la vocal',
+  comVoz: 'Con voz: la garganta vibra',
+  semVoz: 'Sin voz: solo el aire que pasa',
+  nariz: 'El aire sale por la nariz'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

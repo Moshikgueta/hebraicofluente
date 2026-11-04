@@ -31,5 +31,20 @@ const en: Traducao<typeof pt> = {
   base: 'You learn to truly understand the alphabet and build the foundation to read Hebrew in Israel, study the language and get closer to the texts in the original language.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aprendeLetras: (n: number) => `las ${n} letras`,
+  aprendeSons: 'los sonidos',
+  aprendeNikud: 'el nikud, los signos de vocal',
+  aprendeCursiva: 'la escritura cursiva',
+  aprendePalavras: 'palabras reales, paso a paso',
+  nadaTabela: 'Nada de memorizar una tabla entera el primer día.',
+  nadaTransliteracao: 'Nada de depender para siempre de la transliteración.',
+  titulo: 'Lo que aprendes en Hebraico Fluente',
+  exercicios: 'Con ejercicios interactivos y corrección inmediata en cada etapa, en español.',
+  numeros: (letras: number, licoes: number, meses: number) =>
+    `${letras} letras en ${licoes} lecciones · progreso guardado en tu cuenta · acceso por ${meses} meses`,
+  base: 'Aprendes a entender el alfabeto de verdad y construyes la base para leer hebreo en Israel, estudiar el idioma y acercarte a los textos en la lengua original.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

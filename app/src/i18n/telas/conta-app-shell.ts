@@ -70,5 +70,40 @@ const en: Traducao<typeof pt> = {
   fechar: 'Close'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  navHoje: 'Hoy',
+  navCurso: 'Curso',
+  navPraticar: 'Practicar',
+  navProgresso: 'Progreso',
+  navRecompensas: 'Recompensas',
+  navPerfil: 'Perfil',
+  armazenamentoBloqueado:
+    'El navegador está bloqueando el almacenamiento local (ventana de incógnito o cookies desactivadas). ' +
+    'Puedes estudiar con normalidad, pero tu progreso no se va a guardar al cerrar la pestaña.',
+  naoSincronizado:
+    'Lo que acabas de hacer está guardado en este dispositivo, pero todavía no llegó a tu cuenta. ' +
+    'En cuanto vuelva la conexión, se sube solo. Si vas a cambiar de dispositivo ahora, abre el curso ' +
+    'una vez con internet antes.',
+  marca: 'Hebraico Fluente',
+  xpAbrirRecompensas: (xp: number) => `${xp} XP. Abrir las recompensas`,
+  ajudaEInformacoes: 'Ayuda e información',
+  precisaDeAjuda: '¿Necesitas ayuda?',
+  duvidasFrequentes: 'Preguntas frecuentes',
+  // etapa 5/6: Brasil, rever
+  reembolso: 'Reembolsos y cancelación',
+  termos: 'Términos',
+  privacidade: 'Privacidad',
+  acessibilidade: 'Accesibilidad',
+  navegacaoPrincipal: 'Navegación principal',
+  nasLicoes: 'En las lecciones, ',
+  respondem: ' responden y ',
+  teclaEnter: 'Enter',
+  avanca: ' avanza.',
+  suaConta: 'Tu cuenta',
+  conquista: 'Logro',
+  conquistaDesbloqueada: 'Logro desbloqueado',
+  fechar: 'Cerrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

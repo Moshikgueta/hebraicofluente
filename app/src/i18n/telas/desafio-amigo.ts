@@ -67,5 +67,37 @@ const en: Traducao<typeof pt> = {
   textoDoConvite: 'Can you read these five Hebrew words? I already can.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Desafío: ¿puedes leer estas palabras en hebreo?',
+  metaDescricao: 'Un amigo que está aprendiendo a leer hebreo te mandó cinco palabras para que intentes leerlas.',
+  kicker: 'Desafío de un amigo',
+  titulo: '¿Puedes leer estas cinco palabras en hebreo?',
+  intro: 'Quien te mandó este enlace está aprendiendo a leer hebreo. Intenta adivinar el sentido de cada palabra.',
+  carregando: 'Abriendo el desafío...',
+  erro: 'Este enlace de desafío no se abrió. Pídele a quien te lo mandó que genere uno nuevo.',
+  palavraN: (n, total) => `Palabra ${n} de ${total}`,
+  pergunta: '¿Qué quiere decir esta palabra?',
+  certo: '¡Eso!',
+  quase: 'Casi.',
+  seLe: (translit, pt) => `Se lee «${translit}» y quiere decir «${pt}».`,
+  proxima: 'Siguiente',
+  verResultado: 'Ver el resultado',
+  resultado: (n, total) => `Acertaste ${n} de ${total}.`,
+  falaFim: 'Con algunas lecciones, lees estas palabras por tu cuenta.',
+  convite: 'Son palabras del curso Hebraico Fluente, escritas solo con letras que se aprenden en él.',
+  experimentar: 'Probar el curso gratis',
+  conhecer: 'Conocer el curso',
+  desafiar: 'Desafiar a un amigo',
+  desafiarNota: 'Cinco palabras que ya lees, en un enlace para que un amigo intente leerlas.',
+  gerando: 'Preparando el enlace...',
+  pronto: '¡Listo! Manda este enlace:',
+  compartilhar: 'Compartir',
+  copiar: 'Copiar el enlace',
+  copiado: 'Enlace copiado.',
+  outro: 'Sortear otras palabras',
+  falhou: 'No se pudo crear el desafío ahora. Intenta de nuevo en un momento.',
+  textoDoConvite: '¿Puedes leer estas cinco palabras en hebreo? Yo ya puedo.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

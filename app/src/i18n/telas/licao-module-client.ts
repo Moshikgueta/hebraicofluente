@@ -93,5 +93,51 @@ const en: Traducao<typeof pt> = {
   comecarModulo: n => `Start module ${n}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  osTresPares: 'los tres pares',
+  oSom: nome => `el sonido ${nome}`,
+  aLetra: nome => `la letra ${nome}`,
+  fechamento: 'Cierre del módulo',
+  aprovado: ' · checkpoint aprobado ✓',
+  passou: 'Aprobaste el checkpoint de este módulo',
+  terminou: 'Terminaste las lecciones. Ahora, el checkpoint.',
+  checkpointEPratica: 'Checkpoint y práctica enfocada',
+  melhorNota: pct => `Tu mejor nota: ${pct}%. `,
+  oCheckpointMostra:
+    'El checkpoint muestra lo que ya está firme. La práctica enfocada empieza por lo que fallaste en este módulo, sin ninguna letra nueva.',
+  abertos: ' Los dos están abiertos en cualquier momento, pero rinden más después de las lecciones.',
+  leituraDeRevisaoFeita: 'Lectura de repaso ✓',
+  leituraDeRevisao: 'Lectura de repaso',
+  refazerCheckpoint: 'Rehacer el checkpoint',
+  fazerCheckpoint: 'Hacer el checkpoint',
+  praticaFeita: 'Práctica enfocada ✓',
+  pratica: 'Práctica enfocada',
+  mapa: '← Mapa',
+  moduloDe: n => `Módulo ${n} de 7`,
+  asLicoes: 'Las lecciones',
+  sozinho: 'Si estudias por tu cuenta, trata cada lección como una sesión.',
+  licao: n => `Lección ${n}`,
+  praticaSemLetra: 'Práctica: sin letra nueva - corrección de tus errores, letras parecidas y lectura en voz alta',
+  aoTerminar: 'Al terminar este módulo',
+  asLetras: 'Las letras',
+  revisaoTipo: tipo => `Lectura de repaso · ${tipo}`,
+  lida: ' · leída ✓',
+  lerDeNovo: 'Leer de nuevo',
+  lerRevisao: 'Leer el repaso',
+  leituraTipo: tipo => `Lectura del módulo · ${tipo}`,
+  lerTexto: 'Leer el texto',
+  segundaLeituraTipo: tipo => `Segunda lectura · ${tipo}`,
+  missaoDoModulo: 'Misión del módulo',
+  cumprida: ' · cumplida ✓',
+  fazerDeNovo: 'Hacerla de nuevo',
+  fazerMissao: 'Hacer la misión',
+  osSons: 'Los sonidos',
+  comecarPelaLetra: nome => `Empezar por la letra ${nome}`,
+  continuarCom: rotulo => `Continuar con ${rotulo}`,
+  checkpointDoModulo: n => `Hacer el checkpoint del módulo ${n}`,
+  seguir: n => `Seguir al módulo ${n}`,
+  comecarModulo: n => `Empezar el módulo ${n}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

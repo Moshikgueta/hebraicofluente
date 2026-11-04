@@ -41,5 +41,25 @@ const en: Traducao<typeof pt> = {
   entrar: 'Sign in'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Contraseña nueva - Hebraico Fluente',
+  metaDescricao: 'Elige una contraseña nueva y vuelve al curso.',
+  senhasDiferentes: 'Las dos contraseñas no son iguales.',
+  titulo: 'Elegir una contraseña nueva',
+  entraDireto: 'Después de esto entras directo - no hace falta iniciar sesión de nuevo.',
+  soComLink: 'Esta dirección solo funciona con el enlace que te enviamos por correo.',
+  senhaNova: 'Contraseña nueva',
+  peloMenos: (n: number) => `Al menos ${n} caracteres.`,
+  repitaSenha: 'Repite la contraseña',
+  salvando: 'Guardando…',
+  salvarEEntrar: 'Guardar y entrar',
+  faltouLink:
+    'Falta el enlace. Pide uno nuevo - duran una hora y funcionan una sola vez, así que es normal ' +
+    'necesitar otro.',
+  pedirLinkNovo: 'Pedir un enlace nuevo',
+  lembrouSenha: '¿Recordaste la contraseña?',
+  entrar: 'Entrar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

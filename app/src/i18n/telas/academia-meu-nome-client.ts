@@ -75,5 +75,42 @@ const en: Traducao<typeof pt> = {
   voltarModelo: 'Back to the model'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Mi nombre en hebreo - Hebraico Fluente',
+  metaDescricao: 'Escribe tu nombre en hebreo, en letra de imprenta y a mano.',
+
+  bonus: 'Extra',
+  titulo: 'Ahora escribe tu nombre en hebreo',
+  intro: 'Con las letras que aprendiste. Un nombre no tiene una sola grafía en hebreo - el curso sugiere, y quien decide eres tú.',
+  passoNome: '1 · Tu nombre',
+  comoSeChama: '¿Cómo te llamas? Puede ser solo el primer nombre.',
+  faltamLetras: (n, nome) =>
+    `${n === 1 ? 'Falta' : 'Faltan'} ${n} ${n === 1 ? 'letra' : 'letras'} para escribir “${nome}”. `
+    + 'Llegan en las próximas lecciones - y este extra te espera.',
+  semSugestao: 'No pude sugerir una grafía para ese nombre. Intenta escribirlo sin símbolos.',
+  passoGrafia: '2 · La grafía',
+  maisDeUmJeito: 'Hay más de una forma común de escribirlo. Elige la que suena como tu nombre:',
+  grafiasSugeridas: 'Grafías sugeridas',
+  querAjustar: '¿Quieres ajustarlo? Toca una letra para quitarla y las de abajo para agregarlas. Aparece de derecha a izquierda, como se lee.',
+  passoVer: '3 · Tu nombre, en las dos escrituras',
+  impressa: 'Imprenta',
+  aMao: 'A mano',
+  confirmado: '✓ Confirmado',
+  confirmar: 'Así escribo mi nombre',
+  ficaGuardado: 'Queda guardado en tu cuenta, y el certificado puede usarlo.',
+  voltarPainel: 'Volver al panel',
+
+  passoEscrever: '4 · Escríbelo a mano',
+  qualPalavra: 'Qué palabra practicar',
+  escrevaAMao: palavra => `Escribe ${palavra} a mano`,
+  comecePelaDireita: 'Empieza por la derecha, como se lee.',
+  passeODedo: 'Pasa el dedo por encima del modelo.',
+  semModelo: 'Ahora sin modelo.',
+  conferir: 'Comprobar',
+  limpar: 'Borrar',
+  tentarSemModelo: 'Intentar sin el modelo',
+  voltarModelo: 'Volver al modelo'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

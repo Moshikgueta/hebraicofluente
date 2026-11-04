@@ -84,5 +84,46 @@ const en: Traducao<typeof pt> = {
   grandePasso: ' That is a big step: you are starting to read Hebrew!'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  guiadaTitulo: 'Lectura guiada',
+  guiadaCurto: 'Guiada',
+  guiadaResumo: 'Con nikud, explicación letra por letra y audio disponible cuando lo necesites.',
+  menosAjudaTitulo: 'Lectura con menos ayuda',
+  menosAjudaCurto: 'Menos ayuda',
+  menosAjudaResumo: 'Intenta leer por tu cuenta. Puedes abrir pistas cuando las necesites.',
+  independenteTitulo: 'Lectura independiente',
+  independenteCurto: 'Independiente',
+  independenteResumo: 'Lee la palabra por tu cuenta y después revisa la pronunciación.',
+  vavO: 'Aquí, la Vav con el punto arriba representa el sonido O.',
+  vavU: 'Aquí, la Vav con el punto adentro representa el sonido U.',
+  nomeFinal: '{nome} final',
+  alefComVogal: 'En esta palabra, la Álef no tiene sonido propio: lo que suena es la vocal {vogal}.',
+  alefSemVogal: 'En esta palabra, la Álef no tiene sonido propio.',
+  ayin: 'En la pronunciación israelí más común, la Áyin no suena como consonante en esta palabra. En algunas tradiciones, se pronuncia en el fondo de la garganta.',
+  heFinal: 'Al final de muchas palabras, la He no tiene sonido propio y ayuda a representar la vocal final.',
+  patachFurtivo: 'Aquí tenemos un pátaj especial: el sonido A se pronuncia antes de la consonante final.',
+  yudI: 'Aquí, la Yud ayuda a representar la vocal I, sin producir un sonido aparte.',
+  yudEi: 'En esta palabra, la E y la Yud forman el sonido "ei".',
+  yudE: 'Aquí, la Yud forma parte de la representación de la vocal E. Escucha cómo se pronuncia esta palabra.',
+  yudMudo: 'Aquí la Yud no tiene sonido propio.',
+  nPalavras: (n: number): string => (n === 1 ? '1 palabra' : `${n} palabras`),
+  guiadaAudio: 'Lee de derecha a izquierda, en voz alta. Si lo necesitas, explora las letras una por una o escucha la pronunciación.',
+  guiadaSemAudio: 'Lee de derecha a izquierda, en voz alta. Si lo necesitas, explora las letras una por una.',
+  menosAjuda: 'Intenta leer en voz alta sin ayuda. Si lo necesitas, puedes abrir las pistas de abajo.',
+  independente: 'Lee la palabra en voz alta por tu cuenta. Después, revisa la pronunciación.',
+  vogalCom: 'vocal {vogal}',
+  vogal: 'vocal',
+  semConsoante: 'aquí sin sonido de consonante',
+  apoioDaVogal: 'apoyo de la vocal',
+  nenhumaCerta: 'Todavía ninguna quedó marcada como leída correctamente: vale la pena leer de nuevo, con calma.',
+  marcou: (certas: number): string =>
+    `Marcaste ${certas === 1 ? '1 de ellas' : `${certas} de ellas`} como ${certas === 1 ? 'leída correctamente' : 'leídas correctamente'}.`,
+  praticouOuvindo: (palavras: string, marcou: string): string =>
+    `Practicaste la lectura de ${palavras} en hebreo. ${marcou} La próxima vez, intenta leer cada palabra antes de escuchar.`,
+  praticouSemOuvir: (palavras: string, marcou: string): string =>
+    `Practicaste la lectura de ${palavras} en hebreo sin escuchar antes la pronunciación. ${marcou}`,
+  grandePasso: ' Es un gran paso: ¡estás empezando a leer hebreo!'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -62,5 +62,36 @@ const en: Traducao<typeof pt> = {
   faixaAindaNaoTexto: 'The exam has no limit on attempts and costs nothing. Below you can see exactly which part brought the score down and where to practice. Come back whenever you like: it is almost always just one part.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  letrasTitulo: 'Las letras',
+  letrasDesc: 'Reconocer la forma, sin orden, incluidas las cinco formas finales.',
+  dificeisTitulo: 'Las letras difíciles',
+  dificeisDesc: 'Las que se parecen entre sí, la misma letra en otra fuente, y encontrar una letra dentro de una palabra: al principio, en el medio o al final.',
+  sinaisTitulo: 'Los signos de vocal',
+  sinaisDesc: 'Qué sonido hace cada signo, sin importar la consonante en la que esté.',
+  silabasTitulo: 'Sílabas',
+  silabasDesc: 'Consonante más vocal, en las dos direcciones: leer y armar.',
+  palavrasTitulo: 'Palabras',
+  palavrasDesc: 'Palabras enteras: leer, completar, armar, escribir, y encontrar una letra dentro de ellas, al principio, en el medio o al final.',
+  frasesTitulo: 'Frases',
+  frasesDesc: 'Dos o tres palabras juntas. Sin transliteración.',
+  semPontosTitulo: 'Sin los puntos',
+  semPontosDesc: 'Palabras que conoces, escritas como en la calle: sin los signos de vocal.',
+  gerechTitulo: 'Los sonidos de afuera',
+  // etapa 3: pronúncia, rever
+  gerechDesc: 'El signo ׳ que le da al hebreo los sonidos CH (como en «chico»), Y (como la «y» de «yo» dicha con fuerza) y ZH (como la «j» del francés «jour»).',
+  escutaTitulo: 'Escucha',
+  escutaDesc: 'Solo el sonido, sin verlo antes.',
+  mundoTitulo: 'Hebreo de verdad',
+  mundoDesc: 'Palabras como las vas a encontrar: en una botella, en una puerta, en un recibo.',
+  faixaOtimaTitulo: 'Lees hebreo.',
+  faixaOtimaTexto: 'No es una forma de hablar: descifraste las palabras del curso por tu cuenta, sin transliteración y sin pistas. Lo que falta ahora es volumen de lectura, no método.',
+  faixaAprovadoTitulo: 'Aprobado, y se ve dónde ajustar.',
+  faixaAprovadoFraca: 'Lees. Una parte quedó por debajo del resto, y está marcada aquí abajo con el enlace para practicar justo eso.',
+  faixaAprovadoEquilibrado: 'Lees, y de forma pareja: ninguna parte se quedó atrás.',
+  faixaAindaNaoTitulo: 'Todavía no, y eso es información, no un veredicto.',
+  faixaAindaNaoTexto: 'El examen no tiene límite de intentos y no cuesta nada. Abajo está exactamente qué parte bajó la nota y dónde practicar. Vuelve cuando quieras: casi siempre es una sola parte.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

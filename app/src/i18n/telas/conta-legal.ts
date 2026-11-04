@@ -49,5 +49,30 @@ const en: Traducao<typeof pt> = {
   quemOfereceCurto: (partes: string) => `Who provides this service: ${partes}.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+/* etapa 5/6: Brasil, rever - identificação do fornecedor (CNPJ) e o prazo de
+   desistência; o site em espanhol terá políticas próprias. */
+const es: Traducao<typeof pt> = {
+  ultimaAtualizacao: (data: string) => `Última actualización: ${data}`,
+  ctaTitulo: '¿Todo eso respondido? Entonces empieza.',
+  ctaLinha:
+    'La primera letra lleva diez minutos, y tienes 14 días para cancelar sin tener que explicar por qué.',
+  termosDeUso: 'Términos de Uso',
+  politicaDePrivacidade: 'Política de Privacidad',
+  reembolso: 'Reembolso y Cancelación',
+  acessibilidade: 'Accesibilidad',
+  duvidasFrequentes: 'Preguntas frecuentes',
+  quemOferece: 'Quién ofrece este servicio',
+  fornecedor: 'Proveedor',
+  cnpj: 'Número de empresa (CNPJ, Brasil)',
+  endereco: 'Dirección',
+  atendimento: 'Atención',
+  telefone: 'Teléfono',
+  whatsapp: 'WhatsApp',
+  horario: 'Horario',
+  prazoDeResposta: 'Plazo de respuesta',
+  cnpjNumero: (numero: string) => `CNPJ ${numero}`,
+  quemOfereceCurto: (partes: string) => `Quién ofrece este servicio: ${partes}.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

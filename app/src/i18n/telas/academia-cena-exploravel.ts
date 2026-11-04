@@ -31,5 +31,20 @@ const en: Traducao<typeof pt> = {
   contagem: (vistos: number, total: number) => `${vistos} of ${total} found`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  explore: (lugar: string) => `Explora ${lugar}`,
+  instrucao: 'Toca los puntos del dibujo: cada uno es una palabra del curso.',
+  visto: ', visto',
+  comPontos: 'Con los puntos:',
+  ouvir: 'Escuchar',
+  ouvirAria: (palavra: string) => `Escuchar ${palavra}`,
+  faltaModulo: (n: number | string) => `La palabra en hebreo aparece aquí cuando empieces el módulo ${n}.`,
+  faltaLetra: (letra: string) => `La palabra en hebreo aparece aquí cuando empieces la letra ${letra}.`,
+  letraQueFalta: 'que falta',
+  nenhum: 'Todavía no abriste ningún punto.',
+  todas: (n: number) => `Encontraste las ${n} palabras del lugar.`,
+  contagem: (vistos: number, total: number) => `${vistos} de ${total} encontradas`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

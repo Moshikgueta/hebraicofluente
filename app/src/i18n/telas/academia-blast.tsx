@@ -26,5 +26,17 @@ const en: Traducao<typeof pt> = {
   quase: resposta => <>Almost. The answer was {resposta}.</>
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  elogio3: '¡3 aciertos seguidos!',
+  elogio5: '¡Le estás agarrando la mano!',
+  elogio8: '8 seguidos - eso es lectura automática.',
+  elogio12: 'Doce. Puedes parar cuando quieras, ya lo demostraste.',
+  seguidos: n => `${n} seguidos`,
+  acertos: n => `${n} aciertos`,
+  perguntaDe: (n, total) => `Pregunta ${n} de ${total}`,
+  boa: '¡Bien!',
+  quase: resposta => <>Casi. La respuesta era {resposta}.</>
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

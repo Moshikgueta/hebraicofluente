@@ -122,5 +122,63 @@ const en: Traducao<typeof pt> = {
   lugarNovoAberto: (lugar: string) => `New place unlocked: ${lugar}.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  meuCurso: 'Mi curso',
+  resumo: '{modulos} módulos · {licoes} lecciones · {letras} letras',
+  concluido: 'completado',
+
+  tagConcluido: 'Completado',
+  comeceAqui: 'Empieza aquí',
+  aula0Rotulo: 'Clase 0 · antes de la primera letra',
+  comoFunciona: 'Cómo funciona el hebreo',
+  aula0Feita: 'La dirección de la lectura, el alfabeto y el nikud. Queda aquí para que la releas cuando quieras.',
+  aula0Falta: 'La dirección de la lectura, el alfabeto, el nikud y cómo funciona el curso. Termina con una revisión corta, y entonces se abre la Álef.',
+
+  emAndamento: 'En curso',
+  faltaCheckpoint: 'Falta el checkpoint',
+  abreDepoisAula0: 'Se abre después de la Clase 0',
+  abreDepoisModulo: 'Se abre después del módulo {n}',
+  moduloLicoes: (n: number, licoes: number) => `Módulo ${n} · ${licoes} ${licoes === 1 ? 'lección' : 'lecciones'}`,
+  letraConcluida: ' - completada',
+  letraEtapas: ' - {n} de {total} etapas',
+  letraBloqueada: ' - bloqueada',
+  letraProxima: ' - la próxima',
+  abrirLicao: 'Abrir la lección de {nome}',
+  checkpointRotulo: 'Checkpoint',
+  abrirCheckpoint: (n: number) => `Abrir el checkpoint del módulo ${n}`,
+  checkpointAprovado: (nota: number | null) => nota != null ? ` - aprobado con ${nota}%` : ' - aprobado',
+  checkpointPronto: ' - listo para hacer',
+  checkpointDepois: ' - mejor después de las lecciones del módulo',
+  metaAlcancada: '✓ Meta alcanzada: ',
+  meta: 'Meta: ',
+
+  aprovado: 'Aprobado',
+  disponivel: 'Disponible',
+  abreQuando: 'Se abre cuando completes las lecciones de las 22 letras',
+  finalFeito: 'Aprobaste el examen final. Tu certificado del curso está listo.',
+  finalFalta: 'Un examen con las letras, los sonidos, las sílabas, palabras, frases y palabras sin nikud. Al final, el certificado del curso.',
+
+  proximoPasso: 'Tu próximo paso',
+  continuar: 'Continuar',
+  comecar: 'Empezar',
+  aula0Curto: 'Clase 0',
+  licaoDe: (nome: string) => `La lección de ${nome}`,
+  checkpointDo: (n: number) => `El checkpoint del módulo ${n}`,
+  faltaSoCheckpoint: 'Las letras de este módulo están hechas. Solo falta el checkpoint para abrir el próximo lugar.',
+  faltamLicoes: (n: number) => (n === 1 ? 'Falta 1 lección para cerrar el camino.' : `Faltan ${n} lecciones para cerrar el camino.`),
+  dominarAntes: (nome: string) => `Repasar la lección de ${nome}`,
+  dominarDetalhe: (regra: string) => `El desafío final se abre con todas las letras dominadas: ${regra}.`,
+  certificadoPronto: 'Tu certificado está listo',
+  verCertificado: 'Ver el certificado',
+
+  reler: 'releer',
+  moduloLugar: (n: number) => `Módulo ${n}`,
+  chegada: 'La llegada',
+
+  naoEncontrado: 'Mapa no encontrado.',
+  lugarNovo: 'Lugar nuevo',
+  lugarNovoAberto: (lugar: string) => `Lugar nuevo abierto: ${lugar}.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

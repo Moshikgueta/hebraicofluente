@@ -11,12 +11,13 @@
 
 import atual from '../../../data/politicas-versoes/atual.json';
 import atualEn from '../../../data/politicas-versoes-en/atual.json';
+import atualEs from '../../../data/politicas-versoes-es/atual.json';
 
 /** A versão em vigor de um documento ('termos', 'reembolso', 'privacidade'), ou ''.
  *  O Worker em inglês (LOCALE = "en") lê as versões das políticas em inglês,
  *  guardadas à parte em data/politicas-versoes-en (PLANO-INGLES.md, etapa 6). */
 export const versaoAtual = (doc, env) => {
-  const lista = env && env.LOCALE === 'en' ? atualEn : atual;
+  const lista = env && env.LOCALE === 'en' ? atualEn : env && env.LOCALE === 'es' ? atualEs : atual;
   return String((lista && lista[doc]) || '');
 };
 

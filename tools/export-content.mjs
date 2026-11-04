@@ -28,6 +28,7 @@ import { gravacoesDoProfessor } from './gravacoes-professor.mjs';
 import { audioIdFor } from './audio-id.mjs';
 import { LOCALE, ARQUIVOS as TRADUZIDOS, traduzir } from './i18n.mjs';
 import { translitEn } from './translit-en.mjs';
+import { translitEs } from './translit-es.mjs';
 import { prepararVideos } from './videos.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -36,10 +37,17 @@ const OUT = join(ROOT, 'app/content');
    os textos de data/en/ no lugar do português (tools/i18n.mjs). Na build em
    português o arquivo é lido como sempre. */
 const FALTAS = new Map();
+/* Site de fora do Brasil: o inglês e, desde 04/11/2026, o espanhol
+   (PLANO-ESPANHOL.md). Os dois saem sem Brasil, em dólar, pelo Paddle. */
+const EXTERIOR = LOCALE !== 'pt';
+const NOME_DO_IDIOMA = { en: 'inglês', es: 'espanhol' }[LOCALE] || 'português';
+/* Campo de um idioma no catálogo e na empresa: `titleEn`, `titleEs`. */
+const SUFIXO = LOCALE === 'es' ? 'Es' : 'En';
+const CONVERTER = LOCALE === 'es' ? translitEs : translitEn;
 const readJson = p => {
   const json = JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
   const nome = p.match(/^data\/([\w-]+)\.json$/)?.[1];
-  if (LOCALE !== 'en' || !TRADUZIDOS.includes(nome)) return json;
+  if (!EXTERIOR || !TRADUZIDOS.includes(nome)) return json;
   const faltas = [];
   traduzir(nome, json, faltas);
   for (const f of faltas) FALTAS.set(`${f.arquivo}:${f.caminho}`, f);
@@ -52,12 +60,12 @@ const readJson = p => {
 function emIngles(no, chave = '') {
   if (Array.isArray(no)) {
     no.forEach((x, i) => {
-      if (typeof x === 'string') { if (/^translit/i.test(chave)) no[i] = translitEn(x); }
+      if (typeof x === 'string') { if (/^translit/i.test(chave)) no[i] = CONVERTER(x); }
       else emIngles(x, chave);
     });
   } else if (no && typeof no === 'object') {
     for (const [k, v] of Object.entries(no)) {
-      if (typeof v === 'string') { if (/^translit/i.test(k)) no[k] = translitEn(v); }
+      if (typeof v === 'string') { if (/^translit/i.test(k)) no[k] = CONVERTER(v); }
       else emIngles(v, k);
     }
   }
@@ -364,28 +372,37 @@ function main() {
     /* O site em inglês cobra pelo Paddle, em dólar, e dá 14 dias para
        desistir (PLANO-INGLES.md, etapa 5; o Worker usa os mesmos 14, DIAS_PADDLE
        em api/pay.js). Sem PIX e sem a chave PIX no pacote do navegador. */
-    if (LOCALE === 'en') {
+    if (EXTERIOR) {
       empresa.pagamento = { modo: 'paddle', formas: { pix: false, cartao: true } };
-      /* E as políticas em inglês têm data própria (etapa 6). */
-      const { atualizadoEmEn, ...politicas } = empresa.politicas;
-      empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: atualizadoEmEn || politicas.atualizadoEm };
-      const { horarioEn, ...atendimento } = empresa.atendimento || {};
-      if (horarioEn) empresa.atendimento = { ...atendimento, horarioPt: horarioEn };
+      /* E as políticas em inglês (e em espanhol) têm data própria (etapa 6). */
+      const { atualizadoEmEn, atualizadoEmEs, ...politicas } = empresa.politicas;
+      const data = LOCALE === 'es' ? atualizadoEmEs : atualizadoEmEn;
+      empresa.politicas = { ...politicas, arrependimentoDias: 14, atualizadoEm: data || politicas.atualizadoEm };
+      const { horarioEn, horarioEs, ...atendimento } = empresa.atendimento || {};
+      const horario = LOCALE === 'es' ? horarioEs : horarioEn;
+      if (horario) empresa.atendimento = { ...atendimento, horarioPt: horario };
       /* Sem Brasil no site em inglês (decisão do dono, 29/10/2026): o contato é
          o e-mail próprio dele, sem o .com.br, e o WhatsApp (+55) não aparece. */
       /* O lembrete para estudar tem chave própria no inglês (a Privacidade em
          inglês ainda não o descreve); o Worker lê a mesma (api/lembrete.js). */
-      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
-      empresa.privacidade = { ...privacidade, lembreteDeEstudo: lembreteDeEstudoEn === true };
-      const { emailEn, ...contato } = empresa.contato;
-      empresa.contato = emailEn
-        ? { ...contato, email: emailEn, emailSuporte: emailEn, emailPrivacidade: emailEn, whatsapp: null }
+      const { lembreteDeEstudoEn, lembreteDeEstudoEs, ...privacidade } = empresa.privacidade;
+      const lembrete = LOCALE === 'es' ? lembreteDeEstudoEs : lembreteDeEstudoEn;
+      empresa.privacidade = { ...privacidade, lembreteDeEstudo: lembrete === true };
+      /* O espanhol usa o e-mail do inglês até haver um `emailEs`. */
+      const { emailEn, emailEs, ...contato } = empresa.contato;
+      const email = LOCALE === 'es' ? (emailEs || emailEn) : emailEn;
+      empresa.contato = email
+        ? { ...contato, email, emailSuporte: email, emailPrivacidade: email, whatsapp: null }
         : { ...contato, whatsapp: null };
     } else {
-      const { emailEn, ...contato } = empresa.contato;
+      const { emailEn, emailEs, ...contato } = empresa.contato;
       empresa.contato = contato;
-      const { lembreteDeEstudoEn, ...privacidade } = empresa.privacidade;
+      const { lembreteDeEstudoEn, lembreteDeEstudoEs, ...privacidade } = empresa.privacidade;
       empresa.privacidade = privacidade;
+      const { atualizadoEmEs, ...politicas } = empresa.politicas;
+      empresa.politicas = politicas;
+      const { horarioEs, ...atendimento } = empresa.atendimento || {};
+      if (empresa.atendimento) empresa.atendimento = atendimento;
     }
     writeFileSync(join(OUT, 'empresa.json'), JSON.stringify(empresa, null, 2) + '\n');
   }
@@ -402,7 +419,7 @@ function main() {
       const { arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura } = p;
       return { id, arquivo, palavra, mostraPt, autor, licenca, licencaUrl, pagina, largura, altura };
     });
-    writeFileSync(join(OUT, 'vitrine-rua.json'), JSON.stringify({ placas: LOCALE === 'en' ? [] : vitrine }, null, 2) + '\n');
+    writeFileSync(join(OUT, 'vitrine-rua.json'), JSON.stringify({ placas: EXTERIOR ? [] : vitrine }, null, 2) + '\n');
   }
 
   /* O blog (29/10/2026). Só sai o artigo com `revisado: true`: cada um foi
@@ -415,7 +432,7 @@ function main() {
       if (typeof a.revisado !== 'boolean') throw new Error(`blog.json: ${a.slug} sem "revisado"`);
     }
     const rascunhos = process.env.HF_BLOG_RASCUNHOS === '1';
-    const aprovados = LOCALE === 'en' ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
+    const aprovados = EXTERIOR ? [] : blog.artigos.filter(a => a.revisado || rascunhos);
     /* Texto com `destino` (31/10/2026, plano de SEO aprovado pelo dono) não é
        artigo: é uma seção da página de destino (hoje só /alfabeto-hebraico,
        que disputaria a mesma busca com um artigo do mesmo assunto). Mesma
@@ -440,26 +457,26 @@ function main() {
      escreve "$47" (app/src/lib/catalog.ts). Sem parcelas, sem desconto do
      PIX, sem preço "depois". Produto sem `usd` não está à venda lá. */
   const emDolar = c => {
-    if (LOCALE !== 'en') return c;
+    if (!EXTERIOR) return c;
     const usd = Number(c.price && c.price.usd);
     return {
       ...c,
       /* Os textos do curso em inglês, quando o catálogo tem (`titleEn`,
          `taglineEn`...): ocupam o lugar do campo `...Pt` que as telas leem. */
-      ...Object.fromEntries(Object.entries(c).filter(([k]) => k.endsWith('En'))
+      ...Object.fromEntries(Object.entries(c).filter(([k]) => k.endsWith(SUFIXO))
         .map(([k, v]) => [k.slice(0, -2) + 'Pt', v])),
       ...(usd > 0 ? {} : { aVenda: false }),
       price: { brl: usd > 0 ? usd : 0, listBrl: null, installments: 1, pixDiscountPct: 0 }
     };
   };
   writeFileSync(join(OUT, 'courses.json'), JSON.stringify({
-    currency: LOCALE === 'en' ? 'USD' : catalogue.currency,
+    currency: EXTERIOR ? 'USD' : catalogue.currency,
     /* O site em inglês só vende o curso de alfabetização: os cursos A1, A2 e
        B1 existem só em português e não são anunciados lá (etapa 7). Livro e
        combo ficam, desligados (`aVenda: false`), porque o código os procura
        pelo slug. */
     courses: catalogue.courses
-      .filter(c => LOCALE !== 'en' || (c.tipo && c.tipo !== 'curso') || Number(c.price && c.price.usd) > 0)
+      .filter(c => !EXTERIOR || (c.tipo && c.tipo !== 'curso') || Number(c.price && c.price.usd) > 0)
       .map(emDolar).map(c => {
       const { modulesFrom, ...rest } = c;
       if (modulesFrom && modulesFrom !== 'alfabetizacao') {
@@ -796,13 +813,13 @@ function main() {
   /* Na build em inglês, o rascunho ainda não revisado fica de fora, e a
      tradução dele não é cobrada: o aluno não o veria, e o português dele
      ainda pode mudar na revisão. Aprovado, ele volta e passa a ser cobrado. */
-  if (LOCALE === 'en') {
+  if (EXTERIOR) {
     textos.forEach((t, i) => {
       if (t.revisado) return;
       for (const chave of [...FALTAS.keys()]) if (chave.startsWith(`textos:textos/#${i}/`)) FALTAS.delete(chave);
     });
   }
-  const textosNaBuild = LOCALE === 'en' ? textos.filter(t => t.revisado) : textos;
+  const textosNaBuild = EXTERIOR ? textos.filter(t => t.revisado) : textos;
   const pontua = x => ({ ...x, he: NFC(x.he) });
   writeFileSync(join(OUT, 'textos.json'), JSON.stringify({
     /* Cada linha com o id de áudio: a gravação dela (onda 4, gen-audio.mjs)
@@ -874,7 +891,7 @@ function main() {
     /* No site em inglês, nenhuma: são explicações FALADAS em português (a
        tela some sozinha sem a gravação, GravacaoDoProfessor.tsx). Voltam
        quando o professor gravar as versões em inglês (PLANO-INGLES.md). */
-    const gravacoes = LOCALE === 'en' ? [] : gravacoesDoProfessor(ROOT);
+    const gravacoes = EXTERIOR ? [] : gravacoesDoProfessor(ROOT);
     writeFileSync(join(OUT, 'professor.json'), JSON.stringify({
       gravacoes: Object.fromEntries(gravacoes.map(g => [g.id, {
         tituloPt: g.tituloPt, audioId: audioIdFor(`professor ${g.id}`)
@@ -1147,7 +1164,7 @@ function main() {
   console.log(`  áudio: ${clips.length} arquivo(s) em app/public/audio` +
     (clips.length ? '' : ' - os exercícios de audição ficam marcados como indisponíveis'));
 
-  if (LOCALE === 'en') relatarTraducao();
+  if (EXTERIOR) relatarTraducao();
 }
 
 /* O que ficou sem inglês vai para app/content/_traducao.json e para o resumo.
@@ -1159,9 +1176,9 @@ function relatarTraducao() {
   const por = {};
   for (const f of faltas) por[f.motivo] = (por[f.motivo] ?? 0) + 1;
   const resumo = Object.entries(por).map(([m, n]) => `${n} ${m}`).join(', ');
-  console.log(`  inglês: ${faltas.length ? resumo : 'completo'} (app/content/_traducao.json)`);
+  console.log(`  ${NOME_DO_IDIOMA}: ${faltas.length ? resumo : 'completo'} (app/content/_traducao.json)`);
   if (faltas.length && process.env.HF_I18N_ESTRITO === '1') {
-    throw new Error(`build em inglês com ${faltas.length} texto(s) sem tradução válida: ${resumo}`);
+    throw new Error(`build em ${NOME_DO_IDIOMA} com ${faltas.length} texto(s) sem tradução válida: ${resumo}`);
   }
 }
 

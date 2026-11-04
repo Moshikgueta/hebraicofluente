@@ -47,5 +47,28 @@ const en: Traducao<typeof pt> = {
   noCurso: 'At first, you keep reading with the print form: it is the one in books and on signs. Cursive comes in as writing and as recognition, one letter at a time, together with that letter\'s lesson.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  impLivros: 'libros',
+  impSites: 'sitios web',
+  impJornais: 'periódicos',
+  impAplicativos: 'aplicaciones',
+  impPlacas: 'carteles',
+  impLegendas: 'subtítulos',
+  impDocumentos: 'documentos',
+  impMaterial: 'material de estudio',
+  curCaderno: 'cuaderno',
+  curAnotacoes: 'apuntes',
+  curListas: 'listas',
+  curRecados: 'recados',
+  curFormularios: 'formularios',
+  curQuadro: 'pizarrón del aula',
+  curQualquer: 'cualquier cosa escrita a mano',
+  regraLer: 'letra impresa',
+  regraEscrever: 'letra cursiva',
+  analogia: 'Se pueden dibujar las letras impresas a mano, sí. Solo que nadie lo hace - sería como escribir una nota en español intentando copiar exactamente la fuente de un libro, letra por letra, cada vez.',
+  mesmaLetra: 'Son dos formas de la MISMA letra, no dos alfabetos. El nombre es el mismo, el sonido es el mismo, el lugar en el alfabeto es el mismo - cambia el dibujo, como entre la letra de molde y la letra manuscrita en español.',
+  noCurso: 'Al principio, sigues leyendo con la forma impresa: es la que está en los libros y en los carteles. La cursiva entra como escritura y como reconocimiento, una letra a la vez, junto con la lección de esa letra.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

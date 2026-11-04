@@ -54,5 +54,31 @@ const en: Traducao<typeof pt> = {
   guiaTexto: 'The Name, the shva, the quick vowels and the other marks the Bible uses beyond the course.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  naoESua: 'Esta lectura todavía no es tuya. Se abre con XP, en Recompensas.',
+  naoExiste: 'Esta lectura no existe.',
+  irRecompensas: 'Ir a Recompensas',
+  voltarBonus: '← Lecturas extra',
+  aFrente: 'Este texto todavía está más adelante',
+  aFrenteTexto: (after, mastered) =>
+    `Para leer este texto por tu cuenta, necesitas dominar ${after} letras, y hoy dominas ${mastered}. Por ahora, escucha cada línea y síguela con la transliteración y la traducción. Cuando domines las letras, vuelve aquí y léelo directo del hebreo. Sigue guardado en Lecturas extra.`,
+  porQueHashem: '¿Por qué la grabación dice «Hashém»?',
+  hashemTexto: (nome, link) =>
+    <>Donde está escrito {nome}, el nombre de Dios, la grabación dice «Hashém», «el Nombre». Es una costumbre judía: el Nombre no se pronuncia, y fuera del rezo muchos evitan incluso «Adonái», que es como se lee en el rezo y en la sinagoga. La transliteración muestra lo que se oye.{' '}{link}.</>,
+  maisNoGuia: 'Más en la guía',
+  leiaEmVozAlta: 'Lee en voz alta',
+  leiaInstrucao: 'Lee despacio, una línea a la vez, grábate y escúchate. Después compara con la grabación de cada línea.',
+  traducaoLiteral: 'La traducción es literal, para seguir el hebreo línea por línea.',
+
+  titulo: 'Lecturas extra',
+  intro: 'Pasajes y versículos del Antiguo Testamento, con transliteración, traducción y la lectura grabada. Abres cada una con XP, en Recompensas.',
+  nenhuma: 'Todavía no abriste ninguna lectura.',
+  verRecompensas: 'Ver en Recompensas',
+
+  guiaOpcional: 'Guía opcional · sin XP',
+  guiaSeta: titulo => `${titulo} →`,
+  guiaTexto: 'El Nombre, el shvá, las vocales rápidas y los otros signos que la Biblia usa más allá del curso.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

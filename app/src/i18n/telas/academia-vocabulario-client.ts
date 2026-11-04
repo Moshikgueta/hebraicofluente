@@ -63,5 +63,36 @@ const en: Traducao<typeof pt> = {
     `None of the words you can read has “${busca}”. The word may use a letter that is still ahead.`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  metaTitulo: 'Mi vocabulario - Hebraico Fluente',
+  metaDescricao: 'Las palabras en hebreo que ya puedes leer con las letras que aprendiste.',
+
+  meuVocabulario: 'Mi vocabulario',
+  intro: (letras, faltam) =>
+    `Son las palabras del curso escritas solo con las ${letras} letras que ya terminaste.` +
+    (faltam > 0 ? ` Llegan ${faltam} más con las próximas letras.` : ' Es el vocabulario entero del curso.'),
+  praticarAMao: 'Practicar estas palabras a mano, en cursiva',
+  praticarLeitura: 'Practica la lectura de estas palabras en el Laboratorio de Lectura.',
+  procurar: 'Buscar',
+  placeholder: 'en hebreo, transliteración o español',
+  achadas: (achadas, total) => `${achadas} de ${total}`,
+  nPalavras: n => `${n} palabras`,
+  vazio: 'Termina la lección de la Mem y la primera palabra aparece aquí.',
+  irCurso: 'Ir al curso',
+  palavras: 'Palabras',
+  ouvir: translit => `Escuchar ${translit}`,
+  letrasDaPalavra: 'Las letras de esta palabra',
+  letras: 'Letras',
+  aMao: 'A mano',
+  porNoCaderno: translit => `Guardar ${translit} en mi cuaderno`,
+  tirarDoCaderno: translit => `Quitar ${translit} de mi cuaderno`,
+  soOCaderno: n => `Solo mi cuaderno (${n})`,
+  treinarCaderno: 'Entrenar las palabras de mi cuaderno',
+  cadernoDica: 'Toca la estrella de una palabra para guardarla en tu cuaderno y entrenar solo las guardadas.',
+  cadernoVazio: 'Todavía no hay palabras guardadas. Toca la estrella de una palabra para guardarla.',
+  nenhuma: busca =>
+    `Ninguna palabra que ya lees tiene “${busca}”. La palabra puede usar una letra que todavía está por venir.`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

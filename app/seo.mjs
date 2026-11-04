@@ -33,7 +33,10 @@ import { FORA_DO_SITE_EN } from '../worker/src/lib/idioma.js';
 /* A build em inglês sai em out-en, e o Worker em inglês responde 404 ao que
    só existe no site brasileiro (FORA_DO_SITE_EN): isso não vai ao sitemap. */
 const EM_INGLES = process.env.NEXT_PUBLIC_LOCALE === 'en';
-export const DIR = EM_INGLES ? 'out-en' : 'out';
+/* O espanhol (04/11/2026): out-es, e a mesma lista do que só existe no Brasil. */
+const EM_ESPANHOL = process.env.NEXT_PUBLIC_LOCALE === 'es';
+const EXTERIOR = EM_INGLES || EM_ESPANHOL;
+export const DIR = EM_INGLES ? 'out-en' : EM_ESPANHOL ? 'out-es' : 'out';
 
 /* Lido do TOML sem dependência: é uma linha `SITE_ORIGIN = "..."` dentro de
    [vars], e um parser inteiro para isso seria mais coisa para quebrar. */
@@ -98,7 +101,7 @@ const TECNICAS = ['/404', '/500',
 const semBarra = (r) => r.replace(/\/+$/, '') || '/';
 const naoListada = (r) =>
   [...NAO_LISTADAS, ...TECNICAS].some(x => semBarra(r) === x || semBarra(r).startsWith(x + '/'))
-  || (EM_INGLES && FORA_DO_SITE_EN.test(semBarra(r)));
+  || (EXTERIOR && FORA_DO_SITE_EN.test(semBarra(r)));
 
 /** As rotas que entram no sitemap, e por quê as outras não entram. */
 export function classificar(todas) {
@@ -159,7 +162,7 @@ export function llmsTxt(site, paginas) {
   const nome = (capa && capa.titulo ? capa.titulo.split(' | ')[0] : 'Hebraico Fluente');
   const linhas = [`# ${nome}`, ''];
   if (capa && capa.descricao) linhas.push(`> ${capa.descricao}`, '');
-  linhas.push(EM_INGLES ? '## Pages' : '## Páginas', '');
+  linhas.push(EM_INGLES ? '## Pages' : EM_ESPANHOL ? '## Páginas del sitio' : '## Páginas', '');
   for (const p of paginas) {
     if (!p.titulo) continue;
     linhas.push(`- [${p.titulo}](${site}${p.rota})${p.descricao ? `: ${p.descricao}` : ''}`);

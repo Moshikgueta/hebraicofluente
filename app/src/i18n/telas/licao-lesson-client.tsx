@@ -273,5 +273,140 @@ const en: Traducao<typeof pt> = {
   ouvirExemplo: (nome, exemplo) => `Listen to ${nome}, in the example ${exemplo}`
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  conhecer: 'Conocer',
+  palavras: 'Palabras',
+  escrever: 'Escribir',
+  fixacao: 'Fijación',
+  exercicios: 'Ejercicios',
+
+  concluirEContinuar: 'Terminar y continuar',
+  emSeguidaSom: nome => `A continuación: el sonido ${nome}`,
+  emSeguidaCheckpoint: n => `A continuación: Checkpoint ${n}`,
+  emSeguidaLetra: nome => `A continuación: la letra ${nome}`,
+  deVolta: 'De vuelta al mapa del curso',
+  mapa: '← Mapa',
+  badge: (modulo, licao, ordem) => `Módulo ${modulo} · lección ${licao} · letra ${ordem}/22`,
+  etapas: 'Etapas de la lección',
+  etapaDe: (n, rotulo) => `Etapa ${n} de 5 - ${rotulo}`,
+  etapaFechada: (n, rotulo) => `Etapa ${n} de 5 - ${rotulo} (se abre cuando termines la anterior)`,
+
+  descobrir: 'Descubrir',
+  oQueVamos: '¿Qué vamos a aprender hoy?',
+  voceVai: (he, final) =>
+    <>Vas a poder reconocer, pronunciar, leer y escribir {he}{final ? <> - y su forma final, {final}</> : null}.</>,
+  gravacaoIntro: nome => `El nombre, el sonido y una palabra con ${nome}.`,
+  ouvir: 'Escuchar',
+  comoPronunciar: '¿Cómo se pronuncia?',
+  // etapa 3: pronúncia, rever
+  gravacaoHet: 'La ח sola y en palabras, comparada con la j de "jamón".',
+  entender: 'Entender',
+  explicacaoCompleta: 'Ver la explicación completa',
+  praticar: 'Practicar',
+  comCadaVogal: 'La letra con cada vocal',
+  toqueParaOuvir: 'Toca una sílaba para escucharla. Después graba la tuya y compara.',
+  toqueParaDica: 'Toca una sílaba para ver el consejo de pronunciación.',
+  ouvirNome: nome => `Escuchar el nombre: ${nome}`,
+  compareComAsQueSabe: 'Compara con las letras que ya sabes',
+  compararComAsQueSabe: 'Comparar con las letras que ya sabes',
+  conferir: 'Comprobar',
+  entendeu: '¿Entendiste? Preguntas rápidas',
+  naoVaiNota: 'No cuenta para la nota. Si te equivocas, la explicación aparece al instante, y relees el paso antes de responder de nuevo.',
+  relerEResponder: 'Releer la explicación y responder de nuevo',
+  respondaParaContinuar: 'Responde las preguntas de arriba para continuar.',
+  acerteParaContinuar: 'Acierta todas las preguntas para continuar. Relee la explicación e intenta de nuevo.',
+  fechoBom: 'Bien. Ahora las palabras que abre esta letra.',
+  fechoParcial: 'Vale la pena releer los pasos anteriores - son dos o tres ideas, y vuelven en las próximas letras.',
+  passoDe: (n, total) => `Paso ${n} de ${total}`,
+  voltar: 'Volver',
+  continuarPalavras: 'Continuar a las palabras',
+  proximo: nome => `Siguiente: ${nome}`,
+
+  detalhe: 'Detalle importante',
+  noMeio: 'en el medio',
+  noFim: 'al final',
+  oQueFaz: '¿Qué hace esta letra?',
+  verMais: n => `Ver más sobre esta letra (${n} ${n === 1 ? 'recuadro' : 'recuadros'})`,
+  lembrar: '¿Qué necesitas recordar?',
+
+  jaConsegueLer: 'Palabras que ya puedes leer',
+  tenteDecifrar: 'Intenta descifrarlas antes de revelarlas. Todas usan solo letras que ya aprendiste.',
+  gravacaoTav: 'Cómo se lee אַתְ, y por qué las mismas dos letras también forman otra palabra.',
+  compareLeitura: 'Compara tu lectura de las palabras con la del curso',
+  semPalavra: 'Todavía no se puede formar una palabra',
+  semPalavraTexto: umaConsoante =>
+    `Con ${umaConsoante ? 'una sola consonante' : 'las pocas letras que tienes hasta aquí'}, ninguna combinación forma una palabra de verdad. Eso cambia ya con la próxima letra - y no vuelve a pasar. Por ahora, lee las sílabas.`,
+  continuarEscrita: 'Continuar a la escritura',
+  maisLugares: n => `${n} ${n === 1 ? 'lugar' : 'lugares'} más donde ya puedes leer`,
+  verMaisPalavras: (n, resto) => `Ver ${n} ${resto === 1 ? 'palabra' : 'palabras'} más`,
+  restantes: n => ` · ${n} restantes`,
+
+  aprendendoAEscrever: 'Aprendiendo a escribir',
+  mesmaLetra: 'La misma letra, con el trazo que se usa a mano.',
+  impressa: 'Impresa',
+  cursiva: 'Cursiva',
+  formaFinal: nome => `${nome} - forma final`,
+  continuarFixacao: 'Continuar a la fijación',
+  escrevaParaContinuar: 'Escribe la letra al menos una vez y toca Comprobar para continuar.',
+  naoConsigoEscrever: 'No puedo escribir en esta pantalla',
+
+  praticarMais: 'Vamos a practicar un poco más.',
+  reforcoTexto: n =>
+    `Estas ${n} preguntas salen de lo que se te escapó hace un momento. Nada aquí cuenta para la nota. La que falles vuelve después de otras, hasta que la aciertes.`,
+  reforco: 'Refuerzo',
+  placar: (certas, total, pct) => `${certas} de ${total} · ${pct}%`,
+  maisUma: 'Una lección más completada.',
+  reforcoFeito: 'Refuerzo hecho.',
+  quaseLa: 'Casi lo logras.',
+  vamosFirmar: nome => `Vamos a afirmar ${nome}.`,
+  reconhece: nome =>
+    `Reconoces ${nome} sola, dentro de una palabra y entre las parecidas. Puedes seguir con seguridad.`,
+  filaTrancada: (nome, libera) =>
+    `${nome} entró en la fila de repaso y vuelve mañana, en el día justo. `
+    + `La próxima lección se abre a partir del ${libera}% en los ejercicios. `
+    + 'Rehaz la prueba: las preguntas cambian en cada intento.',
+  filaReforco: nome =>
+    `${nome} entró en la fila de repaso y vuelve mañana, en el día justo. `
+    + 'Todavía no cuenta como completada - rehaz la prueba cuando quieras, '
+    + 'con otras preguntas, y pasa a contar. Puedes seguir.',
+  faltouPouco: 'Faltó poco. Cuatro preguntas rápidas, armadas a partir de lo que se te escapó, y seguimos.',
+  naoFirme: 'Esta letra todavía no está firme, y está bien - para eso existe la práctica. Cuatro preguntas armadas a partir de lo que se te escapó.',
+  praticarMaisUmPouco: 'Practicar un poco más',
+  refazerPrecisa: libera => `Rehacer los ejercicios (necesitas ${libera}%)`,
+  proximaAbre: (libera, acertos, total) =>
+    `La próxima lección se abre con ${libera}% en los ejercicios: ${acertos} de ${total}.`,
+  refazerTeste: 'Rehacer la prueba',
+  exerciciosLetra: nome => `Ejercicios - letra ${nome}`,
+
+  minhaConquista: 'Mi logro',
+  conquista1: nome => `Reconocer la letra ${nome} en sus formas impresa y cursiva.`,
+  conquistaSemSom: nome =>
+    `Entender que, en las palabras estudiadas, la letra ${nome} puede aparecer sin un sonido propio.`,
+  conquistaDoisSons: (nome, som) =>
+    `Reconocer los dos sonidos de la letra ${nome}, con y sin daguesh: ${som}.`,
+  conquistaSom: (nome, som) => `Asociar la letra ${nome} con el sonido ${som}.`,
+  conquista3: nome => `Reconocer la letra ${nome} dentro de palabras.`,
+  laboratorio: 'Practicar la lectura de palabras en el Laboratorio de Lectura.',
+
+  antesDaPrimeira: 'Antes de la primera letra, la Clase 0',
+  abreComAula0: he =>
+    <>La letra {he} se abre cuando terminas la Clase 0: la dirección de la lectura, qué es el nikud y cómo funciona el curso. Termina con una comprobación corta, y puedes rehacerla todas las veces que quieras.</>,
+  irAula0: 'Ir a la Clase 0',
+  verMapa: 'Ver el mapa',
+  naoAbriu: he => <>La letra {he} todavía no se abrió</>,
+  vemDepois: anterior =>
+    <>Viene después de {anterior}, y esa lección todavía no está terminada. Cada letra usa las anteriores en las palabras - por eso importa el orden.</>,
+  faltamExercicios: (anterior, nota, libera) =>
+    <>Faltan los ejercicios de {anterior}. Tu mejor nota ahí fue {nota}%, y esta letra se abre a partir del {libera}%. Puedes rehacerlos todas las veces que quieras - las preguntas cambian en cada intento.</>,
+  irPara: nome => `Ir a ${nome}`,
+  refazerDe: nome => `Rehacer los ejercicios de ${nome}`,
+  continuarDeOnde: nome => `Continuar donde lo dejé (${nome})`,
+
+  duasLeituras: 'Las dos lecturas',
+  leiturasDestaLetra: 'Las lecturas de esta letra',
+  mesmoDesenho: 'El mismo dibujo de letra. Lo que cambia es el signo - y es en él que te fijas antes de pronunciar.',
+  ouvirExemplo: (nome, exemplo) => `Escuchar ${nome}, en el ejemplo ${exemplo}`
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

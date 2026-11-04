@@ -30,5 +30,19 @@ const en: Traducao<typeof pt> = {
   erro: 'Could not check right now. Please try again in a moment.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  localeDaData: 'es-419',
+  titulo: 'Verificar un certificado',
+  instrucao: 'Escribe el código que aparece en el certificado (por ejemplo, A1-ABCD2345).',
+  codigoRotulo: 'Código del certificado',
+  conferindo: 'Verificando…',
+  conferir: 'Verificar',
+  valido: '✓ Certificado válido',
+  concluiu: 'Completó el curso {curso} de Hebraico Fluente, con aprobación en el examen final el {data}.',
+  codigoNota: 'Código {id}. No es una certificación oficial de nivel.',
+  naoAchou: 'No encontramos un certificado público con este código. Revisa el código, o pídele a la persona que active la verificación pública.',
+  erro: 'No se pudo verificar ahora. Inténtalo de nuevo en unos instantes.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

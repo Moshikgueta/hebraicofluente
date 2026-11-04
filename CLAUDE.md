@@ -18,6 +18,20 @@ muda entre eles é só configuração. Toda melhoria entra nos dois, na mesma ro
 - Texto novo de tela nasce com o inglês ao lado (dicionário); dado novo do curso pede
   `node tools/i18n.mjs extrair` e a tradução, senão a build estrita em inglês para.
 
+## O site em espanhol (04/11/2026, pedido do dono: "traduzir a plataforma inteira para espanhol")
+Terceira língua, no mesmo molde do inglês: `NEXT_PUBLIC_LOCALE=es` gera `app/out-es`, servido por
+`wrangler.es.toml` (`LOCALE = "es"`, ainda sem domínio e sem publicação). Plano e pendências do dono em
+`PLANO-ESPANHOL.md`.
+- É um site de FORA, como o inglês: `EXTERIOR` (app/src/i18n/locale.ts) e `exterior()`
+  (worker/src/lib/idioma.js) são "inglês OU espanhol". Condição nova de site de fora usa esses dois,
+  nunca `=== 'en'` sozinho.
+- Todo dicionário de tela tem `pt`, `en` e `es`; a linha do `tx` é
+  `process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;`
+  (tests/i18n.test.ts confere). Texto novo de tela nasce nos três.
+- Conteúdo em `data/es/` (campo `es`); `node tools/i18n.mjs extrair` atualiza `data/en/` e `data/es/`.
+- Transliteração: `tools/translit-es.mjs` = `translitEs` de app/src/i18n/translit.ts
+  (tests/espanhol.test.ts). E-mails: `worker/src/lib/mail-es.js`. Políticas: `components/legal/es/`.
+
 ## Como trabalhar neste repositório (regras do dono)
 Este projeto é SEPARADO do curso de espanhol (`Moshikgueta/espanolsindolordecabeza`).
 Sessões do Claude para o Hebraico Fluente abrem só este repositório; nada do

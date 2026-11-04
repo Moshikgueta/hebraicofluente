@@ -37,7 +37,7 @@ import {
   empresa, enderecoLinha, nomeLegalCompleto, parcelasTexto, prazoResposta, soPix, temCartao, temPix, whatsappUrl
 } from '@/lib/empresa';
 import { tx } from '@/i18n/telas/conta-public-shell';
-import { LOCALE } from '@/i18n';
+import { EXTERIOR } from '@/i18n';
 /* Só a contagem dos artigos aprovados: o texto do blog não vem para o navegador. */
 import blogResumo from '@content/blog-resumo.json';
 
@@ -377,7 +377,7 @@ function Footer() {
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 py-5 grid gap-1.5">
           {/* O site em inglês não mostra a empresa no rodapé (decisão do dono,
               29/10/2026): ela fica só nos Termos e na Privacidade, onde a lei pede. */}
-          {LOCALE !== 'en' && <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
+          {!EXTERIOR && <p className="font-ui text-[12px] leading-relaxed text-ink-muted">
             {[nomeLegalCompleto(),
               empresa.cnpj && tx.cnpj(empresa.cnpj),
               enderecoLinha()

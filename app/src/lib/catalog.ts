@@ -161,6 +161,10 @@ export const brl = (v: number): string =>
   process.env.NEXT_PUBLIC_LOCALE === 'en'
     ? v.toLocaleString('en-US', { style: 'currency', currency: 'USD',
         minimumFractionDigits: Number.isInteger(v) ? 0 : 2 })
+    /* No espanhol, "US$ 47": o "$" sozinho é o peso em boa parte da América Latina. */
+    : process.env.NEXT_PUBLIC_LOCALE === 'es'
+    ? 'US$ ' + v.toLocaleString('es-419', { minimumFractionDigits: Number.isInteger(v) ? 0 : 2,
+        maximumFractionDigits: 2 })
     : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL',
         minimumFractionDigits: Number.isInteger(v) ? 0 : 2 });
 

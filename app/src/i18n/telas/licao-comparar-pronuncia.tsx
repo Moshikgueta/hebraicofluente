@@ -50,5 +50,29 @@ const en: Traducao<typeof pt> = {
   itemParaComparar: 'Item to compare'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Compara tu pronunciación con la del curso',
+  modelo: '▶ Modelo',
+  parar: '■ Detener',
+  gravarDeNovo: 'Grabar de nuevo',
+  gravarMinha: 'Grabar la mía',
+  ouvirOsDois: '▶ Escuchar las dos',
+  soAMinha: 'Solo la mía',
+  gravando: 'Grabando… di el elemento una vez y toca Detener.',
+  negado: 'El navegador no permitió usar el micrófono. Toca el candado junto a la dirección, permite el micrófono e intenta de nuevo.',
+  semSuporte: 'Este navegador no graba audio. Prueba con Chrome, Edge, Firefox o Safari actualizados.',
+  erro: 'No pude grabar ni leer la grabación. Intenta de nuevo.',
+  soNoAparelho: 'Tu grabación queda solo en este dispositivo. No se envía nada.',
+  curso: 'Curso',
+  voce: 'Tú',
+  silabas: 'Sílabas',
+  ouvirEPraticar: item => `${item}: escuchar y practicar`,
+  praticar: item => `Practicar ${item}`,
+  agoraVoce: (he, translit) =>
+    <>Ahora tú: graba {he}{translit ? <> ({translit})</> : null} y compáralo con el curso.</>,
+  escolhaUmItem: 'Elige un elemento, escucha el modelo, graba el tuyo y compara: las dos ondas quedan en la misma escala de tiempo.',
+  itemParaComparar: 'Elemento para comparar'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

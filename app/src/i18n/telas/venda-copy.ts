@@ -108,5 +108,58 @@ const en: Traducao<typeof pt> = {
   maqueteHeroiPergunta: 'What sound does this letter make?'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  aulaLabel: 'Clase',
+  aulaKicker: 'Aprender',
+  aulaTitle: 'La letra primero, siempre sola.',
+  aulaBodyAudio: 'Una forma por pantalla. El nombre, el sonido, el audio y la explicación en español - nada más compitiendo por tu atención.',
+  aulaBodySemAudio: 'Una forma por pantalla. El nombre, el sonido y la explicación en español - nada más compitiendo por tu atención.',
+  aulaPontoAudio: 'Audio grabado por un hablante nativo',
+  // etapa 3: pronúncia, rever
+  aulaPontoSemAudio: 'El sonido comparado con un sonido del español',
+  aulaPonto2: 'Explicación escrita en español',
+  aulaPonto3: 'Una palabra de ejemplo, ya con nikud',
+
+  escritaLabel: 'Escritura',
+  escritaKicker: 'Escribir',
+  escritaTitle: 'Escribes la letra con el dedo en la pantalla.',
+  escritaBody: 'El curso muestra el orden de los trazos y después te devuelve la pluma. Escribir es lo que separa reconocer de saber - la mano aprende lo que el ojo solo reconoce.',
+  escritaPonto1: 'El orden de los trazos, movimiento a movimiento',
+  escritaPonto2: 'Trazado con el dedo, directo en el celular',
+  escritaPonto3: 'La forma exacta de la cursiva israelí, y no un dibujo aproximado',
+
+  praticaLabel: 'Práctica',
+  praticaKicker: 'Fijar',
+  praticaTitleAudio: 'Cinco tipos de ejercicio, alternados.',
+  praticaTitleSemAudio: 'Cuatro tipos de ejercicio, alternados.',
+  praticaBodyAudio: 'Opción múltiple, escritura, asociación, escucha y lectura. La alternancia es lo que evita memorizar sin entender.',
+  praticaBodySemAudio: 'Opción múltiple, escritura, asociación y lectura. La alternancia es lo que evita memorizar sin entender.',
+  praticaPonto1: 'Corrección inmediata, con explicación',
+  praticaPonto2: 'Un error no te bloquea: lo intentas de nuevo',
+  praticaPonto3: 'En los juegos, la dificultad sube a medida que aciertas',
+
+  revisaoLabel: 'Repaso',
+  revisaoKicker: 'Consolidar',
+  revisaoTitle: 'Lo que fallaste vuelve en el momento justo.',
+  revisaoBody: 'Las letras que todavía se te escapan reaparecen en intervalos cada vez más largos, hasta volverse automáticas.',
+  revisaoPonto1: 'Repasos cortos, de 3 a 5 minutos',
+  revisaoPonto2: 'Solo lo que hace falta - no repite lo que ya dominas',
+  revisaoPonto3: 'Aviso cuando hay un repaso pendiente',
+
+  progressoLabel: 'Progreso',
+  progressoKicker: 'Seguir',
+  progressoTitle: 'Ves exactamente dónde estás.',
+  progressoBody: 'Letras dominadas, letras en progreso, letras por repasar. Sin puntajes inflados: el número refleja lectura real.',
+  progressoPonto1: 'Porcentaje por módulo',
+  progressoPonto2: 'Mapa de dominio de las 22 letras',
+  progressoPonto3: 'Tiempo de estudio por semana',
+
+  maquetePraticaRotuloAudio: 'Escucha',
+  maquetePraticaRotuloSemAudio: 'Reconocer',
+  maquetePraticaPerguntaAudio: '¿Qué sonido escuchaste?',
+  maquetePraticaPerguntaSemAudio: '¿Cuál de estas letras hace el sonido SH?',
+  maqueteHeroiPergunta: '¿Cuál es el sonido de esta letra?'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

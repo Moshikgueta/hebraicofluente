@@ -28,5 +28,18 @@ const en: Traducao<typeof pt> = {
   dominado: 'Mastered'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  leitura: 'Lectura',
+  escuta: 'Escucha',
+  vocabulario: 'Vocabulario',
+  gramatica: 'Gramática',
+  comunicacao: 'Comunicación',
+  escrita: 'Escritura',
+  agora: 'Repasar ahora',
+  logo: 'Repasar pronto',
+  depois: 'Repasar después',
+  dominado: 'Dominado'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

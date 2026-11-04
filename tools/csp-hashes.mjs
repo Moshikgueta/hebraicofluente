@@ -61,7 +61,8 @@ function* htmls(dir) {
    roda no CI ANTES do build: uma conferência da pasta no topo do módulo
    derrubava o teste (e a publicação) por falta de um out/ que ele nem usa. */
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const padrao = process.env.NEXT_PUBLIC_LOCALE === 'en' ? '../app/out-en' : '../app/out';
+  const padrao = process.env.NEXT_PUBLIC_LOCALE === 'en' ? '../app/out-en'
+    : process.env.NEXT_PUBLIC_LOCALE === 'es' ? '../app/out-es' : '../app/out';
   const OUT = process.argv[2] || new URL(padrao, import.meta.url).pathname;
   if (!existsSync(OUT)) { console.error(`csp-hashes: ${OUT} não existe; rode o build antes.`); process.exit(1); }
   const mapa = {};

@@ -69,5 +69,39 @@ const en: Traducao<typeof pt> = {
   olheComCalma: 'Take a calm look at the shape and try the next one.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  rodadaDe: (n, total) => `Ronda ${n} de ${total}`,
+  parecidasSom: 'Parecidas en el sonido',
+  parecidasDesenho: 'Parecidas en el dibujo',
+  inimigasDeHoje: 'Rivales de hoy',
+  placar: (n, total, acertos) =>
+    `${n} / ${total} · ${acertos} ${acertos === 1 ? 'acierto' : 'aciertos'}`,
+  nomeDaOpcao: (nome, final) => `${nome}${final ? ' final' : ''}`,
+
+  relampagoEspera: 'La letra va a aparecer por un instante. Toca cuando estés listo.',
+  relampagoPergunta: '¿Qué letra pasó?',
+  mostrarLetra: 'Mostrar la letra',
+  passou: 'pasó',
+  eraA: nome => `Era la ${nome}.`,
+
+  somInstrucao: 'Escucha la sílaba y elige la letra que oíste.',
+  ouvir: 'Escuchar',
+  ouvirSilaba: 'Escuchar la sílaba',
+  ouvirPrimeiro: 'Toca Escuchar primero.',
+
+  qualLetra: '¿Qué letra es esta?',
+  estaEA: nome => `Esta es la ${nome}.`,
+
+  pediaFinal: nome =>
+    `Esa es la ${nome} de principio y medio de palabra. Se pedía la forma final, la que cierra la palabra.`,
+  pediaComeco: nome =>
+    `Esa es la ${nome} final, la que cierra la palabra. Se pedía la forma de principio y medio.`,
+  toqueEmTodas: he => <>Toca todas las letras{' '}{he}</>,
+
+  qualDiferente: '¿Cuál es diferente?',
+  isso: '¡Eso!',
+  olheComCalma: 'Mira el dibujo con calma e intenta la siguiente.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

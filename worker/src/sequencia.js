@@ -62,10 +62,10 @@ export async function runSequencia(env, at = Date.now()) {
      prazo de desistência é o do Paddle. */
   const idioma = idiomaDoWorker(env);
   const preco = c && c.price ? {
-    usd: idioma === 'en' ? (c.price.usd || null) : null,
+    usd: idioma !== 'pt' ? (c.price.usd || null) : null,
     brl: c.price.brl, listBrl: c.price.listBrl || null, pixPct: c.price.pixDiscountPct || 0,
     parcelas: c.price.installments || 12, meses: c.accessMonths || 12,
-    desistir: idioma === 'en' ? DIAS_PADDLE : (Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7)
+    desistir: idioma !== 'pt' ? DIAS_PADDLE : (Number(empresa.politicas && empresa.politicas.arrependimentoDias) || 7)
   } : null;
 
   let enviados = 0;

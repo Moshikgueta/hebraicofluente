@@ -33,5 +33,21 @@ const en: Traducao<typeof pt> = {
   acheAsLetras: 'Find the three highlighted letters before you open it.'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  titulo: 'Hoy y hace dos mil años',
+  intro:
+    'Más de dos mil años separan las dos líneas de cada par. La escritura cuadrada que estás aprendiendo se adoptó en la época del Segundo Templo, y es en ella que el texto antiguo se copia y se lee desde entonces:',
+  comPar: ' las letras de abajo son, una por una, las que acabas de aprender.',
+  semPar: ' las letras son, una por una, las que estás aprendiendo ahora.',
+  aindaFechados: 'Todavía cerrados',
+  raizDe: raiz => `La raíz de ${raiz}`,
+  letras: n => `${n} letras`,
+  umPar: 'Un par se abre cuando puedes leer las DOS líneas. Media comparación no compara nada.',
+  hoje: 'Hoy, en la calle',
+  fila: 'en la fila del supermercado',
+  oQueDizem: '¿Qué dicen las dos?',
+  acheAsLetras: 'Encuentra las tres letras resaltadas antes de abrir.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

@@ -73,5 +73,41 @@ const en: Traducao<typeof pt> = {
   voltar: '← Back'
 };
 
-export const DICIONARIO = { pt, en };
-export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : pt;
+const es: Traducao<typeof pt> = {
+  motivoViagem: 'Viajar a Israel',
+  motivoFamilia: 'Familia o pareja',
+  motivoMorar: 'Vivir en Israel',
+  motivoBiblia: 'Leer la Biblia o textos religiosos',
+  motivoIdiomas: 'Interés en los idiomas',
+  motivoTrabalho: 'Trabajo',
+  motivoOutro: 'Otro motivo',
+
+  meta5: '5 minutos',
+  meta5Nota: 'Una letra cada dos días. Despacio y sin parar.',
+  meta10: '10 minutos',
+  meta10Nota: 'Más o menos una letra por día.',
+  meta15: '15 minutos',
+  meta15Nota: 'Una letra por día, con margen para repasar.',
+  meta20: '20 minutos',
+  meta20Nota: 'Intenso. El alfabeto en tres semanas.',
+
+  inicioZero: 'Estoy empezando desde cero',
+  inicioAlgumas: 'Reconozco algunas letras',
+  inicioUmPouco: 'Ya puedo leer un poco',
+
+  contador: '{n} de 4',
+  porQueTitulo: '¿Por qué quieres aprender hebreo?',
+  porQueDica: 'Queda en tu cuenta, para que te conozcamos. No cambia el contenido: todos hacen el mismo curso.',
+  tempoTitulo: '¿Cuánto tiempo al día?',
+  tempoDica: 'Es tu meta diaria. Puedes cambiarla después - y nadie es castigado por no cumplirla.',
+  sabeTitulo: '¿Ya sabes algo de hebreo?',
+  sabeDica: 'Todos empiezan por la primera letra: cada lección se apoya en las anteriores, y eso es lo que permite leer palabras enteras tan pronto.',
+  nomeTitulo: '¿Cómo te llamamos?',
+  nomeDica: 'Opcional. Queda en tu cuenta y ya completa el certificado y la actividad Mi nombre.',
+  seuNome: 'Tu nombre',
+  comecarCurso: 'Empezar el curso',
+  voltar: '← Volver'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;
