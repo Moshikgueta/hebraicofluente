@@ -19,7 +19,10 @@ muda entre eles é só configuração. Toda melhoria entra nos dois, na mesma ro
   `node tools/i18n.mjs extrair` e a tradução, senão a build estrita em inglês para.
 
 ## O site em espanhol (04/11/2026, pedido do dono: "traduzir a plataforma inteira para espanhol")
-Terceira língua, no mesmo molde do inglês: `NEXT_PUBLIC_LOCALE=es` gera `app/out-es`, servido por
+**Repositório próprio, `Moshikgueta/hebreo-fluido`, com banco próprio** (decisão do dono, 04/11/2026): entra na
+lista "Os dois sites iguais" acima como o terceiro. Toda melhoria daqui vai para lá com `git merge`; o que é
+só de lá: `wrangler.toml` (LOCALE es, banco `hebreo-fluido`), os workflows com a trava `HEBREO_PUBLICAR`, os
+scripts com o nome do banco, `package.json` e `CLAUDE.md`. Terceira língua, no mesmo molde do inglês: `NEXT_PUBLIC_LOCALE=es` gera `app/out-es`, servido por
 `wrangler.es.toml` (`LOCALE = "es"`, ainda sem domínio e sem publicação). Plano e pendências do dono em
 `PLANO-ESPANHOL.md`.
 - É um site de FORA, como o inglês: `EXTERIOR` (app/src/i18n/locale.ts) e `exterior()`
