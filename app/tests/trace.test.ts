@@ -82,6 +82,23 @@ describe('a wobbly trace is still a trace', () => {
   });
 });
 
+describe('small mistakes are forgiven (04/11/2026)', () => {
+  it('passes when the whole letter is drawn a finger off to the side', () => {
+    const pts = goodTrace().map(p => ({ x: p.x + 15, y: p.y + 10 }));
+    expect(scoreTrace({ alpha, w: W, h: H, points: pts }).tone).toBe('good');
+  });
+
+  it('passes with a bigger wobble', () => {
+    const pts = goodTrace().map((p, i) => ({ x: p.x + Math.sin(i / 3) * 12, y: p.y + Math.cos(i / 4) * 12 }));
+    expect(scoreTrace({ alpha, w: W, h: H, points: pts }).tone).toBe('good');
+  });
+
+  it('passes when a small piece of the end is missing', () => {
+    const pts = goodTrace().filter(p => !(p.x > 150 && p.y === 150));
+    expect(scoreTrace({ alpha, w: W, h: H, points: pts }).tone).toBe('good');
+  });
+});
+
 describe('what is not a letter', () => {
   it('rejects a couple of stray taps', () => {
     const v = scoreTrace({ alpha, w: W, h: H, points: [{ x: 10, y: 10 }, { x: 12, y: 12 }] });
