@@ -43,3 +43,13 @@ describe('em que módulo a pessoa está', () => {
     expect(o.abertos).toEqual([{ n: 4, faltam: ['a revisão', 'a Primeira Leitura', 'o texto principal'] }]);
   });
 });
+
+import { situacaoDoPedido } from '@/app/admin/vendas/VendasClient';
+
+describe('a situação do pedido não pago', () => {
+  it('"PIX vencido" só no PIX; no cartão, pagamento não concluído', () => {
+    expect(situacaoDoPedido({ status: 'expired', metodo: 'pix' })).toBe('PIX vencido');
+    expect(situacaoDoPedido({ status: 'expired', metodo: 'card' })).toBe('pagamento não concluído');
+    expect(situacaoDoPedido({ status: 'failed', metodo: 'card' })).toBe('pagamento recusado');
+  });
+});
