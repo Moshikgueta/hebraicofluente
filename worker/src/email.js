@@ -28,7 +28,7 @@
 import { dataHoraBR, sendMail } from './lib/mail.js';
 import { dataEN } from './lib/mail-en.js';
 import { log, throttled } from './lib/db.js';
-import { idiomaDoWorker } from './lib/idioma.js';
+import { MARCA, idiomaDoWorker } from './lib/idioma.js';
 
 const DOMINIO = 'hebraicofluente.com.br';
 
@@ -83,7 +83,7 @@ export function confirmacaoTexto(recebidaEm, idioma = 'pt', contato = `contato@$
       '',
       'If you prefer, you can cancel on the site itself: sign in, open Your account and, under Purchases, use "Cancel the purchase". The request is recorded right away.',
       '',
-      'Hebraico Fluente',
+      MARCA.en,
       contato
     ].join('\n');
   }
