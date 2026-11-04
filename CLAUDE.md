@@ -1,9 +1,12 @@
 # Hebraico Fluente - notas do projeto
 
-## Os dois sites iguais (28/10/2026, decisão do dono)
-"Quero que os dois sites sejam iguais, mas com versões adaptadas para cada um." O site brasileiro
-(`Moshikgueta/hebraicofluente`) e o de inglês (`Moshikgueta/fluent-hebrew`) têm o MESMO código; o que
-muda entre eles é só configuração. Toda melhoria entra nos dois, na mesma rodada.
+## Os três sites iguais (28/10/2026; o espanhol desde 04/11/2026, decisão do dono)
+"Quero que os dois sites sejam iguais, mas com versões adaptadas para cada um." E, em 04/11/2026: "tem que
+ter três sites, um em português, um em inglês e o último em espanhol". O site brasileiro
+(`Moshikgueta/hebraicofluente`), o de inglês (`Moshikgueta/fluent-hebrew`) e o de espanhol
+(`Moshikgueta/hebreo-fluido`, banco próprio) têm o MESMO código; o que muda entre eles é só
+configuração. Toda melhoria entra nos três, na mesma rodada (no do espanhol, o que é só de lá está no
+`CLAUDE.md` de lá).
 - **O que é de cada um** (nunca copiar de um para o outro): `wrangler.toml` (Worker, banco, domínio,
   `LOCALE`), `wrangler.en.toml` (só no brasileiro), `.github/workflows/` (no inglês, todos com a trava
   `FLUENT_PUBLICAR`), `package.json` e o lockfile, `.env.example`, os scripts com o nome do banco
