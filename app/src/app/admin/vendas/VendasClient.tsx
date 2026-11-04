@@ -242,6 +242,11 @@ function OndeEsta({ v }: { v: Venda }) {
 const SITUACAO: Record<string, string> = {
   pending: 'aguardando pagamento', expired: 'PIX vencido', failed: 'pagamento recusado', cancelled: 'cancelado'
 };
+/* "Vencido" só é PIX vencido no PIX: no cartão, o pedido vence quando o
+   pagamento não é concluído (04/11/2026, o painel dizia "PIX vencido" num
+   pedido de cartão). */
+export const situacaoDoPedido = (x: Pick<NaoPago, 'status' | 'metodo'>) =>
+  x.status === 'expired' && x.metodo !== 'pix' ? 'pagamento não concluído' : SITUACAO[x.status] ?? x.status;
 
 function NaoPagos({ lista: itens }: { lista: readonly NaoPago[] }) {
   if (!itens.length) return null;
@@ -263,7 +268,7 @@ function NaoPagos({ lista: itens }: { lista: readonly NaoPago[] }) {
             </p>
             <p className="m-0 text-[14px] text-ink-body break-all">
               {reais(x.valorCentavos)} · {x.metodo === 'pix' ? 'PIX' : 'cartão'} · {quando(x.criadoEm)}
-              {' · '}{SITUACAO[x.status] ?? x.status} · pedido {x.orderId}
+              {' · '}{situacaoDoPedido(x)} · pedido {x.orderId}
             </p>
             {(x.origem || x.comprouDepois) && (
               <p className="m-0 text-[14px]">
