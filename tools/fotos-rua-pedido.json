@@ -3,99 +3,83 @@
   "buscas": [
     {
       "grupo": 1,
-      "q": "Yad Vashem sign Hebrew"
+      "q": "Israel national park sign Hebrew גן לאומי"
     },
     {
       "grupo": 1,
-      "q": "יד ושם שלט"
+      "q": "Hayarkon park sign Hebrew"
     },
     {
       "grupo": 2,
-      "q": "Dead Sea sign Hebrew ים המלח"
+      "q": "Israel beach sign Hebrew חוף"
     },
     {
       "grupo": 2,
-      "q": "Jordan River sign Hebrew נהר הירדן"
+      "q": "Tel Aviv beach sign Hebrew sea"
     },
     {
       "grupo": 3,
-      "q": "Mount Herzl sign Hebrew הר הרצל"
+      "q": "Israel nature reserve sign Hebrew mountain"
     },
     {
       "grupo": 3,
-      "q": "הר שלט כביש"
+      "q": "Mount Carmel sign Hebrew"
     },
     {
       "grupo": 4,
-      "q": "kindergarten sign Hebrew גן ילדים"
+      "q": "fresh bread sign Hebrew bakery market"
     },
     {
       "grupo": 4,
-      "q": "Israel zoo sign Hebrew גן החיות"
+      "q": "Israel bakery shop window Hebrew"
     },
     {
       "grupo": 5,
-      "q": "juice stand Hebrew מיץ"
+      "q": "orange juice stand Tel Aviv Hebrew"
     },
     {
       "grupo": 5,
-      "q": "מיץ טבעי שלט"
+      "q": "Israel street food sign pita"
     },
     {
       "grupo": 6,
-      "q": "pita bakery sign Hebrew פיתה"
+      "q": "Israel dog park sign Hebrew"
     },
     {
       "grupo": 6,
-      "q": "טרי שלט שוק"
+      "q": "horse riding sign Israel Hebrew"
     },
     {
       "grupo": 7,
-      "q": "Mahane Yehuda market sign Hebrew"
+      "q": "Israel parking sign Hebrew"
     },
     {
       "grupo": 7,
-      "q": "Carmel market stall sign Hebrew"
+      "q": "Israel library sign Hebrew books"
     },
     {
       "grupo": 8,
-      "q": "bookstore sign Hebrew ספרים"
+      "q": "Israel old city gate sign Hebrew"
     },
     {
       "grupo": 8,
-      "q": "חנות ספרים שלט"
+      "q": "Jerusalem Old City sign Hebrew"
     },
     {
       "grupo": 9,
-      "q": "quiet please sign Hebrew שקט"
+      "q": "Israel shop sign Hebrew new"
     },
     {
       "grupo": 9,
-      "q": "no dogs sign Hebrew כלבים"
+      "q": "Israel cafe chalkboard Hebrew"
     },
     {
       "grupo": 10,
-      "q": "Israel milk carton Hebrew חלב"
+      "q": "Israel town sign Hebrew welcome city"
     },
     {
       "grupo": 10,
-      "q": "Hebrew food packaging label Israel"
-    },
-    {
-      "grupo": 11,
-      "q": "Hebrew restaurant menu board Israel"
-    },
-    {
-      "grupo": 11,
-      "q": "תפריט מסעדה ישראל"
-    },
-    {
-      "grupo": 12,
-      "q": "Israel city entrance sign Hebrew עיר"
-    },
-    {
-      "grupo": 12,
-      "q": "Hebrew sign family restaurant משפחה"
+      "q": "Israel kibbutz sign Hebrew"
     }
   ],
   "porBusca": 4
