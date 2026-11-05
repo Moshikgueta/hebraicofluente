@@ -794,6 +794,30 @@ html[data-a11y-movimento='reduzido'] .hf-trem { display: none; }
 .hf-resposta:disabled { opacity: .6; }
 .hf-resposta-errada { border-color: var(--amber); background: var(--amber-wash); animation: hf-sacode .4s; opacity: .75; }
 
+/* ── A corrida das palavras (05/11/2026) ───────────────────────────────────
+   A revisão rápida de Um dia em Israel (app/um-dia-em-israel/corrida): uma
+   pista escura, a palavra no centro de um anel que se esvazia em seis
+   segundos. Com "menos movimento" o anel some e fica só a contagem em
+   segundos, que é a mesma informação. */
+.hf-pista { border-radius: 24px; background: linear-gradient(#155059, #0E3B43); color: #FBF9F5; padding: 18px clamp(12px, 3vw, 24px); box-shadow: var(--sh-mock); }
+.hf-pista-go { min-height: 52px; padding: 0 28px; border-radius: 14px; background: #E7B65A; color: #0E3B43; font-family: var(--font-ui); font-weight: 700; font-size: 17px; }
+.hf-pista-palco { position: relative; display: grid; place-items: center; width: min(240px, 70vw); aspect-ratio: 1; margin-inline: auto; }
+.hf-pista-anel { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.hf-pista-anel-fundo { fill: none; stroke: rgba(251, 249, 245, .15); stroke-width: 6; }
+.hf-pista-anel-tempo { fill: none; stroke: #E7B65A; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.hf-pista-corre { animation: hf-pista-tempo var(--dur, 6s) linear forwards; }
+.hf-pista-parado { stroke-dashoffset: 1; }
+@keyframes hf-pista-tempo { to { stroke-dashoffset: 1; } }
+@media (prefers-reduced-motion: reduce) { .hf-pista-anel { display: none; } }
+html[data-a11y-movimento='reduzido'] .hf-pista-anel { display: none; }
+.hf-pista-palavra { font-family: var(--font-he); font-weight: 700; font-size: clamp(34px, 9vw, 46px); line-height: 1.1; direction: rtl; unicode-bidi: isolate; text-align: center; padding: 0 18px; }
+.hf-pista-segundos { position: absolute; bottom: 18%; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #BFD3CF; font-variant-numeric: tabular-nums; }
+.hf-pista-op { min-height: 52px; padding: 8px 14px; border-radius: 14px; border: 2px solid rgba(251, 249, 245, .35); background: transparent; color: #FBF9F5;
+  font-family: var(--font-ui); font-weight: 600; font-size: 16.5px; }
+.hf-pista-op:hover:not(:disabled) { border-color: #8FD6C8; }
+.hf-pista-op-certa { border-color: #8FD6C8; background: rgba(143, 214, 200, .18); }
+.hf-pista-op-errada { border-color: #F2A08A; color: #F2A08A; animation: hf-sacode .4s; }
+
 /* ── os cartões ilustrados (05/11/2026, aprovados pelo dono) ─────────────
    Uma cena desenhada em cima (components/ilustra/), o texto embaixo, sombra
    macia e o cartão que sobe um pouco no toque. A cena é um SVG em "meet",
