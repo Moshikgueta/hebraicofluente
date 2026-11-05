@@ -66,6 +66,7 @@ import { Match, type ResultadoJogo } from '@/components/game/Match';
 import { Blast } from '@/components/game/Blast';
 import { CacaLetra } from '@/components/game/CacaLetra';
 import { Pomar } from '@/components/game/Pomar';
+import { HebraicoNaVidaReal } from '@/components/learn/HebraicoNaVidaReal';
 import { perguntasDoPomar } from '@/lib/engine/pomar';
 import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 import { Batalha } from '@/components/game/Batalha';
@@ -241,6 +242,9 @@ export function AcademiaClient() {
      "Match" no painel seja um toque e não três. */
   const busca = useSearchParams();
   const pedido = busca?.get('jogo');
+  /* As duas abas de Praticar (05/11/2026, pedido do dono): as práticas e o
+     Hebraico na vida real. `?aba=vida-real` abre direto a segunda. */
+  const [aba, setAba] = useState<'praticas' | 'vida-real'>(busca?.get('aba') === 'vida-real' ? 'vida-real' : 'praticas');
   useEffect(() => {
     if (pedido && pedido in JOGOS) {
       setScreen({ kind: 'jogo', jogo: pedido as Jogo, rodada: 0 });
@@ -786,6 +790,21 @@ export function AcademiaClient() {
         </Card>
       ) : (
         <>
+          <div role="tablist" aria-label={tx.abas} className="inline-flex justify-self-start rounded-full border-2 border-line bg-[var(--card)] p-1 gap-1">
+            {(['praticas', 'vida-real'] as const).map(a => (
+              <button key={a} type="button" role="tab" aria-selected={aba === a} onClick={() => setAba(a)}
+                      className={`min-h-[44px] px-4 rounded-full font-ui text-[14.5px] font-semibold transition-colors
+                        ${aba === a ? 'bg-[var(--navy)] text-white' : 'text-ink hover:bg-[var(--sand)]'}`}>
+                {a === 'praticas' ? tx.abaPraticas : tx.abaVidaReal}
+              </button>
+            ))}
+          </div>
+
+          {aba === 'vida-real' ? (
+            <HebraicoNaVidaReal state={p.state} unlocked={unlocked} letrasDaCena={letrasDaCena}
+                                pomarFechado={fechados.pomar}
+                                onPomar={() => setScreen({ kind: 'jogo', jogo: 'pomar', rodada: 0 })} />
+          ) : (<>
           {/* Os jogos primeiro, e em cartões maiores: são eles que alguém
               abre quando tem cinco minutos e nenhuma paciência para escolher
               um modo. Os treinos por assunto continuam logo abaixo, para quem
@@ -802,7 +821,7 @@ export function AcademiaClient() {
               {tx.jogosDePratica}
             </h2>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
-              {(['caca', 'batalha', 'cursiva', 'pomar', 'match', 'blast', 'teste'] as const).map(jogo => (
+              {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
                 <li key={jogo}>
                   {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
                       jogo em cima, com as letras que o aluno já aprendeu. */}
@@ -1020,6 +1039,7 @@ export function AcademiaClient() {
               onClick={() => setScreen({ kind: 'palavras-a-mao' })}
             />
           </div>
+          </>)}
         </>
       )}
     </div>
