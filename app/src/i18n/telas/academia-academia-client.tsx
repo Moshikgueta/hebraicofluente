@@ -24,6 +24,9 @@ const pt = {
   jogoCursivaTitulo: 'Impressa × cursiva',
   jogoCursivaDesc: 'A mesma letra nos dois alfabetos: o do livro e o da mão.',
   jogoCursivaTreina: 'Ler a letra escrita à mão',
+  jogoPomarTitulo: 'Pomar das palavras',
+  jogoPomarDesc: 'Leia a palavra sem os pontos: cada acerto vale uma jogada num pomar de frutas de Israel.',
+  jogoPomarTreina: 'Ler palavras sem os pontos',
 
   abreCom: 'Abre com {n} letras',
   abreParecidas: 'Abre quando houver duas letras parecidas',
@@ -171,6 +174,9 @@ const en: Traducao<typeof pt> = {
   jogoCursivaTitulo: 'Print × cursive',
   jogoCursivaDesc: 'The same letter in both alphabets: the one in books and the one written by hand.',
   jogoCursivaTreina: 'Reading the handwritten letter',
+  jogoPomarTitulo: 'Word orchard',
+  jogoPomarDesc: 'Read the word without the points: each right answer earns a move in an orchard of Israeli fruit.',
+  jogoPomarTreina: 'Reading words without the points',
 
   abreCom: 'Opens with {n} letters',
   abreParecidas: 'Opens when there are two look-alike letters',
@@ -318,6 +324,9 @@ const es: Traducao<typeof pt> = {
   jogoCursivaTitulo: 'Imprenta × cursiva',
   jogoCursivaDesc: 'La misma letra en los dos alfabetos: el de los libros y el de la mano.',
   jogoCursivaTreina: 'Leer la letra escrita a mano',
+  jogoPomarTitulo: 'Huerto de las palabras',
+  jogoPomarDesc: 'Lee la palabra sin los puntos: cada acierto vale una jugada en un huerto de frutas de Israel.',
+  jogoPomarTreina: 'Leer palabras sin los puntos',
 
   abreCom: 'Se abre con {n} letras',
   abreParecidas: 'Se abre cuando haya dos letras parecidas',

@@ -65,6 +65,9 @@ import { rng } from '@/lib/engine/rng';
 import { Match, type ResultadoJogo } from '@/components/game/Match';
 import { Blast } from '@/components/game/Blast';
 import { CacaLetra } from '@/components/game/CacaLetra';
+import { Pomar } from '@/components/game/Pomar';
+import { perguntasDoPomar } from '@/lib/engine/pomar';
+import { alfabetoDe, palavrasLegiveis, vocabularioDoCurso } from '@/lib/engine/palavras';
 import { Batalha } from '@/components/game/Batalha';
 import { ImpressaCursiva } from '@/components/game/ImpressaCursiva';
 import { TestRun, RelatorioTeste, type ResultadoTeste } from '@/components/game/TestRun';
@@ -82,7 +85,7 @@ import { tx } from '@/i18n/telas/academia-academia-client';
    descobrir isso num `undefined` em produção. */
 type DadosDeJogo = ReturnType<typeof montarNovo>;
 type JogoDeBaralho = 'match' | 'blast' | 'teste';
-type JogoNovo = 'caca' | 'batalha' | 'cursiva';
+type JogoNovo = 'caca' | 'batalha' | 'cursiva' | 'pomar';
 type Jogo = JogoDeBaralho | JogoNovo;
 const DE_BARALHO = (j: Jogo): j is JogoDeBaralho =>
   j === 'match' || j === 'blast' || j === 'teste';
@@ -157,6 +160,14 @@ export const JOGOS: Record<Jogo, { titlePt: string; descPt: string; treinaPt: st
     titlePt: tx.jogoCursivaTitulo,
     descPt: tx.jogoCursivaDesc,
     treinaPt: tx.jogoCursivaTreina,
+    minimo: 3
+  },
+  /* O Pomar das palavras (05/11/2026, aprovado pelo dono): ler palavras para
+     ganhar jogadas num tabuleiro de frutas (lib/engine/pomar.ts). */
+  pomar: {
+    titlePt: tx.jogoPomarTitulo,
+    descPt: tx.jogoPomarDesc,
+    treinaPt: tx.jogoPomarTreina,
     minimo: 3
   }
 };
@@ -289,7 +300,8 @@ export function AcademiaClient() {
         falta = jogo === 'match' ? baralho.length < info.minimo : perguntas.length < info.minimo;
       } else {
         const d = fazerNovo(jogo, 0);
-        falta = jogo === 'caca' ? !d.cacada?.length : jogo === 'cursiva' ? !d.cursiva?.length : !d.batalha;
+        falta = jogo === 'caca' ? !d.cacada?.length : jogo === 'cursiva' ? !d.cursiva?.length
+          : jogo === 'pomar' ? !d.pomar?.length : !d.batalha;
       }
       if (!falta) continue;
       out[jogo] = unlocked.length < info.minimo
@@ -336,6 +348,7 @@ export function AcademiaClient() {
 
     const vazio = jogo === 'caca' ? !dados.cacada?.length
       : jogo === 'cursiva' ? !dados.cursiva?.length
+      : jogo === 'pomar' ? !dados.pomar?.length
       : !dados.batalha;
 
     if (vazio || unlocked.length < info.minimo) {
@@ -369,6 +382,9 @@ export function AcademiaClient() {
         {jogo === 'batalha' && dados.batalha && (
           <Batalha key={`ba-${screen.rodada}`} dados={dados.batalha}
                    onResposta={registrar} onFim={fim} />
+        )}
+        {jogo === 'pomar' && dados.pomar && (
+          <Pomar key={`po-${screen.rodada}`} perguntas={dados.pomar} onFim={fim} />
         )}
         {jogo === 'cursiva' && dados.cursiva && (
           <ImpressaCursiva key={`cu-${screen.rodada}`} rodadas={dados.cursiva}
@@ -824,6 +840,46 @@ export function AcademiaClient() {
             </ul>
           </section>
 
+          {/* Os jogos logo depois de Rever e ler (05/11/2026, pedido do dono):
+              antes vinham depois da lista dos textos e dos flashcards, longe do topo. */}
+          <section aria-labelledby="jogos" className="grid gap-3">
+            <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+              {tx.jogosDePratica}
+            </h2>
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
+              {(['caca', 'batalha', 'cursiva', 'pomar', 'match', 'blast', 'teste'] as const).map(jogo => (
+                <li key={jogo}>
+                  {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
+                      jogo em cima, com as letras que o aluno já aprendeu. */}
+                  <button
+                    type="button"
+                    disabled={!!fechados[jogo]}
+                    onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
+                    className={`hf-cartao w-full h-full text-left ${fechados[jogo] ? 'hf-cartao-fechado' : ''}`}
+                  >
+                    <CenaDoJogo jogo={jogo} letras={letrasDaCena} />
+                    <span className="grid gap-1.5 content-start p-4 pt-3.5">
+                      <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+                        {JOGOS[jogo].titlePt}
+                      </span>
+                      <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
+                        {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
+                      </span>
+                      <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+                        {JOGOS[jogo].descPt}
+                      </span>
+                      {fechados[jogo]
+                        ? <span className="font-ui text-[13px] font-semibold text-ink-body">
+                            <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
+                          </span>
+                        : <GymBest modeId={jogo} />}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           {/* Os textos do curso (05/11/2026, decisão do dono): todos aqui, cada
               um aberto depois de lido no lugar dele no curso, para reler e
               praticar de novo. Os trancados dizem em que módulo estão. */}
@@ -898,43 +954,6 @@ export function AcademiaClient() {
             </ul>
           </section>
 
-          <section aria-labelledby="jogos" className="grid gap-3">
-            <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              {tx.jogosDePratica}
-            </h2>
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
-              {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
-                <li key={jogo}>
-                  {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
-                      jogo em cima, com as letras que o aluno já aprendeu. */}
-                  <button
-                    type="button"
-                    disabled={!!fechados[jogo]}
-                    onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
-                    className={`hf-cartao w-full h-full text-left ${fechados[jogo] ? 'hf-cartao-fechado' : ''}`}
-                  >
-                    <CenaDoJogo jogo={jogo} letras={letrasDaCena} />
-                    <span className="grid gap-1.5 content-start p-4 pt-3.5">
-                      <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-                        {JOGOS[jogo].titlePt}
-                      </span>
-                      <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
-                        {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
-                      </span>
-                      <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-                        {JOGOS[jogo].descPt}
-                      </span>
-                      {fechados[jogo]
-                        ? <span className="font-ui text-[13px] font-semibold text-ink-body">
-                            <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
-                          </span>
-                        : <GymBest modeId={jogo} />}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </section>
 
           <h2 className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink mt-2">
             {tx.treinarPorAssunto}
@@ -1029,6 +1048,8 @@ function montarNovo(
      praticava sempre a mesma letra - o sorteio já era por peso. */
   if (jogo === 'caca') return { cacada: montarCacada(state, unlocked, rand, nivel) };
   if (jogo === 'cursiva') return { cursiva: montarCursiva(state, unlocked, rand, nivel) };
+  /* As palavras do curso que o aluno já lê, como no resto da Academia. */
+  if (jogo === 'pomar') return { pomar: perguntasDoPomar(palavrasLegiveis(vocabularioDoCurso(allLetters()), alfabetoDe(unlocked)), rand) };
   /* Vários pares por partida, e não um. `paresParaTreinar` põe primeiro o que
      ELE trocou de verdade e depois o que o conteúdo prevê. */
   /* O giro sai da mesma semente da rodada: cada partida nova traz outros
