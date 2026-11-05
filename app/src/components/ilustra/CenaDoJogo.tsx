@@ -13,6 +13,13 @@ export type JogoIlustrado = 'caca' | 'batalha' | 'cursiva' | 'match' | 'blast' |
 const HE = 'var(--font-he)';
 const CURSIVA = 'var(--font-he-cursive)';
 
+/* O símbolo hebraico de um assunto (os treinos por assunto da Academia) só
+   com letras que o aluno já tem: o מַ de "Sílabas" vira a primeira letra dele,
+   com a mesma vogal, enquanto o Mem não foi ensinado. */
+export function simboloComLetrasDoAluno(simbolo: string, letras: readonly string[]): string {
+  return simbolo.replace(/[\u05D0-\u05EA]/gu, c => (letras.includes(c) || !letras.length ? c : letras[0]!));
+}
+
 /** A letra `i` da lista, repetindo quando a lista é curta. */
 const L = (letras: readonly string[], i: number) => letras[i % Math.max(letras.length, 1)] ?? 'א';
 

@@ -37,7 +37,7 @@ import { useSearchParams } from 'next/navigation';
 import { PARES_DE_SOM } from '@/lib/engine/pares-de-som';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
-import { CenaDoJogo } from '@/components/ilustra/CenaDoJogo';
+import { CenaDoJogo, simboloComLetrasDoAluno } from '@/components/ilustra/CenaDoJogo';
 import { He } from '@/components/hebrew/He';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
@@ -936,28 +936,25 @@ export function AcademiaClient() {
           <ul className="grid gap-3 sm:grid-cols-2">
             {modes.map(({ mode, ready, whyNot }) => (
               <li key={mode.id}>
+                {/* Cartão ilustrado, parte 2 (05/11/2026): o símbolo do assunto
+                    numa medalha colorida, a cor fixa por assunto (COR_DO_ASSUNTO). */}
                 <button
                   type="button"
                   disabled={!ready}
                   onClick={() => start(mode)}
-                  className={`w-full h-full text-left rounded-[var(--r-lg)] border p-4 grid gap-1.5
-                    transition-colors
-                    ${ready
-                      ? 'border-line bg-surface hover:border-[var(--accent-soft)] hover:bg-[var(--accent-wash)]'
-                      : 'border-line-soft bg-surface-2 opacity-70 cursor-default'}`}
+                  className={`hf-topico w-full h-full text-left grid gap-1.5 ${ready ? '' : 'hf-topico-fechado'}`}
                 >
-                  <span className="flex items-center gap-2.5">
-                    <span aria-hidden className="w-9 h-9 rounded-[var(--r-md)] bg-surface-2
-                                                 grid place-items-center text-[16px] text-ink">
+                  <span className="flex items-center gap-3.5">
+                    <span aria-hidden className={`hf-medalha ${COR_DO_ASSUNTO[mode.id] ?? 'hf-medalha-teal'}`}>
                       {/[֐-׿]/.test(mode.icon)
                         /* A bare vowel mark has nothing to sit on and renders
                            as a stray dot in the corner of the tile; onCarrier
                            puts it on U+25CC, which is Unicode's own way of
                            showing a combining mark on its own. */
-                        ? <He size="inline">{onCarrier(mode.icon)}</He>
+                        ? <He size="inline" className="!text-current">{onCarrier(simboloComLetrasDoAluno(mode.icon, letrasDaCena))}</He>
                         : mode.icon}
                     </span>
-                    <span className="font-display text-[16px] font-bold text-ink">{mode.titlePt}</span>
+                    <span className="font-display text-[16.5px] font-semibold tracking-[-0.01em] text-ink">{mode.titlePt}</span>
                     {mode.timed && (
                       <span className="ml-auto font-ui text-[11px] uppercase tracking-[.07em]
                                        text-[var(--accent)]">{tx.tempoMarca}</span>
@@ -982,16 +979,19 @@ export function AcademiaClient() {
             <ReferenceCard
               title={tx.sonsESinais}
               desc={tx.refSonsDesc}
+              simbolo="♫" cor="hf-medalha-mar"
               onClick={() => setScreen({ kind: 'lab' })}
             />
             <ReferenceCard
               title={tx.escrita}
               desc={tx.refEscritaDesc}
+              simbolo="✎" cor="hf-medalha-oliva"
               onClick={() => setScreen({ kind: 'escrita' })}
             />
             <ReferenceCard
               title={tx.palavrasAMao}
               desc={tx.refPalavrasDesc}
+              simbolo="✍" cor="hf-medalha-flor"
               onClick={() => setScreen({ kind: 'palavras-a-mao' })}
             />
           </div>
@@ -1066,20 +1066,26 @@ function GymBest({ modeId }: { modeId: string }) {
 }
 
 function ReferenceCard({
-  title, desc, onClick
-}: { title: string; desc: string; onClick: () => void }) {
+  title, desc, simbolo, cor, onClick
+}: { title: string; desc: string; simbolo: string; cor: string; onClick: () => void }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="text-left rounded-[var(--r-lg)] border border-dashed border-line bg-surface
-                 p-4 grid gap-1 hover:bg-surface-2 transition-colors min-h-[88px]"
-    >
-      <span className="font-display text-[15.5px] font-bold text-ink">{title}</span>
-      <span className="font-ui text-[13px] leading-relaxed text-ink-muted">{desc}</span>
+    <button type="button" onClick={onClick} className="hf-topico hf-topico-ref text-left flex items-center gap-3.5 min-h-[88px]">
+      <span aria-hidden className={`hf-medalha ${cor}`}>{simbolo}</span>
+      <span className="grid gap-1 min-w-0">
+        <span className="font-display text-[15.5px] font-semibold text-ink">{title}</span>
+        <span className="font-ui text-[13px] leading-relaxed text-ink-muted">{desc}</span>
+      </span>
     </button>
   );
 }
+
+/* A cor da medalha de cada assunto (cartões ilustrados, parte 2). Fixa por
+   assunto, e não pela posição na lista: o aluno reconhece "Vogais" pela cor. */
+const COR_DO_ASSUNTO: Record<string, string> = {
+  revisao: 'hf-medalha-ouro', letras: 'hf-medalha-teal', vogais: 'hf-medalha-ouro', silabas: 'hf-medalha-mar',
+  palavras: 'hf-medalha-flor', fotos: 'hf-medalha-oliva', ouvir: 'hf-medalha-mar', parecidas: 'hf-medalha-terra',
+  construir: 'hf-medalha-teal', 'palavras-cursiva': 'hf-medalha-flor', digitar: 'hf-medalha-oliva', relogio: 'hf-medalha-terra'
+};
 
 /* O cronômetro do modo «contra o relógio».
  * ─────────────────────────────────────────────────────────────────────────
