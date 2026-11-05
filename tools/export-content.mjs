@@ -816,6 +816,9 @@ function main() {
       if (comPonto.some(l => !'בכךפףו'.includes(l))) {
         throw new Error(`cardapios.json: daguesh fora de בּ/כּ/פּ em ${c.id}: ${it.he}`);
       }
+      /* Os chatafim (ֱ ֲ ֳ) não entram (05/11/2026, pedido do dono): o curso
+         ensina a vogal simples, e é ela que vai no lugar (עַ, não עֲ). */
+      if (/[\u05B1-\u05B3]/u.test(it.he)) throw new Error(`cardapios.json: chataf em ${c.id}: ${it.he} (use a vogal simples)`);
       precos.add(it.preco);
     }
     if (precos.size < 3) throw new Error(`cardapios.json: ${c.id} precisa de pelo menos 3 preços diferentes`);

@@ -24,6 +24,9 @@
       "revisado": true,
       "itens": [
         { "desenho": "coffee", "he": "קָפֶה הָפוּךְ", "translit": "kafé hafúch", "pt": "café com leite", "preco": 14 },
+        { "desenho": "espresso", "he": "קָפֶה שָׁחוֹר", "translit": "kafé shachór", "pt": "café preto", "preco": 10 },
+        { "desenho": "cappuccino", "he": "קַפּוּצִ'ינוֹ", "translit": "kapuchíno", "pt": "cappuccino", "preco": 16 },
+        { "desenho": "americano", "he": "אָמֶרִיקָנוֹ", "translit": "amerikáno", "pt": "café americano", "preco": 12 },
         { "desenho": "tea", "he": "תֵה נַעְנָע", "translit": "te náana", "pt": "chá de hortelã", "preco": 10 },
         { "desenho": "sachlav", "he": "סַחְלָב", "translit": "sachláv", "pt": "sachlav (bebida quente de leite)", "preco": 16 },
         { "desenho": "rimonim", "he": "מִיץ רִימוֹנִים", "translit": "mits rimoním", "pt": "suco de romã", "preco": 18 },

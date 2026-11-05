@@ -44,22 +44,34 @@
     "en": "latte"
   },
   "cardapios/bebidas/itens/#1/pt": {
+    "pt": "café preto",
+    "en": "black coffee"
+  },
+  "cardapios/bebidas/itens/#2/pt": {
+    "pt": "cappuccino",
+    "en": "cappuccino"
+  },
+  "cardapios/bebidas/itens/#3/pt": {
+    "pt": "café americano",
+    "en": "americano"
+  },
+  "cardapios/bebidas/itens/#4/pt": {
     "pt": "chá de hortelã",
     "en": "mint tea"
   },
-  "cardapios/bebidas/itens/#2/pt": {
+  "cardapios/bebidas/itens/#5/pt": {
     "pt": "sachlav (bebida quente de leite)",
     "en": "sachlav (hot milk drink)"
   },
-  "cardapios/bebidas/itens/#3/pt": {
+  "cardapios/bebidas/itens/#6/pt": {
     "pt": "suco de romã",
     "en": "pomegranate juice"
   },
-  "cardapios/bebidas/itens/#4/pt": {
+  "cardapios/bebidas/itens/#7/pt": {
     "pt": "limonada",
     "en": "lemonade"
   },
-  "cardapios/bebidas/itens/#5/pt": {
+  "cardapios/bebidas/itens/#8/pt": {
     "pt": "água",
     "en": "water"
   },

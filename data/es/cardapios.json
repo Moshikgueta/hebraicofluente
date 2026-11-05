@@ -44,22 +44,34 @@
     "es": "café con leche"
   },
   "cardapios/bebidas/itens/#1/pt": {
+    "pt": "café preto",
+    "es": "café negro"
+  },
+  "cardapios/bebidas/itens/#2/pt": {
+    "pt": "cappuccino",
+    "es": "capuchino"
+  },
+  "cardapios/bebidas/itens/#3/pt": {
+    "pt": "café americano",
+    "es": "café americano"
+  },
+  "cardapios/bebidas/itens/#4/pt": {
     "pt": "chá de hortelã",
     "es": "té de menta"
   },
-  "cardapios/bebidas/itens/#2/pt": {
+  "cardapios/bebidas/itens/#5/pt": {
     "pt": "sachlav (bebida quente de leite)",
     "es": "sajlab (bebida caliente de leche)"
   },
-  "cardapios/bebidas/itens/#3/pt": {
+  "cardapios/bebidas/itens/#6/pt": {
     "pt": "suco de romã",
     "es": "jugo de granada"
   },
-  "cardapios/bebidas/itens/#4/pt": {
+  "cardapios/bebidas/itens/#7/pt": {
     "pt": "limonada",
     "es": "limonada"
   },
-  "cardapios/bebidas/itens/#5/pt": {
+  "cardapios/bebidas/itens/#8/pt": {
     "pt": "água",
     "es": "agua"
   },
