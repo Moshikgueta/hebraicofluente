@@ -809,7 +809,7 @@ function main() {
     if (!Array.isArray(c.itens) || c.itens.length < 4) throw new Error(`cardapios.json: ${c.id} precisa de pelo menos 4 itens`);
     const precos = new Set();
     for (const it of c.itens) {
-      if (!it.he || !it.translit || !it.pt || !Number.isInteger(it.preco) || it.preco <= 0) {
+      if (!it.he || !it.translit || !it.pt || !it.desenho || !Number.isInteger(it.preco) || it.preco <= 0) {
         throw new Error(`cardapios.json: item incompleto em ${c.id}: ${it.he ?? '?'}`);
       }
       const comPonto = [...NFC(it.he).matchAll(/([\u05D0-\u05EA])[\u05B0-\u05BB\u05C1\u05C2\u05C7]*\u05BC/gu)].map(m => m[1]);

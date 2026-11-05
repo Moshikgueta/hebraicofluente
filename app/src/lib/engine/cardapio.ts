@@ -1,47 +1,42 @@
 /* Ler cardápios (05/11/2026, pedido do dono).
  * ─────────────────────────────────────────────────────────────────────────
- * Cardápios como chegam em Israel: sem nikud, com o preço em shekels. O aluno
- * lê o nome em voz alta e reconhece o que é (קפה é "kafé"), e acha no
- * cardápio quanto custa uma coisa. Abre com o alfabeto dominado: todo
- * cardápio usa letras do alfabeto inteiro. data/cardapios.json.
+ * O quadro de um café em Tel Aviv, como chega em Israel: sem nikud, com o
+ * preço em shekels. Três abas (pratos de Israel, bebidas, nomes
+ * internacionais), cada item com um desenho. Abre com o alfabeto dominado:
+ * todo cardápio usa letras do alfabeto inteiro. data/cardapios.json.
  *
- * As perguntas saem do próprio cardápio, numa ordem fixa por cardápio:
- *   · "O que é <nome sem nikud>?", com o sentido de outros itens como
- *     alternativas erradas;
- *   · "Quanto custa <sentido>?", com outros preços do cardápio. */
+ * Dois modos na tela (components/learn/QuadroDoCafe.tsx):
+ *   · ler o quadro: tocar num prato mostra os pontos, a leitura e o sentido;
+ *   · fazer o pedido: os desenhos somem, o cliente pede um prato pelo
+ *     sentido, o aluno acha o nome no quadro e depois escolhe o preço.
+ * As regras do pedido moram aqui, sem tela, para os testes. */
 
-import type { ItemCompreensao } from '@/lib/content-publico';
-import { stripNikud } from '@/lib/hebrew';
-import { rng, shuffled } from './rng';
-import { tx } from '@/i18n/telas/motor-cardapio';
+import { shuffled } from './rng';
 
-export type ItemDoCardapio = { he: string; translit: string; pt: string; preco: number };
-export type Cardapio = { id: string; he: string; nomePt: string; tipoPt: string; itens: ItemDoCardapio[] };
+export type ItemDoCardapio = { desenho: string; he: string; translit: string; pt: string; preco: number };
+export type Cardapio = {
+  id: string; he: string; nomePt: string; tipoPt: string;
+  /** Aba de comidas com nome internacional: o item ganha a etiqueta. */
+  internacional?: boolean;
+  itens: ItemDoCardapio[];
+};
 
-export const PERGUNTAS_DE_CADA_TIPO = 2;
+/** Clientes por rodada do pedido. */
+export const CLIENTES_POR_RODADA = 4;
+/** Preços na escolha: o certo e mais dois do mesmo quadro. */
+export const OPCOES_DE_PRECO = 3;
 
 export const precoEm = (n: number) => `₪${n}`;
 
-export function perguntasDoCardapio(c: Cardapio): ItemCompreensao[] {
-  const rand = rng(`cardapio-${c.id}`);
-  const itens = c.itens.filter((it, i, a) => a.findIndex(x => x.pt === it.pt) === i);
-  const out: ItemCompreensao[] = [];
-  const [oQue, quanto] = [shuffled(itens, rand), shuffled(itens, rand)];
+/** Os pratos pedidos numa rodada: índices distintos do cardápio. */
+export function clientesDaRodada(c: Cardapio, rand: () => number = Math.random): number[] {
+  return shuffled(c.itens.map((_, i) => i), rand).slice(0, Math.min(CLIENTES_POR_RODADA, c.itens.length));
+}
 
-  for (const it of oQue.slice(0, PERGUNTAS_DE_CADA_TIPO)) {
-    const erradas = shuffled(itens.filter(x => x !== it), rand).slice(0, 2).map(x => x.pt);
-    const opcoes = shuffled([it.pt, ...erradas], rand);
-    const he = stripNikud(it.he);
-    out.push({ t: 'escolha', q: tx.oQueE(he), opcoes, certa: opcoes.indexOf(it.pt), porque: tx.porque(he, it.translit, it.pt, precoEm(it.preco)) });
-  }
-
-  const usados = new Set(out.map(p => p.q));
-  for (const it of quanto.filter(x => !usados.has(tx.oQueE(stripNikud(x.he)))).slice(0, PERGUNTAS_DE_CADA_TIPO)) {
-    const outros = [...new Set(itens.filter(x => x.preco !== it.preco).map(x => x.preco))];
-    const erradas = shuffled(outros, rand).slice(0, 2);
-    const opcoes = shuffled([it.preco, ...erradas], rand).map(precoEm);
-    const he = stripNikud(it.he);
-    out.push({ t: 'escolha', q: tx.quantoCusta(it.pt), opcoes, certa: opcoes.indexOf(precoEm(it.preco)), porque: tx.porque(he, it.translit, it.pt, precoEm(it.preco)) });
-  }
-  return out;
+/** As opções de preço para o item `i`: o certo e outros preços do quadro,
+ *  todos diferentes entre si. */
+export function opcoesDePreco(c: Cardapio, i: number, rand: () => number = Math.random): number[] {
+  const certo = c.itens[i]!.preco;
+  const outros = [...new Set(c.itens.map(x => x.preco).filter(p => p !== certo))];
+  return shuffled([certo, ...shuffled(outros, rand).slice(0, OPCOES_DE_PRECO - 1)], rand);
 }

@@ -1,50 +1,50 @@
 {
-  "_nota": "Ler cardápios (05/11/2026, pedido do dono): cardápios como chegam em Israel, SEM nikud, com o botão para mostrar os pontos. Abrem com o alfabeto dominado (as 22 letras). Daguesh só em בּ/כּ/פּ, como no resto do curso. `revisado` só é true depois de o dono conferir o hebraico; o exportador ignora os outros. Os exercícios saem de lib/engine/cardapio.ts. `pt`, `nomePt` e `tipoPt` têm tradução em data/en e data/es.",
+  "_nota": "Ler cardápios (05/11/2026, pedido do dono): o quadro de um café em Tel Aviv, como chega em Israel, SEM nikud, com o botão para mostrar os pontos. Três abas: pratos famosos de Israel, bebidas e comidas de nome internacional. Cada item tem um desenho (components/learn/QuadroDoCafe.tsx, pela chave `desenho`). Abrem com o alfabeto dominado (as 22 letras). Daguesh só em בּ/כּ/פּ, como no resto do curso. Os preços são exemplos, não preços de um café real. `revisado` só é true depois de o dono conferir o hebraico; o exportador ignora os outros. `pt`, `nomePt` e `tipoPt` têm tradução em data/en e data/es.",
   "cardapios": [
     {
-      "id": "cafe",
-      "he": "בֵּית קָפֶה",
-      "nomePt": "Café",
-      "tipoPt": "Cardápio de um café de bairro",
+      "id": "israel",
+      "he": "בֵּית קָפֶה הַיָם",
+      "nomePt": "Comida de Israel",
+      "tipoPt": "Pratos famosos de Israel",
       "revisado": true,
       "itens": [
-        { "he": "קָפֶה הָפוּךְ", "translit": "kafé hafúch", "pt": "café com leite", "preco": 14 },
-        { "he": "תֵה", "translit": "te", "pt": "chá", "preco": 10 },
-        { "he": "מִיץ תַפּוּזִים", "translit": "mits tapuzím", "pt": "suco de laranja", "preco": 16 },
-        { "he": "מַיִם", "translit": "máyim", "pt": "água", "preco": 8 },
-        { "he": "לֶחֶם וְחֶמְאָה", "translit": "léchem vechem'á", "pt": "pão com manteiga", "preco": 18 },
-        { "he": "סָלָט יְרָקוֹת", "translit": "salát yerakót", "pt": "salada de legumes", "preco": 36 },
-        { "he": "עוּגַת שׁוֹקוֹלָד", "translit": "ugát shokolád", "pt": "bolo de chocolate", "preco": 24 }
+        { "desenho": "falafel", "he": "פָלָאפֶל", "translit": "faláfel", "pt": "falafel", "preco": 18 },
+        { "desenho": "hummus", "he": "חוּמוּס", "translit": "chúmus", "pt": "homus", "preco": 28 },
+        { "desenho": "shakshuka", "he": "שַׁקְשׁוּקָה", "translit": "shakshúka", "pt": "shakshuka (ovos no molho de tomate)", "preco": 42 },
+        { "desenho": "sabich", "he": "סַבִּיח", "translit": "sabíach", "pt": "sabich (pita com berinjela e ovo)", "preco": 32 },
+        { "desenho": "burekas", "he": "בּוּרֵקָס", "translit": "burékas", "pt": "burekas (salgado folhado)", "preco": 8 },
+        { "desenho": "malabi", "he": "מַלַבִּי", "translit": "malabí", "pt": "malabi (creme de leite com água de rosas)", "preco": 18 }
       ]
     },
     {
-      "id": "falafel",
-      "he": "פָלָאפֶל",
-      "nomePt": "Falafel",
-      "tipoPt": "Cardápio de uma barraca de falafel",
+      "id": "bebidas",
+      "he": "בֵּית קָפֶה הַיָם",
+      "nomePt": "Bebidas",
+      "tipoPt": "Bebidas que se pedem em Israel",
       "revisado": true,
       "itens": [
-        { "he": "פָלָאפֶל", "translit": "faláfel", "pt": "falafel", "preco": 20 },
-        { "he": "חוּמוּס", "translit": "chúmus", "pt": "homus", "preco": 30 },
-        { "he": "פִּיתָה", "translit": "píta", "pt": "pão pita", "preco": 5 },
-        { "he": "סָלָט", "translit": "salát", "pt": "salada", "preco": 14 },
-        { "he": "קָפֶה שָׁחוֹר", "translit": "kafé shachór", "pt": "café preto", "preco": 10 },
-        { "he": "שְׁתִיָה קָרָה", "translit": "shtiyá kará", "pt": "bebida gelada", "preco": 8 }
+        { "desenho": "coffee", "he": "קָפֶה הָפוּךְ", "translit": "kafé hafúch", "pt": "café com leite", "preco": 14 },
+        { "desenho": "tea", "he": "תֵה נַעְנָע", "translit": "te náana", "pt": "chá de hortelã", "preco": 10 },
+        { "desenho": "sachlav", "he": "סַחְלָב", "translit": "sachláv", "pt": "sachlav (bebida quente de leite)", "preco": 16 },
+        { "desenho": "rimonim", "he": "מִיץ רִימוֹנִים", "translit": "mits rimoním", "pt": "suco de romã", "preco": 18 },
+        { "desenho": "limonada", "he": "לִימוֹנָדָה", "translit": "limonáda", "pt": "limonada", "preco": 14 },
+        { "desenho": "water", "he": "מַיִם", "translit": "máyim", "pt": "água", "preco": 8 }
       ]
     },
     {
-      "id": "padaria",
-      "he": "מַאֲפִיָה",
-      "nomePt": "Padaria",
-      "tipoPt": "Quadro de preços de uma padaria",
+      "id": "internacional",
+      "he": "בֵּית קָפֶה הַיָם",
+      "nomePt": "Nomes internacionais",
+      "tipoPt": "Comidas com nome internacional",
+      "internacional": true,
       "revisado": true,
       "itens": [
-        { "he": "לֶחֶם", "translit": "léchem", "pt": "pão", "preco": 14 },
-        { "he": "חַלָה", "translit": "chalá", "pt": "chalá (pão trançado)", "preco": 16 },
-        { "he": "פִּיתוֹת", "translit": "pitót", "pt": "pães pita", "preco": 10 },
-        { "he": "בּוּרֵקָס", "translit": "burékas", "pt": "burekas (salgado folhado)", "preco": 8 },
-        { "he": "עוּגִיוֹת", "translit": "ugiyót", "pt": "biscoitos", "preco": 22 },
-        { "he": "עוּגַת גְבִינָה", "translit": "ugát gviná", "pt": "bolo de queijo", "preco": 28 }
+        { "desenho": "pizza", "he": "פִּיצָה", "translit": "pítsa", "pt": "pizza", "preco": 45 },
+        { "desenho": "burger", "he": "הַמְבּוּרְגֶר", "translit": "hambúrger", "pt": "hambúrguer", "preco": 52 },
+        { "desenho": "sushi", "he": "סוּשִׁי", "translit": "súshi", "pt": "sushi", "preco": 48 },
+        { "desenho": "schnitzel", "he": "שְׁנִיצֶל", "translit": "shnítsel", "pt": "schnitzel (bife à milanesa)", "preco": 46 },
+        { "desenho": "pasta", "he": "פַּסְטָה", "translit": "pásta", "pt": "macarrão", "preco": 44 },
+        { "desenho": "cola", "he": "קוֹלָה", "translit": "kóla", "pt": "refrigerante de cola", "preco": 9 }
       ]
     }
   ]

@@ -1,102 +1,98 @@
 {
-  "cardapios/cafe/nomePt": {
-    "pt": "Café",
-    "en": "Coffee shop"
+  "cardapios/israel/nomePt": {
+    "pt": "Comida de Israel",
+    "en": "Israeli food"
   },
-  "cardapios/cafe/tipoPt": {
-    "pt": "Cardápio de um café de bairro",
-    "en": "Menu of a neighborhood coffee shop"
+  "cardapios/israel/tipoPt": {
+    "pt": "Pratos famosos de Israel",
+    "en": "Famous dishes of Israel"
   },
-  "cardapios/cafe/itens/#0/pt": {
-    "pt": "café com leite",
-    "en": "latte"
-  },
-  "cardapios/cafe/itens/#1/pt": {
-    "pt": "chá",
-    "en": "tea"
-  },
-  "cardapios/cafe/itens/#2/pt": {
-    "pt": "suco de laranja",
-    "en": "orange juice"
-  },
-  "cardapios/cafe/itens/#3/pt": {
-    "pt": "água",
-    "en": "water"
-  },
-  "cardapios/cafe/itens/#4/pt": {
-    "pt": "pão com manteiga",
-    "en": "bread and butter"
-  },
-  "cardapios/cafe/itens/#5/pt": {
-    "pt": "salada de legumes",
-    "en": "vegetable salad"
-  },
-  "cardapios/cafe/itens/#6/pt": {
-    "pt": "bolo de chocolate",
-    "en": "chocolate cake"
-  },
-  "cardapios/falafel/nomePt": {
-    "pt": "Falafel",
-    "en": "Falafel"
-  },
-  "cardapios/falafel/tipoPt": {
-    "pt": "Cardápio de uma barraca de falafel",
-    "en": "Menu of a falafel stand"
-  },
-  "cardapios/falafel/itens/#0/pt": {
+  "cardapios/israel/itens/#0/pt": {
     "pt": "falafel",
     "en": "falafel"
   },
-  "cardapios/falafel/itens/#1/pt": {
+  "cardapios/israel/itens/#1/pt": {
     "pt": "homus",
     "en": "hummus"
   },
-  "cardapios/falafel/itens/#2/pt": {
-    "pt": "pão pita",
-    "en": "pita bread"
+  "cardapios/israel/itens/#2/pt": {
+    "pt": "shakshuka (ovos no molho de tomate)",
+    "en": "shakshuka (eggs in tomato sauce)"
   },
-  "cardapios/falafel/itens/#3/pt": {
-    "pt": "salada",
-    "en": "salad"
+  "cardapios/israel/itens/#3/pt": {
+    "pt": "sabich (pita com berinjela e ovo)",
+    "en": "sabich (pita with eggplant and egg)"
   },
-  "cardapios/falafel/itens/#4/pt": {
-    "pt": "café preto",
-    "en": "black coffee"
-  },
-  "cardapios/falafel/itens/#5/pt": {
-    "pt": "bebida gelada",
-    "en": "cold drink"
-  },
-  "cardapios/padaria/nomePt": {
-    "pt": "Padaria",
-    "en": "Bakery"
-  },
-  "cardapios/padaria/tipoPt": {
-    "pt": "Quadro de preços de uma padaria",
-    "en": "Price board of a bakery"
-  },
-  "cardapios/padaria/itens/#0/pt": {
-    "pt": "pão",
-    "en": "bread"
-  },
-  "cardapios/padaria/itens/#1/pt": {
-    "pt": "chalá (pão trançado)",
-    "en": "challah (braided bread)"
-  },
-  "cardapios/padaria/itens/#2/pt": {
-    "pt": "pães pita",
-    "en": "pita breads"
-  },
-  "cardapios/padaria/itens/#3/pt": {
+  "cardapios/israel/itens/#4/pt": {
     "pt": "burekas (salgado folhado)",
-    "en": "bourekas (savory pastry)"
+    "en": "burekas (savory pastry)"
   },
-  "cardapios/padaria/itens/#4/pt": {
-    "pt": "biscoitos",
-    "en": "cookies"
+  "cardapios/israel/itens/#5/pt": {
+    "pt": "malabi (creme de leite com água de rosas)",
+    "en": "malabi (milk pudding with rose water)"
   },
-  "cardapios/padaria/itens/#5/pt": {
-    "pt": "bolo de queijo",
-    "en": "cheesecake"
+  "cardapios/bebidas/nomePt": {
+    "pt": "Bebidas",
+    "en": "Drinks"
+  },
+  "cardapios/bebidas/tipoPt": {
+    "pt": "Bebidas que se pedem em Israel",
+    "en": "Drinks people order in Israel"
+  },
+  "cardapios/bebidas/itens/#0/pt": {
+    "pt": "café com leite",
+    "en": "latte"
+  },
+  "cardapios/bebidas/itens/#1/pt": {
+    "pt": "chá de hortelã",
+    "en": "mint tea"
+  },
+  "cardapios/bebidas/itens/#2/pt": {
+    "pt": "sachlav (bebida quente de leite)",
+    "en": "sachlav (hot milk drink)"
+  },
+  "cardapios/bebidas/itens/#3/pt": {
+    "pt": "suco de romã",
+    "en": "pomegranate juice"
+  },
+  "cardapios/bebidas/itens/#4/pt": {
+    "pt": "limonada",
+    "en": "lemonade"
+  },
+  "cardapios/bebidas/itens/#5/pt": {
+    "pt": "água",
+    "en": "water"
+  },
+  "cardapios/internacional/nomePt": {
+    "pt": "Nomes internacionais",
+    "en": "International names"
+  },
+  "cardapios/internacional/tipoPt": {
+    "pt": "Comidas com nome internacional",
+    "en": "Foods with international names"
+  },
+  "cardapios/internacional/itens/#0/pt": {
+    "pt": "pizza",
+    "en": "pizza"
+  },
+  "cardapios/internacional/itens/#1/pt": {
+    "pt": "hambúrguer",
+    "en": "hamburger"
+  },
+  "cardapios/internacional/itens/#2/pt": {
+    "pt": "sushi",
+    "en": "sushi"
+  },
+  "cardapios/internacional/itens/#3/pt": {
+    "pt": "schnitzel (bife à milanesa)",
+    "en": "schnitzel (breaded cutlet)"
+  },
+  "cardapios/internacional/itens/#4/pt": {
+    "pt": "macarrão",
+    "en": "pasta"
+  },
+  "cardapios/internacional/itens/#5/pt": {
+    "pt": "refrigerante de cola",
+    "en": "cola"
   }
 }
