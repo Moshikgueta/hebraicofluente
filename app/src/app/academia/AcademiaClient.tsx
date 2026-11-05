@@ -37,6 +37,7 @@ import { useSearchParams } from 'next/navigation';
 import { PARES_DE_SOM } from '@/lib/engine/pares-de-som';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
+import { CenaDoJogo } from '@/components/ilustra/CenaDoJogo';
 import { He } from '@/components/hebrew/He';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
@@ -180,6 +181,8 @@ export function AcademiaClient() {
   );
 
   /* O desafio do dia, montado uma vez por dia (lib/engine/desafio.ts). */
+  /* As letras dos desenhos dos cartões: só as que o aluno já tem. */
+  const letrasDaCena = useMemo(() => unlocked.map(l => l.letter), [unlocked]);
   const desafio = useMemo(() => desafioDoDia(unlocked, p.weak, p.day, audioAvailable()),
     [unlocked.length, p.day]);
   const desafioFeito = desafioFeitoHoje(p.state, p.day);
@@ -896,33 +899,31 @@ export function AcademiaClient() {
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
               {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
                 <li key={jogo}>
+                  {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
+                      jogo em cima, com as letras que o aluno já aprendeu. */}
                   <button
                     type="button"
                     disabled={!!fechados[jogo]}
                     onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
-                    className={`w-full h-full text-left rounded-[18px] border border-line bg-[var(--card)]
-                               p-5 grid gap-1.5 content-start transition-[box-shadow,border-color]
-                               duration-[250ms]
-                               ${fechados[jogo] ? 'cursor-default bg-surface-2' : 'hover:shadow-[var(--sh)] hover:border-[var(--teal)]'}`}
+                    className={`hf-cartao w-full h-full text-left ${fechados[jogo] ? 'hf-cartao-fechado' : ''}`}
                   >
-                    <span aria-hidden className="w-10 h-10 rounded-[12px] bg-[var(--teal-soft)]
-                                                 grid place-items-center mb-1">
-                      <IconeJogo jogo={jogo} />
+                    <CenaDoJogo jogo={jogo} letras={letrasDaCena} />
+                    <span className="grid gap-1.5 content-start p-4 pt-3.5">
+                      <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+                        {JOGOS[jogo].titlePt}
+                      </span>
+                      <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
+                        {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
+                      </span>
+                      <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+                        {JOGOS[jogo].descPt}
+                      </span>
+                      {fechados[jogo]
+                        ? <span className="font-ui text-[13px] font-semibold text-ink-body">
+                            <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
+                          </span>
+                        : <GymBest modeId={jogo} />}
                     </span>
-                    <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-                      {JOGOS[jogo].titlePt}
-                    </span>
-                    <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
-                      {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
-                    </span>
-                    <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-                      {JOGOS[jogo].descPt}
-                    </span>
-                    {fechados[jogo]
-                      ? <span className="font-ui text-[13px] font-semibold text-ink-body">
-                          <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
-                        </span>
-                      : <GymBest modeId={jogo} />}
                   </button>
                 </li>
               ))}
@@ -1044,56 +1045,6 @@ function montarNovo(
      é o que autoriza, no fim, a frase "você confundia estas duas". */
   const batalha = montarBatalha(pares, Object.keys(state.confusions).length > 0, rand);
   return { batalha: { ...batalha, rodadas: [...batalha.rodadas, ...somRodadas] } };
-}
-
-/* Seis desenhos de traço, no peso do resto do sistema. Traço e não emoji: o
-   emoji muda de desenho em cada sistema operacional, e dois deles aqui
-   ficariam coloridos no meio de uma paleta que tem três cores. */
-function IconeJogo({ jogo }: { jogo: Jogo }) {
-  const comum = {
-    width: 20, height: 20, viewBox: '0 0 20 20', fill: 'none',
-    stroke: 'var(--teal)', strokeWidth: 1.5,
-    strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const,
-    'aria-hidden': true
-  };
-  if (jogo === 'match') return (
-    <svg {...comum}>
-      <rect x="2.4" y="4" width="6.6" height="12" rx="2" />
-      <rect x="11" y="4" width="6.6" height="12" rx="2" />
-      <path d="M9 10h2" />
-    </svg>
-  );
-  if (jogo === 'blast') return (
-    <svg {...comum}><path d="M11.2 2.4 4.6 11h4.6l-.8 6.6L15.4 9h-4.6l.4-6.6Z" /></svg>
-  );
-  /* Caça: a lupa sobre a grade. */
-  if (jogo === 'caca') return (
-    <svg {...comum}>
-      <circle cx="8.6" cy="8.6" r="5.2" />
-      <path d="m12.6 12.6 4.2 4.2" />
-    </svg>
-  );
-  /* Batalha: duas formas quase iguais, encostadas, e o traço que as separa. */
-  if (jogo === 'batalha') return (
-    <svg {...comum}>
-      <path d="M7.6 3.6v9a2.6 2.6 0 0 1-2.6 2.6H3.4" />
-      <path d="M16.6 3.6v9a2.6 2.6 0 0 1-2.6 2.6h-1.6" />
-      <path d="M10.1 2.6v14.8" strokeDasharray="2 2.4" />
-    </svg>
-  );
-  /* Impressa × cursiva: o quadrado do tipo e a curva da mão. */
-  if (jogo === 'cursiva') return (
-    <svg {...comum}>
-      <rect x="2.6" y="5" width="6.4" height="10" rx="1.2" />
-      <path d="M12 14.6c2.6-.6 4.4-2.6 4.4-5.2 0-2-1.2-3.4-2.6-3.4-1.2 0-2 1-2 2.4 0 3 3.4 4.2 5.2 4.2" />
-    </svg>
-  );
-  return (
-    <svg {...comum}>
-      <rect x="4" y="2.8" width="12" height="14.4" rx="2.4" />
-      <path d="M7.4 8.2h5.2M7.4 11.8h3.4" />
-    </svg>
-  );
 }
 
 function GymBest({ modeId }: { modeId: string }) {
