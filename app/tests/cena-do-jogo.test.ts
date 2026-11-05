@@ -31,3 +31,13 @@ describe('símbolo do assunto', () => {
     expect(simboloComLetrasDoAluno('◉', ['א'])).toBe('◉');
   });
 });
+
+describe('livro da leitura', () => {
+  it('o tipo sai do id da leitura', async () => {
+    const { tipoDaLeitura } = await import('@/components/ilustra/LivroDaLeitura');
+    expect(tipoDaLeitura('pl-2')).toBe('primeira');
+    expect(tipoDaLeitura('tx-3')).toBe('texto');
+    expect(tipoDaLeitura('tx2-3')).toBe('texto');
+    expect(tipoDaLeitura('rv-4')).toBe('revisao');
+  });
+});

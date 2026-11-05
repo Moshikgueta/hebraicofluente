@@ -38,6 +38,7 @@ import { PARES_DE_SOM } from '@/lib/engine/pares-de-som';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button, LinkButton } from '@/components/ui/Button';
 import { CenaDoJogo, simboloComLetrasDoAluno } from '@/components/ilustra/CenaDoJogo';
+import { LivroDaLeitura } from '@/components/ilustra/LivroDaLeitura';
 import { He } from '@/components/hebrew/He';
 import { Milestone } from '@/components/game/Game';
 import { ExercisePlayer, type PlayerResult } from '@/components/learn/ExercisePlayer';
@@ -838,18 +839,23 @@ export function AcademiaClient() {
             <ul className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
               {textosDoCurso.map(t => (
                 <li key={t.id} className="min-w-0">
+                  {/* Cartão ilustrado, parte 3: o livrinho do texto do módulo. */}
                   {t.aberta ? (
-                    <Link href={t.href}
-                          className="h-full grid content-start gap-1 rounded-[16px] border border-line bg-[var(--card)] p-4 min-h-[76px]
-                                     transition-[box-shadow,border-color] duration-200 hover:shadow-[var(--sh)] hover:border-[var(--teal)]">
-                      <span className="font-ui text-[12px] font-semibold uppercase tracking-[.06em] text-[var(--teal-ink)]">✓ {tx.moduloN(t.modulo)}</span>
-                      <span className="font-display text-[15.5px] font-semibold leading-snug text-ink">{t.titulo}</span>
+                    <Link href={t.href} className="hf-topico h-full flex items-center gap-3.5 min-h-[76px]">
+                      <LivroDaLeitura tipo="texto" />
+                      <span className="grid gap-1 min-w-0">
+                        <span className="font-ui text-[12px] font-semibold uppercase tracking-[.06em] text-[var(--teal-ink)]">✓ {tx.moduloN(t.modulo)}</span>
+                        <span className="font-display text-[15.5px] font-semibold leading-snug text-ink">{t.titulo}</span>
+                      </span>
                     </Link>
                   ) : (
-                    <div className="h-full grid content-start gap-1 rounded-[16px] border border-dashed border-line bg-[var(--paper)] p-4 min-h-[76px]">
-                      <span className="font-ui text-[12px] font-semibold uppercase tracking-[.06em] text-ink-muted">{tx.moduloN(t.modulo)}</span>
-                      <span className="font-display text-[15.5px] font-semibold leading-snug text-ink-muted">{t.titulo}</span>
-                      <span className="font-ui text-[12.5px] leading-snug text-ink-muted">{t.porque}</span>
+                    <div className="hf-topico hf-topico-fechado h-full flex items-center gap-3.5 min-h-[76px] border-dashed">
+                      <LivroDaLeitura tipo="texto" trancado />
+                      <span className="grid gap-1 min-w-0">
+                        <span className="font-ui text-[12px] font-semibold uppercase tracking-[.06em] text-ink-muted">{tx.moduloN(t.modulo)}</span>
+                        <span className="font-display text-[15.5px] font-semibold leading-snug text-ink-muted">{t.titulo}</span>
+                        <span className="font-ui text-[12.5px] leading-snug text-ink-muted">{t.porque}</span>
+                      </span>
                     </div>
                   )}
                 </li>
