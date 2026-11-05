@@ -821,7 +821,9 @@ export function AcademiaClient() {
               {tx.jogosDePratica}
             </h2>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
-              {(['caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
+              {/* O Pomar das palavras em primeiro (05/11/2026, pedido do dono): antes
+                  só aparecia na aba Hebraico na vida real. Continua lá também. */}
+              {(['pomar', 'caca', 'batalha', 'cursiva', 'match', 'blast', 'teste'] as const).map(jogo => (
                 <li key={jogo}>
                   {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
                       jogo em cima, com as letras que o aluno já aprendeu. */}
