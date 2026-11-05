@@ -375,21 +375,55 @@ jobs:
 
       # Teto do passo (23/10/2026): o download do Chromium pendurou duas vezes no
       # mesmo dia e a publicação ficou parada até ser cancelada à mão, segurando
-      # a fila das seguintes. Com o teto, ela falha em vez de travar.
+      # a fila das seguintes. Com o teto, ela falha em vez de travar. Desde
+      # 05/11/2026 o passo nem chega a ele: ver o comentário dentro do `run`.
       - name: E-book no site
         if: steps.guard.outputs.ok == 'true'
         timeout-minutes: 20
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick >/dev/null
           ( cd editorial && npm ci --ignore-scripts --no-audit --no-fund )
-          # Cada tentativa tem 5 minutos; um download pendurado é morto e tentado de novo.
+          # O Chromium do livro (05/11/2026, depois de duas publicações caídas no
+          # mesmo dia). O navegador vem do cache, então o que pendurava era quase
+          # certamente o `--with-deps`, o apt-get das bibliotecas do sistema, que
+          # o `timeout` sem `-k` não matava (17 minutos numa tentativa de 5), e
+          # cujo resto derrubava as tentativas seguintes em um segundo. A saída
+          # ia para /dev/null, então não há como ter certeza.
+          # Agora:
+          #   1. as bibliotecas vão à parte, com teto e `-k` (mata de vez), e não
+          #      derrubam a publicação: a máquina do GitHub já traz quase todas,
+          #      porque já traz o Google Chrome;
+          #   2. o navegador é baixado sem o apt-get, em até duas tentativas de 4
+          #      minutos com `-k`, apagando a trava que uma tentativa morta deixa
+          #      (no pior caso o passo inteiro fica em uns 14 minutos, abaixo do
+          #      teto de 20; num dia normal ele leva 44 segundos);
+          #   3. a saída vai para um arquivo, e o fim dele aparece no log quando
+          #      falha, para a próxima vez se saber o porquê;
+          #   4. se ainda assim não vier, o livro é montado com o Google Chrome
+          #      da própria máquina, em vez de a publicação inteira cair.
           PW="playwright@$(cd editorial && node -p "require('./package.json').dependencies['playwright-core']")"
-          for tentativa in 1 2 3; do
-            if ( cd editorial && timeout 300 npx --yes "$PW" install --with-deps chromium >/dev/null 2>&1 ); then break; fi
-            echo "Chromium: a tentativa $tentativa falhou ou passou de 5 minutos."
-            if [ "$tentativa" = 3 ]; then echo "Chromium não instalou em 3 tentativas." >&2; exit 1; fi
+          LOG_PW="$RUNNER_TEMP/playwright-install.log"
+          if ! ( cd editorial && timeout -k 15 240 npx --yes "$PW" install-deps chromium >"$LOG_PW" 2>&1 ); then
+            echo "::warning::As bibliotecas do Chromium não instalaram em 4 minutos; segue com as da máquina."
+            tail -n 20 "$LOG_PW" || true
+          fi
+          HF_CHROMIUM=""
+          for tentativa in 1 2; do
+            rm -rf "$HOME/.cache/ms-playwright/__dirlock"
+            if ( cd editorial && timeout -k 15 240 npx --yes "$PW" install chromium >"$LOG_PW" 2>&1 ); then
+              HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))" || true)"
+              [ -x "$HF_CHROMIUM" ] && break
+              HF_CHROMIUM=""
+            fi
+            echo "Chromium: a tentativa $tentativa falhou ou passou de 4 minutos."
+            tail -n 20 "$LOG_PW" || true
           done
-          export HF_CHROMIUM="$(cd editorial && node -e "import('playwright-core').then(m => console.log(m.chromium.executablePath()))")"
+          if [ -z "$HF_CHROMIUM" ]; then
+            HF_CHROMIUM="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser || true)"
+            if [ -z "$HF_CHROMIUM" ]; then echo "Chromium não instalou em 2 tentativas, e a máquina não tem Chrome." >&2; exit 1; fi
+            echo "::warning::O Chromium do Playwright não veio; o livro é montado com $HF_CHROMIUM."
+          fi
+          export HF_CHROMIUM
           bash scripts/ebook-no-site.sh
           # As imagens da página de venda do livro, tiradas do livro montado
           # (scripts/vitrine-do-livro.mjs): nunca entram no git.
