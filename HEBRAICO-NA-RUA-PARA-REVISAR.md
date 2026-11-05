@@ -56,4 +56,4 @@ avisos de minas, rótulos de marca e textos pequenos demais para o celular.
 | rua-yam | יָם (mar) | nenhuma | Placas de estrada para o mar Morto (ים המלח) e Jerusalém | Un E pour Encyclopédieur, CC0 |
 | rua-gan | גַן (jardim) | יָפֶה e, no texto pequeno, גַג, עֵץ, שֵׁם, עַל, זֶה, אֶחָד, שָׁנָה, יֶלֶד, גָדוֹל, קָטָן | Placa do antigo jardim de infância Gan Yafa (גן יפה), Givatayim | אורי מ., CC BY-SA 4.0 |
 
-As duas estão em `data/hebraico-na-rua.json` com `aprovada: false`.
+Aprovadas pelo dono em 05/11/2026.

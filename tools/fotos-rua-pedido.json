@@ -1,85 +1,109 @@
 {
-  "_nota": "O que a Action 'Fotos das missões' procura no Wikimedia Commons para o Hebraico na rua (28/10/2026): placas, letreiros, cardápios e rótulos com hebraico grande e legível. O grupo só organiza a busca. Só licenças livres (domínio público, CC0, CC BY, CC BY-SA). O dono escolhe depois, em HEBRAICO-NA-RUA-PARA-REVISAR.md. Segunda rodada (05/11/2026, pedido do dono: mais placas, cardápios e rótulos para ler sem nikud): buscas voltadas para palavras que o curso já ensina.",
+  "_nota": "O que a Action 'Fotos das missões' procura no Wikimedia Commons para o Hebraico na rua (28/10/2026): placas, letreiros, cardápios e rótulos com hebraico grande e legível. O grupo só organiza a busca. Só licenças livres (domínio público, CC0, CC BY, CC BY-SA). O dono escolhe depois, em HEBRAICO-NA-RUA-PARA-REVISAR.md.",
   "buscas": [
     {
       "grupo": 1,
-      "q": "Israel national park sign Hebrew גן לאומי"
+      "q": "Hebrew street name sign Tel Aviv"
     },
     {
       "grupo": 1,
-      "q": "Hayarkon park sign Hebrew"
+      "q": "Jerusalem street sign Hebrew Arabic English"
+    },
+    {
+      "grupo": 1,
+      "q": "Israel road sign Hebrew"
     },
     {
       "grupo": 2,
-      "q": "Israel beach sign Hebrew חוף"
+      "q": "Hebrew shop sign storefront"
     },
     {
       "grupo": 2,
-      "q": "Tel Aviv beach sign Hebrew sea"
+      "q": "Israeli bakery sign Hebrew"
+    },
+    {
+      "grupo": 2,
+      "q": "pharmacy sign Hebrew Israel"
     },
     {
       "grupo": 3,
-      "q": "Israel nature reserve sign Hebrew mountain"
+      "q": "Hebrew menu cafe Israel"
     },
     {
       "grupo": 3,
-      "q": "Mount Carmel sign Hebrew"
+      "q": "falafel stand sign Hebrew"
     },
     {
       "grupo": 4,
-      "q": "fresh bread sign Hebrew bakery market"
+      "q": "Israel bus stop sign Hebrew"
     },
     {
       "grupo": 4,
-      "q": "Israel bakery shop window Hebrew"
+      "q": "Israel Railways station sign Hebrew"
     },
     {
       "grupo": 5,
-      "q": "orange juice stand Tel Aviv Hebrew"
+      "q": "Shalom sign Hebrew"
     },
     {
       "grupo": 5,
-      "q": "Israel street food sign pita"
+      "q": "Hebrew welcome sign Israel"
     },
     {
       "grupo": 6,
-      "q": "Israel dog park sign Hebrew"
+      "q": "Hebrew graffiti wall Tel Aviv"
     },
     {
       "grupo": 6,
-      "q": "horse riding sign Israel Hebrew"
+      "q": "Hebrew product label supermarket Israel"
     },
     {
       "grupo": 7,
-      "q": "Israel parking sign Hebrew"
+      "q": "Israel coffee shop sign Hebrew"
     },
     {
       "grupo": 7,
-      "q": "Israel library sign Hebrew books"
+      "q": "קפה שלט"
+    },
+    {
+      "grupo": 7,
+      "q": "ice cream shop sign Israel"
+    },
+    {
+      "grupo": 7,
+      "q": "גלידה שלט"
     },
     {
       "grupo": 8,
-      "q": "Israel old city gate sign Hebrew"
+      "q": "שבת שלום שלט"
     },
     {
       "grupo": 8,
-      "q": "Jerusalem Old City sign Hebrew"
+      "q": "Shabbat Shalom sign"
+    },
+    {
+      "grupo": 8,
+      "q": "בית ספר שלט"
+    },
+    {
+      "grupo": 8,
+      "q": "school sign Hebrew Israel"
     },
     {
       "grupo": 9,
-      "q": "Israel shop sign Hebrew new"
+      "q": "מים שלט"
     },
     {
       "grupo": 9,
-      "q": "Israel cafe chalkboard Hebrew"
+      "q": "drinking water sign Hebrew"
     },
     {
-      "grupo": 10,
-      "q": "Israel town sign Hebrew welcome city"
+      "grupo": 9,
+      "q": "רחוב שלט"
     },
     {
-      "grupo": 10,
-      "q": "Israel kibbutz sign Hebrew"
+      "grupo": 9,
+      "q": "Hebrew sign bread bakery shop"
     }
   ],
   "porBusca": 4

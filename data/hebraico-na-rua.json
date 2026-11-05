@@ -141,7 +141,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Signalisation_routi%C3%A8re_en_Isra%C3%ABl_Jerusalem,_Dead_Sea.JPG",
       "largura": 1200,
       "altura": 900,
-      "aprovada": false
+      "aprovada": true
     },
     {
       "id": "rua-gan",
@@ -169,7 +169,7 @@
       "pagina": "https://commons.wikimedia.org/wiki/File:Gan_Yafa_Givatayim_White_Sign.jpg",
       "largura": 901,
       "altura": 1200,
-      "aprovada": false
+      "aprovada": true
     }
   ]
 }
