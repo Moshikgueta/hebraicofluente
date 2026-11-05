@@ -8,11 +8,13 @@
  *   · Fazer o pedido: os desenhos somem. O cliente pede um prato pelo
  *     sentido, o aluno acha o nome no quadro e depois escolhe o preço. Quem
  *     acerta os dois de primeira ganha a estrela daquele cliente.
+ * Os preços vêm por extenso em hebraico (precoPorExtenso), sem os pontos
+ * como o resto do quadro.
  * Sem nota e nada no progresso: é leitura. */
 
 import { useState } from 'react';
 import { DesenhoDoCafe } from './DesenhosDoCafe';
-import { clientesDaRodada, opcoesDePreco, precoEm, type Cardapio } from '@/lib/engine/cardapio';
+import { clientesDaRodada, opcoesDePreco, precoPorExtenso, type Cardapio } from '@/lib/engine/cardapio';
 import { stripNikud } from '@/lib/hebrew';
 import { tocarResposta } from '@/lib/som-do-acerto';
 import { tx } from '@/i18n/telas/academia-cardapios';
@@ -149,7 +151,7 @@ export function QuadroDoCafe({ cardapios }: { cardapios: Cardapio[] }) {
               </p>
             ) : (
               <p className="m-0 font-ui text-[16px] leading-snug text-[#FBF9F5]">
-                <span lang="he" dir="rtl" className="he text-[1.2em]">{stripNikud(alvo!.he)}</span> ({alvo!.translit}) {tx.custa} <b>{precoEm(alvo!.preco)}</b>. {limpoAgora ? tx.naPrimeira : tx.certoAgora}
+                <span lang="he" dir="rtl" className="he text-[1.2em]">{stripNikud(alvo!.he)}</span> ({alvo!.translit}) {tx.custa} <span lang="he" dir="rtl" className="he text-[1.15em] font-bold">{precoPorExtenso(alvo!.preco)}</span>. {limpoAgora ? tx.naPrimeira : tx.certoAgora}
               </p>
             )}
             <Estrelas jogo={jogo} />
@@ -159,9 +161,9 @@ export function QuadroDoCafe({ cardapios }: { cardapios: Cardapio[] }) {
                   const errado = jogo.erradosPreco.includes(p);
                   return (
                     <button key={p} type="button" onClick={() => escolherPreco(p)} disabled={errado}
-                            className={`min-h-[52px] min-w-[88px] px-4 rounded-[14px] border-2 font-display text-[22px] font-bold tabular-nums
+                            className={`min-h-[52px] min-w-[88px] px-4 rounded-[14px] border-2 text-[21px]
                               ${errado ? 'hf-quadro-erro border-[#F2A08A] text-[#F2A08A]' : 'border-white/35 text-[#E7B65A]'}`}>
-                      {precoEm(p)}
+                      <span lang="he" dir="rtl" className="he">{mostra(precoPorExtenso(p))}</span>
                     </button>
                   );
                 })}
@@ -194,7 +196,7 @@ export function QuadroDoCafe({ cardapios }: { cardapios: Cardapio[] }) {
                           ${errado ? 'hf-quadro-erro bg-[#F2A08A]/12 outline-2 outline outline-[#F2A08A]' : ''}`}>
                   {!escondeDesenhos && <DesenhoDoCafe chave={it.desenho} />}
                   <Giz className="text-[26px] sm:text-[30px] leading-tight">{mostra(it.he)}</Giz>
-                  {!escondeDesenhos && <span className="font-display text-[19px] font-bold text-[#E7B65A] tabular-nums" dir="ltr">{precoEm(it.preco)}</span>}
+                  {!escondeDesenhos && <Giz className="text-[18px] sm:text-[19px] leading-snug !text-[#E7B65A]">{mostra(precoPorExtenso(it.preco))}</Giz>}
                   {abertoAqui && (
                     <span className="grid gap-0.5 font-ui text-[15px] leading-snug text-[#8FD6C8]">
                       <Giz className="text-[24px] !text-[#8FD6C8]">{it.he}</Giz>
