@@ -795,6 +795,46 @@ export function AcademiaClient() {
               existe "jogo de baralho" e "jogo de reconhecimento" - existe o
               que ele quer jogar agora. A divisão é do código, e o código não
               é assunto dele. */}
+          {/* Os jogos em primeiro lugar e em destaque (05/11/2026, pedido do dono):
+              antes vinham depois da lista dos textos e dos flashcards, longe do topo. */}
+          <section aria-labelledby="jogos" className="grid gap-3">
+            <h2 id="jogos" className="font-display text-[23px] sm:text-[26px] font-bold tracking-[-0.02em] text-ink">
+              {tx.jogosDePratica}
+            </h2>
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
+              {(['caca', 'batalha', 'cursiva', 'pomar', 'match', 'blast', 'teste'] as const).map(jogo => (
+                <li key={jogo}>
+                  {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
+                      jogo em cima, com as letras que o aluno já aprendeu. */}
+                  <button
+                    type="button"
+                    disabled={!!fechados[jogo]}
+                    onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
+                    className={`hf-cartao w-full h-full text-left ${fechados[jogo] ? 'hf-cartao-fechado' : ''}`}
+                  >
+                    <CenaDoJogo jogo={jogo} letras={letrasDaCena} />
+                    <span className="grid gap-1.5 content-start p-4 pt-3.5">
+                      <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
+                        {JOGOS[jogo].titlePt}
+                      </span>
+                      <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
+                        {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
+                      </span>
+                      <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
+                        {JOGOS[jogo].descPt}
+                      </span>
+                      {fechados[jogo]
+                        ? <span className="font-ui text-[13px] font-semibold text-ink-body">
+                            <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
+                          </span>
+                        : <GymBest modeId={jogo} />}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           {/* As três portas que vieram da barra (28/10/2026, navegação em quatro
               portas): a revisão, a leitura e as palavras moram aqui agora. A
               revisão vem primeiro e diz quantos itens esperam. */}
@@ -835,46 +875,6 @@ export function AcademiaClient() {
                     <span className="font-display text-[16.5px] font-semibold text-ink">{titulo}</span>
                     <span className={`font-ui text-[13px] leading-snug ${destaque ? 'text-[var(--gold-ink)] font-semibold' : 'text-ink-muted'}`}>{desc}</span>
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Os jogos logo depois de Rever e ler (05/11/2026, pedido do dono):
-              antes vinham depois da lista dos textos e dos flashcards, longe do topo. */}
-          <section aria-labelledby="jogos" className="grid gap-3">
-            <h2 id="jogos" className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-              {tx.jogosDePratica}
-            </h2>
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
-              {(['caca', 'batalha', 'cursiva', 'pomar', 'match', 'blast', 'teste'] as const).map(jogo => (
-                <li key={jogo}>
-                  {/* Cartão ilustrado (05/11/2026, aprovado pelo dono): a cena do
-                      jogo em cima, com as letras que o aluno já aprendeu. */}
-                  <button
-                    type="button"
-                    disabled={!!fechados[jogo]}
-                    onClick={() => setScreen({ kind: 'jogo', jogo, rodada: 0 })}
-                    className={`hf-cartao w-full h-full text-left ${fechados[jogo] ? 'hf-cartao-fechado' : ''}`}
-                  >
-                    <CenaDoJogo jogo={jogo} letras={letrasDaCena} />
-                    <span className="grid gap-1.5 content-start p-4 pt-3.5">
-                      <span className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-                        {JOGOS[jogo].titlePt}
-                      </span>
-                      <span className="font-ui text-[12.5px] font-semibold text-[var(--teal-ink)]">
-                        {tx.treina(JOGOS[jogo].treinaPt.toLowerCase())}
-                      </span>
-                      <span className="font-ui text-[13.5px] leading-[1.5] text-ink-muted">
-                        {JOGOS[jogo].descPt}
-                      </span>
-                      {fechados[jogo]
-                        ? <span className="font-ui text-[13px] font-semibold text-ink-body">
-                            <IconeCadeado size={14} className="inline -mt-0.5 mr-1" />{fechados[jogo]}
-                          </span>
-                        : <GymBest modeId={jogo} />}
-                    </span>
-                  </button>
                 </li>
               ))}
             </ul>
