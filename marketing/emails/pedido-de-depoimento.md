@@ -1,6 +1,8 @@
 # Pedido de depoimento (semana 7 do plano, 07/12 a 13/12)
 
-Rascunho para o dono aprovar (23/10/2026). Nada é enviado sem a aprovação dele. Skill usada:
+**Aprovado pelo dono em 28/10/2026**, sem a frase dos "15 minutos" e sem o parágrafo para quem não
+começou. O dono envia, do e-mail dele. Primeiro envio: Gabriela e Sammily (se já estudaram); o José
+só depois de começar o curso. Skill usada:
 `emails` (tom e estrutura) e as regras do `CLAUDE.md` (depoimentos, 29/09/2026).
 
 ## Para quem
@@ -40,7 +42,7 @@ leva até ele.
 > Aqui é o Moshik, do Hebraico Fluente. Faz umas semanas que você começou o curso, e eu queria
 > saber como está indo.
 >
-> Se você já passou pelas primeiras letras, tenho um pedido: me conte, em poucas linhas, o que
+> Tenho um pedido: me conte, em poucas linhas, o que
 > mudou desde o começo. Pode ser uma palavra que você leu sozinho, uma dificuldade que ficou para
 > trás ou algo que ainda está difícil. Tudo me ajuda a melhorar o curso.
 >
@@ -50,9 +52,6 @@ leva até ele.
 > Lá você escolhe como assinar (nome e cidade, só as iniciais ou "Aluno do curso") e decide, numa
 > caixa à parte, se eu posso publicar ou não. Se não marcar, o texto fica só comigo. E você pode
 > apagar quando quiser.
->
-> Se ainda não deu tempo de começar, sem problema: a primeira lição leva uns 15 minutos e começa
-> aqui: https://hebraicofluente.com.br/inicio
 >
 > Obrigado,
 > Moshik

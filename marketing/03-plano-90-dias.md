@@ -28,7 +28,7 @@ repetida, não por significância estatística fina (skill `ab-testing`).
 | Tempo do dono: gravar, aprovar, parceiros | 6 a 8 h por semana | - |
 | Código e documentos (Claude, nas sessões) | por pedido do dono | - |
 | Instagram, ManyChat, Resend, Cloudflare | já em uso | os planos atuais (sem mudança) |
-| Search Console | conta gratuita do Google, ligada pelo dono | 0 |
+| Search Console | conta gratuita do Google, ligada pelo dono (verificada em 26/10/2026) | 0 |
 | Verba de anúncio | só a partir da semana 9, teto definido pelo dono | a definir (decisão 5) |
 | Advogado / contador | Privacidade nova; condição de grupo e comissão, se houver | o que já se paga a eles |
 

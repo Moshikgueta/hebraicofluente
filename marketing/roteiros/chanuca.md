@@ -1,6 +1,6 @@
 # Chanucá 2026 (semana 6 do plano, a festa começa na noite de 04/12)
 
-Rascunho para o dono aprovar (24/10/2026). Nada é publicado sem a aprovação dele. Skills usadas:
+**Carrossel aprovado pelo dono em 26/10/2026**, sem as "quatro letras" do pião. O dono publica. Skills usadas:
 `social` e `content-strategy`. Os Reels estão pausados a pedido do dono, então a proposta é um
 carrossel e uma sequência de stories, que ele publica sem gravar vídeo. Se os Reels voltarem até
 lá, o roteiro 3 vira um Reel curto.
@@ -29,8 +29,8 @@ completa continua na lição.
 3. **Palavra por palavra:** חַג = festa; שָׂמֵחַ = alegre. "Em hebraico o adjetivo vem depois."
 4. **Quando usar:** "Serve para as festas alegres do calendário: Pessach, Sucot, Shavuot e Chanucá.
    Em dia de jejum ou de luto, não se diz." (o mesmo que a nota do curso)
-5. **A letra do pião:** "No pião de Chanucá há quatro letras. Uma delas é o ג, Gimel: quando o pião
-   cai nela, quem jogou leva tudo."
+5. **A letra do pião:** "No pião de Chanucá, uma das letras é o ג, Gimel: quando o pião cai nela,
+   quem jogou leva tudo."
 6. **Fecho (pedido do dono, 26/10: mais forte, para seguir e salvar; sem "mande para um amigo"):**
    - Em cima, grande: **"Salve para a sexta à noite."**
    - Embaixo: "A frase, o jeito de dizer e quando não usar ficam guardados aqui."
@@ -51,8 +51,7 @@ Comente LER que eu te mando o link." (O ManyChat do LER já está ligado.)
 Conferir antes de publicar:
 - "sexta à noite": 04/12/2026 é uma sexta-feira (conferido no calendário). A data de início da
   festa é a do plano; confirme no seu calendário judaico.
-- "quatro letras" no pião: conhecimento geral, mas não está escrito no curso. Se preferir, a frase
-  fica só com o Gimel.
+- "quatro letras" no pião: saiu a pedido do dono (26/10/2026); a frase fala só do Gimel.
 
 ## 2. Stories (04/12, um por vez ao longo do dia)
 
@@ -74,7 +73,6 @@ Você diz חַג שָׂמֵחַ devagar, a legenda mostra a frase com o nikud, e
 
 ## Pendências
 
-- [ ] Dono aprova (ou corta) o carrossel e os stories.
+- [x] Dono aprovou o carrossel (26/10/2026). Artes entregues em zip no mesmo dia.
 - [ ] Decide se quer a palavra חֲנֻכָּה em hebraico e manda a grafia.
 - [ ] Confirma no calendário judaico que a primeira vela é na noite de 04/12.
-- [ ] Monta as artes no Canva (ou me pede um rascunho visual).
