@@ -676,3 +676,7 @@ html[data-a11y-movimento='reduzido'] *::after {
 .hf-livro { flex: none; width: 40px; height: 50px; filter: drop-shadow(0 3px 4px rgba(27, 33, 31, .12)); }
 a.hf-topico:hover .hf-livro { transform: rotate(-4deg); }
 .hf-livro { transition: transform .25s var(--ease); }
+
+/* Cartões ilustrados, parte 4: o cartão da loja não é um botão (o botão é o
+   "Trocar" dentro dele), então não sobe no toque. */
+.hf-cartao-estatico:hover, .hf-cartao-estatico:active { transform: none !important; box-shadow: var(--sh) !important; }

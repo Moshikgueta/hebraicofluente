@@ -41,3 +41,14 @@ describe('livro da leitura', () => {
     expect(tipoDaLeitura('rv-4')).toBe('revisao');
   });
 });
+
+describe('cenas da loja', () => {
+  it('nenhuma letra hebraica, e decorativas', async () => {
+    const { CenaDaRecompensa } = await import('@/components/ilustra/CenaDaRecompensa');
+    for (const tipo of ['folga', 'carta', 'nome'] as const) {
+      const html = renderToStaticMarkup(createElement(CenaDaRecompensa, { tipo }));
+      expect(letrasHebraicas(html).size, tipo).toBe(0);
+      expect(html).toContain('aria-hidden="true"');
+    }
+  });
+});
