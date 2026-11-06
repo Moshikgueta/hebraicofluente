@@ -24,6 +24,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { getLetter } from '@/lib/content';
 import type { Pergunta } from '@/lib/engine/deck';
+import { tx } from '@/i18n/telas/academia-test-run';
 
 export type RespostaTeste = { q: Pergunta; escolhida: number };
 
@@ -73,6 +74,17 @@ export function TestRun({
      pergunta seguinte sem precisar de ninguém para limpá-la. */
   const confirmado = useRef(-1);
 
+  /* Leitor de tela e teclado (auditoria de 28/09, UX-013). O teste não diz
+     se acertou - isso é o relatório do fim -, mas precisa dizer que a
+     resposta foi registrada e em que pergunta se está. E o botão de
+     confirmar fica desativado depois do toque, o que jogava o foco no
+     <body>: ele vai para o enunciado da pergunta nova. */
+  const enunciado = useRef<HTMLParagraphElement | null>(null);
+  const [aviso, setAviso] = useState('');
+  useEffect(() => {
+    if (i > 0) enunciado.current?.focus();
+  }, [i]);
+
   /* O cronômetro, quando o modo pede um.
      ─────────────────────────────────────────────────────────────────────
      Um `setInterval` só, criado quando a rodada começa e desligado no
@@ -117,8 +129,27 @@ export function TestRun({
       });
       return;
     }
+    setAviso(tx.registrada(i + 2, perguntas.length));
     setI(n => n + 1);
   }, [escolha, q, dadas, i, perguntas.length, onFim, onResposta, inicio]);
+
+  /* Teclado: 1-4 escolhem, Enter confirma - o mesmo atalho da prática. Os
+     selos numerados já prometiam isso e as teclas não faziam nada (auditoria
+     de 01/10/2026, VIS-013). Aqui a tecla só ESCOLHE: o teste não corrige
+     durante, e confirmar continua sendo um gesto à parte. */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!q) return;
+      const el = document.activeElement;
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) return;
+      if (e.key === 'Enter' && escolha !== null && !e.repeat
+          && !(el instanceof HTMLButtonElement)) { e.preventDefault(); confirmar(); return; }
+      const n = Number(e.key);
+      if (n >= 1 && n <= q.opcoes.length) { e.preventDefault(); setEscolha(n - 1); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [q, escolha, confirmar]);
 
   if (!q) return null;
   const decorridos = Math.max(0, Math.round((agora - inicio) / 1000));
@@ -126,6 +157,7 @@ export function TestRun({
 
   return (
     <div className="grid gap-5">
+      <p aria-live="polite" className="sr-only">{aviso}</p>
       <div className="flex items-center gap-3">
         <span className="flex-1 h-1.5 rounded-full bg-[var(--sand)] overflow-hidden">
           <span className="block h-full rounded-full bg-[var(--navy)] transition-[width] duration-300"
@@ -136,20 +168,21 @@ export function TestRun({
         </span>
         {cronometro && (
           <span className="font-ui text-[13px] font-semibold tabular-nums text-ink shrink-0"
-                aria-label={`Tempo decorrido: ${decorridos} segundos`}>
+                aria-label={tx.tempoDecorrido(decorridos)}>
             {Math.floor(decorridos / 60)}:{String(decorridos % 60).padStart(2, '0')}
           </span>
         )}
       </div>
 
       <Card className="p-5 sm:p-7 grid gap-5">
-        <p className="font-ui text-[17px] sm:text-[19px] font-semibold text-ink">{q.enunciadoPt}</p>
+        <p ref={enunciado} tabIndex={-1}
+           className="font-ui text-[17px] sm:text-[19px] font-semibold text-ink outline-none">{q.enunciadoPt}</p>
 
         <div className="rounded-[18px] bg-[var(--sand)] px-4 py-6 text-center">
           {emHebraico
             ? <He size="plate" tone="navy">{q.alvo}</He>
             : <span className="font-display text-[32px] sm:text-[38px] font-semibold
-                               tracking-[-0.02em] text-[var(--navy)]">{q.alvo}</span>}
+                               tracking-[-0.02em] text-[var(--accent)]">{q.alvo}</span>}
         </div>
 
         <ul className="grid gap-2.5 sm:grid-cols-2 list-none p-0 m-0">
@@ -180,8 +213,8 @@ export function TestRun({
       </Card>
 
       <Button size="lg" full onClick={confirmar} disabled={escolha === null}>
-        {escolha === null ? 'Escolha uma opção'
-          : i + 1 >= perguntas.length ? 'Terminar o teste' : 'Confirmar e continuar'}
+        {escolha === null ? tx.escolhaOpcao
+          : i + 1 >= perguntas.length ? tx.terminar : tx.confirmar}
       </Button>
     </div>
   );
@@ -201,28 +234,28 @@ export function RelatorioTeste({
       <Card tone={forte ? 'mint' : 'ember'} className="p-6 sm:p-8 grid gap-3 text-center">
         <p className={`font-ui text-[13px] font-bold uppercase tracking-[.1em]
           ${forte ? 'text-[var(--teal-ink)]' : 'text-[var(--gold-ink)]'}`}>
-          Teste concluído
+          {tx.concluido}
         </p>
         <p className="font-display text-[40px] sm:text-[48px] font-semibold tracking-[-0.03em]
                       leading-none text-ink tabular-nums">
           {pct}%
         </p>
         <p className="font-ui text-[16px] text-ink-body">
-          Você acertou {r.acertos} de {r.total}.
+          {tx.acertou(r.acertos, r.total)}
         </p>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[46ch] mx-auto">
           {forte
-            ? 'Isso é leitura firme. O que escapou volta sozinho na revisão, no dia certo.'
+            ? tx.forte
             : meio
-              ? 'Boa base, com buracos localizados. A lista abaixo diz exatamente quais.'
-              : 'Ainda é cedo para este conjunto, e isso não é um problema. Reveja as letras abaixo e refaça - não há limite de tentativas.'}
+              ? tx.meio
+              : tx.cedo}
         </p>
       </Card>
 
       {r.erradas.length > 0 && (
         <Card className="p-5 sm:p-6 grid gap-3">
           <p className="font-display text-[18px] font-semibold tracking-[-0.018em] text-ink">
-            O que escapou
+            {tx.escapou}
           </p>
           <ul className="grid gap-2 list-none p-0 m-0">
             {r.erradas.map(({ q, escolhida }, k) => {
@@ -240,13 +273,13 @@ export function RelatorioTeste({
                       {q.sentido === 'he' ? certa : q.alvo}
                     </span>
                     <span className="block font-ui text-[13px] text-[var(--gold-ink)]">
-                      {q.sentido === 'he' ? `você marcou ${dada}` : 'você marcou outra letra'}
+                      {q.sentido === 'he' ? tx.voceMarcou(dada) : tx.outraLetra}
                     </span>
                   </span>
                   {L && (
                     <Link href={`/licao/${L.id}`}
-                          className="font-ui text-[13px] text-[var(--teal)] hover:underline shrink-0">
-                      Rever {L.namePt}
+                          className="font-ui text-[13px] text-[var(--teal-ink)] hover:underline shrink-0">
+                      {tx.rever(L.namePt)}
                     </Link>
                   )}
                 </li>
@@ -257,7 +290,7 @@ export function RelatorioTeste({
       )}
 
       <div className="flex flex-wrap gap-3">
-        <Button variant={forte ? 'secondary' : 'primary'} onClick={onRefazer}>Refazer o teste</Button>
+        <Button variant={forte ? 'secondary' : 'primary'} onClick={onRefazer}>{tx.refazer}</Button>
         {children}
       </div>
     </div>

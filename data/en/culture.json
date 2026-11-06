@@ -1,0 +1,248 @@
+{
+  "cards/de-onde-vem/titlePt": {
+    "pt": "De onde vem este alfabeto?",
+    "en": "Where does this alphabet come from?"
+  },
+  "cards/de-onde-vem/leadPt": {
+    "pt": "As 22 letras que você está aprendendo têm cerca de três mil anos - e não nasceram em Israel.",
+    "en": "The 22 letters you're learning are about three thousand years old - and they weren't born in Israel."
+  },
+  "cards/de-onde-vem/bodyPt/#0": {
+    "pt": "O alfabeto hebraico descende do alfabeto fenício, usado no litoral do Mediterrâneo oriental a partir de mais ou menos 1050 a.C. O mesmo alfabeto fenício deu origem ao grego, e do grego, por meio dos etruscos, veio o latino - o que você está lendo agora.",
+    "en": "The Hebrew alphabet descends from the Phoenician alphabet, used along the coast of the eastern Mediterranean from around 1050 BC. The same Phoenician alphabet gave rise to Greek, and from Greek, by way of the Etruscans, came the Latin alphabet - the one you are reading right now."
+  },
+  "cards/de-onde-vem/bodyPt/#1": {
+    "pt": "Ou seja: o alfabeto hebraico e o nosso são primos. Eles se separaram há uns três mil anos e seguiram caminhos diferentes, um para a direita e o outro para a esquerda.",
+    "en": "In other words: the Hebrew alphabet and ours are cousins. They split about three thousand years ago and went their separate ways, one to the right and the other to the left."
+  },
+  "cards/de-onde-vem/bodyPt/#2": {
+    "pt": "Isso explica uma coisa que costuma incomodar no começo: as letras hebraicas não se parecem com nada que você conhece, mas a ideia por trás delas - letras que representam sons, e não ideias - é a mesma.",
+    "en": "That explains something that often bothers people at the start: Hebrew letters don't look like anything you know, but the idea behind them - letters that stand for sounds, not ideas - is the same."
+  },
+  "cards/de-onde-vem/sources": {
+    "pt": "Consenso acadêmico sobre a origem fenícia dos alfabetos grego e aramaico/hebraico.",
+    "en": "Scholarly consensus on the Phoenician origin of the Greek and Aramaic/Hebrew alphabets."
+  },
+  "cards/duas-escritas/titlePt": {
+    "pt": "O hebraico já teve outro desenho",
+    "en": "Hebrew once had a different look"
+  },
+  "cards/duas-escritas/leadPt": {
+    "pt": "As letras do Primeiro Templo não são as que você está aprendendo.",
+    "en": "The letters of the First Temple aren't the ones you're learning."
+  },
+  "cards/duas-escritas/bodyPt/#0": {
+    "pt": "Até o exílio na Babilônia, o hebraico era escrito no chamado paleo-hebraico, um desenho bem mais próximo do fenício.",
+    "en": "Until the Babylonian exile, Hebrew was written in what is called Paleo-Hebrew, a design much closer to Phoenician."
+  },
+  "cards/duas-escritas/bodyPt/#1": {
+    "pt": "Depois do exílio, os judeus passaram, aos poucos, a usar a escrita aramaica quadrada - o aramaico era a língua franca do império, e a escrita dele acabou adotada para escrever hebraico. É essa escrita quadrada que virou o alfabeto hebraico moderno.",
+    "en": "After the exile, Jews gradually started using the square Aramaic script - Aramaic was the lingua franca of the empire, and its script ended up being adopted to write Hebrew. That square script is what became the modern Hebrew alphabet."
+  },
+  "cards/duas-escritas/bodyPt/#2": {
+    "pt": "Por isso o hebraico tem duas histórias visuais: a língua é a mesma, o desenho das letras mudou.",
+    "en": "That's why Hebrew has two visual histories: the language is the same, the shape of the letters changed."
+  },
+  "cards/duas-escritas/sources": {
+    "pt": "Consenso acadêmico: adoção da escrita aramaica quadrada no período do Segundo Templo.",
+    "en": "Scholarly consensus: adoption of the Aramaic square script in the Second Temple period."
+  },
+  "cards/de-onde-vem-o-nikud/titlePt": {
+    "pt": "De onde vieram os pontinhos?",
+    "en": "Where did the little dots come from?"
+  },
+  "cards/de-onde-vem-o-nikud/leadPt": {
+    "pt": "O nikud é mais de mil anos mais novo do que as letras.",
+    "en": "Nikud is more than a thousand years younger than the letters."
+  },
+  "cards/de-onde-vem-o-nikud/bodyPt/#0": {
+    "pt": "Durante a maior parte da sua história, o hebraico foi escrito sem sinais de vogal, só com as letras (algumas delas, como {{ו}} e {{י}}, ajudando a indicar vogais). Quem lia sabia a língua e completava as vogais de cabeça - como um brasileiro lê \"vc\" sem hesitar.",
+    "en": "For most of its history, Hebrew was written without vowel signs, with just the letters (some of them, like {{ו}} and {{י}}, helping to indicate vowels). Readers knew the language and filled in the vowels in their heads - the way you read \"pls\" or \"thx\" without hesitating.",
+    "comentario": "O original compara com um brasileiro lendo \"vc\"; troquei por \"pls\"/\"thx\"."
+  },
+  "cards/de-onde-vem-o-nikud/bodyPt/#1": {
+    "pt": "Entre os séculos VII e X, estudiosos conhecidos como massoretas criaram sistemas de sinais para fixar a pronúncia do texto bíblico, que estava sendo transmitido de geração em geração. O sistema que se tornou padrão foi o desenvolvido em Tiberíades, na Galileia - é o que você está aprendendo.",
+    "en": "Between the 7th and 10th centuries, scholars known as the Masoretes created systems of signs to fix the pronunciation of the biblical text, which was being passed down from generation to generation. The system that became standard was the one developed in Tiberias, in the Galilee - it's the one you are learning."
+  },
+  "cards/de-onde-vem-o-nikud/bodyPt/#2": {
+    "pt": "Então o nikud não é uma muleta para estrangeiros: foi criado por sábios judeus, numa época em que o hebraico já não era a língua de casa de ninguém, justamente para preservar uma leitura que corria o risco de se perder.",
+    "en": "So nikud is not a crutch for foreigners: it was created by Jewish sages, at a time when Hebrew was no longer anyone's home language, precisely to preserve a reading that was at risk of being lost."
+  },
+  "cards/de-onde-vem-o-nikud/sources": {
+    "pt": "Consenso acadêmico sobre a vocalização massorética tiberiense (c. séc. VII-X).",
+    "en": "Scholarly consensus on the Tiberian Masoretic vocalization (c. 7th-10th century)."
+  },
+  "cards/por-que-finais/titlePt": {
+    "pt": "Por que cinco letras mudam no fim?",
+    "en": "Why do five letters change at the end?"
+  },
+  "cards/por-que-finais/leadPt": {
+    "pt": "As formas finais não foram inventadas: em várias delas, a forma do fim da palavra preserva características de formas mais antigas.",
+    "en": "The final forms weren't invented: in several of them, the end-of-word shape preserves features of older forms."
+  },
+  "cards/por-que-finais/bodyPt/#0": {
+    "pt": "Repare no que ם, ן, ך, ף e ץ têm em comum: quatro delas descem abaixo da linha, e a quinta se fecha.",
+    "en": "Notice what ם, ן, ך, ף and ץ have in common: four of them go down below the line, and the fifth closes up."
+  },
+  "cards/por-que-finais/bodyPt/#1": {
+    "pt": "A explicação mais aceita é que, ao escrever rápido, as letras no meio da palavra foram sendo encurtadas para emendar na próxima - e só no fim da palavra, onde não havia o que emendar, o traço original continuou inteiro.",
+    "en": "The most widely accepted explanation is that, when writing fast, the letters in the middle of a word got shorter so they could join the next one - and only at the end of the word, where there was nothing to join, did the original stroke stay whole."
+  },
+  "cards/por-que-finais/bodyPt/#2": {
+    "pt": "Ou seja: em {{ך}}, {{ן}}, {{ף}} e {{ץ}}, a forma \"estranha\" é a mais antiga, e a comum é a abreviada. O {{ם}} fechado tem uma história um pouco diferente. Saber disso não ajuda a ler mais rápido, mas ajuda a parar de achar que são dez letras em vez de cinco.",
+    "en": "In other words: in {{ך}}, {{ן}}, {{ף}} and {{ץ}}, the \"strange\" form is the older one, and the regular one is the shortened version. The closed {{ם}} has a slightly different story. Knowing this won't help you read faster, but it helps you stop thinking there are ten letters instead of five."
+  },
+  "cards/por-que-finais/sources": {
+    "pt": "Explicação paleográfica corrente para as formas finais.",
+    "en": "Standard paleographic explanation for the final forms."
+  },
+  "cards/ben-yehuda/titlePt": {
+    "pt": "A língua que voltou a ser falada",
+    "en": "The language that was spoken again"
+  },
+  "cards/ben-yehuda/leadPt": {
+    "pt": "Poucas línguas no mundo passaram por uma transformação comparável à do hebraico, nessa escala.",
+    "en": "Few languages in the world have gone through a transformation comparable to that of Hebrew, on that scale."
+  },
+  "cards/ben-yehuda/bodyPt/#0": {
+    "pt": "Por cerca de mil e setecentos anos o hebraico foi lido, rezado, estudado e escrito - mas não era a língua do dia a dia de quase ninguém. Judeus falavam iídiche, ladino, árabe, português.",
+    "en": "For about seventeen hundred years Hebrew was read, prayed, studied and written - but it was almost nobody's everyday language. Jews spoke Yiddish, Ladino, Arabic and the languages of the countries where they lived."
+  },
+  "cards/ben-yehuda/bodyPt/#1": {
+    "pt": "No fim do século XIX isso começou a mudar. Eliezer Ben-Yehuda (1858-1922) mudou-se para Jerusalém em 1881 decidido a criar palavras para o que faltava e a criar o filho falando só hebraico. Seu filho Itamar é lembrado como uma das primeiras crianças em séculos a ter o hebraico como língua materna.",
+    "en": "At the end of the 19th century that began to change. Eliezer Ben-Yehuda (1858-1922) moved to Jerusalem in 1881 determined to create words for what was missing and to raise his son speaking only Hebrew. His son Itamar is remembered as one of the first children in centuries to have Hebrew as his mother tongue."
+  },
+  "cards/ben-yehuda/bodyPt/#2": {
+    "pt": "Ben-Yehuda virou o símbolo da história, mas o trabalho foi coletivo: escolas, professores, jornais e famílias inteiras decidiram falar uma língua que ninguém falava em casa. Hoje são milhões de falantes nativos.",
+    "en": "Ben-Yehuda became the symbol of the story, but the work was collective: schools, teachers, newspapers and whole families decided to speak a language nobody spoke at home. Today there are millions of native speakers."
+  },
+  "cards/ben-yehuda/bodyPt/#3": {
+    "pt": "Quando você lê uma placa em Tel Aviv, está lendo o resultado dessa decisão.",
+    "en": "When you read a sign in Tel Aviv, you are reading the result of that decision."
+  },
+  "cards/ben-yehuda/sources": {
+    "pt": "Datas de Ben-Yehuda e da mudança para Jerusalém: consenso biográfico. A ênfase no caráter coletivo do renascimento é deliberada.",
+    "en": "Dates for Ben-Yehuda and his move to Jerusalem: biographical consensus. The emphasis on the collective nature of the revival is deliberate."
+  },
+  "cards/sem-maiusculas/titlePt": {
+    "pt": "Coisas que o hebraico não tem",
+    "en": "Things Hebrew doesn't have"
+  },
+  "cards/sem-maiusculas/leadPt": {
+    "pt": "Algumas ausências facilitam a sua vida.",
+    "en": "Some things it lacks make your life easier."
+  },
+  "cards/sem-maiusculas/bodyPt/#0": {
+    "pt": "Não há letras maiúsculas. Nenhuma. Nomes próprios, começo de frase, títulos - tudo com as mesmas 22 letras.",
+    "en": "There are no capital letters. None. Proper names, the start of a sentence, titles - all with the same 22 letters."
+  },
+  "cards/sem-maiusculas/bodyPt/#1": {
+    "pt": "Não há letras próprias para todas as vogais: elas são os sinais do nikud, que no dia a dia não aparecem. O que aparece são as letras {{ו}} e {{י}}, que fazem as vezes de O/U e de I.",
+    "en": "There aren't letters of their own for every vowel: the vowels are the nikud signs, which don't appear in everyday writing. What does appear are the letters {{ו}} and {{י}}, which stand in for O/U and for I."
+  },
+  "cards/sem-maiusculas/bodyPt/#2": {
+    "pt": "E não há \"c\", \"x\", \"w\" nem \"y\" como letras separadas - os sons que o português escreve com elas são resolvidos por letras que você já conhece, ou pelo guéresh de ג׳, צ׳ e ז׳.",
+    "en": "And there's no \"c\", \"x\", \"w\" or \"y\" as separate letters - the sounds English writes with them are handled by letters you already know, or by the geresh in ג׳, צ׳ and ז׳.",
+    "comentario": "etapa 3: pronúncia, rever. \"o português\" virou \"English\"; conferir se a frase vale para o inglês (w e y existem como som em hebraico, com ו e י)."
+  },
+  "cards/sem-maiusculas/sources": {
+    "pt": "Fatos elementares da ortografia hebraica.",
+    "en": "Basic facts of Hebrew spelling."
+  },
+  "cards/numeros-com-letras/titlePt": {
+    "pt": "As letras também são números",
+    "en": "Letters are numbers too"
+  },
+  "cards/numeros-com-letras/leadPt": {
+    "pt": "א é 1, ב é 2, ל é 30.",
+    "en": "א is 1, ב is 2, ל is 30."
+  },
+  "cards/numeros-com-letras/bodyPt/#0": {
+    "pt": "Por muitos séculos as letras também fizeram o papel de números: as nove primeiras valem de 1 a 9, as nove seguintes de 10 a 90, e as quatro últimas valem 100, 200, 300 e 400.",
+    "en": "For many centuries the letters also served as numbers: the first nine are worth 1 to 9, the next nine 10 to 90, and the last four are worth 100, 200, 300 and 400."
+  },
+  "cards/numeros-com-letras/bodyPt/#1": {
+    "pt": "Isso não é só história. Você vai encontrar letras como números no calendário hebraico, na numeração de capítulos, nas séries da escola (o primeiro ano é a turma {{א׳}}) e em listas - do mesmo jeito que usamos algarismos romanos.",
+    "en": "This isn't just history. You'll find letters used as numbers in the Hebrew calendar, in chapter numbering, in school grades (first grade is class {{א׳}}) and in lists - the same way we use Roman numerals."
+  },
+  "cards/numeros-com-letras/bodyPt/#2": {
+    "pt": "Um exemplo que aparece muito: י״ד é 14 - dez mais quatro.",
+    "en": "An example you'll see a lot: י״ד is 14 - ten plus four."
+  },
+  "cards/numeros-com-letras/sources": {
+    "pt": "Valor numérico das letras hebraicas (a soma desses valores é a base da gematria). י״ד = 10 + 4.",
+    "en": "Numerical value of the Hebrew letters (the sum of these values is the basis of gematria). י״ד = 10 + 4."
+  },
+  "cards/shekel/titlePt": {
+    "pt": "O símbolo do dinheiro israelense",
+    "en": "The symbol for Israeli money"
+  },
+  "cards/shekel/leadPt": {
+    "pt": "₪ não é um desenho aleatório: são duas letras que você já sabe ler.",
+    "en": "₪ isn't a random drawing: it's two letters you already know how to read."
+  },
+  "cards/shekel/bodyPt/#0": {
+    "pt": "O símbolo junta ש e ח - as iniciais de שֶׁקֶל חָדָשׁ, \"shekel novo\", a moeda israelense adotada em 1985.",
+    "en": "The symbol combines ש and ח - the initials of שֶׁקֶל חָדָשׁ, \"new shekel\", the Israeli currency adopted in 1985."
+  },
+  "cards/shekel/bodyPt/#1": {
+    "pt": "Depois de ler isto, o símbolo deixa de ser um rabisco e passa a ser uma abreviação. É mais ou menos o que acontece com o alfabeto inteiro: a partir de certo ponto, você para de ver desenhos e começa a ver palavras.",
+    "en": "Once you've read this, the symbol stops being a scribble and becomes an abbreviation. That's more or less what happens with the whole alphabet: at some point, you stop seeing drawings and start seeing words."
+  },
+  "cards/shekel/bodyPt/#2": {
+    "pt": "A palavra שקל é muito mais antiga do que a moeda: era uma unidade de peso, e aparece na Bíblia com esse sentido.",
+    "en": "The word שקל is much older than the currency: it was a unit of weight, and it appears in the Bible with that meaning."
+  },
+  "cards/shekel/sources": {
+    "pt": "₪ como ligadura de ש+ח (שקל חדש); novo shekel em circulação a partir de 1985.",
+    "en": "₪ as a ligature of ש+ח (שקל חדש); new shekel in circulation from 1985."
+  },
+  "cards/na-rua/titlePt": {
+    "pt": "O que você vai ver numa rua em Israel?",
+    "en": "What will you see on a street in Israel?"
+  },
+  "cards/na-rua/leadPt": {
+    "pt": "Placas de rua costumam vir em três alfabetos.",
+    "en": "Street signs usually come in three alphabets."
+  },
+  "cards/na-rua/bodyPt/#0": {
+    "pt": "Hebraico, árabe e latino, um embaixo do outro. Isso quer dizer que, mesmo lendo devagar, você sempre tem como conferir se leu certo.",
+    "en": "Hebrew, Arabic and Latin letters, one below the other. That means that, even reading slowly, you always have a way to check whether you read it right."
+  },
+  "cards/na-rua/bodyPt/#1": {
+    "pt": "Muito do que está escrito na rua é mais fácil do que parece: nomes de lugares, palavras importadas do inglês escritas com letras hebraicas, e as mesmas dez ou quinze palavras se repetindo - entrada, saída, aberto, fechado, ônibus, farmácia.",
+    "en": "A lot of what is written on the street is easier than it looks: place names, words borrowed from English written in Hebrew letters, and the same ten or fifteen words over and over - entrance, exit, open, closed, bus, pharmacy."
+  },
+  "cards/na-rua/bodyPt/#2": {
+    "pt": "Nenhuma delas leva nikud. É por isso que os módulos finais deste curso treinam leitura sem os pontinhos: é assim que o hebraico aparece de verdade.",
+    "en": "None of them have nikud. That's why the last modules of this course train reading without the dots: that's how Hebrew really shows up."
+  },
+  "cards/na-rua/sources": {
+    "pt": "Prática de sinalização trilíngue em Israel; ausência de nikud em texto corrente.",
+    "en": "Practice of trilingual signage in Israel; absence of nikud in everyday text."
+  },
+  "cards/mao-diferente/titlePt": {
+    "pt": "Ninguém escreve como está impresso",
+    "en": "Nobody writes the way it's printed"
+  },
+  "cards/mao-diferente/leadPt": {
+    "pt": "A letra de mão hebraica é outro desenho - e é a que você aprende a escrever aqui.",
+    "en": "Hebrew handwriting is a different design - and it's the one you learn to write here."
+  },
+  "cards/mao-diferente/bodyPt/#0": {
+    "pt": "A letra de imprensa é para ler. Para escrever à mão, israelenses usam uma cursiva que em várias letras não se parece nada com a impressa.",
+    "en": "Print letters are for reading. To write by hand, Israelis use a cursive that, for several letters, looks nothing like print."
+  },
+  "cards/mao-diferente/bodyPt/#1": {
+    "pt": "É por isso que as etapas de escrita deste curso treinam a cursiva, e não a impressa: ninguém escreve um bilhete em letra de forma.",
+    "en": "That's why the writing stages of this course train cursive, not print: nobody writes a note in block letters."
+  },
+  "cards/mao-diferente/bodyPt/#2": {
+    "pt": "Você não precisa dominar a cursiva para ler. Mas escrever ajuda a fixar a forma, e um dia alguém vai te escrever um bilhete.",
+    "en": "You don't need to master cursive to read. But writing helps the shapes stick, and one day someone will write you a note."
+  },
+  "cards/mao-diferente/sources": {
+    "pt": "Prática corrente: cursiva hebraica manuscrita versus tipografia quadrada.",
+    "en": "Common practice: handwritten Hebrew cursive versus square typography."
+  }
+}

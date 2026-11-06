@@ -29,18 +29,20 @@
  */
 
 import type { Letter } from '@/lib/content';
+import type { ParDeSom } from './pares-de-som';
 import type { LearnerState } from '@/lib/state/types';
 import { letterMastery, topConfusions } from '@/lib/state/rules';
 import { pick, shuffled, take, type Rand } from './rng';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 /* ── o nível ───────────────────────────────────────────────────────────── */
 
 export type Nivel = 'facil' | 'medio' | 'dificil';
 
 export const NIVEL_LABEL: Record<Nivel, string> = {
-  facil: 'Aquecimento',
-  medio: 'Treino',
-  dificil: 'Difícil'
+  facil: tx.nivelFacil,
+  medio: tx.nivelMedio,
+  dificil: tx.nivelDificil
 };
 
 /**
@@ -335,7 +337,9 @@ export function montarCacada(
 /* ── as rodadas da Batalha ─────────────────────────────────────────────── */
 
 export type RodadaBatalha =
-  | { tipo: 'qual'; alvo: Letter; glifo: string; opcoes: Letter[] }
+  /* `final`: o glifo mostrado é a forma final, e as opções dizem "Pe final",
+     "Mem final". Só quando as duas letras do par têm forma final. */
+  | { tipo: 'qual'; alvo: Letter; glifo: string; opcoes: Letter[]; final?: boolean }
   | { tipo: 'todas'; alvo: Letter; outra: Letter; glifo: string;
       fila: { id: string; glifo: string; certa: boolean; letterId: string }[] }
   | { tipo: 'intruso'; alvo: Letter; intruso: Letter;
@@ -345,7 +349,11 @@ export type RodadaBatalha =
      lado a lado - e comparar é justamente a muleta que faz alguém achar que
      sabe distinguir {{ד}} de {{ר}} quando na verdade sabe é comparar. Na
      leitura real a letra não fica esperando. */
-  | { tipo: 'relampago'; alvo: Letter; glifo: string; opcoes: Letter[]; ms: number };
+  | { tipo: 'relampago'; alvo: Letter; glifo: string; opcoes: Letter[]; ms: number; final?: boolean }
+  /* O OUVIDO (12/10/2026): toca a sílaba com A de uma das duas, e o aluno
+     escolhe a letra. Pares de PARES_DE_SOM, que são outra meta: parecer no
+     som, e não no desenho. */
+  | { tipo: 'som'; alvo: Letter; opcoes: Letter[]; audioId: string; notaPt: string };
 
 export type Batalha = {
   /** As duas inimigas da PRIMEIRA rodada, para o anúncio de abertura. */
@@ -495,14 +503,22 @@ export function montarBatalha(
     const par = lista[Math.floor(i / POR_PAR) % lista.length]!;
     const alvo = par[i % 2]!;
     const outra = par[(i + 1) % 2]!;
+    /* A forma final é OUTRA letra para quem lê (pedido do dono, 27/10/2026:
+       "não considera as letras finais como letras normais"). Ela só aparece
+       como glifo da rodada nas fileiras, onde o pedido é o DESENHO exato; em
+       "qual é esta" e no relâmpago, só quando as duas do par têm forma
+       final, e então as opções dizem "final". Com uma só, "Pe final" contra
+       "Kaf" entregaria a resposta pelo rótulo. */
     const glifo = pick(formas(alvo), rand) ?? alvo.letter;
+    const final = !!alvo.finalForm && !!outra.finalForm && rand() < 0.3;
+    const glifoNome = final ? alvo.finalForm! : alvo.letter;
 
     /* A quarta de cada par é a relâmpago, e ela vem por último de propósito:
        o aluno chega nela tendo visto o par de três ângulos, então o que se
        mede é o reconhecimento e não a surpresa. */
     if (i % POR_PAR === 3) {
       rodadas.push({
-        tipo: 'relampago', alvo, glifo,
+        tipo: 'relampago', alvo, glifo: glifoNome, final,
         opcoes: shuffled([alvo, outra], rand),
         /* 900 ms: tempo de ver, não de estudar. Abaixo disso vira teste de
            reflexo; acima, o aluno guarda a imagem e compara depois. */
@@ -512,20 +528,24 @@ export function montarBatalha(
     }
 
     if (i % 3 === 0) {
-      rodadas.push({ tipo: 'qual', alvo, glifo, opcoes: shuffled([alvo, outra], rand) });
+      rodadas.push({ tipo: 'qual', alvo, glifo: glifoNome, final, opcoes: shuffled([alvo, outra], rand) });
       continue;
     }
 
     if (i % 3 === 1) {
+      /* Só conta o DESENHO pedido: em "toque em todas as ף", a פ é errada.
+         A outra forma da própria letra entra como distrator, porque separar
+         פ de ף é a mesma habilidade de separar ד de ר. */
+      const outraForma = alvo.finalForm ? (glifo === alvo.letter ? alvo.finalForm : alvo.letter) : null;
+      const ruido = [
+        ...formas(outra).map(g => ({ g, L: outra })),
+        ...(outraForma ? [{ g: outraForma, L: alvo }] : [])
+      ];
       const n = 6 + Math.floor(rand() * 3);
       const fila = Array.from({ length: n }, (_, k) => {
         const certa = rand() < 0.45;
-        const L = certa ? alvo : outra;
-        return {
-          id: `f${i}-${k}`,
-          glifo: pick(formas(L), rand) ?? L.letter,
-          certa, letterId: L.id
-        };
+        const d = certa ? { g: glifo, L: alvo } : pick(ruido, rand)!;
+        return { id: `f${i}-${k}`, glifo: d.g, certa, letterId: d.L.id };
       });
       /* Uma fileira sem nenhuma certa não tem resposta, e uma só com certas
          não tem escolha. Garante pelo menos uma de cada. */
@@ -596,6 +616,36 @@ export function montarCursiva(
       [alvo, ...distratores(state, alvo, unlocked, opcoesN - 1, nivel, rand)], rand
     );
     out.push({ tipo: i % 2 === 0 ? 'paraCursiva' : 'paraImpressa', alvo, opcoes });
+  }
+  return out;
+}
+
+/* ── as rodadas de som da Batalha ──────────────────────────────────────── */
+
+/**
+ * Até `quantas` rodadas de ouvido, dos pares de som cujas duas letras o
+ * aluno já tem e cujas duas sílabas têm gravação (`temAudio`). Sem nenhum
+ * par assim, nenhuma rodada: a Batalha fica só no desenho.
+ */
+export function rodadasDeSom(
+  pares: readonly ParDeSom[], unlocked: readonly Letter[], rand: Rand,
+  temAudio: (audioId: string) => boolean, quantas = 4
+): Extract<RodadaBatalha, { tipo: 'som' }>[] {
+  const porGlifo = new Map(unlocked.map(l => [l.letter, l]));
+  const silaba = (L: Letter) => L.syllables.find(s => s.vowel === 'a');
+  const validos = pares.flatMap(par => {
+    const a = porGlifo.get(par.a), b = porGlifo.get(par.b);
+    const sa = a && silaba(a), sb = b && silaba(b);
+    return a && b && sa && sb && temAudio(sa.audioId) && temAudio(sb.audioId) ? [{ a, b, par }] : [];
+  });
+  if (!validos.length) return [];
+  const out: Extract<RodadaBatalha, { tipo: 'som' }>[] = [];
+  const ordem = shuffled(validos, rand);
+  for (let i = 0; i < quantas; i++) {
+    const v = ordem[i % ordem.length]!;
+    const alvo = rand() < 0.5 ? v.a : v.b;
+    const outra = alvo === v.a ? v.b : v.a;
+    out.push({ tipo: 'som', alvo, opcoes: shuffled([alvo, outra], rand), audioId: silaba(alvo)!.audioId, notaPt: v.par.notaPt });
   }
   return out;
 }

@@ -142,6 +142,14 @@ curso nomeia e não exercita.
 
 ## 3. O que FALTA de verdade
 
+> **Situação em 25/09/2026, conferida no código.** Feitos desde este
+> levantamento: 2 (parte "Frases" no exame), 3 (checkpoints nos módulos 6 e
+> 7), 4 (todo par de letras parecidas tem a frase de contraste, dos dois
+> lados), 5 (`exVowelPair`), 6 (a missão de módulo, `/modulo/N/missao`),
+> 7 (`exTypeHebrew` na academia e `/teclado-hebraico`), 9 (verdadeiro ou
+> falso na compreensão) e 10 (`ContadorDeLeitura` no fim da lição). Continuam
+> em aberto: 1 (o áudio, 0 de 321) e 8 (gravação da voz do aluno).
+
 Em ordem de dano, e nada aqui é opinião de estilo.
 
 | # | lacuna | por que dói | esforço |

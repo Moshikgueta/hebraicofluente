@@ -1,0 +1,814 @@
+{
+  "note": [
+    "LEITURAS BÔNUS - textos e versículos bíblicos trocados por XP em Recompensas (27/09/2026).",
+    "",
+    "Pedido do dono do curso, para o público judeu, evangélico e Bnei Anusim que quer",
+    "ler o Antigo Testamento. São RECOMPENSA, fora do caminho do curso: nada da",
+    "trilha depende delas, e elas não valem XP.",
+    "",
+    "Por isso ficam fora da regra do curso de «só tempo presente»: é hebraico bíblico",
+    "com o passado narrativo (וַיֹּאמֶר, «e disse»). A introdução de cada",
+    "uma avisa que a tradução está ali para ajudar, e que entender o hebraico bíblico",
+    "é outro curso.",
+    "",
+    "O Nome está escrito como no texto massorético (יְהוָה). Na reza lê-se «Adonái»; o dono do",
+    "curso, nas gravações, segue o costume de não dizer o Nome fora da reza e diz «Hashém»",
+    "(«o Nome»). A transliteração acompanha a gravação: «Hashém». O guia explica.",
+    "",
+    "Pontuação sem os sinais de cantilação (te'amim), só as vogais. A tradução é",
+    "nossa, literal, e não de uma edição da Bíblia com direitos.",
+    "",
+    "`revisado: false` até o dono do curso conferir o hebraico: só as revisadas",
+    "aparecem na loja e entram no roteiro de gravação (onda 5). `tipo` escolhe o",
+    "item da loja: \"texto\" ou \"curto\" (versículo), os dois a 200 XP.",
+    "`after` (a letra mais tardia) é CALCULADO pelo exportador.",
+    "",
+    "`guia` (27/09/2026): «O nikud da Bíblia», uma página à parte (/nikud-biblico), opcional e",
+    "fora da trilha. Explica o que a Bíblia pontua além do que o curso ensina. Todo exemplo",
+    "é recortado de uma linha das leituras acima (tests/loja.test.ts confere), e o de",
+    "te'amim (`ouvir`) toca a gravação da linha sem os sinais.",
+    "",
+    "27/09/2026: o dono do curso pediu o foco no texto bíblico e não nas rezas. As",
+    "quatro bênçãos de reza (pão, vinho, velas, Shehecheyanu) saíram; a bênção",
+    "sacerdotal fica, porque é texto bíblico (Números 6).",
+    "",
+    "27/09/2026: os versículos passam a ser os mais conhecidos, e os que chamam a atenção",
+    "de quem é cristão (pedido do dono). Saíram Isaías 2:4 e Miqueias 6:8. A numeração",
+    "segue a das Bíblias em português; quando a hebraica difere, `fontePt` diz as duas."
+  ],
+  "leituras": [
+    {
+      "id": "genesis-1",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "No princípio",
+      "fontePt": "Gênesis 1:1-5",
+      "introPt": "O começo da Bíblia: a criação da luz e o primeiro dia. É hebraico bíblico, que conta no passado (וַיֹּאמֶר é «e disse»), então leia pelo som e use a tradução para acompanhar.",
+      "linhas": [
+        {
+          "he": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
+          "translit": "bereshít bará Elohím et ha-shamáyim ve-ét ha-árets",
+          "pt": "No princípio, Deus criou os céus e a terra."
+        },
+        {
+          "he": "וְהָאָרֶץ הָיְתָה תֹהוּ וָבֹהוּ וְחֹשֶׁךְ עַל־פְּנֵי תְהוֹם וְרוּחַ אֱלֹהִים מְרַחֶפֶת עַל־פְּנֵי הַמָּיִם",
+          "translit": "veha-árets haytá tóhu vavóhu, vechóshech al-penéi tehóm, veruách Elohím merachéfet al-penéi ha-máyim",
+          "pt": "A terra era sem forma e vazia, havia escuridão sobre o abismo, e o espírito de Deus pairava sobre as águas."
+        },
+        {
+          "he": "וַיֹּאמֶר אֱלֹהִים יְהִי אוֹר וַיְהִי־אוֹר",
+          "translit": "vayómer Elohím: yehí or! vayehí-or",
+          "pt": "Deus disse: haja luz! E houve luz."
+        },
+        {
+          "he": "וַיַּרְא אֱלֹהִים אֶת־הָאוֹר כִּי־טוֹב וַיַּבְדֵּל אֱלֹהִים בֵּין הָאוֹר וּבֵין הַחֹשֶׁךְ",
+          "translit": "vayár Elohím et-ha-ór ki-tov, vayavdél Elohím bein ha-ór uvéin ha-chóshech",
+          "pt": "Deus viu que a luz era boa, e Deus separou a luz da escuridão."
+        },
+        {
+          "he": "וַיִּקְרָא אֱלֹהִים לָאוֹר יוֹם וְלַחֹשֶׁךְ קָרָא לָיְלָה וַיְהִי־עֶרֶב וַיְהִי־בֹקֶר יוֹם אֶחָד",
+          "translit": "vayikrá Elohím la-ór yom, velachóshech kará láyla. vayehí-érev vayehí-vóker, yom echád",
+          "pt": "Deus chamou a luz de dia, e a escuridão chamou de noite. Houve tarde e houve manhã: o primeiro dia (no hebraico, «dia um»)."
+        }
+      ]
+    },
+    {
+      "id": "shema",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "Shemá Israel",
+      "fontePt": "Deuteronômio 6:4-9",
+      "introPt": "O Shemá, a declaração de fé que se diz de manhã e à noite. O último versículo é a origem da mezuzá, no batente da porta: o pergaminho dela traz este trecho inteiro (e mais Deuteronômio 11:13-21).",
+      "linhas": [
+        {
+          "he": "שְׁמַע יִשְׂרָאֵל יְהוָה אֱלֹהֵינוּ יְהוָה אֶחָד",
+          "translit": "shemá Yisraél, Hashém Elohéinu, Hashém echád",
+          "pt": "Ouve, Israel: o Senhor é o nosso Deus, o Senhor é um."
+        },
+        {
+          "he": "וְאָהַבְתָּ אֵת יְהוָה אֱלֹהֶיךָ בְּכָל־לְבָבְךָ וּבְכָל־נַפְשְׁךָ וּבְכָל־מְאֹדֶךָ",
+          "translit": "veahavtá et Hashém Elohécha bechól-levavchá uvchól-nafshechá uvchól-meodécha",
+          "pt": "Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e com toda a tua força."
+        },
+        {
+          "he": "וְהָיוּ הַדְּבָרִים הָאֵלֶּה אֲשֶׁר אָנֹכִי מְצַוְּךָ הַיּוֹם עַל־לְבָבֶךָ",
+          "translit": "vehayú ha-devarím ha-éle ashér anochí metsavechá ha-yóm al-levavécha",
+          "pt": "Estas palavras que hoje eu te ordeno estarão no teu coração."
+        },
+        {
+          "he": "וְשִׁנַּנְתָּם לְבָנֶיךָ וְדִבַּרְתָּ בָּם בְּשִׁבְתְּךָ בְּבֵיתֶךָ וּבְלֶכְתְּךָ בַדֶּרֶךְ וּבְשָׁכְבְּךָ וּבְקוּמֶךָ",
+          "translit": "veshinantám levanécha vedibartá bam, beshivtechá bevetécha uvlechtechá vadérech, uvshochbechá uvkumécha",
+          "pt": "Tu as ensinarás a teus filhos e falarás delas sentado em casa e andando pelo caminho, ao deitar e ao levantar."
+        },
+        {
+          "he": "וּקְשַׁרְתָּם לְאוֹת עַל־יָדֶךָ וְהָיוּ לְטֹטָפֹת בֵּין עֵינֶיךָ",
+          "translit": "ukshartám leót al-yadécha, vehayú letotafót bein einécha",
+          "pt": "Tu as atarás como sinal na tua mão, e serão como uma faixa entre os teus olhos."
+        },
+        {
+          "he": "וּכְתַבְתָּם עַל־מְזֻזֹת בֵּיתֶךָ וּבִשְׁעָרֶיךָ",
+          "translit": "uchtavtám al-mezuzót betécha uvisharécha",
+          "pt": "E as escreverás nos batentes da tua casa e nos teus portões."
+        }
+      ]
+    },
+    {
+      "id": "salmo-23",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "O Senhor é o meu pastor",
+      "fontePt": "Salmo 23",
+      "introPt": "O salmo mais conhecido, inteiro, nos seis versículos. Muita gente já o sabe de cor em português: ler em hebraico é reconhecer o que já conhece.",
+      "linhas": [
+        {
+          "he": "מִזְמוֹר לְדָוִד יְהוָה רֹעִי לֹא אֶחְסָר",
+          "translit": "mizmór leDavíd. Hashém roí, lo echsár",
+          "pt": "Salmo de Davi. O Senhor é o meu pastor, nada me faltará."
+        },
+        {
+          "he": "בִּנְאוֹת דֶּשֶׁא יַרְבִּיצֵנִי עַל־מֵי מְנֻחוֹת יְנַהֲלֵנִי",
+          "translit": "binót déshe yarbitséni, al-mei menuchót yenahaléni",
+          "pt": "Em pastos verdes me faz deitar, a águas tranquilas me conduz."
+        },
+        {
+          "he": "נַפְשִׁי יְשׁוֹבֵב יַנְחֵנִי בְמַעְגְּלֵי־צֶדֶק לְמַעַן שְׁמוֹ",
+          "translit": "nafshí yeshovév, yanchéni vemagléi-tsédek lemáan shemó",
+          "pt": "Restaura a minha alma, me guia por caminhos de justiça por amor do seu nome."
+        },
+        {
+          "he": "גַּם כִּי־אֵלֵךְ בְּגֵיא צַלְמָוֶת לֹא־אִירָא רָע כִּי־אַתָּה עִמָּדִי שִׁבְטְךָ וּמִשְׁעַנְתֶּךָ הֵמָּה יְנַחֲמֻנִי",
+          "translit": "gam ki-eléch beguéi tsalmávet lo-irá ra, ki-atá imadí; shivtechá umishantécha héma yenachamúni",
+          "pt": "Mesmo que eu ande pelo vale da sombra da morte, não temerei mal nenhum, porque tu estás comigo; a tua vara e o teu cajado me consolam."
+        },
+        {
+          "he": "תַּעֲרֹךְ לְפָנַי שֻׁלְחָן נֶגֶד צֹרְרָי דִּשַּׁנְתָּ בַשֶּׁמֶן רֹאשִׁי כּוֹסִי רְוָיָה",
+          "translit": "taaróch lefanái shulchán négued tsorerái; dishánta vashémen roshí, kossí revayá",
+          "pt": "Preparas uma mesa para mim diante dos meus inimigos; unges com óleo a minha cabeça, o meu cálice transborda."
+        },
+        {
+          "he": "אַךְ טוֹב וָחֶסֶד יִרְדְּפוּנִי כָּל־יְמֵי חַיָּי וְשַׁבְתִּי בְּבֵית־יְהוָה לְאֹרֶךְ יָמִים",
+          "translit": "ach tov vachéssed yirdefúni kol-yeméi chayái, veshavtí bevéit-Hashém leórech yamím",
+          "pt": "Certamente o bem e a bondade me seguirão todos os dias da minha vida, e habitarei na casa do Senhor por longos dias."
+        }
+      ]
+    },
+    {
+      "id": "salmo-121",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "Levanto os meus olhos para os montes",
+      "fontePt": "Salmo 121",
+      "introPt": "Um salmo de viagem, dos «cânticos das subidas» que, segundo uma tradição, se cantavam a caminho de Jerusalém. A raiz que mais se repete é שׁ־מ־ר, «guardar»: conte quantas vezes ela aparece.",
+      "linhas": [
+        {
+          "he": "שִׁיר לַמַּעֲלוֹת אֶשָּׂא עֵינַי אֶל־הֶהָרִים מֵאַיִן יָבֹא עֶזְרִי",
+          "translit": "shir lamaalót. essá einái el-heharím: meáyin yavó ezrí?",
+          "pt": "Cântico das subidas. Levanto os meus olhos para os montes: de onde virá o meu socorro?"
+        },
+        {
+          "he": "עֶזְרִי מֵעִם יְהוָה עֹשֵׂה שָׁמַיִם וָאָרֶץ",
+          "translit": "ezrí meím Hashém, ossé shamáyim vaárets",
+          "pt": "O meu socorro vem do Senhor, que fez os céus e a terra."
+        },
+        {
+          "he": "אַל־יִתֵּן לַמּוֹט רַגְלֶךָ אַל־יָנוּם שֹׁמְרֶךָ",
+          "translit": "al-yitén lamót raglécha, al-yanúm shomerécha",
+          "pt": "Ele não deixará o teu pé tropeçar; não cochila aquele que te guarda."
+        },
+        {
+          "he": "הִנֵּה לֹא־יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל",
+          "translit": "hiné lo-yanúm veló yishán shomér Yisraél",
+          "pt": "Não cochila nem dorme o guarda de Israel."
+        },
+        {
+          "he": "יְהוָה שֹׁמְרֶךָ יְהוָה צִלְּךָ עַל־יַד יְמִינֶךָ",
+          "translit": "Hashém shomerécha, Hashém tsilechá al-yad yeminécha",
+          "pt": "O Senhor é quem te guarda; o Senhor é a tua sombra, à tua mão direita."
+        },
+        {
+          "he": "יוֹמָם הַשֶּׁמֶשׁ לֹא־יַכֶּכָּה וְיָרֵחַ בַּלָּיְלָה",
+          "translit": "yomám hashémesh lo-yakéka, veyaréach baláyla",
+          "pt": "De dia o sol não te ferirá, nem a lua de noite."
+        },
+        {
+          "he": "יְהוָה יִשְׁמָרְךָ מִכָּל־רָע יִשְׁמֹר אֶת־נַפְשֶׁךָ",
+          "translit": "Hashém yishmorchá mikól-ra, yishmór et-nafshécha",
+          "pt": "O Senhor te guardará de todo mal; ele guardará a tua vida."
+        },
+        {
+          "he": "יְהוָה יִשְׁמָר־צֵאתְךָ וּבוֹאֶךָ מֵעַתָּה וְעַד־עוֹלָם",
+          "translit": "Hashém yishmór-tsetechá uvoécha, meatá veád-olám",
+          "pt": "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre."
+        }
+      ]
+    },
+    {
+      "id": "rute-1",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "O teu povo é o meu povo",
+      "fontePt": "Rute 1:16-17",
+      "introPt": "Rute, que não era israelita, se recusa a deixar a sogra, Noemi, e escolhe o povo e o Deus dela. Para muitos, é o texto de quem volta ou chega ao povo judeu.",
+      "linhas": [
+        {
+          "he": "וַתֹּאמֶר רוּת אַל־תִּפְגְּעִי־בִי לְעָזְבֵךְ לָשׁוּב מֵאַחֲרָיִךְ",
+          "translit": "vatómer Rut: al-tifgueí-vi leozvéch lashúv meacharáyich",
+          "pt": "Rute disse: não insistas comigo para que eu te deixe e volte, deixando de te seguir."
+        },
+        {
+          "he": "כִּי אֶל־אֲשֶׁר תֵּלְכִי אֵלֵךְ וּבַאֲשֶׁר תָּלִינִי אָלִין",
+          "translit": "ki el-ashér teléchi eléch, uvaashér talíni alín",
+          "pt": "Pois aonde tu fores, eu irei, e onde tu pousares, eu pousarei."
+        },
+        {
+          "he": "עַמֵּךְ עַמִּי וֵאלֹהַיִךְ אֱלֹהָי",
+          "translit": "améch amí, ve-Eloháyich Elohái",
+          "pt": "O teu povo será o meu povo, e o teu Deus, o meu Deus."
+        },
+        {
+          "he": "בַּאֲשֶׁר תָּמוּתִי אָמוּת וְשָׁם אֶקָּבֵר",
+          "translit": "baashér tamúti amút, veshám ekavér",
+          "pt": "Onde tu morreres, eu morrerei, e ali serei sepultada."
+        },
+        {
+          "he": "כֹּה יַעֲשֶׂה יְהוָה לִי וְכֹה יֹסִיף כִּי הַמָּוֶת יַפְרִיד בֵּינִי וּבֵינֵךְ",
+          "translit": "ko yaassé Hashém li vechó yossíf, ki hamávet yafríd beiní uveinéch",
+          "pt": "Que o Senhor me castigue, e mais ainda, se outra coisa que não a morte me separar de ti."
+        }
+      ]
+    },
+    {
+      "id": "eclesiastes-3",
+      "tipo": "texto",
+      "revisado": true,
+      "tituloPt": "Tudo tem o seu tempo",
+      "fontePt": "Eclesiastes 3:1-8",
+      "introPt": "O texto bíblico mais fácil de ler em voz alta: a palavra עֵת, «tempo», se repete 28 vezes nos pares dos versos 2 a 8, e cada linha é um par de opostos. Um bom primeiro texto longo.",
+      "linhas": [
+        {
+          "he": "לַכֹּל זְמָן וְעֵת לְכָל־חֵפֶץ תַּחַת הַשָּׁמָיִם",
+          "translit": "lakól zman, veét lechól-chéfets táchat hashamáyim",
+          "pt": "Tudo tem o seu tempo, e há um momento para cada coisa debaixo do céu:"
+        },
+        {
+          "he": "עֵת לָלֶדֶת וְעֵת לָמוּת עֵת לָטַעַת וְעֵת לַעֲקוֹר נָטוּעַ",
+          "translit": "et lalédet veét lamút, et latáat veét laakór natúa",
+          "pt": "tempo de nascer e tempo de morrer, tempo de plantar e tempo de arrancar o que se plantou;"
+        },
+        {
+          "he": "עֵת לַהֲרוֹג וְעֵת לִרְפּוֹא עֵת לִפְרוֹץ וְעֵת לִבְנוֹת",
+          "translit": "et laharóg veét lirpó, et lifróts veét livnót",
+          "pt": "tempo de matar e tempo de curar, tempo de derrubar e tempo de construir;"
+        },
+        {
+          "he": "עֵת לִבְכּוֹת וְעֵת לִשְׂחוֹק עֵת סְפוֹד וְעֵת רְקוֹד",
+          "translit": "et livkót veét lischók, et sefód veét rekód",
+          "pt": "tempo de chorar e tempo de rir, tempo de lamentar e tempo de dançar;"
+        },
+        {
+          "he": "עֵת לְהַשְׁלִיךְ אֲבָנִים וְעֵת כְּנוֹס אֲבָנִים עֵת לַחֲבוֹק וְעֵת לִרְחֹק מֵחַבֵּק",
+          "translit": "et lehashlích avaním veét kenós avaním, et lachavók veét lirchók mechabék",
+          "pt": "tempo de espalhar pedras e tempo de juntar pedras, tempo de abraçar e tempo de se afastar do abraço;"
+        },
+        {
+          "he": "עֵת לְבַקֵּשׁ וְעֵת לְאַבֵּד עֵת לִשְׁמוֹר וְעֵת לְהַשְׁלִיךְ",
+          "translit": "et levakésh veét leabéd, et lishmór veét lehashlích",
+          "pt": "tempo de procurar e tempo de perder, tempo de guardar e tempo de jogar fora;"
+        },
+        {
+          "he": "עֵת לִקְרוֹעַ וְעֵת לִתְפּוֹר עֵת לַחֲשׁוֹת וְעֵת לְדַבֵּר",
+          "translit": "et likróa veét litpór, et lachashót veét ledabér",
+          "pt": "tempo de rasgar e tempo de costurar, tempo de calar e tempo de falar;"
+        },
+        {
+          "he": "עֵת לֶאֱהֹב וְעֵת לִשְׂנֹא עֵת מִלְחָמָה וְעֵת שָׁלוֹם",
+          "translit": "et leehóv veét lisnó, et milchamá veét shalóm",
+          "pt": "tempo de amar e tempo de odiar, tempo de guerra e tempo de paz."
+        }
+      ]
+    },
+    {
+      "id": "jeremias-29",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Planos de paz",
+      "fontePt": "Jeremias 29:11",
+      "introPt": "Um dos versículos mais amados e citados: a promessa de um futuro e de uma esperança, numa carta de Jeremias aos exilados na Babilônia.",
+      "linhas": [
+        {
+          "he": "כִּי אָנֹכִי יָדַעְתִּי אֶת־הַמַּחֲשָׁבֹת אֲשֶׁר אָנֹכִי חֹשֵׁב עֲלֵיכֶם נְאֻם־יְהוָה",
+          "translit": "ki anochí yadáti et-hamachashavót ashér anochí choshév aleichém, neúm-Hashém",
+          "pt": "Porque eu sei os planos que tenho para vocês, diz o Senhor:"
+        },
+        {
+          "he": "מַחְשְׁבוֹת שָׁלוֹם וְלֹא לְרָעָה לָתֵת לָכֶם אַחֲרִית וְתִקְוָה",
+          "translit": "machshevót shalóm veló leraá, latét lachém acharít vetikvá",
+          "pt": "planos de paz, e não de mal, para dar a vocês um futuro e uma esperança."
+        }
+      ]
+    },
+    {
+      "id": "josue-1",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Sê forte e corajoso",
+      "fontePt": "Josué 1:9",
+      "introPt": "O que Deus diz a Josué antes de ele entrar na terra prometida. חֲזַק וֶאֱמָץ, «chazák veemáts», se diz até hoje para dar coragem a alguém.",
+      "linhas": [
+        {
+          "he": "הֲלוֹא צִוִּיתִיךָ חֲזַק וֶאֱמָץ",
+          "translit": "haló tsivitícha: chazák veemáts",
+          "pt": "Não fui eu que te ordenei? Sê forte e corajoso."
+        },
+        {
+          "he": "אַל־תַּעֲרֹץ וְאַל־תֵּחָת",
+          "translit": "al-taaróts veál-techát",
+          "pt": "Não tenhas medo nem desanimes,"
+        },
+        {
+          "he": "כִּי עִמְּךָ יְהוָה אֱלֹהֶיךָ בְּכֹל אֲשֶׁר תֵּלֵךְ",
+          "translit": "ki imechá Hashém Elohécha bechól ashér teléch",
+          "pt": "porque o Senhor, teu Deus, está contigo por onde quer que fores."
+        }
+      ]
+    },
+    {
+      "id": "proverbios-3",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Confia no Senhor",
+      "fontePt": "Provérbios 3:5-6",
+      "introPt": "O conselho de Salomão para as decisões da vida: confiar no Senhor, e não só no próprio entendimento.",
+      "linhas": [
+        {
+          "he": "בְּטַח אֶל־יְהוָה בְּכָל־לִבֶּךָ",
+          "translit": "betách el-Hashém bechól-libécha",
+          "pt": "Confia no Senhor de todo o teu coração"
+        },
+        {
+          "he": "וְאֶל־בִּינָתְךָ אַל־תִּשָּׁעֵן",
+          "translit": "veél-binatchá al-tishaén",
+          "pt": "e não te apoies no teu próprio entendimento."
+        },
+        {
+          "he": "בְּכָל־דְּרָכֶיךָ דָעֵהוּ וְהוּא יְיַשֵּׁר אֹרְחֹתֶיךָ",
+          "translit": "bechól-derachécha daéhu, vehú yeyashér orchotécha",
+          "pt": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas."
+        }
+      ]
+    },
+    {
+      "id": "isaias-41",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Não temas",
+      "fontePt": "Isaías 41:10",
+      "introPt": "Uma das promessas mais repetidas da Bíblia, «não temas», com três verbos seguidos no fim: fortaleço, ajudo, sustento.",
+      "linhas": [
+        {
+          "he": "אַל־תִּירָא כִּי עִמְּךָ־אָנִי",
+          "translit": "al-tirá ki imechá-aní",
+          "pt": "Não temas, porque eu estou contigo;"
+        },
+        {
+          "he": "אַל־תִּשְׁתָּע כִּי־אֲנִי אֱלֹהֶיךָ",
+          "translit": "al-tishtá ki-aní Elohécha",
+          "pt": "não te assustes, porque eu sou o teu Deus."
+        },
+        {
+          "he": "אִמַּצְתִּיךָ אַף־עֲזַרְתִּיךָ אַף־תְּמַכְתִּיךָ בִּימִין צִדְקִי",
+          "translit": "imatstícha af-azartícha af-temachtícha bimín tsidkí",
+          "pt": "Eu te fortaleço, eu te ajudo, eu te sustento com a mão direita da minha justiça."
+        }
+      ]
+    },
+    {
+      "id": "isaias-40",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Asas como águias",
+      "fontePt": "Isaías 40:31",
+      "introPt": "O versículo das águias: três imagens, subir como águias, correr e caminhar sem se cansar.",
+      "linhas": [
+        {
+          "he": "וְקוֹיֵ יְהוָה יַחֲלִיפוּ כֹחַ",
+          "translit": "vekovéi Hashém yachalífu chóach",
+          "pt": "Mas os que esperam no Senhor renovam as suas forças;"
+        },
+        {
+          "he": "יַעֲלוּ אֵבֶר כַּנְּשָׁרִים",
+          "translit": "yaalú éver kanesharím",
+          "pt": "sobem com asas, como águias;"
+        },
+        {
+          "he": "יָרוּצוּ וְלֹא יִיגָעוּ יֵלְכוּ וְלֹא יִיעָפוּ",
+          "translit": "yarútsu veló yigáu, yelchú veló yiáfu",
+          "pt": "correm e não se cansam, caminham e não se fatigam."
+        }
+      ]
+    },
+    {
+      "id": "jeremias-33",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Clama a mim",
+      "fontePt": "Jeremias 33:3",
+      "introPt": "Um convite à oração, dito a Jeremias quando ele estava preso: «clama a mim, e eu te responderei».",
+      "linhas": [
+        {
+          "he": "קְרָא אֵלַי וְאֶעֱנֶךָּ",
+          "translit": "kerá elái veeenéka",
+          "pt": "Clama a mim, e eu te responderei;"
+        },
+        {
+          "he": "וְאַגִּידָה לְּךָ גְּדֹלוֹת וּבְצֻרוֹת לֹא יְדַעְתָּם",
+          "translit": "veaguída lechá guedolót uvtsurót lo yedatám",
+          "pt": "e te anunciarei coisas grandes e escondidas, que tu não conheces."
+        }
+      ]
+    },
+    {
+      "id": "josue-24",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Eu e a minha casa",
+      "fontePt": "Josué 24:15",
+      "introPt": "A decisão de Josué diante de todo o povo, que muita gente escreve na parede de casa. São só cinco palavras.",
+      "linhas": [
+        {
+          "he": "וְאָנֹכִי וּבֵיתִי נַעֲבֹד אֶת־יְהוָה",
+          "translit": "veanochí uveití naavód et-Hashém",
+          "pt": "Eu e a minha casa serviremos ao Senhor."
+        }
+      ]
+    },
+    {
+      "id": "salmo-91",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "À sombra do Todo-Poderoso",
+      "fontePt": "Salmo 91:1-2",
+      "introPt": "O salmo da proteção, que muita gente lê nos tempos difíceis. Aqui, os dois primeiros versículos. שַׁדַּי, «Shadái», é o Todo-Poderoso.",
+      "linhas": [
+        {
+          "he": "יֹשֵׁב בְּסֵתֶר עֶלְיוֹן בְּצֵל שַׁדַּי יִתְלוֹנָן",
+          "translit": "yoshév besséter elyón, betsél Shadái yitlonán",
+          "pt": "Quem habita no abrigo do Altíssimo descansa à sombra do Todo-Poderoso."
+        },
+        {
+          "he": "אֹמַר לַיהוָה מַחְסִי וּמְצוּדָתִי אֱלֹהַי אֶבְטַח־בּוֹ",
+          "translit": "omár laHashém: machsí umtsudatí, Elohái evtach-bó",
+          "pt": "Digo ao Senhor: meu refúgio e minha fortaleza, meu Deus, em quem confio."
+        }
+      ]
+    },
+    {
+      "id": "lamentacoes-3",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Novas a cada manhã",
+      "fontePt": "Lamentações 3:22-23",
+      "introPt": "No meio do livro mais triste da Bíblia, uma esperança: as misericórdias do Senhor se renovam a cada manhã.",
+      "linhas": [
+        {
+          "he": "חַסְדֵי יְהוָה כִּי לֹא־תָמְנוּ כִּי לֹא־כָלוּ רַחֲמָיו",
+          "translit": "chasdéi Hashém ki lo-támnu, ki lo-chálu rachamáv",
+          "pt": "As misericórdias do Senhor não têm fim, as suas compaixões não se esgotam;"
+        },
+        {
+          "he": "חֲדָשִׁים לַבְּקָרִים רַבָּה אֱמוּנָתֶךָ",
+          "translit": "chadashím labkarím, rabá emunatécha",
+          "pt": "elas se renovam a cada manhã. Grande é a tua fidelidade!"
+        }
+      ]
+    },
+    {
+      "id": "salmo-119",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Lâmpada para os meus pés",
+      "fontePt": "Salmo 119:105",
+      "introPt": "Do maior capítulo da Bíblia, o versículo sobre a própria Palavra.",
+      "linhas": [
+        {
+          "he": "נֵר־לְרַגְלִי דְבָרֶךָ וְאוֹר לִנְתִיבָתִי",
+          "translit": "ner-leraglí devarécha, veór lintivatí",
+          "pt": "A tua palavra é lâmpada para os meus pés e luz para o meu caminho."
+        }
+      ]
+    },
+    {
+      "id": "bencao-sacerdotal",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "A bênção sacerdotal",
+      "fontePt": "Números 6:24-26",
+      "introPt": "A bênção que Deus manda Aarão e os seus filhos darem ao povo de Israel. Três versículos, cada um maior que o anterior.",
+      "linhas": [
+        {
+          "he": "יְבָרֶכְךָ יְהוָה וְיִשְׁמְרֶךָ",
+          "translit": "yevarechechá Hashém veyishmerécha",
+          "pt": "O Senhor te abençoe e te guarde."
+        },
+        {
+          "he": "יָאֵר יְהוָה פָּנָיו אֵלֶיךָ וִיחֻנֶּךָּ",
+          "translit": "yaér Hashém panáv elécha vichunéka",
+          "pt": "O Senhor faça brilhar o seu rosto sobre ti e tenha misericórdia de ti."
+        },
+        {
+          "he": "יִשָּׂא יְהוָה פָּנָיו אֵלֶיךָ וְיָשֵׂם לְךָ שָׁלוֹם",
+          "translit": "yissá Hashém panáv elécha veyassém lechá shalóm",
+          "pt": "O Senhor volte o seu rosto para ti e te dê a paz."
+        }
+      ]
+    },
+    {
+      "id": "isaias-6",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Santo, santo, santo",
+      "fontePt": "Isaías 6:3",
+      "introPt": "O que os anjos proclamam na visão de Isaías. A palavra קָדוֹשׁ, «santo», vem três vezes seguidas.",
+      "linhas": [
+        {
+          "he": "וְקָרָא זֶה אֶל־זֶה וְאָמַר",
+          "translit": "vekará ze el-ze veamár",
+          "pt": "E um clamava ao outro, dizendo:"
+        },
+        {
+          "he": "קָדוֹשׁ קָדוֹשׁ קָדוֹשׁ יְהוָה צְבָאוֹת מְלֹא כָל־הָאָרֶץ כְּבוֹדוֹ",
+          "translit": "kadósh kadósh kadósh Hashém tsevaót, meló chol-haárets kevodó",
+          "pt": "Santo, santo, santo é o Senhor dos Exércitos; toda a terra está cheia da sua glória."
+        }
+      ]
+    },
+    {
+      "id": "isaias-9",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Um menino nos nasceu",
+      "fontePt": "Isaías 9:6 (9:5 na Bíblia hebraica)",
+      "introPt": "Um dos textos mais conhecidos da Bíblia. Na Bíblia hebraica a numeração é um versículo antes: 9:5. Há mais de uma leitura tradicional deste versículo; a tradução abaixo é a mais conhecida no Brasil.",
+      "linhas": [
+        {
+          "he": "כִּי־יֶלֶד יֻלַּד־לָנוּ בֵּן נִתַּן־לָנוּ",
+          "translit": "ki-yéled yulád-lánu, ben nitán-lánu",
+          "pt": "Porque um menino nos nasceu, um filho nos foi dado;"
+        },
+        {
+          "he": "וַתְּהִי הַמִּשְׂרָה עַל־שִׁכְמוֹ",
+          "translit": "vatehí hamisrá al-shichmó",
+          "pt": "o governo está sobre os seus ombros,"
+        },
+        {
+          "he": "וַיִּקְרָא שְׁמוֹ פֶּלֶא יוֹעֵץ אֵל גִּבּוֹר אֲבִיעַד שַׂר־שָׁלוֹם",
+          "translit": "vayikrá shemó: péle yoéts, El guibór, Aviád, sar-shalóm",
+          "pt": "e o seu nome é chamado: Maravilhoso, Conselheiro, Deus Forte, Pai Eterno, Príncipe da Paz."
+        }
+      ]
+    },
+    {
+      "id": "isaias-53",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Pelas suas feridas",
+      "fontePt": "Isaías 53:5",
+      "introPt": "Do capítulo do servo sofredor, um dos textos do Antigo Testamento mais citados pelos cristãos.",
+      "linhas": [
+        {
+          "he": "וְהוּא מְחֹלָל מִפְּשָׁעֵנוּ מְדֻכָּא מֵעֲוֹנֹתֵינוּ",
+          "translit": "vehú mecholál mipeshaénu, meduká meavonotéinu",
+          "pt": "Mas ele foi ferido por causa das nossas transgressões, esmagado por causa das nossas culpas;"
+        },
+        {
+          "he": "מוּסַר שְׁלוֹמֵנוּ עָלָיו וּבַחֲבֻרָתוֹ נִרְפָּא־לָנוּ",
+          "translit": "mussár shloméinu aláv, uvachavurató nirpá-lánu",
+          "pt": "o castigo que nos traz a paz estava sobre ele, e pelas suas feridas fomos curados."
+        }
+      ]
+    },
+    {
+      "id": "levitico-19",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Amarás o teu próximo",
+      "fontePt": "Levítico 19:18",
+      "introPt": "O versículo de onde vem «amarás o teu próximo como a ti mesmo». Ele termina com a assinatura que a Torá repete tantas vezes: אֲנִי יְהוָה, «eu sou o Senhor».",
+      "linhas": [
+        {
+          "he": "לֹא־תִקֹּם וְלֹא־תִטֹּר אֶת־בְּנֵי עַמֶּךָ",
+          "translit": "lo-tikóm veló-titór et-benéi amécha",
+          "pt": "Não te vingarás nem guardarás rancor contra os filhos do teu povo;"
+        },
+        {
+          "he": "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ אֲנִי יְהוָה",
+          "translit": "veahavtá lereachá kamócha: aní Hashém",
+          "pt": "amarás o teu próximo como a ti mesmo. Eu sou o Senhor."
+        }
+      ]
+    },
+    {
+      "id": "salmo-133",
+      "tipo": "curto",
+      "revisado": true,
+      "tituloPt": "Como é bom",
+      "fontePt": "Salmo 133:1",
+      "introPt": "Um versículo só, e talvez o mais cantado: הִנֵּה מַה־טּוֹב vira música em casamento, em festa e em reunião de amigos.",
+      "linhas": [
+        {
+          "he": "שִׁיר הַמַּעֲלוֹת לְדָוִד",
+          "translit": "shir ha-maalót leDavíd",
+          "pt": "Cântico das subidas, de Davi."
+        },
+        {
+          "he": "הִנֵּה מַה־טּוֹב וּמַה־נָּעִים שֶׁבֶת אַחִים גַּם־יָחַד",
+          "translit": "hiné ma-tóv uma-naím shévet achím gam-yáchad",
+          "pt": "Vejam como é bom e agradável os irmãos viverem juntos."
+        }
+      ]
+    }
+  ],
+  "guia": {
+    "revisado": true,
+    "tituloPt": "O nikud da Bíblia",
+    "introPt": "Um guia opcional, para quem quer ler as leituras bônus ou abrir uma Bíblia em hebraico. Os pontos são os mesmos que você aprendeu no curso; a Bíblia só usa alguns a mais, e tem umas poucas regras de leitura. Os exemplos são todos das leituras bônus.",
+    "secoes": [
+      {
+        "id": "nome",
+        "tituloPt": "O Nome não se pronuncia",
+        "textoPt": "O nome de Deus, {{יְהוָה}}, nunca é lido como está escrito. Na reza e na leitura da Torá na sinagoga, diz-se «Adonái», «meu Senhor». Fora da reza, muitos judeus evitam até essa palavra, por respeito ao Nome, e dizem «Hashém», que quer dizer «o Nome». As gravações deste curso seguem esse costume: por isso você ouve «Hashém», e a transliteração mostra o que se ouve. Ao ler sozinho, cada um segue o costume da sua casa: «Adonái», «Hashém» ou, nas traduções, «o Senhor». Por escrito, muita gente abrevia para {{ה׳}}.",
+        "exemplos": [
+          {
+            "he": "יְהוָה",
+            "translit": "Hashém",
+            "pt": "como está no texto bíblico; na gravação, «Hashém»"
+          },
+          {
+            "he": "יְהוָה אֱלֹהֵינוּ",
+            "translit": "Hashém Elohéinu",
+            "pt": "o Senhor, nosso Deus (do Shemá)"
+          }
+        ]
+      },
+      {
+        "id": "sheva",
+        "tituloPt": "O shva no começo soa «e»",
+        "textoPt": "O shva ({{ְ}}) debaixo da primeira letra da palavra soa como um «e» rápido. No meio da palavra, depois de outra vogal, ele costuma ficar mudo: a letra fecha a sílaba anterior.",
+        "exemplos": [
+          {
+            "he": "בְּרֵאשִׁית",
+            "translit": "bereshít",
+            "pt": "shva no começo: «be»"
+          },
+          {
+            "he": "שְׁמַע",
+            "translit": "shemá",
+            "pt": "shva no começo: «she»"
+          },
+          {
+            "he": "יִשְׂרָאֵל",
+            "translit": "Yisraél",
+            "pt": "shva no meio, mudo: «Yis-ra-él»"
+          }
+        ]
+      },
+      {
+        "id": "chataf",
+        "tituloPt": "As vogais rápidas (chataf)",
+        "textoPt": "Um shva com outra vogal ao lado é uma vogal curta, dita depressa: {{ֲ}} soa «a», {{ֱ}} soa «e» e {{ֳ}} soa «o». Aparecem quase sempre debaixo de {{א}}, {{ה}}, {{ח}} e {{ע}}, as letras que não aceitam o shva simples.",
+        "exemplos": [
+          {
+            "he": "אֱלֹהִים",
+            "translit": "Elohím",
+            "pt": "«e» rápido"
+          },
+          {
+            "he": "אֲשֶׁר",
+            "translit": "ashér",
+            "pt": "«a» rápido"
+          }
+        ]
+      },
+      {
+        "id": "kamats-katan",
+        "tituloPt": "Quando o kamats soa «o»?",
+        "textoPt": "Em algumas palavras, o kamats ({{ָ}}) soa «o», e não «a». A mais comum de todas é {{כָּל}}, «todo», que aparece em quase toda página. Nas leituras bônus, a transliteração sempre mostra qual é o caso.",
+        "exemplos": [
+          {
+            "he": "כָּל־יְמֵי",
+            "translit": "kol-yeméi",
+            "pt": "todos os dias de"
+          },
+          {
+            "he": "בְּכָל־לְבָבְךָ",
+            "translit": "bechól-levavchá",
+            "pt": "com todo o teu coração"
+          }
+        ]
+      },
+      {
+        "id": "patach-furtivo",
+        "tituloPt": "O «a» que vem antes da letra",
+        "textoPt": "Quando a palavra termina em {{ח}}, {{ע}} ou {{הּ}} (com o ponto dentro) e há um patach embaixo, o «a» se diz ANTES da letra: «ru-ach», e não «ru-cha».",
+        "exemplos": [
+          {
+            "he": "וְרוּחַ",
+            "translit": "veruách",
+            "pt": "e o espírito"
+          }
+        ]
+      },
+      {
+        "id": "maqaf",
+        "tituloPt": "O tracinho que liga palavras",
+        "textoPt": "O tracinho no alto da linha ({{־}}), o maqaf, junta duas palavras que se leem de um fôlego só, como se fossem uma.",
+        "exemplos": [
+          {
+            "he": "עַל־פְּנֵי",
+            "translit": "al-penéi",
+            "pt": "sobre a face de"
+          },
+          {
+            "he": "כִּי־טוֹב",
+            "translit": "ki-tov",
+            "pt": "que era bom"
+          }
+        ]
+      },
+      {
+        "id": "dagesh",
+        "tituloPt": "O daguesh, de novo",
+        "textoPt": "Você já sabe que o ponto dentro de {{ב}}, {{כ}} e {{פ}} muda o som. A Bíblia pontua tudo, então você vai ver o daguesh em muitas outras letras também: nelas, ele não muda nada que você precise dizer.",
+        "exemplos": [
+          {
+            "he": "בָּרָא",
+            "translit": "bará",
+            "pt": "com daguesh: «b»"
+          },
+          {
+            "he": "וַיְהִי־בֹקֶר",
+            "translit": "vayehí-vóker",
+            "pt": "sem daguesh: «v»"
+          },
+          {
+            "he": "הַשָּׁמַיִם",
+            "translit": "ha-shamáyim",
+            "pt": "daguesh no ש: o som não muda"
+          }
+        ]
+      },
+      {
+        "id": "yod",
+        "tituloPt": "O י que não se lê como «y»",
+        "textoPt": "Quando o {{י}} vem depois de um chirik ({{ִ}}) só para marcar a vogal, ele não acrescenta outro som: juntos, {{ִי}} representam o som «i». No fim {{ֶיךָ}}, ele fica mudo. Depois de um tsere ({{ֵ}}), na pronúncia de hoje, soa «ei».",
+        "exemplos": [
+          {
+            "he": "אִירָא",
+            "translit": "irá",
+            "pt": "temerei"
+          },
+          {
+            "he": "לְבָנֶיךָ",
+            "translit": "levanécha",
+            "pt": "a teus filhos"
+          },
+          {
+            "he": "אֱלֹהֵינוּ",
+            "translit": "Elohéinu",
+            "pt": "nosso Deus"
+          }
+        ]
+      },
+      {
+        "id": "vav",
+        "tituloPt": "O ו do «e disse»",
+        "textoPt": "A Bíblia conta o que aconteceu com um {{וַ}} na frente do verbo: {{וַיֹּאמֶר}} é «e disse», {{וַיְהִי}} é «e houve». É a forma bíblica de narrar no passado, e o hebraico de hoje não a usa. Para ler, basta dizer «va» e seguir.",
+        "exemplos": [
+          {
+            "he": "וַיֹּאמֶר",
+            "translit": "vayómer",
+            "pt": "e disse"
+          },
+          {
+            "he": "וַיְהִי",
+            "translit": "vayehí",
+            "pt": "e houve"
+          }
+        ]
+      },
+      {
+        "id": "teamim",
+        "tituloPt": "Os sinais a mais numa Bíblia impressa",
+        "textoPt": "Numa Bíblia hebraica você vai ver ainda outros sinais, em cima e embaixo das letras: são os te'amim, as notas do canto da leitura na sinagoga. Para ler, pode ignorá-los. O {{׃}} marca o fim do versículo, e um {{פ}} ou {{ס}} sozinho entre versículos marca um parágrafo: nenhum dos dois se lê.",
+        "exemplos": [
+          {
+            "he": "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃",
+            "ouvir": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
+            "translit": "bereshít bará Elohím et ha-shamáyim ve-ét ha-árets",
+            "pt": "Gênesis 1:1 como numa Bíblia impressa, com os te'amim e o ׃"
+          }
+        ]
+      }
+    ]
+  }
+}

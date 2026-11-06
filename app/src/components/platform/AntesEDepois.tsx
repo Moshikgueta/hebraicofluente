@@ -23,12 +23,14 @@ import { useProgress } from '@/lib/state/store';
 import { allLetters, sentencesUpTo } from '@/lib/content';
 import { isLessonComplete } from '@/lib/state/rules';
 import { antesEDepois, ordemCorrida } from '@/lib/antes-depois';
+import { tx } from '@/i18n/telas/conta-plataforma-pecas';
+import { LOCALE_INTL } from '@/i18n';
 
 /** "14 de março" - sem o ano, que só envelhece o cartão. */
 const emPortugues = (dia: string) => {
   const d = new Date(`${dia}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return dia;
-  return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', timeZone: 'UTC' });
+  return d.toLocaleDateString(LOCALE_INTL, { day: 'numeric', month: 'long', timeZone: 'UTC' });
 };
 
 export function AntesEDepois() {
@@ -46,16 +48,16 @@ export function AntesEDepois() {
   return (
     <Card tone="wash" className="p-5 sm:p-7 grid gap-4">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <Badge tone="accent">Antes e depois</Badge>
+        <Badge tone="accent">{tx.antesEDepois}</Badge>
         <p className="font-ui text-[13px] text-ink-muted tabular-nums">
           {/* "destravadas" e não "lidas": o curso sabe quais frases estão ao
               alcance das letras que a pessoa fechou, e não quantas ela leu. */}
-          {total === 1 ? '1 frase destravada' : `${total} frases destravadas`}
+          {tx.frasesDestravadas(total)}
         </p>
       </div>
 
       <p className="font-display text-[19px] sm:text-[21px] font-semibold leading-[1.25] tracking-[-0.018em] text-ink">
-        Em {emPortugues(desde)}, há {dias} {dias === 1 ? 'dia' : 'dias'}, isto era um desenho.
+        {tx.eraUmDesenho(emPortugues(desde), dias)}
       </p>
 
       <div className="flex flex-wrap justify-center items-baseline gap-x-3 gap-y-2 py-2"
@@ -68,10 +70,10 @@ export function AntesEDepois() {
       {!aberto ? (
         <div className="grid gap-2 justify-items-center">
           <Button variant="ghost" onClick={() => setAberto(true)}>
-            O que está escrito?
+            {tx.oQueEstaEscrito}
           </Button>
           <p className="font-ui text-[13px] text-ink-muted text-center">
-            Leia antes de abrir. É para isso que serve.
+            {tx.leiaAntes}
           </p>
         </div>
       ) : (

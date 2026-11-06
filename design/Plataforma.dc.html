@@ -88,7 +88,7 @@
               <div>
                 <div style="font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#8FD6C8; margin-bottom:10px;">Curso em andamento</div>
                 <div class="dsp" style="font-size:25px; font-weight:600; letter-spacing:-0.025em; color:#fff; margin-bottom:6px;">Alfabetização Hebraica</div>
-                <div style="font-size:15.5px; color:rgba(255,255,255,.66); margin-bottom:20px;">Módulo 3 · Lição 7 — Nikud: as vogais longas</div>
+                <div style="font-size:15.5px; color:rgba(255,255,255,.66); margin-bottom:20px;">Módulo 3 · Lição 7 - Nikud: as vogais longas</div>
                 <div style="display:flex; align-items:center; gap:14px; max-width:420px;">
                   <div style="flex:1; height:8px; border-radius:100px; background:rgba(255,255,255,.15); overflow:hidden;">
                     <div style="height:100%; width:{{ dashPct }}; border-radius:100px; background:linear-gradient(90deg,#1F8A7D,#8FD6C8); transition:width 1.2s cubic-bezier(.3,.8,.3,1);"></div>
@@ -449,13 +449,13 @@ class Component extends DCLogic {
           E("div", { style: { display: "flex", alignItems: "center", gap: 9, marginBottom: 4 } },
             E("svg", { width: 18, height: 18, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" }, E("path", { d: "M9 4.4v5.4M9 13v.1", stroke: "#8A6520", strokeWidth: 2.1, strokeLinecap: "round" })),
             E("span", { style: { fontWeight: 700, fontSize: 16.5, color: "#8A6520" } }, "Quase.")),
-          E("div", { style: { fontSize: 14.5, lineHeight: 1.55, color: "#7A5A1C" } }, "Essa é a mesma forma, mas com o ponto do outro lado — ela soa S. Procure o ponto à direita. Pode tentar de novo."));
+          E("div", { style: { fontSize: 14.5, lineHeight: 1.55, color: "#7A5A1C" } }, "Essa é a mesma forma, mas com o ponto do outro lado - ela soa S. Procure o ponto à direita. Pode tentar de novo."));
       }
       return null;
     };
 
     const bodies = [
-      // 0 — Aprender
+      // 0 - Aprender
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Aprender"),
         E("div", { style: { background: "#F3F0E9", borderRadius: 20, padding: "30px 18px", textAlign: "center", marginBottom: 18 } },
@@ -463,14 +463,14 @@ class Component extends DCLogic {
           E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.02em", marginTop: 6 } }, "Shin"),
           E("div", { style: { fontSize: 15.5, color: "#1F8A7D", marginBottom: 16 } }, "som /ʃ/"),
           audioBtn("Ouvir")),
-        E("p", { style: { fontSize: 16.5, lineHeight: 1.6, margin: "0 0 14px" } }, "Como o CH de «chave», «chuva», «chá». O som já existe no seu português — o que é novo é a forma."),
+        E("p", { style: { fontSize: 16.5, lineHeight: 1.6, margin: "0 0 14px" } }, "Como o CH de «chave», «chuva», «chá». O som já existe no seu português - o que é novo é a forma."),
         E("div", { style: { background: "#fff", border: "1px solid #E4E0D6", borderRadius: 15, padding: "16px 18px", display: "flex", alignItems: "center", gap: 16 } },
           HE("שָׁלוֹם", { fontSize: 32, lineHeight: 1.4, color: "#0E3B43" }),
           E("div", null,
             E("div", { style: { fontSize: 15, fontWeight: 600 } }, "shalom"),
             E("div", { style: { fontSize: 14, color: "#66716D" } }, "olá, paz")))),
 
-      // 1 — Escuta
+      // 1 - Escuta
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Escuta"),
         E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.022em", marginBottom: 18 } }, "Qual som você ouviu?"),
@@ -480,7 +480,7 @@ class Component extends DCLogic {
             .map(([k, l, h, ok]) => optionBtn(k, l, h, choice === null ? null : (choice === 1 ? "b" : "a"), ok, () => S({ choice: ok ? 1 : 0 })))),
         feedbackBox()),
 
-      // 2 — Reconhecimento
+      // 2 - Reconhecimento
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Reconhecimento"),
         E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.022em", marginBottom: 6 } }, "Toque na letra Shin."),
@@ -490,7 +490,7 @@ class Component extends DCLogic {
             .map(([k, l, h, ok]) => optionBtn(k, l || "\u00A0", h, choice === null ? null : (choice === 1 ? "b" : "a"), ok, () => S({ choice: ok ? 1 : 0 })))),
         feedbackBox()),
 
-      // 3 — Associação
+      // 3 - Associação
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Associação"),
         E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.022em", marginBottom: 20 } }, "Ligue cada letra ao seu som."),
@@ -503,7 +503,7 @@ class Component extends DCLogic {
               done ? E("svg", { width: 17, height: 17, viewBox: "0 0 18 18", fill: "none", "aria-hidden": "true" }, E("path", { d: "M3.6 9.4 7 12.8 14.4 5.4", stroke: "#12665C", strokeWidth: 2.2, strokeLinecap: "round", strokeLinejoin: "round" })) : E("span", { style: { width: 17 } })))),
         E("div", { style: { fontSize: 14.5, color: "#66716D", marginTop: 16, lineHeight: 1.5 } }, "Duas de quatro ligadas. Continue tocando nos pares.")),
 
-      // 4 — Digitação
+      // 4 - Digitação
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Digitação"),
         E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.022em", marginBottom: 6 } }, "Escreva a pronúncia."),
@@ -522,7 +522,7 @@ class Component extends DCLogic {
               E("span", { style: { marginLeft: "auto", fontWeight: 700, fontSize: 14.5, color: "#1F8A7D" } }, "+10 XP"))
           : E("div", { style: { fontSize: 14.5, color: "#66716D", marginTop: 14, lineHeight: 1.5 } }, "Dica: começa com o som SH.")),
 
-      // 5 — Leitura
+      // 5 - Leitura
       E("div", { style: { animation: "hf-rise .3s ease both" } },
         kicker("Leitura"),
         E("div", { className: "dsp", style: { fontSize: 23, fontWeight: 600, letterSpacing: "-.022em", marginBottom: 20 } }, "Leia em voz alta."),
@@ -533,10 +533,10 @@ class Component extends DCLogic {
               E("div", { key: i, style: { textAlign: "center" } },
                 HE(h, { fontSize: 30, lineHeight: 1.4, color: "#1F8A7D" }),
                 E("div", { style: { fontSize: 14, fontWeight: 600, color: "#12665C" } }, t))))),
-        E("p", { style: { fontSize: 16, lineHeight: 1.6, color: "#66716D", margin: "0 0 18px" } }, "Duas sílabas, a segunda mais forte. O ם no fim é o Mem final — mesma letra, forma de fechamento."),
+        E("p", { style: { fontSize: 16, lineHeight: 1.6, color: "#66716D", margin: "0 0 18px" } }, "Duas sílabas, a segunda mais forte. O ם no fim é o Mem final - mesma letra, forma de fechamento."),
         E("div", { style: { textAlign: "center" } }, audioBtn("Ouvir o modelo"))),
 
-      // 6 — Conclusão
+      // 6 - Conclusão
       E("div", { style: { animation: "hf-rise .3s ease both", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", paddingBottom: 14 } },
         E("div", { style: { position: "relative", width: 96, height: 96, margin: "0 auto 24px" } },
           E("div", { style: { position: "absolute", inset: 0, borderRadius: "50%", background: "#E4F1EE", display: "flex", alignItems: "center", justifyContent: "center", animation: "hf-pop .5s cubic-bezier(.2,.8,.3,1) both" } },

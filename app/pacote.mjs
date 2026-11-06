@@ -28,10 +28,10 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { OUT } from './saida.mjs';
 
-const OUT = 'out';
 if (!existsSync(OUT)) {
-  console.error('out/ não existe. Rode a build antes:  npm run build && node pacote.mjs');
+  console.error(`${OUT}/ não existe.`.slice(0) + ' Rode a build antes:  npm run build && node pacote.mjs');
   process.exit(1);
 }
 
@@ -108,10 +108,37 @@ for (const s of j('sentences.json').sentences) por(`frase/${s.id}`, s.notePt);
 for (const p of j('eras.json').pairs) por(`era/${p.id}`, p.notePt);
 
 for (const s of j('real-world.json').scenes) por(`cena/${s.id}`, s.contextPt);
+/* As leituras bônus (27/09/2026): a prosa da introdução, pelo mesmo motivo. */
+for (const l of j('bonus.json').leituras) por(`bonus/${l.id}`, l.introPt);
 for (const c of j('culture.json').cards) {
   por(`cultura/${c.id}.leadPt`, c.leadPt);
   por(`cultura/${c.id}.bodyPt`, c.bodyPt?.[0]);
 }
+/* O curso Hebraico A1 (06/10/2026): a explicação da gramática e o objetivo
+   de cada unidade. É pago por OUTRO curso, e nada dele pode aparecer em
+   página livre. */
+for (const u of j('a1.json').unidades) {
+  por(`a1/unidade-${u.n}.objetivoPt`, u.objetivoPt);
+  for (const [i, g] of u.gramatica.entries()) por(`a1/unidade-${u.n}.gramatica-${i + 1}`, g.textoPt);
+  for (const [i, c] of [...(u.cultura ?? []), ...(u.sabia ?? [])].entries()) por(`a1/unidade-${u.n}.caixa-${i + 1}`, c.textoPt);
+}
+/* O exame do A1 é corrigido no servidor: nem pergunta nem gabarito podem
+   chegar ao navegador por nenhum caminho, nem pago. */
+for (const p of j('a1-exame.json').partes) {
+  for (const [i, it] of p.itens.entries()) por(`a1/exame-${p.id}-${i + 1}`, it.q ?? it.pt);
+}
+/* Raízes Sefarditas (21/10/2026): outro produto pago. A prosa de cada
+   módulo, a evidência da matriz e o enunciado das atividades. */
+const semMarcas = t => String(t || '').replace(/\[\[[^\]]*\]\]/g, ' ');
+for (const m of j('raizes.json').conteudo) {
+  for (const e of m.etapas) {
+    for (const [i, b] of e.blocos.entries()) {
+      if (b.tipo === 'texto') por(`raizes/m${m.n}.${e.id}.${i}`, semMarcas(b.paragrafos[0]));
+    }
+  }
+  for (const [id, a] of Object.entries(m.atividades)) por(`raizes/m${m.n}.atividade.${id}`, a.enunciado);
+}
+for (const a of j('raizes.json').afirmacoes.slice(0, 8)) por(`raizes/${a.id}`, a.evidencia);
 const traços = j('stroke-paths.json').letters;
 for (const [id, set] of Object.entries(traços).slice(0, 6)) {
   por(`traço/${id}`, set.strokes?.[0]?.d);

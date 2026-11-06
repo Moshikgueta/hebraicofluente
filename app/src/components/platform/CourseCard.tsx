@@ -16,10 +16,12 @@
  * se decide, e o cadeado é visível.
  */
 
+import { IconeCadeado } from '@/components/shell/NavIcons';
 import Link from 'next/link';
 import { Card, Badge } from '@/components/ui/Card';
-import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse } from '@/lib/catalog';
-import { soPix } from '@/lib/empresa';
+import { ancora, brl, isPlayable, parcelasMax, pixPrice, type CatalogCourse, fimDoPreLancamento, paginaDeVenda } from '@/lib/catalog';
+import { parcelasCurto, soPix } from '@/lib/empresa';
+import { tx } from '@/i18n/telas/conta-course-card';
 
 export type CourseCardState = 'owned' | 'available' | 'soon' | 'locked';
 
@@ -29,10 +31,10 @@ export function courseCardState(c: CatalogCourse, owned: boolean): CourseCardSta
 }
 
 const BADGE: Record<CourseCardState, { label: string; tone: 'accent' | 'mint' | 'neutral' }> = {
-  owned:     { label: 'Seu curso', tone: 'mint' },
-  available: { label: 'Disponível', tone: 'accent' },
-  locked:    { label: 'Disponível', tone: 'accent' },
-  soon:      { label: 'Em breve', tone: 'neutral' }
+  owned:     { label: tx.seuCurso, tone: 'mint' },
+  available: { label: tx.disponivel, tone: 'accent' },
+  locked:    { label: tx.disponivel, tone: 'accent' },
+  soon:      { label: tx.emBreve, tone: 'neutral' }
 };
 
 export function CourseCard({
@@ -44,11 +46,11 @@ export function CourseCard({
   progress?: number;
 }) {
   const badge = BADGE[state];
-  const href = state === 'owned' ? '/meu-hebraico' : `/cursos/${course.slug}`;
+  const href = state === 'owned' ? '/meu-hebraico' : paginaDeVenda(course.slug);
   const cta =
-    state === 'owned' ? 'Continuar'
-      : state === 'soon' ? 'Ver o que vem'
-      : 'Ver o curso';
+    state === 'owned' ? tx.continuar
+      : state === 'soon' ? tx.verOQueVem
+      : tx.verOCurso;
 
   return (
     <Card
@@ -56,6 +58,8 @@ export function CourseCard({
       tone={state === 'owned' ? 'wash' : 'surface'}
       className={`p-5 grid gap-3 content-start ${state === 'soon' ? 'opacity-90' : ''}`}
     >
+      {/* Para numeros.mjs: os números deste cartão são deste curso. */}
+      <span hidden data-curso={course.slug} />
       <div className="flex items-start justify-between gap-3">
         <span aria-hidden className="font-display text-[28px] font-bold leading-none
                                       text-[color-mix(in_srgb,var(--accent)_35%,transparent)]
@@ -64,8 +68,8 @@ export function CourseCard({
         </span>
         <div className="flex items-center gap-2">
           {state === 'locked' && (
-            <span aria-hidden title="Ainda não está na sua conta"
-                  className="text-[14px] text-ink-muted">🔒</span>
+            <span aria-hidden title={tx.aindaNaoNaConta}
+                  className="text-ink-muted"><IconeCadeado size={15} /></span>
           )}
           <Badge tone={badge.tone}>{badge.label}</Badge>
         </div>
@@ -79,8 +83,8 @@ export function CourseCard({
           {course.levelPt}
           {course.cefr ? ` · ${course.cefr}` : ''}
           {' · '}
-          {course.stats.modules} módulos
-          {course.stats.lessons ? ` · ${course.stats.lessons} lições` : ''}
+          {tx.modulos(course.stats.modules)}
+          {course.stats.lessons ? tx.licoes(course.stats.lessons) : ''}
         </p>
       </div>
 
@@ -95,7 +99,7 @@ export function CourseCard({
                  style={{ width: `${Math.round(progress * 100)}%` }} />
           </div>
           <p className="font-ui text-[12px] text-ink-muted tabular-nums">
-            {Math.round(progress * 100)}% concluído
+            {tx.concluido(Math.round(progress * 100))}
           </p>
         </div>
       )}
@@ -105,17 +109,18 @@ export function CourseCard({
           {soPix() ? (
             <>
               <strong className="font-semibold text-ink">{brl(pixPrice(course.price))}</strong>
-              {' '}no PIX
+              {' '}{tx.noPix}
             </>
           ) : (
             <>
-              {/* O riscado antes do preço, e não depois: quem varre a grade lê
-                  o primeiro número como o preço. Ver `ancora()` em catalog.ts. */}
-              {ancora(course.price) && (
-                <span className="line-through">{brl(ancora(course.price)!)}{' '}</span>
-              )}
+              {/* Sem número riscado desde 28/09/2026 (auditoria, LEGAL-014):
+                  o preço cheio aparece como o que ele é, o de depois do
+                  pré-lançamento. Ver `fimDoPreLancamento()` em catalog.ts. */}
               <strong className="font-semibold text-ink">{brl(course.price.brl)}</strong>
-              {' '}ou em até {parcelasMax(course.price)}x no cartão
+              {' '}{tx.ouNoCartao(parcelasCurto(parcelasMax(course.price)))}
+              {ancora(course.price) && (
+                <>{' '}{tx.preLancamento(fimDoPreLancamento(course.price) || null, brl(ancora(course.price)!))}</>
+              )}
             </>
           )}
         </p>
@@ -129,6 +134,7 @@ export function CourseCard({
       >
         {cta}
       </Link>
+      <span hidden data-curso="fim" />
     </Card>
   );
 }

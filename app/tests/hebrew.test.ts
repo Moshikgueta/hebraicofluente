@@ -50,7 +50,7 @@ describe('gapAtLetter', () => {
 describe('containsLetter', () => {
   it('sees a letter present only in final form', () => {
     expect(containsLetter('קרם', 'מ')).toBe(true);
-    expect(containsLetter('אַתְּ', 'ה')).toBe(false);
+    expect(containsLetter('אַתְ', 'ה')).toBe(false);
   });
 });
 

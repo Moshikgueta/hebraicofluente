@@ -59,8 +59,10 @@ const TONE = {
   ink:   'text-ink',
   muted: 'text-ink-muted',
   paper: 'text-[var(--cream)]',
-  teal:  'text-[var(--teal)]',
-  navy:  'text-[var(--navy)]',
+  teal:  'text-[var(--teal-ink)]',
+  /* `--accent` e não `--navy` (28/10/2026): no claro são o mesmo azul; no
+     escuro o `--navy` é fundo, e como tinta dava 2,5:1. */
+  navy:  'text-[var(--accent)]',
   /* Teal claro: existe SÓ sobre navy - a marca, os rótulos e os ícones
      dentro dos blocos escuros. Sobre creme ele não passa em contraste. */
   lite:  'text-[var(--teal-lite)]'
@@ -68,7 +70,7 @@ const TONE = {
 
 export function He({
   children, size = 'inline', cursive = false, mark, marks, className = '', dim = false,
-  tone = 'ink'
+  tone = 'ink', pedaco
 }: {
   children: string;
   size?: HeSize;
@@ -84,6 +86,12 @@ export function He({
    * telas que dependem disso.
    */
   marks?: readonly string[] | null;
+  /**
+   * Destaca UM cluster, pela posição na palavra (0 = a primeira letra lida, a
+   * da direita). É o "ler letra por letra" do Laboratório de Leitura: a mesma
+   * letra pode aparecer duas vezes, e só a da vez acende.
+   */
+  pedaco?: number | null;
   className?: string;
   /** Atalho antigo para `tone="muted"`. Mantido: está em muitas telas. */
   dim?: boolean;
@@ -113,6 +121,18 @@ export function He({
      ponto fica órfão e a letra perde o som na tela. E pela consoante de base,
      porque a raiz não muda quando a letra aparece na forma final - o מ de
      «nishmá» é o mesmo מ que vira ם no fim de uma palavra. */
+  if (pedaco != null && pedaco >= 0) {
+    return (
+      <span className={cls} lang="he">
+        {clusters(raw).map((g, i) =>
+          i === pedaco
+            ? <b key={i} className="font-normal text-[var(--accent-soft)] underline decoration-2 underline-offset-[.35em]">{g}</b>
+            : <span key={i}>{g}</span>
+        )}
+      </span>
+    );
+  }
+
   const alvos = marks?.length
     ? new Set(marks.flatMap(x => consonantsOf(x)))
     : null;

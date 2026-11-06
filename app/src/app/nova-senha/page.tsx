@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { NovaSenha } from '@/components/platform/NovaSenha';
+import { tx } from '@/i18n/telas/conta-nova-senha';
 
 export const metadata: Metadata = {
-  title: 'Nova senha - Hebraico Fluente',
-  description: 'Escolha uma senha nova e volte para o curso.',
+  title: tx.metaTitulo,
+  description: tx.metaDescricao,
   /* Esta URL carrega um token na query. Ela não pode ser indexada, e não
      porque o buscador leria o token - ele não o tem - mas porque um resultado
      de busca para "nova senha hebraico fluente" leva a uma tela que só

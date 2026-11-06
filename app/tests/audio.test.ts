@@ -8,9 +8,10 @@
  *
  * So the app's view of the world is checked against the recording manifest. */
 
+import { gravacaoDoProfessor, idsDoProfessor } from '@/lib/gravacoes-professor';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { allLetters, extras, nikud, scenesUpTo } from '../src/lib/content';
+import { allLetters, extras, guiaNikud, leiturasBonus, nikud, scenesUpTo, sentencesUpTo, textosDoCurso } from '../src/lib/content';
 import { AUDIO_MANIFEST } from '../src/lib/audio-manifest';
 
 type Clip = { num: number; he: string; file: string; wave: number; kind: string };
@@ -28,7 +29,15 @@ function requested(): { id: string; where: string }[] {
     L.syllables.forEach(s => out.push({ id: s.audioId, where: `${L.id}.syllable ${s.vowel}` }));
     L.wordsToRead.forEach(w => out.push({ id: w.audioId, where: `${L.id}.read ${w.he}` }));
     L.wordsToRecognize.forEach(w => out.push({ id: w.audioId, where: `${L.id}.recognize ${w.he}` }));
+    /* As leituras de uma letra (פּ/פ/ף, בּ/ב, כּ/כ/ך, שׁ/שׂ). Ficavam de fora
+       desta lista, e o id delas - da consoante sozinha - não tinha gravação
+       nenhuma: o quadro "As leituras desta letra" era mudo (29/09/2026). */
+    (L.variantes ?? []).forEach(v => out.push({ id: v.audioId, where: `${L.id}.variante ${v.he}` }));
+    /* As palavras internacionais, com a pronúncia hebraica (11/10/2026). */
+    L.bridgeWords.forEach(b => out.push({ id: b.audioId, where: `${L.id}.ponte ${b.he}` }));
   }
+  /* As explicações gravadas pelo professor (data/gravacoes-professor.json). */
+  for (const id of idsDoProfessor()) out.push({ id: gravacaoDoProfessor(id)!.audioId, where: `professor ${id}` });
   for (const s of nikud().sounds) {
     s.signs.forEach(g => {
       out.push({ id: g.audioId, where: `nikud ${g.namePt}` });
@@ -47,7 +56,48 @@ function requested(): { id: string; where: string }[] {
     out.push({ id: g.audioId, where: `mod7 letter ${g.he}` });
     g.words.forEach(w => out.push({ id: w.audioId, where: `mod7 ${w.he}` }));
   });
+  /* As lições de som: as sílabas sem ponto (e o par, com ponto), as palavras
+     de cada som e as do contraste. */
+  extras().sons.forEach(S => {
+    out.push({ id: S.audioId, where: `som ${S.id}` });
+    [...S.silabas, ...S.parSilabas, ...S.palavras, ...S.parPalavras]
+      .forEach(x => out.push({ id: x.audioId, where: `som ${S.id} ${x.he}` }));
+  });
   scenesUpTo(22).forEach(s => out.push({ id: s.audioId, where: `scene ${s.id}` }));
+  /* Onda 4: as frases e cada linha dos mini-textos, que a escuta de frase e
+     o "ouvir o texto" da leitura tocam. */
+  sentencesUpTo(22).forEach(f => out.push({ id: f.audioId, where: `frase ${f.id}` }));
+  /* E cada palavra da frase, que a leitura palavra a palavra toca: treze
+     delas não tinham gravação prevista (29/09/2026). */
+  sentencesUpTo(22).forEach(f => f.words.forEach(w => out.push({ id: w.audioId, where: `frase ${f.id} palavra ${w.he}` })));
+  textosDoCurso().forEach(t => t.linhas.forEach((l, i) =>
+    out.push({ id: l.audioId!, where: `texto ${t.modulo} linha ${i + 1}` })));
+  /* E as palavras novas de cada texto: a lista embaixo dele e, depois de
+     lido, o vocabulário e o treino (27/09/2026). */
+  textosDoCurso().forEach(t => t.novas.forEach(w => {
+    if (w.audioId) out.push({ id: w.audioId, where: `texto ${t.modulo} palavra ${w.he}` });
+  }));
+  /* Onda 5: as linhas das leituras bônus de Recompensas. */
+  leiturasBonus().forEach(b => b.linhas.forEach((l, i) =>
+    out.push({ id: l.audioId!, where: `bônus ${b.id} linha ${i + 1}` })));
+  guiaNikud()?.secoes.forEach(s => s.exemplos.forEach(e =>
+    out.push({ id: e.audioId!, where: `guia do nikud ${s.id} ${e.he}` })));
+  /* Onda 6: o Hebraico A1 (06/10/2026), só as unidades revisadas pelo dono -
+     as outras ainda não pedem gravação. */
+  type IA1 = { t: string; audioId?: string };
+  type UA1 = {
+    n: number; revisado: boolean; palavras: { audioId?: string; he?: string }[];
+    dialogo: { linhas: { audioId?: string }[]; glossario: { audioId?: string }[] };
+    leitura?: { linhas: { audioId?: string }[]; perguntas: IA1[] }; exercicios: IA1[];
+  };
+  const a1 = JSON.parse(readFileSync(new URL('../content/a1.json', import.meta.url), 'utf8')) as { unidades: UA1[] };
+  for (const u of a1.unidades.filter(x => x.revisado)) {
+    const onde = `a1 unidade ${u.n}`;
+    u.palavras.forEach(w => { if (w.audioId) out.push({ id: w.audioId, where: `${onde} ${w.he}` }); });
+    [...u.dialogo.linhas, ...u.dialogo.glossario, ...(u.leitura?.linhas ?? [])].forEach(l => out.push({ id: l.audioId!, where: onde }));
+    [...u.exercicios, ...(u.leitura?.perguntas ?? [])].filter(i => i.t === 'ouvir' || i.t === 'ditado')
+      .forEach(i => out.push({ id: i.audioId!, where: `${onde} escuta` }));
+  }
   return out;
 }
 
@@ -83,13 +133,14 @@ describe('the audio manifest and the app agree', () => {
   });
 
   it('keeps every clip in exactly one wave, and wave 1 first', () => {
-    for (const c of manifest.clips) expect([1, 2, 3]).toContain(c.wave);
+    for (const c of manifest.clips) expect([1, 2, 3, 4, 5, 6, 7]).toContain(c.wave);
     const w1 = manifest.clips.filter(c => c.wave === 1);
     /* Wave 1 must carry every letter name and every syllable: it is the wave
        that makes the course's central claim - this letter makes this sound -
        actually audible. */
     expect(w1.filter(c => c.kind === 'nome').length).toBeGreaterThanOrEqual(22);
-    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(132);
+    /* 22 × 6, menos o sheva de א, ה e ע, que não levam esse cartão. */
+    expect(w1.filter(c => c.kind === 'silaba').length).toBeGreaterThanOrEqual(128);
   });
 
   it('never claims a clip that is not in the manifest', () => {

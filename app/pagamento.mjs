@@ -66,7 +66,7 @@ const PROIBIDO_SEM_AUTOMATICO = [
   /ela se atualiza sozinha/i
 ];
 
-const PAGINAS = ['/', '/cursos/', '/cursos/alfabetizacao/', '/faq/', '/termos/',
+const PAGINAS = ['/', '/cursos/', '/curso-de-hebraico/', '/faq/', '/termos/',
                  '/privacidade/', '/reembolso/', '/suporte/', '/checkout/alfabetizacao/'];
 
 const navegador = await chromium.launch({ executablePath: process.env.HF_CHROMIUM });
@@ -104,13 +104,16 @@ for (const w of [390, 1280]) {
     const campo = p.getByLabel(rotulo).first();
     if (await campo.isVisible().catch(() => false)) await campo.fill(valor).catch(() => {});
   }
+  const aceite = p.getByRole('checkbox', { name: /aceito os termos/i }).first();
+  if (await aceite.isVisible().catch(() => false)) await aceite.check().catch(() => {});
   await p.getByRole('button', { name: /criar minha conta|criar conta|continuar/i })
          .last().click().catch(() => {});
   await p.waitForTimeout(1200);
-  if (!p.url().includes('/checkout/')) {
-    await p.goto(url('/checkout/alfabetizacao/'), { waitUntil: 'networkidle' });
-    await p.waitForTimeout(800);
-  }
+  /* Quem cria a conta no checkout tem de continuar nele. Este roteiro voltava
+     ao checkout sozinho quando saía dele, e por isso nunca viu que o cadastro
+     mandava a pessoa para a página de venda (growth, 23/10/2026). */
+  ok(new URL(p.url()).pathname === '/checkout/alfabetizacao/',
+    `${w}px · depois de criar a conta, continua no checkout (${new URL(p.url()).pathname})`);
 
   const pagar = p.getByRole('button', { name: /^Pagar/i }).first();
   const chegou = await pagar.isVisible().catch(() => false);

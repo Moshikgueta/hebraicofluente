@@ -1,0 +1,20 @@
+import type { Traducao } from '..';
+
+/* components/learn/TraceBoard.tsx */
+const pt = {
+  areaDeEscrita: (letra: string) => `Área de escrita para a letra ${letra}`,
+  feito: 'Feito. Compare com o modelo e veja o que você mudaria.'
+} as const;
+
+const en: Traducao<typeof pt> = {
+  areaDeEscrita: letra => `Writing area for the letter ${letra}`,
+  feito: 'Done. Compare it with the model and see what you would change.'
+};
+
+const es: Traducao<typeof pt> = {
+  areaDeEscrita: letra => `Área de escritura para la letra ${letra}`,
+  feito: 'Listo. Compara con el modelo y mira qué cambiarías.'
+};
+
+export const DICIONARIO = { pt, en, es };
+export const tx = process.env.NEXT_PUBLIC_LOCALE === 'en' ? en : process.env.NEXT_PUBLIC_LOCALE === 'es' ? es : pt;

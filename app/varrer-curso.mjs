@@ -10,7 +10,9 @@ const ACC={v:1,accounts:{'demo@hf.test':{id:'acc_demo',name:'Moshik',email:'demo
 const ST={version:2,onboarding:{reason:'familia',goalMinutes:10,startingPoint:'zero',name:'Moshik',completedAt:new Date().toISOString()},xp:340,lessons:{mem:{letterId:'mem',stagesDone:[1,2,3,4,5],quizBest:1,quizAttempts:1,perfectBonusPaid:true,completedAt:new Date().toISOString()},tav:{letterId:'tav',stagesDone:[1,2,3,4,5],quizBest:.9,quizAttempts:2,perfectBonusPaid:false,completedAt:new Date().toISOString()},alef:{letterId:'alef',stagesDone:[1,2],quizBest:null,quizAttempts:0,perfectBonusPaid:false,completedAt:null}},checkpoints:{},srs:{tav:{itemId:'tav',letterId:'tav',box:1,misses:2,hits:1,dueOn:hoje,lastSeen:hoje,skill:'ler'},mem:{itemId:'mem',letterId:'mem',box:0,misses:1,hits:0,dueOn:hoje,lastSeen:hoje,skill:'som'}},achievements:[{id:'primeira-letra',unlockedAt:new Date().toISOString()}],days:{[hoje]:{answered:12,units:3,xp:120,goalMet:false}},streak:{current:3,longest:5,lastDay:hoje},lastRoute:null,finalChallenge:{best:null,completedAt:null},skills:{},confusions:{},firsts:{},gym:{}};
 const ROTAS=['/meu-hebraico/','/mapa/','/revisao/','/academia/','/conquistas/','/perfil/','/licao/alef/','/licao/bet/','/licao/he/','/modulo/6/','/inicio/','/historia/','/desafio-final/','/onboarding/',
   /* 23/09/2026: as três telas das atividades de produção. */
-  '/vocabulario/','/meu-nome/','/teclado-hebraico/'];
+  '/vocabulario/','/meu-nome/','/teclado-hebraico/','/leituras/','/hebraico-na-rua/','/modulo/3/texto-2/','/modulo/6/texto-2/',
+  /* 25/09/2026: a missão de módulo. */
+  '/modulo/1/missao/', '/modulo/3/texto/'];
 const b=await chromium.launch({executablePath:process.env.HF_CHROMIUM});
 let ruim=0;
 /* O que a navegação OFERECE, por largura e por rota. Ver as duas regras
@@ -50,7 +52,9 @@ for (const w of [390,1280]) {
        Só conta link que ocupa espaço na tela: nas duas barras o HTML das
        duas existe sempre, e é o CSS que esconde uma delas. A inicial da
        conta, no cabeçalho do telefone, é a versão móvel do item "Perfil" e
-       por isso entra na conta. */
+       por isso entra na conta; o presente do cabeçalho é a versão móvel de
+       "Recompensas" (27/09/2026: na barra de baixo não cabe um oitavo
+       destino), e entra pelo mesmo motivo. */
     /* E o que a tela oferece a quem precisa de SOCORRO. Medido junto porque
        é a mesma pergunta: o que esta tela alcança. */
     ajuda[w][rota]=await p.evaluate(()=>{
@@ -64,7 +68,7 @@ for (const w of [390,1280]) {
       const visivel=el=>!!(el.offsetWidth||el.offsetHeight||el.getClientRects().length);
       const fora=new Set();
       for (const a of document.querySelectorAll(
-             'nav[aria-label="Navegação principal"] a[href^="/"], header a[href^="/perfil"]'))
+             'nav[aria-label="Navegação principal"] a[href^="/"], header a[href^="/perfil"], header a[href^="/loja"]'))
         if (visivel(a)) fora.add(new URL(a.href).pathname.replace(/\/+$/,'')||'/');
       return [...fora].sort();
     });
@@ -111,18 +115,33 @@ for (const w of [390,1280]) {
     : `os mesmos destinos nas duas larguras (${chaves(ROTAS[0])})`}`);
 }
 
+/* O cartão "Aula 0" no topo do mapa: o caminho para ela depois de concluída. */
+const mapaLinkaAula0 = await (async () => {
+  const ctx = await b.newContext({ viewport: { width: 390, height: 900 } });
+  await ctx.addInitScript(([a,st])=>{localStorage.setItem('hf-platform-local-v1',a);localStorage.setItem('hebraico-fluente-v1',st)},[JSON.stringify(ACC),JSON.stringify(ST)]);
+  const p = await ctx.newPage();
+  await p.goto('http://127.0.0.1:4403/mapa/', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(500);
+  const n = await p.locator('main a[href="/inicio/"], main a[href="/inicio"]').count();
+  await ctx.close();
+  return n > 0;
+})();
+
 /* ── a aula 0 fica ao alcance do curso inteiro ────────────────────────────
    Ela era uma ETAPA: o painel oferecia, o onboarding terminava nela, e
    depois sumia do caminho. Mas a página é referência - quem esbarra no ה
    mudo na décima lição precisa dela ali, não no painel. Agora ela é um
    destino da navegação, e isto recusa a volta atrás: em toda rota que tem
-   navegação, nas duas larguras, existe um link visível para /inicio. */
+   navegação, nas duas larguras, existe um link visível para /inicio.
+   Exceção (27/10/2026, decisão do dono): depois de CONCLUÍDA, ela sai das
+   duas navegações e o caminho passa a ser o cartão no topo do mapa. Então a
+   tela sem o link na navegação só passa se o mapa tiver o link. */
 {
   let sem=0;
   for (const w of [390,1280]) for (const rota of ROTAS) {
     const tem=navegacao[w][rota];
     if (!tem.length) continue;
-    if (!tem.includes('/inicio')) {
+    if (!tem.includes('/inicio') && !mapaLinkaAula0) {
       sem++; ruim++;
       console.log(`${String(w).padEnd(5)} ${rota.padEnd(20)} SEM CAMINHO PARA A AULA 0`);
     }
@@ -232,7 +251,10 @@ for (const w of [390,1280]) {
      uma pergunta e esquecer o título, a página passa a mentir por conta
      própria - e o pedido era de 12 a 18. */
   const cartoes = await p.evaluate(() => {
-    const sec = document.querySelector('section[aria-labelledby="atividade"]');
+    /* A checagem mora no <Compreensao id="atividade-perguntas">, dentro da
+       parte "atividade" (que chega fechada: o texto está no HTML, então
+       textContent conta mesmo assim). */
+    const sec = document.querySelector('section[aria-labelledby="atividade-perguntas"]');
     if (!sec) return 0;
     return [...sec.children].filter(el => /^\d+\./.test(el.textContent || '')).length;
   });
@@ -241,6 +263,15 @@ for (const w of [390,1280]) {
               `${faixa ? '(entre 12 e 18)' : 'FORA DA FAIXA 12-18'}`);
   if (!faixa) ruim++;
 
+  /* As partes da Aula 0 chegam fechadas (pedido do dono, 29/09/2026,
+     components/learn/Partes.tsx): o texto fica no HTML com `hidden`, e o
+     innerText só lê o que está à vista. Abre todas antes de procurar. */
+  /* Desde 28/10/2026 a Aula 0 abre numa capa, com os passos curtos; a
+     página inteira fica a um botão ("Ver tudo numa página"). */
+  const paginaInteira = p.getByRole('button', { name: 'Ver tudo numa página' });
+  if (await paginaInteira.count()) { await paginaInteira.first().click(); await p.waitForTimeout(200); }
+  const abrirTodas = p.getByRole('button', { name: 'Abrir todas as partes' });
+  if (await abrirTodas.count()) { await abrirTodas.first().click(); await p.waitForTimeout(200); }
   const txt = (await p.innerText('body')).replace(/\s+/g, ' ');
   for (const [o_que, marca] of [
     ['a linha de duas direções', 'Quando a linha tem duas direções'],

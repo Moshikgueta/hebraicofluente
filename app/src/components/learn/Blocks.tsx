@@ -2,9 +2,13 @@
 
 /* The teaching blocks: the pieces of a lesson that present rather than test. */
 
+import { tx } from '@/i18n/telas/licao-blocks';
 import { useState } from 'react';
 import { He, HeSeq } from '@/components/hebrew/He';
+import { Prose } from '@/components/hebrew/Prose';
+import { somPt } from '@/lib/som-pt';
 import { AudioButton } from './AudioButton';
+import { GravacaoDoProfessor } from './GravacaoDoProfessor';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import type { Letter, Scene, Syllable, Word } from '@/lib/content';
@@ -39,7 +43,7 @@ export function RegraCursiva() {
   return (
     <div className="rounded-[var(--r-md)] border border-[color:var(--edge-teal)]
                     bg-[var(--teal-soft)] p-4 grid sm:grid-cols-2 gap-3">
-      {[['Para ler', REGRA_CURSIVA.ler], ['Para escrever à mão', REGRA_CURSIVA.escrever]].map(
+      {[[tx.paraLer, REGRA_CURSIVA.ler], [tx.paraEscrever, REGRA_CURSIVA.escrever]].map(
         ([o_que, forma]) => (
           <p key={o_que} className="font-ui text-[15px] leading-snug text-[var(--teal-ink)]">
             <span className="font-semibold">{o_que}</span>
@@ -67,11 +71,11 @@ export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] 
       </div>
       <dl className="grid gap-3">
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 items-start">
-          <dt className="font-ui text-xs font-semibold text-ink-muted pt-[3px] uppercase tracking-wider">Sai</dt>
+          <dt className="font-ui text-xs font-semibold text-ink-muted pt-[3px] uppercase tracking-wider">{tx.sai}</dt>
           <dd className="text-[15px] leading-relaxed text-ink-body"><Prose text={mistake.wrong} /></dd>
         </div>
         <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 items-start">
-          <dt className="font-ui text-xs font-semibold text-[var(--green)] pt-[3px] uppercase tracking-wider">Certo</dt>
+          <dt className="font-ui text-xs font-semibold text-[var(--teal-ink)] pt-[3px] uppercase tracking-wider">{tx.certo}</dt>
           <dd className="text-[15px] leading-relaxed text-ink"><Prose text={mistake.right} /></dd>
         </div>
       </dl>
@@ -82,24 +86,9 @@ export function BrazilianTip({ mistake }: { mistake: Letter['brazilianMistake'] 
   );
 }
 
-/* Prose from the data files marks Hebrew as {{…}}. Authors never write a
-   direction span by hand; this wraps it, and everything outside the braces
-   stays ordinary Portuguese - so the quotes and parentheses that bled into the
-   reference PDF's Hebrew runs physically cannot get inside a span. */
-export function Prose({ text }: { text: string }) {
-  const parts: React.ReactNode[] = [];
-  let i = 0, k = 0;
-  for (;;) {
-    const open = text.indexOf('{{', i);
-    if (open < 0) { parts.push(text.slice(i)); break; }
-    const close = text.indexOf('}}', open);
-    if (close < 0) { parts.push(text.slice(i)); break; }
-    parts.push(text.slice(i, open));
-    parts.push(<He key={`he-${k++}`} size="inline">{text.slice(open + 2, close).trim()}</He>);
-    i = close + 2;
-  }
-  return <>{parts}</>;
-}
+/* Prose moved to components/hebrew/Prose.tsx, so public pages can use it
+   without this module; re-exported here for the lesson screens. */
+export { Prose };
 
 /* ── syllables ──────────────────────────────────────────────────────────
    Learning mode, explicitly: the reading is on screen. The testing version of
@@ -111,14 +100,18 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
 
   return (
     <div className="grid gap-3">
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {/* Da direita para a esquerda (12/10/2026): a ordem dos dados é a, e, i,
+          o, u, e o A fica à DIREITA, onde a leitura começa - também quando a
+          grade quebra em mais linhas no telefone. Cinco colunas no computador:
+          as cinco vogais numa linha só, A à direita e U à esquerda. */}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-3" dir="rtl">
         {shown.map((s, i) => (
           <button
             key={s.he}
             type="button"
             onClick={() => setActive(active === i ? null : i)}
             aria-expanded={active === i}
-            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-all
+            className={`group rounded-[var(--r-lg)] border p-4 text-center transition-[border-color,background-color]
               duration-[var(--dur)] ease-[var(--ease)] min-h-[108px]
               flex flex-col items-center justify-center gap-1.5
               ${active === i
@@ -126,14 +119,14 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
                 : 'border-line bg-surface hover:border-[var(--accent-soft)]'}`}
           >
             <He size="lg">{s.he}</He>
-            <span className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
+            <span dir="ltr" className="font-ui text-[15px] font-semibold text-[var(--accent)] tracking-wide">
               {s.translit || '-'}
             </span>
             {/* A instrução vive uma vez, acima da grade. Repetida em baixo de
                 cada uma das seis sílabas ela virava ruído - seis linhas de
                 texto idêntico numa tela em que o assunto é a letra. */}
             {active === i && (
-              <span className="font-ui text-[12px] text-ink-muted leading-snug">
+              <span dir="ltr" className="font-ui text-[12px] text-ink-muted leading-snug">
                 {s.ptApprox}
               </span>
             )}
@@ -141,9 +134,9 @@ export function SyllableTrainer({ letter }: { letter: Letter }) {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-3 pt-1">
-        <AudioButton audioId={letter.audioId} label={`Ouvir ${letter.namePt}`} slow />
+        <AudioButton audioId={letter.audioId} label={tx.ouvirNome(letter.namePt)} slow />
         <p className="font-ui text-[13px] text-ink-muted">
-          Leia cada sílaba em voz alta três vezes. É a repetição falada que fixa o som.
+          {tx.leiaCadaSilaba}
         </p>
       </div>
     </div>
@@ -164,9 +157,10 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
 
   return (
     <Card className="p-5 flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-4 min-h-[64px]">
+      {/* O hebraico à direita, o botão à esquerda (pedido do dono, 19/10/2026). */}
+      <div className="flex flex-row-reverse items-center justify-between gap-4 min-h-[64px]">
         <He size="xl" mark={mark ?? null}>{word.he}</He>
-        <AudioButton audioId={word.audioId} label="Ouvir" size="sm" />
+        <AudioButton audioId={word.audioId} label={tx.ouvir} size="sm" />
       </div>
 
       <div className="grid gap-2" aria-live="polite">
@@ -187,7 +181,7 @@ export function WordReveal({ word, mark }: { word: Word; mark?: string | null })
           onClick={() => setStep(s => (s === 0 ? 1 : 2))}
           className="self-start"
         >
-          {step === 0 ? supportLabel(level) : 'Mostrar significado'}
+          {step === 0 ? supportLabel(level) : tx.mostrarSignificado}
         </Button>
       )}
     </Card>
@@ -203,24 +197,32 @@ export function BridgeWords({ letter }: { letter: Letter }) {
   if (!letter.bridgeWords.length) return null;
   return (
     <Card tone="wash" className="p-5 sm:p-6">
-      <Badge tone="accent">Você já conhece estas palavras</Badge>
+      <Badge tone="accent">{tx.jaConhece}</Badge>
       <p className="mt-3 text-[15px] leading-relaxed text-ink-body">
-        O hebraico moderno importou centenas de palavras. Você já sabe o que elas
-        querem dizer - só nunca as viu escritas assim. Ache o{' '}
-        <He size="inline">{letter.letter}</He> dentro de cada uma.
+        {tx.importou(<He size="inline">{letter.letter}</He>)}
       </p>
       <ul className="mt-4 grid gap-2">
         {letter.bridgeWords.map(b => (
           <li key={b.he}
-              className="flex items-center justify-between gap-4 rounded-[var(--r-md)]
+              /* O hebraico à direita e o português à esquerda (pedido do dono,
+                 19/10/2026): cada língua do lado em que ela começa a ser lida. */
+              className="flex flex-row-reverse items-center justify-between gap-4 rounded-[var(--r-md)]
                          bg-surface px-4 py-3 border border-[color:var(--line-soft)]">
-            <He size="word" mark={letter.letter}>{b.he}</He>
-            <span className="font-ui text-[14px] text-ink-muted text-right">{b.pt}</span>
+            <He size="word" mark={b.marca ?? letter.letter}>{b.he}</He>
+            <span className="flex items-center gap-3">
+              <span className="font-ui text-[14px] text-ink-muted text-left">{b.pt}</span>
+              {/* A pronúncia hebraica, quando gravada: sem gravação, nada. */}
+              <AudioButton audioId={b.audioId} size="sm" label="" ariaLabel={tx.ouvirEmHebraico(b.pt)} />
+            </span>
           </li>
         ))}
       </ul>
+      <div className="mt-3">
+        <GravacaoDoProfessor id="international-words-pronunciation"
+          textoPt={tx.acento} />
+      </div>
       <p className="mt-3 font-ui text-[12.5px] text-ink-muted">
-        Não tente ler a palavra inteira ainda - ela usa letras que você ainda não aprendeu.
+        {tx.naoTente}
       </p>
     </Card>
   );
@@ -249,7 +251,7 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
       <div className="flex items-center gap-2.5 px-5 py-3 border-b border-[color:var(--line-soft)]">
         <span aria-hidden>🇮🇱</span>
         <h3 className="font-ui text-[13px] font-semibold uppercase tracking-[.07em] text-ink-muted">
-          Hebraico no mundo real
+          {tx.mundoReal}
         </h3>
         <span aria-hidden className="ml-auto text-ink-muted">{icon}</span>
       </div>
@@ -264,7 +266,7 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
           <p className="text-[15px] leading-relaxed text-ink-body flex-1 min-w-[16ch]">
             <Prose text={contextPt} />
           </p>
-          <AudioButton audioId={word.audioId} label="Ouvir" size="sm" />
+          <AudioButton audioId={word.audioId} label={tx.ouvir} size="sm" />
         </div>
         {shown ? (
           <div className="grid gap-1 animate-rise border-t border-[color:var(--line-soft)] pt-4">
@@ -273,7 +275,7 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
           </div>
         ) : (
           <Button variant="secondary" size="sm" className="self-start" onClick={() => setShown(true)}>
-            {level === 'on-request' ? 'Você consegue ler? Conferir' : 'Você consegue ler? Mostrar resposta'}
+            {level === 'on-request' ? tx.conferir : tx.mostrarResposta}
           </Button>
         )}
       </div>
@@ -297,11 +299,8 @@ export function RealWorldHebrew({ scene }: { scene: Scene }) {
    três telas adiante. Então saiu inteiro: a página, os cinco cartões e o
    evento de analytics.
 
-   O que FICA é o campo `workbookPages` no conteúdo. Ele não é promessa: é a
-   correspondência entre cada letra e as páginas do manuscrito de origem, que
-   `tools/build-pdf.mjs` usa para gerar o livro do dono do curso. Nada disso
-   chega à tela do aluno. No dia em que houver um arquivo para distribuir, o
-   cartão volta - com um link que leva a alguma coisa. */
+   Em 26/09/2026 o livro em PDF saiu do projeto inteiro, com o gerador e o
+   campo `workbookPages`: o curso é a plataforma. */
 
 /* ── a letter, big ──────────────────────────────────────────────────────── */
 export function HebrewLetterCard({ letter }: { letter: Letter }) {
@@ -309,22 +308,31 @@ export function HebrewLetterCard({ letter }: { letter: Letter }) {
     <div className="grid sm:grid-cols-[1fr_auto] items-center gap-6">
       <div className="grid gap-3">
         <div className="flex items-baseline gap-4 flex-wrap">
-          <He size="hero">{letter.letter}</He>
+          {/* Com o daguesh na lição do Bet, Kaf e Pe (glifoDaLicao em lib/sons.ts).
+              A letra se revela da direita para a esquerda, no sentido da
+              leitura, uma vez ao abrir a lição (`hf-revela`, globals.css): é
+              um recorte que se abre, e não um traço desenhado, então o glifo
+              é sempre o da fonte. Com movimento reduzido ela já está inteira. */}
+          <He size="hero" className="hf-revela">{letter.letraComPonto ?? letter.letter}</He>
           {letter.finalForm && (
             <span className="flex items-baseline gap-2">
               <He size="xl" dim>{letter.finalForm}</He>
-              <span className="font-ui text-[12px] text-ink-muted">no fim da palavra</span>
+              <span className="font-ui text-[12px] text-ink-muted">{tx.noFim}</span>
             </span>
           )}
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <h1 className="text-[28px] sm:text-[34px] font-bold">{letter.namePt}</h1>
-          <span className="font-ui text-[17px] text-[var(--accent)] font-semibold">{letter.sound}</span>
+          {/* O som em português; o IPA fica como detalhe (CONT-003). */}
+          <span className="font-ui text-[17px] text-[var(--accent)] font-semibold">{somPt(letter.sound)}</span>
+          <span className="font-ui text-[12px] text-ink-muted" title={tx.ipa}>
+            {letter.sound.startsWith('/') ? `IPA ${letter.sound}` : null}
+          </span>
           <He size="word" dim>{letter.nameHe}</He>
         </div>
       </div>
       <div className="grid gap-2 justify-items-start sm:justify-items-end">
-        <AudioButton audioId={letter.audioId} label="Ouvir a letra" slow />
+        <AudioButton audioId={letter.audioId} label={tx.ouvirLetra} slow />
       </div>
     </div>
   );

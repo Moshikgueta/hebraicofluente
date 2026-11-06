@@ -20,10 +20,21 @@
  * continuar perguntando por eles seria gastar chamada com pedido morto. Se um
  * pagamento chegar mesmo assim, o webhook o encontra pelo id do pedido e o
  * `settle` o processa do mesmo jeito: `expired` não fecha porta nenhuma.
+ * E, desde 01/10/2026 (PAY-B-009), o expirado que teve pagamento no
+ * provedor (o cartão em análise antifraude) continua sendo perguntado de 6 em
+ * 6 horas por uma semana, para não depender só do webhook.
  */
 
-import { settleFromProvider } from './api/pay.js';
-import { getOrder, log, logPurge, resetPurge, stalePendingOrders, updateOrder } from './lib/db.js';
+import { enviarRecibosManuais, runEstornos, settleFromProvider } from './api/pay.js';
+import { runAlertas } from './alertas.js';
+import { runVencimentos } from './vencimento.js';
+import { runAtivacao } from './ativacao.js';
+import { runSequencia } from './sequencia.js';
+import { runLembretes } from './lembrete.js';
+import { pegarTrava, soltarTrava,
+  arrependimentosIpPurge, expiredOrdersToRecheck, getOrder, log, logPurge, paidOrdersToRecheck,
+  registrosPurge, resetPurge, stalePendingOrders, updateOrder, verifyPurge
+} from './lib/db.js';
 import empresa from '../../data/empresa.json';
 
 /* No PIX direto não existe provedor a quem perguntar: o dinheiro cai na conta
@@ -40,8 +51,30 @@ const GIVE_UP_MS = 24 * 3_600_000;
  *  tacada estoura o tempo do cron e não resolve nenhum. */
 const BATCH = 20;
 
+/** A varredura de 5 em 5 minutos, uma de cada vez (auditoria de 28/09,
+ *  INFRA-013). Uma execução que demorasse mais que o intervalo encontraria a
+ *  seguinte no meio do caminho, e as duas pediriam o mesmo estorno e
+ *  mandariam o mesmo alerta. A trava vale 4 minutos: se uma execução morrer
+ *  sem soltar, a próxima-da-próxima segue normalmente. Sem a tabela, ou com
+ *  o banco falhando, a varredura roda assim mesmo - não rodar é pior. */
 export async function runReconcile(env) {
-  const pending = await stalePendingOrders(env, { olderThanMs: MIN_AGE_MS, limit: BATCH });
+  if (!await pegarTrava(env, 'varredura', 4 * 60_000)) {
+    console.log('varredura anterior ainda em andamento - esta foi pulada');
+    return { checked: 0, settled: 0, expired: 0, pulada: true };
+  }
+  try { return await varrer(env); }
+  finally { await soltarTrava(env, 'varredura'); }
+}
+
+async function varrer(env) {
+  /* No PIX direto não há nada a perguntar, e EXPIRAR também não: o pedido
+     é a prova de que a pessoa quis comprar, e a liberação à mão pode vir no
+     dia seguinte. Expirado, o aluno que pagou via "Expirado" em /perfil
+     enquanto esperava (auditoria de 28/09, PAY-009); pendente, vê
+     "aguardando". Quando a Mercado Pago voltar, a varredura retoma e os
+     pedidos velhos expiram pela regra de sempre. */
+  const pending = PIX_DIRETO ? []
+    : await stalePendingOrders(env, { olderThanMs: MIN_AGE_MS, limit: BATCH });
   let settled = 0, expired = 0;
 
   for (const order of pending) {
@@ -54,10 +87,6 @@ export async function runReconcile(env) {
         expired++;
         continue;
       }
-      /* Expirar continua valendo no PIX direto - um pedido de ontem não pode
-         ficar pendente para sempre. Perguntar ao provedor, não: não há
-         provedor. */
-      if (PIX_DIRETO) continue;
       const status = await settleFromProvider(env, order, 'reconcile');
       /* Conta como liberado só o que FOI liberado agora: o pedido era
          pendente e saiu pago. Contar o valor devolvido pela função
@@ -84,6 +113,53 @@ export async function runReconcile(env) {
      trabalho de verdade desta execução. */
   try { await resetPurge(env); } catch { /* a faxina tenta de novo em 5 min */ }
   try { await logPurge(env); } catch { /* idem */ }
+  /* Os registros de acesso do Marco Civil: seis meses e pronto. */
+  try { await registrosPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
+  try { await verifyPurge(env); } catch { /* idem, e a tabela pode ainda não existir */ }
+  try { await arrependimentosIpPurge(env); } catch { /* idem */ }
+
+  /* Os estornos das desistências (pedir de novo o que falhou, confirmar o
+     que a Mercado Pago já devolveu) e os alertas ao dono, que também marcam
+     o batimento que /api/health usa para dizer se esta varredura parou.
+     Cada um no seu try, pelo mesmo motivo das faxinas acima. */
+  /* Os pedidos PAGOS, uma vez por dia cada, dez por rodada (o plano gratuito
+     limita cada execução a 50 chamadas externas): pega o estorno ou a
+     contestação cujo aviso nunca chegou (auditoria de 28/09, PAY-002).
+     `settleFromProvider` pergunta à Mercado Pago pelo nosso id de pedido e
+     aplica o que ela disser; um `refunded` ou `charged_back` fecha o acesso. */
+  if (!PIX_DIRETO) {
+    try {
+      for (const order of await paidOrdersToRecheck(env)) {
+        try { await settleFromProvider(env, order, 'reconcile-pagos'); }
+        catch (e) { await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`); }
+      }
+    } catch (e) { console.error('pagos', e && e.stack || e); }
+
+    /* Os EXPIRADOS que tiveram pagamento no provedor, por mais uma semana,
+       de 6 em 6 horas cada, cinco por rodada (01/10/2026, PAY-B-009). Um
+       cartão em análise antifraude por mais de 24 h vira `expired` acima, e
+       a aprovação que chega depois disso só abria o curso pelo webhook. */
+    try {
+      for (const order of await expiredOrdersToRecheck(env)) {
+        try {
+          const st = await settleFromProvider(env, order, 'reconcile-expirados');
+          if (st === 'paid') {
+            const depois = await getOrder(env, order.id);
+            if (depois && depois.status === 'paid') settled++;
+          }
+        } catch (e) { await log(env, order.account_id, 'reconcile-error', `${order.id} ${e && e.message || e}`); }
+      }
+    } catch (e) { console.error('expirados', e && e.stack || e); }
+  }
+  /* Os recibos das liberações feitas à mão (Actions → Acesso → liberar com
+     pedido) e os avisos de fim de acesso ao aluno. Valem nos dois trilhos. */
+  try { await enviarRecibosManuais(env); } catch (e) { console.error('recibos', e && e.stack || e); }
+  try { await runVencimentos(env); } catch (e) { console.error('vencimentos', e && e.stack || e); }
+  try { await runAtivacao(env); } catch (e) { console.error('ativacao', e && e.stack || e); }
+  try { await runSequencia(env); } catch (e) { console.error('sequencia', e && e.stack || e); }
+  try { await runLembretes(env); } catch (e) { console.error('lembrete', e && e.stack || e); }
+  try { await runEstornos(env); } catch (e) { console.error('estornos', e && e.stack || e); }
+  try { await runAlertas(env); } catch (e) { console.error('alertas', e && e.stack || e); }
 
   return { checked: pending.length, settled, expired };
 }

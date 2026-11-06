@@ -25,6 +25,7 @@
  * do aluno.
  */
 
+import { tx } from '@/i18n/telas/licao-writing-canvas';
 import { useCallback, useRef, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -35,10 +36,10 @@ import { track } from '@/lib/analytics';
 type Step = 1 | 2 | 3 | 4;
 
 const STEPS: { n: Step; label: string; hint: string; guide: number }[] = [
-  { n: 1, label: 'Ver', hint: 'Veja por onde a caneta começa.', guide: 0 },
-  { n: 2, label: 'Traçar', hint: 'Passe o dedo por cima do modelo.', guide: 0.22 },
-  { n: 3, label: 'Guia fraco', hint: 'O modelo está mais fraco. Siga assim mesmo.', guide: 0.08 },
-  { n: 4, label: 'Sem modelo', hint: 'Agora sozinho. Escreva de memória.', guide: 0 }
+  { n: 1, label: tx.ver, hint: tx.verDica, guide: 0 },
+  { n: 2, label: tx.tracar, hint: tx.tracarDica, guide: 0.22 },
+  { n: 3, label: tx.guiaFraco, hint: tx.guiaFracoDica, guide: 0.08 },
+  { n: 4, label: tx.semModelo, hint: tx.semModeloDica, guide: 0 }
 ];
 
 export function WritingCanvas({
@@ -80,7 +81,7 @@ export function WritingCanvas({
         <h3 className="font-ui text-[13px] font-semibold uppercase tracking-[.07em] text-ink-muted">
           {label}
         </h3>
-        <ol className="flex items-center gap-1" aria-label="Etapas da escrita">
+        <ol className="flex items-center gap-1" aria-label={tx.etapas}>
           {STEPS.map(s => (
             <li key={s.n}>
               <button
@@ -104,10 +105,9 @@ export function WritingCanvas({
         <div className="p-5 sm:p-6 grid gap-4 justify-items-center">
           <StrokeOrderPlayer letterId={letterId} label={label} />
           <p className="font-ui text-[13.5px] text-ink-muted text-center max-w-[40ch]">
-            {current.hint} A cursiva é a que se escreve à mão - ninguém escreve
-            hebraico em letra de imprensa.
+            {current.hint} {tx.cursiva}
           </p>
-          <Button onClick={() => goStep(2)} size="md">Começar a traçar</Button>
+          <Button onClick={() => goStep(2)} size="md">{tx.comecar}</Button>
         </div>
       ) : (
         <>
@@ -121,7 +121,7 @@ export function WritingCanvas({
 
           <div className="p-4 sm:p-5 grid gap-3 border-t border-[color:var(--line-soft)]">
             <p className="font-ui text-[13.5px] text-ink-muted">
-              {current.hint} <span className="whitespace-nowrap">← escreva nesta direção ←</span>
+              {current.hint} <span className="whitespace-nowrap">{tx.direcao}</span>
             </p>
 
             {verdict && (
@@ -136,12 +136,12 @@ export function WritingCanvas({
             )}
 
             <div className="flex flex-wrap items-center gap-2.5">
-              <Button onClick={check} disabled={!hasInk} size="md">Conferir</Button>
+              <Button onClick={check} disabled={!hasInk} size="md">{tx.conferir}</Button>
               <Button variant="secondary" size="sm" onClick={clear} disabled={!hasInk}>
-                Limpar
+                {tx.limpar}
               </Button>
               <Button variant="ghost" size="sm" onClick={() => goStep(1)}>
-                Ver o traçado
+                {tx.verTracado}
               </Button>
               {step < 4 && (
                 <Button
@@ -149,7 +149,7 @@ export function WritingCanvas({
                   onClick={() => goStep((step + 1) as Step)}
                   className="ml-auto"
                 >
-                  Próxima etapa →
+                  {tx.proxima}
                 </Button>
               )}
             </div>

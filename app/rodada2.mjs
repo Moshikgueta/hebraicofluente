@@ -122,9 +122,13 @@ for (const width of [390, 1280]) {
        os testes de unidade cobram isso). O que aparece como LETRA - a lista
        de letras e a forma à mão, sem vogal - segue a régua estrita. */
     const permitidas = new Set(letras[n - 1].alphabetSoFar.map(base));
+    /* A forma à mão aceita o ו de vogal antes da lição do Vav (decisão do
+       dono, 29/09/2026: "À mão" aparece para toda palavra legível). A lista
+       de letras continua na régua estrita. */
     const comoLetra = await p.evaluate(() =>
       [...document.querySelectorAll('[data-letras], [data-cursiva]')]
-        .flatMap(el => [...el.textContent].filter(c => /[\u05D0-\u05EA]/.test(c))));
+        .flatMap(el => [...el.textContent].filter(c => /[\u05D0-\u05EA]/.test(c))
+          .map(c => (el.hasAttribute('data-cursiva') && c === '\u05D5' ? null : c)).filter(Boolean)));
     const fora = comoLetra.filter(c => !permitidas.has(base(c)));
     if (fora.length) erro(`vocabulário mostra como LETRA o que o aluno não aprendeu: ${[...new Set(fora)].join(' ')}`);
     else ok(`nenhuma letra fora das aprendidas aparece como letra (${comoLetra.length} conferidas)`);
@@ -193,6 +197,10 @@ for (const width of [390, 1280]) {
     await p.goto(`${BASE}/academia/`, { waitUntil: 'networkidle' });
     await p.getByRole('button', { name: /Digitar em hebraico/ }).first().click();
     await p.waitForTimeout(400);
+    /* Desde 01/10/2026 (UXQA-012) o teclado da tela vem primeiro, e o guia
+       do teclado do aparelho fica recolhido logo abaixo. */
+    await p.locator('main details summary').first().click().catch(() => {});
+    await p.waitForTimeout(300);
     const guia = await p.getByRole('button', { name: 'Já adicionei o teclado hebraico' }).count();
     const sistemas = await p.getByRole('group', { name: 'Escolha o seu aparelho' }).locator('button').count();
     if (!guia || sistemas !== 4) erro(`o guia do teclado não veio antes da digitação (botão ${guia}, sistemas ${sistemas})`);
@@ -348,16 +356,17 @@ for (const width of [390, 1280]) {
     await ctx.close();
   }
 
-  /* ── 6 · o painel mostra o número e o convite do nome ───────────────── */
+  /* ── 6 · o Progresso mostra o número e o convite do nome ─────────────── */
+  /* Desde 28/10/2026 (painel mais curto) os dois cartões moram no Progresso. */
   {
     const { ctx, p, problemas } = await pagina(width, estado(22));
-    await p.goto(`${BASE}/meu-hebraico/`, { waitUntil: 'networkidle' });
+    await p.goto(`${BASE}/conquistas/`, { waitUntil: 'networkidle' });
     await p.waitForTimeout(800);
     const txt = await p.locator('main').innerText();
-    if (!/Você já consegue ler \d+ palavras/.test(txt)) erro('o painel não mostra quantas palavras o aluno lê');
-    else ok('o painel mostra quantas palavras o aluno lê');
-    if (!/Agora você já consegue escrever o seu nome/.test(txt)) erro('o painel não convida para escrever o nome');
-    else ok('o painel convida para escrever o nome');
+    if (!/Você já consegue ler \d+ palavras/.test(txt)) erro('o Progresso não mostra quantas palavras o aluno lê');
+    else ok('o Progresso mostra quantas palavras o aluno lê');
+    if (!/Agora você já consegue escrever o seu nome/.test(txt)) erro('o Progresso não convida para escrever o nome');
+    else ok('o Progresso convida para escrever o nome');
     await semRolarDeLado(p, 'painel');
     if (problemas.length) erro(`painel: ${problemas[0]}`);
     await ctx.close();

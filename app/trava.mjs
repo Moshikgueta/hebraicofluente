@@ -78,12 +78,15 @@ const st3=base({shin:licao('shin',3,null)});
   await r.ctx.close(); }
 
 console.log('\n── o mapa ────────────────────────────────────');
-{ const r=await abre(st1,'/meu-hebraico/');   // a grade das 22 letras mora no painel
-  const bloq=await r.pg.locator('button[aria-label*="bloqueada"]').count();
-  bloq>0 ? ok(`${bloq} letras com cadeado, e nenhuma delas é link`) : erro('o mapa não marcou nenhuma letra como bloqueada');
+/* Desde 28/10/2026 (painel mais curto) as letras do curso inteiro moram no
+   mapa, módulo por módulo: a grade das 22 saiu do painel. */
+{ const r=await abre(st1,'/mapa/');
+  const bloq=await r.pg.locator('[aria-label*="bloqueada"]').count();
+  const bloqLink=await r.pg.locator('a[aria-label*="bloqueada"]').count();
+  bloq>0 && bloqLink===0 ? ok(`${bloq} letras com cadeado, e nenhuma delas é link`) : erro(`o mapa marcou ${bloq} letras bloqueadas, ${bloqLink} delas com link`);
   const aqui=await r.pg.locator('[aria-current="step"]').count();
   aqui===1 ? ok('uma letra marcada como "você está aqui"') : erro(`${aqui} letras marcadas como atual`);
-  /de 22 letras dominadas/.test(r.txt) ? ok('o mapa conta as letras DOMINADAS') : erro('sem a contagem de dominadas');
+  /\d+%\s*concluído/.test(r.txt) ? ok("o mapa diz quanto do curso foi concluído") : erro("sem a porcentagem concluída");
   await r.ctx.close(); }
 
 await b.close(); s.close();

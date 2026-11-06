@@ -2,10 +2,12 @@
  *
  * Two reasons, both pedagogical rather than technical:
  *
- *   · a learner who leaves a lesson and comes back must find the same
- *     exercise, not a new one - otherwise "tentar de novo" silently becomes
- *     "tentar outra coisa", and the retry teaches nothing about the item that
- *     was missed;
+ *   · WITHIN a round, the exercise must not change under the learner: a
+ *     screen that re-renders, or a learner who reloads mid-round, finds the
+ *     same questions. (Across rounds it is the opposite, by the course
+ *     owner's decision of 26/09/2026: a round the learner FINISHED is not
+ *     served again - lib/rodadas.ts picks the next round's seed and keeps
+ *     what was already asked at the back of the queue.)
  *   · two learners must be able to talk about question 3.
  *
  * It also makes the whole engine testable: the order-rule test can enumerate

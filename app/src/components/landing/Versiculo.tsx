@@ -22,17 +22,18 @@ import { useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { Card, Badge } from '@/components/ui/Card';
 import type { BibleVerse } from '@/lib/content-publico';
+import { tx } from '@/i18n/telas/venda-versiculo';
 
 export function Versiculo({ v }: { v: BibleVerse }) {
   const [sel, setSel] = useState<number | null>(null);
   const palavra = sel === null ? null : v.words[sel] ?? null;
 
   return (
-    <Card tone="wash" className="p-5 sm:p-8 grid gap-5">
+    <Card className="p-5 sm:p-8 grid gap-5 shadow-[0_2px_4px_rgba(27,33,31,.04),0_24px_48px_-32px_rgba(14,59,67,.3)]">
       <div className="flex items-center gap-2.5 flex-wrap">
         <Badge tone="accent">{v.fontePt}</Badge>
         <span className="font-ui text-[12.5px] text-ink-muted">
-          toque numa palavra
+          {tx.convite}
         </span>
       </div>
 
@@ -44,7 +45,7 @@ export function Versiculo({ v }: { v: BibleVerse }) {
             type="button"
             onClick={() => setSel(s => (s === k ? null : k))}
             aria-pressed={sel === k}
-            aria-label={`Palavra ${k + 1}: ${w.translit}`}
+            aria-label={tx.palavra(k + 1, w.translit)}
             className={`rounded-[var(--r-sm)] px-1.5 py-0.5 min-h-[44px]
                         transition-colors cursor-pointer
                         ${sel === k ? 'bg-[var(--accent-wash)]' : 'hover:bg-[var(--accent-wash)]'}`}
@@ -63,16 +64,15 @@ export function Versiculo({ v }: { v: BibleVerse }) {
           <>
             <p className="font-display text-[19px] font-bold text-ink">{palavra.pt}</p>
             <p className="font-ui text-[14px] text-ink-muted">
-              lê-se <strong className="font-semibold text-ink-body">{palavra.translit}</strong>
+              {tx.leSe} <strong className="font-semibold text-ink-body">{palavra.translit}</strong>
             </p>
             <p className="font-ui text-[13px] text-ink-muted">
-              sem os pontos, num rolo de sinagoga: <He size="inline">{palavra.bare}</He>
+              {tx.semPontos} <He size="inline">{palavra.bare}</He>
             </p>
           </>
         ) : (
           <p className="font-ui text-[14.5px] leading-relaxed text-ink-body max-w-[46ch] mx-auto">
-            São sete palavras. Depois do curso, você lê as sete em voz alta -
-            e precisa de um dicionário para saber o que cinco delas querem dizer.
+            {tx.setePalavras}
           </p>
         )}
       </div>
@@ -80,8 +80,7 @@ export function Versiculo({ v }: { v: BibleVerse }) {
       <div className="grid gap-1 text-center">
         <p className="font-ui text-[15px] leading-relaxed text-ink-body">{v.pt}</p>
         <p className="font-ui text-[12.5px] text-ink-muted">
-          A tradução é de uma versão em português. Elas variam, e é por isso que
-          ler o original tem valor.
+          {tx.traducao}
         </p>
       </div>
     </Card>

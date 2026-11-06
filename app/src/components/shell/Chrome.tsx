@@ -13,56 +13,60 @@
  * curso para quem não comprou".
  */
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSelectedLayoutSegments } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { AppShell } from '@/components/shell/AppShell';
+import dynamic from 'next/dynamic';
 import { PublicShell } from '@/components/shell/PublicShell';
-import { CourseGate } from '@/components/shell/CourseGate';
+import { rotaDasRaizes } from '@/lib/raizes';
+import { isPublicRoute } from '@/lib/rotas';
+import { useAccount } from '@/lib/account/store';
+import { FLAGSHIP } from '@/lib/catalog';
 
-/** Prefixos públicos. `/` é tratado à parte, senão casaria com tudo. */
-const PUBLIC_PREFIXES = [
-  '/metodo', '/cursos', '/sobre', '/faq', '/biblia',
-  /* As telas de conta, incluindo as duas de recuperação de senha. Elas são
-     públicas pela definição do problema: quem não consegue entrar não pode
-     ter de entrar para voltar a entrar. (`/recuperar` estava nesta lista e
-     nunca existiu como página - virou estas duas.) */
-  '/entrar', '/criar-conta', '/esqueci-senha', '/nova-senha',
-  /* O checkout é público de propósito: quem chega por um link de venda
-     precisa ver o preço antes de ter conta. Quem paga tem de estar logado, e
-     essa exigência é da própria tela, não do portão. */
-  '/checkout',
-  /* As páginas de confiança são públicas por definição: uma Política de
-     Privacidade que exige login não informa o visitante, informa o cliente -
-     e é justamente o visitante que precisa dela para decidir comprar. O
-     mesmo vale para o atendimento: quem não consegue entrar é exatamente
-     quem mais precisa escrever. */
-  '/termos', '/privacidade', '/reembolso', '/suporte',
-  /* A confirmação de que a conta foi apagada.
-     ──────────────────────────────────────────────────────────────────────
-     Pública por necessidade, e não por conveniência: quem chega nela acabou
-     de deixar de ter conta. A primeira versão mostrava a confirmação dentro
-     do próprio /perfil, e ela nunca aparecia - o CourseGate via a sessão
-     sumir e mandava a pessoa para /entrar no mesmo instante. O sintoma era o
-     pior possível justamente nesta operação: a tela pulava para a página de
-     vendas sem dizer nada, e a pessoa ficava sem saber se a conta dela tinha
-     sido apagada ou não. Encontrado no navegador, e não nos testes, porque
-     no teste a exclusão é uma chamada - na tela ela é uma chamada seguida de
-     um portão. */
-  '/conta-apagada'
-] as const;
+/* A casca do aluno e o portão vêm em pedaço próprio (23/10/2026, velocidade
+   no celular): importados direto, entravam no JavaScript de TODA página, e a
+   capa e a página de venda baixavam a navegação do curso sem nunca mostrá-la.
+   O servidor continua desenhando a casca nas rotas do aluno (o HTML é o
+   mesmo), e só elas pedem o pedaço. */
+const AppShell = dynamic(() => import('@/components/shell/AppShell').then(m => m.AppShell));
+const CourseGate = dynamic(() => import('@/components/shell/CourseGate').then(m => m.CourseGate));
 
-export function isPublicRoute(pathname: string | null): boolean {
-  const p = (pathname ?? '/').replace(/\/+$/, '') || '/';
-  if (p === '/') return true;
-  return PUBLIC_PREFIXES.some(prefix => p === prefix || p.startsWith(`${prefix}/`));
-}
+export { isAppRoute, isPublicRoute } from '@/lib/rotas';
 
 export function Chrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const account = useAccount();
+  const segmentos = useSelectedLayoutSegments();
+  const semCurso = account.ready && account.signedIn && !account.can(FLAGSHIP);
 
-  if (isPublicRoute(pathname)) {
+  /* O painel do dono do curso (/admin): sem a casca do curso e sem o
+     portão de compra. Quem decide o acesso é a API, pela conta de
+     administrador - ver worker/src/api/audio.js. */
+  if (/^\/admin(\/|$)/.test(pathname ?? '')) return <>{children}</>;
+
+  /* A página 404 (auditoria de 01/10/2026, UXQA-017). O 404.html é gerado
+     UMA vez, com a casca pública; o Worker o serve para qualquer endereço
+     que não existe, inclusive /licao/nao-existe. Decidindo pela URL, o
+     navegador do aluno montava a casca do aluno sobre um HTML de casca
+     pública e o React acusava a hidratação divergente (#418). O segmento
+     é o mesmo no servidor e no navegador: a 404 fica sempre na pública. */
+  if (segmentos[0] === '_not-found' || isPublicRoute(pathname)) {
     return <PublicShell>{children}</PublicShell>;
   }
+
+  /* Conta sem curso em /perfil: a casca pública (auditoria de 01/10/2026,
+     UXQA-007). Inclui quem pagou por PIX e espera a confirmação. A casca do
+     aluno mostrava "0 XP" e sete destinos, e cada um deles voltava à página
+     de vendas - um laço sem saída, com o preço na frente. Enquanto a sessão
+     não responde, fica a do aluno (o caso comum é quem tem o curso). */
+  if ((pathname ?? '').replace(/\/+$/, '') === '/perfil' && semCurso) {
+    return <PublicShell>{children}</PublicShell>;
+  }
+
+  /* Raízes Sefarditas (22/10/2026): produto individual, comprado à parte.
+     A casca, o portão e as fontes moram no layout dele (app/raizes/layout.tsx),
+     com a estética da coleção editorial; aqui ele só não ganha a casca do
+     curso de hebraico. */
+  if (rotaDasRaizes(pathname)) return <>{children}</>;
 
   return (
     <AppShell>

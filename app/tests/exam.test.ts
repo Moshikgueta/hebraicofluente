@@ -6,7 +6,7 @@
  * mark that moves, a certificate issued to someone who did not pass. */
 
 import { describe, expect, it } from 'vitest';
-import { allLetters, course, scenesUpTo, sentencesUpTo } from '@/lib/content';
+import { allLetters, course, extras, scenesUpTo, sentencesUpTo } from '@/lib/content';
 import { buildExam, examReport, partsFor, EXAM_PASS, EXAM_PARTS } from '@/lib/engine/exam';
 import { violatesOrderRule } from '@/lib/engine/exercises';
 import { certificateReady, recordExam } from '@/lib/state/rules';
@@ -27,7 +27,7 @@ const sentences = sentencesUpTo(22).map(x => ({
 
 describe('the exam covers what it says it covers', () => {
   it('builds every part it promises, with no recordings', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences, extras: extras() });
     const promised = partsFor(false).map(p => p.id);
     expect(exam.sections.map(s => s.part.id)).toEqual(promised);
     for (const s of exam.sections) {
@@ -38,14 +38,14 @@ describe('the exam covers what it says it covers', () => {
   it('withholds the listening part until there are recordings, and says so', () => {
     expect(partsFor(false).some(p => p.id === 'escuta')).toBe(false);
     expect(partsFor(true).some(p => p.id === 'escuta')).toBe(true);
-    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences, extras: extras() });
     for (const s of exam.sections) {
       for (const ex of s.exercises) expect(ex.skill).not.toBe('ouvir');
     }
   });
 
   it('tests each part with the skill that part is about', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences, extras: extras() });
     for (const s of exam.sections) {
       /* `mundo` is reading, and so is `silabas` and `palavras` - what matters
          is that a part never quietly tests something else. */
@@ -68,7 +68,7 @@ describe('the exam covers what it says it covers', () => {
        famílias: o que se exige é que NADA fora dessa lista entre na parte. */
     const vistas = new Set<string>();
     for (const attempt of [1, 2, 3, 4, 5]) {
-      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences });
+      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences, extras: extras() });
       const parte = exam.sections.find(s => s.part.id === 'dificeis');
       expect(parte, `tentativa ${attempt}`).toBeTruthy();
       for (const ex of parte!.exercises) {
@@ -83,7 +83,7 @@ describe('the exam covers what it says it covers', () => {
   });
 
   it('não repete em "As letras" o que já é cobrado em "As letras difíceis"', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences, extras: extras() });
     const parte = exam.sections.find(s => s.part.id === 'letras')!;
     for (const ex of parte.exercises) {
       expect(FAMILIAS_DIFICEIS, ex.id).not.toContain(familia(ex.id));
@@ -91,7 +91,7 @@ describe('the exam covers what it says it covers', () => {
   });
 
   it('ends on real-world reading', () => {
-    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: true, sentences, extras: extras() });
     const last = exam.sections[exam.sections.length - 1]!;
     expect(last.part.id).toBe('mundo');
     for (const ex of last.exercises) expect(ex.kind).toBe('scene-reading');
@@ -100,7 +100,7 @@ describe('the exam covers what it says it covers', () => {
   it('never shows a word the course did not teach', () => {
     const alphabet = letters.flatMap(l => l.finalForm ? [l.letter, l.finalForm] : [l.letter]);
     for (const attempt of [1, 2, 3, 7]) {
-      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences });
+      const exam = buildExam(letters, scenes, { audioAvailable: true, attempt, sentences, extras: extras() });
       for (const s of exam.sections) {
         for (const ex of s.exercises) {
           expect(violatesOrderRule(ex, alphabet), `${attempt} ${ex.id}`).toEqual([]);
@@ -121,21 +121,21 @@ describe('the exam covers what it says it covers', () => {
        um de noventa ninguém termina. */
     for (const audio of [false, true]) {
       const esperado = partsFor(audio).reduce((n, p) => n + p.count, 0);
-      const exam = buildExam(letters, scenes, { audioAvailable: audio, sentences });
+      const exam = buildExam(letters, scenes, { audioAvailable: audio, sentences, extras: extras() });
       expect(exam.total, `áudio=${audio}`).toBe(esperado);
       expect(exam.total).toBeGreaterThanOrEqual(25);
       expect(exam.total).toBeLessThanOrEqual(60);
     }
     /* E a parte de escuta é a única diferença entre os dois. */
-    const semAudio = buildExam(letters, scenes, { audioAvailable: false, sentences }).total;
-    const comAudio = buildExam(letters, scenes, { audioAvailable: true, sentences }).total;
+    const semAudio = buildExam(letters, scenes, { audioAvailable: false, sentences, extras: extras() }).total;
+    const comAudio = buildExam(letters, scenes, { audioAvailable: true, sentences, extras: extras() }).total;
     expect(comAudio - semAudio).toBe(EXAM_PARTS.find(p => p.id === 'escuta')!.count);
   });
 
   it('mede a frase, que o curso passou a ensinar', () => {
     /* As 23 frases e o gerador entraram no curso DEPOIS do exame, e por um
        tempo o curso ensinou uma habilidade que não verificava. */
-    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences });
+    const exam = buildExam(letters, scenes, { audioAvailable: false, sentences, extras: extras() });
     const parte = exam.sections.find(s => s.part.id === 'frases');
     expect(parte, 'o exame não tem parte de frases').toBeTruthy();
     expect(parte!.exercises.length).toBe(3);
@@ -151,8 +151,8 @@ describe('the exam covers what it says it covers', () => {
 
 describe('a retry is a different exam', () => {
   it('asks different questions on the second sitting', () => {
-    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 1, sentences });
-    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 2, sentences });
+    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 1, sentences, extras: extras() });
+    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 2, sentences, extras: extras() });
     const idsA = a.sections.flatMap(s => s.exercises.map(e => e.id));
     const idsB = b.sections.flatMap(s => s.exercises.map(e => e.id));
     const shared = idsA.filter(id => idsB.includes(id)).length;
@@ -162,8 +162,8 @@ describe('a retry is a different exam', () => {
   });
 
   it('is deterministic within one attempt', () => {
-    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences });
-    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences });
+    const a = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences, extras: extras() });
+    const b = buildExam(letters, scenes, { audioAvailable: true, attempt: 4, sentences, extras: extras() });
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 });

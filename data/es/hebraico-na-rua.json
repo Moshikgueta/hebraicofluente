@@ -1,0 +1,38 @@
+{
+  "placas/rua-derech/mostraPt": {
+    "pt": "Placa de estrada para a Estrada de Burma, em hebraico, árabe e inglês.",
+    "es": "Señal de carretera hacia el Camino de Birmania, en hebreo, árabe e inglés."
+  },
+  "placas/rua-bait/mostraPt": {
+    "pt": "Placa de uma farmácia num centro médico em Holon.",
+    "es": "Letrero de una farmacia en un centro médico de Holón."
+  },
+  "placas/rua-shalom/mostraPt": {
+    "pt": "Placa que indica uma sinagoga em Ramat Gan.",
+    "es": "Letrero que indica una sinagoga en Ramat Gan."
+  },
+  "placas/rua-lechem/mostraPt": {
+    "pt": "Placa da padaria de 1943 no moshav Moledet.",
+    "es": "Letrero de la panadería de 1943 en el moshav Moledet."
+  },
+  "placas/rua-maim/mostraPt": {
+    "pt": "Placa de pedra sobre um canal de água antigo, num jardim de Jerusalém.",
+    "es": "Placa de piedra sobre un antiguo canal de agua, en un jardín de Jerusalén."
+  },
+  "placas/rua-israel/mostraPt": {
+    "pt": "Placa de um reservatório de água no vale do Jordão.",
+    "es": "Letrero de un depósito de agua en el valle del Jordán."
+  },
+  "placas/rua-ani/mostraPt": {
+    "pt": "Faixa de uma escola em Petah Tikva.",
+    "es": "Pancarta de una escuela en Petaj Tikva."
+  },
+  "placas/rua-yam/mostraPt": {
+    "pt": "Placas de estrada para o mar Morto e para Jerusalém, em hebraico, árabe e inglês.",
+    "es": "Señales de carretera hacia el mar Muerto y hacia Jerusalén, en hebreo, árabe e inglés."
+  },
+  "placas/rua-gan/mostraPt": {
+    "pt": "Placa do antigo jardim de infância Gan Yafa, em Givatayim.",
+    "es": "Cartel del antiguo jardín de infantes Gan Yafa, en Givatayim."
+  }
+}

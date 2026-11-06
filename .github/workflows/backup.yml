@@ -1,0 +1,140 @@
+# Backup do banco - todo dia, fora do banco, provado.
+# ──────────────────────────────────────────────────────────────────────────
+# O D1 guarda as contas, os acessos, os pedidos e o progresso de todos os
+# alunos, e até 28/09/2026 não havia cópia nenhuma fora dele (auditoria,
+# INFRA-001, o único P0). Esta Action:
+#
+#   · todo dia às 03:17 (Brasília): exporta o banco, restaura a cópia num
+#     banco local e confere tabela por tabela, e só então guarda no R2
+#     (bucket privado `hebraico-fluente-backups`, cópias diárias por 90 dias);
+#   · à mão, com "ensaiar": baixa uma cópia do R2, restaura do zero num banco
+#     de TESTE na Cloudflare, confere e apaga o banco de teste. Rodar uma vez
+#     depois de ligar e depois uma vez por mês.
+#
+# A tabela `gravacoes` (os áudios do painel /admin/gravar) fica FORA da cópia
+# desde 01/10/2026 (SEC-A-001): cada blob em hexadecimal passa do teto de 1 MB
+# por comando do SQLite e a cópia não restaurava em lugar nenhum. As gravações
+# são conteúdo do curso e moram no git como audio/<id>.mp3 (job
+# `exportar-gravacoes` do deploy-worker.yml). O resumo de cada execução diz
+# quantas linhas ficaram fora e quais ainda não têm arquivo no git.
+#
+# Se falhar, manda e-mail para o SUPPORT_EMAIL do wrangler.toml (pela Resend,
+# a mesma chave do site). Não dependemos do aviso do próprio GitHub: numa
+# execução agendada ele vai para quem editou o cron por último, que pode não
+# ser o dono.
+#
+# O que precisa existir (uma vez):
+#   · R2 ativado na conta Cloudflare (painel → R2 Object Storage);
+#   · o token CLOUDFLARE_API_TOKEN com  Account · Workers R2 Storage · Edit
+#     (o modelo "Edit Cloudflare Workers" já traz). O bucket e a regra de 90
+#     dias o próprio script cria. Se faltar algo, o resumo da execução diz o quê.
+#
+# Cópia fora da Cloudflare (01/10/2026): com os segredos BACKUP_SENHA e
+# RCLONE_DRIVE_TOKEN, cada backup diário vai também, CIFRADO, para a pasta
+# `hebraico-fluente-backups` do Google Drive do dono (90 dias). Sem eles,
+# tudo funciona como antes e o resumo avisa que a cópia no Drive está
+# desligada. Como ligar: RUNBOOK-ATENDIMENTO.md, "Cópia do backup no Drive".
+#
+# Tudo o que o script faz está em scripts/backup-nuvem.sh.
+
+name: Backup do banco
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+    inputs:
+      acao:
+        description: 'copiar = fazer um backup agora · ensaiar = provar que uma cópia restaura do zero'
+        type: choice
+        options: [copiar, ensaiar]
+        default: copiar
+      chave:
+        description: 'Só em "ensaiar": qual cópia (vazio = a mais recente). Ex.: diario/hebraico-fluente-20261001-061700.sql.gz'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+# O mesmo grupo da publicação: um backup nunca roda no meio de uma mudança
+# de schema, e vice-versa.
+concurrency:
+  group: cloudflare
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      # O wrangler do package-lock.json da raiz (auditoria de 01/10/2026,
+      # SEC-A-009): versão e dependências conferidas pelo hash do lockfile,
+      # e nenhum script de instalação roda num passo com o token no ambiente.
+      - name: Instalar o wrangler do lockfile
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      # A cópia fora da Cloudflare (Google Drive, cifrada) só roda com os dois
+      # segredos; sem eles, o passo abaixo nem instala o rclone.
+      - name: Instalar o rclone (cópia no Google Drive)
+        env:
+          RCLONE_DRIVE_TOKEN: ${{ secrets.RCLONE_DRIVE_TOKEN }}
+        run: |
+          if [ -n "$RCLONE_DRIVE_TOKEN" ]; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+            rclone version | head -1
+          else
+            echo "Sem RCLONE_DRIVE_TOKEN: a cópia no Drive fica desligada."
+          fi
+
+      - name: Backup
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BACKUP_SENHA: ${{ secrets.BACKUP_SENHA }}
+          RCLONE_DRIVE_TOKEN: ${{ secrets.RCLONE_DRIVE_TOKEN }}
+          ACAO: ${{ github.event_name == 'schedule' && 'copiar' || inputs.acao }}
+          CHAVE: ${{ inputs.chave }}
+        run: |
+          set -o pipefail
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "## ❌ Sem CLOUDFLARE_API_TOKEN nos segredos do repositório" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          bash scripts/backup-nuvem.sh "$ACAO" "$CHAVE"
+
+      - name: Avisar o dono por e-mail
+        if: failure()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ACAO: ${{ github.event_name == 'schedule' && 'copiar' || inputs.acao }}
+        run: |
+          if [ -z "$RESEND_API_KEY" ]; then
+            echo "::warning::Sem RESEND_API_KEY: o aviso por e-mail não saiu."
+            exit 0
+          fi
+          FROM="$(grep -oP '^EMAIL_FROM\s*=\s*"\K[^"]+' wrangler.toml)"
+          TO="$(grep -oP '^SUPPORT_EMAIL\s*=\s*"\K[^"]+' wrangler.toml)"
+          node -e '
+            const [from,to,url,acao]=process.argv.slice(1);
+            const oque = acao==="ensaiar" ? "O ensaio de restauração do backup FALHOU" : "O backup diário do banco FALHOU";
+            console.log(JSON.stringify({
+              from, to: [to],
+              subject: "Hebraico Fluente: " + oque.toLowerCase(),
+              text: oque + ".\n\nO resumo da execução diz o motivo e o que fazer:\n" + url +
+                    "\n\nEnquanto não for resolvido, não há cópia nova do banco de hoje."
+            }));' "$FROM" "$TO" "$RUN_URL" "$ACAO" > /tmp/aviso.json
+          code="$(curl -sS -o /tmp/resend.out -w '%{http_code}' https://api.resend.com/emails \
+            -H "Authorization: Bearer $RESEND_API_KEY" -H 'Content-Type: application/json' \
+            --data @/tmp/aviso.json)"
+          if [ "$code" = "200" ]; then
+            echo "Aviso enviado para o e-mail de suporte." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::A Resend recusou o aviso ($code): $(cat /tmp/resend.out)"
+          fi

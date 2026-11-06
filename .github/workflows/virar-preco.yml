@@ -1,0 +1,105 @@
+# Virar o preço de pré-lançamento para o oficial.
+#
+# Desde 31/10/2026 (decisão do dono) também AGENDADO: em 01/12 às 00:05 de
+# Brasília (03:05 UTC) roda sozinho com --vencidos, que só vira o produto cuja
+# `preLancamentoAte` já passou. Assim o "até 30/11" da página é verdade: no
+# dia seguinte o preço sobe e a faixa da promoção some. O agendamento só roda
+# no ramo padrão (main). O texto abaixo é o de 23/10/2026.
+#
+# Decisão do dono em 23/10/2026: os preços oficiais (data/courses.json,
+# `listBrl`) ficam configurados e não sobem sozinhos. Este workflow não tem
+# agendamento: roda quando o dono manda (Actions → Virar o preço → Run
+# workflow), escrevendo "virar" no campo de confirmação. Aplica a virada com
+# tools/virar-preco.mjs (todos os produtos vendáveis, ou só os do campo
+# `produtos`), gera a versão nova dos Termos, faz o commit em main e dispara a
+# publicação. A página e a cobrança mudam juntas.
+#
+# Um commit feito com o GITHUB_TOKEN não dispara outros workflows por push;
+# por isso a publicação é chamada explicitamente (workflow_dispatch, que é a
+# exceção permitida).
+
+name: Virar o preço (pré-lançamento → oficial)
+
+on:
+  schedule:
+    - cron: '5 3 1 12 *'
+  workflow_dispatch:
+    inputs:
+      confirmar:
+        description: 'Escreva "virar" para subir os preços ao valor oficial'
+        required: true
+      produtos:
+        description: 'Só estes (slugs separados por vírgula). Vazio = todos os vendáveis'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: virar-preco
+  cancel-in-progress: false
+
+jobs:
+  virar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+
+      - name: Aplicar a virada
+        id: virada
+        env:
+          CONFIRMAR: ${{ inputs.confirmar }}
+          PRODUTOS: ${{ inputs.produtos }}
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            node tools/virar-preco.mjs --aplicar --vencidos | tee virada.txt
+          else
+          if [ "$CONFIRMAR" != "virar" ]; then
+            echo "Confirmação ausente: escreva virar no campo. Nada foi mudado." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if ! printf '%s' "$PRODUTOS" | grep -Eq '^[a-z0-9,-]*$'; then
+            echo "Produtos inválidos (só letras minúsculas, números, hífen e vírgula)." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          node tools/virar-preco.mjs --aplicar ${PRODUTOS:+--so=$PRODUTOS} | tee virada.txt
+          fi
+          if git diff --quiet -- data/courses.json; then
+            echo "mudou=nao" >> "$GITHUB_OUTPUT"
+          else
+            echo "mudou=sim" >> "$GITHUB_OUTPUT"
+          fi
+          { echo "## Virada do preço"; echo; cat virada.txt; } >> "$GITHUB_STEP_SUMMARY"
+
+      # Os Termos citam o preço: preço novo é versão nova do contrato, e a
+      # publicação exige a cópia fixa dela no repositório (app/versoes.mjs e
+      # app/check-legal.mjs, LEGAL-104). A build a gera em data/politicas-versoes.
+      - name: Gerar a versão nova das políticas
+        if: steps.virada.outputs.mudou == 'sim'
+        run: |
+          npm ci --ignore-scripts
+          (cd app && npm ci)
+          npm run build:platform
+          (cd app && node check-legal.mjs) || true
+
+      - name: Commit em main
+        if: steps.virada.outputs.mudou == 'sim'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/courses.json data/politicas-versoes
+          git commit -m "Preço oficial: fim do pré-lançamento" -m "$(cat virada.txt)"
+          git push origin HEAD:main
+
+      - name: Publicar
+        if: steps.virada.outputs.mudou == 'sim'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-worker.yml --ref main

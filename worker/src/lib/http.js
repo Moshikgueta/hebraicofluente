@@ -44,6 +44,36 @@ export const serverError = () => fail('server', 500);
  * UTF-16: um corpo em hebraico passava com o dobro do tamanho nominal, e um
  * corpo de 100 MB era lido inteiro antes de ser recusado.
  */
+/** O corpo cru, lido aos pedaços e cortado no teto. `null` = grande demais.
+ *  Existe para o upload de áudio, que conferia o Content-Length declarado e
+ *  depois lia o corpo inteiro: sem o cabeçalho (chunked), o arquivo todo era
+ *  materializado antes de ser recusado (auditoria de 28/09, SEC-006). */
+export async function readBytes(request, maxBytes) {
+  const declarado = Number(request.headers.get('Content-Length') || 0);
+  if (Number.isFinite(declarado) && declarado > maxBytes) return null;
+  if (!request.body || typeof request.body.getReader !== 'function') {
+    const buf = new Uint8Array(await request.arrayBuffer());
+    return buf.length > maxBytes ? null : buf;
+  }
+  const reader = request.body.getReader();
+  const pedacos = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > maxBytes) {
+      try { await reader.cancel(); } catch { /* já era */ }
+      return null;
+    }
+    pedacos.push(value);
+  }
+  const tudo = new Uint8Array(total);
+  let at = 0;
+  for (const p of pedacos) { tudo.set(p, at); at += p.byteLength; }
+  return tudo;
+}
+
 export async function readJson(request, maxBytes = 8 * 1024) {
   const declarado = Number(request.headers.get('Content-Length') || 0);
   if (Number.isFinite(declarado) && declarado > maxBytes) return null;

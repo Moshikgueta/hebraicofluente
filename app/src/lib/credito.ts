@@ -16,9 +16,12 @@
  * vira uma linha embaralhada no navegador.
  */
 
+import { tx } from '@/i18n/telas/motor-credito';
+
 export const METODO_ORIGINAL = {
-  /** Como o autor assina. */
-  autor: 'Dr. Damián Dzienciarsky',
+  /** Como o autor assina. Escrito aqui e em lugar nenhum mais
+   *  (check-legal.mjs lê esta linha). */
+  autor: 'Dr. Damián Dzienciarsky', // i18n-ok: nome próprio
   /** O título da obra, em hebraico. Renderizar com <He>. */
   obraHe: 'בא לי עברית',
   /** A transliteração, para quem ainda não lê - que é todo mundo que chega
@@ -27,5 +30,10 @@ export const METODO_ORIGINAL = {
    *  inventar uma versão seria pôr na boca do autor o que ele não escreveu. */
   obraTranslit: 'Ba Li Ivrit',
   /** A frase curta, para rodapé e legendas. */
-  linhaPt: 'Método inspirado na obra do Dr. Damián Dzienciarsky.'
+  get linhaPt(): string { return tx.linha(this.autor); },
+  /** O que vem do método e o que é do professor, nas palavras dele
+   *  (01/10/2026): a ordem das letras NÃO é adaptação; os exercícios, as
+   *  explicações para quem fala português e a escrita cursiva são. Em
+   *  primeira pessoa, porque é o Moshik quem fala na capa e em /sobre. */
+  adaptacoesPt: tx.adaptacoes
 } as const;

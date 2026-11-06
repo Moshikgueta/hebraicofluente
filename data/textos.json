@@ -1,0 +1,1919 @@
+{
+  "textos": [
+    {
+      "modulo": 2,
+      "tituloPt": "O peixe",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "Na praia, a Maya e o Dani acham alguma coisa na água, e a mãe do Dani tem a última palavra. Só as letras dos módulos 1 e 2, e quase só palavras que você já leu nas lições.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "מַיָה, הִנֵה הַיָם!",
+          "translit": "Máya, hiné hayám!",
+          "pt": "Maya, olha o mar!"
+        },
+        {
+          "quem": "Maya",
+          "he": "יֵשׁ שָׁם דָג?",
+          "translit": "yesh sham dag?",
+          "pt": "Tem peixe ali?"
+        },
+        {
+          "quem": "Dani",
+          "he": "יֵשׁ! הִנֵה דָג!",
+          "translit": "yesh! hiné dag!",
+          "pt": "Tem! Olha um peixe!"
+        },
+        {
+          "quem": "Mãe",
+          "he": "מָה יֵשׁ שָׁם, דָנִי?",
+          "translit": "ma yesh sham, Dáni?",
+          "pt": "O que tem ali, Dani?"
+        },
+        {
+          "quem": "Dani",
+          "he": "דָג, אִמָא! הִנֵה, שָׁם.",
+          "translit": "dag, íma! hiné, sham.",
+          "pt": "Um peixe, mãe! Olha, ali."
+        },
+        {
+          "quem": "Maya",
+          "he": "הַדָג שֶׁלִי!",
+          "translit": "hadág shelí!",
+          "pt": "O peixe é meu!"
+        },
+        {
+          "quem": "Mãe",
+          "he": "לֹא, מַיָה. הַדָג שֶׁל הַיָם.",
+          "translit": "lo, Máya. hadág shel hayám.",
+          "pt": "Não, Maya. O peixe é do mar."
+        }
+      ],
+      "novas": [
+        {
+          "he": "שֶׁלִי",
+          "translit": "shelí",
+          "pt": "meu, minha"
+        },
+        {
+          "he": "מַיָה",
+          "translit": "Máya",
+          "pt": "Maya (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que as crianças veem no mar?",
+          "opcoes": [
+            "Um peixe",
+            "Um sorvete",
+            "A mãe"
+          ],
+          "certa": 0,
+          "porque": "{{הִנֵה דָג}}: olha um peixe."
+        },
+        {
+          "t": "escolha",
+          "q": "Quem diz que o peixe é seu?",
+          "opcoes": [
+            "A Maya",
+            "O Dani",
+            "A mãe"
+          ],
+          "certa": 0,
+          "porque": "A Maya diz {{הַדָג שֶׁלִי}}: o peixe é meu."
+        },
+        {
+          "t": "vf",
+          "q": "Para a mãe, o peixe é do mar.",
+          "certa": true,
+          "porque": "{{הַדָג שֶׁל הַיָם}}: o peixe é do mar."
+        }
+      ]
+    },
+    {
+      "modulo": 3,
+      "tituloPt": "Tem pão?",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "Dana acorda, a casa está em silêncio, e ela manda uma mensagem para a mãe, que já saiu. É a primeira conversa que você lê inteira em hebraico.",
+      "linhas": [
+        {
+          "quem": "Dana",
+          "he": "אִמָא, יֵשׁ לֶחֶם?",
+          "translit": "íma, yesh léchem?",
+          "pt": "Mãe, tem pão?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "יֵשׁ לֶחֶם טָרִי, וְיֵשׁ גַם תֵה חַם.",
+          "translit": "yesh léchem tarí, veyésh gam te cham.",
+          "pt": "Tem pão fresco, e tem chá quente também."
+        },
+        {
+          "quem": "Dana",
+          "he": "תוֹדָה! וְיוֹנָתָן?",
+          "translit": "todá! veYonatán?",
+          "pt": "Obrigada! E o Yonatan?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "הוּא יָשֵׁן.",
+          "translit": "hu yashén.",
+          "pt": "Ele está dormindo."
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָנָה",
+          "translit": "Dána",
+          "pt": "Dana (nome)"
+        },
+        {
+          "he": "יוֹנָתָן",
+          "translit": "Yonatán",
+          "pt": "Yonatan (nome)"
+        },
+        {
+          "he": "גַם",
+          "translit": "gam",
+          "pt": "também"
+        },
+        {
+          "he": "חַם",
+          "translit": "cham",
+          "pt": "quente"
+        },
+        {
+          "he": "יָשֵׁן",
+          "translit": "yashén",
+          "pt": "dorme, está dormindo"
+        },
+        {
+          "he": "וְ־",
+          "translit": "ve-",
+          "pt": "e (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que a Dana pergunta primeiro?",
+          "opcoes": [
+            "Se tem pão",
+            "Se tem chá",
+            "Onde está o Yonatan"
+          ],
+          "certa": 0,
+          "porque": "{{אִמָא, יֵשׁ לֶחֶם?}}: mãe, tem pão?"
+        },
+        {
+          "t": "vf",
+          "q": "O chá está frio.",
+          "certa": false,
+          "porque": "{{חַם}} é quente: o chá está quente."
+        },
+        {
+          "t": "escolha",
+          "q": "O que o Yonatan está fazendo?",
+          "opcoes": [
+            "Tomando chá",
+            "Comendo pão",
+            "Dormindo"
+          ],
+          "certa": 2,
+          "porque": "{{הוּא יָשֵׁן}}: ele está dormindo."
+        },
+        {
+          "t": "vf",
+          "q": "O pão é fresco.",
+          "certa": true,
+          "porque": "{{טָרִי}} é fresco."
+        }
+      ]
+    },
+    {
+      "modulo": 4,
+      "tituloPt": "Uma mensagem da montanha",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "A Noa foi passar uns dias na montanha, e o Dan manda uma mensagem para saber como ela está.",
+      "linhas": [
+        {
+          "quem": "Dan",
+          "he": "הַיי נוֹעָה, מָה נִשְׁמָע?",
+          "translit": "hai Nóa, ma nishmá?",
+          "pt": "Oi, Noa, tudo bem?"
+        },
+        {
+          "quem": "Noa",
+          "he": "מְעוּלֶה! אֲנִי עַל הָהָר.",
+          "translit": "meulé! aní al hahár.",
+          "pt": "Ótimo! Estou na montanha."
+        },
+        {
+          "quem": "Dan",
+          "he": "קַר שָׁם?",
+          "translit": "kar sham?",
+          "pt": "Está frio aí?"
+        },
+        {
+          "quem": "Noa",
+          "he": "קְצָת. אֲנִי שׁוֹתָה תֵה.",
+          "translit": "ktsat. aní shotá te.",
+          "pt": "Um pouco. Estou tomando chá."
+        },
+        {
+          "quem": "Dan",
+          "he": "מָתַי אַתְ חוֹזֶרֶת?",
+          "translit": "matái at chozéret?",
+          "pt": "Quando você volta?"
+        },
+        {
+          "quem": "Noa",
+          "he": "מָחָר. אֲנִי רוֹצָה עוֹד יוֹם!",
+          "translit": "machár. aní rotsá od yom!",
+          "pt": "Amanhã. Quero mais um dia!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "נוֹעָה",
+          "translit": "Nóa",
+          "pt": "Noa (nome)"
+        },
+        {
+          "he": "דָן",
+          "translit": "Dan",
+          "pt": "Dan (nome)"
+        },
+        {
+          "he": "הַי",
+          "translit": "hai",
+          "pt": "oi"
+        },
+        {
+          "he": "מָה נִשְׁמָע?",
+          "translit": "ma nishmá?",
+          "pt": "tudo bem? (o que se ouve?)"
+        },
+        {
+          "he": "מְעוּלֶה",
+          "translit": "meulé",
+          "pt": "ótimo"
+        },
+        {
+          "he": "קַר",
+          "translit": "kar",
+          "pt": "frio"
+        },
+        {
+          "he": "שָׁם",
+          "translit": "sham",
+          "pt": "lá, aí"
+        },
+        {
+          "he": "קְצָת",
+          "translit": "ktsat",
+          "pt": "um pouco"
+        },
+        {
+          "he": "חוֹזֶרֶת",
+          "translit": "chozéret",
+          "pt": "volta (ela volta)"
+        },
+        {
+          "he": "מָחָר",
+          "translit": "machár",
+          "pt": "amanhã"
+        },
+        {
+          "he": "עוֹד",
+          "translit": "od",
+          "pt": "mais, ainda"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Onde a Noa está?",
+          "opcoes": [
+            "Em casa",
+            "Na montanha",
+            "No mar"
+          ],
+          "certa": 1,
+          "porque": "{{אֲנִי עַל הָהָר}}: estou na montanha."
+        },
+        {
+          "t": "vf",
+          "q": "Está muito frio na montanha.",
+          "certa": false,
+          "porque": "{{קְצָת}}: só um pouco."
+        },
+        {
+          "t": "escolha",
+          "q": "Quando ela volta?",
+          "opcoes": [
+            "Hoje",
+            "Amanhã",
+            "Daqui a uma semana"
+          ],
+          "certa": 1,
+          "porque": "{{מָחָר}} é amanhã."
+        },
+        {
+          "t": "vf",
+          "q": "A Noa quer ficar mais um dia.",
+          "certa": true,
+          "porque": "{{אֲנִי רוֹצָה עוֹד יוֹם!}}: quero mais um dia!"
+        }
+      ]
+    },
+    {
+      "modulo": 5,
+      "tituloPt": "Sábado de manhã",
+      "tipoPt": "Grupo da família no WhatsApp",
+      "revisado": true,
+      "introPt": "Sábado de manhã, cada um num canto da casa, e o pai escreve no grupo da família.",
+      "linhas": [
+        {
+          "quem": "Pai",
+          "he": "בֹּקֶר טוֹב! מִי רוֹצֶה קָפֶה?",
+          "translit": "bóker tov! mi rotsé kafé?",
+          "pt": "Bom dia! Quem quer café?"
+        },
+        {
+          "quem": "Dana",
+          "he": "אֲנִי!",
+          "translit": "aní!",
+          "pt": "Eu!"
+        },
+        {
+          "quem": "Mãe",
+          "he": "גַם אֲנִי. אֲנִי בַּגַן.",
+          "translit": "gam aní. aní bagán.",
+          "pt": "Eu também. Estou no jardim."
+        },
+        {
+          "quem": "Yonatan",
+          "he": "הַכֶּלֶב רוֹצֶה לָצֵאת!",
+          "translit": "hakélev rotsé latsét!",
+          "pt": "O cachorro quer sair!"
+        },
+        {
+          "quem": "Pai",
+          "he": "אֲנִי בָּא. שַׁבָּת שָׁלוֹם!",
+          "translit": "aní ba. shabát shalóm!",
+          "pt": "Já vou. Shabát shalóm!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "קָפֶה",
+          "translit": "kafé",
+          "pt": "café"
+        },
+        {
+          "he": "בַּ־",
+          "translit": "ba-",
+          "pt": "no, na (grudado na palavra)"
+        },
+        {
+          "he": "לָצֵאת",
+          "translit": "latsét",
+          "pt": "sair"
+        },
+        {
+          "he": "בָּא",
+          "translit": "ba",
+          "pt": "vem, está vindo"
+        },
+        {
+          "he": "שַׁבָּת שָׁלוֹם",
+          "translit": "shabát shalóm",
+          "pt": "bom sábado (a saudação do sábado)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Quem oferece café?",
+          "opcoes": [
+            "O pai",
+            "A mãe",
+            "A Dana"
+          ],
+          "certa": 0,
+          "porque": "É o pai quem pergunta {{מִי רוֹצֶה קָפֶה?}}"
+        },
+        {
+          "t": "escolha",
+          "q": "Onde a mãe está?",
+          "opcoes": [
+            "Na cozinha",
+            "No jardim",
+            "Na rua"
+          ],
+          "certa": 1,
+          "porque": "{{אֲנִי בַּגַן}}: estou no jardim."
+        },
+        {
+          "t": "vf",
+          "q": "O cachorro quer sair.",
+          "certa": true,
+          "porque": "{{הַכֶּלֶב רוֹצֶה לָצֵאת!}}"
+        },
+        {
+          "t": "vf",
+          "q": "A conversa é num dia de semana.",
+          "certa": false,
+          "porque": "{{שַׁבָּת שָׁלוֹם}}: é sábado."
+        }
+      ]
+    },
+    {
+      "modulo": 6,
+      "tituloPt": "A caminho de casa",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "semPontos": true,
+      "introPt": "O Dani está voltando para casa, e a mãe manda mensagem. Como toda mensagem de verdade, chega sem os pontos das vogais.",
+      "linhas": [
+        {
+          "quem": "Mãe",
+          "he": "דָנִי, אֵיפֹה אַתָה?",
+          "translit": "Dáni, éifo atá?",
+          "pt": "Dani, onde você está?"
+        },
+        {
+          "quem": "Dani",
+          "he": "בַּדֶרֶךְ הַבַּיְתָה.",
+          "translit": "badérech habáyta.",
+          "pt": "A caminho de casa."
+        },
+        {
+          "quem": "Mãe",
+          "he": "יֵשׁ לְךָ מַפְתֵחַ?",
+          "translit": "yesh lechá maftéach?",
+          "pt": "Você está com a chave?"
+        },
+        {
+          "quem": "Dani",
+          "he": "כֵּן. אֲנִי בַּבַּיִת בְּעוֹד עֶשֶׂר דַקוֹת.",
+          "translit": "ken. aní babáyit beód ésser dakót.",
+          "pt": "Sim. Chego em casa em dez minutos."
+        },
+        {
+          "quem": "Mãe",
+          "he": "מְעוּלֶה. יֵשׁ אוֹכֶל בַּמְקָרֵר.",
+          "translit": "meulé. yesh óchel bamekarér.",
+          "pt": "Ótimo. Tem comida na geladeira."
+        },
+        {
+          "quem": "Dani",
+          "he": "תוֹדָה, אִמָא!",
+          "translit": "todá, íma!",
+          "pt": "Obrigado, mãe!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "אֵיפֹה",
+          "translit": "éifo",
+          "pt": "onde"
+        },
+        {
+          "he": "בַּדֶרֶךְ הַבַּיְתָה",
+          "translit": "badérech habáyta",
+          "pt": "a caminho de casa"
+        },
+        {
+          "he": "יֵשׁ לְךָ",
+          "translit": "yesh lechá",
+          "pt": "você tem"
+        },
+        {
+          "he": "מַפְתֵחַ",
+          "translit": "maftéach",
+          "pt": "chave"
+        },
+        {
+          "he": "בְּעוֹד",
+          "translit": "beód",
+          "pt": "daqui a, em (tempo)"
+        },
+        {
+          "he": "עֶשֶׂר",
+          "translit": "ésser",
+          "pt": "dez"
+        },
+        {
+          "he": "דַקוֹת",
+          "translit": "dakót",
+          "pt": "minutos"
+        },
+        {
+          "he": "אוֹכֶל",
+          "translit": "óchel",
+          "pt": "comida"
+        },
+        {
+          "he": "מְקָרֵר",
+          "translit": "mekarér",
+          "pt": "geladeira"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que a mãe pergunta primeiro?",
+          "opcoes": [
+            "Onde o Dani está",
+            "Se ele está com fome",
+            "Quando ele sai"
+          ],
+          "certa": 0,
+          "porque": "{{אֵיפֹה אַתָה?}}: onde você está?"
+        },
+        {
+          "t": "escolha",
+          "q": "Em quanto tempo o Dani chega?",
+          "opcoes": [
+            "Dois minutos",
+            "Dez minutos",
+            "Uma hora"
+          ],
+          "certa": 1,
+          "porque": "{{עֶשֶׂר דַקוֹת}}: dez minutos."
+        },
+        {
+          "t": "vf",
+          "q": "O Dani está sem a chave.",
+          "certa": false,
+          "porque": "A mãe pergunta {{יֵשׁ לְךָ מַפְתֵחַ?}} e ele responde {{כֵּן}}: sim."
+        },
+        {
+          "t": "vf",
+          "q": "Tem comida na geladeira.",
+          "certa": true,
+          "porque": "{{יֵשׁ אוֹכֶל בַּמְקָרֵר}}."
+        }
+      ]
+    },
+    {
+      "modulo": 7,
+      "tituloPt": "No hotel",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "A Dana está viajando pela América do Sul, e a mãe manda mensagem para saber como ela está. Repare nas palavras de fora, com o guéresh.",
+      "linhas": [
+        {
+          "quem": "Mãe",
+          "he": "דָנָה, אַתְ בַּמָלוֹן?",
+          "translit": "Dána, at bamalón?",
+          "pt": "Dana, você está no hotel?"
+        },
+        {
+          "quem": "Dana",
+          "he": "כֵּן! אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו.",
+          "translit": "ken! aní ossá tchék-in achsháv.",
+          "pt": "Sim! Estou fazendo o check-in agora."
+        },
+        {
+          "quem": "Mãe",
+          "he": "יֵשׁ לָךְ פיג׳מה?",
+          "translit": "yesh lach pidjáma?",
+          "pt": "Você tem pijama?"
+        },
+        {
+          "quem": "Dana",
+          "he": "אֵין לִי! אֲנִי קוֹנָה פֹּה.",
+          "translit": "ein li! aní koná po.",
+          "pt": "Não tenho! Compro aqui."
+        },
+        {
+          "quem": "Mãe",
+          "he": "וּמָחָר?",
+          "translit": "umachár?",
+          "pt": "E amanhã?"
+        },
+        {
+          "quem": "Dana",
+          "he": "מָחָר צ׳ילה! נְשִׁיקוֹת!",
+          "translit": "machár Tchíle! neshikót!",
+          "pt": "Amanhã, Chile! Beijos!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "מָלוֹן",
+          "translit": "malón",
+          "pt": "hotel"
+        },
+        {
+          "he": "עוֹשָׂה",
+          "translit": "ossá",
+          "pt": "faz, está fazendo (ela)"
+        },
+        {
+          "he": "צ׳ק-אין",
+          "translit": "tchék-in",
+          "pt": "check-in"
+        },
+        {
+          "he": "עַכְשָׁיו",
+          "translit": "achsháv",
+          "pt": "agora"
+        },
+        {
+          "he": "יֵשׁ לָךְ",
+          "translit": "yesh lach",
+          "pt": "você tem (para mulher)"
+        },
+        {
+          "he": "אֵין לִי",
+          "translit": "ein li",
+          "pt": "eu não tenho"
+        },
+        {
+          "he": "קוֹנָה",
+          "translit": "koná",
+          "pt": "compra, está comprando (ela)"
+        },
+        {
+          "he": "פֹּה",
+          "translit": "po",
+          "pt": "aqui"
+        },
+        {
+          "he": "נְשִׁיקוֹת",
+          "translit": "neshikót",
+          "pt": "beijos"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Onde a Dana está?",
+          "opcoes": [
+            "No aeroporto",
+            "No hotel",
+            "Em casa"
+          ],
+          "certa": 1,
+          "porque": "A mãe pergunta {{אַתְ בַּמָלוֹן?}} e ela responde {{כֵּן}}: sim."
+        },
+        {
+          "t": "escolha",
+          "q": "O que a Dana está fazendo agora?",
+          "opcoes": [
+            "O check-in",
+            "Comprando pijama",
+            "Dormindo"
+          ],
+          "certa": 0,
+          "porque": "{{אֲנִי עוֹשָׂה צ׳ק-אין עַכְשָׁיו}}: estou fazendo o check-in agora."
+        },
+        {
+          "t": "vf",
+          "q": "A Dana tem pijama.",
+          "certa": false,
+          "porque": "{{אֵין לִי!}}: não tenho - e ela vai comprar aí mesmo, onde está."
+        },
+        {
+          "t": "escolha",
+          "q": "Para onde ela vai amanhã?",
+          "opcoes": [
+            "Chile",
+            "Tchéquia",
+            "Israel"
+          ],
+          "certa": 0,
+          "porque": "{{מָחָר צ׳ילה}}: amanhã, Chile."
+        }
+      ]
+    },
+    {
+      "modulo": 1,
+      "revisao": true,
+      "tituloPt": "Na praia",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "Natan e Maya se conhecem na praia. Tudo aqui usa só as seis letras do módulo, as palavras que você já leu nas lições e os sinais de vogal que você já aprendeu, incluindo {{וֹ}} e {{וּ}}.",
+      "linhas": [
+        {
+          "quem": "Natan",
+          "he": "מִי אַתְ?",
+          "translit": "mi at?",
+          "pt": "Quem é você?"
+        },
+        {
+          "quem": "Maya",
+          "he": "אֲנִי מַיָה. מִי אַתָה?",
+          "translit": "aní Máya. mi atá?",
+          "pt": "Eu sou a Maya. Quem é você?"
+        },
+        {
+          "quem": "Natan",
+          "he": "אֲנִי נָתָן. הִנֵה אִמָא.",
+          "translit": "aní Natán. hiné íma.",
+          "pt": "Eu sou o Natan. Olha a mamãe aqui."
+        },
+        {
+          "quem": "Mãe",
+          "he": "הִנֵה תֵה.",
+          "translit": "hiné te.",
+          "pt": "Aqui está um chá."
+        },
+        {
+          "quem": "Maya",
+          "he": "תֵה? הִנֵה הַיָם!",
+          "translit": "te? hiné hayám!",
+          "pt": "Chá? Olha o mar ali!"
+        },
+        {
+          "quem": "Natan",
+          "he": "הַיוֹם יוֹם יָם!",
+          "translit": "hayóm yom yam!",
+          "pt": "Hoje é dia de praia!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "נָתָן",
+          "translit": "Natán",
+          "pt": "Natan (nome)"
+        },
+        {
+          "he": "מַיָה",
+          "translit": "Máya",
+          "pt": "Maya (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Como se chama a menina?",
+          "opcoes": [
+            "Maya",
+            "Natan",
+            "Ima"
+          ],
+          "certa": 0,
+          "porque": "{{אֲנִי מַיָה}}: eu sou a Maya."
+        },
+        {
+          "t": "escolha",
+          "q": "Quem traz o chá?",
+          "opcoes": [
+            "A Maya",
+            "A mãe",
+            "O Natan"
+          ],
+          "certa": 1,
+          "porque": "A mãe diz {{הִנֵה תֵה}}: aqui está um chá."
+        },
+        {
+          "t": "vf",
+          "q": "A Maya fala do mar.",
+          "certa": true,
+          "porque": "Ela responde {{תֵה? הִנֵה הַיָם!}}: chá? Olha o mar ali!"
+        }
+      ]
+    },
+    {
+      "modulo": 2,
+      "revisao": true,
+      "tituloPt": "Sorvete para todos",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "A Maya visita a tia, e a tia tem uma surpresa. Só palavras que você já leu nas lições dos módulos 1 e 2.",
+      "linhas": [
+        {
+          "quem": "Maya",
+          "he": "שָׁלוֹם, דוֹדָה!",
+          "translit": "shalóm, dodá!",
+          "pt": "Olá, tia!"
+        },
+        {
+          "quem": "Tia",
+          "he": "שָׁלוֹם, מַיָה! הִנֵה גְלִידָה.",
+          "translit": "shalóm, Máya! hiné glidá.",
+          "pt": "Olá, Maya! Aqui está um sorvete."
+        },
+        {
+          "quem": "Maya",
+          "he": "תוֹדָה, דוֹדָה!",
+          "translit": "todá, dodá!",
+          "pt": "Obrigada, tia!"
+        },
+        {
+          "quem": "Tia",
+          "he": "מִי הַיֶלֶד שָׁם?",
+          "translit": "mi hayéled sham?",
+          "pt": "Quem é o menino ali?"
+        },
+        {
+          "quem": "Maya",
+          "he": "הוּא דָנִי.",
+          "translit": "hu Dáni.",
+          "pt": "É o Dani."
+        },
+        {
+          "quem": "Tia",
+          "he": "הִנֵה גְלִידָה גַם לְדָנִי!",
+          "translit": "hiné glidá gam leDáni!",
+          "pt": "Tem sorvete para o Dani também!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "מַיָה",
+          "translit": "Máya",
+          "pt": "Maya (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        },
+        {
+          "he": "לְ־",
+          "translit": "le-",
+          "pt": "para (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que a tia dá para a Maya?",
+          "opcoes": [
+            "Chá",
+            "Sorvete",
+            "Água"
+          ],
+          "certa": 1,
+          "porque": "{{הִנֵה גְלִידָה}}: aqui está um sorvete."
+        },
+        {
+          "t": "escolha",
+          "q": "Quem é o menino ali?",
+          "opcoes": [
+            "O Natan",
+            "O Dani",
+            "O tio"
+          ],
+          "certa": 1,
+          "porque": "{{הוּא דָנִי}}: é o Dani."
+        },
+        {
+          "t": "vf",
+          "q": "Só a Maya ganha sorvete.",
+          "certa": false,
+          "porque": "{{גַם לְדָנִי}}: para o Dani também."
+        }
+      ]
+    },
+    {
+      "modulo": 3,
+      "revisao": true,
+      "tituloPt": "Um passeio",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "O Dani quer saber o que vai levar no passeio. Todas as palavras já apareceram nas lições.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "אִמָא, הַיוֹם טִיוּל?",
+          "translit": "íma, hayóm tiyúl?",
+          "pt": "Mãe, hoje tem passeio?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "הַיוֹם טִיוּל לַנָהָר.",
+          "translit": "hayóm tiyúl lanahár.",
+          "pt": "Hoje tem passeio até o rio."
+        },
+        {
+          "quem": "Dani",
+          "he": "וְגַם לֶחֶם?",
+          "translit": "vegám léchem?",
+          "pt": "E pão também?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "הִנֵה לֶחֶם טָרִי, וְגַם מַיִם.",
+          "translit": "hiné léchem tarí, vegám máyim.",
+          "pt": "Aqui tem pão fresco, e água também."
+        },
+        {
+          "quem": "Dani",
+          "he": "וְגַם מִטְרִיָה?",
+          "translit": "vegám mitriyá?",
+          "pt": "E guarda-chuva também?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.",
+          "translit": "lo. hayóm yesh shémesh.",
+          "pt": "Não. Hoje tem sol."
+        },
+        {
+          "quem": "Dani",
+          "he": "מַזָל!",
+          "translit": "mazál!",
+          "pt": "Que sorte!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        },
+        {
+          "he": "לַ־",
+          "translit": "la-",
+          "pt": "até o, para o (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Para onde é o passeio?",
+          "opcoes": [
+            "Para o mar",
+            "Para o rio",
+            "Para o jardim"
+          ],
+          "certa": 1,
+          "porque": "{{טִיוּל לַנָהָר}}: passeio até o rio."
+        },
+        {
+          "t": "vf",
+          "q": "O pão é fresco.",
+          "certa": true,
+          "porque": "{{לֶחֶם טָרִי}}: pão fresco."
+        },
+        {
+          "t": "escolha",
+          "q": "Por que o Dani não leva guarda-chuva?",
+          "opcoes": [
+            "Porque hoje tem sol",
+            "Porque não tem guarda-chuva",
+            "Porque o passeio é amanhã"
+          ],
+          "certa": 0,
+          "porque": "{{הַיוֹם יֵשׁ שֶׁמֶשׁ}}: hoje tem sol."
+        }
+      ]
+    },
+    {
+      "modulo": 4,
+      "revisao": true,
+      "tituloPt": "Meio-dia na cidade",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "A Noa conhece o Dani na cidade, ao meio-dia. Só palavras que você já leu nas lições.",
+      "linhas": [
+        {
+          "quem": "Noa",
+          "he": "סְלִיחָה, אַתָה סְטוּדֶנְט?",
+          "translit": "slichá, atá studént?",
+          "pt": "Com licença, você é estudante?"
+        },
+        {
+          "quem": "Dani",
+          "he": "אֲנִי סְטוּדֶנְט חָדָשׁ. וְאַתְ?",
+          "translit": "aní studént chadásh. veát?",
+          "pt": "Sou um estudante novo. E você?"
+        },
+        {
+          "quem": "Noa",
+          "he": "אֲנִי נוֹעָה, נָעִים מְאוֹד! אַתָה רוֹצֶה מִיץ?",
+          "translit": "aní Nóa, naím meód! atá rotsé mits?",
+          "pt": "Eu sou a Noa, muito prazer! Você quer um suco?"
+        },
+        {
+          "quem": "Dani",
+          "he": "לֹא, תוֹדָה. אֲנִי רוֹצֶה מָקוֹם שֶׁקֶט.",
+          "translit": "lo, todá. aní rotsé makóm shéket.",
+          "pt": "Não, obrigado. Quero um lugar tranquilo."
+        },
+        {
+          "quem": "Noa",
+          "he": "הִנֵה עֵץ גָדוֹל וְצֵל.",
+          "translit": "hiné ets gadól vetsél.",
+          "pt": "Olha aqui uma árvore grande, e sombra."
+        },
+        {
+          "quem": "Dani",
+          "he": "תוֹדָה, נוֹעָה. זֶה נֶחְמָד!",
+          "translit": "todá, Nóa. ze nechmád!",
+          "pt": "Obrigado, Noa. Que legal!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "נוֹעָה",
+          "translit": "Nóa",
+          "pt": "Noa (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "וְ־",
+          "translit": "ve-",
+          "pt": "e (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "vf",
+          "q": "O Dani é um estudante novo.",
+          "certa": true,
+          "porque": "{{אֲנִי סְטוּדֶנְט חָדָשׁ}}: sou um estudante novo."
+        },
+        {
+          "t": "escolha",
+          "q": "O que a Noa oferece?",
+          "opcoes": [
+            "Café",
+            "Suco",
+            "Água"
+          ],
+          "certa": 1,
+          "porque": "{{אַתָה רוֹצֶה מִיץ?}}: você quer um suco?"
+        },
+        {
+          "t": "escolha",
+          "q": "O que o Dani procura?",
+          "opcoes": [
+            "Um lugar tranquilo",
+            "Um ônibus",
+            "Uma árvore pequena"
+          ],
+          "certa": 0,
+          "porque": "{{מָקוֹם שֶׁקֶט}}: um lugar tranquilo."
+        }
+      ]
+    },
+    {
+      "modulo": 5,
+      "revisao": true,
+      "tituloPt": "Café da manhã",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "Manhã corrida na casa do Dani. Agora, com o ב, o כ e o פ, já dá para ler a família inteira à mesa.",
+      "linhas": [
+        {
+          "quem": "Pai",
+          "he": "שָׁלוֹם, מִשְׁפָּחָה! הִנֵה קָפֶה וְתֵה.",
+          "translit": "shalóm, mishpachá! hiné kafé veté.",
+          "pt": "Bom dia, família! Tem café e chá."
+        },
+        {
+          "quem": "Mãe",
+          "he": "תוֹדָה! וְאֹכֶל?",
+          "translit": "todá! veóchel?",
+          "pt": "Obrigada! E comida?"
+        },
+        {
+          "quem": "Pai",
+          "he": "הִנֵה לֶחֶם, וְגַם תַפּוּחַ.",
+          "translit": "hiné léchem, vegám tapúach.",
+          "pt": "Aqui tem pão, e maçã também."
+        },
+        {
+          "quem": "Dani",
+          "he": "אַבָּא, הָאוֹטוֹבּוּס! עַכְשָׁיו!",
+          "translit": "ába, haótobus! achsháv!",
+          "pt": "Pai, o ônibus! Agora!"
+        },
+        {
+          "quem": "Pai",
+          "he": "רֶגַע, רֶגַע! הִנֵה הַתִיק.",
+          "translit": "réga, réga! hiné hatík.",
+          "pt": "Calma, um momento! Aqui está a mochila."
+        },
+        {
+          "quem": "Dani",
+          "he": "תוֹדָה, אַבָּא! שָׁלוֹם!",
+          "translit": "todá, ába! shalóm!",
+          "pt": "Obrigado, pai! Tchau!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        },
+        {
+          "he": "וְ־",
+          "translit": "ve-",
+          "pt": "e (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que o pai oferece primeiro?",
+          "opcoes": [
+            "Café e chá",
+            "Pão e maçã",
+            "Suco"
+          ],
+          "certa": 0,
+          "porque": "{{הִנֵה קָפֶה וְתֵה}}: tem café e chá."
+        },
+        {
+          "t": "vf",
+          "q": "O Dani está com pressa por causa do ônibus.",
+          "certa": true,
+          "porque": "{{הָאוֹטוֹבּוּס! עַכְשָׁיו!}}: o ônibus! Agora!"
+        },
+        {
+          "t": "escolha",
+          "q": "O que o pai entrega ao Dani?",
+          "opcoes": [
+            "O telefone",
+            "A mochila",
+            "O livro"
+          ],
+          "certa": 1,
+          "porque": "{{הִנֵה הַתִיק}}: aqui está a mochila."
+        }
+      ]
+    },
+    {
+      "modulo": 6,
+      "revisao": true,
+      "semPontos": true,
+      "tituloPt": "Mensagem",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "O Dani e o Tom combinam um café. Como numa mensagem de verdade, sem os pontos das vogais, e só com palavras que você já leu.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "שָׁלוֹם, חָבֵר! אַתָה בָּעִיר?",
+          "translit": "shalóm, chavér! atá baír?",
+          "pt": "Oi, amigo! Você está na cidade?"
+        },
+        {
+          "quem": "Tom",
+          "he": "כֵּן, אֲנִי בָּרְחוֹב. רֶגַע.",
+          "translit": "ken, aní barechóv. réga.",
+          "pt": "Sim, estou na rua. Um momento."
+        },
+        {
+          "quem": "Dani",
+          "he": "אֲנִי רוֹצֶה קָפֶה. גַם אַתָה?",
+          "translit": "aní rotsé kafé. gam atá?",
+          "pt": "Quero um café. Você também?"
+        },
+        {
+          "quem": "Tom",
+          "he": "לֹא, רַק מִיץ. וְאוֹכֶל!",
+          "translit": "lo, rak mits. veóchel!",
+          "pt": "Não, só um suco. E comida!"
+        },
+        {
+          "quem": "Dani",
+          "he": "יָפֶה. עַכְשָׁיו?",
+          "translit": "yafé. achsháv?",
+          "pt": "Ótimo. Agora?"
+        },
+        {
+          "quem": "Tom",
+          "he": "עַכְשָׁיו!",
+          "translit": "achsháv!",
+          "pt": "Agora!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "טוֹם",
+          "translit": "Tom",
+          "pt": "Tom (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "בְּ־, בָּ־",
+          "translit": "be-, ba-",
+          "pt": "em, no, na (grudado na palavra)"
+        },
+        {
+          "he": "וְ־",
+          "translit": "ve-",
+          "pt": "e (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Onde o Tom está?",
+          "opcoes": [
+            "Em casa",
+            "Na rua",
+            "No ônibus"
+          ],
+          "certa": 1,
+          "porque": "{{אֲנִי בָּרְחוֹב}}: estou na rua."
+        },
+        {
+          "t": "vf",
+          "q": "O Tom também quer café.",
+          "certa": false,
+          "porque": "{{לֹא, רַק מִיץ}}: não, só um suco."
+        },
+        {
+          "t": "escolha",
+          "q": "Quando eles se encontram?",
+          "opcoes": [
+            "Agora",
+            "Amanhã",
+            "À noite"
+          ],
+          "certa": 0,
+          "porque": "{{עַכְשָׁיו!}}: agora!"
+        }
+      ]
+    },
+    {
+      "modulo": 7,
+      "revisao": true,
+      "tituloPt": "Viagem ao Chile",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "A Maya está viajando, e o Dani quer saber o que ela levou na mochila. Repare nas palavras de fora, com o guéresh.",
+      "linhas": [
+        {
+          "quem": "Maya",
+          "he": "דָנִי, הַיוֹם אֲנִי בְּצ׳ילה!",
+          "translit": "Dáni, hayóm aní beTchíle!",
+          "pt": "Dani, hoje estou no Chile!"
+        },
+        {
+          "quem": "Dani",
+          "he": "בְּצ׳ילה? יָפֶה! מָה בַּתִיק?",
+          "translit": "beTchíle? yafé! ma batík?",
+          "pt": "No Chile? Que lindo! O que tem na mochila?"
+        },
+        {
+          "quem": "Maya",
+          "he": "פיג׳מה, ג׳ל, סֵפֶר וְכֶסֶף.",
+          "translit": "pidjáma, djel, séfer vechéssef.",
+          "pt": "Pijama, gel, um livro e dinheiro."
+        },
+        {
+          "quem": "Dani",
+          "he": "וְגַם מִטְרִיָה?",
+          "translit": "vegám mitriyá?",
+          "pt": "E guarda-chuva também?"
+        },
+        {
+          "quem": "Maya",
+          "he": "לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.",
+          "translit": "lo. hayóm yesh shémesh.",
+          "pt": "Não. Hoje tem sol."
+        },
+        {
+          "quem": "Dani",
+          "he": "מַזָל! שָׁלוֹם, מַיָה!",
+          "translit": "mazál! shalóm, Máya!",
+          "pt": "Que sorte! Tchau, Maya!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "מַיָה",
+          "translit": "Máya",
+          "pt": "Maya (nome)"
+        },
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "בְּ־, בָּ־",
+          "translit": "be-, ba-",
+          "pt": "em, no, na (grudado na palavra)"
+        },
+        {
+          "he": "וְ־",
+          "translit": "ve-",
+          "pt": "e (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Onde a Maya está hoje?",
+          "opcoes": [
+            "No Chile",
+            "Na Tchéquia",
+            "Em Israel"
+          ],
+          "certa": 0,
+          "porque": "{{הַיוֹם אֲנִי בְּצ׳ילה}}: hoje estou no Chile."
+        },
+        {
+          "t": "vf",
+          "q": "A Maya levou um guarda-chuva.",
+          "certa": false,
+          "porque": "{{לֹא. הַיוֹם יֵשׁ שֶׁמֶשׁ.}}: não, hoje tem sol."
+        },
+        {
+          "t": "escolha",
+          "q": "Qual destas coisas está na mochila?",
+          "opcoes": [
+            "Pijama",
+            "Bola",
+            "Telefone"
+          ],
+          "certa": 0,
+          "porque": "{{פיג׳מה}} é pijama."
+        }
+      ]
+    },
+    {
+      "modulo": 3,
+      "n": 2,
+      "tituloPt": "A rosa",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "O Dani e a mãe estão no jardim.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "אִמָא, מָה זֶה?",
+          "translit": "íma, ma ze?",
+          "pt": "Mãe, o que é isto?"
+        },
+        {
+          "quem": "Mãe",
+          "he": "זֶה וֶרֶד.",
+          "translit": "ze véred.",
+          "pt": "É uma rosa."
+        },
+        {
+          "quem": "Dani",
+          "he": "וֶרֶד גָדוֹל!",
+          "translit": "véred gadól!",
+          "pt": "Uma rosa grande!"
+        },
+        {
+          "quem": "Mãe",
+          "he": "הִנֵה גַם וֶרֶד שָׁם.",
+          "translit": "hiné gam véred sham.",
+          "pt": "Olha, tem uma rosa lá também."
+        },
+        {
+          "quem": "Dani",
+          "he": "וֶרֶד לְאִמָא!",
+          "translit": "véred le'íma!",
+          "pt": "Uma rosa para a mamãe!"
+        },
+        {
+          "quem": "Mãe",
+          "he": "תוֹדָה, דָנִי!",
+          "translit": "todá, Dáni!",
+          "pt": "Obrigada, Dani!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָנִי",
+          "translit": "Dáni",
+          "pt": "Dani (nome)"
+        },
+        {
+          "he": "לְ־",
+          "translit": "le-",
+          "pt": "para (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que a mãe mostra ao Dani?",
+          "opcoes": [
+            "Uma rosa",
+            "Um peixe",
+            "O mar"
+          ],
+          "certa": 0,
+          "porque": "{{זֶה וֶרֶד}}: é uma rosa."
+        },
+        {
+          "t": "vf",
+          "q": "A rosa é pequena.",
+          "certa": false,
+          "porque": "{{וֶרֶד גָדוֹל!}}: uma rosa grande."
+        },
+        {
+          "t": "escolha",
+          "q": "Para quem o Dani quer a rosa?",
+          "opcoes": [
+            "Para a mãe",
+            "Para a Maya",
+            "Para o pai"
+          ],
+          "certa": 0,
+          "porque": "{{וֶרֶד לְאִמָא!}}: uma rosa para a mamãe."
+        }
+      ]
+    },
+    {
+      "modulo": 4,
+      "n": 2,
+      "tituloPt": "Um suco gelado",
+      "tipoPt": "Conversa no WhatsApp",
+      "revisado": true,
+      "introPt": "É meio-dia, faz calor, e a Noa manda uma mensagem para o Dan.",
+      "linhas": [
+        {
+          "quem": "Noa",
+          "he": "הַי דָן, מָה אַתָה עוֹשֶׂה?",
+          "translit": "hai Dan, ma atá osé?",
+          "pt": "Oi, Dan, o que você está fazendo?"
+        },
+        {
+          "quem": "Dan",
+          "he": "אֲנִי שׁוֹתֶה מִיץ קַר.",
+          "translit": "aní shoté mits kar.",
+          "pt": "Estou tomando um suco gelado."
+        },
+        {
+          "quem": "Noa",
+          "he": "אֵיזֶה מִיץ?",
+          "translit": "éize mits?",
+          "pt": "Que suco?"
+        },
+        {
+          "quem": "Dan",
+          "he": "מִיץ טָרִי.",
+          "translit": "mits tarí.",
+          "pt": "Suco fresco."
+        },
+        {
+          "quem": "Noa",
+          "he": "גַם אֲנִי רוֹצָה!",
+          "translit": "gam aní rotsá!",
+          "pt": "Eu também quero!"
+        },
+        {
+          "quem": "Dan",
+          "he": "יֵשׁ עוֹד.",
+          "translit": "yesh od.",
+          "pt": "Tem mais."
+        },
+        {
+          "quem": "Noa",
+          "he": "אֲנִי שָׁם עוֹד רֶגַע!",
+          "translit": "aní sham od réga!",
+          "pt": "Estou aí num instante!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "דָן",
+          "translit": "Dan",
+          "pt": "Dan (nome)"
+        },
+        {
+          "he": "הַי",
+          "translit": "hai",
+          "pt": "oi"
+        },
+        {
+          "he": "עוֹשֶׂה",
+          "translit": "osé",
+          "pt": "faz, está fazendo"
+        },
+        {
+          "he": "שׁוֹתֶה",
+          "translit": "shoté",
+          "pt": "bebe, está tomando"
+        },
+        {
+          "he": "קַר",
+          "translit": "kar",
+          "pt": "gelado, frio"
+        },
+        {
+          "he": "אֵיזֶה",
+          "translit": "éize",
+          "pt": "qual, que"
+        },
+        {
+          "he": "רוֹצָה",
+          "translit": "rotsá",
+          "pt": "quer (para mulher)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que o Dan está tomando?",
+          "opcoes": [
+            "Chá",
+            "Suco",
+            "Água"
+          ],
+          "certa": 1,
+          "porque": "{{אֲנִי שׁוֹתֶה מִיץ קַר}}: estou tomando um suco gelado."
+        },
+        {
+          "t": "vf",
+          "q": "O suco está quente.",
+          "certa": false,
+          "porque": "{{מִיץ קַר}}: um suco gelado."
+        },
+        {
+          "t": "vf",
+          "q": "A Noa também quer suco.",
+          "certa": true,
+          "porque": "{{גַם אֲנִי רוֹצָה!}}: eu também quero!"
+        }
+      ]
+    },
+    {
+      "modulo": 5,
+      "n": 2,
+      "tituloPt": "No mercado",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "A Maya passa no mercado de manhã.",
+      "linhas": [
+        {
+          "quem": "Vendedor",
+          "he": "בֹּקֶר טוֹב! מָה אַתְ רוֹצָה?",
+          "translit": "bóker tov! ma at rotsá?",
+          "pt": "Bom dia! O que você quer?"
+        },
+        {
+          "quem": "Maya",
+          "he": "פִּתָה, בְּבַקָשָׁה.",
+          "translit": "píta, bevakashá.",
+          "pt": "Um pão sírio, por favor."
+        },
+        {
+          "quem": "Vendedor",
+          "he": "עוֹד מַשֶׁהוּ?",
+          "translit": "od máshehu?",
+          "pt": "Mais alguma coisa?"
+        },
+        {
+          "quem": "Maya",
+          "he": "כֵּן, קָפֶה.",
+          "translit": "ken, kafé.",
+          "pt": "Sim, um café."
+        },
+        {
+          "quem": "Vendedor",
+          "he": "הִנֵה. זֶה עֶשְׂרִים שֶׁקֶל.",
+          "translit": "hiné. ze esrím shékel.",
+          "pt": "Aqui está. São vinte shekels."
+        },
+        {
+          "quem": "Maya",
+          "he": "תוֹדָה רַבָּה!",
+          "translit": "todá rabá!",
+          "pt": "Muito obrigada!"
+        }
+      ],
+      "novas": [
+        {
+          "he": "מַשֶׁהוּ",
+          "translit": "máshehu",
+          "pt": "alguma coisa"
+        },
+        {
+          "he": "שֶׁקֶל",
+          "translit": "shékel",
+          "pt": "shekel (a moeda de Israel)"
+        },
+        {
+          "he": "רַבָּה",
+          "translit": "rabá",
+          "pt": "muita (תוֹדָה רַבָּה: muito obrigado)"
+        },
+        {
+          "he": "רוֹצָה",
+          "translit": "rotsá",
+          "pt": "quer (para mulher)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "O que a Maya pede primeiro?",
+          "opcoes": [
+            "Um pão sírio",
+            "Um café",
+            "Um suco"
+          ],
+          "certa": 0,
+          "porque": "{{פִּתָה, בְּבַקָשָׁה}}: um pão sírio, por favor."
+        },
+        {
+          "t": "vf",
+          "q": "A Maya também quer um café.",
+          "certa": true,
+          "porque": "{{כֵּן, קָפֶה}}: sim, um café."
+        },
+        {
+          "t": "escolha",
+          "q": "Quanto custa?",
+          "opcoes": [
+            "Dez shekels",
+            "Vinte shekels",
+            "Quatro shekels"
+          ],
+          "certa": 1,
+          "porque": "{{עֶשְׂרִים שֶׁקֶל}}: vinte shekels."
+        }
+      ]
+    },
+    {
+      "modulo": 6,
+      "n": 2,
+      "tituloPt": "O bilhete da mãe",
+      "tipoPt": "Bilhete",
+      "revisado": true,
+      "semPontos": true,
+      "introPt": "O Dani chega em casa e encontra um bilhete da mãe.",
+      "linhas": [
+        {
+          "he": "לְדָנִי,",
+          "translit": "ledáni,",
+          "pt": "Para o Dani,"
+        },
+        {
+          "he": "יֵשׁ לֶחֶם וּגְבִינָה עַל הַשׁוּלְחָן.",
+          "translit": "yesh léchem ugviná al hashulchán.",
+          "pt": "Tem pão e queijo na mesa."
+        },
+        {
+          "he": "הַמִיץ בַּמְקָרֵר.",
+          "translit": "hamíts bamekarér.",
+          "pt": "O suco está na geladeira."
+        },
+        {
+          "he": "אֲנִי בַּעֲבוֹדָה עַד אַרְבַּע.",
+          "translit": "aní baavodá ad árba.",
+          "pt": "Estou no trabalho até as quatro."
+        },
+        {
+          "he": "אוֹהֶבֶת, אִמָא",
+          "translit": "ohévet, íma",
+          "pt": "Com amor, mãe"
+        }
+      ],
+      "novas": [
+        {
+          "he": "לְ־",
+          "translit": "le-",
+          "pt": "para (grudado na palavra)"
+        },
+        {
+          "he": "וּ־",
+          "translit": "u-",
+          "pt": "e (grudado na palavra)"
+        },
+        {
+          "he": "גְבִינָה",
+          "translit": "gviná",
+          "pt": "queijo"
+        },
+        {
+          "he": "הַ־",
+          "translit": "ha-",
+          "pt": "o, a (grudado na palavra)"
+        },
+        {
+          "he": "שׁוּלְחָן",
+          "translit": "shulchán",
+          "pt": "mesa"
+        },
+        {
+          "he": "בַּ־",
+          "translit": "ba-",
+          "pt": "no, na (grudado na palavra)"
+        },
+        {
+          "he": "מְקָרֵר",
+          "translit": "mekarér",
+          "pt": "geladeira"
+        },
+        {
+          "he": "עֲבוֹדָה",
+          "translit": "avodá",
+          "pt": "trabalho"
+        },
+        {
+          "he": "עַד",
+          "translit": "ad",
+          "pt": "até"
+        },
+        {
+          "he": "אוֹהֶבֶת",
+          "translit": "ohévet",
+          "pt": "ama (ela ama); no fim do bilhete, com amor"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Onde está o suco?",
+          "opcoes": [
+            "Na mesa",
+            "Na geladeira",
+            "Na mochila"
+          ],
+          "certa": 1,
+          "porque": "{{הַמִיץ בַּמְקָרֵר}}: o suco está na geladeira."
+        },
+        {
+          "t": "vf",
+          "q": "Tem pão na mesa.",
+          "certa": true,
+          "porque": "{{יֵשׁ לֶחֶם}}: tem pão."
+        },
+        {
+          "t": "escolha",
+          "q": "Até que horas a mãe trabalha?",
+          "opcoes": [
+            "Até as quatro",
+            "Até as cinco",
+            "Até o meio-dia"
+          ],
+          "certa": 0,
+          "porque": "{{עַד אַרְבַּע}}: até as quatro."
+        }
+      ]
+    },
+    {
+      "modulo": 7,
+      "n": 2,
+      "tituloPt": "A girafa",
+      "tipoPt": "Conversa",
+      "revisado": true,
+      "introPt": "O Dani e o pai passeiam no zoológico.",
+      "linhas": [
+        {
+          "quem": "Dani",
+          "he": "אַבָּא, תִרְאֶה! ג׳ירפה!",
+          "translit": "ába, tir'é! jiráfa!",
+          "pt": "Pai, olha! Uma girafa!"
+        },
+        {
+          "quem": "Pai",
+          "he": "כֵּן. הִיא גְדוֹלָה מְאוֹד.",
+          "translit": "ken. hi gdolá meód.",
+          "pt": "É. Ela é muito grande."
+        },
+        {
+          "quem": "Dani",
+          "he": "מָה הִיא אוֹכֶלֶת?",
+          "translit": "ma hi ochélet?",
+          "pt": "O que ela come?"
+        },
+        {
+          "quem": "Pai",
+          "he": "עָלִים מֵהָעֵץ.",
+          "translit": "alím meha'éts.",
+          "pt": "Folhas da árvore."
+        },
+        {
+          "quem": "Dani",
+          "he": "גַם אֲנִי רוֹצֶה לֶאֱכוֹל!",
+          "translit": "gam aní rotsé le'echól!",
+          "pt": "Eu também quero comer!"
+        },
+        {
+          "quem": "Pai",
+          "he": "יֵשׁ פִּתָה בַּתִיק.",
+          "translit": "yesh píta batík.",
+          "pt": "Tem pão sírio na mochila."
+        }
+      ],
+      "novas": [
+        {
+          "he": "תִרְאֶה",
+          "translit": "tir'é",
+          "pt": "olha! (para homem)"
+        },
+        {
+          "he": "גְדוֹלָה",
+          "translit": "gdolá",
+          "pt": "grande (para feminino)"
+        },
+        {
+          "he": "אוֹכֶלֶת",
+          "translit": "ochélet",
+          "pt": "come (ela come)"
+        },
+        {
+          "he": "עָלִים",
+          "translit": "alím",
+          "pt": "folhas"
+        },
+        {
+          "he": "מֵהָ־",
+          "translit": "meha-",
+          "pt": "de o, da (grudado na palavra)"
+        },
+        {
+          "he": "לֶאֱכוֹל",
+          "translit": "le'echól",
+          "pt": "comer"
+        },
+        {
+          "he": "בַּ־",
+          "translit": "ba-",
+          "pt": "no, na (grudado na palavra)"
+        }
+      ],
+      "perguntas": [
+        {
+          "t": "escolha",
+          "q": "Que animal o Dani vê?",
+          "opcoes": [
+            "Uma girafa",
+            "Um cavalo",
+            "Um cachorro"
+          ],
+          "certa": 0,
+          "porque": "{{ג׳ירפה}}: girafa."
+        },
+        {
+          "t": "vf",
+          "q": "A girafa é pequena.",
+          "certa": false,
+          "porque": "{{הִיא גְדוֹלָה מְאוֹד}}: ela é muito grande."
+        },
+        {
+          "t": "escolha",
+          "q": "O que a girafa come?",
+          "opcoes": [
+            "Folhas",
+            "Pão sírio",
+            "Sorvete"
+          ],
+          "certa": 0,
+          "porque": "{{עָלִים מֵהָעֵץ}}: folhas da árvore."
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,11 @@
  *   · the storage KEY never changes. It is how we find the old save at all.
  */
 
+import { a1Valido } from './a1-estado';
+import { raizesValido } from './raizes-estado';
 import { EMPTY_STATE, STATE_VERSION, type LearnerState } from './types';
+import { fundirRodadas, type Rodadas } from '@/lib/rodadas';
+import { comprasValidas } from '@/lib/loja';
 
 /** v1: everything before per-skill mastery. */
 type V1 = Omit<LearnerState, 'version' | 'skills' | 'confusions' | 'firsts' | 'gym'> & { version: 1 };
@@ -81,6 +85,17 @@ export function migrate(raw: unknown): LearnerState {
     /* Os dois de 23/09/2026, pelo mesmo motivo do `gym`. */
     nomeHebraico: merged.nomeHebraico ?? null,
     kinds: merged.kinds ?? {},
+    /* 27/09/2026, pelo mesmo motivo. Passa pela fusão consigo mesmo, que
+       descarta registro malformado: isto vem do servidor ou do navegador, e
+       quem escolhe as perguntas confia na forma. */
+    rodadas: isObject(merged.rodadas) ? fundirRodadas(merged.rodadas as Rodadas, {}) : {},
+    /* As trocas de XP (27/09/2026). Só as que têm a forma certa: é dinheiro
+       de faz de conta, mas um custo que não é número viraria saldo infinito. */
+    loja: { compras: comprasValidas(isObject(merged.loja) ? (merged.loja as { compras?: unknown }).compras : null) },
+    /* O A1 (06/10/2026): só com a forma certa (lib/state/a1-estado.ts). */
+    a1: a1Valido((merged as { a1?: unknown }).a1),
+    /* Raízes Sefarditas (21/10/2026): só com a forma certa, e só se existir. */
+    raizes: raizesValido((merged as { raizes?: unknown }).raizes),
     streak: merged.streak ?? { current: 0, longest: 0, lastDay: null },
     finalChallenge: merged.finalChallenge ?? { best: null, completedAt: null }
   };

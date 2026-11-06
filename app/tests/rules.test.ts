@@ -3,7 +3,7 @@
 
 import { describe, expect, it } from 'vitest';
 import {
-  addDays, applyPractice, ACHIEVEMENTS, awardXp, completeStage, courseProgress,
+  addDays, applyPractice, concluirRevisao, ACHIEVEMENTS, awardXp, completeStage, courseProgress,
   daysBetween, displayStreak, dueItems, goalTarget, lettersMastered, PASS_MARK,
   recordAnswer, recordCheckpoint, recordQuiz, STAGE_COUNT, STAGE_UNITS,
   alphabetComplete, isLessonComplete, isLessonMastered, MASTERY_MARK,
@@ -267,5 +267,34 @@ describe('concluir e dominar são coisas diferentes', () => {
     expect(alphabetComplete(s, ids)).toBe(false);
     for (const id of ids) s = recordQuiz(s, id, 1, '2026-01-05');
     expect(alphabetComplete(s, ids)).toBe(true);
+  });
+});
+
+describe('concluirRevisao', () => {
+  // Dois itens errados na lição, um de mem e um de shin, ambos para hoje.
+  const pendente = () => {
+    let s = recordAnswer(base(), 'mem-rec-0', 'mem', false, '2026-01-05');
+    s = recordAnswer(s, 'shin-rec-0', 'shin', false, '2026-01-05');
+    return s;
+  };
+  const hoje = '2026-01-06';
+
+  it('a revisão sem erros tira da fila de hoje as letras revisadas', () => {
+    const s = concluirRevisao(pendente(), hoje, { mem: { erros: 0 }, shin: { erros: 0 } });
+    expect(dueItems(s, hoje)).toEqual([]);
+    expect(s.srs['mem-rec-0']?.box).toBe(1);
+  });
+
+  it('um erro consertado também fecha o dia, e o item volta amanhã', () => {
+    const s = concluirRevisao(pendente(), hoje, { mem: { erros: 1 }, shin: { erros: 0 } });
+    expect(dueItems(s, hoje)).toEqual([]);
+    expect(s.srs['mem-rec-0']?.dueOn).toBe(addDays(hoje, 1));
+    expect(s.srs['mem-rec-0']?.box).toBe(0);
+    expect(dueItems(s, addDays(hoje, 1)).map(i => i.itemId)).toEqual(['mem-rec-0']);
+  });
+
+  it('letra que não entrou na rodada continua para hoje', () => {
+    const s = concluirRevisao(pendente(), hoje, { mem: { erros: 0 } });
+    expect(dueItems(s, hoje).map(i => i.itemId)).toEqual(['shin-rec-0']);
   });
 });

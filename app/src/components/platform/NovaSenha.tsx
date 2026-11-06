@@ -29,6 +29,7 @@ import { Button, LinkButton } from '@/components/ui/Button';
 import { Campo, Erro } from '@/components/platform/Campo';
 import { useAccount } from '@/lib/account/store';
 import { AuthError, MESSAGES, MIN_PASSWORD, passwordOk } from '@/lib/account/types';
+import { tx } from '@/i18n/telas/conta-nova-senha';
 
 export function NovaSenha() {
   const account = useAccount();
@@ -46,7 +47,7 @@ export function NovaSenha() {
     setError(null);
 
     if (!passwordOk(password)) { setError(MESSAGES['weak-password']); return; }
-    if (password !== repeat) { setError('As duas senhas não são iguais.'); return; }
+    if (password !== repeat) { setError(tx.senhasDiferentes); return; }
 
     setBusy(true);
     try {
@@ -63,12 +64,12 @@ export function NovaSenha() {
       <header className="grid gap-3 justify-items-center text-center">
         <He size="lg" dim>ע</He>
         <h1 className="font-display text-[27px] sm:text-[31px] font-bold leading-tight text-ink">
-          Escolher uma senha nova
+          {tx.titulo}
         </h1>
         <p className="font-ui text-[14.5px] leading-relaxed text-ink-muted max-w-[38ch]">
           {token
-            ? 'Depois disso você já entra direto - não precisa fazer login de novo.'
-            : 'Este endereço só funciona com o link que mandamos por e-mail.'}
+            ? tx.entraDireto
+            : tx.soComLink}
         </p>
       </header>
 
@@ -76,38 +77,37 @@ export function NovaSenha() {
         {token ? (
           <form onSubmit={submit} className="grid gap-4" noValidate>
             <Campo
-              id="senha" label="Senha nova" value={password} onChange={setPassword}
+              id="senha" label={tx.senhaNova} value={password} onChange={setPassword}
               type="password" autoComplete="new-password" required autoFocus
-              hint={`Pelo menos ${MIN_PASSWORD} caracteres.`}
+              hint={tx.peloMenos(MIN_PASSWORD)}
             />
             <Campo
-              id="senha2" label="Repita a senha" value={repeat} onChange={setRepeat}
+              id="senha2" label={tx.repitaSenha} value={repeat} onChange={setRepeat}
               type="password" autoComplete="new-password" required
             />
 
             {error && <Erro>{error}</Erro>}
 
             <Button type="submit" size="lg" full disabled={busy}>
-              {busy ? 'Salvando…' : 'Salvar e entrar'}
+              {busy ? tx.salvando : tx.salvarEEntrar}
             </Button>
           </form>
         ) : (
           <div className="grid gap-3">
             <p className="font-ui text-[14.5px] leading-relaxed text-ink-body">
-              Faltou o link. Peça um novo - eles duram uma hora e funcionam uma
-              vez só, então é normal precisar de outro.
+              {tx.faltouLink}
             </p>
             <LinkButton href="/esqueci-senha" size="lg" full>
-              Pedir um link novo
+              {tx.pedirLinkNovo}
             </LinkButton>
           </div>
         )}
       </Card>
 
       <p className="font-ui text-[14px] text-center text-ink-muted">
-        Lembrou a senha?{' '}
+        {tx.lembrouSenha}{' '}
         <Link href="/entrar" className="text-[var(--accent)] font-medium hover:underline">
-          Entrar
+          {tx.entrar}
         </Link>
       </p>
     </div>

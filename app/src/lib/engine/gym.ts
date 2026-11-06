@@ -22,7 +22,7 @@ import { letterMastery, topConfusions, weakLetters } from '@/lib/state/rules';
 import {
   exAudioWord, exBuildSyllable, exBuildWord, exCompleteWord, exFinalForm,
   exLetterRecognition, exListenSyllable, exMatchLetterSound, exMatchSyllable,
-  exMatchWordMeaning, exMeaningToWord, exOddOneOut, exPrintVsCursive,
+  exImageToWord, exMatchWordMeaning, exMeaningToWord, exOddOneOut, exPrintVsCursive,
   exSoundToSyllable, exSyllableReading, exTypeHeard, exTypeTranslit, exVowelSound,
   type Gen
 } from './generators';
@@ -32,11 +32,13 @@ import {
   palavrasAcumuladas, type ModoCursiva, type PalavraDoCurso
 } from './palavras';
 import { rng, shuffled, type Rand } from './rng';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-gym';
 
 export type GymModeId =
   | 'letras' | 'vogais' | 'silabas' | 'palavras' | 'ouvir'
   | 'parecidas' | 'relogio' | 'revisao'
-  | 'construir' | 'palavras-cursiva' | 'digitar';
+  | 'construir' | 'palavras-cursiva' | 'digitar' | 'fotos';
 
 export type GymMode = {
   id: GymModeId;
@@ -70,7 +72,8 @@ const GENS: Record<GymModeId, readonly Gen[]> = {
      de cada item sai do vocabulário ACUMULADO (ver `rodadaDePalavras`). */
   construir: [],
   'palavras-cursiva': [],
-  digitar: []
+  digitar: [],
+  fotos: []           // ver `rodadaDeFotos`
 };
 
 /* Kept out of the list above only because the import would shadow the name. */
@@ -83,58 +86,63 @@ function exWordLike(): Gen {
 
 export const GYM_MODES: GymMode[] = [
   {
-    id: 'revisao', titlePt: 'Revisão personalizada', icon: '↻',
-    descPt: 'O que você errou, no dia certo de rever.',
+    id: 'revisao', titlePt: tx.revisaoTitulo, icon: '↻',
+    descPt: tx.revisaoDesc,
     skills: ['rec', 'som', 'ler'], count: 8
   },
   {
-    id: 'letras', titlePt: 'Letras', icon: 'א',
-    descPt: 'Reconhecer a forma, rápido, fora de ordem.',
+    id: 'letras', titlePt: tx.letrasTitulo, icon: 'א',
+    descPt: tx.letrasDesc,
     skills: ['rec'], count: 10
   },
   {
-    id: 'vogais', titlePt: 'Vogais', icon: 'ָ',
-    descPt: 'Os sinais: que som fazem e onde ficam.',
+    id: 'vogais', titlePt: tx.vogaisTitulo, icon: 'ָ',
+    descPt: tx.vogaisDesc,
     skills: ['som'], count: 10
   },
   {
-    id: 'silabas', titlePt: 'Sílabas', icon: 'מַ',
-    descPt: 'Consoante mais vogal - a operação da leitura.',
+    id: 'silabas', titlePt: tx.silabasTitulo, icon: 'מַ',
+    descPt: tx.silabasDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'palavras', titlePt: 'Palavras', icon: '◉',
-    descPt: 'Ler palavras inteiras, montar, escrever.',
+    id: 'palavras', titlePt: tx.palavrasTitulo, icon: '◉',
+    descPt: tx.palavrasDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'ouvir', titlePt: 'Ouvir e escolher', icon: '♪',
-    descPt: 'Só o som, sem ver antes.',
-    skills: ['ouvir'], needsAudio: true, count: 10
-  },
-  {
-    id: 'parecidas', titlePt: 'Letras parecidas', icon: '◫',
-    descPt: 'As que você está trocando, lado a lado.',
-    skills: ['rec'], count: 8
-  },
-  {
-    id: 'construir', titlePt: 'Construir palavras', icon: '⌂',
-    descPt: 'O som na tela, as letras na mesa: monte a palavra, da direita para a esquerda.',
+    id: 'fotos', titlePt: tx.fotosTitulo, icon: '▣',
+    descPt: tx.fotosDesc,
     skills: ['ler'], count: 8
   },
   {
-    id: 'palavras-cursiva', titlePt: 'Palavras à mão', icon: '✎',
-    descPt: 'Palavras inteiras em cursiva: reconhecer, entender e montar.',
+    id: 'ouvir', titlePt: tx.ouvirTitulo, icon: '♪',
+    descPt: tx.ouvirDesc,
+    skills: ['ouvir'], needsAudio: true, count: 10
+  },
+  {
+    id: 'parecidas', titlePt: tx.parecidasTitulo, icon: '◫',
+    descPt: tx.parecidasDesc,
+    skills: ['rec'], count: 8
+  },
+  {
+    id: 'construir', titlePt: tx.construirTitulo, icon: '⌂',
+    descPt: tx.construirDesc,
+    skills: ['ler'], count: 8
+  },
+  {
+    id: 'palavras-cursiva', titlePt: tx.cursivaTitulo, icon: '✎',
+    descPt: tx.cursivaDesc,
     skills: ['ler'], count: 10
   },
   {
-    id: 'digitar', titlePt: 'Digitar em hebraico', icon: '⌨',
-    descPt: 'Escreva palavras no teclado hebraico do seu aparelho.',
+    id: 'digitar', titlePt: tx.digitarTitulo, icon: '⌨',
+    descPt: tx.digitarDesc,
     skills: ['escrever'], needsKeyboard: true, count: 8
   },
   {
-    id: 'relogio', titlePt: 'Contra o relógio', icon: '◷',
-    descPt: 'O mesmo que você já sabe, mais rápido que da última vez.',
+    id: 'relogio', titlePt: tx.relogioTitulo, icon: '◷',
+    descPt: tx.relogioDesc,
     skills: ['rec', 'ler'], timed: true, count: 12
   }
 ];
@@ -148,28 +156,31 @@ export function availableModes(
 ): { mode: GymMode; ready: boolean; whyNot?: string }[] {
   return GYM_MODES.map(mode => {
     if (mode.needsAudio && !audioAvailable) {
-      return { mode, ready: false, whyNot: 'Esperando as gravações.' };
+      return { mode, ready: false, whyNot: tx.esperandoGravacoes };
     }
     if (!unlocked.length) {
-      return { mode, ready: false, whyNot: 'Faça a primeira lição.' };
+      return { mode, ready: false, whyNot: tx.primeiraLicao };
     }
     if (mode.id === 'revisao' && !weakLetters(state, day, 5).length) {
-      return { mode, ready: false, whyNot: 'Nada pendente - você está em dia.' };
+      return { mode, ready: false, whyNot: tx.emDia };
     }
     if (mode.id === 'parecidas' && !confusionPair(state, unlocked)) {
-      return { mode, ready: false, whyNot: 'Nenhuma troca registrada ainda.' };
+      return { mode, ready: false, whyNot: tx.semTroca };
+    }
+    if (mode.id === 'fotos' && fotosDisponiveis(unlocked).length < 3) {
+      return { mode, ready: false, whyNot: tx.semFotos };
     }
     if (mode.id === 'palavras' && !unlocked.some(l => l.wordsToRead.length)) {
-      return { mode, ready: false, whyNot: 'Ainda não há palavras para ler.' };
+      return { mode, ready: false, whyNot: tx.semPalavras };
     }
     /* Montar, ver à mão e digitar pedem uma palavra cujas letras TODAS o
        aluno já tem - inclusive o ו que numa leitura seria só vogal. */
     if (MODOS_DE_PALAVRA.has(mode.id)) {
       if (!palavrasAcumuladas(unlocked).length) {
-        return { mode, ready: false, whyNot: 'Chega com a primeira palavra, na lição do Mem.' };
+        return { mode, ready: false, whyNot: tx.chegaComMem };
       }
       if (mode.id === 'palavras-cursiva' && unlocked.length < 3) {
-        return { mode, ready: false, whyNot: 'Chega na lição do Tav.' };
+        return { mode, ready: false, whyNot: tx.chegaComTav };
       }
     }
     return { mode, ready: true };
@@ -222,7 +233,7 @@ export function buildGym(
     const weak = weakLetters(state, day, 5);
     return {
       exercises: buildReview(weak, letters, { audioAvailable, count: mode.count, seed }),
-      label: weak.length ? 'Tirado dos seus erros' : 'As letras mais recentes'
+      label: weak.length ? tx.dosErros : tx.maisRecentes
     };
   }
 
@@ -233,14 +244,20 @@ export function buildGym(
       exercises: buildConfusionDrill(pair[0], pair[1], {
         audioAvailable, count: mode.count, seed, history: letters
       }),
-      label: `${pair[0].namePt} e ${pair[1].namePt}`
+      label: fmt(tx.par, { a: pair[0].namePt, b: pair[1].namePt })
     };
+  }
+
+  if (mode.id === 'fotos') {
+    const exercises = rodadaDeFotos(mode, state, letters, rng(seed));
+    const n = fotosDisponiveis(letters).length;
+    return { exercises, label: tx.fotosRotulo(n) };
   }
 
   if (MODOS_DE_PALAVRA.has(mode.id)) {
     const exercises = rodadaDePalavras(mode, state, letters, rng(seed));
     const n = palavrasAcumuladas(letters).length;
-    return { exercises, label: `Das ${n} palavras que você já acumulou` };
+    return { exercises, label: fmt(tx.acumuladas, { n }) };
   }
 
   /* Everything else: aim at the letters this learner is weakest on, then fill
@@ -258,7 +275,7 @@ export function buildGym(
     exercises: buildFromGens(ranked, letters, GENS[mode.id], {
       audioAvailable, count: mode.count, seed
     }),
-    label: ranked.length > 6 ? 'Começando pelo que está mais fraco' : ''
+    label: ranked.length > 6 ? tx.maisFraco : ''
   };
 }
 
@@ -393,4 +410,44 @@ function escolherPalavras(
     if (!escolha.includes(w)) escolha.push(w);
   }
   return shuffled(escolha.slice(0, quantas), rand);
+}
+
+/* ── foto e palavra ───────────────────────────────────────────────────── */
+
+/** As palavras com foto que o aluno já lê: as `wordsToRead` das letras que ele
+ *  tem, uma vez cada. São as mesmas do exercício da lição (`exImageToWord`). */
+export function fotosDisponiveis(letters: readonly Letter[]): { L: Letter; i: number }[] {
+  const visto = new Set<string>();
+  const out: { L: Letter; i: number }[] = [];
+  for (const L of [...letters].sort((a, b) => a.order - b.order)) {
+    L.wordsToRead.filter(w => !!w.image).forEach((w, i) => {
+      if (visto.has(w.he)) return;
+      visto.add(w.he);
+      out.push({ L, i });
+    });
+  }
+  return out;
+}
+
+/**
+ * Uma rodada de "Foto e palavra" (28/10/2026, pedido do dono): a foto do
+ * vocabulário e quatro palavras para escolher. Cada item é o próprio
+ * `exImageToWord` da lição, mas as alternativas saem de TODAS as palavras que
+ * o aluno já lê (o contexto da letra mais recente), e as fotos giram em
+ * rodízio pelas rodadas, como nos modos de palavra.
+ */
+function rodadaDeFotos(mode: GymMode, state: LearnerState, letters: Letter[], rand: Rand): Exercise[] {
+  const ordenadas = [...letters].sort((a, b) => a.order - b.order);
+  const atual = ordenadas[ordenadas.length - 1];
+  if (!atual) return [];
+  const ctx = contextFor(atual, ordenadas);
+  const fixa = shuffled(fotosDisponiveis(ordenadas), rng(`fotos-${atual.order}`));
+  if (!fixa.length) return [];
+  const volta = state.gym[mode.id]?.runs ?? 0;
+  const inicio = (volta * mode.count) % fixa.length;
+  const janela = [...fixa.slice(inicio), ...fixa.slice(0, inicio)].slice(0, mode.count);
+  return shuffled(janela, rand).flatMap(({ L, i }) => {
+    const ex = exImageToWord(L, ctx, rand, i);
+    return ex ? [ex] : [];
+  });
 }

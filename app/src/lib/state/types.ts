@@ -1,10 +1,16 @@
 /* The learner's state. One shape, two adapters (localStorage now, Supabase
  * when there are keys), so nothing above this line knows where it is stored. */
 
+import type { Caderno } from '@/lib/caderno';
+import { A1_VAZIO, type EstadoA1 } from './a1-estado';
+import type { EstadoRaizes } from './raizes-estado';
+import type { Rodadas } from '@/lib/rodadas';
+import { tx } from '@/i18n/telas/motor-pequenos';
+
 export type DailyGoalMinutes = 5 | 10 | 15 | 20;
 
 export type Onboarding = {
-  reason: 'viagem' | 'familia' | 'morar' | 'idiomas' | 'trabalho' | 'outro';
+  reason: 'viagem' | 'familia' | 'morar' | 'biblia' | 'idiomas' | 'trabalho' | 'outro';
   goalMinutes: DailyGoalMinutes;
   startingPoint: 'zero' | 'algumas-letras' | 'leio-um-pouco';
   name?: string;
@@ -61,11 +67,11 @@ export type Skill = 'rec' | 'som' | 'ler' | 'ouvir' | 'escrever';
 export const SKILLS: readonly Skill[] = ['rec', 'som', 'ler', 'ouvir', 'escrever'];
 
 export const SKILL_LABEL: Record<Skill, string> = {
-  rec: 'Reconhecimento',
-  som: 'Som',
-  ler: 'Leitura',
-  ouvir: 'Audição',
-  escrever: 'Escrita'
+  rec: tx.skillRec,
+  som: tx.skillSom,
+  ler: tx.skillLer,
+  ouvir: tx.skillOuvir,
+  escrever: tx.skillEscrever
 };
 
 export type SkillStat = {
@@ -75,6 +81,23 @@ export type SkillStat = {
    *  that something was relearned rather than merely met often. */
   streak: number;
   lastOn: string | null;         // YYYY-MM-DD
+  /** Em quantos dias diferentes houve pelo menos um acerto (11/10/2026).
+   *  É o "ao longo do tempo" do domínio (lib/dominio.ts): quatro acertos
+   *  seguidos numa tarde só não provam que a letra ficou. Ausente nos
+   *  registros de antes dessa data, e aí o critério de dias não se aplica:
+   *  ninguém perde o nível que já tinha por causa de um campo novo. */
+  diasDeAcerto?: number;
+  /** O dia do último acerto, para contar `diasDeAcerto` uma vez por dia. */
+  ultimoAcerto?: string | null;
+};
+
+export type LeituraAutoavaliada = {
+  /** Palavras que ele tentou ler (respondeu a pergunta). */
+  tentadas: number;
+  /** Destas, quantas ele marcou como lidas corretamente. */
+  consegui: number;
+  /** YYYY-MM-DD da última. */
+  ultima: string;
 };
 
 /** What the learner knows about one letter, per skill. Sparse: a skill with no
@@ -115,6 +138,8 @@ export type DayRecord = {
   units: number;
   xp: number;
   goalMet: boolean;
+  /** XP pago por acertos neste dia, para o teto (`XP_ACERTOS_POR_DIA`). */
+  xpAcertos?: number;
 };
 
 /** The current shape. Bump this and add a step to `migrate()` - never both
@@ -185,6 +210,69 @@ export type LearnerState = {
    * precisa para mostrar erro por exercício sem guardar resposta a resposta.
    */
   kinds: Record<string, { h: number; m: number }>;
+
+  /* ── acrescentado à v2 em 27/09/2026 ─────────────────────────────── */
+
+  /**
+   * As rodadas de cada categoria de exercício: quantas o aluno concluiu e a
+   * "impressão" das perguntas que já viu (lib/rodadas.ts). Estava só no
+   * navegador; aqui ela vai para a conta, e refazer um exercício em outro
+   * aparelho também traz perguntas novas.
+   */
+  rodadas: Rodadas;
+
+  /* ── acrescentado à v2 em 27/09/2026 ─────────────────────────────── */
+
+  /**
+   * As trocas de XP (lib/loja.ts). O XP TOTAL (`xp`) é a conquista e nunca
+   * diminui; o que se pode gastar é o SALDO, `xp` menos a soma do que está
+   * aqui. Por isso gastar não apaga esforço nenhum.
+   */
+  loja: { compras: Record<string, Compra> };
+
+  /* ── acrescentado à v2 em 06/10/2026 ─────────────────────────────── */
+
+  /** O curso Hebraico A1: gênero dos exercícios, unidades e exame
+   *  (lib/state/a1-estado.ts). Chave própria, para não misturar com as letras. */
+  a1: EstadoA1;
+
+  /* ── acrescentado à v2 em 12/10/2026 ─────────────────────────────── */
+
+  /**
+   * O que o aluno DISSE da própria leitura no Laboratório de Leitura e na
+   * Primeira Leitura ("Sim, consegui!" / "Ainda preciso praticar"), por
+   * atividade. É autoavaliação: fica separada de propósito e NÃO entra em
+   * `skills`, no domínio das letras nem na revisão - só um exercício
+   * corrigido pelo curso mede. Opcional: estados antigos não o têm.
+   */
+  leituraAutoavaliada?: Record<string, LeituraAutoavaliada>;
+
+  /* ── acrescentado à v2 em 21/10/2026 ─────────────────────────────── */
+
+  /**
+   * Raízes Sefarditas: atividades, etapas abertas e onde o aluno parou
+   * (lib/state/raizes-estado.ts). Opcional: só existe para quem abriu o
+   * produto, e nada do curso de hebraico lê esta chave.
+   */
+  raizes?: EstadoRaizes;
+  /**
+   * Meu caderno de palavras (lib/caderno.ts): as palavras que o aluno marcou
+   * para rever, com a data em que entraram e a em que saíram. Opcional:
+   * estados antigos não o têm.
+   */
+  caderno?: Caderno;
+};
+
+/** Uma troca de XP. O id é único por compra (`folga:<instante>`, `carta:<id>`). */
+export type Compra = {
+  item: string;
+  custo: number;
+  /** ISO, quando foi comprada. */
+  em: string;
+  /** O que ela abriu, quando é um item com alvo (o id da carta). */
+  alvo?: string;
+  /** Só nas folgas: o dia que ela cobriu, quando já foi usada. */
+  usadaEm?: string | null;
 };
 
 /**
@@ -228,7 +316,10 @@ export const EMPTY_STATE: LearnerState = {
   firsts: {},
   gym: {},
   nomeHebraico: null,
-  kinds: {}
+  kinds: {},
+  rodadas: {},
+  loja: { compras: {} },
+  a1: A1_VAZIO
 };
 
 export interface ProgressStore {

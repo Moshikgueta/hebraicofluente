@@ -48,10 +48,10 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { OUT } from './saida.mjs';
 
-const OUT = 'out';
 if (!existsSync(OUT)) {
-  console.error('out/ não existe. Rode a build antes:  npm run build && node promessas.mjs');
+  console.error(`${OUT}/ não existe.`.slice(0) + ' Rode a build antes:  npm run build && node promessas.mjs');
   process.exit(1);
 }
 
@@ -71,7 +71,11 @@ const PROMESSAS = [
   'Reproduzir áudio',
   'Qual som você ouviu',
   'escuta e leitura',
-  'Cinco tipos de exercício'
+  'Cinco tipos de exercício',
+  /* O site em inglês: as mesmas promessas, no texto de lá. */
+  'recorded by the teacher',
+  'recorded by a native',
+  'Hear the teacher'
 ];
 
 /* As rotas pagas não entram: o HTML delas só sai para quem já comprou, e não
@@ -106,8 +110,119 @@ console.log(`gravações: ${TEM_AUDIO ? 'existem' : 'NENHUMA'} · `
   + `páginas livres conferidas: ${paginas.length}`);
 console.log('─'.repeat(66));
 
+/* ── marcação crua na vitrine ─────────────────────────────────────────────
+   Os textos de data/*.json marcam hebraico como {{...}}, e só o componente
+   <Prose> transforma isso em texto. A página do curso mostrou `{{בּ}} ·
+   {{כּ}} · {{פּ}}` para quem ia comprar porque renderizava a string crua
+   (auditoria de 28/09/2026, UX-001). Conta só o texto VISÍVEL: dentro dos
+   <script> de dados da página as chaves são normais. */
+const cruas = [];
+for (const p of paginas.filter(p => p.endsWith('.html'))) {
+  let html;
+  try { html = readFileSync(p, 'utf8'); } catch { continue; }
+  const visivel = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
+  const m = visivel.match(/\{\{[^}]{0,40}\}\}/);
+  if (m) cruas.push({ onde: rotaDe(p), trecho: m[0] });
+}
+if (cruas.length) {
+  console.error(`\n✗ ${cruas.length} página(s) livre(s) mostram marcação crua de hebraico:\n`);
+  for (const c of cruas) console.error(`   ${c.onde.padEnd(46)} ${c.trecho}`);
+  console.error('\nUse <Prose text={...} /> (components/hebrew/Prose.tsx) em vez da string.');
+  console.error('─'.repeat(66));
+  process.exit(1);
+}
+console.log('✓ nenhuma página livre mostra {{...}} cru.');
+
+/* ── a ordem das letras é do método, não do professor ────────────────────
+   Decisão do dono (01/10/2026): a ordem em que as letras entram vem do
+   método do Dr. Damián; são adaptação do Moshik os exercícios, as
+   explicações para quem fala português e a cursiva. A única frase sobre a
+   ordem mora em lib/credito.ts (`adaptacoesPt`). Em 01/10 /sobre dizia, ao
+   lado dela, que "a sequência em que as letras entram" foi organizada pelo
+   Moshik (auditoria, CONV-004). Duas cercas:
+     · na FONTE (app/src e data/, sem comentários), nenhuma string fala em
+       "sequência/ordem das letras" fora de lib/credito.ts;
+     · no HTML publicado, toda frase visível que fala da ordem das letras
+       atribui ao método ("vem do método"). */
+const ORDEM = /(sequ[eê]ncia|ordem)\s+(das|em que as)\s+letras/i;
+/* No HTML do site em inglês, a mesma frase em inglês, atribuída ao método. */
+const ORDEM_HTML = /(sequ[eê]ncia|ordem)\s+(das|em que as)\s+letras|(sequence|order)\s+(of the|in which the)\s+letters/i;
+const DO_METODO = /vem do método|comes from (his|the) method/i;
+const semComentarios = s => s
+  .replace(/\/\*[\s\S]*?\*\//g, ' ')
+  .replace(/(^|[^:'"`])\/\/.*$/gm, '$1');
+const fontes = [
+  ...arquivos(new URL('./src', import.meta.url).pathname).filter(p => /\.(tsx?|mjs)$/.test(p)),
+  ...arquivos(new URL('../data', import.meta.url).pathname).filter(p => p.endsWith('.json'))
+].filter(p => !p.endsWith('/lib/credito.ts') && !p.endsWith('/i18n/telas/motor-credito.ts'));
+const ordemNaFonte = [];
+for (const p of fontes) {
+  let s = readFileSync(p, 'utf8');
+  if (p.endsWith('.json')) {
+    /* Nos JSON, as chaves "_", "note" e "notes" são notas internas do
+       arquivo: não vão à tela. */
+    const NOTAS = new Set(['_', 'note', 'notes', 'nota', 'notaInterna']);
+    try {
+      s = JSON.stringify(JSON.parse(s), (k, v) => (NOTAS.has(k) ? undefined : v));
+    } catch { /* fica cru */ }
+  } else s = semComentarios(s);
+  const m = s.match(ORDEM);
+  if (m) ordemNaFonte.push(`${relative(new URL('..', import.meta.url).pathname, p)}: "${m[0]}"`);
+}
+const ordemNoHtml = [];
+for (const p of paginas.filter(p => p.endsWith('.html'))) {
+  let html;
+  try { html = readFileSync(p, 'utf8'); } catch { continue; }
+  const visivel = html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  for (const frase of visivel.split(/(?<=[.!?])\s+/)) {
+    if (ORDEM_HTML.test(frase) && !DO_METODO.test(frase)) {
+      ordemNoHtml.push(`${rotaDe(p)}: "${frase.trim().slice(0, 120)}"`);
+    }
+  }
+}
+if (ordemNaFonte.length || ordemNoHtml.length) {
+  console.error('\n✗ a ordem das letras aparece fora de lib/credito.ts, ou atribuída a outro que não o método:\n');
+  for (const x of [...ordemNaFonte, ...ordemNoHtml]) console.error(`   ${x}`);
+  console.error('\nA ordem das letras vem do método do Dr. Damián (decisão do dono, 01/10/2026).');
+  console.error('Use METODO_ORIGINAL.adaptacoesPt (lib/credito.ts) e nada mais.');
+  console.error('─'.repeat(66));
+  process.exit(1);
+}
+console.log('✓ a ordem das letras só aparece como do método (lib/credito.ts).');
+
+/* ── o contrário: com gravação, nenhuma página pode NEGÁ-LA ─────────────
+   Em 28/09/2026 a FAQ dizia "sintetizador do próprio navegador, com voz de
+   espanhol latino" com 526 gravações no ar - um texto fixo herdado do curso
+   de espanhol, que este script não via porque só cobrava o lado da promessa
+   (auditoria, COM-003). Prometer a menos custa a venda. */
+const NEGACOES = [
+  'sintetizador',
+  'voz sintética',
+  'espanhol latino',
+  'gravações estão em produção',
+  'gravações com falante nativo estão planejadas',
+  'speech synthesizer',
+  'synthetic voice',
+  'recordings are in production'
+];
+
 if (TEM_AUDIO) {
-  console.log('✓ o manifesto tem gravação: a vitrine pode prometer áudio.');
+  const negadas = [];
+  for (const p of paginas) {
+    let texto;
+    try { texto = readFileSync(p, 'utf8'); } catch { continue; }
+    for (const frase of NEGACOES) if (texto.includes(frase)) negadas.push({ onde: rotaDe(p), frase });
+  }
+  if (negadas.length) {
+    console.error(`\n✗ ${negadas.length} página(s) negam o áudio que o curso TEM:\n`);
+    for (const a of negadas) console.error(`   ${a.onde.padEnd(46)} "${a.frase}"`);
+    console.error('\nO manifesto tem gravação. Cada frase sobre áudio tem de sair dele');
+    console.error('(ver components/landing/copy.ts e app/faq/page.tsx).');
+    console.error('─'.repeat(66));
+    process.exit(1);
+  }
+  console.log('✓ o manifesto tem gravação: a vitrine pode prometer áudio,');
+  console.log('  e nenhuma página livre diz que ele é sintetizado ou que não existe.');
   process.exit(0);
 }
 

@@ -25,6 +25,8 @@ import { clean, containsLetter, isReadableWith } from '@/lib/hebrew';
 import { shuffled, take, type Rand } from './rng';
 import type { Ctx } from './generators';
 import type { Exercise } from './types';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-pares';
 
 /** Treinar `alvo` contra `glifoRival`, que é um desenho de `rival`. */
 export type Contraste = { alvo: Letter; rival: Letter; glifoRival: string };
@@ -78,7 +80,7 @@ function porQue(alvo: Letter, o: string, ctx: Ctx): string {
   const dono = ctx.history.find(x => x.letter === o || x.finalForm === o);
   const deles = dono?.contrastes?.[alvo.letter];
   if (deles) return deles;
-  return dono ? `Essa é ${dono.namePt}. Olhe o desenho de novo.` : 'Essa é outra letra, bem parecida.';
+  return dono ? fmt(tx.essaE, { nome: dono.namePt }) : tx.outraParecida;
 }
 
 /**
@@ -99,11 +101,11 @@ export function exContraste(c: Contraste, ctx: Ctx, rand: Rand, i: number): Exer
   return {
     id: `${alvo.id}-par-${c.rival.id}-${i}`,
     kind: 'letter-recognition', letterId: alvo.id, skill: 'rec',
-    promptPt: `Entre estas parecidas, qual é ${alvo.namePt}?`,
+    promptPt: fmt(tx.parecidasPergunta, { nome: alvo.namePt }),
     letter: alvo.letter, options, answer: options.indexOf(alvo.letter),
     whyPt: options.map(o => o === alvo.letter ? null : porQue(alvo, o, ctx)),
     hintsPt: [porQue(alvo, glifoRival, ctx)],
-    explainPt: `${alvo.namePt} e ${c.rival.namePt} se confundem. ${porQue(alvo, glifoRival, ctx)}`
+    explainPt: fmt(tx.seConfundem, { a: alvo.namePt, b: c.rival.namePt, porque: porQue(alvo, glifoRival, ctx) })
   };
 }
 
@@ -121,10 +123,10 @@ export function exIntrusaDoPar(c: Contraste, ctx: Ctx, rand: Rand, i: number): E
   return {
     id: `${alvo.id}-parodd-${c.rival.id}-${i}`,
     kind: 'odd-one-out', letterId: alvo.id, skill: 'rec',
-    promptPt: `Uma destas não é ${alvo.namePt}. Qual?`,
+    promptPt: fmt(tx.intrusaPergunta, { nome: alvo.namePt }),
     options, answer,
-    whyPt: options.map((_, k) => k === answer ? null : `Essa é ${alvo.namePt}.`),
-    explainPt: `A intrusa era ${glifoRival}, de ${c.rival.namePt}. ${porQue(alvo, glifoRival, ctx)}`
+    whyPt: options.map((_, k) => k === answer ? null : fmt(tx.intrusaEssaE, { nome: alvo.namePt })),
+    explainPt: fmt(tx.intrusaExplica, { letra: glifoRival, rival: c.rival.namePt, porque: porQue(alvo, glifoRival, ctx) })
   };
 }
 
@@ -155,10 +157,10 @@ export function exPalavraDoPar(c: Contraste, ctx: Ctx, rand: Rand, i: number): E
   return {
     id: `${alvo.id}-parword-${rival.id}-${i}`,
     kind: 'letter-in-word', letterId: alvo.id, skill: 'rec',
-    promptPt: `Em qual destas palavras aparece ${alvo.namePt}? As outras têm ${rival.namePt}.`,
+    promptPt: fmt(tx.palavraPergunta, { nome: alvo.namePt, rival: rival.namePt }),
     letter: alvo.letter, options, answer: options.indexOf(certa.he),
     whyPt: options.map(o => o === certa.he ? null
-      : `${porHe.get(o)?.pt ?? 'Essa'} tem ${rival.namePt}, não ${alvo.namePt}. ${porQue(alvo, c.glifoRival, ctx)}`),
+      : fmt(tx.palavraErro, { palavra: porHe.get(o)?.pt ?? tx.essa, rival: rival.namePt, nome: alvo.namePt, porque: porQue(alvo, c.glifoRival, ctx) })),
     hintsPt: [porQue(alvo, c.glifoRival, ctx)],
     explainPt: `${certa.he} - ${certa.translit} - ${certa.pt}.`
   };

@@ -1,79 +1,149 @@
 'use client';
 
-/* O mapa do curso: uma linha do tempo vertical.
+/* O mapa do curso: uma viagem, de lugar em lugar.
  * ─────────────────────────────────────────────────────────────────────────
- * Um marcador por módulo, ligado ao seguinte por um fio, e ao lado um cartão
- * com as letras daquele módulo. O caminho inteiro é visível desde o começo -
- * esconder a estrada é o que faz um curso parecer infinito -, mas o peso é
- * desigual de propósito: o módulo concluído tem o marcador cheio, o atual
- * tem borda teal e barra de progresso, e o que vem tem cadeado e 72% de
- * opacidade.
- *
- * Uma forma só, do telefone ao desktop. Antes eram duas - uma espinha no
- * telefone e um quadro de painéis no desktop -, dois desenhos para o mesmo
- * dado, e cada mudança de conteúdo tinha de ser feita nos dois. Os cartões
- * de letra são uma grade que embrulha sozinha, então a linha do tempo cabe
- * em 390px sem virar outra tela.
- *
- * Nada aqui é bloqueado de verdade: o cadeado diz "você ainda não chegou",
- * não "não pode entrar". Um adulto que quer espiar o módulo 6 pode.
+ * No topo, o próximo passo, com o que falta e o botão de continuar. Embaixo,
+ * desde 06/11/2026 (pedido do dono: "a melhor experiência com o mapa"), o
+ * caminho inteiro numa estrada só (components/aventura/EstradaDoModulo.tsx):
+ * a Aula 0, cada módulo com a faixa do lugar dele presa no topo enquanto se
+ * rola por ele, todas as etapas, e o desafio final. A Yael anda até a etapa
+ * de agora, e a página rola com ela e abre onde o aluno está. Tocar numa
+ * etapa abre o cartão dela. O caminho inteiro é visível desde o começo -
+ * esconder a estrada é o que faz um curso parecer infinito -, e o cadeado diz
+ * "você ainda não chegou", não "não pode entrar".
  */
 
+import { useEffect, useState } from 'react';
+import { anotarVisto, lerVisto, moduloParaAnunciar } from '@/lib/desbloqueio';
 import Link from 'next/link';
-import { He } from '@/components/hebrew/He';
 import { useProgress } from '@/lib/state/store';
-import { course, getLetter, type CourseModule } from '@/lib/content';
+import { allLetters, course } from '@/lib/content';
 import { totalLicoes } from '@/lib/content-publico';
-import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
-import { isLessonComplete, STAGE_COUNT } from '@/lib/state/rules';
+import { aula0Feita, isLessonComplete, isLessonMastered, REGRA_DO_DOMINIO } from '@/lib/state/rules';
+import { EstradaDoModulo } from '@/components/aventura/EstradaDoModulo';
+import { itensDoModulo, moduloCompleto, useEstradaDoCurso } from '@/components/aventura/estrada-do-modulo';
+import { ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-course-map-client';
 
-type Estado = 'feito' | 'agora' | 'adiante';
+type Progresso = ReturnType<typeof useProgress>;
+
+/* As lições que ainda faltam no caminho: cada letra ou som não concluído, e
+   as lições de um módulo sem letras (o 6) enquanto ele não fechou. */
+function licoesQueFaltam(state: Progresso['state']): number {
+  let n = 0;
+  for (const m of course.modules) {
+    n += itensDoModulo(m).filter(i => !isLessonComplete(state, i.id)).length;
+    if (m.letterIds.length === 0 && (state.lessons[m.id]?.stagesDone.length ?? 0) < 3) {
+      n += m.lessons.filter(l => !l.som).length;
+    }
+  }
+  return n;
+}
+
+/* O próximo passo, o mesmo que o cartão do módulo atual leva. */
+type Passo = { titulo: string; detalhe: string; href: string; rotulo: string };
+
+function proximoPasso(p: Progresso, indiceAtual: number): Passo {
+  const faltam = licoesQueFaltam(p.state);
+  const detalhe = faltam ? tx.faltamLicoes(faltam) : '';
+  if (indiceAtual === -2) {
+    return { titulo: `${tx.aula0Curto} · ${tx.comoFunciona}`, detalhe: tx.aula0Falta, href: '/inicio', rotulo: tx.comecar };
+  }
+  if (indiceAtual >= 0) {
+    const m = course.modules[indiceAtual]!;
+    const itens = itensDoModulo(m);
+    const pendente = itens.find(i => !isLessonComplete(p.state, i.id));
+    if (pendente) return { titulo: tx.licaoDe(pendente.nome), detalhe, href: pendente.href, rotulo: tx.continuar };
+    if (m.letterIds.length === 0) return { titulo: m.titlePt, detalhe, href: `/modulo/${m.n}`, rotulo: tx.continuar };
+    return { titulo: tx.checkpointDo(m.n), detalhe: tx.faltaSoCheckpoint, href: `/checkpoint/${m.n}`, rotulo: tx.continuar };
+  }
+  /* O caminho inteiro feito: falta o exame, ou dominar alguma letra para ele
+     abrir, ou só buscar o certificado. */
+  const letras = allLetters();
+  const semDominio = letras.find(l => !isLessonMastered(p.state, l.id));
+  if (p.state.finalChallenge?.passedAt) {
+    return { titulo: tx.certificadoPronto, detalhe: tx.finalFeito, href: '/certificado', rotulo: tx.verCertificado };
+  }
+  if (semDominio) {
+    return { titulo: tx.dominarAntes(semDominio.namePt), detalhe: tx.dominarDetalhe(REGRA_DO_DOMINIO), href: `/licao/${semDominio.id}`, rotulo: tx.continuar };
+  }
+  return { titulo: ETAPA_FINAL, detalhe: tx.finalFalta, href: '/desafio-final', rotulo: tx.comecar };
+}
 
 export function CourseMapClient() {
   const p = useProgress();
   const modulos = course.modules;
   const licoes = totalLicoes();
 
-  /* O módulo atual é o primeiro que ainda não fechou. */
-  const indiceAtual = modulos.findIndex(m => !moduloCompleto(p.state, m));
+  /* O módulo atual é o primeiro que ainda não fechou. Antes da Aula 0
+     nenhum: o passo atual é ela (12/10/2026). */
+  const a0 = aula0Feita(p.state);
+  const indiceAtual = a0 ? modulos.findIndex(m => !moduloCompleto(p.state, m)) : -2;
+  /* O lugar que abriu desde a última visita (lib/desbloqueio.ts). Só depois
+     de o progresso carregar: antes dele o mapa inteiro parece trancado, e
+     anotar isso apagaria a lembrança certa. */
+  const atualN = indiceAtual >= 0 ? modulos[indiceAtual]!.n : indiceAtual === -2 ? 0 : null;
+  const [novo, setNovo] = useState<number | null>(null);
+  useEffect(() => {
+    if (!p.ready || atualN == null) return;
+    const n = moduloParaAnunciar(atualN, lerVisto());
+    if (n != null) setNovo(n);
+    anotarVisto(atualN);
+  }, [p.ready, atualN]);
+
+  const pct = Math.round(p.progress * 100);
+  const passo = proximoPasso(p, indiceAtual);
+  const estrada = useEstradaDoCurso();
 
   return (
     <div className="lg:rounded-[24px] lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
                     lg:p-10 lg:pb-11">
-      <header className="flex items-end gap-5 flex-wrap mb-8">
-        <div className="flex-1 min-w-[240px]">
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.1em] text-[var(--teal)] mb-2">
-            Meu curso
+      <header className="flex items-center gap-5 mb-6">
+        <div className="flex-1 min-w-0">
+          <p className="font-ui text-[13px] font-semibold tracking-[.02em] text-[var(--teal-ink)] mb-1.5">
+            {tx.meuCurso}
           </p>
           <h1 className="font-display text-[27px] sm:text-[31px] font-semibold leading-[1.1]
                          tracking-[-0.028em] mb-1">
             {flagship().titlePt}
           </h1>
-          <p className="font-ui text-[16px] text-ink-muted">
-            {modulos.length} módulos · {licoes} lições · {course.totalLetters} letras
+          <p className="font-ui text-[15px] text-ink-muted">
+            {fmt(tx.resumo, { modulos: modulos.length, licoes, letras: course.totalLetters })}
           </p>
         </div>
-        <p className="text-right">
-          <span className="block font-display text-[34px] sm:text-[38px] font-semibold
-                           tracking-[-0.03em] leading-none text-[var(--teal)] tabular-nums">
-            {Math.round(p.progress * 100)}%
-          </span>
-          <span className="block font-ui text-[14px] text-ink-muted">concluído</span>
-        </p>
+        <Anel pct={pct} />
       </header>
 
-      <ol className="list-none p-0 m-0">
-        {modulos.map((m, i) => {
-          const estado: Estado = i < indiceAtual ? 'feito'
-            : i === indiceAtual || indiceAtual === -1 ? 'agora'
-            : 'adiante';
-          return (
-            <Trecho key={m.id} module={m} estado={estado} ultimo={i === modulos.length - 1} />
-          );
-        })}
-      </ol>
+      {/* O próximo passo, antes do caminho: é a pergunta de quem abre o mapa. */}
+      {p.ready && (
+        <section aria-labelledby="proximo-passo"
+                 className="relative mb-8 rounded-[20px] bg-[var(--teal-soft)] p-5 sm:p-6 grid gap-1">
+          <p id="proximo-passo" className="font-ui text-[13px] font-semibold text-[var(--teal-ink)] m-0">
+            {tx.proximoPasso}
+          </p>
+          <p className="font-display text-[20px] sm:text-[22px] font-semibold tracking-[-0.02em] text-ink m-0">
+            {passo.titulo}
+          </p>
+          {passo.detalhe && <p className="font-ui text-[14.5px] leading-[1.5] text-ink-body m-0">{passo.detalhe}</p>}
+          <Link href={passo.href}
+                className="mt-3 justify-self-start inline-flex items-center gap-2 min-h-[46px] px-5 rounded-[14px]
+                           bg-[var(--accent-bg)] text-white font-ui text-[15.5px] font-semibold
+                           hover:brightness-110 transition-[filter]
+                           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                           focus-visible:outline-[var(--teal)]">
+            {passo.rotulo}<span aria-hidden>→</span>
+          </Link>
+        </section>
+      )}
+
+      {/* O caminho inteiro numa estrada só (06/11/2026, pedido do dono): a
+          Aula 0, cada módulo com a faixa do lugar dele, e o desafio final.
+          Mais curto no mesmo dia: só o módulo de agora vem aberto; os outros
+          ficam na faixa, que abre com um toque. */}
+      <EstradaDoModulo itens={estrada} pronto={p.ready} onAbrirJarro={id => p.abrirJarro(id)} seguir recolher novo={novo} />
 
       {/* Depois do caminho inteiro, e não antes: a pergunta "por que {{מ}}
           vem antes de {{ב}}?" só existe para quem acabou de VER a ordem.
@@ -86,145 +156,27 @@ export function CourseMapClient() {
   );
 }
 
-function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: CourseModule): boolean {
-  if (m.letterIds.length === 0) return (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
-  const letras = m.letterIds.every(id => isLessonComplete(state, id));
-  const cp = m.checkpoint ? !!state.checkpoints[m.checkpoint.id]?.passedAt : true;
-  return letras && cp;
-}
+/* ── peças do caminho ─────────────────────────────────────────────────── */
 
-function Trecho({ module: m, estado, ultimo }: {
-  module: CourseModule; estado: Estado; ultimo: boolean;
-}) {
-  const p = useProgress();
-  const letras = m.letterIds.map(getLetter).filter(l => !!l);
-  const feitas = letras.filter(l => isLessonComplete(p.state, l!.id)).length;
-  const extra = letras.length === 0;
-  const etapas = extra ? Math.min(3, p.state.lessons[m.id]?.stagesDone.length ?? 0) : feitas;
-  const total = extra ? 3 : letras.length;
-  const pct = total ? Math.round((etapas / total) * 100) : 0;
-  const destino = extra
-    ? `/modulo/${m.n}`
-    : `/licao/${m.letterIds.find(id => !isLessonComplete(p.state, id)) ?? m.letterIds[0]}`;
-
-  const TAG = {
-    feito: { texto: 'Concluído', cor: 'text-[var(--teal-ink)]' },
-    agora: { texto: 'Em andamento', cor: 'text-[var(--teal)]' },
-    /* `--locked` e não um cinza escrito à mão: o cinza literal era o mesmo
-       nos dois temas, e no escuro ele nem é o cinza certo nem acompanha o
-       alto contraste. */
-    adiante: { texto: 'Em breve', cor: 'text-[var(--locked)]' }
-  }[estado];
-
+/* O quanto do curso já foi, num anel: o número em largura fixa no meio. */
+function Anel({ pct }: { pct: number }) {
+  const r = 30, c = 2 * Math.PI * r;
   return (
-    <li className="grid grid-cols-[38px_minmax(0,1fr)] sm:grid-cols-[52px_minmax(0,1fr)] gap-4 sm:gap-5">
-      <div className="flex flex-col items-center">
-        <span
-          aria-hidden
-          className={`w-[38px] h-[38px] sm:w-11 sm:h-11 rounded-[14px] border-2 grid place-items-center shrink-0
-            ${estado === 'feito' ? 'bg-[var(--teal)] border-[var(--teal)]'
-              : estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
-              : 'bg-[var(--sand)] border-line'}`}
-        >
-          {estado === 'feito' && (
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M3.6 9.4 7 12.8 14.4 5.4" stroke="#fff" strokeWidth="2.2"
-                    strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-          {estado === 'agora' && <span className="w-[11px] h-[11px] rounded-full bg-[var(--teal)]" />}
-          {estado === 'adiante' && (
-            <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
-              <rect x="3.6" y="7.8" width="10.8" height="7.4" rx="2" stroke="var(--locked)" strokeWidth="1.4" />
-              <path d="M6.2 7.8V5.9a2.8 2.8 0 0 1 5.6 0v1.9" stroke="var(--locked)" strokeWidth="1.4" strokeLinecap="round" />
-            </svg>
-          )}
-        </span>
-        {!ultimo && (
-          <span aria-hidden className="flex-1 w-[2px] min-h-[26px]"
-                style={{ background: estado === 'feito' ? 'var(--teal)' : 'var(--line)' }} />
-        )}
-      </div>
-
-      <div className="pb-6 sm:pb-[26px]">
-        <Link
-          href={destino}
-          className={`block rounded-[18px] border p-5 sm:px-6 sm:py-[22px] transition-shadow duration-[250ms]
-            hover:shadow-[var(--sh)]
-            ${estado === 'agora' ? 'bg-[var(--card)] border-[var(--teal)]'
-              /* O módulo trancado RECUA, e é por isso que ele usa o papel e
-                 não uma cor escrita à mão. O literal `#FBFAF7` que estava
-                 aqui é quase o creme, então no tema claro ele fazia o certo
-                 por acaso - e no escuro virou o bloco MAIS CLARO da tela: os
-                 módulos que o aluno ainda não pode abrir gritavam, e o único
-                 que ele podia estudar ficava mais quieto que eles.
-                 Com `--paper` o cartão tem a cor do fundo nos dois temas, e
-                 quem o separa é a borda. Que é o que "ainda não" deve ser. */
-              : estado === 'adiante' ? 'bg-[var(--paper)] border-line opacity-[.72]'
-              : 'bg-[var(--card)] border-line'}`}
-        >
-          <div className="flex items-center gap-3.5 flex-wrap mb-2.5">
-            <span className={`font-ui text-[12.5px] font-bold uppercase tracking-[.1em] ${TAG.cor}`}>
-              {TAG.texto}
-            </span>
-            <span className="font-ui text-[13.5px] text-ink-muted">
-              Módulo {m.n} · {m.lessons.length} {m.lessons.length === 1 ? 'lição' : 'lições'}
-            </span>
-            <span className="flex-1" />
-            {estado !== 'adiante' && (
-              <span className="flex items-center gap-2.5 min-w-[150px]">
-                <span className="flex-1 h-1.5 rounded-full bg-[var(--sand)] overflow-hidden">
-                  <span className="block h-full rounded-full bg-[var(--teal)] transition-[width] duration-500"
-                        style={{ width: `${pct}%` }} />
-                </span>
-                <span className="font-ui text-[13px] font-semibold text-[var(--teal)] tabular-nums">{pct}%</span>
-              </span>
-            )}
-          </div>
-
-          <p className={`font-display text-[19px] sm:text-[21px] font-semibold tracking-[-0.02em] mb-3.5
-                         ${estado === 'adiante' ? 'text-ink-muted' : 'text-ink'}`}>
-            {m.titlePt}
-          </p>
-
-          {extra ? (
-            <p className="font-ui text-[14.5px] leading-[1.5] text-ink-muted">
-              <Prose text={m.subPt} />
-            </p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {letras.map(L => {
-                const feita = isLessonComplete(p.state, L!.id);
-                const etapasFeitas = p.state.lessons[L!.id]?.stagesDone.length ?? 0;
-                const comecada = etapasFeitas > 0 && !feita;
-                return (
-                  <span
-                    key={L!.id}
-                    title={`${L!.namePt}${feita ? ' - concluída' : comecada ? ` - ${etapasFeitas} de ${STAGE_COUNT} etapas` : ''}`}
-                    className={`min-w-[46px] px-1.5 h-[50px] rounded-[12px] border grid place-items-center gap-px
-                      ${feita ? 'bg-[var(--teal-soft)] border-[var(--edge-teal)]'
-                        : comecada ? 'bg-[var(--card)] border-[var(--teal)]'
-                        : 'bg-[var(--sand)] border-line'}`}
-                  >
-                    <He size="inline" tone={feita ? 'teal' : estado === 'adiante' ? 'muted' : 'navy'}
-                        className="!text-[23px] !leading-[1.1]">
-                      {L!.letter}
-                    </He>
-                    <span className={`font-ui text-[9.5px] tracking-[.04em]
-                      ${feita ? 'text-[var(--teal-ink)]' : 'text-ink-muted'}`}>
-                      {L!.namePt}
-                    </span>
-                  </span>
-                );
-              })}
-            </div>
-          )}
-        </Link>
-      </div>
-    </li>
+    <p className="relative shrink-0 w-[76px] h-[76px] m-0" role="img" aria-label={`${pct}% ${tx.concluido}`}>
+      <svg viewBox="0 0 76 76" className="w-full h-full -rotate-90" aria-hidden>
+        <circle cx="38" cy="38" r={r} fill="none" stroke="var(--sand)" strokeWidth="6" />
+        <circle cx="38" cy="38" r={r} fill="none" stroke="var(--teal)" strokeWidth="6" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)}
+                className="transition-[stroke-dashoffset] duration-700" />
+      </svg>
+      <span aria-hidden className="absolute inset-0 grid place-items-center font-display text-[19px] font-semibold
+                                  tracking-[-0.02em] text-[var(--teal-ink)] tabular-nums">
+        {pct}%
+      </span>
+    </p>
   );
 }
 
 export function CourseMapNotFound() {
-  return <p className="font-ui text-[15px] text-ink-muted">Mapa não encontrado.</p>;
+  return <p className="font-ui text-[15px] text-ink-muted">{tx.naoEncontrado}</p>;
 }

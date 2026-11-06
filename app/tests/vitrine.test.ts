@@ -29,7 +29,7 @@
  * prova o que RENDERIZA, este teste prova o que a interação pode mostrar.
  */
 
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ABAS, MAQUETE, PASSOS, TEM_AUDIO } from '@/components/landing/copy';
 
@@ -78,11 +78,10 @@ describe('a landing e o áudio dizem a mesma coisa', () => {
     }
   });
 
-  it('mantém o método com um passo por coisa que o curso faz', () => {
-    /* Seis passos com gravação, cinco sem: o "Ouça" não tem como existir com o
-       manifesto vazio. */
-    expect(PASSOS).toHaveLength(TEM_AUDIO ? 6 : 5);
-    expect(PASSOS.map(p => p[0])).toContain('Associe');
+  it('mantém o método com as etapas da lição, e não uma lista à parte', () => {
+    /* Desde 01/10/2026 (CONV-010) os passos da capa são as abas da lição:
+       Conhecer, Palavras, Escrever, Praticar, Fixação - com a escrita. */
+    expect(PASSOS.map(p => p[0])).toEqual(['Conhecer', 'Palavras', 'Escrever', 'Fixação', 'Exercícios']);
   });
 
   it('volta a prometer sozinha no dia em que a gravação entrar', () => {
@@ -126,6 +125,17 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(achadas).toEqual([]);
   });
 
+  it('não diz que o áudio é sintetizado quando há gravação', () => {
+    /* A FAQ dizia "sintetizador do próprio navegador, com voz de espanhol
+       latino" com 526 gravações do professor no ar: um texto fixo herdado do
+       curso de espanhol (auditoria de 28/09/2026, COM-003). A resposta passa
+       a sair do manifesto, e nenhuma das frases antigas pode voltar. */
+    const fonte = faq();
+    expect(fonte).toContain("from '@/lib/audio-manifest'");
+    const NEGACOES = ['espanhol latino', 'sintetizador do próprio navegador', 'estão planejadas'];
+    expect(NEGACOES.filter(n => fonte.includes(n))).toEqual([]);
+  });
+
   it('não escreve à mão um número que o array decide', () => {
     /* A seção do método dizia "Seis passos" e renderizava CINCO: `PASSOS`
        perde o passo "Ouça" enquanto não há gravação, e a frase ficou. Um
@@ -137,7 +147,10 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
        gravação entrar e o array voltar a ter seis. */
     const fonte = readFileSync(
       new URL('../src/components/landing/Secoes.tsx', import.meta.url), 'utf8');
-    expect(fonte).toContain('PASSOS.length === 6');
+    /* Desde 01/10/2026 a contagem sai de lib/etapas-da-licao.ts
+       (`quantasEtapasPt`), a mesma lista que a capa desenha. */
+    expect(fonte).toContain('quantasEtapasPt()');
+    expect(fonte).not.toContain("'Seis passos'");
   });
 
   it('e a sincronização que ele anuncia existe mesmo', () => {
@@ -165,7 +178,7 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
        dela. Um `<BarraFixa>` solto no JSX passa despercebido numa revisão e
        só aparece no site do cliente. */
     const capa = readFileSync(
-      new URL('../src/app/HomeClient.tsx', import.meta.url), 'utf8');
+      new URL('../src/app/curso-de-hebraico/CursoDeHebraicoClient.tsx', import.meta.url), 'utf8');
     expect(capa).toContain('passo.vende && <BarraFixa');
 
     /* E o preço que ela mostra sai do catálogo, nunca escrito à mão: é o
@@ -176,13 +189,43 @@ describe('a vitrine também não NEGA o que o curso entrega', () => {
     expect(barra).not.toMatch(/R\$\s?\d/);
   });
 
-  it('a seção do conteúdo extra não manda visitante para rota paga', () => {
+  it('nenhuma seção da capa manda visitante para rota paga', () => {
     /* /biblia é pública e vira link. /historia é do curso: um link para ela
        numa página de vendas leva a um 302 de login, que é a pior coisa que
-       um botão de landing pode fazer. */
-    const alem = readFileSync(
-      new URL('../src/components/landing/AlemDoAlfabeto.tsx', import.meta.url), 'utf8');
-    expect(alem).toContain('href="/biblia"');
-    expect(alem).not.toContain('href="/historia"');
+       um botão de landing pode fazer. (A seção AlemDoAlfabeto, que era a
+       que tinha esses links, saiu da capa em 30/09/2026.) */
+    const dir = new URL('../src/components/landing/', import.meta.url);
+    for (const f of readdirSync(dir).filter(n => n.endsWith('.tsx'))) {
+      expect(readFileSync(new URL(f, dir), 'utf8'), f).not.toContain('href="/historia"');
+    }
+  });
+});
+
+/* ── preço de pré-lançamento (auditoria de 28/09/2026, LEGAL-014) ────────
+   O R$ 297 nunca foi praticado, então não pode aparecer riscado: número
+   riscado é preço de referência. Ele aparece como o preço de DEPOIS, com a
+   data em que o pré-lançamento acaba (decisão do dono: 31/10/2026). */
+describe('o preço cheio não aparece riscado', () => {
+  it('nenhuma tela usa line-through', async () => {
+    const { readdirSync, statSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const raiz = new URL('../src/', import.meta.url).pathname;
+    const achados: string[] = [];
+    const varre = (d: string) => {
+      for (const n of readdirSync(d)) {
+        const p = join(d, n);
+        if (statSync(p).isDirectory()) varre(p);
+        else if (/\.(tsx|ts|css)$/.test(n) && readFileSync(p, 'utf8').includes('line-through')) achados.push(p);
+      }
+    };
+    varre(raiz);
+    expect(achados).toEqual([]);
+  });
+
+  it('a data de fim sai do catálogo, no formato brasileiro', async () => {
+    const { fimDoPreLancamento, flagship } = await import('@/lib/catalog');
+    const p = flagship().price;
+    /* Depois da virada (tools/virar-preco.mjs) não há data a anunciar. */
+    expect(fimDoPreLancamento(p)).toBe(p.preLancamentoAte ? '30/11/2026' : null);
   });
 });

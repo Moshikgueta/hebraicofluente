@@ -9,32 +9,37 @@
  * skipping ahead would break the reading progression, not accelerate it. */
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useProgress } from '@/lib/state/store';
+import { useAccount } from '@/lib/account/store';
+import { primeiroNome } from '@/components/learn/MeuNome';
 import type { DailyGoalMinutes, Onboarding } from '@/lib/state/types';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/painel-onboarding';
 
 const REASONS = [
-  { id: 'viagem',   label: 'Viajar para Israel' },
-  { id: 'familia',  label: 'Família ou relacionamento' },
-  { id: 'morar',    label: 'Morar em Israel' },
-  { id: 'idiomas',  label: 'Interesse em idiomas' },
-  { id: 'trabalho', label: 'Trabalho' },
-  { id: 'outro',    label: 'Outro motivo' }
+  { id: 'viagem',   label: tx.motivoViagem },
+  { id: 'familia',  label: tx.motivoFamilia },
+  { id: 'morar',    label: tx.motivoMorar },
+  { id: 'biblia',   label: tx.motivoBiblia },
+  { id: 'idiomas',  label: tx.motivoIdiomas },
+  { id: 'trabalho', label: tx.motivoTrabalho },
+  { id: 'outro',    label: tx.motivoOutro }
 ] as const;
 
 const GOALS: { m: DailyGoalMinutes; label: string; note: string }[] = [
-  { m: 5,  label: '5 minutos',  note: 'Uma etapa por dia. Devagar e sempre.' },
-  { m: 10, label: '10 minutos', note: 'O ritmo da maioria. Uma letra a cada dois dias.' },
-  { m: 15, label: '15 minutos', note: 'Uma letra por dia, com folga.' },
-  { m: 20, label: '20 minutos', note: 'Intenso. O alfabeto em três semanas.' }
+  { m: 5,  label: tx.meta5,  note: tx.meta5Nota },
+  { m: 10, label: tx.meta10, note: tx.meta10Nota },
+  { m: 15, label: tx.meta15, note: tx.meta15Nota },
+  { m: 20, label: tx.meta20, note: tx.meta20Nota }
 ];
 
 const START = [
-  { id: 'zero',            label: 'Estou começando do zero' },
-  { id: 'algumas-letras',  label: 'Reconheço algumas letras' },
-  { id: 'leio-um-pouco',   label: 'Já consigo ler um pouco' }
+  { id: 'zero',            label: tx.inicioZero },
+  { id: 'algumas-letras',  label: tx.inicioAlgumas },
+  { id: 'leio-um-pouco',   label: tx.inicioUmPouco }
 ] as const;
 
 export default function OnboardingPage() {
@@ -45,6 +50,17 @@ export default function OnboardingPage() {
   const [goal, setGoal] = useState<DailyGoalMinutes | null>(null);
   const [start, setStart] = useState<Onboarding['startingPoint'] | null>(null);
   const [name, setName] = useState('');
+  /* O cadastro já pediu o nome: aqui ele vem preenchido com o primeiro nome
+     da conta, e o aluno só troca se quiser outro (UXQA-008). Uma vez só,
+     para não apagar o que ele digitou. */
+  const account = useAccount();
+  const nomeDaConta = account.session?.account.name ?? '';
+  const preenchido = useRef(false);
+  useEffect(() => {
+    if (preenchido.current || !nomeDaConta) return;
+    preenchido.current = true;
+    setName(n => n || primeiroNome(nomeDaConta));
+  }, [nomeDaConta]);
 
   const finish = () => {
     setOnboarding({
@@ -71,17 +87,21 @@ export default function OnboardingPage() {
   return (
     <div className="grid gap-6 max-w-[560px] mx-auto">
       <header className="grid gap-2">
-        <Badge tone="accent">{step + 1} de 4</Badge>
+        <Badge tone="accent">{fmt(tx.contador, { n: step + 1 })}</Badge>
         <div className="h-1.5 rounded-full bg-surface-2 overflow-hidden">
-          <div className="h-full bg-[var(--accent)] transition-[width] duration-300"
-               style={{ width: `${((step + 1) / 4) * 100}%` }} />
+          {/* Por transform, e não width (a régua de movimento de 27/10). */}
+          <div className="h-full w-full origin-left bg-[var(--accent)] transition-transform duration-300 ease-[var(--ease-out)]"
+               style={{ transform: `scaleX(${(step + 1) / 4})` }} />
         </div>
       </header>
 
       {step === 0 && (
         <Question
-          title="Por que você quer aprender hebraico?"
-          hint="Isso muda o tom das mensagens ao longo do curso, não o conteúdo."
+          title={tx.porQueTitulo}
+          /* Dizia "Isso muda o tom das mensagens ao longo do curso", e nada no
+             curso lê esta resposta (28/10/2026): a frase prometia o que não
+             existe. */
+          hint={tx.porQueDica}
         >
           {REASONS.map(r => (
             <Choice key={r.id} selected={reason === r.id}
@@ -94,8 +114,8 @@ export default function OnboardingPage() {
 
       {step === 1 && (
         <Question
-          title="Quanto tempo por dia?"
-          hint="É a sua meta diária. Dá para mudar depois - e ninguém é punido por não bater."
+          title={tx.tempoTitulo}
+          hint={tx.tempoDica}
         >
           {GOALS.map(g => (
             <Choice key={g.m} selected={goal === g.m}
@@ -111,8 +131,8 @@ export default function OnboardingPage() {
 
       {step === 2 && (
         <Question
-          title="Você já sabe alguma coisa em hebraico?"
-          hint="Todo mundo começa pela primeira letra: cada lição se apoia nas anteriores, e é isso que permite ler palavras inteiras tão cedo."
+          title={tx.sabeTitulo}
+          hint={tx.sabeDica}
         >
           {START.map(s => (
             <Choice key={s.id} selected={start === s.id}
@@ -124,18 +144,18 @@ export default function OnboardingPage() {
       )}
 
       {step === 3 && (
-        <Question title="Como podemos te chamar?" hint="Opcional. Fica só no seu navegador.">
+        <Question title={tx.nomeTitulo} hint={tx.nomeDica}>
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
-            placeholder="Seu nome"
+            placeholder={tx.seuNome}
             autoComplete="given-name"
             className="w-full min-h-[56px] px-4 rounded-[var(--r-md)] border border-line
                        bg-surface text-ink text-[16px] font-ui
                        placeholder:text-ink-muted"
           />
-          <Button size="lg" full onClick={finish}>Começar o curso</Button>
+          <Button size="lg" full onClick={finish}>{tx.comecarCurso}</Button>
         </Question>
       )}
 
@@ -143,9 +163,9 @@ export default function OnboardingPage() {
         <button
           type="button"
           onClick={() => setStep(s => s - 1)}
-          className="font-ui text-[13px] text-ink-muted hover:text-ink-body justify-self-start"
+          className="inline-flex items-center min-h-[44px] pr-3 font-ui text-[14px] text-ink-muted hover:text-ink-body justify-self-start"
         >
-          ← Voltar
+          {tx.voltar}
         </button>
       )}
     </div>

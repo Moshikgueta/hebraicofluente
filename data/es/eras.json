@@ -1,0 +1,19 @@
+{
+  "pairs/shama/raizPt": {
+    "pt": "ouvir",
+    "es": "oír"
+  },
+  "pairs/shama/fontePt": {
+    "pt": "Deuteronômio 6:4",
+    "es": "Deuteronomio 6:4"
+  },
+  "pairs/shama/idadePt": {
+    "pt": "mais de dois mil anos",
+    "es": "más de dos mil años"
+  },
+  "pairs/shama/notePt": {
+    "pt": "A mesma raiz, nas duas pontas. Na linha antiga ela é uma ordem - «ouve». Na linha de hoje ela virou a pergunta mais banal que existe em Israel: {{מָה נִשְׁמָע}}, ao pé da letra «o que se ouve?», que é o nosso «e aí?». Mais de dois mil anos entre uma e outra, e são as mesmas três letras.",
+    "es": "La misma raíz, en los dos extremos. En la línea antigua es una orden: «oye». En la línea de hoy se volvió la pregunta más común que existe en Israel: {{מָה נִשְׁמָע}}, al pie de la letra «¿qué se oye?», que es nuestro «¿qué tal?». Más de dos mil años entre una y otra, y son las mismas tres letras.",
+    "comentario": "adaptado como el inglés: «e aí?» virou «¿qué tal?»"
+  }
+}

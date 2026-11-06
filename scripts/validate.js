@@ -11,6 +11,7 @@ import {
   consonantsOf, hasNikud, hasHebrew, clean, stripNikud, FINAL_TO_BASE
 } from './lib/hebrew.js';
 import { unmarkedHebrew } from './lib/render.js';
+import { dagueshFora, foraDoDaguesh } from '../tools/daguesh.mjs';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const read = p => readFileSync(join(ROOT, p), 'utf8');
@@ -117,9 +118,15 @@ export function validate({ checkDist = true } = {}) {
     }
 
     /* ── V6 - syllable table ─────────────────────────────────────────── */
-    const WANT = ['a', 'e', 'i', 'o', 'u', 'sheva'];
-    if (!Array.isArray(L.syllables) || L.syllables.length !== 6) {
-      fail('V6', at, `expected 6 syllables, got ${L.syllables ? L.syllables.length : 0}`);
+    /* א, ה, י e ע não levam o cartão do sheva. No א e no ע ele virava um
+       hataf ("a" ultrabreve) que o aluno lia como mais um A; no ה, um som que
+       não se pronuncia; no י, um "y" sozinho que ninguém diz - o som do Yod é
+       o da letra com a vogal (pedido do dono do curso, 26/09/2026). As quatro
+       ficam com as cinco vogais. */
+    const SEM_SHEVA = new Set(['א', 'ה', 'י', 'ע']);
+    const WANT = SEM_SHEVA.has(L.letter) ? ['a', 'e', 'i', 'o', 'u'] : ['a', 'e', 'i', 'o', 'u', 'sheva'];
+    if (!Array.isArray(L.syllables) || L.syllables.length !== WANT.length) {
+      fail('V6', at, `expected ${WANT.length} syllables, got ${L.syllables ? L.syllables.length : 0}`);
     } else {
       L.syllables.forEach((s, i) => {
         if (s.vowel !== WANT[i]) fail('V6', at, `syllable ${i} should be "${WANT[i]}", got "${s.vowel}"`);
@@ -159,7 +166,7 @@ export function validate({ checkDist = true } = {}) {
 
     /* ── V12 - empty reading list (expected for letter 1) ────────────── */
     if (!L.wordsToRead || !L.wordsToRead.length) {
-      warn('V12', at, 'wordsToRead is empty - the templates fall back to syllable-only practice');
+      warn('V12', at, 'wordsToRead is empty - the lesson falls back to syllable-only practice');
     }
 
     /* ── V13 - Hebrew in prose must be marked {{…}} ──────────────────
@@ -169,6 +176,7 @@ export function validate({ checkDist = true } = {}) {
     const proseFields = [
       ['soundNotePt', L.soundNotePt],
       ['didYouKnow', L.didYouKnow],
+      ...(L.maisCuriosidades || []).map((c, i) => [`maisCuriosidades[${i}]`, c.textoPt]),
       ['brazilianMistake.wrong', L.brazilianMistake && L.brazilianMistake.wrong],
       ['brazilianMistake.right', L.brazilianMistake && L.brazilianMistake.right],
       ['brazilianMistake.why', L.brazilianMistake && L.brazilianMistake.why]
@@ -183,8 +191,8 @@ export function validate({ checkDist = true } = {}) {
 
     /* ── V17 - the letter has something to gap ─────────────────────────
        The "complete a palavra" exercises need words that CONTAIN the target
-       letter. wordsToRead may legitimately hold a word that does not - אַתְּ
-       belongs on the He page as the partner of אַתָּה and has no he - so the
+       letter. wordsToRead may legitimately hold a word that does not - אַתְ
+       belongs on the He page as the partner of אַתָה and has no he - so the
        templates filter, and this warns when the filter leaves too little to
        build an exercise from. */
     {
@@ -202,6 +210,13 @@ export function validate({ checkDist = true } = {}) {
        without this rule the page silently printed a word with nothing
        highlighted in it. */
     (L.bridgeWords || []).forEach(w => {
+      /* A sílaba destacada (19/10/2026) tem de estar na palavra, uma vez só,
+         e conter a letra da lição. */
+      if (w.marca != null) {
+        const n = w.he.split(w.marca).length - 1;
+        const temLetra = w.marca.includes(L.letter) || (!!L.finalForm && w.marca.includes(L.finalForm));
+        if (n !== 1 || !temLetra) fail('V15', at, `bridgeWords "${w.he}": a marca "${w.marca}" aparece ${n} vez(es) ou não contém a letra`);
+      }
       const hasBase = w.he.includes(L.letter);
       const hasFinal = !!L.finalForm && w.he.includes(L.finalForm);
       if (!hasBase && !hasFinal) {
@@ -710,6 +725,9 @@ export function validate({ checkDist = true } = {}) {
       for (const L of letters) {
         for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) vocab.set(clean(w.he), w);
       }
+      /* As lições de som também ensinam palavras: desde 26/09/2026 {{טוֹב}},
+         {{סֵפֶר}} e {{מֶלֶךְ}} são lidas pela primeira vez em Vet, Fe e Chaf. */
+      for (const S of extras.sons?.licoes || []) for (const w of S.palavras) vocab.set(clean(w.he), w);
       const confere = (pointed, onde) => {
         const p = clean(pointed);
         const w = vocab.get(p);
@@ -761,7 +779,7 @@ export function validate({ checkDist = true } = {}) {
     const GERESH = '׳';
     for (const g of extras.gerech.letters) {
       if (g.he !== g.base + GERESH) {
-        fail('V19', `extras.gerech/${g.id}`, `"${g.he}" deveria ser ${g.base} + gerech U+05F3`);
+        fail('V19', `extras.gerech/${g.id}`, `"${g.he}" deveria ser ${g.base} + guéresh U+05F3`);
       }
       for (const w of g.words) {
         if (!w.he.includes(g.he)) {
@@ -771,6 +789,108 @@ export function validate({ checkDist = true } = {}) {
     }
   } else {
     warn('V19', 'data/extras.json', 'ausente - os módulos 6 e 7 ficam sem conteúdo');
+  }
+
+  /* ── V26 - as lições de som (Sin, Vet, Chaf, Fe, Tch, Dj, J) ───────
+     Cada uma promete três coisas que dá para conferir: toda palavra TEM o
+     som da lição (a letra sem daguesh, a final, ou a letra com guéresh); toda
+     palavra de Vet/Chaf/Fe só usa letras já ensinadas até ali (a regra V1 das
+     letras, na posição da lição); e o plano de aulas (modules.json) põe a
+     lição no número e no módulo que ela diz ter. */
+  if (extras?.sons) {
+    /* Uma palavra da letra marcada com `som` é ensinada na lição de som, e não
+       na da letra: a marca tem de apontar para uma lição que a ensina. */
+    for (const L of letters) {
+      for (const w of [...L.wordsToRead, ...L.wordsToRecognize]) {
+        if (!w.som) continue;
+        const S = extras.sons.licoes.find(x => x.id === w.som);
+        if (!S) fail('V26', L.id, `"${w.he}" aponta para a lição de som "${w.som}", que não existe`);
+        else if (!S.palavras.some(p => clean(p.he) === clean(w.he))) {
+          fail('V26', L.id, `"${w.he}" diz ser da lição ${S.namePt}, que não a ensina`);
+        }
+      }
+    }
+    const DAGUESH = 'ּ';
+    const GERESH = '׳';
+    const plano = new Map();
+    for (const M of modules || []) for (const ls of M.lessons || []) if (ls.som) plano.set(ls.som, { M, ls });
+    const ids = new Set();
+    for (const S of extras.sons.licoes) {
+      const onde = `extras.sons/${S.id}`;
+      if (ids.has(S.id)) fail('V26', onde, 'id repetido');
+      ids.add(S.id);
+      const p = plano.get(S.id);
+      if (!p) fail('V26', onde, 'nenhuma lição de modules.json aponta para este som');
+      else if (p.ls.n !== S.licao || p.M.n !== S.modulo) {
+        fail('V26', onde, `diz ser a lição ${S.licao} do módulo ${S.modulo}; o plano diz ${p.ls.n} do módulo ${p.M.n}`);
+      }
+      if (S.tipo === 'daguesh') {
+        const L = letters.find(l => l.id === S.depoisDe);
+        if (!L) { fail('V26', onde, `depoisDe "${S.depoisDe}" não é uma letra`); continue; }
+        if (S.he !== L.letter) fail('V26', onde, `"${S.he}" não é a letra ${L.letter}`);
+        /* A letra sem ponto em algum lugar da palavra, ou a forma final. */
+        const temSom = he => [...he.normalize('NFC')].some((c, i, a) =>
+          (c === L.letter && !a.slice(i + 1).join('').match(/^[֑-ׇ]*ּ/)) || c === L.finalForm);
+        for (const s of S.silabas) {
+          /* O daguesh proibido é o da consoante; o do וּ (shuruk) é vogal. */
+          const consoante = s.he.normalize('NFC').match(/^.[\u0591-\u05C7]*/)[0];
+          if (consoante.includes(DAGUESH) || stripNikud(s.he).replace(/ו/g, '') !== L.letter) {
+            fail('V26', onde, `a sílaba "${s.he}" não é ${L.letter} sem ponto`);
+          }
+        }
+        for (const w of S.palavras) {
+          if (!hasNikud(w.he)) fail('V26', onde, `"${w.he}" sem nikud`);
+          if (!temSom(w.he)) fail('V26', onde, `"${w.he}" não tem ${L.letter} sem ponto`);
+          for (const c of stripNikud(w.he)) {
+            const o = orderOf.get(c);
+            if (o == null || o > L.order) fail('V26', onde, `"${w.he}" usa ${c}, que ainda não foi ensinada`);
+          }
+          record(w.he, w.translit, onde);
+        }
+      } else if (S.tipo === 'ponto') {
+        /* O Sin: o som depende do LADO do ponto do ש. A lição vem no fim do
+           módulo 2, e as palavras só podem usar letras de lições anteriores. */
+        const L = letters.find(l => l.id === S.parId);
+        if (!L) { fail('V26', onde, `parId "${S.parId}" não é uma letra`); continue; }
+        const lado = [...S.he.normalize('NFC')].slice(1).join('');
+        if (stripNikud(S.he) !== L.letter || !lado) fail('V26', onde, `"${S.he}" não é ${L.letter} com um ponto`);
+        if (S.he.normalize('NFC') === S.parHe.normalize('NFC')) fail('V26', onde, 'o som e o par são o mesmo desenho');
+        const licaoDe = new Map();
+        for (const l of letters) { licaoDe.set(l.letter, l.lesson); if (l.finalForm) licaoDe.set(l.finalForm, l.lesson); }
+        for (const s of S.silabas) {
+          if (!s.he.normalize('NFC').startsWith(S.he.normalize('NFC')) && !s.he.normalize('NFC').includes(lado)) {
+            fail('V26', onde, `a sílaba "${s.he}" não tem ${S.he}`);
+          }
+        }
+        for (const w of S.palavras) {
+          if (!hasNikud(w.he)) fail('V26', onde, `"${w.he}" sem nikud`);
+          if (!w.he.normalize('NFC').includes(lado)) fail('V26', onde, `"${w.he}" não tem ${S.he}`);
+          for (const c of stripNikud(w.he)) {
+            const n = licaoDe.get(c);
+            if (n == null || n >= S.licao) fail('V26', onde, `"${w.he}" usa ${c}, que ainda não foi ensinada na lição ${S.licao}`);
+          }
+          record(w.he, w.translit, onde);
+        }
+      } else if (S.tipo === 'gerech') {
+        const L = letters.find(l => l.id === S.parId);
+        if (!L) { fail('V26', onde, `parId "${S.parId}" não é uma letra`); continue; }
+        if (S.he !== L.letter + GERESH) fail('V26', onde, `"${S.he}" deveria ser ${L.letter} + guéresh U+05F3`);
+        const final = L.finalForm ? L.finalForm + GERESH : null;
+        for (const w of S.palavras) {
+          if (!w.he.includes(S.he) && !(final && w.he.includes(final))) {
+            fail('V26', onde, `"${w.he}" não contém ${S.he}`);
+          }
+        }
+      } else {
+        fail('V26', onde, `tipo "${S.tipo}" desconhecido`);
+      }
+      if (!S.palavras.length || !S.checagem?.length) fail('V26', onde, 'sem palavras ou sem checagem');
+      /* As alternativas da checagem saem como texto puro: um {{…}} ali
+         aparece para o aluno com as chaves. Só o enunciado passa pelo Prose. */
+      for (const q of S.checagem || []) {
+        for (const o of q.opcoes || []) if (o.includes('{{')) fail('V26', onde, `alternativa com {{…}}: "${o}"`);
+      }
+    }
   }
 
 
@@ -831,6 +951,41 @@ export function validate({ checkDist = true } = {}) {
     }
   }
 
+  /* ── V27 - todo hebraico do dado-fonte em NFC ───────────────────────
+     O exportador normaliza, então o aluno nunca via a diferença; mas oito
+     sílabas de Kaf e Pe estavam com o daguesh antes da vogal no dado-fonte, e
+     todo código que compara o dado cru (o validate, os geradores que dizem
+     "o dado do curso está em NFC") herdava a mentira (auditoria de
+     01/10/2026, CONT-018). */
+  for (const f of ['letters', 'modules', 'sentences', 'textos', 'bonus', 'missoes', 'extras', 'real-world', 'biblia', 'nikud']) {
+    let dado;
+    try { dado = readJson(`data/${f}.json`); } catch { continue; }
+    const andar = (x, onde) => {
+      if (typeof x === 'string') {
+        if (/[\u0590-\u05FF]/.test(x) && x.normalize('NFC') !== x) fail('V27', `data/${f}.json${onde}`, `fora de NFC: ${JSON.stringify(x.slice(0, 30))}`);
+      } else if (Array.isArray(x)) x.forEach((v, i) => andar(v, `${onde}[${i}]`));
+      else if (x && typeof x === 'object') for (const [k, v] of Object.entries(x)) andar(v, `${onde}.${k}`);
+    };
+    andar(dado, '');
+  }
+
+  /* ── V24 - o daguesh só onde ele muda o som (12/10/2026) ───────────────
+     Decisão do dono do curso: no hebraico de hoje o ponto dentro da letra só
+     muda a pronúncia em בּ, כּ e פּ, e é só nelas que o curso o escreve. O
+     shuruk (וּ) e a letra sozinha de uma explicação
+     ficam; os textos bíblicos têm a pontuação tradicional e ficam de fora.
+     A regra é a de tools/daguesh.mjs, e `node tools/daguesh.mjs --aplicar`
+     conserta o que esta acusar. */
+  {
+    const andar = d => readdirSync(join(ROOT, d), { withFileTypes: true }).flatMap(e =>
+      e.isDirectory() ? andar(join(d, e.name)) : e.name.endsWith('.json') ? [join(d, e.name)] : []);
+    for (const f of andar('data')) {
+      if (foraDoDaguesh(f)) continue;
+      const w = dagueshFora(readFileSync(join(ROOT, f), 'utf8'));
+      if (w.length) fail('V24', f, `daguesh que não muda o som: ${[...new Set(w)].slice(0, 4).join(', ')} (rode tools/daguesh.mjs --aplicar)`);
+    }
+  }
+
   return { fails: fails.slice(), warns: warns.slice() };
 }
 
@@ -844,7 +999,7 @@ export function validate({ checkDist = true } = {}) {
    Spans nest (.he-list > .he, .he > b.he-mark), so this walks the tag stream
    and matches closings by depth rather than regexing for the nearest </span>. */
 function checkBidi(src, file) {
-  const HEB = /[֐-׿יִ-ﭏ]/;
+  const HEB = /[֐-׿יִ-ﭏ]/;
   const NEUTRAL = /[()\[\]{}:;/,<>«»|]/;
 
   /* Regions that hold no rendered body text. */

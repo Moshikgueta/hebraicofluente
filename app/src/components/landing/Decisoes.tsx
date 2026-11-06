@@ -3,8 +3,8 @@
 /* Três decisões que tornam o aprendizado mais leve.
  * ─────────────────────────────────────────────────────────────────────────
  * As três ideias pedagógicas que sustentam o curso - progressão gradual,
- * transliteração que se retira, retorno imediato - mostradas em vez de
- * afirmadas.
+ * transliteração que se retira, retorno imediato. As duas primeiras com um
+ * desenho; a terceira já se vê na aula aberta e na galeria de telas.
  *
  * ── por que o tom mudou ─────────────────────────────────────────────────
  * Estas mesmas três ideias já estavam na página /sobre, sob o título «Três
@@ -31,7 +31,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { He } from '@/components/hebrew/He';
 import { course } from '@/lib/content-publico';
-import { Container, H2, Lead, Reveal, Check } from './base';
+import { Container, H2, Lead, Reveal, Rubrica } from './base';
+import { tx } from '@/i18n/telas/venda-decisoes';
 
 /** Roda uma vez, quando o bloco entra na tela. Devolve `true` para animar. */
 function useNaTela<T extends HTMLElement>() {
@@ -114,7 +115,7 @@ function UmaDeCadaVez() {
         </ul>
       </div>
       <p className="font-ui text-[14px] text-ink-muted m-0 min-h-[20px]" aria-live="polite">
-        {acesas === 0 ? ' ' : `${acesas} de ${letras.length} · ${nomes}`}
+        {acesas === 0 ? ' ' : tx.acesas(acesas, letras.length, nomes)}
       </p>
     </div>
   );
@@ -126,9 +127,9 @@ function UmaDeCadaVez() {
    depende dela, e ver os três estágios lado a lado mostra que a retirada é
    gradual, não um corte. */
 const APOIO = [
-  { rotulo: 'Início', he: 'שָׁלוֹם', tr: 'shalóm', pt: 'olá, paz', nota: 'Tudo à mostra: a palavra, como se diz e o que quer dizer.' },
-  { rotulo: 'Meio', he: 'שָׁלוֹם', tr: 'sh… …', pt: 'olá, paz', nota: 'O apoio encolhe. Você lê e confere só o que ficou em dúvida.' },
-  { rotulo: 'Depois', he: 'שָׁלוֹם', tr: '', pt: 'olá, paz', nota: 'Você lê direto do hebraico. O apoio saiu porque já não fazia falta.' }
+  { rotulo: tx.inicio, he: 'שָׁלוֹם', tr: tx.shalomTr, pt: tx.shalomPt, nota: tx.notaInicio },
+  { rotulo: tx.meio, he: 'שָׁלוֹם', tr: 'sh… …', pt: tx.shalomPt, nota: tx.notaMeio },
+  { rotulo: tx.depois, he: 'שָׁלוֹם', tr: '', pt: tx.shalomPt, nota: tx.notaDepois }
 ] as const;
 
 function ApoioQueSai() {
@@ -156,7 +157,7 @@ function ApoioQueSai() {
            style={{ opacity: e.tr ? 1 : 0 }}>
           {e.tr || ' '}
         </p>
-        <p className="font-ui text-[14px] text-ink-muted m-0">«{e.pt}»</p>
+        <p className="font-ui text-[14px] text-ink-muted m-0">“{e.pt}”</p>
       </div>
 
       {/* `flex-wrap`, e não `inline-flex` rígido: três rótulos lado a lado
@@ -164,7 +165,7 @@ function ApoioQueSai() {
           largura útil do cartão é menor que isso - a linha empurrava o cartão
           e a página passava a rolar de lado. Com a quebra, os rótulos descem
           em vez de arrastar a página. */}
-      <div role="tablist" aria-label="Estágios do apoio"
+      <div role="tablist" aria-label={tx.estagios}
            className="flex flex-wrap gap-1 rounded-[12px] bg-[var(--sand)] border border-line p-1
                       w-fit max-w-full">
         {APOIO.map((x, k) => (
@@ -191,166 +192,73 @@ function ApoioQueSai() {
   );
 }
 
-/* ── 3 · o retorno imediato ──────────────────────────────────────────────
-   Dois botões e o que o curso responde a cada um. É a única das três em que
-   o visitante precisa agir para ver - e de propósito: a afirmação é sobre o
-   que acontece DEPOIS de responder. */
-function RetornoImediato() {
-  const [resp, setResp] = useState<'certo' | 'quase' | null>(null);
-
-  return (
-    <div className="grid gap-4">
-      <div className="rounded-[16px] border border-line bg-[var(--card)] p-4 grid gap-3">
-        <p className="font-ui text-[12.5px] font-semibold uppercase tracking-[.08em] text-ink-muted m-0">
-          Exercício · escolha
-        </p>
-        <p className="font-ui text-[16px] font-semibold text-ink m-0">
-          Qual destas é o Bet?
-        </p>
-        <div className="flex gap-2.5">
-          <button
-            type="button"
-            onClick={() => setResp('certo')}
-            aria-pressed={resp === 'certo'}
-            className={`flex-1 min-h-[62px] rounded-[13px] border-2 grid place-items-center
-                        transition-colors duration-200 motion-reduce:transition-none
-                        focus-visible:outline focus-visible:outline-2
-                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
-              ${resp === 'certo'
-                ? 'border-[var(--teal)] bg-[var(--teal-soft)]'
-                : 'border-line hover:bg-[var(--sand)]'}`}
-          >
-            <He size="word" tone={resp === 'certo' ? 'teal' : 'navy'}>ב</He>
-          </button>
-          <button
-            type="button"
-            onClick={() => setResp('quase')}
-            aria-pressed={resp === 'quase'}
-            className={`flex-1 min-h-[62px] rounded-[13px] border-2 grid place-items-center
-                        transition-colors duration-200 motion-reduce:transition-none
-                        focus-visible:outline focus-visible:outline-2
-                        focus-visible:outline-offset-2 focus-visible:outline-[var(--teal)]
-              ${resp === 'quase'
-                ? 'border-[#D9B872] bg-[var(--gold-soft)]'
-                : 'border-line hover:bg-[var(--sand)]'}`}
-          >
-            <He size="word" tone="navy">כ</He>
-          </button>
-        </div>
-      </div>
-
-      {/* Altura reservada, e cor nunca sozinha: ✓ e ✕ carregam a mesma
-          informação para quem não separa teal de âmbar. */}
-      <div className="min-h-[84px]" aria-live="polite">
-        {resp === null && (
-          <p className="font-ui text-[14px] leading-[1.55] text-ink-muted m-0">
-            Toque numa das duas para ver o que o curso responde.
-          </p>
-        )}
-        {resp === 'certo' && (
-          <div className="rounded-[13px] bg-[var(--teal-soft)] px-4 py-3 grid gap-1
-                          animate-pop motion-reduce:animate-none">
-            <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--teal-ink)]">
-              <Check size={16} color="var(--teal-ink)" /> Correto
-            </p>
-            <p className="font-ui text-[14px] leading-[1.55] text-[var(--teal-body)] m-0">
-              O Bet apoia a base inteira na linha e fecha o canto de cima à direita.
-            </p>
-          </div>
-        )}
-        {resp === 'quase' && (
-          <div className="rounded-[13px] bg-[var(--gold-soft)] px-4 py-3 grid gap-1
-                          animate-pop motion-reduce:animate-none">
-            <p className="flex items-center gap-2 m-0 font-ui font-bold text-[15px] text-[var(--gold-ink)]">
-              <span aria-hidden>✕</span> Quase. Veja por quê.
-            </p>
-            <p className="font-ui text-[14px] leading-[1.55] text-[var(--gold-body)] m-0">
-              Este é o Kaf: o canto de baixo é arredondado. O Bet tem a base reta e
-              um degrau à direita. Pode tentar de novo.
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 /* ── a seção ─────────────────────────────────────────────────────────── */
 const CARTOES = [
   {
     n: '01',
-    t: 'Uma letra de cada vez',
-    b: 'Você conhece a letra, pratica com ela e só então avança. O alfabeto inteiro na tela no primeiro dia não ensina - assusta.',
-    destaque: `${course.totalLetters} letras parecem difíceis. Uma letra por vez, não.`,
+    t: tx.c1t,
+    b: tx.c1b,
     visual: <UmaDeCadaVez />
   },
   {
     n: '02',
-    t: 'O apoio aparece e depois sai',
-    b: 'A transliteração ajuda no começo, e o objetivo nunca foi você depender dela. Ela vai diminuindo junto com o seu progresso, até você ler direto do hebraico.',
-    destaque: 'O apoio chega quando você precisa e sai quando você já anda sozinho.',
+    t: tx.c2t,
+    b: tx.c2b,
     visual: <ApoioQueSai />
   },
   {
     n: '03',
-    t: 'Retorno na hora, em cada passo',
-    b: 'Você não precisa esperar por um professor para saber se acertou. Quando erra, o curso diz onde olhar e devolve a tentativa. O exame final tem correção, gabarito, transcrição e critérios à vista.',
-    destaque: 'Você nunca termina uma etapa sem saber se entendeu de verdade.',
-    visual: <RetornoImediato />
+    t: tx.c3t,
+    b: tx.c3b,
+    /* Sem desenho desde 30/10/2026: a correção na hora já aparece, de verdade,
+       na aula aberta e na galeria de telas logo acima. */
+    visual: null
   }
 ] as const;
 
 export function Decisoes() {
   return (
     <section id="decisoes" aria-labelledby="decisoes-titulo">
-      <Container className="pt-16 sm:pt-24">
+      <Container className="pt-20 sm:pt-28">
         <Reveal>
-          <p className="font-ui text-[13px] font-bold uppercase tracking-[.11em] text-[var(--teal)] mb-3.5">
-            Como o curso foi pensado
-          </p>
+          <Rubrica letra="ד" className="mb-5">{tx.rubrica}</Rubrica>
           <H2 id="decisoes-titulo" className="mb-3 max-w-[22ch]">
-            Três decisões que tornam o aprendizado mais leve.
+            {tx.titulo}
           </H2>
         </Reveal>
         <Reveal delay={80}>
           <Lead className="mb-9">
-            Cada parte do curso foi organizada para evitar sobrecarga e deixar você
-            avançar com confiança.
+            {tx.lead}
           </Lead>
         </Reveal>
 
-        <ul className="grid gap-4 lg:grid-cols-3 list-none p-0 m-0">
-          {CARTOES.map((c, i) => (
-            <Reveal as="li" key={c.n} delay={i * 90}>
-              {/* `flex-col` e não `grid`: os três cartões têm quantidades
-                  diferentes de texto, e com grade o destaque de cada um
-                  parava numa altura diferente. Em coluna, o `mt-auto` do
-                  destaque empurra os três para a mesma linha de base - que é
-                  o que faz três cartões lado a lado lerem como um objeto só. */}
-              <article className="h-full rounded-[22px] border border-line bg-[var(--card)]
-                                  p-6 sm:p-7 flex flex-col gap-5">
-                <div className="grid gap-2.5">
-                  <p className="font-ui text-[12.5px] font-bold tracking-[.14em] text-[var(--teal)] m-0">
-                    {c.n}
-                  </p>
-                  <h3 className="font-display text-[21px] sm:text-[22px] font-semibold
-                                 tracking-[-0.02em] text-ink m-0">
+        {/* Três linhas, e não três cartões lado a lado. Em colunas, o cartão
+            de texto mais curto ficava com um vão no meio, esperando o mais
+            longo terminar; em linhas, cada decisão tem o argumento à
+            esquerda e a prova clicável à direita, e a página muda de ritmo
+            depois de duas seções em grade. */}
+        <ol className="list-none p-0 m-0 border-t border-line">
+          {CARTOES.map(c => (
+            <li key={c.n} className="border-b border-line">
+              {/* Mais curto desde 30/10/2026 (pedido do dono): o número na linha do
+                  título, sem a frase de destaque (repetia o texto) e sem o desenho
+                  do terceiro item. */}
+              <article className="grid gap-5 lg:gap-14 py-7 sm:py-10
+                                  lg:grid-cols-[minmax(0,1fr)_minmax(0,400px)] lg:items-start">
+                <div className="grid gap-2.5 content-start max-w-[52ch]">
+                  <h3 className="flex items-baseline gap-3 font-display text-[22px] sm:text-[26px] font-semibold leading-[1.15]
+                                 tracking-[-0.022em] text-ink m-0">
+                    <span aria-hidden className="font-display text-[15px] font-semibold tracking-[-0.01em]
+                                                 text-[var(--teal-ink)] tabular-nums">{c.n}</span>
                     {c.t}
                   </h3>
-                  <p className="font-ui text-[15.5px] leading-[1.6] text-ink-muted m-0">{c.b}</p>
+                  <p className="font-ui text-[16px] leading-[1.6] text-ink-muted m-0">{c.b}</p>
                 </div>
-
-                {c.visual}
-
-                <p className="font-display text-[16.5px] leading-[1.45] font-medium
-                              tracking-[-0.01em] text-ink m-0 mt-auto pt-4
-                              border-t border-[color:var(--line-soft)]">
-                  {c.destaque}
-                </p>
+                {c.visual && <div className="min-w-0">{c.visual}</div>}
               </article>
-            </Reveal>
+            </li>
           ))}
-        </ul>
+        </ol>
       </Container>
     </section>
   );

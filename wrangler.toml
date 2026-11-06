@@ -58,7 +58,30 @@ workers_dev = false
 # arquivos são servidos antes de o portão rodar, e a aula sai sem cookie.
 directory = "./app/out"
 binding = "ASSETS"
-run_worker_first = true
+# Uma lista, e não `true` (01/10/2026, auditoria PERF-001): `"/*"` manda tudo
+# para o Worker, e cada `"!..."` é uma exceção que o servidor de ativos
+# responde sozinho, sem invocar o Worker (não conta na cota do plano Free,
+# que custava de 47 a 70 invocações por carga de página). Só entra na lista
+# de exceções o que é PÚBLICO e IMUTÁVEL:
+#   /_next/static/*     chunks e CSS com o hash do conteúdo no nome
+#   /fonts/*            as fontes (next/font/local)
+#   /media/*            as imagens da capa e o og.jpg
+#   /tracado-amostra/*  os 2 traçados que a capa mostra (Álef e Shin)
+# /amostra-audio (os 7 clipes da capa) FICA no Worker de propósito: o
+# Safari só toca mp3 que responde 206 a `Range`, e o Worker garante a fatia
+# (worker/src/lib/range.js) em vez de depender do servidor de ativos.
+# NUNCA ponha aqui /audio nem /stroke-order: são conteúdo pago, atrás do
+# portão (worker/src/gate.js). Os cabeçalhos de segurança e de cache do que
+# sai sem Worker vêm de app/public/_headers (copiado para app/out na build).
+# Sintaxe (wrangler 4.x): array de globs; `!` nega; o wrangler recusa a
+# lista acima do limite de regras.
+run_worker_first = [
+  "/*",
+  "!/_next/static/*",
+  "!/fonts/*",
+  "!/media/*",
+  "!/tracado-amostra/*"
+]
 # O 404 do próprio site, com o layout do site - e não a página crua do
 # servidor.
 not_found_handling = "404-page"
@@ -67,7 +90,7 @@ not_found_handling = "404-page"
 # configurar. No Workers Paid, descomente para permitir o PBKDF2 forte
 # (ver PBKDF2_ITERATIONS em [vars]).
 # [limits]
-# cpu_ms = 200
+# cpu_ms = 300
 
 [[d1_databases]]
 binding = "DB"
@@ -97,6 +120,11 @@ crons = ["*/5 * * * *"]
 # link de recuperação de senha sai DAQUI, nunca do cabeçalho Host, que é
 # escolhido por quem chama (ver a nota em worker/src/api/auth.js).
 SITE_ORIGIN = "https://hebraicofluente.com.br"
+# A origem do site em inglês (PLANO-INGLES.md). Este Worker roda o
+# agendamento para as contas dos DOIS sites (lembretes, vencimento, estorno),
+# e os links de uma conta do site em inglês saem daqui (lib/idioma.js). Entra
+# quando o domínio em inglês existir; sem ela, os links ficam no SITE_ORIGIN.
+# SITE_ORIGIN_EN = "https://<dominio-em-ingles>"
 # De quem sai o e-mail de recuperação de senha. Precisa ser de um domínio
 # verificado na Resend: sem a verificação ela recusa a entrega com 403, e o
 # sintoma é "ninguém recebe o link" com tudo o mais funcionando.
@@ -104,7 +132,11 @@ EMAIL_FROM = "Hebraico Fluente <contato@hebraicofluente.com.br>"
 # Aparece dentro do e-mail, como "qualquer dúvida, escreva para". É o mesmo
 # endereço do rodapé do site (data/empresa.json) - repetido aqui porque o
 # Worker não lê o JSON do app.
-SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
+SUPPORT_EMAIL = "contato@hebraicofluente.com.br"
+# Para onde o Worker encaminha o que chega em contato@ (worker/src/email.js),
+# quando a regra do Email Routing manda contato@ "para o Worker". Precisa ser
+# um endereço de destino VERIFICADO no Email Routing da Cloudflare.
+CONTATO_DESTINO = "languageswithmoshik@gmail.com"
 # "1" usa o checkout de teste da Mercado Pago (não cobra nada). Em produção,
 # "0" - e a diferença é visível: o sandbox manda o comprador para uma tela
 # que não cobra, o que passa despercebido por semanas se ficar ligado sem querer.
@@ -122,6 +154,10 @@ SUPPORT_EMAIL = "languageswithmoshik@gmail.com"
 # sem nenhum sintoma; "0" faz a Mercado Pago recusar na hora, na primeira
 # tentativa, onde dá para ver. Entre falhar calado e falhar alto, alto.
 MP_SANDBOX = "0"
+# Quem pode gravar, substituir e remover pronúncias em /admin/gravar
+# (worker/src/api/audio.js). Separados por vírgula. Não é segredo: a conta
+# ainda exige a senha. Não criar um Secret com este nome no painel.
+ADMIN_EMAILS = "languageswithmoshik@gmail.com"
 # Custo do hash de senha. O padrão do código (25.000) foi dimensionado para o
 # limite de 10 ms de CPU do plano GRATUITO - acima disso o Worker é morto no
 # meio do cálculo e toda conta/login devolve 500.
@@ -130,4 +166,4 @@ MP_SANDBOX = "0"
 # para chegar ao valor recomendado pelo OWASP. Ninguém é deslogado: cada conta
 # guarda as iterações com que foi gravada, e se atualiza sozinha no primeiro
 # login. Ver a nota em worker/src/lib/crypto.js.
-# PBKDF2_ITERATIONS = "310000"
+# PBKDF2_ITERATIONS = "600000"

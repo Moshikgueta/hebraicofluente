@@ -40,12 +40,13 @@ const ctxNa = (ordem: number): Ctx => ({
 const rand = () => rng('frases');
 
 describe('as frases do curso', () => {
-  it('existem, e só entram depois da metade do alfabeto', () => {
-    /* Não é falha: uma frase precisa de verbo, e verbo precisa de letras que
-       só chegam no meio. Antes disso o curso tem sílabas e palavras. */
+  it('existem, e a primeira chega com o Yod', () => {
+    /* Até 28/10/2026 a primeira frase vinha na letra 11. As frases curtas sem
+       verbo (מִי אַתָה?, הִנֵה הַיָם), aprovadas pelo dono, trouxeram a leitura
+       de frase para a letra 6. Antes disso o curso tem sílabas e palavras. */
     expect(sentencesUpTo(22).length).toBeGreaterThanOrEqual(12);
-    expect(sentencesUpTo(10)).toHaveLength(0);
-    expect(sentencesUpTo(12).length).toBeGreaterThan(0);
+    expect(sentencesUpTo(5)).toHaveLength(0);
+    expect(sentencesUpTo(6).length).toBeGreaterThan(0);
   });
 
   it('cada frase só usa letras já ensinadas na ordem em que aparece', () => {
@@ -69,7 +70,7 @@ describe('as frases do curso', () => {
   it('da primeira frase em diante, TODA letra destrava uma frase nova', () => {
     /* Sem isto a promessa "hoje você lê uma frase que ontem não lia" vale só
        em algumas aulas, e o exercício cai de volta numa frase repetida. As
-       seis letras que ficavam de fora eram Záyin, Chet, Tet, Tsadi, Qof e Pê -
+       seis letras que ficavam de fora eram Záyin, Chet, Tet, Tsadi, Kuf e Pê -
        e o Pê, a última letra do curso, fechava o alfabeto sem nada novo. */
     const inicio = Math.min(...sentencesUpTo(22).map(f => f.after));
     const vazias = letras

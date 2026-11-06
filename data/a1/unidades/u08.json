@@ -1,0 +1,527 @@
+{
+  "n": 8,
+  "revisado": true,
+  "tituloPt": "Vamos conversar",
+  "objetivoPt": "Sustentar uma conversa curta inteira com alguém novo.",
+  "situacaoPt": "A Maya apresenta a amiga Shira ao Dani. Eles conversam, combinam um café e trocam telefones.",
+  "palavras": [
+    {
+      "he": "לִי",
+      "translit": "li",
+      "pt": "para mim"
+    },
+    {
+      "he": "לְךָ",
+      "translit": "lechá",
+      "pt": "para você (m)"
+    },
+    {
+      "he": "לָךְ",
+      "translit": "lach",
+      "pt": "para você (f)"
+    },
+    {
+      "he": "לוֹ",
+      "translit": "lo",
+      "pt": "para ele"
+    },
+    {
+      "he": "לָה",
+      "translit": "la",
+      "pt": "para ela"
+    },
+    {
+      "he": "לָנוּ",
+      "translit": "lánu",
+      "pt": "para nós"
+    },
+    {
+      "he": "לָכֶם",
+      "translit": "lachém",
+      "pt": "para vocês (homens ou grupo misto)"
+    },
+    {
+      "he": "לָכֶן",
+      "translit": "lachén",
+      "pt": "para vocês (só mulheres)"
+    },
+    {
+      "he": "לָהֶם",
+      "translit": "lahém",
+      "pt": "para eles"
+    },
+    {
+      "he": "לָהֶן",
+      "translit": "lahén",
+      "pt": "para elas"
+    },
+    {
+      "he": "שֶׁלָכֶם",
+      "translit": "shelachém",
+      "pt": "de vocês (homens ou grupo misto)"
+    },
+    {
+      "he": "שֶׁלָכֶן",
+      "translit": "shelachén",
+      "pt": "de vocês (só mulheres)"
+    },
+    {
+      "he": "שֶׁלָהֶם",
+      "translit": "shelahém",
+      "pt": "deles"
+    },
+    {
+      "he": "שֶׁלָהֶן",
+      "translit": "shelahén",
+      "pt": "delas"
+    },
+    {
+      "he": "אִתִי",
+      "translit": "ití",
+      "pt": "comigo"
+    },
+    {
+      "he": "אִתְךָ",
+      "translit": "itchá",
+      "pt": "contigo (m)"
+    },
+    {
+      "he": "אִתָךְ",
+      "translit": "itách",
+      "pt": "contigo (f)"
+    },
+    {
+      "he": "אִתוֹ",
+      "translit": "itó",
+      "pt": "com ele"
+    },
+    {
+      "he": "אִתָה",
+      "translit": "itá",
+      "pt": "com ela"
+    },
+    {
+      "he": "אִתָנוּ",
+      "translit": "itánu",
+      "pt": "com a gente"
+    },
+    {
+      "he": "אֵיךְ?",
+      "translit": "eich?",
+      "pt": "como?"
+    },
+    {
+      "he": "מָתַי?",
+      "translit": "matái?",
+      "pt": "quando?"
+    },
+    {
+      "he": "לָמָה?",
+      "translit": "láma?",
+      "pt": "por quê?"
+    },
+    {
+      "he": "אֵיךְ קוֹרְאִים לְךָ?",
+      "translit": "eich korím lechá?",
+      "pt": "como você se chama? (falando com um homem)"
+    },
+    {
+      "he": "אֵיךְ קוֹרְאִים לָךְ?",
+      "translit": "eich korím lach?",
+      "pt": "como você se chama? (falando com uma mulher)"
+    },
+    {
+      "he": "קוֹרְאִים לִי…",
+      "translit": "korím li…",
+      "pt": "eu me chamo…"
+    },
+    {
+      "he": "מִסְפָּר",
+      "translit": "mispár",
+      "pt": "número"
+    },
+    {
+      "he": "שָׁם",
+      "translit": "sham",
+      "pt": "lá"
+    },
+    {
+      "he": "בְּעָיָה",
+      "translit": "beayá",
+      "pt": "problema"
+    },
+    {
+      "he": "אֵין בְּעָיָה",
+      "translit": "ein beayá",
+      "pt": "sem problema"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "O לְ com finais, completo",
+      "textoPt": "É o \"para\" grudado: כּוֹתֵב לְךָ (escrevo para você), יֵשׁ לָהֶם (eles têm)."
+    },
+    {
+      "tituloPt": "O mesmo desenho serve para שֶׁל",
+      "textoPt": "לָכֶם → שֶׁלָכֶם, לָהֶם → שֶׁלָהֶם. Quem sabe uma tabela, sabe a outra."
+    },
+    {
+      "tituloPt": "\"Comigo\" é uma palavra só: אִתִי",
+      "textoPt": "עִם + אֲנִי = אִתִי.",
+      "erroPt": "Dizer עִם אֲנִי (\"com eu\"). O português faz a mesma fusão: \"com + mim\" vira \"comigo\"."
+    },
+    {
+      "tituloPt": "Como se pergunta o nome de verdade?",
+      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? (\"como te chamam?\"). O מָה שִׁמְךָ? da Unidade 1 está certo, mas é mais formal.",
+      "erroPt": "Responder קוֹרְאִים אֲנִי… A resposta usa o לְ: קוֹרְאִים לִי דָנִי, como o \"me\" de \"me chamo\"."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Maya apresenta Shira ao Dani",
+    "linhas": [
+      {
+        "quem": "Maya",
+        "he": "דָנִי, זֹאת שִׁירָה. הִיא לוֹמֶדֶת אִתִי.",
+        "translit": "Dáni, zot Shíra. hi lomédet ití.",
+        "pt": "Dani, esta é a Shira. Ela estuda comigo."
+      },
+      {
+        "quem": "Dani",
+        "he": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְ?",
+        "translit": "naím meód, Shíra! meéifo at?",
+        "pt": "Muito prazer, Shira! De onde você é?"
+      },
+      {
+        "quem": "Shira",
+        "he": "אֲנִי מֵחֵיפָה, אֲבָל אֲנִי גָרָה בְּתֵל אָבִיב.",
+        "translit": "aní meCháifa, avál aní gará beTél Avív.",
+        "pt": "Sou de Haifa, mas moro em Tel Aviv."
+      },
+      {
+        "quem": "Dani",
+        "he": "יֵשׁ לָךְ מִשְׁפָּחָה בְּחֵיפָה?",
+        "translit": "yesh lach mishpachá beCháifa?",
+        "pt": "Você tem família em Haifa?"
+      },
+      {
+        "quem": "Shira",
+        "he": "כֵּן, הַהוֹרִים שֶׁלִי גָרִים שָׁם.",
+        "translit": "ken, hahorím shelí garím sham.",
+        "pt": "Sim, os meus pais moram lá."
+      },
+      {
+        "quem": "Maya",
+        "he": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה. אַתָה רוֹצֶה קָפֶה?",
+        "translit": "anáchnu shotót kafé. atá rotsé kafé?",
+        "pt": "Nós estamos tomando um café. Você quer um café?"
+      },
+      {
+        "quem": "Dani",
+        "he": "כֵּן! אֲבָל רַק עַד שָׁלוֹשׁ. בְּשָׁלוֹשׁ אֲנִי עוֹבֵד.",
+        "translit": "ken! avál rak ad shalósh. beshalósh aní ovéd.",
+        "pt": "Quero! Mas só até as três. Às três eu trabalho."
+      },
+      {
+        "quem": "Shira",
+        "he": "אֵין בְּעָיָה!",
+        "translit": "ein beayá!",
+        "pt": "Sem problema!"
+      },
+      {
+        "quem": "Dani",
+        "he": "שִׁירָה, מָה מִסְפַּר הַטֶלֶפוֹן שֶׁלָךְ?",
+        "translit": "Shíra, ma mispár hatélefon shelách?",
+        "pt": "Shira, qual é o número do seu telefone?"
+      },
+      {
+        "quem": "Shira",
+        "he": "אֶפֶס חֲמִשִׁים וּשְׁתַיִם…",
+        "translit": "éfes chamishím ushtáyim…",
+        "pt": "Zero cinquenta e dois…"
+      },
+      {
+        "quem": "Maya",
+        "he": "דָנִי!",
+        "translit": "Dáni!",
+        "pt": "Dani!"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "מִסְפַּר הַטֶלֶפוֹן",
+        "translit": "mispár hatélefon",
+        "pt": "o número do telefone (expressão fixa)"
+      },
+      {
+        "he": "שִׁירָה",
+        "translit": "Shíra",
+        "pt": "Shira (nome)"
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Números de telefone",
+      "textoPt": "Em Israel, todo celular começa com 05, e o número inteiro tem dez dígitos. Ao passar o número, o israelense fala os dígitos um por um ou em pares: אֶפֶס חֲמִשִׁים וּשְׁתַיִם, ou אֶפֶס חָמֵשׁ שְׁתַיִם… E o WhatsApp é o caminho mais comum para continuar a conversa."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "\"Como te chamam?\"",
+      "textoPt": "אֵיךְ קוֹרְאִים לְךָ? quer dizer, palavra por palavra, \"como chamam a você?\". Parecido com o português \"como te chamam?\": o nome é o que os outros usam para chamar a gente."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu uso לְ, שֶׁל e עִם com as terminações (לִי, שֶׁלָנוּ, אִתִי…).",
+    "Eu pergunto quando, por quê e como.",
+    "Eu levo uma conversa inteira com alguém que acabei de conhecer."
+  ],
+  "exercicios": [
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "לְ",
+      "linhas": [
+        [
+          "nós",
+          "לנו"
+        ],
+        [
+          "vocês (homens ou grupo misto)",
+          "לכם"
+        ],
+        [
+          "eles",
+          "להם"
+        ],
+        [
+          "elas",
+          "להן"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Eles têm um cachorro\"",
+      "opcoes": [
+        "יֵשׁ לָהֶם כֶּלֶב",
+        "יֵשׁ לָהֶן כֶּלֶב"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Falando com a Maya e a Noa: \"a casa de vocês\"",
+      "opcoes": [
+        "הַבַּיִת שֶׁלָכֶן",
+        "הַבַּיִת שֶׁלָכֶם"
+      ],
+      "certa": 0,
+      "porque": "Para um grupo só de mulheres, o padrão é שֶׁלָכֶן. Na fala, muitos israelenses usam שֶׁלָכֶם para qualquer grupo."
+    },
+    {
+      "t": "montar",
+      "pt": "Eu escrevo para ela (fala um homem)",
+      "palavras": [
+        "אֲנִי",
+        "כּוֹתֵב",
+        "לָה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Os pais deles moram no Rio\"",
+      "antes": "הַהוֹרִים",
+      "depois": "גָרִים בְּרִיוֹ",
+      "respostas": [
+        "שלהם"
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "\"Comigo\"",
+      "opcoes": [
+        "אִתִי",
+        "עִם אֲנִי"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "הִיא לוֹמֶדֶת עִם אֲנִי",
+      "respostas": [
+        "היא לומדת איתי",
+        "היא לומדת אתי"
+      ],
+      "porque": "עִם + אֲנִי = אִתִי."
+    },
+    {
+      "t": "escolha",
+      "q": "O Dani é convidado. Como se diz \"com a gente\"?",
+      "opcoes": [
+        "אִתָנוּ",
+        "אִתָם"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ligar",
+      "q": "Ligue cada pergunta ao que ela quer dizer.",
+      "pares": [
+        [
+          "אֵיךְ",
+          "como"
+        ],
+        [
+          "מָתַי",
+          "quando"
+        ],
+        [
+          "לָמָה",
+          "por quê"
+        ],
+        [
+          "כַּמָה",
+          "quanto"
+        ],
+        [
+          "אֵיפֹה",
+          "onde"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "A resposta é \"às oito\". Qual foi a pergunta?",
+      "opcoes": [
+        "מָתַי?",
+        "אֵיפֹה?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "A resposta é \"em Haifa\". Qual foi a pergunta?",
+      "opcoes": [
+        "אֵיפֹה?",
+        "מָתַי?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "Como se pergunta o nome na rua, a uma mulher?",
+      "opcoes": [
+        "אֵיךְ קוֹרְאִים לָךְ?",
+        "אֵיךְ קוֹרְאִים לְךָ?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "erro",
+      "q": "Ache o erro e escreva a frase certa.",
+      "errada": "קוֹרְאִים אֲנִי נֹעָה",
+      "respostas": [
+        "קוראים לי נועה"
+      ],
+      "porque": "A resposta usa o לְ: קוֹרְאִים לִי."
+    },
+    {
+      "t": "ouvir",
+      "he": "אֵין לָהֶן בְּעָיָה",
+      "q": "O que a pessoa disse?",
+      "opcoes": [
+        "elas não têm problema",
+        "eles não têm problema"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "מָתַי אַתָה עוֹבֵד?",
+      "q": "O que a pessoa perguntou?",
+      "opcoes": [
+        "quando você trabalha?",
+        "onde você trabalha?"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: de onde é a Shira?",
+      "opcoes": [
+        "de Haifa",
+        "de Tel Aviv"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: onde ela mora?",
+      "opcoes": [
+        "em Tel Aviv",
+        "em Haifa"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "vf",
+      "q": "No diálogo, o Dani pode ficar até as quatro.",
+      "certa": false,
+      "porque": "רַק עַד שָׁלוֹשׁ."
+    },
+    {
+      "t": "escolha",
+      "q": "No diálogo: por que a Maya diz דָנִי! no fim?",
+      "opcoes": [
+        "porque ele pediu o telefone da Shira",
+        "porque ele está atrasado"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "escrever",
+      "pt": "de vocês (homens ou grupo misto)",
+      "respostas": [
+        "שלכם"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "com ele",
+      "respostas": [
+        "איתו",
+        "אתו"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Nós estamos tomando um café. Você quer um café?\"",
+      "antes": "אֲנַחְנוּ שׁוֹתוֹת קָפֶה.",
+      "depois": "רוֹצֶה קָפֶה?",
+      "respostas": [
+        "אתה"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Shira, qual é o número do seu telefone?\"",
+      "antes": "שִׁירָה, מָה",
+      "depois": "הַטֶלֶפוֹן שֶׁלָךְ?",
+      "respostas": [
+        "מספר"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Muito prazer, Shira! De onde você é?\"",
+      "exemplo": "נָעִים מְאֹד, שִׁירָה! מֵאֵיפֹה אַתְ?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Escreva uma apresentação sua de 5 frases: nome (com קוֹרְאִים לִי), de onde é, onde mora, o que faz, e alguém da família.",
+      "exemplo": "קוֹרְאִים לִי דָנִי. אֲנִי מִבְּרָזִיל. אֲנִי גָר בְּרִיוֹ. אֲנִי עוֹבֵד. יֵשׁ לִי אָחוֹת."
+    }
+  ]
+}

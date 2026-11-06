@@ -15,8 +15,10 @@ export type EventName =
   | 'quiz_completed'
   | 'review_started' | 'review_completed'
   | 'checkpoint_started' | 'checkpoint_completed'
+  | 'mission_started' | 'mission_completed'
   | 'streak_updated' | 'achievement_unlocked'
   | 'first_reached'
+  | 'loja_compra'
   | 'gym_started' | 'gym_completed'
   /* Match, Blast e Teste. `jogo` diz qual. */
   | 'game_started' | 'game_completed'
@@ -36,7 +38,7 @@ export type EventName =
 export type EventProps = {
   /** Qual jogo da academia. Os três primeiros saem do baralho; os três de
    *  22/09/2026 saem do motor de reconhecimento (lib/engine/jogos.ts). */
-  jogo?: 'match' | 'blast' | 'teste' | 'caca' | 'batalha' | 'cursiva';
+  jogo?: 'match' | 'blast' | 'teste' | 'caca' | 'batalha' | 'cursiva' | 'pomar' | 'montar' | 'ouvir';
   letterId?: string;
   itemId?: string;
   checkpointId?: string;
@@ -61,6 +63,10 @@ export type EventProps = {
   words?: number;
   /** O tipo do exercício respondido, para o erro por tipo no painel. */
   kind?: string;
+  /** Etapa concluída pela primeira vez (e não refeita). */
+  primeira?: boolean;
+  /** A faixa de tempo ativo da etapa (lib/tempo-de-etapa.ts), nunca os segundos. */
+  faixa?: number;
 };
 
 export type LearningEvent = { name: EventName; props: EventProps; at: number };

@@ -1,0 +1,32 @@
+# Cabeçalhos do que o servidor de ativos da Cloudflare responde SEM o Worker.
+#
+# Desde 01/10/2026 o `run_worker_first` do wrangler.toml é uma lista, e os
+# caminhos abaixo são as exceções dela: o pedido nem invoca o Worker, então
+# `blindar` (worker/src/worker.js) não os vê. O que o Worker poria neles vem
+# daqui: nosniff, HSTS e, como são imutáveis (hash no nome ou arquivo que não
+# muda sem mudar a build), um ano de cache. Formato do Cloudflare Workers
+# Assets / Pages: um caminho por bloco, globs, cabeçalhos indentados.
+#
+# O Next copia app/public para app/out na build; este arquivo precisa estar
+# em app/out/_headers na publicação. Nada pago entra aqui: /audio e
+# /stroke-order continuam atrás do portão e nunca saem sem o Worker.
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/media/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/tracado-amostra/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

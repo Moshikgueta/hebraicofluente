@@ -24,6 +24,7 @@ import { useProgress } from '@/lib/state/store';
 import { MARCOS_DE_LEITURA, marcoId } from '@/lib/engine/palavras';
 import { track } from '@/lib/analytics';
 import { leituraDe, type Leitura } from './leitura';
+import { tx } from '@/i18n/telas/motor-pequenos';
 
 export { leituraDe, letrasConcluidas, novasCom, type Leitura } from './leitura';
 
@@ -53,6 +54,6 @@ export function useLeitura(): Leitura {
 
 /** A frase do número, sem exagero e no singular quando é um. */
 export const fraseDeLeitura = (n: number): string =>
-  n === 0 ? 'Ainda nenhuma palavra - ela chega com a próxima letra.'
-  : n === 1 ? 'Você já consegue ler 1 palavra em hebraico.'
-  : `Você já consegue ler ${n} palavras em hebraico.`;
+  n === 0 ? tx.leituraNenhuma
+  : n === 1 ? tx.leituraUma
+  : tx.leituraVarias(n);

@@ -19,6 +19,10 @@
 
 import type { Exercise } from './exercises';
 import { rng, shuffled, take, type Rand } from './rng';
+import { analisar } from './posicao-do-ponto';
+import { stripNikud } from '@/lib/hebrew';
+import { fmt } from '@/i18n';
+import { tx } from '@/i18n/telas/motor-extras';
 
 export type DageshLetter = {
   id: string;
@@ -49,6 +53,43 @@ export type UnpointedWord = {
   bare: string; pointed: string; translit: string; pt: string; audioId: string;
 };
 
+/** Uma lição de som: Vet, Chaf, Fe (a letra sem daguesh), Sin (o ponto do
+ *  ש à esquerda) ou Tch, Dj, J (a letra com guéresh). Ver data/extras.json →
+ *  `sons` e lib/sons.ts. */
+export type SomLicao = {
+  id: string;
+  tipo: 'daguesh' | 'ponto' | 'gerech';
+  modulo: number;
+  licao: number;
+  /** A lição que vem logo antes no caminho: a letra (bet) ou outro som (tch). */
+  depoisDe: string | null;
+  namePt: string;
+  he: string;
+  som: string;
+  comoPt: string;
+  parHe: string;
+  parNomePt: string;
+  parSom: string;
+  parId: string;
+  /** O sinal que distingue, dito em palavras: "sem o ponto", "ponto à esquerda". */
+  rotuloPt: string;
+  parRotuloPt: string;
+  finalHe: string | null;
+  introPt: string;
+  articulacao: import('@/lib/content-publico').Articulacao;
+  regraPt: string;
+  irmaoPt: string;
+  /** A curiosidade da lição, quando ela tem uma (19/10/2026). */
+  curiosidade?: { tituloPt: string; textoPt: string };
+  erro: { wrong: string; right: string; why: string };
+  audioId: string;
+  silabas: { he: string; translit: string; audioId: string }[];
+  parSilabas: { he: string; translit: string; audioId: string }[];
+  palavras: { he: string; translit: string; pt: string; audioId: string }[];
+  parPalavras: { he: string; translit: string; pt: string; audioId: string }[];
+  checagem: import('@/lib/content-publico').ItemCompreensao[];
+};
+
 export type Extras = {
   dagesh: { titlePt: string; rulePt: string; warningPt: string; letters: DageshLetter[] };
   finals: FinalForm[];
@@ -67,6 +108,7 @@ export type Extras = {
     titlePt: string; signNamePt: string; signHe: string;
     introPt: string; signNotePt: string; letters: GerechLetter[];
   };
+  sons: SomLicao[];
 };
 
 /* The extra kinds, added to the shared Exercise union via the same shape the
@@ -86,11 +128,26 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
   const out: Exercise[] = [];
 
   /* One "which sound does it have here?" per word, hard and soft interleaved
-     so the answer is never predictable from position in the list. */
+     so the answer is never predictable from position in the list.
+
+     SEM NIKUD (27/10/2026, pedido do dono: "na parte sem nikud ainda tem
+     nikud"). O fecho é a etapa "Sem nikud" da lição 23, e esta pergunta
+     mostrava a palavra pontuada, com o daguesh à vista: a resposta estava
+     desenhada. Agora a palavra vem sem ponto nenhum, com o significado como
+     pista, e o aluno decide pelo que a lição 21 ensinou: no começo e depois
+     de consoante, o som forte; depois de vogal, o suave. Por isso só entram as
+     palavras em que essa regra acerta e a letra aparece uma vez só: as do
+     ponto que dobra (אַבָּא) não teriam resposta sem os pontos. A forma
+     pontuada aparece na explicação, depois de responder. */
+  const base = (hard: string) => hard.normalize('NFD')[0]!;
+  const legivelSemPontos = (he: string, letra: string): boolean => {
+    const a = analisar(he).filter(x => x.letra.he === letra);
+    return a.length === 1 && a[0]!.previsto === a[0]!.real;
+  };
   const rows = extras.dagesh.letters.flatMap(D => [
     ...D.hardWords.map(w => ({ D, w, isHard: true })),
     ...D.softWords.map(w => ({ D, w, isHard: false }))
-  ]);
+  ]).filter(r => legivelSemPontos(r.w.he, base(r.D.hard)));
 
   for (const [i, row] of shuffled(rows, rand).entries()) {
     const correct = row.isHard ? row.D.hardPt : row.D.softPt;
@@ -100,14 +157,14 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-dag-${row.D.id}-${i}`,
       kind: 'word-meaning',
       letterId: row.D.id, skill: 'ler',
-      promptPt: `Nesta palavra, a letra tem que som?`,
-      he: row.w.he,
+      promptPt: fmt(tx.dagueshPergunta, { sentido: row.w.pt, nome: row.D.namePt }),
+      he: stripNikud(row.w.he),
       options,
       answer,
-      explainPt: `${row.w.he} - ${row.w.translit} - ${row.w.pt}. ` +
+      explainPt: fmt(tx.palavraExplica, { he: row.w.he, leitura: row.w.translit, sentido: row.w.pt }) +
         (row.isHard
-          ? 'Com daguesh: no começo da palavra ou depois de consoante.'
-          : 'Sem daguesh: entre vogais, ou no fim da palavra.')
+          ? tx.dagueshExplicaForte
+          : tx.dagueshExplicaSuave)
     });
   }
 
@@ -119,11 +176,11 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-fin-${i}`,
       kind: 'final-form',
       letterId: 'mod6', skill: 'rec',
-      promptPt: `Qual destas é a forma final de ${F.namePt.replace(' sofit', '')}?`,
+      promptPt: fmt(tx.finalPergunta, { nome: F.namePt.replace(' sofit', '') }),
       letter: F.base,
       options,
       answer,
-      explainPt: `${F.base} vira ${F.fin} no fim da palavra - como em ${F.word} (${F.translit}), "${F.pt}".`
+      explainPt: fmt(tx.finalExplica, { base: F.base, final: F.fin, palavra: F.word, leitura: F.translit, sentido: F.pt })
     });
   }
 
@@ -135,11 +192,11 @@ export function buildDageshQuiz(extras: Extras, count = 10, seed = 'mod6'): Exer
       id: `mod6-unp-${i}`,
       kind: 'word-meaning',
       letterId: 'mod6', skill: 'ler',
-      promptPt: 'Sem nikud, como num jornal. O que está escrito?',
+      promptPt: tx.semNikudPergunta,
       he: u.bare,
       options,
       answer,
-      explainPt: `${u.bare} é ${u.pointed} - ${u.translit} - "${u.pt}".`
+      explainPt: fmt(tx.semNikudExplica, { nua: u.bare, pontuada: u.pointed, leitura: u.translit, sentido: u.pt })
     });
   }
 
@@ -160,22 +217,22 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       id: `mod7-snd-${i}`,
       kind: 'syllable-reading',
       letterId: 'mod7', skill: 'som',
-      promptPt: 'Que som esta letra tem?',
+      promptPt: tx.gerechPergunta,
       he: g.he,
       options,
       answer,
-      explainPt: `${g.he} é ${g.pt} - ${g.likePt}. Sem o gerech, ${g.base} é ${g.basePt}.`
+      explainPt: fmt(tx.gerechExplica, { he: g.he, som: g.pt, como: g.likePt, base: g.base, baseSom: g.basePt })
     });
     const bare = optionsWith(g.basePt, G.map(x => x.pt), rand);
     out.push({
       id: `mod7-base-${i}`,
       kind: 'syllable-reading',
       letterId: 'mod7', skill: 'som',
-      promptPt: 'E sem o sinal - que som ela tem?',
+      promptPt: tx.semSinalPergunta,
       he: g.base,
       options: bare.options,
       answer: bare.answer,
-      explainPt: `Sem o gerech, ${g.base} é ${g.basePt}. Com ele, ${g.he} é ${g.pt}.`
+      explainPt: fmt(tx.semSinalExplica, { base: g.base, baseSom: g.basePt, he: g.he, som: g.pt })
     });
   }
 
@@ -188,11 +245,11 @@ export function buildGerechQuiz(extras: Extras, count = 8, seed = 'mod7'): Exerc
       id: `mod7-word-${i}`,
       kind: 'word-meaning',
       letterId: 'mod7', skill: 'ler',
-      promptPt: 'Leia em voz alta. Que palavra é esta?',
+      promptPt: tx.palavraPergunta,
       he: w.he,
       options,
       answer,
-      explainPt: `${w.he} - "${w.pt}". O ${g.he} faz o som ${g.pt}.`
+      explainPt: fmt(tx.palavraGerechExplica, { he: w.he, sentido: w.pt, letra: g.he, som: g.pt })
     });
   }
 

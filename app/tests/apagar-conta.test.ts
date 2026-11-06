@@ -8,7 +8,7 @@
  *
  *   · o DADO PESSOAL tem de sumir - e-mail, nome, senha, progresso, acesso;
  *   · o REGISTRO DE VENDA tem de ficar, porque nota fiscal é obrigação de
- *     quem vende e a própria LGPD prevê a guarda (art. 16, II).
+ *     quem vende e a própria LGPD prevê a guarda (art. 16, I).
  *
  * Um apagamento que leva o pedido junto quebra a contabilidade. Um que deixa
  * o e-mail para trás não apaga nada. Os dois erros passam despercebidos, e
@@ -49,7 +49,7 @@ async function alunoDeVerdade(senha = 'senha-do-aluno-1') {
   const email = 'aluno@exemplo.com.br';
 
   const r = await auth.signup({
-    request: pedido(`${SITE}/api/auth/signup`, { name: 'Daniel', email, password: senha }),
+    request: pedido(`${SITE}/api/auth/signup`, { aceitouTermos: true, declarouIdade: true, name: 'Daniel', email, password: senha }),
     env, ctx
   });
   expect(r.status).toBe(200);
@@ -147,7 +147,7 @@ describe('apagar a conta leva a PESSOA', () => {
        guardar o endereço: com ele lá, voltar seria impossível para sempre. */
     const r = await auth.signup({
       request: pedido(`${SITE}/api/auth/signup`,
-        { name: 'Daniel de novo', email, password: 'outra-senha-9876' }),
+        { aceitouTermos: true, declarouIdade: true, name: 'Daniel de novo', email, password: 'outra-senha-9876' }),
       env, ctx
     });
     expect(r.status).toBe(200);

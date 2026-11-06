@@ -1,0 +1,53 @@
+name: Fotos das missões
+# Busca no Wikimedia Commons as fotos candidatas das missões e do Hebraico na
+# rua e as devolve ao ramo que pediu, em fotos-candidatas/missoes/ e
+# fotos-candidatas/rua/ (tools/fotos-missoes-buscar.mjs).
+# Roda quando o pedido muda num ramo do Claude, ou à mão. Nada vai ao ar daqui.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['tools/fotos-missoes-pedido.json', 'tools/fotos-rua-pedido.json']
+permissions:
+  contents: write
+jobs:
+  buscar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      # Só busca o pedido que mudou neste push (à mão, os dois): a busca das
+      # missões não refaz tudo quando só o da rua mudou.
+      - name: Qual pedido mudou
+        id: mudou
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "missoes=1" >> "$GITHUB_OUTPUT"; echo "rua=1" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          # Contra a main, e não contra o commit anterior: o ramo recomeçado a
+          # partir da main, com o merge que mexeu no pedido por cima, não é um
+          # pedido novo (foi o que trouxe as candidatas de volta em 28/10/2026).
+          git fetch -q origin main
+          m=$(git diff --name-only origin/main HEAD -- tools/fotos-missoes-pedido.json)
+          r=$(git diff --name-only origin/main HEAD -- tools/fotos-rua-pedido.json)
+          [ -n "$m" ] && echo "missoes=1" >> "$GITHUB_OUTPUT"
+          [ -n "$r" ] && echo "rua=1" >> "$GITHUB_OUTPUT"
+          exit 0
+      - if: steps.mudou.outputs.missoes == '1'
+        run: node tools/fotos-missoes-buscar.mjs
+      # O Hebraico na rua (28/10/2026): placas e letreiros, em fotos-candidatas/rua/.
+      - if: steps.mudou.outputs.rua == '1'
+        run: node tools/fotos-missoes-buscar.mjs tools/fotos-rua-pedido.json rua r
+      - name: Devolver as candidatas ao ramo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Nenhum pedido mudou de verdade (o push só passou pelo arquivo): nada a devolver.
+          [ -d fotos-candidatas ] || exit 0
+          git add fotos-candidatas
+          git commit -m "Fotos candidatas (Wikimedia Commons)" || exit 0
+          git push

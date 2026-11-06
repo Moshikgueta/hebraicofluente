@@ -135,6 +135,13 @@ describe('dinheiro', () => {
        um dia o pré-lançamento acabar, este caso cai junto com a promoção -
        e é para cair, porque a frase "depois passa a custar X" sai da tela no
        mesmo movimento. */
+    /* Desde 23/10/2026 o pré-lançamento não tem data (decisão do dono): o
+       preço oficial fica no catálogo até a virada manual (virar-preco.yml),
+       que o põe como cobrado e tira a âncora. */
+    if (c.price.listBrl === null) {
+      expect(ancora(c.price)).toBeNull();
+      return;
+    }
     expect(c.price.brl).toBeLessThan(c.price.listBrl!);
     expect(ancora(c.price)).toBe(c.price.listBrl);
   });

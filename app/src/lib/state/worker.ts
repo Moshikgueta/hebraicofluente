@@ -27,6 +27,7 @@ import { EMPTY_STATE, type LearnerState, type ProgressStore } from './types';
 import { LocalProgressStore } from './local';
 import { migrate } from './migrate';
 import { mergeStates, sameProgress, sameState } from './merge';
+import { api } from '../account/api';
 
 type Resposta = { state: LearnerState | null; rev: number; uid: string | null };
 
@@ -80,6 +81,20 @@ async function descartar(r: Response): Promise<void> {
   try { await r.text(); } catch { /* já consumido, ou sem corpo */ }
 }
 
+/** Verdadeiro só quando o servidor DISSE que não há sessão. Erro de rede ou
+ *  de servidor dá falso: na dúvida, o progresso pergunta. */
+async function semSessao(): Promise<boolean> {
+  try {
+    return (await (await api()).me()) === null;
+  } catch {
+    return false;
+  }
+}
+
+/** Evento no `window`: o servidor recusou o progresso por falta de sessão
+ *  no meio do estudo. components/shell/SessaoCaiu.tsx mostra o aviso. */
+export const SESSAO_CAIU = 'hf-sessao-caiu';
+
 export class WorkerProgressStore implements ProgressStore {
   #local = new LocalProgressStore();
   /** A revisão que este aparelho leu por último. 0 = nunca leu nada. */
@@ -88,8 +103,23 @@ export class WorkerProgressStore implements ProgressStore {
   #comSessao = true;
   /** O que este aparelho já mandou ao servidor. Ver a nota em `save`. */
   #enviado: LearnerState | null = null;
+  /**
+   * A conta ainda não comprou nada, e o servidor não guarda progresso de quem
+   * não tem curso (403 `sem-curso`, ver worker/src/api/progress.js). Aí o
+   * aparelho é o lugar, como para quem está deslogado: nada de PUT a cada
+   * mudança, nada de aviso de "não sincronizado". Volta a tentar na próxima
+   * `load()`, que é o que acontece depois da compra.
+   */
+  #semCurso = false;
 
   async #ler(): Promise<Resposta> {
+    /* Visitante não pergunta pelo progresso (auditoria de 01/10/2026,
+       PERF-007): era um 401 certo em toda página pública, uma invocação do
+       Worker a mais por página vista. A pergunta "há sessão?" é a mesma que
+       o AccountProvider faz ao abrir a página, e as duas viajam juntas
+       (`me()` compartilha o pedido em voo). Se ela falhar (rede, servidor),
+       segue como antes: pergunta ao progresso, que sabe responder 401. */
+    if (await semSessao()) { this.#comSessao = false; return VAZIO; }
     const r = await pedir('/api/progress');
     if (!r) return VAZIO;
     if (r.status === 401) { await descartar(r); this.#comSessao = false; return VAZIO; }
@@ -108,6 +138,7 @@ export class WorkerProgressStore implements ProgressStore {
   }
 
   async load(): Promise<LearnerState> {
+    this.#semCurso = false;
     const aqui = await this.#local.load();
     const la = await this.#ler();
     this.#rev = la.rev;
@@ -147,7 +178,7 @@ export class WorkerProgressStore implements ProgressStore {
     /* O aparelho primeiro, e sempre. Se a rede falhar, a sessão continua
        salva; a próxima `load()` funde e leva. */
     await this.#local.save(state);
-    if (!this.#comSessao) return;
+    if (!this.#comSessao || this.#semCurso) return;
     /* Trocar de tela grava `lastRoute` e mais nada. Subir isso seria uma
        escrita no D1 por clique de navegação, para sincronizar onde a pessoa
        está neste segundo - a rota sobe junto com a próxima mudança de
@@ -183,7 +214,7 @@ export class WorkerProgressStore implements ProgressStore {
    * nunca foi prometida a ele.
    */
   sincronizado(): boolean {
-    if (!this.#comSessao) return true;
+    if (!this.#comSessao || this.#semCurso) return true;
     return this.#enviado !== null;
   }
 
@@ -215,7 +246,14 @@ export class WorkerProgressStore implements ProgressStore {
         body: JSON.stringify({ state: atual, rev: this.#rev, version: atual.version })
       });
       if (!r) return;                       /* sem rede: fica no aparelho */
-      if (r.status === 401) { await descartar(r); this.#comSessao = false; return; }
+      if (r.status === 401) {
+        await descartar(r);
+        this.#comSessao = false;
+        /* Havia sessão e ela caiu: a pessoa precisa saber (QA-004). */
+        try { window.dispatchEvent(new CustomEvent(SESSAO_CAIU)); } catch { /* SSR */ }
+        return;
+      }
+      if (r.status === 403) { await descartar(r); this.#semCurso = true; return; }
 
       const corpo = await r.json().catch(() => null) as
         { rev?: number; state?: unknown } | null;

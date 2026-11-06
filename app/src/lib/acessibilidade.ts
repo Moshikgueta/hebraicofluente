@@ -49,10 +49,17 @@ export type Prefs = {
   links: boolean;
   /** Entrelinha e espaço entre palavras maiores (WCAG 1.4.12). */
   espaco: boolean;
+  /** Um botão "Ouvir a instrução" em cada exercício, que lê o enunciado em
+   *  português com a voz do aparelho (components/learn/OuvirInstrucao.tsx). */
+  voz: boolean;
+  /** Cala o som do acerto, do erro e da comemoração (lib/som-do-acerto.ts). Os sons
+   *  nascem ligados; esta é a saída. As gravações do curso não mudam. */
+  semSons: boolean;
 };
 
 export const PADRAO: Prefs = {
-  texto: 100, tema: 'auto', contraste: false, movimento: false, links: false, espaco: false
+  texto: 100, tema: 'auto', contraste: false, movimento: false, links: false, espaco: false,
+  voz: false, semSons: false
 };
 
 export const TEMAS = ['auto', 'claro', 'escuro'] as const;
@@ -70,11 +77,14 @@ export const ATRIBUTOS = {
   contraste: 'data-a11y-contraste',
   movimento: 'data-a11y-movimento',
   links: 'data-a11y-links',
-  espaco: 'data-a11y-espaco'
+  espaco: 'data-a11y-espaco',
+  voz: 'data-a11y-voz',
+  semSons: 'data-a11y-sons'
 } as const;
 
 const LIGADO = {
-  contraste: 'alto', movimento: 'reduzido', links: 'sublinhado', espaco: 'amplo'
+  contraste: 'alto', movimento: 'reduzido', links: 'sublinhado', espaco: 'amplo', voz: 'instrucoes',
+  semSons: 'desligados'
 } as const;
 
 /**
@@ -96,7 +106,9 @@ export function normalizar(bruto: unknown): Prefs {
     contraste: o.contraste === true,
     movimento: o.movimento === true,
     links: o.links === true,
-    espaco: o.espaco === true
+    espaco: o.espaco === true,
+    voz: o.voz === true,
+    semSons: o.semSons === true
   };
 }
 
@@ -140,7 +152,7 @@ export function aplicar(p: Prefs, raiz?: HTMLElement): void {
   if (temaEscuro(p)) el.setAttribute(ATRIBUTOS.tema, 'escuro');
   else el.removeAttribute(ATRIBUTOS.tema);
 
-  for (const chave of ['contraste', 'movimento', 'links', 'espaco'] as const) {
+  for (const chave of ['contraste', 'movimento', 'links', 'espaco', 'voz', 'semSons'] as const) {
     if (p[chave]) el.setAttribute(ATRIBUTOS[chave], LIGADO[chave]);
     else el.removeAttribute(ATRIBUTOS[chave]);
   }
@@ -177,7 +189,7 @@ if([${TAMANHOS.join(',')}].indexOf(Number(p.texto))>0)e.setAttribute(${JSON.stri
 var m=typeof window!=='undefined'&&window.matchMedia
   ?window.matchMedia('(prefers-color-scheme: dark)').matches:false;
 if(p.tema==='escuro'||(p.tema!=='claro'&&m))e.setAttribute(${JSON.stringify(ATRIBUTOS.tema)},'escuro');
-${(['contraste', 'movimento', 'links', 'espaco'] as const)
+${(['contraste', 'movimento', 'links', 'espaco', 'voz', 'semSons'] as const)
     .map(k => `if(p.${k}===true)e.setAttribute(${JSON.stringify(ATRIBUTOS[k])},${JSON.stringify(LIGADO[k])});`)
     .join('\n')}
 }catch(_){}})();`;

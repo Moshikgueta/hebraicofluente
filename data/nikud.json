@@ -2,7 +2,7 @@
   "intro": {
     "title": "Os sinais de vogal",
     "lead": "O hebraico escreve as consoantes com letras e as vogais com pequenos sinais - pontos e traços - que aparecem embaixo, dentro ou acima da letra. Você vai aprender os sinais pelo SOM que produzem, não pelo nome. Os nomes ficam no apêndice, para consultar depois.",
-    "correction": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas - {{א}}, {{ה}}, {{ו}} e {{י}} - também funcionam como apoio de vogal, aparecendo dentro da palavra para indicar um som vocálico. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira."
+    "correction": "O alfabeto hebraico tem 22 letras, e todas elas são consoantes. Quatro delas - {{א}}, {{ה}}, {{ו}} e {{י}} - também funcionam como apoio de vogal: {{ו}} e {{י}} no meio da palavra, {{ה}} e {{א}} geralmente no fim. Por isso a frase \"todas consoantes\" é verdadeira sobre as letras, mas não conta a história inteira."
   },
   "sounds": [
     {
@@ -12,7 +12,7 @@
         {
           "sign": "ַ",
           "demo": "מַ",
-          "nameHe": "פַּתָּח",
+          "nameHe": "פַּתָח",
           "namePt": "patach",
           "position": "embaixo"
         },
@@ -24,7 +24,7 @@
           "position": "embaixo"
         }
       ],
-      "note": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora."
+      "note": "Dois sinais, um único som no hebraico moderno. Não se preocupe em distingui-los agora. Só em umas poucas palavras o kamats soa \"o\" ({{כָּל}} kol, {{צָהֳרַיִם}} tsohoráyim), e a transliteração sempre avisa. O mesmo som \"a\" tem ainda o chataf patach, o patach com dois pontos ao lado ({{אֲנִי}} aní). E no fim da palavra, {{חַ}} e {{עַ}} se leem com o A antes da consoante: {{תַפּוּחַ}} tapúach."
     },
     {
       "sound": "e",
@@ -33,7 +33,7 @@
         {
           "sign": "ֶ",
           "demo": "מֶ",
-          "nameHe": "סֶגּוֹל",
+          "nameHe": "סֶגוֹל",
           "namePt": "segol",
           "position": "embaixo"
         },
@@ -45,7 +45,7 @@
           "position": "embaixo"
         }
       ],
-      "note": "Também dois sinais para um som só."
+      "note": "Também dois sinais para um som só. O chataf segol, o segol com dois pontos ao lado, soa igual: {{אֱלֹהִים}} Elohím. Com {{י}} depois, o tsere muitas vezes soa \"ei\": {{אֵין}} ein, {{אֵיפֹה}} éifo."
     },
     {
       "sound": "i",
@@ -80,7 +80,7 @@
           "position": "ponto sobre a letra {{ו}}"
         }
       ],
-      "note": "A forma com {{ו}} é a mais comum no hebraico moderno."
+      "note": "A forma com {{ו}} é a mais comum no hebraico moderno. O chataf kamats, o kamats com dois pontos ao lado, também soa \"o\": {{צָהֳרַיִם}} tsohoráyim."
     },
     {
       "sound": "u",
@@ -105,21 +105,21 @@
     },
     {
       "sound": "sheva",
-      "ptApprox": "sem vogal, ou um apoio muito breve",
+      "ptApprox": "sem vogal nenhuma, ou um E normal",
       "signs": [
         {
           "sign": "ְ",
           "demo": "מְ",
           "nameHe": "שְׁוָא",
-          "namePt": "sheva",
+          "namePt": "shva",
           "position": "embaixo, dois pontos verticais"
         }
       ],
-      "note": "Não é uma vogal de verdade. Marca que a consoante vem sem vogal, ou com um apoio tão curto que quase não se ouve. Em {{מְנַהֵל}} soa como um \"e\" muito breve."
+      "note": "Não é uma vogal de verdade. Às vezes não tem som nenhum ({{זְמַן}} zman, {{סְלִיחָה}} slichá) e às vezes soa como um E normal, principalmente nos prefixos {{בְּ}}, {{וְ}} e {{לְ}} e embaixo de {{מ}}, {{נ}}, {{ל}}, {{ר}} ou {{י}} no começo da palavra ({{מְדַבֵּר}} medabér, {{בְּבַקָשָׁה}} bevakashá, {{רְחוֹב}} rechóv). A transliteração mostra qual é o caso."
     }
   ],
   "dagesh": {
     "title": "O ponto dentro da letra",
-    "text": "Um ponto no meio da letra - o dagesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora."
+    "text": "Um ponto no meio da letra - o daguesh - muda o som de três delas: {{ב}} vira b ({{בּ}}), {{כ}} vira k ({{כּ}}) e {{פ}} vira p ({{פּ}}). Nas outras letras o ponto não muda nada que você precise ouvir agora, e por isso, neste curso, ele só é escrito nessas três."
   }
 }

@@ -1,94 +1,24 @@
-# Hebraico Fluente - Workbook de Alfabetização
+# Hebraico Fluente - Curso de Alfabetização
 
-Gerador do workbook de alfabetização em hebraico moderno para **brasileiros
-adultos**. Interface e explicações em português do Brasil; conteúdo-alvo em
-hebraico **com nikud**.
+Curso de alfabetização em hebraico moderno para **brasileiros adultos**.
+Interface e explicações em português do Brasil; conteúdo-alvo em hebraico
+**com nikud**.
 
-Nada aqui é escrito à mão página a página. Os 22 módulos de letra saem de
-`data/` + `templates/` através de `scripts/build.js`. Mudar um template muda as
-22 letras de uma vez.
-
----
-
-## Como construir
-
-```bash
-npm run build      # valida, gera dist/, valida de novo (agora o HTML)
-npm run validate   # só as verificações de dados
-npm run check-fit  # mede: toda folha cabe numa página A4?
-npm run check      # as duas acima
-npm run serve      # constrói e serve dist/ em http://127.0.0.1:8080
-```
-
-### Empacotamento
-
-```bash
-npm run pack       # mede as peças e decide o agrupamento
-```
-
-Dividir o conteúdo em folhas que cabem é só metade do trabalho: só isso deixava
-o livro **69% cheio em média**, com dezenas de páginas pela metade - a tabela
-"impressa e cursiva" ocupa 110mm numa página de 265mm.
-
-Então o build **empacota**. Cada template emite *unidades*; o build corta cada
-uma nos próprios `<h2>`, cartões de exercício e linhas de traçado - pontos
-atômicos por construção - e preenche cada folha com as peças seguintes da mesma
-seção, em ordem, até o limite. Uma peça que não abre a folha perde o badge e o
-título, que o `<h2>` dela já substitui.
-
-As alturas vêm de `data/layout.json`, medido por `npm run pack`. Sem esse
-arquivo cada peça fica na sua própria folha: desperdiça papel, nunca erra - que
-é como uma entrada ausente deve falhar.
-
-**O empacotador é otimista de propósito.** Uma margem de segurança grande o
-bastante para a pior junção encolhe todas as outras folhas e custa mais páginas
-do que economiza. Em vez disso ele arrisca, e o `npm run pack` conserta o que
-de fato estourou: mede o resultado empacotado e força uma quebra antes da peça
-exata que passou do limite, repetindo até estabilizar (normalmente duas
-rodadas). O resultado:
-
-| | antes | depois |
-|---|---|---|
-| páginas A4 | 344 | **287** |
-| ocupação média | 69% | **81%** |
-| folhas abaixo de 60% | 93 | **16** |
-| folhas que estouram | 0 | **0** |
-
-### Uma folha é uma página impressa
-
-Esse é o contrato do workbook, e tudo depende dele: se uma folha estoura a
-página por três milímetros ela vira duas páginas em silêncio, o fólio para de
-bater com o papel e o sumário passa a mentir.
-
-Por isso nenhuma etapa transborda. Quando o conteúdo não cabe, a etapa ganha
-uma **folha de continuação explícita** - o número da etapa continua o mesmo, a
-contagem de folhas é que cresce - exatamente como o PDF de referência faz com
-"PÁGINA 1 DE 5 - CONTINUAÇÃO".
-
-E isso é **medido**, não presumido. `npm run check-fit` abre cada página no
-Chromium com mídia de impressão emulada e a largura útil real, e compara a
-altura de cada `.sheet` com os 265mm que o `@page` deixa:
-
-```
-  344 folhas medidas · limite 265mm de altura útil
-  ✓ todas cabem em uma página A4
-```
-
-`npm run pdf` ainda confere o resultado: se a contagem de páginas do PDF não
-bater com a de folhas do HTML, ele falha e manda rodar o `check-fit`.
-
-As tabelas que crescem com o alfabeto - a da revisão vai de 4 a 22 linhas -
-são fatiadas por `chunk()` em `templates/partials.js`, então elas continuam
-cabendo à medida que o conteúdo aumenta.
-
-Não há dependências de runtime. Node 20+ é suficiente; as fontes estão
-versionadas em `assets/fonts/`.
-
-O build **falha** (sai com código 1) antes de escrever qualquer arquivo se
-alguma regra fatal for violada. `dist/` nunca contém uma página que quebre a
-regra de ordem.
+O conteúdo mora em `data/` e é o mesmo para todas as telas: o
+`tools/export-content.mjs` o leva para `app/content/`, e a plataforma
+(`app/`, Next.js atrás do Worker em `worker/`) o mostra. O antigo gerador do
+livro em PDF (`scripts/build.js`, `templates/`, `tools/build-pdf.mjs`) saiu do
+projeto em 26/09/2026: o curso é a plataforma.
 
 ---
+
+## Como rodar
+
+```bash
+npm run validate         # as verificações de dados
+npm run build:platform   # a plataforma, como vai ao ar
+cd app && npx vitest run # os testes
+```
 
 ## A ordem das letras - e por que ela não é a alfabética
 
@@ -138,19 +68,11 @@ ainda não aprendeu, e é esse justamente o ponto. Por isso nunca entram em
 ```
 data/
   letters.json      um objeto por letra - a única fonte do conteúdo
-  modules.json      o plano de aulas: 7 unidades, 22 lições, quem ensina o quê
-  extras.json       módulos 6 e 7 - daguesh, formas finais, sem nikud, gerech
+  modules.json      o plano de aulas: 7 módulos, 27 lições, quem ensina o quê
+  extras.json       módulos 6 e 7 e as lições de som (Sin, Vet, Chaf, Fe, Tch, Dj, J)
   real-world.json   as cenas de «Hebraico no mundo real», por letra
   translit.json     a única fonte das transliterações
   nikud.json        os seis sons vocálicos (Página 0) e o daguesh
-templates/
-  letter.js         as 5 etapas de uma letra; nunca cita uma letra específica
-  module.js         a abertura de módulo e a lição de prática que o fecha
-  extras.js         módulos 6 e 7 - daguesh/formas finais e os sons com gerech
-  page-0.js         Os sinais de vogal, antes da letra 1
-  review.js         as 5 revisões de módulo + a revisão final cumulativa
-  appendix.js       alfabeto · nikud · transliteração · cursiva
-  partials.js       badge, callout, tabela, exercício, documento
 tools/
   gen-stroke-order.py   ferramenta de autoria; gera assets/stroke-order/*.svg
   gen-audio.mjs         o manifesto de clipes - data/audio.json
@@ -158,14 +80,9 @@ tools/
   check-audio.mjs       o que chegou, o que falta, o que tem nome errado
   export-content.mjs    data/ → app/content/, e as gravações → app/public/audio/
 scripts/
-  build.js          data + templates → dist/
   validate.js       as 19 regras
   lib/hebrew.js     codepoints: nikud, formas finais, normalização
   lib/render.js     o contrato de direção - he(), heList(), heCloze(), prose()
-styles/
-  tokens.css        extraído do PDF de referência, com a origem de cada valor
-  components.css    o mobiliário da página
-  print.css         geometria A4
 assets/
   fonts/            woff2 + licenças
   stroke-order/     27 SVG de ordem de traçado (22 letras + 5 formas finais)
@@ -331,7 +248,7 @@ no PDF de impressão.
 
 `assets/stroke-order/` traz **27 SVG** - as 22 letras e as 5 formas finais -
 gerados por `tools/gen-stroke-order.py`. É uma ferramenta de autoria, roda uma
-vez e os SVG vão versionados; **não faz parte de `npm run build`**:
+vez e os SVG vão versionados; **não faz parte da build**:
 
 ```bash
 pip install fonttools brotli
@@ -355,73 +272,3 @@ Licença: Gveret Levin é OFL-1.1, que permite derivar e embutir contornos.
 `assets/fonts/LICENSE-gveret-levin.txt` acompanha o projeto.
 
 ---
-
-## Desvios deliberados em relação ao PDF
-
-Dois, ambos revertíveis com uma linha:
-
-1. **Contraste do cabeçalho de tabela.** O PDF usa `#464646` sobre `#1A99BA` -
-   2,75:1, reprovado no WCAG AA e o primeiro elemento a sumir numa fotocópia.
-   A faixa foi escurecida para `--c-teal-band: #15788F` com texto branco
-   (4,9:1). O teal de destaque dentro das palavras continua `#1A99BA`, idêntico
-   à referência. Para reverter: `--c-teal-band: var(--c-teal)` e
-   `--c-teal-on: #464646` em `styles/tokens.css`.
-2. **Tamanho do hebraico inline.** `--t-he-inline: 1.15em`. Hebraico pontuado
-   no mesmo corpo do latim ao redor fica pequeno demais para quem está
-   aprendendo a distinguir os sinais.
-
----
-
-## PDF
-
-```bash
-npm run pdf              # o livro inteiro → pdf/hebraico-moderno-workbook.pdf
-npm run pdf -- 01-mem    # um módulo só
-```
-
-Precisa de Playwright + Chromium, e por isso **não faz parte de `npm run build`**
-- o build em si não tem dependência nenhuma e continua assim:
-
-```bash
-npm i -D playwright && npx playwright install chromium
-```
-
-O livro sai de `dist/livro-completo.html` numa **única passada de impressão**, e
-não de trinta arquivos juntados depois. A diferença é real: juntar reiniciaria a
-paginação a cada módulo e não deixaria uma tabela quebrar entre duas páginas de
-uma mesma seção. Num documento só, o Chromium pagina o livro como livro.
-
-**A margem mora no `@page`, não no padding da folha.** Padding só vale no topo e
-na base de uma caixa, então uma seção que passa de uma página começaria a
-segunda colada na borda do papel. Várias passam - de propósito.
-
-### Sumário com páginas reais
-
-Um sumário não tem como saber em que página cada seção cai antes de o livro ser
-paginado. Então `npm run pdf` imprime, mede e reconstrói:
-
-1. imprime o livro;
-2. `tools/page-map.py` lê o PDF e acha em que página cada seção começa;
-3. grava `data/page-map.json`, reconstrói o `dist/` e imprime de novo.
-
-Como a largura do número é fixa, a segunda passada não desloca nada e o laço
-converge na primeira tentativa. Sem Python ou PyMuPDF o livro sai igual - o
-sumário só fica com um traço no lugar do número, e a execução avisa.
-
-O marcador que torna isso possível é um `<span class="secmark">` invisível. Duas
-coisas nele são críticas, e cada uma esteve errada uma vez:
-
-- **não é `position: absolute`** - em mídia paginada o Chromium ancora elementos
-  absolutos na primeira página do documento, e todos os marcadores relatavam
-  página 1;
-- **não é `color: transparent` nem 1px** - o Chromium descarta texto totalmente
-  transparente ou sub-pixel da camada de texto, e aí não há o que ler.
-
-Ele também fica **entre o badge e o `<h1>`**, não no topo da seção: uma caixa de
-altura zero logo depois de uma quebra de página forçada cai de um lado ou do
-outro conforme o humor do motor, e várias seções saíam uma página adiantadas.
-
-## Publicar
-
-`dist/` é estático, qualquer host serve. O PDF pronto fica em `pdf/` (ignorado
-pelo git - é artefato de build).

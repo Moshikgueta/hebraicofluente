@@ -1,0 +1,717 @@
+{
+  "n": 13,
+  "revisado": false,
+  "tituloPt": "No café e no restaurante",
+  "objetivoPt": "Ler um cardápio, pedir comida e bebida com educação, dizer o que você não come, perguntar \"qual?\" e pedir a conta.",
+  "situacaoPt": "Sexta à noite. O Dani e a Maya jantam num restaurante pequeno perto do mercado. O Dani é vegetariano e quer saber o que é gostoso ali.",
+  "palavras": [
+    {
+      "he": "מִסְעָדָה",
+      "translit": "misadá",
+      "pt": "restaurante"
+    },
+    {
+      "he": "תַפְרִיט",
+      "translit": "tafrít",
+      "pt": "cardápio"
+    },
+    {
+      "he": "מֶלְצָר",
+      "translit": "meltsár",
+      "pt": "garçom"
+    },
+    {
+      "he": "מֶלְצָרִית",
+      "translit": "meltsarít",
+      "pt": "garçonete"
+    },
+    {
+      "he": "חֶשְׁבּוֹן",
+      "translit": "cheshbón",
+      "pt": "conta"
+    },
+    {
+      "he": "מָנָה",
+      "translit": "maná",
+      "pt": "prato, porção"
+    },
+    {
+      "he": "אֹכֶל",
+      "translit": "óchel",
+      "pt": "comida"
+    },
+    {
+      "he": "עוֹף",
+      "translit": "of",
+      "pt": "frango"
+    },
+    {
+      "he": "בָּשָׂר",
+      "translit": "bassár",
+      "pt": "carne"
+    },
+    {
+      "he": "דָג",
+      "translit": "dag",
+      "pt": "peixe"
+    },
+    {
+      "he": "אֹרֶז",
+      "translit": "órez",
+      "pt": "arroz"
+    },
+    {
+      "he": "בָּצָל",
+      "translit": "batsál",
+      "pt": "cebola"
+    },
+    {
+      "he": "מִיץ",
+      "translit": "mits",
+      "pt": "suco"
+    },
+    {
+      "he": "סֻכָּר",
+      "translit": "sukár",
+      "pt": "açúcar"
+    },
+    {
+      "he": "קֶרַח",
+      "translit": "kérach",
+      "pt": "gelo"
+    },
+    {
+      "pt": "gostoso",
+      "formas": [
+        "טָעִים",
+        "טְעִימָה",
+        "טְעִימִים",
+        "טְעִימוֹת"
+      ],
+      "translit": [
+        "taím",
+        "teimá",
+        "teimím",
+        "teimót"
+      ]
+    },
+    {
+      "pt": "pedir, solicitar. No restaurante, também é muito comum pedir com אֶפְשָׁר… ou אֲנִי רוֹצֶה…",
+      "formas": [
+        "מְבַקֵשׁ",
+        "מְבַקֶשֶׁת",
+        "מְבַקְשִׁים",
+        "מְבַקְשׁוֹת"
+      ],
+      "translit": [
+        "mevakésh",
+        "mevakéshet",
+        "mevakshím",
+        "mevakshót"
+      ]
+    },
+    {
+      "he": "צִמְחוֹנִי",
+      "translit": "tsimchoní",
+      "pt": "vegetariano"
+    },
+    {
+      "he": "צִמְחוֹנִית",
+      "translit": "tsimchonít",
+      "pt": "vegetariana"
+    },
+    {
+      "he": "חָרִיף",
+      "translit": "charíf",
+      "pt": "picante"
+    },
+    {
+      "he": "אֶפְשָׁר…?",
+      "translit": "efshár…?",
+      "pt": "pode ser…? dá para…?"
+    },
+    {
+      "he": "לְשַׁלֵם",
+      "translit": "leshalém",
+      "pt": "pagar"
+    },
+    {
+      "he": "אֵיזֶה?",
+      "translit": "éize?",
+      "pt": "qual? (masculino)"
+    },
+    {
+      "he": "אֵיזוֹ?",
+      "translit": "éizo?",
+      "pt": "qual? (feminino)"
+    },
+    {
+      "he": "אֵילוּ?",
+      "translit": "éilu?",
+      "pt": "quais?"
+    },
+    {
+      "he": "עִם",
+      "translit": "im",
+      "pt": "com"
+    },
+    {
+      "he": "בְּלִי",
+      "translit": "bli",
+      "pt": "sem"
+    },
+    {
+      "he": "אוֹ",
+      "translit": "o",
+      "pt": "ou"
+    }
+  ],
+  "gramatica": [
+    {
+      "tituloPt": "Pedir com educação: אֶפְשָׁר…?",
+      "textoPt": "O jeito mais natural de pedir é אֶפְשָׁר + a coisa, como pergunta: אֶפְשָׁר מַיִם, בְּבַקָשָׁה? (pode ser uma água?). Com uma ação, אֶפְשָׁר + infinitivo: אֶפְשָׁר לְשַׁלֵם? (dá para pagar?). Também vale אֲנִי רוֹצֶה…, בְּבַקָשָׁה.",
+      "erroPt": "Dizer só \"מַיִם!\" soa como uma ordem. E não traduza \"eu queria\" do português: no restaurante, o presente com בְּבַקָשָׁה já é educado.",
+      "exemplos": [
+        {
+          "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָשָׁה?",
+          "pt": "Pode trazer a conta, por favor?"
+        },
+        {
+          "he": "אֶפְשָׁר לְשַׁלֵם, בְּבַקָשָׁה?",
+          "pt": "Dá para pagar, por favor?"
+        }
+      ]
+    },
+    {
+      "tituloPt": "Qual? אֵיזֶה, אֵיזוֹ, אֵילוּ",
+      "textoPt": "\"Qual\" concorda com a coisa: אֵיזֶה קָפֶה? (masculino), אֵיזוֹ עוּגָה? (feminino), אֵילוּ מָנוֹת? (plural).",
+      "erroPt": "Na rua você vai ouvir muito אֵיזֶה para tudo, até para feminino (אֵיזֶה עוּגָה?). No plural, na fala, quase sempre se diz אֵיזֶה: אֵיזֶה סָלָטִים יֵשׁ? אֵילוּ é mais de texto escrito. Entenda quando ouvir, mas, para escrever, use a forma que concorda."
+    },
+    {
+      "tituloPt": "Com e sem",
+      "textoPt": "עִם é \"com\" e בְּלִי é \"sem\": קָפֶה עִם חָלָב, תֵה בְּלִי סֻכָּר, סָלָט בְּלִי בָּצָל.",
+      "exemplos": [
+        {
+          "he": "אֲנִי רוֹצָה סָלָט בְּלִי בָּצָל.",
+          "pt": "Quero uma salada sem cebola. (mulher)"
+        }
+      ]
+    },
+    {
+      "tituloPt": "O adjetivo concorda, mesmo longe",
+      "textoPt": "Como na Unidade 3: הַשַׁקְשׁוּקָה טְעִימָה (a shakshuka está gostosa), הַדָג טָעִים. A palavra que descreve segue o gênero da comida, não o de quem fala.",
+      "erroPt": "Uma mulher que gostou do peixe diz הַדָג טָעִים, e não טְעִימָה: o gostoso é o peixe, que é masculino."
+    }
+  ],
+  "dialogo": {
+    "tituloPt": "Jantar de sexta",
+    "linhas": [
+      {
+        "quem": "O garçom",
+        "he": "עֶרֶב טוֹב! הִנֵה הַתַפְרִיט.",
+        "translit": "érev tov! hiné hatafrít.",
+        "pt": "Boa noite! Aqui está o cardápio."
+      },
+      {
+        "quem": "Maya",
+        "he": "תוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָשָׁה?",
+        "translit": "todá. efshár máyim, bevakashá?",
+        "pt": "Obrigada. Pode ser uma água, por favor?"
+      },
+      {
+        "quem": "O garçom",
+        "he": "בְּטַח.",
+        "translit": "betách.",
+        "pt": "Claro."
+      },
+      {
+        "quem": "Dani",
+        "he": "מָה טָעִים פֹּה?",
+        "translit": "ma taím po?",
+        "pt": "O que é gostoso aqui?"
+      },
+      {
+        "quem": "O garçom",
+        "he": "הַשַׁקְשׁוּקָה מְאֹד טְעִימָה. וְגַם הַדָג.",
+        "translit": "hashakshúka meód teimá. vegám hadág.",
+        "pt": "A shakshuka é muito gostosa. E o peixe também."
+      },
+      {
+        "quem": "Dani",
+        "he": "אֲנִי צִמְחוֹנִי. אֲנִי רוֹצֶה שַׁקְשׁוּקָה, בְּבַקָשָׁה.",
+        "translit": "aní tsimchoní. aní rotsé shakshúka, bevakashá.",
+        "pt": "Eu sou vegetariano. Quero uma shakshuka, por favor."
+      },
+      {
+        "quem": "O garçom",
+        "he": "עִם לֶחֶם?",
+        "translit": "im léchem?",
+        "pt": "Com pão?"
+      },
+      {
+        "quem": "Dani",
+        "he": "כֵּן, תוֹדָה.",
+        "translit": "ken, todá.",
+        "pt": "Sim, obrigado."
+      },
+      {
+        "quem": "Maya",
+        "he": "וַאֲנִי רוֹצָה סָלָט. אֵיזֶה סָלָט יֵשׁ?",
+        "translit": "vaaní rotsá salát. éize salát yesh?",
+        "pt": "E eu quero uma salada. Que salada tem?"
+      },
+      {
+        "quem": "O garçom",
+        "he": "יֵשׁ סָלָט יְרָקוֹת וְסָלָט טוּנָה.",
+        "translit": "yesh salát yerakót vessalát túna.",
+        "pt": "Tem salada de legumes e salada de atum."
+      },
+      {
+        "quem": "Maya",
+        "he": "סָלָט יְרָקוֹת, בְּלִי בָּצָל.",
+        "translit": "salát yerakót, bli batsál.",
+        "pt": "Salada de legumes, sem cebola."
+      },
+      {
+        "quem": "Dani (depois do jantar)",
+        "he": "אֶפְשָׁר חֶשְׁבּוֹן, בְּבַקָשָׁה?",
+        "translit": "efshár cheshbón, bevakashá?",
+        "pt": "Pode trazer a conta, por favor?"
+      }
+    ],
+    "glossario": [
+      {
+        "he": "בְּטַח",
+        "translit": "betách",
+        "pt": "claro"
+      },
+      {
+        "he": "סָלָט יְרָקוֹת",
+        "translit": "salát yerakót",
+        "pt": "salada de legumes (expressão fixa)"
+      },
+      {
+        "he": "טוּנָה",
+        "translit": "túna",
+        "pt": "atum"
+      }
+    ]
+  },
+  "leitura": {
+    "tituloPt": "O cardápio do café",
+    "semPontos": true,
+    "linhas": [
+      {
+        "he": "אֲרוּחַת בֹּקֶר יִשְׂרְאֵלִית: בֵּיצִים, סָלָט, לֶחֶם, גְבִינָה, קָפֶה אוֹ מִיץ. 62 שֶׁקֶל",
+        "translit": "aruchát bóker yisraelít: beitsím, salát, léchem, gviná, kafé o mits. shishím ushtáyim shékel",
+        "pt": "Café da manhã israelense: ovos, salada, pão, queijo, café ou suco. 62 shekels"
+      },
+      {
+        "he": "שַׁקְשׁוּקָה (חָרִיף!): 48 שֶׁקֶל",
+        "translit": "shakshúka (charíf!): arbaím ushmoné shékel",
+        "pt": "Shakshuka (picante!): 48 shekels"
+      },
+      {
+        "he": "טוֹסְט גְבִינָה: 39 שֶׁקֶל",
+        "translit": "tost gviná: shloshím vatésha shékel",
+        "pt": "Queijo quente: 39 shekels"
+      },
+      {
+        "he": "קָפֶה הָפוּךְ: 14 שֶׁקֶל",
+        "translit": "kafé hafúch: árba-esré shékel",
+        "pt": "Café com leite (\"hafúch\"): 14 shekels"
+      }
+    ],
+    "perguntas": [
+      {
+        "t": "escolha",
+        "q": "Quanto custa o café da manhã israelense?",
+        "opcoes": [
+          "62 shekels",
+          "48 shekels",
+          "14 shekels"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "escolha",
+        "q": "Qual prato é picante?",
+        "opcoes": [
+          "A shakshuka",
+          "O queijo quente",
+          "O café da manhã"
+        ],
+        "certa": 0
+      },
+      {
+        "t": "vf",
+        "q": "No café da manhã israelense dá para escolher café ou suco.",
+        "certa": true,
+        "porque": "קָפֶה אוֹ מִיץ: café OU suco."
+      }
+    ]
+  },
+  "cultura": [
+    {
+      "tituloPt": "Café hafúch e o café da manhã israelense",
+      "textoPt": "Peça um קָפֶה הָפוּךְ, \"café de ponta-cabeça\": o leite vem primeiro e o café por cima. É o café com leite de todo dia. E o café da manhã israelense de restaurante é farto: ovos, uma salada de pepino e tomate cortados bem miudinho, queijos, pastas e pão. Na conta do restaurante a gorjeta não vem incluída, e o costume é deixar algo entre 10% e 15%."
+    }
+  ],
+  "sabia": [
+    {
+      "tituloPt": "Por que hebraico e árabe se parecem?",
+      "textoPt": "Os dois são línguas semíticas, da mesma família do aramaico, e muitas palavras vêm da mesma origem: שָׁלוֹם e o árabe \"salam\" (paz), יוֹם e \"yawm\" (dia), בַּיִת e \"bayt\" (casa). E algumas vieram emprestadas do árabe falado para o hebraico moderno, como חוּמוּס, פָלָאפֶל e o סַבָּבָּה da Unidade 0."
+    }
+  ],
+  "autoavaliacao": [
+    "Eu peço comida e bebida com אֶפְשָׁר e בְּבַקָשָׁה.",
+    "Eu pergunto \"qual?\" com אֵיזֶה, אֵיזוֹ ou אֵילוּ.",
+    "Eu digo o que não como e peço a conta."
+  ],
+  "exercicios": [
+    {
+      "t": "ligar",
+      "q": "Ligue as comidas e bebidas.",
+      "pares": [
+        [
+          "עוֹף",
+          "frango"
+        ],
+        [
+          "בָּשָׂר",
+          "carne"
+        ],
+        [
+          "דָג",
+          "peixe"
+        ],
+        [
+          "אֹרֶז",
+          "arroz"
+        ],
+        [
+          "מִיץ",
+          "suco"
+        ]
+      ]
+    },
+    {
+      "t": "ligar",
+      "q": "E o restaurante.",
+      "pares": [
+        [
+          "תַפְרִיט",
+          "cardápio"
+        ],
+        [
+          "חֶשְׁבּוֹן",
+          "conta"
+        ],
+        [
+          "מֶלְצָר",
+          "garçom"
+        ],
+        [
+          "מָנָה",
+          "prato, porção"
+        ],
+        [
+          "טָעִים",
+          "gostoso"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "Qual é o jeito educado de pedir água?",
+      "opcoes": [
+        "אֶפְשָׁר מַיִם, בְּבַקָשָׁה?",
+        "מַיִם!",
+        "אֲנִי מַיִם."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Só a palavra, sem nada, soa como ordem.",
+        "2": "אֲנִי מַיִם quer dizer \"eu sou água\"."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "___ עוּגָה אַתְ רוֹצָה?",
+      "opcoes": [
+        "אֵיזוֹ",
+        "אֵיזֶה",
+        "אֵילוּ"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. Na rua você ouve אֵיזֶה para tudo, mas עוּגָה é feminina: com cuidado, é אֵיזוֹ.",
+        "2": "אֵילוּ é para plural: אֵילוּ עוּגוֹת."
+      }
+    },
+    {
+      "t": "escolha",
+      "q": "\"Que saladas vocês têm?\" (por escrito, com a forma que concorda): ___ סָלָטִים יֵשׁ?",
+      "opcoes": [
+        "אֵילוּ",
+        "אֵיזֶה",
+        "אֵיזוֹ"
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "Quase. Na rua você ouve אֵיזֶה סָלָטִים, mas סָלָטִים é plural: com cuidado, por escrito, é אֵילוּ.",
+        "2": "סָלָטִים é plural: אֵילוּ."
+      }
+    },
+    {
+      "t": "separar",
+      "q": "אֵיזֶה, אֵיזוֹ ou אֵילוּ?",
+      "baldes": [
+        "אֵיזֶה",
+        "אֵיזוֹ",
+        "אֵילוּ"
+      ],
+      "itens": [
+        [
+          "קָפֶה",
+          0
+        ],
+        [
+          "עוּגָה",
+          1
+        ],
+        [
+          "מָנוֹת",
+          2
+        ],
+        [
+          "דָג",
+          0
+        ],
+        [
+          "מִסְעָדָה",
+          1
+        ],
+        [
+          "בֵּיצִים",
+          2
+        ]
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Café sem açúcar\"",
+      "antes": "קָפֶה",
+      "depois": "סֻכָּר",
+      "respostas": [
+        "בלי"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "\"Chá com leite\"",
+      "antes": "תֵה",
+      "depois": "חָלָב",
+      "respostas": [
+        "עם"
+      ]
+    },
+    {
+      "t": "vf",
+      "q": "אֶפְשָׁר לְשַׁלֵם? quer dizer \"dá para pagar?\".",
+      "certa": true
+    },
+    {
+      "t": "tabela",
+      "q": "Complete as formas.",
+      "base": "מְבַקֵשׁ",
+      "linhas": [
+        [
+          "mulher",
+          "מבקשת"
+        ],
+        [
+          "homens",
+          "מבקשים"
+        ],
+        [
+          "mulheres",
+          "מבקשות"
+        ]
+      ]
+    },
+    {
+      "t": "escolha",
+      "q": "O Dani diz que é vegetariano:",
+      "opcoes": [
+        "אֲנִי צִמְחוֹנִי.",
+        "אֲנִי צִמְחוֹנִית."
+      ],
+      "certa": 0,
+      "dicas": {
+        "1": "צִמְחוֹנִית é a forma de mulher. O Dani diz צִמְחוֹנִי."
+      }
+    },
+    {
+      "t": "erro",
+      "q": "A shakshuka é feminina. Ache o erro e escreva a frase certa.",
+      "errada": "הַשַׁקְשׁוּקָה טָעִים.",
+      "respostas": [
+        "השקשוקה טעימה"
+      ],
+      "porque": "שַׁקְשׁוּקָה é feminina: טְעִימָה."
+    },
+    {
+      "t": "erro",
+      "q": "Fala um homem. Ache o erro e escreva a frase certa.",
+      "errada": "אֲנִי לֹא אוֹכֵל בָּשָׂר, אֲנִי צִמְחוֹנִית.",
+      "respostas": [
+        "אני לא אוכל בשר אני צמחוני"
+      ],
+      "porque": "Ele é homem: צִמְחוֹנִי."
+    },
+    {
+      "t": "montar",
+      "pt": "Pode trazer a conta, por favor?",
+      "palavras": [
+        "אֶפְשָׁר",
+        "חֶשְׁבּוֹן",
+        "בְּבַקָשָׁה?"
+      ]
+    },
+    {
+      "t": "montar",
+      "pt": "Eu quero uma salada sem cebola. (fala uma mulher)",
+      "palavras": [
+        "אֲנִי",
+        "רוֹצָה",
+        "סָלָט",
+        "בְּלִי",
+        "בָּצָל"
+      ]
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "O garçom",
+          "מָה אַתֶם רוֹצִים לִשְׁתוֹת?"
+        ]
+      ],
+      "opcoes": [
+        "קָפֶה וּמַיִם, בְּבַקָשָׁה.",
+        "חֶשְׁבּוֹן, בְּבַקָשָׁה.",
+        "אֲנִי צִמְחוֹנִי."
+      ],
+      "certa": 0,
+      "porque": "Ele pergunta o que vão beber."
+    },
+    {
+      "t": "dialogo",
+      "q": "Qual é a resposta natural?",
+      "linhas": [
+        [
+          "A garçonete",
+          "אֵיךְ הָאֹכֶל?"
+        ]
+      ],
+      "opcoes": [
+        "מְאֹד טָעִים, תוֹדָה!",
+        "בְּשֶׁבַע.",
+        "לֹא, אֵין."
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ordenar",
+      "q": "Ponha a conversa na ordem.",
+      "falas": [
+        "עֶרֶב טוֹב, הִנֵה הַתַפְרִיט.",
+        "תוֹדָה. אֶפְשָׁר מַיִם?",
+        "בְּטַח. עִם קֶרַח?",
+        "לֹא, בְּלִי קֶרַח."
+      ]
+    },
+    {
+      "t": "ouvir",
+      "he": "הַחֶשְׁבּוֹן, בְּבַקָשָׁה.",
+      "q": "O que a pessoa pede?",
+      "opcoes": [
+        "A conta",
+        "O cardápio",
+        "Água"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ouvir",
+      "he": "תֵה בְּלִי סֻכָּר.",
+      "q": "Como é o chá?",
+      "opcoes": [
+        "Sem açúcar",
+        "Com açúcar",
+        "Com leite"
+      ],
+      "certa": 0
+    },
+    {
+      "t": "ditado",
+      "he": "טָעִים",
+      "respostas": [
+        "טעים"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "sem",
+      "respostas": [
+        "בלי"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "comida",
+      "respostas": [
+        "אוכל",
+        "אכל"
+      ]
+    },
+    {
+      "t": "escrever",
+      "pt": "açúcar",
+      "respostas": [
+        "סוכר",
+        "סכר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"Obrigada. Pode ser uma água, por favor?\"",
+      "antes": "תוֹדָה.",
+      "depois": "מַיִם, בְּבַקָשָׁה?",
+      "respostas": [
+        "אפשר"
+      ]
+    },
+    {
+      "t": "completar",
+      "q": "Complete a fala do diálogo: \"E eu quero uma salada. Que salada tem?\"",
+      "antes": "וַאֲנִי רוֹצָה סָלָט.",
+      "depois": "סָלָט יֵשׁ?",
+      "respostas": [
+        "איזה"
+      ]
+    },
+    {
+      "t": "falar",
+      "pt": "Diga em voz alta, em hebraico: \"Obrigada. Pode ser uma água, por favor?\"",
+      "exemplo": "תוֹדָה. אֶפְשָׁר מַיִם, בְּבַקָשָׁה?"
+    },
+    {
+      "t": "aberta",
+      "pt": "Você está num café. Peça uma bebida e uma comida, diga uma coisa que você não quer, e peça a conta.",
+      "exemplo": "אֶפְשָׁר קָפֶה הָפוּךְ וְטוֹסְט גְבִינָה, בְּבַקָשָׁה? בְּלִי בָּצָל. אֶפְשָׁר חֶשְׁבּוֹן?"
+    }
+  ]
+}

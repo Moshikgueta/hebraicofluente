@@ -1,16 +1,32 @@
-# Publicar o curso
+# Publicar o curso: a PRÉVIA no GitHub Pages (HISTÓRICO)
 
-O app é estático - 48 páginas pré-renderizadas, e o único estado é o do aluno,
-no navegador dele. Não há servidor, não há banco, não há custo. Ele mora no
-GitHub Pages e se republica sozinho a cada push.
+> **A produção não é esta.** O site que vende e que os alunos usam,
+> https://hebraicofluente.com.br, roda na Cloudflare (Worker + D1 + Mercado
+> Pago) e é publicado por `.github/workflows/deploy-worker.yml` a cada merge
+> em `main`. O passo a passo dele está em `DEPLOY-CLOUDFLARE.md`; o que fazer
+> quando algo quebra, em `INCIDENTES.md`.
+>
+> **Este arquivo é histórico desde 01/10/2026.** O workflow que ele descreve
+> (`.github/workflows/deploy-app.yml`) foi APAGADO na auditoria (SEC-A-004):
+> sem `NEXT_PUBLIC_PLATFORM_API=worker` o build põe os JSON pagos dentro do
+> pacote, e a ação publicava o curso inteiro no GitHub Pages, sem portão. Não
+> o recrie. Uma prévia pública só volta se o build sair sem o conteúdo pago.
+> O que falta ao dono é conferir que o site antigo está fora do ar
+> (`ANTES-DE-VENDER.md`, item 1). Correção anterior, de 28/09/2026
+> (auditoria, INFRA-014): o texto abaixo dizia que o Pages era o site e que se
+> republicava a cada push, e nenhuma das duas coisas era verdade.
 
-**Endereço:** https://moshikgueta.github.io/hebraicofluente/
+A prévia é estática: as páginas pré-renderizadas, e o único estado é o de
+quem abre, no navegador. Sem servidor, sem banco, sem custo.
+
+**Endereço da prévia:** https://moshikgueta.github.io/hebraicofluente/
 
 ---
 
-## Já está no ar
+## Como funcionava a prévia
 
-Não é preciso fazer nada para publicar uma mudança. O fluxo é este:
+O fluxo abaixo é o de quando ela publicava sozinha; hoje ela é disparada à
+mão em Actions → deploy-app → Run workflow.
 
 ```
 você edita  →  git push  →  Actions roda os testes  →  build  →  Pages

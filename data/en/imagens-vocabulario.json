@@ -1,0 +1,811 @@
+{
+  "palavras/אִמָא/pt": {
+    "pt": "mãe",
+    "en": "mother"
+  },
+  "palavras/אִמָא/imageAlt": {
+    "pt": "Uma mulher adulta sorrindo, caminhando de mãos dadas com uma criança pequena.",
+    "en": "A smiling adult woman walking hand in hand with a small child."
+  },
+  "palavras/מַיִם/pt": {
+    "pt": "água",
+    "en": "water"
+  },
+  "palavras/מַיִם/imageAlt": {
+    "pt": "Um copo transparente cheio de água, com uma gota caindo.",
+    "en": "A clear glass full of water, with a drop falling."
+  },
+  "palavras/מִשְׁפָּחָה/pt": {
+    "pt": "família",
+    "en": "family"
+  },
+  "palavras/מִשְׁפָּחָה/imageAlt": {
+    "pt": "Pai, mãe e dois filhos, lado a lado, abraçados.",
+    "en": "A father, a mother and two children, side by side, hugging."
+  },
+  "palavras/מֶלֶךְ/pt": {
+    "pt": "rei",
+    "en": "king"
+  },
+  "palavras/מֶלֶךְ/imageAlt": {
+    "pt": "Uma coroa dourada simples sobre uma almofada.",
+    "en": "A simple golden crown on a cushion."
+  },
+  "palavras/תֵה/pt": {
+    "pt": "chá",
+    "en": "tea"
+  },
+  "palavras/תֵה/imageAlt": {
+    "pt": "Uma xícara de chá fumegante com um saquinho pendurado.",
+    "en": "A steaming cup of tea with a tea bag hanging from it."
+  },
+  "palavras/תַפּוּחַ/pt": {
+    "pt": "maçã",
+    "en": "apple"
+  },
+  "palavras/תַפּוּחַ/imageAlt": {
+    "pt": "Uma maçã vermelha com uma folha no cabo.",
+    "en": "A red apple with a leaf on the stem."
+  },
+  "palavras/חַלוֹן/pt": {
+    "pt": "janela",
+    "en": "window"
+  },
+  "palavras/חַלוֹן/imageAlt": {
+    "pt": "Uma janela aberta, com venezianas verdes, mostrando árvores e céu azul.",
+    "en": "An open window with green shutters, showing trees and blue sky."
+  },
+  "palavras/יָם/pt": {
+    "pt": "mar",
+    "en": "sea"
+  },
+  "palavras/יָם/imageAlt": {
+    "pt": "Ondas do mar sob um céu claro, com a linha do horizonte.",
+    "en": "Sea waves under a clear sky, with the horizon line."
+  },
+  "palavras/יַלְדָה/pt": {
+    "pt": "menina",
+    "en": "girl"
+  },
+  "palavras/יַלְדָה/imageAlt": {
+    "pt": "Uma menina de cabelo comprido e vestido amarelo, sorrindo.",
+    "en": "A girl with long hair and a yellow dress, smiling."
+  },
+  "palavras/גַן/pt": {
+    "pt": "jardim · jardim de infância",
+    "en": "garden · kindergarten"
+  },
+  "palavras/גַן/imageAlt": {
+    "pt": "Um parquinho com árvore, escorregador, balanço e caixa de areia.",
+    "en": "A playground with a tree, a slide, a swing and a sandbox."
+  },
+  "palavras/גַג/pt": {
+    "pt": "telhado",
+    "en": "roof"
+  },
+  "palavras/גַג/imageAlt": {
+    "pt": "O telhado de uma casa, com telhas e uma chaminé.",
+    "en": "The roof of a house, with tiles and a chimney."
+  },
+  "palavras/אֲגַם/pt": {
+    "pt": "lago",
+    "en": "lake"
+  },
+  "palavras/אֲגַם/imageAlt": {
+    "pt": "Um lago calmo cercado de árvores, com um barquinho.",
+    "en": "A calm lake surrounded by trees, with a small boat."
+  },
+  "palavras/גְלִידָה/pt": {
+    "pt": "sorvete",
+    "en": "ice cream"
+  },
+  "palavras/גְלִידָה/imageAlt": {
+    "pt": "Uma casquinha de sorvete com duas bolas.",
+    "en": "An ice cream cone with two scoops."
+  },
+  "palavras/יָד/pt": {
+    "pt": "mão",
+    "en": "hand"
+  },
+  "palavras/יָד/imageAlt": {
+    "pt": "Uma mão aberta, palma para a frente.",
+    "en": "An open hand, palm facing forward."
+  },
+  "palavras/דָג/pt": {
+    "pt": "peixe",
+    "en": "fish"
+  },
+  "palavras/דָג/imageAlt": {
+    "pt": "Um peixe nadando, de perfil.",
+    "en": "A fish swimming, seen from the side."
+  },
+  "palavras/דוֹדָה/pt": {
+    "pt": "tia",
+    "en": "aunt"
+  },
+  "palavras/דוֹדָה/imageAlt": {
+    "pt": "Uma mulher adulta abaixada para abraçar uma sobrinha.",
+    "en": "An adult woman crouching down to hug her niece."
+  },
+  "palavras/אִשָׁה/pt": {
+    "pt": "mulher",
+    "en": "woman"
+  },
+  "palavras/אִשָׁה/imageAlt": {
+    "pt": "Uma mulher adulta de cabelo comprido, sorrindo, com as mãos nos bolsos.",
+    "en": "An adult woman with long hair, smiling, with her hands in her pockets."
+  },
+  "palavras/שֶׁמֶשׁ/pt": {
+    "pt": "sol",
+    "en": "sun"
+  },
+  "palavras/שֶׁמֶשׁ/imageAlt": {
+    "pt": "Um sol redondo e brilhante num céu limpo.",
+    "en": "A round, bright sun in a clear sky."
+  },
+  "palavras/יֶלֶד/pt": {
+    "pt": "menino",
+    "en": "boy"
+  },
+  "palavras/יֶלֶד/imageAlt": {
+    "pt": "Um menino de uns oito anos segurando uma bola.",
+    "en": "A boy of about eight holding a ball."
+  },
+  "palavras/לַיְלָה/pt": {
+    "pt": "noite",
+    "en": "night"
+  },
+  "palavras/לַיְלָה/imageAlt": {
+    "pt": "Um céu noturno com lua crescente e estrelas sobre casas.",
+    "en": "A night sky with a crescent moon and stars over houses."
+  },
+  "palavras/לֶחֶם/pt": {
+    "pt": "pão",
+    "en": "bread"
+  },
+  "palavras/לֶחֶם/imageAlt": {
+    "pt": "Um pão de forma dourado, com algumas fatias cortadas.",
+    "en": "A golden loaf of bread, with a few slices cut."
+  },
+  "palavras/הַר/pt": {
+    "pt": "montanha",
+    "en": "mountain"
+  },
+  "palavras/הַר/imageAlt": {
+    "pt": "Uma montanha com o pico nevado.",
+    "en": "A mountain with a snowy peak."
+  },
+  "palavras/נָהָר/pt": {
+    "pt": "rio",
+    "en": "river"
+  },
+  "palavras/נָהָר/imageAlt": {
+    "pt": "Um rio correndo entre margens verdes.",
+    "en": "A river flowing between green banks."
+  },
+  "palavras/רְחוֹב/pt": {
+    "pt": "rua",
+    "en": "street"
+  },
+  "palavras/רְחוֹב/imageAlt": {
+    "pt": "Uma rua de cidade com calçada, poste e casas.",
+    "en": "A city street with a sidewalk, a lamppost and houses."
+  },
+  "palavras/חָבֵר/pt": {
+    "pt": "amigo",
+    "en": "friend"
+  },
+  "palavras/חָבֵר/imageAlt": {
+    "pt": "Dois amigos adultos rindo, um com a mão no ombro do outro.",
+    "en": "Two adult friends laughing, one with a hand on the other's shoulder."
+  },
+  "palavras/וֶרֶד/pt": {
+    "pt": "rosa (flor)",
+    "en": "rose (flower)"
+  },
+  "palavras/וֶרֶד/imageAlt": {
+    "pt": "Uma rosa vermelha com o cabo e duas folhas.",
+    "en": "A red rose with its stem and two leaves."
+  },
+  "palavras/אֹזֶן/pt": {
+    "pt": "orelha",
+    "en": "ear"
+  },
+  "palavras/אֹזֶן/imageAlt": {
+    "pt": "O perfil de uma cabeça com a orelha em destaque.",
+    "en": "A head in profile with the ear highlighted."
+  },
+  "palavras/אָח/pt": {
+    "pt": "irmão",
+    "en": "brother"
+  },
+  "palavras/אָח/imageAlt": {
+    "pt": "Dois irmãos, um mais velho e um mais novo, lado a lado.",
+    "en": "Two brothers, an older one and a younger one, side by side."
+  },
+  "palavras/מִטָה/pt": {
+    "pt": "cama",
+    "en": "bed"
+  },
+  "palavras/מִטָה/imageAlt": {
+    "pt": "Uma cama arrumada com travesseiro e cobertor.",
+    "en": "A made bed with a pillow and a blanket."
+  },
+  "palavras/מִטְרִיָה/pt": {
+    "pt": "guarda-chuva",
+    "en": "umbrella"
+  },
+  "palavras/מִטְרִיָה/imageAlt": {
+    "pt": "Um guarda-chuva verde, fechado, de cabo curvo.",
+    "en": "A green umbrella, closed, with a curved handle."
+  },
+  "palavras/סוּס/pt": {
+    "pt": "cavalo",
+    "en": "horse"
+  },
+  "palavras/סוּס/imageAlt": {
+    "pt": "Um cavalo marrom em pé, de perfil.",
+    "en": "A brown horse standing, seen from the side."
+  },
+  "palavras/סַל/pt": {
+    "pt": "cesta",
+    "en": "basket"
+  },
+  "palavras/סַל/imageAlt": {
+    "pt": "Uma cesta de vime com frutas.",
+    "en": "A wicker basket with fruit."
+  },
+  "palavras/אוֹטוֹבּוּס/pt": {
+    "pt": "ônibus",
+    "en": "bus"
+  },
+  "palavras/אוֹטוֹבּוּס/imageAlt": {
+    "pt": "Um ônibus urbano de frente.",
+    "en": "A city bus seen from the front."
+  },
+  "palavras/כִּסֵא/pt": {
+    "pt": "cadeira",
+    "en": "chair"
+  },
+  "palavras/כִּסֵא/imageAlt": {
+    "pt": "Uma cadeira de madeira simples.",
+    "en": "A simple wooden chair."
+  },
+  "palavras/עִיר/pt": {
+    "pt": "cidade",
+    "en": "city"
+  },
+  "palavras/עִיר/imageAlt": {
+    "pt": "Prédios de uma cidade vistos de longe.",
+    "en": "City buildings seen from a distance."
+  },
+  "palavras/עֵץ/pt": {
+    "pt": "árvore",
+    "en": "tree"
+  },
+  "palavras/עֵץ/imageAlt": {
+    "pt": "Uma árvore frondosa com tronco grosso.",
+    "en": "A leafy tree with a thick trunk."
+  },
+  "palavras/מִיץ/pt": {
+    "pt": "suco",
+    "en": "juice"
+  },
+  "palavras/מִיץ/imageAlt": {
+    "pt": "Um copo de suco de laranja com uma laranja cortada ao lado.",
+    "en": "A glass of orange juice with a cut orange beside it."
+  },
+  "palavras/קָפֶה/pt": {
+    "pt": "café",
+    "en": "coffee"
+  },
+  "palavras/קָפֶה/imageAlt": {
+    "pt": "Uma xícara de café preto sobre o pires.",
+    "en": "A cup of black coffee on a saucer."
+  },
+  "palavras/אַבָּא/pt": {
+    "pt": "pai",
+    "en": "father"
+  },
+  "palavras/אַבָּא/imageAlt": {
+    "pt": "Um homem adulto carregando uma criança nos ombros.",
+    "en": "An adult man carrying a child on his shoulders."
+  },
+  "palavras/בַּיִת/pt": {
+    "pt": "casa",
+    "en": "house"
+  },
+  "palavras/בַּיִת/imageAlt": {
+    "pt": "Uma casa simples com porta, janelas e telhado.",
+    "en": "A simple house with a door, windows and a roof."
+  },
+  "palavras/לֵב/pt": {
+    "pt": "coração",
+    "en": "heart"
+  },
+  "palavras/לֵב/imageAlt": {
+    "pt": "Um coração vermelho desenhado.",
+    "en": "A drawn red heart."
+  },
+  "palavras/כֶּלֶב/pt": {
+    "pt": "cachorro",
+    "en": "dog"
+  },
+  "palavras/כֶּלֶב/imageAlt": {
+    "pt": "Um cachorro sentado, olhando para a frente.",
+    "en": "A dog sitting, looking forward."
+  },
+  "palavras/כּוֹס/pt": {
+    "pt": "copo",
+    "en": "glass (cup)",
+    "comentario": "\"copo\": \"glass (cup)\" para não confundir com vidro."
+  },
+  "palavras/כּוֹס/imageAlt": {
+    "pt": "Um copo de vidro vazio.",
+    "en": "An empty drinking glass."
+  },
+  "palavras/כַּדוּר/pt": {
+    "pt": "bola",
+    "en": "ball"
+  },
+  "palavras/כַּדוּר/imageAlt": {
+    "pt": "Uma bola de futebol.",
+    "en": "A soccer ball."
+  },
+  "palavras/סֵפֶר/pt": {
+    "pt": "livro",
+    "en": "book"
+  },
+  "palavras/סֵפֶר/imageAlt": {
+    "pt": "Um livro fechado, de capa verde, com uma fita marcando a página.",
+    "en": "A closed book with a green cover and a ribbon marking the page."
+  },
+  "palavras/כֶּסֶף/pt": {
+    "pt": "dinheiro",
+    "en": "money"
+  },
+  "palavras/כֶּסֶף/imageAlt": {
+    "pt": "Algumas moedas e uma nota dobrada.",
+    "en": "A few coins and a folded bill."
+  },
+  "palavras/טֶלֶפוֹן/pt": {
+    "pt": "telefone",
+    "en": "phone"
+  },
+  "palavras/טֶלֶפוֹן/imageAlt": {
+    "pt": "Um celular de tela escura, inclinado.",
+    "en": "A cell phone with a dark screen, tilted."
+  },
+  "palavras/אֹכֶל/pt": {
+    "pt": "comida",
+    "en": "food"
+  },
+  "palavras/אֹכֶל/imageAlt": {
+    "pt": "Um prato com comida: arroz, legumes e um pedaço de frango.",
+    "en": "A plate of food: rice, vegetables and a piece of chicken."
+  },
+  "palavras/מוֹרֶה/pt": {
+    "pt": "professor",
+    "en": "teacher"
+  },
+  "palavras/מוֹרֶה/imageAlt": {
+    "pt": "Um professor em pé ao lado de um quadro branco, apontando.",
+    "en": "A teacher standing next to a whiteboard, pointing."
+  },
+  "palavras/תָא/pt": {
+    "pt": "compartimento · cabine",
+    "en": "compartment · booth"
+  },
+  "palavras/תָא/imageAlt": {
+    "pt": "Uma cabine de estudo pequena, com mesa e cadeira, numa biblioteca.",
+    "en": "A small study booth with a desk and a chair, in a library."
+  },
+  "palavras/יִשְׂרָאֵל/pt": {
+    "pt": "Israel",
+    "en": "Israel"
+  },
+  "palavras/יִשְׂרָאֵל/imageAlt": {
+    "pt": "A bandeira de Israel tremulando.",
+    "en": "The flag of Israel waving."
+  },
+  "palavras/אֲדָמָה/pt": {
+    "pt": "terra / solo",
+    "en": "earth / soil"
+  },
+  "palavras/אֲדָמָה/imageAlt": {
+    "pt": "Um monte de terra escura com um broto saindo.",
+    "en": "A mound of dark soil with a sprout coming out."
+  },
+  "palavras/מִדָה/pt": {
+    "pt": "medida / tamanho",
+    "en": "measure / size"
+  },
+  "palavras/מִדָה/imageAlt": {
+    "pt": "Uma trena amarela com a fita puxada.",
+    "en": "A yellow tape measure with the tape pulled out."
+  },
+  "palavras/מְדַבֵּר/pt": {
+    "pt": "falo, fala",
+    "en": "speak, speaks"
+  },
+  "palavras/מְדַבֵּר/imageAlt": {
+    "pt": "Um homem falando, com balões de fala vazios.",
+    "en": "A man talking, with empty speech bubbles."
+  },
+  "palavras/שָׁלוֹם/pt": {
+    "pt": "paz / olá / tchau",
+    "en": "peace / hello / goodbye"
+  },
+  "palavras/שָׁלוֹם/imageAlt": {
+    "pt": "Duas pessoas se cumprimentando com um aceno.",
+    "en": "Two people greeting each other with a wave."
+  },
+  "palavras/שִׁיר/pt": {
+    "pt": "canção",
+    "en": "song"
+  },
+  "palavras/שִׁיר/imageAlt": {
+    "pt": "Notas musicais saindo de um rádio antigo.",
+    "en": "Musical notes coming out of an old radio."
+  },
+  "palavras/אַרְבַּע/pt": {
+    "pt": "quatro",
+    "en": "four"
+  },
+  "palavras/אַרְבַּע/imageAlt": {
+    "pt": "O número 4, em azul.",
+    "en": "The number 4, in blue."
+  },
+  "palavras/יוֹם/pt": {
+    "pt": "dia",
+    "en": "day"
+  },
+  "palavras/יוֹם/imageAlt": {
+    "pt": "Um dia claro com sol e nuvens sobre um campo.",
+    "en": "A bright day with sun and clouds over a field."
+  },
+  "palavras/אֶחָד/pt": {
+    "pt": "um",
+    "en": "one"
+  },
+  "palavras/אֶחָד/imageAlt": {
+    "pt": "Uma única maçã vermelha.",
+    "en": "A single red apple."
+  },
+  "palavras/שִׂמְחָה/pt": {
+    "pt": "alegria",
+    "en": "joy"
+  },
+  "palavras/שִׂמְחָה/imageAlt": {
+    "pt": "Uma pessoa pulando de alegria, braços para cima.",
+    "en": "A person jumping for joy, arms up."
+  },
+  "palavras/חֲמִשָׁה/pt": {
+    "pt": "cinco",
+    "en": "five"
+  },
+  "palavras/חֲמִשָׁה/imageAlt": {
+    "pt": "Cinco maçãs vermelhas em fila.",
+    "en": "Five red apples in a row."
+  },
+  "palavras/טִיוּל/pt": {
+    "pt": "passeio",
+    "en": "outing, trip"
+  },
+  "palavras/טִיוּל/imageAlt": {
+    "pt": "Uma pessoa de mochila caminhando numa trilha.",
+    "en": "A person with a backpack walking on a trail."
+  },
+  "palavras/טָרִי/pt": {
+    "pt": "fresco",
+    "en": "fresh"
+  },
+  "palavras/טָרִי/imageAlt": {
+    "pt": "Legumes frescos com gotas de água.",
+    "en": "Fresh vegetables with drops of water."
+  },
+  "palavras/סְטוּדֶנְט/pt": {
+    "pt": "estudante",
+    "en": "student"
+  },
+  "palavras/סְטוּדֶנְט/imageAlt": {
+    "pt": "Um estudante jovem de mochila, com livros nos braços.",
+    "en": "A young student with a backpack, holding books."
+  },
+  "palavras/סוֹד/pt": {
+    "pt": "segredo",
+    "en": "secret"
+  },
+  "palavras/סוֹד/imageAlt": {
+    "pt": "Uma pessoa cochichando no ouvido de outra.",
+    "en": "A person whispering in another person's ear."
+  },
+  "palavras/סֶרֶט/pt": {
+    "pt": "filme",
+    "en": "movie"
+  },
+  "palavras/סֶרֶט/imageAlt": {
+    "pt": "Um rolo de filme de cinema e pipoca.",
+    "en": "A film reel and popcorn."
+  },
+  "palavras/שָׁעָה/pt": {
+    "pt": "hora",
+    "en": "hour"
+  },
+  "palavras/שָׁעָה/imageAlt": {
+    "pt": "Um relógio de parede sem números.",
+    "en": "A wall clock without numbers."
+  },
+  "palavras/עוֹלָם/pt": {
+    "pt": "mundo",
+    "en": "world"
+  },
+  "palavras/עוֹלָם/imageAlt": {
+    "pt": "Um globo terrestre.",
+    "en": "A globe."
+  },
+  "palavras/צֵל/pt": {
+    "pt": "sombra",
+    "en": "shade, shadow"
+  },
+  "palavras/צֵל/imageAlt": {
+    "pt": "Uma árvore fazendo sombra no chão.",
+    "en": "A tree casting a shadow on the ground."
+  },
+  "palavras/צָהֳרַיִם/pt": {
+    "pt": "meio-dia",
+    "en": "noon"
+  },
+  "palavras/צָהֳרַיִם/imageAlt": {
+    "pt": "O sol brilhando alto no céu, acima das nuvens.",
+    "en": "The sun shining high in the sky, above the clouds."
+  },
+  "palavras/תִיק/pt": {
+    "pt": "bolsa / mochila",
+    "en": "bag / backpack"
+  },
+  "palavras/תִיק/imageAlt": {
+    "pt": "Uma mochila escolar.",
+    "en": "A school backpack."
+  },
+  "palavras/שֶׁקֶט/pt": {
+    "pt": "silêncio",
+    "en": "silence, quiet"
+  },
+  "palavras/שֶׁקֶט/imageAlt": {
+    "pt": "Uma mulher com o dedo nos lábios pedindo silêncio.",
+    "en": "A woman with a finger on her lips asking for silence."
+  },
+  "palavras/טוֹב/pt": {
+    "pt": "bom",
+    "en": "good"
+  },
+  "palavras/טוֹב/imageAlt": {
+    "pt": "Uma mão com o polegar para cima.",
+    "en": "A hand giving a thumbs-up."
+  },
+  "palavras/שַׁבָּת/pt": {
+    "pt": "sábado / shabát",
+    "en": "Saturday / shabat"
+  },
+  "palavras/שַׁבָּת/imageAlt": {
+    "pt": "Duas velas acesas e uma chalá trançada.",
+    "en": "Two lit candles and a braided challah."
+  },
+  "palavras/בֹּקֶר/pt": {
+    "pt": "manhã",
+    "en": "morning"
+  },
+  "palavras/בֹּקֶר/imageAlt": {
+    "pt": "O sol nascendo atrás de casas.",
+    "en": "The sun rising behind houses."
+  },
+  "palavras/דֶרֶךְ/pt": {
+    "pt": "caminho",
+    "en": "way, path"
+  },
+  "palavras/דֶרֶךְ/imageAlt": {
+    "pt": "Um caminho de terra atravessando um campo.",
+    "en": "A dirt path crossing a field."
+  },
+  "palavras/כִּתָה/pt": {
+    "pt": "sala de aula, turma",
+    "en": "classroom, class"
+  },
+  "palavras/כִּתָה/imageAlt": {
+    "pt": "Uma sala de aula com carteiras e um quadro.",
+    "en": "A classroom with desks and a board."
+  },
+  "palavras/לָלֶכֶת/pt": {
+    "pt": "ir, caminhar",
+    "en": "to go, to walk"
+  },
+  "palavras/לָלֶכֶת/imageAlt": {
+    "pt": "Uma pessoa caminhando de perfil.",
+    "en": "A person walking, seen from the side."
+  },
+  "palavras/פֶּה/pt": {
+    "pt": "boca",
+    "en": "mouth"
+  },
+  "palavras/פֶּה/imageAlt": {
+    "pt": "Uma boca sorrindo.",
+    "en": "A smiling mouth."
+  },
+  "palavras/פָּרָה/pt": {
+    "pt": "vaca",
+    "en": "cow"
+  },
+  "palavras/פָּרָה/imageAlt": {
+    "pt": "Uma vaca malhada no pasto.",
+    "en": "A spotted cow in a pasture."
+  },
+  "palavras/פִּתָה/pt": {
+    "pt": "pão sírio",
+    "en": "pita"
+  },
+  "palavras/פִּתָה/imageAlt": {
+    "pt": "Um pão sírio redondo, aberto ao meio.",
+    "en": "A round pita bread, split open."
+  },
+  "palavras/שְׂמֹאל/pt": {
+    "pt": "esquerda",
+    "en": "left"
+  },
+  "palavras/שְׂמֹאל/imageAlt": {
+    "pt": "Uma seta apontando para a esquerda.",
+    "en": "An arrow pointing left."
+  },
+  "palavras/שָׂדֶה/pt": {
+    "pt": "campo",
+    "en": "field"
+  },
+  "palavras/שָׂדֶה/imageAlt": {
+    "pt": "Um campo verde aberto.",
+    "en": "An open green field."
+  },
+  "palavras/עֶרֶב/pt": {
+    "pt": "noite, fim de tarde",
+    "en": "evening, late afternoon"
+  },
+  "palavras/עֶרֶב/imageAlt": {
+    "pt": "O pôr do sol sobre a água, no fim da tarde.",
+    "en": "A sunset over the water, late in the afternoon."
+  },
+  "palavras/אָבִיב/pt": {
+    "pt": "primavera",
+    "en": "spring"
+  },
+  "palavras/אָבִיב/imageAlt": {
+    "pt": "Uma árvore florida na primavera.",
+    "en": "A tree in bloom in the spring."
+  },
+  "palavras/זָהָב/pt": {
+    "pt": "ouro",
+    "en": "gold"
+  },
+  "palavras/זָהָב/imageAlt": {
+    "pt": "Barras de ouro empilhadas.",
+    "en": "Stacked gold bars."
+  },
+  "palavras/צ׳יפס/pt": {
+    "pt": "batata frita",
+    "en": "French fries"
+  },
+  "palavras/צ׳יפס/imageAlt": {
+    "pt": "Batatas fritas num cone de papel.",
+    "en": "French fries in a paper cone."
+  },
+  "palavras/צ׳ילה/pt": {
+    "pt": "Chile",
+    "en": "Chile"
+  },
+  "palavras/צ׳ילה/imageAlt": {
+    "pt": "A bandeira do Chile.",
+    "en": "The flag of Chile."
+  },
+  "palavras/סנדוויץ׳/pt": {
+    "pt": "sanduíche",
+    "en": "sandwich"
+  },
+  "palavras/סנדוויץ׳/imageAlt": {
+    "pt": "Um sanduíche com recheio.",
+    "en": "A sandwich with filling."
+  },
+  "palavras/צ׳כיה/pt": {
+    "pt": "Tchéquia",
+    "en": "Czechia"
+  },
+  "palavras/צ׳כיה/imageAlt": {
+    "pt": "A bandeira da Tchéquia.",
+    "en": "The flag of Czechia."
+  },
+  "palavras/ג׳ינס/pt": {
+    "pt": "calça jeans",
+    "en": "jeans"
+  },
+  "palavras/ג׳ינס/imageAlt": {
+    "pt": "Uma calça jeans.",
+    "en": "A pair of jeans."
+  },
+  "palavras/ג׳ירפה/pt": {
+    "pt": "girafa",
+    "en": "giraffe"
+  },
+  "palavras/ג׳ירפה/imageAlt": {
+    "pt": "Uma girafa.",
+    "en": "A giraffe."
+  },
+  "palavras/פיג׳מה/pt": {
+    "pt": "pijama",
+    "en": "pajamas"
+  },
+  "palavras/פיג׳מה/imageAlt": {
+    "pt": "Um pijama listrado dobrado.",
+    "en": "Folded striped pajamas."
+  },
+  "palavras/ג׳ל/pt": {
+    "pt": "gel",
+    "en": "gel"
+  },
+  "palavras/ג׳ל/imageAlt": {
+    "pt": "Um tubo de gel de cabelo.",
+    "en": "A tube of hair gel."
+  },
+  "palavras/ג׳ונגל/pt": {
+    "pt": "selva",
+    "en": "jungle"
+  },
+  "palavras/ג׳ונגל/imageAlt": {
+    "pt": "Uma selva densa com árvores e cipós.",
+    "en": "A dense jungle with trees and vines."
+  },
+  "palavras/ז׳קט/pt": {
+    "pt": "jaqueta",
+    "en": "jacket"
+  },
+  "palavras/ז׳קט/imageAlt": {
+    "pt": "Uma jaqueta verde num cabide.",
+    "en": "A green jacket on a hanger."
+  },
+  "palavras/מסאז׳/pt": {
+    "pt": "massagem",
+    "en": "massage"
+  },
+  "palavras/מסאז׳/imageAlt": {
+    "pt": "Uma pessoa recebendo massagem nas costas.",
+    "en": "A person getting a back massage."
+  },
+  "palavras/בז׳/pt": {
+    "pt": "bege",
+    "en": "beige"
+  },
+  "palavras/בז׳/imageAlt": {
+    "pt": "Um quadrado da cor bege.",
+    "en": "A beige square."
+  },
+  "palavras/מִצְוָה/pt": {
+    "pt": "preceito, boa ação",
+    "en": "commandment, good deed"
+  },
+  "palavras/מִצְוָה/imageAlt": {
+    "pt": "Um jovem ajudando uma senhora idosa a atravessar a rua.",
+    "en": "A young man helping an elderly woman cross the street."
+  },
+  "palavras/זְמַן/pt": {
+    "pt": "tempo",
+    "en": "time"
+  },
+  "palavras/זְמַן/imageAlt": {
+    "pt": "Uma ampulheta com areia caindo.",
+    "en": "An hourglass with sand falling."
+  },
+  "palavras/מַזָל/pt": {
+    "pt": "sorte",
+    "en": "luck"
+  },
+  "palavras/מַזָל/imageAlt": {
+    "pt": "Um trevo de quatro folhas.",
+    "en": "A four-leaf clover."
+  }
+}

@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { meta } from '@/lib/seo';
+import { tx } from '@/i18n/telas/painel-paginas';
 import { DashboardClient } from './DashboardClient';
 
 export const metadata: Metadata = meta({
   rota: '/meu-hebraico',
-  title: 'Meu Hebraico - Hebraico Fluente',
-  description:
-    'Seus cursos, seu progresso e a aula de hoje.'
+  title: tx.meuHebraicoTitulo,
+  description: tx.meuHebraicoDescricao
 });
 
 export default function MeuHebraicoPage() { return <DashboardClient />; }

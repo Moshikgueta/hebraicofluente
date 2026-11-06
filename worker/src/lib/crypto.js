@@ -29,7 +29,7 @@ const enc = new TextEncoder();
  *
  *      10.000 →  1,9 ms      100.000 → 17,0 ms
  *      25.000 →  4,4 ms      310.000 → 53,0 ms
- *      50.000 →  8,6 ms
+ *      50.000 →  8,6 ms      600.000 → ~103 ms (estimado, linear)
  *
  * Ou seja: qualquer coisa acima de ~50.000 é morta no meio do cálculo, e a
  * rota devolve 500. Foi exatamente o que aconteceu na primeira publicação -
@@ -42,9 +42,9 @@ const enc = new TextEncoder();
  *
  * COMO PAGAR ESSA DÍVIDA (uns cinco minutos, depois do Workers Paid, US$5/mês):
  *
- *   1. em wrangler.toml, [vars]:   PBKDF2_ITERATIONS = "310000"
+ *   1. em wrangler.toml, [vars]:   PBKDF2_ITERATIONS = "600000"   (o que o OWASP pede hoje)
  *   2. em wrangler.toml, no topo:  [limits]
- *                                  cpu_ms = 200
+ *                                  cpu_ms = 300
  *   3. publicar.
  *
  * Nada mais. Ninguém é deslogado e nenhuma senha é invalidada, porque cada
