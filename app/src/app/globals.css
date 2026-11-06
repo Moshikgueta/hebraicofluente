@@ -960,12 +960,13 @@ a:hover > .hf-arco { transform: translateY(-2px); }
 .hf-carimbo-ok { border-style: solid; border-color: #C9443A; color: #C9443A; animation: hf-carimba .35s var(--ease-out) both; }
 .hf-carimbo-ok:nth-child(2) { animation-delay: .35s; } .hf-carimbo-ok:nth-child(3) { animation-delay: .7s; }
 @keyframes hf-carimba { from { transform: scale(2.2) rotate(-30deg); opacity: 0; } to { transform: scale(1) rotate(-12deg); opacity: 1; } }
-.hf-viajante { position: absolute; left: 0; top: 0; z-index: 2; width: 38px; height: 48px; pointer-events: none; }
+.hf-viajante { position: absolute; left: 0; top: 0; z-index: 2; width: 56px; height: 56px; pointer-events: none; }
 .hf-viajante svg { width: 100%; height: 100%; overflow: visible; }
-.hf-perna1, .hf-perna2 { transform-box: fill-box; transform-origin: 50% 0; }
-.hf-andando .hf-perna1 { animation: hf-passo .32s ease-in-out infinite alternate; }
-.hf-andando .hf-perna2 { animation: hf-passo .32s ease-in-out infinite alternate-reverse; }
-@keyframes hf-passo { from { transform: rotate(18deg); } to { transform: rotate(-18deg); } }
+/* A Yael saltita enquanto anda; ao chegar a uma estação, ela dá um pulinho. */
+.hf-andando .yael { animation: hf-saltita .3s ease-in-out infinite alternate; }
+@keyframes hf-saltita { from { transform: translateY(0) rotate(-3deg); } to { transform: translateY(-7px) rotate(3deg); } }
+.hf-visita { animation: hf-visita .42s var(--ease-out); }
+@keyframes hf-visita { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
 .hf-estrada-voltar { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 140px); z-index: 60;
   width: 52px; height: 52px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); color: var(--navy); display: grid; place-items: center; box-shadow: var(--sh-mock); }
 

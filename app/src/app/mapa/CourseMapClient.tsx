@@ -38,7 +38,7 @@ import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
 import { aula0Feita, isLessonComplete, isLessonMastered, letraLiberada, REGRA_DO_DOMINIO, STAGE_COUNT } from '@/lib/state/rules';
 import { EstradaDoModulo } from '@/components/aventura/EstradaDoModulo';
-import { itensDoModulo, moduloCompleto, useEstradaDoModulo } from '@/components/aventura/estrada-do-modulo';
+import { itensDoModulo, moduloCompleto, useEstradaDoCurso, useEstradaDoModulo } from '@/components/aventura/estrada-do-modulo';
 import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
 import { ordemDeEnsino, portasDosModulos } from '@/lib/sons';
@@ -123,6 +123,10 @@ export function CourseMapClient() {
 
   const pct = Math.round(p.progress * 100);
   const passo = proximoPasso(p, indiceAtual);
+  /* Nos módulos sem letras (6 e 7) e com o curso terminado, o mapa é a
+     estrada do curso inteiro, a mesma do painel (06/11/2026, pedido do dono). */
+  const estradaDoCurso = useEstradaDoCurso();
+  const doCursoInteiro = p.ready && a0 && (indiceAtual === -1 || modulos[indiceAtual]!.letterIds.length === 0);
 
   return (
     <div className="lg:rounded-[24px] lg:bg-[var(--card)] lg:border lg:border-line lg:shadow-[var(--sh)]
@@ -165,6 +169,9 @@ export function CourseMapClient() {
         </section>
       )}
 
+      {doCursoInteiro ? (
+        <EstradaDoModulo paradas={estradaDoCurso} jarro="aberto" onAbrirJarro={() => false} seguir />
+      ) : (
       <ol className="list-none p-0 m-0">
         <TrechoAula0 feita={a0} />
         {modulos.map((m, i) => {
@@ -177,6 +184,7 @@ export function CourseMapClient() {
         })}
         <TrechoFinal />
       </ol>
+      )}
 
       {/* Depois do caminho inteiro, e não antes: a pergunta "por que {{מ}}
           vem antes de {{ב}}?" só existe para quem acabou de VER a ordem.
@@ -519,7 +527,7 @@ function Trecho({ module: m, estado, novo = false }: {
             <Prose text={m.subPt} />
           </p>
         ) : estrada.length ? (
-          <EstradaDoModulo paradas={estrada} jarro={jarro} onAbrirJarro={() => p.abrirJarro(m.id)} />
+          <EstradaDoModulo paradas={estrada} jarro={jarro} onAbrirJarro={() => p.abrirJarro(m.id)} seguir />
         ) : (
           /* As letras do módulo da direita para a esquerda, na ordem em que
              se aprendem (11/10/2026): `dir` no contêiner, e a ordem do HTML

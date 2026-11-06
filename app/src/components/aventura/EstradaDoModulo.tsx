@@ -13,6 +13,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { He } from '@/components/hebrew/He';
+import { Yael } from '@/components/aventura/Yael';
 import { IconeCadeado } from '@/components/shell/NavIcons';
 import { tx } from '@/i18n/telas/painel-course-map-client';
 
@@ -80,22 +81,12 @@ function Portao() {
   );
 }
 
-const VIAJANTE = (
-  <svg viewBox="0 0 38 48" aria-hidden>
-    <ellipse cx="19" cy="46" rx="9" ry="2" fill="rgba(0,0,0,.18)" />
-    <rect className="hf-perna1" x="13" y="31" width="4.5" height="13" rx="2" fill="#0E3B43" />
-    <rect className="hf-perna2" x="20.5" y="31" width="4.5" height="13" rx="2" fill="#0E3B43" />
-    <g className="hf-viajante-corpo">
-      <rect x="22" y="15" width="10" height="13" rx="3" fill="#C9773F" />
-      <rect x="10" y="14" width="18" height="19" rx="7" fill="#1F8A7D" />
-      <circle cx="19" cy="8" r="7" fill="#E8C4A0" /><path d="M12 7c0-5 14-5 14 0z" fill="#E7B65A" />
-      <path d="M10 7h18" stroke="#B8862F" strokeWidth="2" strokeLinecap="round" />
-    </g>
-  </svg>
-);
-
-export function EstradaDoModulo({ paradas, jarro, onAbrirJarro }: {
+export function EstradaDoModulo({ paradas, jarro, onAbrirJarro, seguir = false }: {
   paradas: ParadaDaEstrada[];
+  /** A página acompanha a Yael enquanto ela anda (no mapa do curso, como um
+   *  caminho que se percorre rolando). No painel, não: ali a estrada é uma
+   *  parte da página. */
+  seguir?: boolean;
   jarro: 'fechado' | 'pronto' | 'aberto';
   /** Abre o jarro; devolve se pagou o XP. */
   onAbrirJarro: () => boolean;
@@ -139,25 +130,66 @@ export function EstradaDoModulo({ paradas, jarro, onAbrirJarro }: {
   }, [centros]);
   const poe = useCallback((l: number) => {
     const path = via.current, v = viajante.current; if (!path || !v) return;
-    const q = path.getPointAtLength(l); v.style.transform = `translate(${q.x - 19}px, ${q.y - 52}px)`;
+    const q = path.getPointAtLength(l); v.style.transform = `translate(${q.x - 28}px, ${q.y - 60}px)`;
   }, []);
 
-  /* A viajante sai da etapa anterior e anda até a de agora. */
+  /* A Yael passa pelas estações (06/11/2026, pedido do dono): sai da
+     primeira e anda até a de agora, parando um instante em cada uma, que
+     pula de leve quando ela chega. Com `seguir`, a página rola junto, até o
+     aluno rolar por conta própria. Com "menos movimento", ela já está lá. */
+  const [humor, setHumor] = useState<'parada' | 'feliz'>('parada');
   useEffect(() => {
     if (!geo) return;
     const fim = comprimentoDe(aqui);
-    if (calmo() || aqui === 0) { poe(fim); return; }
-    const ini = comprimentoDe(aqui - 1), v = viajante.current!;
-    let raf = 0; const t0 = performance.now(), dur = Math.min(2200, 600 + Math.abs(fim - ini) * 2);
-    poe(ini); v.classList.add('hf-andando');
-    const passo = (t: number) => {
-      const k = Math.min(1, (t - t0) / dur), e = k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
-      poe(ini + (fim - ini) * e);
-      if (k < 1) raf = requestAnimationFrame(passo); else v.classList.remove('hf-andando');
+    const paradasEl = [...(caixa.current?.querySelectorAll<HTMLElement>('[data-parada]') ?? [])];
+    if (calmo() || aqui === 0) {
+      poe(fim);
+      if (seguir && aqui > 0) paradasEl[aqui]?.scrollIntoView({ block: 'center' });
+      return;
+    }
+    const marcos = Array.from({ length: aqui + 1 }, (_, i) => comprimentoDe(i));
+    const v = viajante.current!;
+    /* Cada trecho entre 450 e 900 ms: o caminho inteiro em uns seis segundos. */
+    const porTrecho = Math.max(450, Math.min(900, 6000 / aqui)), pausa = 220;
+    let raf = 0, trecho = 0, t0 = 0, parado = false, solto = false;
+    const largar = () => { solto = true; };
+    const acompanhar = () => {
+      if (!seguir || solto) return;
+      const r = v.getBoundingClientRect(), alvo = window.innerHeight * 0.5;
+      const dy = r.top + r.height / 2 - alvo;
+      if (Math.abs(dy) > 24) window.scrollBy(0, dy * 0.12);
     };
-    const atraso = setTimeout(() => { raf = requestAnimationFrame(passo); }, 700);
-    return () => { clearTimeout(atraso); cancelAnimationFrame(raf); };
-  }, [geo, aqui, comprimentoDe, poe]);
+    const chegou = (i: number) => {
+      const el = paradasEl[i]; if (!el) return;
+      el.classList.remove('hf-visita'); void el.getBoundingClientRect(); el.classList.add('hf-visita');
+    };
+    const passo = (t: number) => {
+      if (!t0) t0 = t;
+      const ini = marcos[trecho]!, alvoL = marcos[trecho + 1]!;
+      if (parado) {
+        if (t - t0 >= pausa) { parado = false; t0 = t; v.classList.add('hf-andando'); }
+      } else {
+        const k = Math.min(1, (t - t0) / porTrecho), e = k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+        poe(ini + (alvoL - ini) * e);
+        if (k >= 1) {
+          trecho++; chegou(trecho); v.classList.remove('hf-andando');
+          if (trecho >= aqui) { setHumor('feliz'); acompanhar(); return; }
+          parado = true; t0 = t;
+        }
+      }
+      acompanhar();
+      raf = requestAnimationFrame(passo);
+    };
+    poe(marcos[0]!);
+    window.addEventListener('wheel', largar, { passive: true });
+    window.addEventListener('touchstart', largar, { passive: true });
+    window.addEventListener('keydown', largar);
+    const atraso = setTimeout(() => { v.classList.add('hf-andando'); raf = requestAnimationFrame(passo); }, 600);
+    return () => {
+      clearTimeout(atraso); cancelAnimationFrame(raf);
+      window.removeEventListener('wheel', largar); window.removeEventListener('touchstart', largar); window.removeEventListener('keydown', largar);
+    };
+  }, [geo, aqui, comprimentoDe, poe, seguir]);
 
   /* O botão de voltar aparece quando a etapa de agora sai da tela. */
   useEffect(() => {
@@ -181,7 +213,7 @@ export function EstradaDoModulo({ paradas, jarro, onAbrirJarro }: {
             <path className="hf-via-det" d={geo.d} fill="none" stroke="#FBF9F5" strokeWidth="2" strokeDasharray="6 10" strokeLinecap="round" opacity=".8" />
           </svg>
         )}
-        <div ref={viajante} aria-hidden className="hf-viajante">{VIAJANTE}</div>
+        <div ref={viajante} aria-hidden className="hf-viajante"><Yael key={humor} humor={humor} /></div>
         <ol className="hf-estrada-lista list-none m-0 p-0">
         {paradas.map((p, i) => {
           const lado = i === 0 ? 'hf-centro' : i % 2 ? 'hf-esq' : 'hf-dir';
