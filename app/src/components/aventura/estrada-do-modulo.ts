@@ -12,6 +12,9 @@ import { useProgress } from '@/lib/state/store';
 import { idDoSom, ordemDeEnsino, portasDosModulos } from '@/lib/sons';
 import { fmt } from '@/i18n';
 import { tx } from '@/i18n/telas/painel-course-map-client';
+import { tx as txT } from '@/i18n/telas/painel-trilha-do-modulo';
+import { LUGAR, type IdDoCenario } from '@/components/aventura/Cenarios';
+import { ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 
 /* Uma lição do caminho dentro do módulo: uma letra ou um som (Vet, Tch...). */
 export type Item = { id: string; he: string; nome: string; href: string };
@@ -104,4 +107,42 @@ export function useEstradaDoModulo(m: CourseModule, ativo: boolean): { estrada: 
     }
   }
   return { estrada, jarro };
+}
+
+/** O módulo fechou: as lições todas e o checkpoint (no módulo sem letras, as
+ *  três etapas dele). A mesma regra do mapa do curso. */
+export function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: CourseModule): boolean {
+  const itens = itensDoModulo(m).every(i => isLessonComplete(state, i.id));
+  if (m.letterIds.length === 0) return itens && (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
+  const cp = m.checkpoint ? !!state.checkpoints[m.checkpoint.id]?.passedAt : true;
+  return itens && cp;
+}
+
+/** A estrada do curso inteiro (06/11/2026, pedido do dono: o mapa na página
+ *  principal também para quem já passou das letras). Uma parada por módulo,
+ *  com o nome do lugar dele em hebraico, e o portão do desafio final no fim.
+ *  O módulo fechado leva à página dele; o de agora também; os que vêm ficam
+ *  com o cadeado. Só para quem já leu todas as palavras dos lugares. */
+export function useEstradaDoCurso(): ParadaDaEstrada[] {
+  const p = useProgress();
+  const atual = course.modules.findIndex(m => !moduloCompleto(p.state, m));
+  const estrada: ParadaDaEstrada[] = course.modules.map((m, i) => {
+    const estado = atual < 0 || i < atual ? 'feita' : i === atual ? 'agora' : 'trancada';
+    const lugar = m.n >= 1 && m.n <= 7 ? LUGAR[m.n as IdDoCenario] : null;
+    const nome = ETAPA_DO_MODULO[m.n] ?? txT.modulo(m.n);
+    return {
+      chave: m.id, tipo: 'letra', he: lugar?.he, nome, sub: txT.modulo(m.n),
+      href: estado === 'trancada' ? null : `/modulo/${m.n}`, estado,
+      rotuloAcessivel: estado === 'trancada' ? `${txT.modulo(m.n)}: ${nome}. ${txT.vem}`
+        : `${txT.abrirModulo(m.n)}: ${nome}${estado === 'feita' ? `. ${txT.feito}` : ''}`
+    };
+  });
+  const passou = !!p.state.finalChallenge?.passedAt;
+  estrada.push({
+    chave: 'final', tipo: 'checkpoint', nome: ETAPA_FINAL, sub: passou ? txT.certificado : txT.chegada,
+    href: passou ? '/certificado' : atual < 0 ? '/desafio-final' : null,
+    estado: passou ? 'feita' : atual < 0 ? 'agora' : 'trancada',
+    rotuloAcessivel: `${ETAPA_FINAL}${passou ? `. ${txT.feito}` : ''}`, carimbos: passou ? 3 : 0
+  });
+  return estrada;
 }

@@ -37,9 +37,16 @@ const ICONE: Record<string, ReactNode> = {
 };
 const calmo = () => typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
+/* Uma letra cabe grande no arco; uma palavra (o lugar de cada módulo, na
+   estrada do curso) encolhe para caber. */
+const tamanhoNoArco = (he: string) => {
+  const n = he.match(/[\u05D0-\u05EA]/g)?.length ?? 1;
+  return n <= 2 ? '!text-[28px]' : n === 3 ? '!text-[21px]' : '!text-[17px]';
+};
+
 function Arco({ p }: { p: ParadaDaEstrada }) {
   const miolo = p.estado === 'trancada' ? <IconeCadeado size={24} />
-    : p.he ? <He size="inline" className="!text-[28px] !leading-none !text-current">{p.he}</He>
+    : p.he ? <He size="inline" className={`${tamanhoNoArco(p.he)} !leading-none !text-current`}>{p.he}</He>
     : <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>{ICONE[p.tipo]}</svg>;
   return (
     <span className={`hf-arco hf-arco-${p.estado}`} data-parada>

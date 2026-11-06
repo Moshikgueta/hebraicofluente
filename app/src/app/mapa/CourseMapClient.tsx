@@ -38,7 +38,7 @@ import { Prose } from '@/components/learn/Blocks';
 import { OrdemPedagogica } from '@/components/learn/OrdemPedagogica';
 import { aula0Feita, isLessonComplete, isLessonMastered, letraLiberada, REGRA_DO_DOMINIO, STAGE_COUNT } from '@/lib/state/rules';
 import { EstradaDoModulo } from '@/components/aventura/EstradaDoModulo';
-import { itensDoModulo, useEstradaDoModulo } from '@/components/aventura/estrada-do-modulo';
+import { itensDoModulo, moduloCompleto, useEstradaDoModulo } from '@/components/aventura/estrada-do-modulo';
 import { ETAPA_AULA0, ETAPA_DO_MODULO, ETAPA_FINAL } from '@/lib/jornada';
 import { flagship } from '@/lib/catalog';
 import { ordemDeEnsino, portasDosModulos } from '@/lib/sons';
@@ -48,14 +48,6 @@ import { tx } from '@/i18n/telas/painel-course-map-client';
 
 type Estado = 'feito' | 'agora' | 'adiante';
 type Progresso = ReturnType<typeof useProgress>;
-
-function moduloCompleto(state: Parameters<typeof isLessonComplete>[0], m: CourseModule): boolean {
-  const itens = itensDoModulo(m).every(i => isLessonComplete(state, i.id));
-  if (m.letterIds.length === 0) return itens && (state.lessons[m.id]?.stagesDone.length ?? 0) >= 3;
-  const letras = itens;
-  const cp = m.checkpoint ? !!state.checkpoints[m.checkpoint.id]?.passedAt : true;
-  return letras && cp;
-}
 
 /* As lições que ainda faltam no caminho: cada letra ou som não concluído, e
    as lições de um módulo sem letras (o 6) enquanto ele não fechou. */
