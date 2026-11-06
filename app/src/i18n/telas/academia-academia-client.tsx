@@ -42,8 +42,9 @@ const pt = {
   vrCardapioTitulo: 'Ler cardápios',
   vrCardapioDesc: 'O quadro de um café em Israel: pratos, bebidas e nomes internacionais.',
   vrCorridaTitulo: 'Corrida das palavras',
-  vrCorridaDesc: 'As palavras de Um dia em Israel que você já lê, contra o relógio.',
+  vrCorridaDesc: 'Letras, sons e as palavras de Um dia em Israel que você já lê, contra o relógio.',
   vrCorridaConta: (n: number) => `${n} palavras na pista`,
+  vrCorridaLetras: 'Aberta: letras e sons',
 
   abreCom: 'Abre com {n} letras',
   abreParecidas: 'Abre quando houver duas letras parecidas',
@@ -209,8 +210,9 @@ const en: Traducao<typeof pt> = {
   vrCardapioTitulo: 'Reading menus',
   vrCardapioDesc: 'The board of a coffee shop in Israel: dishes, drinks and international names.',
   vrCorridaTitulo: 'Word race',
-  vrCorridaDesc: 'The words from A day in Israel that you can already read, against the clock.',
+  vrCorridaDesc: 'Letters, sounds and the words from A day in Israel that you can already read, against the clock.',
   vrCorridaConta: (n: number) => `${n} words on the track`,
+  vrCorridaLetras: 'Open: letters and sounds',
 
   abreCom: 'Opens with {n} letters',
   abreParecidas: 'Opens when there are two look-alike letters',
@@ -376,8 +378,9 @@ const es: Traducao<typeof pt> = {
   vrCardapioTitulo: 'Leer menús',
   vrCardapioDesc: 'La pizarra de un café en Israel: platos, bebidas y nombres internacionales.',
   vrCorridaTitulo: 'Carrera de palabras',
-  vrCorridaDesc: 'Las palabras de Un día en Israel que ya lees, contra el reloj.',
+  vrCorridaDesc: 'Letras, sonidos y las palabras de Un día en Israel que ya lees, contra el reloj.',
   vrCorridaConta: (n: number) => `${n} palabras en la pista`,
+  vrCorridaLetras: 'Abierta: letras y sonidos',
 
   abreCom: 'Se abre con {n} letras',
   abreParecidas: 'Se abre cuando haya dos letras parecidas',
