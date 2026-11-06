@@ -25,7 +25,9 @@ export function ComVoce() {
   const itens = [
     { t: tx.item1T, d: tx.item1D(prazoResposta()), icone: 'M4 5h16v11H8l-4 4zM8 10h8M8 13h5' },
     { t: tx.item2T, d: tx.item2D, icone: 'M12 4v4M12 16v4M4 12h4M16 12h4M6.5 6.5l2.5 2.5M15 15l2.5 2.5M6.5 17.5 9 15M15 9l2.5-2.5' },
-    { t: tx.item3T, d: tx.item3D, icone: 'M12 21a9 9 0 1 0-8-4.9L3 21l4.9-1A9 9 0 0 0 12 21z' }
+    /* Só onde o site tem WhatsApp (o inglês não tem): prometer um canal que
+       não existe seria pior do que não dizer nada. */
+    ...(zap ? [{ t: tx.item3T, d: tx.item3D, icone: 'M12 21a9 9 0 1 0-8-4.9L3 21l4.9-1A9 9 0 0 0 12 21z' }] : [])
   ];
   return (
     <section id="com-voce" aria-labelledby="com-voce-titulo">

@@ -9,7 +9,7 @@
 
 import { flagship } from '@/lib/catalog';
 import { tempoDoCursoPt } from '@/lib/content-publico';
-import { empresa, prazoResposta } from '@/lib/empresa';
+import { empresa, prazoResposta, whatsappUrl } from '@/lib/empresa';
 import { TEM_AUDIO } from './copy';
 import { tx } from '@/i18n/telas/venda-faq-capa';
 
@@ -39,7 +39,7 @@ export function perguntasDaCapa(): readonly (readonly [string, string])[] {
      tx.r7(empresa.politicas.arrependimentoDias)],
     /* 06/11/2026: o Fale comigo, com o prazo que o site promete em todo lugar. */
     [tx.p9,
-     tx.r9(prazoResposta())],
+     whatsappUrl() ? `${tx.r9(prazoResposta())} ${tx.r9Zap}` : tx.r9(prazoResposta())],
     [tx.p8,
      tx.r8]
   ];
