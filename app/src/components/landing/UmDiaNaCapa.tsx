@@ -11,8 +11,9 @@
  * nada desenhado para a venda. Sem rolagem automática nem troca sozinha: a
  * pessoa escolhe (mesma regra da capa, ver base.tsx/Reveal).
  *
- * As capturas são do site em português. Nos outros idiomas a seção só
- * aparece quando houver capturas daquele idioma (CAPTURAS abaixo). */
+ * Cada idioma tem as suas capturas, tiradas do site naquele idioma
+ * (public/media/um-dia/<idioma>/). Um idioma sem capturas não mostra a
+ * seção (CAPTURAS abaixo). */
 
 import { useState } from 'react';
 import { PARADAS } from '@/lib/engine/um-dia';
@@ -22,7 +23,7 @@ import { Container, Lead, Rubrica } from './base';
 
 const LOCALE = process.env.NEXT_PUBLIC_LOCALE || 'pt';
 /** Os idiomas que têm as capturas das paradas em public/media/um-dia/<idioma>/. */
-const CAPTURAS: readonly string[] = ['pt'];
+const CAPTURAS: readonly string[] = ['pt', 'en', 'es'];
 
 export function UmDiaNaCapa() {
   const [ativa, setAtiva] = useState(0);
