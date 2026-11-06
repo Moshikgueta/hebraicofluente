@@ -353,7 +353,7 @@ export function DashboardClient() {
       </section>
 
       {/* O caminho do módulo (28/10/2026): as letras dele, tocáveis. */}
-      {!aula0Primeiro && <TrilhaDoModulo modulo={next.kind === 'done' ? null : next.module} />}
+      {!aula0Primeiro && <TrilhaDoModulo />}
 
       <PlanoDeHoje licao={licaoDeHoje} semDesafio={!aula0Primeiro} />
 
