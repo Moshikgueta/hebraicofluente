@@ -26,8 +26,7 @@ export function AulaParticularClient() {
       </header>
       <Card className="p-5 sm:p-6 grid gap-4">
         <p className="m-0 font-ui text-[16px] leading-relaxed text-ink-body">{tx.intro}</p>
-        <p className="m-0 font-display text-[24px] font-semibold text-ink">{tx.preco}</p>
-        <p className="m-0 font-ui text-[15.5px] leading-relaxed text-ink-body">{tx.combinado}</p>
+        <p className="m-0 font-ui text-[15.5px] leading-relaxed text-ink-body">{tx.detalhes}</p>
         <p className="m-0 font-ui text-[15.5px] leading-relaxed text-ink-body">{tx.comoPedir}</p>
         <div className="grid gap-2.5 sm:grid-cols-2">
           {wa && (
