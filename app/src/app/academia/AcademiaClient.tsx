@@ -277,7 +277,8 @@ export function AcademiaClient() {
     const baralho = montarBaralho(fontes, { quantos, semente, peso });
     const perguntas = jogo === 'match' ? [] : perguntasDe(baralho, fontes, {
       semente: `${semente}-q`,
-      sentido: jogo === 'teste' ? 'misto' : 'he'
+      /* No canhão o pedido vem em português e os alvos são o hebraico. */
+      sentido: jogo === 'teste' ? 'misto' : jogo === 'blast' ? 'pt' : 'he'
     });
     return { baralho, perguntas };
   }, [unlocked, peso]);
